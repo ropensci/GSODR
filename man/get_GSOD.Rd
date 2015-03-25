@@ -4,7 +4,7 @@
 \alias{get_GSOD}
 \title{Download, Clean and Generate New Variables From GSOD Weather Data}
 \usage{
-get_GSOD(start_year, end_year, max_missing, path)
+get_GSOD(start_year, end_year, max_missing)
 }
 \arguments{
 \item{start_year}{The first year of the series of weather data to download}
@@ -13,9 +13,6 @@ get_GSOD(start_year, end_year, max_missing, path)
 
 \item{max_missing}{The maximum number of days allowed to be missing from a
 station's data before it is excluded from .csv file output}
-
-\item{path}{The directory where data will be downloaded and
-stored, further subdirectories will be automatically created by year}
 }
 \description{
 This function automates downloading and cleaning data from the
@@ -27,12 +24,16 @@ Fahrenheit to Celcius. Output is saved as a .csv file summarizing each year by
 station, which includes vapor pressure and relative humidity variables
 calculated from existing data in GSOD.
 
+Be sure to have disk space free and allocate the proper time for this to run.
+This is a time, processor and disk space intensive process.
+
 For more information see the description of the data provided by NCDC,
 \url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}
 }
 \details{
-This function generates a .csv file containing the following
-weather variables as columns:
+This function generates a GSOD_TPYYYY_XY.csv file in the respective
+year directory containing the following data:
+weather variables as columns
 STNID - Station ID,
 LAT - latitude,
 LON - longitude,
@@ -51,9 +52,11 @@ es - Mean daily saturation vapor pressure,
 RH - Mean daily relative humidity
 }
 \examples{
-get_GSOD(start_year = 2009,
-                  end_year = 2010,
-                  max_missing = 5,
-                  path = "")
+# Download data for years 2009 and 2010 and generate yearly summary files,
+# GSOD_TP2009_XY and GSOD_TP2010_XY files in folders 2009 and 2010 of your
+# working directory with a maximum of five missing days per weather station
+# allowed.
+
+get_GSOD(start_year = 2009, end_year = 2010, max_missing = 5)
 }
 

@@ -9,17 +9,19 @@
 #'station, which includes vapor pressure and relative humidity variables
 #'calculated from existing data in GSOD.
 #'
+#'Be sure to have disk space free and allocate the proper time for this to run.
+#'This is a time, processor and disk space intensive process.
+#'
 #'For more information see the description of the data provided by NCDC,
 #'\url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}
 #' @param start_year The first year of the series of weather data to download
 #' @param end_year The last year of the series of weather data to download
 #' @param max_missing The maximum number of days allowed to be missing from a
 #' station's data before it is excluded from .csv file output
-#' @param path The directory where data will be downloaded and
-#' stored, further subdirectories will be automatically created by year
 #'
-#' @details This function generates a .csv file containing the following
-#' weather variables as columns:
+#' @details This function generates a GSOD_TPYYYY_XY.csv file in the respective
+#' year directory containing the following data:
+#' weather variables as columns
 #' STNID - Station ID,
 #' LAT - latitude,
 #' LON - longitude,
@@ -38,72 +40,74 @@
 #' RH - Mean daily relative humidity
 #'
 #' @examples
-#' get_GSOD(start_year = 2009,
-#'                   end_year = 2010,
-#'                   max_missing = 5,
-#'                   path = "")
+#' # Download data for years 2009 and 2010 and generate yearly summary files,
+#' # GSOD_TP2009_XY and GSOD_TP2010_XY files in folders 2009 and 2010 of your
+#' # working directory with a maximum of five missing days per weather station
+#' # allowed.
+#'
+#' get_GSOD(start_year = 2009, end_year = 2010, max_missing = 5)
 
 get_GSOD <- function(start_year,
                      end_year,
-                     max_missing,
-                     path) {
+                     max_missing) {
   yr <- NULL
 
-  # if path is not defined, use working directory
-  if(path == "") path = getwd()
+  # ftp site for data download
+  ftp.GSOD <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
+  k <- 1 # enumerator for appending to .csv file out
 
-  for (yr in start_year:end_year) {
-    # ftp site for data download
-    ftp.GSOD <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
+  # ---------------------------------------------------------
+  # STEP 1: Download the data from server
+  # ---------------------------------------------------------
+  # Download the location coordinates of stations:
+  if(!file.exists(paste(getwd(), "/isd-history.csv", sep = ""))) {
+    cat("Downloading station file\n")
+    download.file(paste(ftp.GSOD, "isd-history.csv", sep = ""),
+                  destfile = paste(getwd(), "/isd-history.csv",
+                                   sep = ""), mode = "wb")
+  }
+  # Read .csv file
+  stations <- read.csv(paste(getwd(), "/isd-history.csv", sep = ""),
+                       colClasses = c(USAF = "character", WBAN = "character"))
+  stations$STNID <- paste(stations$USAF, stations$WBAN, sep = "-")
+  # Format coordinates to decimal degrees:
+  stations$LAT <- ifelse(stations$LAT > 90.0 * 1000 |
+                           stations$LAT < -90.0 * 1000,
+                         NA, stations$LAT / 1000)
+  stations$LON <- ifelse(stations$LON > 180 * 1000 |
+                           stations$LON < -180 * 1000,
+                         NA, stations$LON / 1000)
+  # Format elevation to metres:
+  stations$ELEV.M <- ifelse(stations$ELEV.M == -99999 |
+                              stations$ELEV.M == -999.999,
+                            NA, stations$ELEV.M / 10)
 
-    try(dir.create(paste(path, yr, sep = "/")))
+  for (yr in start_year:end_year) { # loop to download all years
+    # download gsod data .gz file for the whole year
 
-    setwd(paste(path, yr, sep = "/"))
+    try(dir.create(paste(getwd(), yr, sep = "/")))
 
-    outfile <- paste(path, "/GSOD_TP", yr, "_XY.csv", sep = "");
+    #setwd(paste(getwd(), yr, sep = "/"))
 
-    # ---------------------------------------------------------
-    # STEP 1: Download the data from server
-    # ---------------------------------------------------------
-    # read the location coordinates of stations:
-    if(!file.exists(paste(path, "/isd-history.csv", sep = ""))) {
-      cat("Downloading station file\n")
-      download.file(paste(ftp.GSOD, "/isd-history.csv", sep = ""),
-                    destfile = paste(path, "/isd-history.csv",
-                                     sep = ""), mode = "wb")
-    }
-    stations <- read.csv(paste(path, "/isd-history.csv", sep = ""),
-                         colClasses = c(USAF = "character", WBAN = "character"))
-    stations$STNID <- paste(stations$USAF, stations$WBAN, sep = "-")
-    # format coordinates to decimal degrees:
-    stations$LAT <- ifelse(stations$LAT > 90.0 * 1000 |
-                             stations$LAT < -90.0 * 1000,
-                           NA, stations$LAT / 1000)
-    stations$LON <- ifelse(stations$LON > 180 * 1000 |
-                             stations$LON < -180 * 1000,
-                           NA, stations$LON / 1000)
-    # format elevation to metres:
-    stations$ELEV.M <- ifelse(stations$ELEV.M == -99999 |
-                                stations$ELEV.M == -999.999,
-                              NA, stations$ELEV.M / 10)
+    outfile <- paste(getwd(), "/", yr, "/GSOD_TP", yr, "_XY.csv", sep = "")
 
-    # download gsod data for the whole year:
-    if(!file.exists(paste(path, "/gsod_", yr, ".tar", sep = ""))) {
+    if(!file.exists(paste(getwd(), "/", yr, ".tar", sep = ""))) {
       cat("Downloading gsod tar file\n")
       try(download.file(paste(ftp.GSOD, yr, "/gsod_", yr, ".tar", sep = ""),
-                        destfile = paste(path, "/gsod_",
+                        destfile = paste(getwd(), "/", yr, "/",
                                          yr, ".tar", sep = ""), mode = "wb"))
     }
 
     # Extract files
-    untar(tarfile = paste(path, "/gsod_", yr, ".tar", sep = ""))
+    untar(tarfile = paste(getwd(), "/", yr, "/", yr, ".tar", sep = ""),
+          exdir  = paste(getwd(), "/", yr, "/", sep = ""))
 
     # Clean up by removing the downloaded tar file, shortens code in next section
-    file.remove(paste(path, "/gsod_", yr, ".tar", sep = ""))
+    file.remove(paste(getwd(), "/", yr, "/", yr, ".tar", sep = ""))
 
     # list all files:
-    GSOD_list <- dir(paste(path = path, yr, sep = "/"),
-                     pattern = glob2rx("*.gz"), full.names = FALSE)
+    GSOD_list <- dir(paste(getwd(), "/", yr, sep = ""), pattern = glob2rx("*.gz"),
+                     full.names = FALSE)
 
     # ---------------------------------------------------------
     # STEP 2: Reformat, tidy up and compute climate variables
@@ -116,8 +120,7 @@ get_GSOD <- function(start_year,
     for(j in 1:length(GSOD_list)){
 
       # import the current station file
-      tmp <- readLines(paste(path, "/", yr, "/",
-                             GSOD_list[j], sep = ""))
+      tmp <- readLines(paste(getwd(), yr, GSOD_list[j], sep = "/"))
 
       # ---------------------------------------------------------
       # STEP 2.1: check against maximum permissible missing days
@@ -129,7 +132,7 @@ get_GSOD <- function(start_year,
       }
 
       if (length(tmp) < s) {
-        file.remove(GSOD_list[j])
+        file.remove(paste(getwd(), yr, GSOD_list[j], sep = "/"))
       } else {
 
         tmp.f <- tmp[-1] #remove header for formatting purposes
@@ -206,7 +209,7 @@ get_GSOD <- function(start_year,
         # ---------------------------------------------------------
         # STEP 2.3: join to the station data
         # ---------------------------------------------------------
-        GSOD.XY <- inner_join(tmp.f, stations)
+        GSOD.XY <- inner_join(tmp.f, stations, by = "STNID")
 
         # Somehwow the isd-history.csv file does not always agree with
         # station names, if that happens and GSOD.XY contains
@@ -263,13 +266,16 @@ get_GSOD <- function(start_year,
             write.table(GSOD_TP.list[[1]], outfile , na = "-9999",  sep = ",",
                         row.names = FALSE, col.names = FALSE, append = TRUE)
           }
+          # iterate through k for previous section in writing .csv file outputs
           k <- k + 1
         }
         # clean up
         rm(tmp.f)
-        rm(GSOD.XY)
       }
     }
+    # delete the gz weather files leaving only the .csv file in the year dir
+    file.remove(paste(getwd(), "/", yr, "/", sep = ""),
+                pattern = glob2rx("*.gz"), full.names = FALSE)
   }
 }
 
