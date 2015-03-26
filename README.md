@@ -5,4 +5,4 @@ station, which includes vapor pressure and relative humidity variables calculate
 
 Be sure to have disk space free and allocate the proper time for this to run. This is a time, processor and disk space intensive process.
 
-For more information see the description of the data provided by NCDC, (http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt)[http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt]
+For more information see the description of the data provided by NCDC, [http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt]
