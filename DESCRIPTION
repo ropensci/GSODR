@@ -1,4 +1,4 @@
-Package: GSOD
+Package: GSODR
 Type: Package
 Title: Download, Clean and Generate New Variables From GSOD Weather Data
 Version: 1.0
