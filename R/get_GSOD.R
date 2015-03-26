@@ -98,7 +98,7 @@ get_GSOD <- function(start_year,
                                          yr, ".tar", sep = ""), mode = "wb"))
     }
 
-    cat("Filter and merge station data./n")
+    cat(paste("Filter and merge station data for ", yr, "\n", sep = ""))
     # Extract files
     untar(tarfile = paste(getwd(), "/", yr, "/", yr, ".tar", sep = ""),
           exdir  = paste(getwd(), "/", yr, "/", sep = ""))
@@ -275,8 +275,8 @@ get_GSOD <- function(start_year,
       }
     }
     # delete the gz weather files leaving only the .csv file in the year dir
-    file.remove(paste(getwd(), "/", yr, "/", sep = ""),
-                pattern = glob2rx("*.gz"), full.names = FALSE)
+    do.call(file.remove, list(list.files(paste(getwd(), yr, sep = "/"),
+                           pattern = glob2rx("*.gz"), full.names = TRUE)))
   }
 }
 
