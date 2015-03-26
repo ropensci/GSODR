@@ -14,7 +14,7 @@ Load the devtools package.
 
 `library(devtools)`
 
-Use install_github("author/package") to install this package.
+Use `install_github("author/package")` to install this package.
 
 `install_github("adamhsparks/GSODR")`
 
