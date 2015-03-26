@@ -98,6 +98,7 @@ get_GSOD <- function(start_year,
                                          yr, ".tar", sep = ""), mode = "wb"))
     }
 
+    cat("Filter and merge station data./n")
     # Extract files
     untar(tarfile = paste(getwd(), "/", yr, "/", yr, ".tar", sep = ""),
           exdir  = paste(getwd(), "/", yr, "/", sep = ""))
