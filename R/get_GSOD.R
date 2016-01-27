@@ -93,7 +93,7 @@ get_GSOD <- function(start_year,
 
     if(!file.exists(paste(getwd(), "/", yr, ".tar", sep = ""))) {
       cat("Downloading gsod tar file\n")
-      try(download.file(paste(ftp.GSOD, yr, "/gsod_", yr, ".tar", sep = ""),
+      try(download.file(paste(ftp_GSOD, yr, "/gsod_", yr, ".tar", sep = ""),
                         destfile = paste(getwd(), "/", yr, "/",
                                          yr, ".tar", sep = ""), mode = "wb"))
     }
