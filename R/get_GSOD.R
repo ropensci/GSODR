@@ -7,7 +7,8 @@
 #'omitted. All units are converted to metric, e.g. feet to metres and
 #'Fahrenheit to Celcius. Output is saved as a .csv file summarizing each year by
 #'station, which includes vapor pressure and relative humidity variables
-#'calculated from existing data in GSOD.
+#'calculated from existing data in GSOD. Only weather stations between 60 and
+#'-60 degrees are included for agroclimatology purposes.
 #'
 #'Be sure to have disk space free and allocate the proper time for this to run.
 #'This is a time, processor and disk space intensive process.
@@ -25,7 +26,7 @@
 #' STNID - Station ID,
 #' LAT - latitude,
 #' LON - longitude,
-#' ELEV.M - elevation in metres,
+#' ELEV.M. - elevation in metres,
 #' YEARMODA - Date in YYYY-MM-DD format,
 #' YEAR - Year,
 #' MONTH - Month,
@@ -73,8 +74,8 @@ get_GSOD <- function(start_year,
 
   # Format elevation to metres:
   stations$ELEV.M. <- ifelse(stations$ELEV.M. == -999.0 |
-                              stations$ELEV.M. == -999.9,
-                            NA, stations$ELEV.M.)
+                               stations$ELEV.M. == -999.9,
+                             NA, stations$ELEV.M.)
 
   stations <- stations[complete.cases(stations), ]
   stations <- subset(stations, LAT >= -60 & LAT <= 60)
@@ -114,7 +115,7 @@ get_GSOD <- function(start_year,
     # ---------------------------------------------------------
 
     # create an empty list:
-    GSOD_TP.list <- as.list(rep(NA, 1))
+    GSOD_TP_list <- as.list(rep(NA, 1))
     k <- 1
     # run in a loop. unzip values, trim white spaces and write to a single file:
     for(j in 1:length(GSOD_list)){
@@ -135,60 +136,60 @@ get_GSOD <- function(start_year,
         file.remove(paste(getwd(), yr, GSOD_list[j], sep = "/"))
       } else {
 
-        tmp.f <- tmp[-1] #remove header for formatting purposes
+        tmp_f <- tmp[-1] #remove header for formatting purposes
 
         #---------------------------------------------------------
         # STEP 2.2: clean up the station and weather data
         # ---------------------------------------------------------
 
-        STN <- substr(tmp.f, 1, 6) #station number
-        WBAN <- substr(tmp.f, 8, 12) #WBAN number
+        STN <- substr(tmp_f, 1, 6) #station number
+        WBAN <- substr(tmp_f, 8, 12) #WBAN number
         STNID <- paste(STN, WBAN, sep = "-") # WMO/DATSAV3 number
 
-        YEARMODA <- as.integer(substr(tmp.f, 15, 22)) #YYYYMODA
-        YEAR <- as.numeric(substr(tmp.f, 15, 18)) #year
-        MONTH <- as.numeric(substr(tmp.f, 19, 20)) #month
-        DAY <- as.numeric(substr(tmp.f, 21, 22)) #day
+        YEARMODA <- as.integer(substr(tmp_f, 15, 22)) #YYYYMODA
+        YEAR <- as.numeric(substr(tmp_f, 15, 18)) #year
+        MONTH <- as.numeric(substr(tmp_f, 19, 20)) #month
+        DAY <- as.numeric(substr(tmp_f, 21, 22)) #day
         YDAY <- 1 + as.POSIXlt(as.Date(as.character(YEARMODA), "%Y%m%d"),
                                "GMT")$yday # DAY OF YEAR
 
         #############################################
         # Convert daily mean temp from degree F to degree C
-        TEMPC <- as.numeric(substr(tmp.f, 25, 30)) # mean T
+        TEMPC <- as.numeric(substr(tmp_f, 25, 30)) # mean T
         TEMPC <- ifelse(TEMPC == 9999.9, NA, (TEMPC - 32) * (5 / 9))
-        DEWPC <- as.numeric(substr(tmp.f, 36, 41)) # mean dewpoint
+        DEWPC <- as.numeric(substr(tmp_f, 36, 41)) # mean dewpoint
         DEWPC <- ifelse(DEWPC == 9999.9, NA, (DEWPC - 32) * (5 / 9))
 
         ##############################################
         # Windspeed
-        WDSPC <- as.numeric(substr(tmp.f, 79, 83))
+        WDSPC <- as.numeric(substr(tmp_f, 79, 83))
         WDSPC <- ifelse(WDSPC == 999.9, NA, WDSPC*0.514444444)
 
         ##############################################
         # Convert daily max temp from degree F to degree C
-        MAXC <- as.numeric(substr(tmp.f, 103, 108))
+        MAXC <- as.numeric(substr(tmp_f, 103, 108))
         MAXC <- ifelse(MAXC == 9999.9, NA, (MAXC - 32) * (5 / 9))
 
         ##############################################
         # Convert daily min temp from degree F to degree C
-        MINC <- as.numeric(substr(tmp.f, 111, 116))
+        MINC <- as.numeric(substr(tmp_f, 111, 116))
         MINC <- ifelse(MINC == 9999.9, NA, (MINC - 32) * (5 / 9))
 
         # Convert precipitation depth to mm
-        PRCP <- as.numeric(substr(tmp.f, 119, 123))
+        PRCP <- as.numeric(substr(tmp_f, 119, 123))
         PRCP <- ifelse(PRCP == 999.9, NA, round(PRCP * 25.4, 1) * 10)
 
         # Convert snow depth to mm
-        SNDP <- as.numeric(substr(tmp.f, 126, 130))
+        SNDP <- as.numeric(substr(tmp_f, 126, 130))
         SNDP <- ifelse(SNDP == 999.9, NA, round(SNDP * 25.4, 1) * 10)
 
-        indicators <- substr(tmp.f, 133, 138)
+        indicators <- substr(tmp_f, 133, 138)
         indicators <- matrix(as.numeric(unlist(strsplit(indicators, ""))),
                              byrow = TRUE, ncol = 6)
         colnames(indicators) <- c("ifog", "irain", "isnow", "ihail",
                                   "ithunder", "itornado")
 
-        tmp.f <- data.frame(
+        tmp_f <- data.frame(
           STNID,
           YEARMODA,
           YEAR,
@@ -204,12 +205,12 @@ get_GSOD <- function(start_year,
           indicators,
           stringsAsFactors = FALSE)
 
-        tmp.f$STNID <- as.character(tmp.f$STNID)
+        tmp_f$STNID <- as.character(tmp_f$STNID)
 
         # ---------------------------------------------------------
         # STEP 2.3: join to the station data
         # ---------------------------------------------------------
-        GSOD.XY <- inner_join(tmp.f, stations, by = "STNID")
+        GSOD.XY <- inner_join(tmp_f, stations, by = "STNID")
 
         # Somehwow the isd-history.csv file does not always agree with
         # station names, if that happens and GSOD.XY contains
@@ -235,10 +236,10 @@ get_GSOD <- function(start_year,
           # STEP 3: Write to csv file, one row per day per station - huge file
           # ---------------------------------------------------------
           # WRITE OUT ROW BY ROW
-          GSOD_TP.list[[1]] <- GSOD.XY[,c("STNID",
+          GSOD_TP_list[[1]] <- GSOD.XY[,c("STNID",
                                           "LAT",
                                           "LON",
-                                          "ELEV.M",
+                                          "ELEV.M.",
                                           "YEARMODA",
                                           "YEAR",
                                           "MONTH",
@@ -260,22 +261,22 @@ get_GSOD <- function(start_year,
                                           "RH")]
           # Write data into .csv file
           if(k == 1) {
-            write.table(GSOD_TP.list[[1]], outfile , na = "-9999",  sep = ",",
+            write.table(GSOD_TP_list[[1]], outfile , na = "-9999",  sep = ",",
                         row.names = FALSE, col.names = TRUE, append = FALSE)
           } else {
-            write.table(GSOD_TP.list[[1]], outfile , na = "-9999",  sep = ",",
+            write.table(GSOD_TP_list[[1]], outfile , na = "-9999",  sep = ",",
                         row.names = FALSE, col.names = FALSE, append = TRUE)
           }
           # iterate through k for previous section in writing .csv file outputs
           k <- k + 1
         }
         # clean up
-        rm(tmp.f)
+        rm(tmp_f)
       }
     }
     # delete the gz weather files leaving only the .csv file in the year dir
     do.call(file.remove, list(list.files(paste(getwd(), yr, sep = "/"),
-                           pattern = glob2rx("*.gz"), full.names = TRUE)))
+                                         pattern = glob2rx("*.gz"), full.names = TRUE)))
   }
 }
 
