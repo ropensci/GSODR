@@ -53,7 +53,7 @@ get_GSOD <- function(start_year,
   yr <- NULL
 
   # ftp site for data download
-  ftp_GSOD <- "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/"
+  ftp.GSOD <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
   k <- 1 # enumerator for appending to .csv file out
 
   # ---------------------------------------------------------
@@ -62,9 +62,9 @@ get_GSOD <- function(start_year,
   # Download the location coordinates of stations:
   if(!file.exists(paste(getwd(), "/isd-history.csv", sep = ""))) {
     cat("Downloading station file\n")
-    getURL(paste(ftp_GSOD, "isd-history.csv", sep = ""),
-           userpwd = "ftp:ncdc.orders@noaa.gov",
-           destfile = paste(getwd(), "/isd-history.csv", sep = ""))
+    download.file(paste(ftp.GSOD, "isd-history.csv", sep = ""),
+                  destfile = paste(getwd(), "/isd-history.csv",
+                                   sep = ""), mode = "wb")
   }
   # Read .csv file
   stations <- read.csv(paste(getwd(), "/isd-history.csv", sep = ""),
@@ -93,7 +93,7 @@ get_GSOD <- function(start_year,
 
     if(!file.exists(paste(getwd(), "/", yr, ".tar", sep = ""))) {
       cat("Downloading gsod tar file\n")
-      try(download.file(paste(ftp_GSOD, yr, "/gsod_", yr, ".tar", sep = ""),
+      try(download.file(paste(ftp.GSOD, yr, "/gsod_", yr, ".tar", sep = ""),
                         destfile = paste(getwd(), "/", yr, "/",
                                          yr, ".tar", sep = ""), mode = "wb"))
     }
@@ -276,7 +276,7 @@ get_GSOD <- function(start_year,
     }
     # delete the gz weather files leaving only the .csv file in the year dir
     do.call(file.remove, list(list.files(paste(getwd(), yr, sep = "/"),
-                                         pattern = glob2rx("*.gz"), full.names = TRUE)))
+                           pattern = glob2rx("*.gz"), full.names = TRUE)))
   }
 }
 
