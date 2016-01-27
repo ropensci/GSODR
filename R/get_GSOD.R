@@ -70,20 +70,19 @@ get_GSOD <- function(start_year,
   stations <- read.csv(paste(getwd(), "/isd-history.csv", sep = ""),
                        colClasses = c(USAF = "character", WBAN = "character"))
   stations$STNID <- paste(stations$USAF, stations$WBAN, sep = "-")
-  # Format coordinates to decimal degrees:
-  stations$LAT <- ifelse(stations$LAT > 90.0 * 1000 |
-                           stations$LAT < -90.0 * 1000,
-                         NA, stations$LAT / 1000)
-  stations$LON <- ifelse(stations$LON > 180 * 1000 |
-                           stations$LON < -180 * 1000,
-                         NA, stations$LON / 1000)
-  # Format elevation to metres:
-  stations$ELEV.M <- ifelse(stations$ELEV.M == -99999 |
-                              stations$ELEV.M == -999.999,
-                            NA, stations$ELEV.M / 10)
 
-  for (yr in start_year:end_year) { # loop to download all years
-    # download gsod data .gz file for the whole year
+  # Format elevation to metres:
+  stations$ELEV.M. <- ifelse(stations$ELEV.M. == -999.0 |
+                              stations$ELEV.M. == -999.9,
+                            NA, stations$ELEV.M.)
+
+  stations <- stations[complete.cases(stations), ]
+  stations <- subset(stations, LAT >= -60 & LAT <= 60)
+  stations <- subset(stations, LON > -180) # unsure what the value of -802.333 is
+
+  # loop to download all years
+  # download gsod data .gz file for the whole year
+  for (yr in start_year:end_year) {
 
     try(dir.create(paste(getwd(), yr, sep = "/")))
 
