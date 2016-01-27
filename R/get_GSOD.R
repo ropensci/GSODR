@@ -53,7 +53,7 @@ get_GSOD <- function(start_year,
   yr <- NULL
 
   # ftp site for data download
-  ftp.GSOD <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
+  ftp_GSOD <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
   k <- 1 # enumerator for appending to .csv file out
 
   # ---------------------------------------------------------
@@ -62,7 +62,7 @@ get_GSOD <- function(start_year,
   # Download the location coordinates of stations:
   if(!file.exists(paste(getwd(), "/isd-history.csv", sep = ""))) {
     cat("Downloading station file\n")
-    download.file(paste(ftp.GSOD, "isd-history.csv", sep = ""),
+    download.file("ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
                   destfile = paste(getwd(), "/isd-history.csv",
                                    sep = ""), mode = "wb")
   }
