@@ -26,7 +26,7 @@
 #' STNID - Station ID,
 #' LAT - latitude,
 #' LON - longitude,
-#' ELEV.M. - elevation in metres,
+#' ELEV.M - elevation in metres,
 #' YEARMODA - Date in YYYY-MM-DD format,
 #' YEAR - Year,
 #' MONTH - Month,
@@ -57,37 +57,31 @@ get_GSOD <- function(start_year,
   ftp_GSOD <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
   k <- 1 # enumerator for appending to .csv file out
 
-  # ---------------------------------------------------------
-  # STEP 1: Download the data from server
-  # ---------------------------------------------------------
-  # Download the location coordinates of stations:
+  # STEP 1: Download the data from server---------------------------------------
+
   if(!file.exists(paste(getwd(), "/isd-history.csv", sep = ""))) {
     cat("Downloading station file\n")
     download.file("ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
                   destfile = paste(getwd(), "/isd-history.csv",
                                    sep = ""), mode = "wb")
   }
-  # Read .csv file
-  stations <- read.csv(paste(getwd(), "/isd-history.csv", sep = ""),
-                       colClasses = c(USAF = "character", WBAN = "character"))
+
+  stations <- readr::read_csv(paste(getwd(), "/isd-history.csv", sep = ""))
+  names(stations)[9] <- "ELEV.M"
   stations$STNID <- paste(stations$USAF, stations$WBAN, sep = "-")
 
-  # Format elevation to metres:
-  stations$ELEV.M. <- ifelse(stations$ELEV.M. == -999.0 |
-                               stations$ELEV.M. == -999.9,
-                             NA, stations$ELEV.M.)
+  # Format elevation to metres
+  stations$ELEV.M <- ifelse(stations$ELEV.M == -999.9 |
+                              stations$ELEV.M == -999.0,
+                            NA, stations$ELEV.M)
 
   stations <- stations[complete.cases(stations), ]
   stations <- subset(stations, LAT >= -60 & LAT <= 60)
-  stations <- subset(stations, LON > -180) # unsure what the value of -802.333 is
+  stations <- subset(stations, LON > -180)
 
-  # loop to download all years
-  # download gsod data .gz file for the whole year
   for (yr in start_year:end_year) {
 
     try(dir.create(paste(getwd(), yr, sep = "/")))
-
-    #setwd(paste(getwd(), yr, sep = "/"))
 
     outfile <- paste(getwd(), "/", yr, "/GSOD_TP", yr, "_XY.csv", sep = "")
 
@@ -107,26 +101,20 @@ get_GSOD <- function(start_year,
     file.remove(paste(getwd(), "/", yr, "/", yr, ".tar", sep = ""))
 
     # list all files:
-    GSOD_list <- dir(paste(getwd(), "/", yr, sep = ""), pattern = glob2rx("*.gz"),
-                     full.names = FALSE)
+    GSOD_list <- dir(paste(getwd(), "/", yr, sep = ""),
+                     pattern = glob2rx("*.gz"), full.names = FALSE)
 
-    # ---------------------------------------------------------
-    # STEP 2: Reformat, tidy up and compute climate variables
-    # ---------------------------------------------------------
+    # STEP 2: Reformat, tidy up and compute climate variables-------------------
 
-    # create an empty list:
     GSOD_TP_list <- as.list(rep(NA, 1))
     k <- 1
     # run in a loop. unzip values, trim white spaces and write to a single file:
     for(j in 1:length(GSOD_list)){
 
-      # import the current station file
-      tmp <- readLines(paste(getwd(), yr, GSOD_list[j], sep = "/"))
+      tmp <- readr::read_lines(paste(getwd(), yr, GSOD_list[j], sep = "/"))
 
-      # ---------------------------------------------------------
-      # STEP 2.1: check against maximum permissible missing days
-      # ---------------------------------------------------------
-      if(leap_year(yr) == TRUE){
+      # STEP 2.1: check against maximum permissible missing days----------------
+      if(lubridate::leap_year(yr) == TRUE){
         s <- 366 - max_missing + 1 # complete leap year is 367 lines
       } else {
         s <- 365 - max_missing + 1 # complete year is 366 lines
@@ -138,54 +126,52 @@ get_GSOD <- function(start_year,
 
         tmp_f <- tmp[-1] #remove header for formatting purposes
 
-        #---------------------------------------------------------
-        # STEP 2.2: clean up the station and weather data
-        # ---------------------------------------------------------
+        # STEP 2.2: clean up the station and weather data-----------------------
 
-        STN <- substr(tmp_f, 1, 6) #station number
-        WBAN <- substr(tmp_f, 8, 12) #WBAN number
+        STN <- stringr::str_sub(tmp_f, 1, 6) # station number
+        WBAN <- stringr::str_sub(tmp_f, 8, 12) # WBAN number
         STNID <- paste(STN, WBAN, sep = "-") # WMO/DATSAV3 number
 
-        YEARMODA <- as.integer(substr(tmp_f, 15, 22)) #YYYYMODA
-        YEAR <- as.numeric(substr(tmp_f, 15, 18)) #year
-        MONTH <- as.numeric(substr(tmp_f, 19, 20)) #month
-        DAY <- as.numeric(substr(tmp_f, 21, 22)) #day
+        YEARMODA <- as.integer(stringr::str_sub(tmp_f, 15, 22)) # YYYYMODA
+        YEAR <- as.numeric(stringr::str_sub(tmp_f, 15, 18)) # year
+        MONTH <- as.numeric(stringr::str_sub(tmp_f, 19, 20)) # month
+        DAY <- as.numeric(stringr::str_sub(tmp_f, 21, 22)) # day
         YDAY <- 1 + as.POSIXlt(as.Date(as.character(YEARMODA), "%Y%m%d"),
-                               "GMT")$yday # DAY OF YEAR
+                               "GMT")$yday # day of year
 
-        #############################################
         # Convert daily mean temp from degree F to degree C
-        TEMPC <- as.numeric(substr(tmp_f, 25, 30)) # mean T
-        TEMPC <- ifelse(TEMPC == 9999.9, NA, (TEMPC - 32) * (5 / 9))
-        DEWPC <- as.numeric(substr(tmp_f, 36, 41)) # mean dewpoint
-        DEWPC <- ifelse(DEWPC == 9999.9, NA, (DEWPC - 32) * (5 / 9))
+        TEMPC <- as.numeric(stringr::str_sub(tmp_f, 25, 30))
+        TEMPC <- ifelse(TEMPC == 9999.9, NA,
+                        round((TEMPC - 32) * (5 / 9), 1))
+        DEWPC <- as.numeric(stringr::str_sub(tmp_f, 36, 41))
+        DEWPC <- ifelse(DEWPC == 9999.9, NA,
+                        round((DEWPC - 32) * (5 / 9), 1))
 
-        ##############################################
-        # Windspeed
-        WDSPC <- as.numeric(substr(tmp_f, 79, 83))
-        WDSPC <- ifelse(WDSPC == 999.9, NA, WDSPC*0.514444444)
+        WDSPC <- as.numeric(stringr::str_sub(tmp_f, 79, 83))
+        WDSPC <- ifelse(WDSPC == 999.9, NA,
+                        round(WDSPC * 0.514444444, 1))
 
-        ##############################################
         # Convert daily max temp from degree F to degree C
-        MAXC <- as.numeric(substr(tmp_f, 103, 108))
-        MAXC <- ifelse(MAXC == 9999.9, NA, (MAXC - 32) * (5 / 9))
+        MAXC <- as.numeric(stringr::str_sub(tmp_f, 103, 108))
+        MAXC <- ifelse(MAXC == 9999.9, NA,
+                       round((MAXC - 32) * (5 / 9), 1))
 
-        ##############################################
         # Convert daily min temp from degree F to degree C
-        MINC <- as.numeric(substr(tmp_f, 111, 116))
-        MINC <- ifelse(MINC == 9999.9, NA, (MINC - 32) * (5 / 9))
+        MINC <- as.numeric(stringr::str_sub(tmp_f, 111, 116))
+        MINC <- ifelse(MINC == 9999.9, NA,
+                       round((MINC - 32) * (5 / 9), 2))
 
         # Convert precipitation depth to mm
-        PRCP <- as.numeric(substr(tmp_f, 119, 123))
+        PRCP <- as.numeric(stringr::str_sub(tmp_f, 119, 123))
         PRCP <- ifelse(PRCP == 999.9, NA, round(PRCP * 25.4, 1) * 10)
 
         # Convert snow depth to mm
-        SNDP <- as.numeric(substr(tmp_f, 126, 130))
+        SNDP <- as.numeric(stringr::str_sub(tmp_f, 126, 130))
         SNDP <- ifelse(SNDP == 999.9, NA, round(SNDP * 25.4, 1) * 10)
 
-        indicators <- substr(tmp_f, 133, 138)
-        indicators <- matrix(as.numeric(unlist(strsplit(indicators, ""))),
-                             byrow = TRUE, ncol = 6)
+        indicators <- stringr::str_sub(tmp_f, 133, 138)
+        indicators <- matrix(as.numeric(
+          unlist(stringr::str_split(indicators, ""))), byrow = TRUE, ncol = 6)
         colnames(indicators) <- c("ifog", "irain", "isnow", "ihail",
                                   "ithunder", "itornado")
 
@@ -207,39 +193,34 @@ get_GSOD <- function(start_year,
 
         tmp_f$STNID <- as.character(tmp_f$STNID)
 
-        # ---------------------------------------------------------
-        # STEP 2.3: join to the station data
-        # ---------------------------------------------------------
-        GSOD.XY <- inner_join(tmp_f, stations, by = "STNID")
+        # STEP 2.3: join to the station data------------------------------------
+        GSOD.XY <- dplyr::inner_join(tmp_f, stations, by = "STNID")
 
         # Somehwow the isd-history.csv file does not always agree with
         # station names, if that happens and GSOD.XY contains
         # no data, this statment skips any further calculations.
         if(length(GSOD.XY[, 1] > 1)){
-          # ---------------------------------------------------------
-          # STEP 2.4: compute other weather vars
-          # ---------------------------------------------------------
+
+          # STEP 2.4: compute other weather vars--------------------------------
 
           ##############################################
           # MEAN ACTUAL (EA) AND MEAN SATURATION VAPOUR PRESSURE (ES)
           # http://www.apesimulator.it/help/models/evapotranspiration/
           # MEAN ACTUAL VAPOUR PRESSURE (EA) DERIVED FROM DEWPOINT TEMPERATURE
-          GSOD.XY$ea <- 0.61078 * exp((17.2694 * GSOD.XY$DEWPC) /
-                                        (GSOD.XY$DEWPC + 237.3)) # kPa
+          GSOD.XY$ea <- round(0.61078 * exp((17.2694 * GSOD.XY$DEWPC) /
+                                              (GSOD.XY$DEWPC + 237.3)), 1) # kPa
           # MEAN SATURATION VAPOUR PRESSURE FROM AVG TEMPERATURE
-          GSOD.XY$es <- 0.61078 * exp((17.2694 * GSOD.XY$TEMPC) /
-                                        (GSOD.XY$TEMPC + 237.3)) # kPa
+          GSOD.XY$es <- round(0.61078 * exp((17.2694 * GSOD.XY$TEMPC) /
+                                              (GSOD.XY$TEMPC + 237.3)), 1) # kPa
           # Calculate relative humidity (RH)
-          GSOD.XY$RH <- GSOD.XY$ea / GSOD.XY$es * 100
+          GSOD.XY$RH <- round(GSOD.XY$ea / GSOD.XY$es * 100, 1)
 
-          # ---------------------------------------------------------
           # STEP 3: Write to csv file, one row per day per station - huge file
-          # ---------------------------------------------------------
-          # WRITE OUT ROW BY ROW
+
           GSOD_TP_list[[1]] <- GSOD.XY[,c("STNID",
                                           "LAT",
                                           "LON",
-                                          "ELEV.M.",
+                                          "ELEV.M",
                                           "YEARMODA",
                                           "YEAR",
                                           "MONTH",
@@ -259,13 +240,13 @@ get_GSOD <- function(start_year,
                                           "ea",
                                           "es",
                                           "RH")]
-          # Write data into .csv file
+
           if(k == 1) {
-            write.table(GSOD_TP_list[[1]], outfile , na = "-9999",  sep = ",",
-                        row.names = FALSE, col.names = TRUE, append = FALSE)
+            readr::write_csv(GSOD_TP_list[[1]], outfile , na = "-9999",
+                             append = FALSE)
           } else {
-            write.table(GSOD_TP_list[[1]], outfile , na = "-9999",  sep = ",",
-                        row.names = FALSE, col.names = FALSE, append = TRUE)
+            readr::write_csv(GSOD_TP_list[[1]], outfile , na = "-9999",
+                             append = TRUE)
           }
           # iterate through k for previous section in writing .csv file outputs
           k <- k + 1
@@ -276,7 +257,8 @@ get_GSOD <- function(start_year,
     }
     # delete the gz weather files leaving only the .csv file in the year dir
     do.call(file.remove, list(list.files(paste(getwd(), yr, sep = "/"),
-                                         pattern = glob2rx("*.gz"), full.names = TRUE)))
+                                         pattern = glob2rx("*.gz"),
+                                         full.names = TRUE)))
   }
 }
 

@@ -15,7 +15,8 @@ Description: Automatic downloading and cleaning data from the Global Summary of
     Stations are individually checked for number of missing days to assure data
     quality, stations with too many missing observations are omitted. Output is
     .csv file summarizing each year, which includes vapor pressure and
-    relative humidity variables calcuated from GSOD data.
+    relative humidity variables calcuated from GSOD data, for latitudes between
+    60 degrees and -60 degrees for agroclimatology work.
 Depends: R (>= 3.0.0)
 License: GPL (>= 3)
-Imports: dplyr, lubridate
+Imports: dplyr, lubridate, stringr, readr
