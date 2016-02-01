@@ -4,7 +4,7 @@ Title: Download, Clean and Generate New Variables From GSOD Weather Data
 Version: 1.0.1
 Date: 2015-03-22
 Authors@R: as.person(c(
-    "Adam Sparks <ahsparks@gmail.com> [aut, cre]",
+    "Adam Sparks <adamhsparks@gmail.com> [aut, cre]",
     "Tomislav Hengl <tom.hengl@wur.nl> [ctb]",
     "Andy Nelson <dr.andy.nelson@gmail.com [ctb]",
     "Kay Sumfleth <kay@sumfleth.de> [ctb]"
