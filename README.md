@@ -16,7 +16,7 @@ Load the devtools package.
 
 Use `install_github("author/package")` to install this package.
 
-`install_github("adamhsparks/GSODR")`
+`install_github("adamhsparks/weathR")`
 
 ##Using get_GSOD()
 See `?get_GSOD()` for the help file.
