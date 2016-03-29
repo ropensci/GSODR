@@ -1,8 +1,7 @@
-Package: GSODR
+Package: weathR
 Type: Package
-Title: Download, Clean and Generate New Variables From GSOD Weather Data
-Version: 1.0.1
-Date: 2015-03-22
+Title: Download, Clean and Generate New Variables From Freely Available Weather
+Version: 1.99
 Authors@R: as.person(c(
     "Adam Sparks <adamhsparks@gmail.com> [aut, cre]",
     "Tomislav Hengl <tom.hengl@wur.nl> [ctb]",
@@ -10,13 +9,21 @@ Authors@R: as.person(c(
     "Kay Sumfleth <kay@sumfleth.de> [ctb]"
   ))
 Maintainer: Adam H Sparks, <adamhsparks@gmail.com>
-Description: Automatic downloading and cleaning data from the Global Summary of
-    the Day (GSOD) data provided by the US National Climatic Data Center (NCDC).
-    Stations are individually checked for number of missing days to assure data
-    quality, stations with too many missing observations are omitted. Output is
-    .csv file summarizing each year, which includes vapor pressure and
-    relative humidity variables calcuated from GSOD data, for latitudes between
-    60 degrees and -60 degrees for agroclimatology work.
-Depends: R (>= 3.0.0)
+Description: Download and format weather data from USA National Climatic Data
+    GSOD weather data stations are individually checked for number of missing
+    days to assure data quality, stations with too many missing observations are
+    omitted. Output is .csv file summarizing each year, which includes vapor
+    pressure and relative humidity variables calcuated from GSOD data, only for
+    latitudes between 60 degrees and -60 degrees for agroclimatology work.
+Depends:
+    R (>= 3.0.0)
 License: GPL (>= 3)
-Imports: dplyr, lubridate, stringr, readr
+Imports:
+    dplyr,
+    lubridate,
+    stringr,
+    readr,
+    countrycode,
+    raster,
+    data.table
+RoxygenNote: 5.0.1

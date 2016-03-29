@@ -25,3 +25,4 @@ Example from help file, to download data for years 2009 and 2010 and generate ye
 
 `get_GSOD(start_year = 2009, end_year = 2010, max_missing = 5)`
 
+[![Travis-CI Build Status](https://travis-ci.org/adamhsparks/GSODR.svg?branch=master)](https://travis-ci.org/adamhsparks/GSODR)
