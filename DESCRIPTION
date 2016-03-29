@@ -1,7 +1,7 @@
 Package: weathR
 Type: Package
 Title: Download, Clean and Generate New Variables from Freely Available Weather
-Version: 2.0.1
+Version: 2.0.2
 Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     email = "adamhsparks@gmail.com"),
     person("Tomislav", "Hengl", role = "ctb",
@@ -15,7 +15,7 @@ Description: Download and format weather data from USA National Climatic Data
     GSOD weather data stations are individually checked for number of missing
     days to assure data quality, stations with too many missing observations are
     omitted. Output is .csv file summarizing each year, which includes vapor
-    pressure and relative humidity variables calcuated from GSOD data.
+    pressure and relative humidity variables calculated from GSOD data.
     An individual country of interest may be selected as well as only stations
     falling between -60/60 degrees latitude for agroclimatology work.
     The output .csv file includes station data (e.g., station name, lat, lon,
@@ -32,5 +32,7 @@ Imports:
     readr,
     countrycode,
     raster,
-    data.table
+    data.table,
+    stats,
+    utils
 RoxygenNote: 5.0.1

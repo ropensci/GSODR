@@ -151,8 +151,8 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
   # download and load country-lists file ---------------------------------------
   if (!file.exists(paste0(path, "/country-list.txt"))) {
     cat("Downloading country list\n")
-    download.file("ftp://ftp.ncdc.noaa.gov/pub/data/noaa/country-list.txt",
-                  destfile = "country-list.txt", mode = "wb")
+    utils::download.file("ftp://ftp.ncdc.noaa.gov/pub/data/noaa/country-list.txt",
+                         destfile = "country-list.txt", mode = "wb")
   }
 
   countries <- readr::read_table(paste0(path, "/country-list.txt"))[-1, c(1, 3)]
@@ -162,8 +162,9 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
   # download and load isd-history file -----------------------------------------
   if (!file.exists(paste0(path, "/isd-history.csv"))) {
     cat("Downloading station file\n")
-    download.file("ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
-                  destfile = "isd-history.csv", mode = "wb")
+    utils::download.file(
+      "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
+      destfile = "isd-history.csv", mode = "wb")
   }
 
   stations <- readr::read_csv(paste0(path, "/isd-history.csv"))
@@ -171,7 +172,7 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
   stations$STNID <- paste(stations$USAF, stations$WBAN, sep = "-")
   stations$ELEV.M <- ifelse(stations$ELEV.M == -999.9 | stations$ELEV.M == -999,
                             NA, stations$ELEV.M)
-  stations <- stations[complete.cases(stations), ]
+  stations <- stations[stats::complete.cases(stations), ]
   stations <- stations[, c(3, 4, 7, 8, 9, 12)]
   names(stations)[1] <- "STATION.NAME"
 
@@ -183,7 +184,7 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
     # If country specified, make list of only those stations -------------------
     if(!is.null(country)) {
       country_FIPS <- unlist(as.character(
-        na.omit(countries[countries$iso3c == country, ][1])))
+        stats::na.omit(countries[countries$iso3c == country, ][1])))
       station_list <- stations[stations$CTRY == country_FIPS, ]$STNID
       station_list <- sapply(station_list,
                              function(x) rep(paste0(x, "-", yr, ".op.gz")))
@@ -191,22 +192,24 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
 
     # Download annual .gz file of .csv files -----------------------------------
     cat("\nDownloading gsod tar file\n")
-    try(download.file(paste0(ftp_site, yr, "/gsod_", yr, ".tar"), mode = "wb",
-                      destfile = paste0("gsod_", yr, ".tar")))
+    try(utils::download.file(paste0(ftp_site, yr, "/gsod_", yr, ".tar"),
+                             destfile = paste0("gsod_", yr, ".tar"),
+                             mode = "wb"))
 
     cat(paste("\nFilter and merge station data for ", yr, "\n", sep = ""))
     # Extract and remove files -------------------------------------------------
-    untar(tarfile = paste0(path.expand(path), "gsod_", yr, ".tar"),
-          exdir  = paste0(path.expand(path), yr, "/"))
+    utils::untar(tarfile = paste0(path.expand(path), "gsod_", yr, ".tar"),
+                 exdir  = paste0(path.expand(path), yr, "/"))
     file.remove(paste0(path, "gsod_", yr, ".tar"))
 
     # list all files------------------------------------------------------------
     GSOD_list <- list.files(paste0(path, yr, "/"),
-                            pattern = glob2rx("*.gz"), full.names = FALSE)
+                            pattern = utils::glob2rx("*.gz"),
+                            full.names = FALSE)
 
     # if a country is specified, only select files from that country to use ----
     if(!is.null(country)) {
-      GSOD_list <- na.omit(GSOD_list[GSOD_list %in% station_list])
+      GSOD_list <- stats::na.omit(GSOD_list[GSOD_list %in% station_list])
     }
 
     # STEP 2: Reformat, tidy up and compute climate variables-------------------
@@ -325,7 +328,7 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
     }
     readr::write_csv(GSOD_XY, outfile, na = "-9999")
     do.call(file.remove, list(list.files(paste0(path, yr),
-                                         pattern = glob2rx("*.gz"),
+                                         pattern = utils::glob2rx("*.gz"),
                                          full.names = TRUE)))
   }
 }
