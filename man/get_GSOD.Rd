@@ -14,8 +14,8 @@ get_GSOD(years = NULL, country = NULL, path = "", max_missing = 5,
 data, full name or 3 letter ISO code work. Use raster::getData('ISO3') to
 for a list of ISO country codes (optional).}
 
-\item{path}{Path entered by user indicating where to store the data.
-Defaults to the current working directory (optional).}
+\item{path}{Path entered by user indicating where to store resulting
+csv file(s). Defaults to the current working directory (optional).}
 
 \item{max_missing}{The maximum number of days allowed to be missing from a
 station's data before it is excluded from .csv file output. Defaults to 5
@@ -23,7 +23,7 @@ days (optional).}
 
 \item{agroclimatology}{Only clean data for stations between latitudes 60 and
 -60 for agroclimatology work, defaults to TRUE. Set to FALSE to override and
-include stations outside these latitudes.}
+include stations outside these latitudes (optional).}
 }
 \description{
 This function automates downloading and cleaning data from the
@@ -31,16 +31,16 @@ Global Summary of the Day (GSOD) data provided by the US National Climatic
 Data Center (NCDC). Stations are individually checked for number of missing
 days to assure data quality, stations with too many missing observations are
 omitted. All units are converted to metric, e.g. feet to metres and
-Fahrenheit to Celcius. Output is saved as a .csv file summarizing each year by
-station, which includes vapor pressure and relative humidity variables
-calculated from existing data in GSOD. Only weather stations between 60 and
--60 degrees are included for agroclimatology purposes.
+Fahrenheit to Celcius. Due to the size of the resulting data,
+output is saved as a .csv file in a directory specified by the user,
+the .csv file summarizes each year by station, which includes vapor pressure
+and relative humidity variables calculated from existing data in GSOD.
 
 All missing values in resulting csv files are represented as -9999 regardless
 of which column they occur in.
 
 Be sure to have disk space free and allocate the proper time for this to run.
-This is a time, processor and disk space intensive process.
+This is a time, processor and disk input/output/space intensive process.
 
 For more information see the description of the data provided by NCDC,
 \url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}

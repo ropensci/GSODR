@@ -5,16 +5,16 @@
 #'Data Center (NCDC). Stations are individually checked for number of missing
 #'days to assure data quality, stations with too many missing observations are
 #'omitted. All units are converted to metric, e.g. feet to metres and
-#'Fahrenheit to Celcius. Output is saved as a .csv file summarizing each year by
-#'station, which includes vapor pressure and relative humidity variables
-#'calculated from existing data in GSOD. Only weather stations between 60 and
-#'-60 degrees are included for agroclimatology purposes.
+#'Fahrenheit to Celcius. Due to the size of the resulting data,
+#'output is saved as a .csv file in a directory specified by the user,
+#'the .csv file summarizes each year by station, which includes vapor pressure
+#'and relative humidity variables calculated from existing data in GSOD.
 #'
 #'All missing values in resulting csv files are represented as -9999 regardless
 #'of which column they occur in.
 #'
 #'Be sure to have disk space free and allocate the proper time for this to run.
-#'This is a time, processor and disk space intensive process.
+#'This is a time, processor and disk input/output/space intensive process.
 #'
 #'For more information see the description of the data provided by NCDC,
 #'\url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}
@@ -22,14 +22,14 @@
 #' @param country Specify a country of interest for which to retrieve weather
 #' data, full name or 3 letter ISO code work. Use raster::getData('ISO3') to
 #' for a list of ISO country codes (optional).
-#' @param  path Path entered by user indicating where to store the data.
-#' Defaults to the current working directory (optional).
+#' @param  path Path entered by user indicating where to store resulting
+#' csv file(s). Defaults to the current working directory (optional).
 #' @param max_missing The maximum number of days allowed to be missing from a
 #' station's data before it is excluded from .csv file output. Defaults to 5
 #' days (optional).
 #' @param agroclimatology Only clean data for stations between latitudes 60 and
 #' -60 for agroclimatology work, defaults to TRUE. Set to FALSE to override and
-#' include stations outside these latitudes.
+#' include stations outside these latitudes (optional).
 #'
 #' @details This function generates a .csv file in the respective year directory
 #' containing the following variables:
@@ -140,8 +140,7 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
     MIN <- PRCP <- SNDP <- VISIB <- NULL
 
   .validate_years(years)
-  path <- .get_data_path(path)
-  setwd(path)
+
   if(!is.null(country)) {
     country <- .get_country(country)
   }
@@ -149,32 +148,22 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
   ftp_site <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
 
   # download and load country-lists file ---------------------------------------
-  if (!file.exists(paste0(path, "/country-list.txt"))) {
-    cat("Downloading country list\n")
-    utils::download.file("ftp://ftp.ncdc.noaa.gov/pub/data/noaa/country-list.txt",
-                         destfile = "country-list.txt", mode = "wb")
-  }
 
-  countries <- readr::read_table(paste0(path, "/country-list.txt"))[-1, c(1, 3)]
+  countries <- readr::read_table(
+    "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/country-list.txt")[-1, c(1, 3)]
   countries <- dplyr::left_join(countries, countrycode::countrycode_data,
                                 by = c(FIPS = "fips104"))
 
   # download and load isd-history file -----------------------------------------
-  if (!file.exists(paste0(path, "/isd-history.csv"))) {
-    cat("Downloading station file\n")
-    utils::download.file(
-      "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
-      destfile = "isd-history.csv", mode = "wb")
-  }
-
-  stations <- readr::read_csv(paste0(path, "/isd-history.csv"))
-  names(stations)[9] <- "ELEV.M"
-  stations$STNID <- paste(stations$USAF, stations$WBAN, sep = "-")
-  stations$ELEV.M <- ifelse(stations$ELEV.M == -999.9 | stations$ELEV.M == -999,
-                            NA, stations$ELEV.M)
+  stations <- readr::read_csv(
+    "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
+    col_types = "cccc__nnn__",
+    col_names = c("USAF", "WBAN", "STATION.NAME", "CTRY", "LAT", "LON",
+                  "ELEV.M"), skip = 1, na = c("-999.9", "999"))
   stations <- stations[stats::complete.cases(stations), ]
-  stations <- stations[, c(3, 4, 7, 8, 9, 12)]
-  names(stations)[1] <- "STATION.NAME"
+  stations <- stations[stations$CTRY != "", ]
+  stations <- stations[stations$LAT != 0 & stations$LON != 0, ]
+  stations$STNID <- paste(stations$USAF, stations$WBAN, sep = "-")
 
   if(agroclimatology == TRUE){
     stations <- stations[stations$LAT >= -60 & stations$LAT <= 60, ]
@@ -191,19 +180,17 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
     }
 
     # Download annual .gz file of .csv files -----------------------------------
-    cat("\nDownloading gsod tar file\n")
-    try(utils::download.file(paste0(ftp_site, yr, "/gsod_", yr, ".tar"),
-                             destfile = paste0("gsod_", yr, ".tar"),
-                             mode = "wb"))
+    tf <- tempfile()
+    td <- tempdir()
 
-    cat(paste("\nFilter and merge station data for ", yr, "\n", sep = ""))
+    try(utils::download.file(paste0(ftp_site, yr, "/gsod_", yr, ".tar"),
+                                   destfile = tf, mode = "wb"))
+
     # Extract and remove files -------------------------------------------------
-    utils::untar(tarfile = paste0(path.expand(path), "gsod_", yr, ".tar"),
-                 exdir  = paste0(path.expand(path), yr, "/"))
-    file.remove(paste0(path, "gsod_", yr, ".tar"))
+    utils::untar(tarfile = tf, exdir  = paste0(td, "/", yr, "/"))
 
     # list all files------------------------------------------------------------
-    GSOD_list <- list.files(paste0(path, yr, "/"),
+    GSOD_list <- list.files(paste0(td, "/", yr, "/"),
                             pattern = utils::glob2rx("*.gz"),
                             full.names = FALSE)
 
@@ -217,7 +204,7 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
 
     for (j in 1:length(GSOD_list)) {
 
-      tmp <- readr::read_table(paste0(path, yr, "/", GSOD_list[j]),
+      tmp <- readr::read_table(paste0(td, "/", yr, "/", GSOD_list[j]),
                                col_names = c("STN", "WBAN", "YEARMODA", "TEMP",
                                              "COUNT.TEMP", "DEWP", "COUNT.DEWP",
                                              "SLP", "COUNT.SLP", "STP",
@@ -237,8 +224,7 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
       }
 
       if (nrow(tmp) < s) {
-        file.remove(paste0(path, yr, "/", GSOD_list[j]))
-        rm(tmp)
+        tmp[] <- NA
       } else {
 
         # STEP 2.2: clean up the station and weather data---------------------
@@ -327,7 +313,7 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
       outfile <- paste0(path, yr, "/GSOD-", yr, ".csv")
     }
     readr::write_csv(GSOD_XY, outfile, na = "-9999")
-    do.call(file.remove, list(list.files(paste0(path, yr),
+    do.call(file.remove, list(list.files(paste0(td, "/", yr),
                                          pattern = utils::glob2rx("*.gz"),
                                          full.names = TRUE)))
   }
@@ -363,7 +349,6 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
   country <- toupper(raster::trim(country[1]))
   cs <- raster::ccodes()
   cs <- toupper(cs)
-
   iso3 <- substr(country, 1, 3)
   if (iso3 %in% cs[, 2]) {
     return(iso3)
