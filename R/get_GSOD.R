@@ -147,14 +147,14 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
 
   ftp_site <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
 
-  # download and load country-lists file ---------------------------------------
-
+  # STEP 1: Download metadata for weather stations and files--------------------
+  # download and load country-lists file
   countries <- readr::read_table(
     "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/country-list.txt")[-1, c(1, 3)]
   countries <- dplyr::left_join(countries, countrycode::countrycode_data,
                                 by = c(FIPS = "fips104"))
 
-  # download and load isd-history file -----------------------------------------
+  # download and load isd-history file
   stations <- readr::read_csv(
     "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
     col_types = "cccc__nnn__",
@@ -170,7 +170,7 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
   }
 
   for (yr in years) {
-    # If country specified, make list of only those stations -------------------
+    # If country specified, make list of only those stations
     if(!is.null(country)) {
       country_FIPS <- unlist(as.character(
         stats::na.omit(countries[countries$iso3c == country, ][1])))
@@ -179,22 +179,22 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
                              function(x) rep(paste0(x, "-", yr, ".op.gz")))
     }
 
-    # Download annual .gz file of .csv files -----------------------------------
+    # Download annual .gz file of .csv files
     tf <- tempfile()
     td <- tempdir()
 
     try(utils::download.file(paste0(ftp_site, yr, "/gsod_", yr, ".tar"),
-                                   destfile = tf, mode = "wb"))
+                             destfile = tf, mode = "wb"))
 
-    # Extract and remove files -------------------------------------------------
+    # Extract and remove files
     utils::untar(tarfile = tf, exdir  = paste0(td, "/", yr, "/"))
 
-    # list all files------------------------------------------------------------
+    # list all files
     GSOD_list <- list.files(paste0(td, "/", yr, "/"),
                             pattern = utils::glob2rx("*.gz"),
                             full.names = FALSE)
 
-    # if a country is specified, only select files from that country to use ----
+    # if a country is specified, only select files from that country to use
     if(!is.null(country)) {
       GSOD_list <- stats::na.omit(GSOD_list[GSOD_list %in% station_list])
     }
@@ -217,7 +217,7 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
                                skip = 1,
                                na = c("9999.9", "999.9", "99.99"))
 
-      # STEP 2.1: check against maximum permissible missing days----------------
+      # STEP 2.1: Check against maximum permissible missing days----------------
       if (lubridate::leap_year(yr) == TRUE) {
       } else {
         s <- 365 - max_missing + 1
@@ -227,7 +227,7 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
         tmp[] <- NA
       } else {
 
-        # STEP 2.2: clean up the station and weather data---------------------
+        # STEP 2.2: Clean up the station and weather data---------------------
 
         tmp <- dplyr::mutate(tmp, STNID = (paste(STN, WBAN, sep = "-")))
         tmp <- dplyr::mutate(tmp, YEAR = stringr::str_sub(tmp$YEARMODA, 1, 4))
@@ -269,7 +269,7 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
                                   "INDICATOR.THUNDER", "INDICATOR.TORNADO")
         tmp <- data.frame(tmp, indicators, stringsAsFactors = FALSE)
 
-        # STEP 2.3: compute other weather vars--------------------------------
+        # STEP 2.3: Compute other weather vars----------------------------------
         # Mean actual (EA) and mean saturation vapour pressure (ES)
         # http://www.apesimulator.it/help/models/evapotranspiration/
 
@@ -285,7 +285,7 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
         tmp <- dplyr::mutate(tmp, RH = round(
           tmp$EA / tmp$ES * 100, 1))
 
-        # STEP 2.4: join to the station data------------------------------------
+        # STEP 2.4: Join to the station data------------------------------------
         GSOD_df <- dplyr::inner_join(tmp, stations, by = "STNID")
 
         GSOD_df <- GSOD_df[c("STN", "WBAN", "STNID", "STATION.NAME", "CTRY",
@@ -306,7 +306,7 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
     }
     GSOD_XY <- data.table::rbindlist(GSOD_objects)
 
-    # STEP 3: Write to csv file
+    # STEP 3: Write to csv file-------------------------------------------------
     if (!is.null(country)) {
       outfile <- paste0(path, yr, "/GSOD-", country, "-", yr, ".csv")
     } else {
