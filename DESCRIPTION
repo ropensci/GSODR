@@ -17,11 +17,15 @@ Description: Download and format weather data from USA National Climatic Data
     omitted. Due to the size of data involved, output is returned as a .csv file
     written to disk in a location selected by the user, which summarizes each
     year by station and includes new variables: actual and saturation vapor
-    pressure and relative humidity calculated from the original GSOD data.
-    An individual country of interest may be selected as well as only stations
-    falling between -60/60 degrees latitude for agroclimatology work.
-    The output .csv file includes station data (e.g., station name, lat, lon,
-    elevation) for use in a GIS.
+    pressure and relative humidity calculated from the original GSOD data. These
+    files can be as large as 500mb depending on your stringency for missing data
+    and geographic area of interest. Be sure to have sufficient RAM and disk
+    space to use this package to perform this operation. However, for much
+    smaller and more manageable data sets, an individual country of interest may
+    be selected as well as only stations falling between -60/60 degrees latitude
+    for agroclimatology work (this is the default behaviour). The output .csv
+    files include station data (e.g., station name, country, latitude,
+    longitude, elevation) for use in a GIS.
 Depends:
     R (>= 3.0.0)
 License: GPL (>= 3)

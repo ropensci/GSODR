@@ -139,6 +139,9 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
   yr <- STN <- WBAN <- YEARMODA <- TEMP <- DEWP <- WDSP <- MXSPD <- MAX <-
     MIN <- PRCP <- SNDP <- VISIB <- NULL
 
+  tf <- tempfile()
+  td <- tempdir()
+
   .validate_years(years)
 
   if(!is.null(country)) {
@@ -180,9 +183,6 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
     }
 
     # Download annual .gz file of .csv files
-    tf <- tempfile()
-    td <- tempdir()
-
     try(utils::download.file(paste0(ftp_site, yr, "/gsod_", yr, ".tar"),
                              destfile = tf, mode = "wb"))
 
@@ -288,7 +288,7 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
         # STEP 2.4: Join to the station data------------------------------------
         GSOD_df <- dplyr::inner_join(tmp, stations, by = "STNID")
 
-        GSOD_df <- GSOD_df[c("STN", "WBAN", "STNID", "STATION.NAME", "CTRY",
+        GSOD_df <- GSOD_df[c("USAF", "WBAN", "STNID", "STATION.NAME", "CTRY",
                              "LAT", "LON", "ELEV.M",
                              "YEARMODA", "YEAR", "MONTH", "DAY", "YDAY",
                              "TEMP", "COUNT.TEMP", "DEWP", "COUNT.DEWP",
