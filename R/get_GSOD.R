@@ -113,20 +113,24 @@
 #' RH - Mean daily relative humidity.
 #'
 #' @examples
-#' # Download global GSOD data for agroclimatology work for years 2009 and 2010
+#' \dontrun{
+#'  # Download global GSOD data for agroclimatology work for years 2009 and 2010
 #' # and generate yearly summary files, GSOD_2009_XY and GSOD_2010_XY in folders
 #' # named 2009 and 2010 in the specified working directory with a maximum of
 #' # five missing days per weather station allowed.
 #'
-#' get_GSOD(years = c(2009:2010), path = '~/tmp', agroclimatology = TRUE)
-#
+#' # Examples not run due to lengthy time required to run.
 #'
+#' get_GSOD(years = c(2009:2010), path = '~/tmp', agroclimatology = TRUE)
+#' }
+#'
+#'\dontrun{
 #' # Download data for Australia for year 2010 and generate a yearly
 #' # summary file, GSOD_2010_XY files in a folder named 2010 in the current
 #' # working directory with a maximum of five missing days per station allowed.
 #'
 #' get_GSOD(years = 2010, country = 'Australia')
-#'
+#' }
 #' @export
 
 get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
