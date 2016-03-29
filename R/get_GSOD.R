@@ -108,7 +108,7 @@
 #' TORNADO or funnel cloud.
 #'
 #' Values calculated by this package:
-#' ea - Mean daily actual vapor, pressure,
+#' ea - Mean daily actual vapor pressure,
 #' es - Mean daily saturation vapor pressure,
 #' RH - Mean daily relative humidity.
 #'
