@@ -1,7 +1,7 @@
 Package: weathR
 Type: Package
 Title: Download, Clean and Generate New Variables From Freely Available Weather
-Version: 2.0
+Version: 2.0.1
 Authors@R: as.person(c(
     "Adam Sparks <adamhsparks@gmail.com> [aut, cre]",
     "Tomislav Hengl <tom.hengl@wur.nl> [ctb]",
