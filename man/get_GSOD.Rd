@@ -5,28 +5,28 @@
 \title{Download, Clean and Generate New Variables From GSOD Weather Data}
 \usage{
 get_GSOD(years = NULL, country = NULL, path = "", max_missing = 5,
-  agroclimatology = TRUE)
+  agroclimatology = FALSE)
 }
 \arguments{
-\item{years}{Year(s) of weather data to download (mandatory).}
+\item{years}{Year(s) of weather data to download.}
 
 \item{country}{Specify a country of interest for which to retrieve weather
 data, full name or 3 letter ISO code work. Use raster::getData('ISO3') to
-for a list of ISO country codes (optional).}
+for a list of ISO country codes.}
 
 \item{path}{Path entered by user indicating where to store resulting
-csv file(s). Defaults to the current working directory (optional).}
+csv file(s). Defaults to the current working directory.}
 
 \item{max_missing}{The maximum number of days allowed to be missing from a
 station's data before it is excluded from .csv file output. Defaults to 5
 days (optional).}
 
 \item{agroclimatology}{Only clean data for stations between latitudes 60 and
--60 for agroclimatology work, defaults to TRUE. Set to FALSE to override and
-include stations outside these latitudes (optional).}
+-60 for agroclimatology work, defaults to FALSE. Set to FALSE to override and
+include only stations within the confines of these latitudes.}
 
 \item{stations}{Specific stations for which to retrieve and check weather
-data (optional).}
+data.}
 }
 \description{
 This function automates downloading and cleaning data from the
