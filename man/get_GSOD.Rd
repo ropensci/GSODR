@@ -4,11 +4,14 @@
 \alias{get_GSOD}
 \title{Download, Clean and Generate New Variables From GSOD Weather Data}
 \usage{
-get_GSOD(years = NULL, country = NULL, path = "", max_missing = 5,
-  agroclimatology = FALSE)
+get_GSOD(years = NULL, station = NULL, country = NULL, path = "",
+  max_missing = 5, agroclimatology = FALSE)
 }
 \arguments{
 \item{years}{Year(s) of weather data to download.}
+
+\item{station}{Specify single station for which to retrieve, check and
+manipulate weather data.}
 
 \item{country}{Specify a country of interest for which to retrieve weather
 data, full name or 3 letter ISO code work. Use raster::getData('ISO3') to
@@ -24,9 +27,6 @@ days (optional).}
 \item{agroclimatology}{Only clean data for stations between latitudes 60 and
 -60 for agroclimatology work, defaults to FALSE. Set to FALSE to override and
 include only stations within the confines of these latitudes.}
-
-\item{stations}{Specific stations for which to retrieve and check weather
-data.}
 }
 \description{
 This function automates downloading and cleaning data from the
@@ -45,6 +45,10 @@ of which column they occur in.
 Be sure to have disk space free and allocate the proper time for this to run.
 This is a time, processor and disk input/output/space intensive process.
 
+This function largely based on T. Hengl's "getGSOD.R" script, available from
+\url{http://spatial-analyst.net/book/system/files/getGSOD.R} with enhancements
+to be more cross platform and faster.
+.
 For more information see the description of the data provided by NCDC,
 \url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}
 }
@@ -131,8 +135,12 @@ es - Mean daily saturation vapor pressure,
 RH - Mean daily relative humidity.
 }
 \examples{
+# Download weather station for Toowoomba, Queensland for 2010, save resulting
+# file in ~/tmp.
+get_GSOD(years = 2010, station = "955510-99999", path = "~/tmp")
+
 \dontrun{
- # Download global GSOD data for agroclimatology work for years 2009 and 2010
+# Download global GSOD data for agroclimatology work for years 2009 and 2010
 # and generate yearly summary files, GSOD_2009_XY and GSOD_2010_XY in folders
 # named 2009 and 2010 in the specified working directory with a maximum of
 # five missing days per weather station allowed.

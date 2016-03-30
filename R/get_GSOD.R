@@ -16,11 +16,16 @@
 #'Be sure to have disk space free and allocate the proper time for this to run.
 #'This is a time, processor and disk input/output/space intensive process.
 #'
+#'This function largely based on T. Hengl's "getGSOD.R" script, available from
+#'\url{http://spatial-analyst.net/book/system/files/getGSOD.R} with enhancements
+#'to be more cross platform and faster.
+#'.
 #'For more information see the description of the data provided by NCDC,
 #'\url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}
+#'
 #' @param years Year(s) of weather data to download.
-#' @param stations Specific stations for which to retrieve and check weather
-#' data.
+#' @param station Specify single station for which to retrieve, check and
+#' manipulate weather data.
 #' @param country Specify a country of interest for which to retrieve weather
 #' data, full name or 3 letter ISO code work. Use raster::getData('ISO3') to
 #' for a list of ISO country codes.
@@ -115,8 +120,12 @@
 #' RH - Mean daily relative humidity.
 #'
 #' @examples
+#' # Download weather station for Toowoomba, Queensland for 2010, save resulting
+#' # file in ~/tmp.
+#' get_GSOD(years = 2010, station = "955510-99999", path = "~/tmp")
+#'
 #' \dontrun{
-#'  # Download global GSOD data for agroclimatology work for years 2009 and 2010
+#' # Download global GSOD data for agroclimatology work for years 2009 and 2010
 #' # and generate yearly summary files, GSOD_2009_XY and GSOD_2010_XY in folders
 #' # named 2009 and 2010 in the specified working directory with a maximum of
 #' # five missing days per weather station allowed.
@@ -135,8 +144,8 @@
 #' }
 #' @export
 
-get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
-                     agroclimatology = FALSE) {
+get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
+                     max_missing = 5, agroclimatology = FALSE) {
 
   yr <- STN <- WBAN <- YEARMODA <- TEMP <- DEWP <- WDSP <- MXSPD <- MAX <-
     MIN <- PRCP <- SNDP <- VISIB <- NULL
@@ -153,14 +162,6 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
 
   ftp_site <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
 
-  # STEP 1: Download metadata for weather stations and files--------------------
-  # download and load country-lists file
-  countries <- readr::read_table(
-    "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/country-list.txt")[-1, c(1, 3)]
-  countries <- dplyr::left_join(countries, countrycode::countrycode_data,
-                                by = c(FIPS = "fips104"))
-
-  # download and load isd-history file
   stations <- readr::read_csv(
     "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
     col_types = "cccc__nnn__",
@@ -171,43 +172,41 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
   stations <- stations[stations$LAT != 0 & stations$LON != 0, ]
   stations$STNID <- paste(stations$USAF, stations$WBAN, sep = "-")
 
-  if (agroclimatology == TRUE) {
-    stations <- stations[stations$LAT >= -60 & stations$LAT <= 60, ]
-  }
-
+  # if a station is specified, select only that station or stations
+  # else if a country is listed, only list stations for that country
+  # else list all stations
   for (yr in years) {
-    # If country specified, make list of only those stations
+    if (!is.null(station)) {
+      GSOD_list <- paste0(station, ".op.gz")
+      try(utils::download.file(paste0(ftp_site, yr, "/", station, "op.gz"),
+                               destfile = tf, mode = "wb"))
+    } else {
+      try(utils::download.file(paste0(ftp_site, yr, "/gsod_", yr, ".tar"),
+                               destfile = tf, mode = "wb"))
+      utils::untar(tarfile = tf, exdir  = paste0(td, "/", yr, "/"))
+    }
     if (!is.null(country)) {
+      countries <- readr::read_table(
+        "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/country-list.txt")[-1, c(1, 3)]
+      countries <- dplyr::left_join(countries, countrycode::countrycode_data,
+                                    by = c(FIPS = "fips104"))
       country_FIPS <- unlist(as.character(
         stats::na.omit(countries[countries$iso3c == country, ][1])))
       station_list <- stations[stations$CTRY == country_FIPS, ]$STNID
       station_list <- sapply(station_list,
                              function(x) rep(paste0(x, "-", yr, ".op.gz")))
-    }
-
-    # Download annual .gz file of .csv files
-    try(utils::download.file(paste0(ftp_site, yr, "/gsod_", yr, ".tar"),
-                             destfile = tf, mode = "wb"))
-
-    # Extract and remove files
-    utils::untar(tarfile = tf, exdir  = paste0(td, "/", yr, "/"))
-
-    # list all files
-    GSOD_list <- list.files(paste0(td, "/", yr, "/"),
-                            pattern = utils::glob2rx("*.gz"),
-                            full.names = FALSE)
-
-    # if a country is specified, only select files from that country to use
-    if (!is.null(country)) {
       GSOD_list <- stats::na.omit(GSOD_list[GSOD_list %in% station_list])
+    } else {
+      GSOD_list <- list.files(paste0(td, "/", yr, "/"),
+                              pattern = utils::glob2rx("*.gz"),
+                              full.names = FALSE)
     }
 
     # STEP 2: Reformat, tidy up and compute climate variables-------------------
     GSOD_objects <- list()
 
-    for (j in 1:length(GSOD_list)) {
-
-      tmp <- readr::read_table(paste0(td, "/", yr, "/", GSOD_list[j]),
+    if (!is.null(station)) {
+      tmp <- readr::read_table(tf,
                                col_names = c("STN", "WBAN", "YEARMODA", "TEMP",
                                              "COUNT.TEMP", "DEWP", "COUNT.DEWP",
                                              "SLP", "COUNT.SLP", "STP",
@@ -219,7 +218,22 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
                                col_types = "iiidididididididdddddc",
                                skip = 1,
                                na = c("9999.9", "999.9", "99.99"))
+    } else {
 
+      for (j in 1:length(GSOD_list)) {
+        tmp <- readr::read_table(paste0(td, "/", yr, "/", GSOD_list[j]),
+                                 col_names = c("STN", "WBAN", "YEARMODA", "TEMP",
+                                               "COUNT.TEMP", "DEWP", "COUNT.DEWP",
+                                               "SLP", "COUNT.SLP", "STP",
+                                               "COUNT.STP", "VISIB",
+                                               "COUNT.VISIB", "WDSP",
+                                               "COUNT.WDSP", "MXSPD",
+                                               "GUST", "MAX", "MIN", "PRCP",
+                                               "SNDP", "FRSHTT"),
+                                 col_types = "iiidididididididdddddc",
+                                 skip = 1,
+                                 na = c("9999.9", "999.9", "99.99"))
+      }
       # STEP 2.1: Check against maximum permissible missing days----------------
       if (lubridate::leap_year(yr) == FALSE) {
         s <- 365 - max_missing
@@ -308,9 +322,8 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
                              "EA", "ES", "RH")]
         GSOD_objects[[j]] <- GSOD_df
       }
+      GSOD_XY <- data.table::rbindlist(GSOD_objects)
     }
-    GSOD_XY <- data.table::rbindlist(GSOD_objects)
-
     # STEP 3: Write to csv file-------------------------------------------------
     if (!is.null(country)) {
       outfile <- paste0(path, "GSOD-", country, "-", yr, ".csv")
@@ -323,6 +336,8 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
                                          full.names = TRUE)))
   }
 }
+
+
 
 # the following 2 functions are shamelessly borrowed from RJ Hijmans raster pkg
 .get_data_path <- function(path) {
