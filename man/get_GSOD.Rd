@@ -24,6 +24,9 @@ days (optional).}
 \item{agroclimatology}{Only clean data for stations between latitudes 60 and
 -60 for agroclimatology work, defaults to TRUE. Set to FALSE to override and
 include stations outside these latitudes (optional).}
+
+\item{stations}{Specific stations for which to retrieve and check weather
+data (optional).}
 }
 \description{
 This function automates downloading and cleaning data from the

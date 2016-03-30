@@ -18,18 +18,20 @@
 #'
 #'For more information see the description of the data provided by NCDC,
 #'\url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}
-#' @param years Year(s) of weather data to download (mandatory).
+#' @param years Year(s) of weather data to download.
+#' @param stations Specific stations for which to retrieve and check weather
+#' data.
 #' @param country Specify a country of interest for which to retrieve weather
 #' data, full name or 3 letter ISO code work. Use raster::getData('ISO3') to
-#' for a list of ISO country codes (optional).
+#' for a list of ISO country codes.
 #' @param  path Path entered by user indicating where to store resulting
-#' csv file(s). Defaults to the current working directory (optional).
+#' csv file(s). Defaults to the current working directory.
 #' @param max_missing The maximum number of days allowed to be missing from a
 #' station's data before it is excluded from .csv file output. Defaults to 5
 #' days (optional).
 #' @param agroclimatology Only clean data for stations between latitudes 60 and
-#' -60 for agroclimatology work, defaults to TRUE. Set to FALSE to override and
-#' include stations outside these latitudes (optional).
+#' -60 for agroclimatology work, defaults to FALSE. Set to FALSE to override and
+#' include only stations within the confines of these latitudes.
 #'
 #' @details This function generates a .csv file in the respective year directory
 #' containing the following variables:
@@ -134,7 +136,7 @@
 #' @export
 
 get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
-                     agroclimatology = TRUE) {
+                     agroclimatology = FALSE) {
 
   yr <- STN <- WBAN <- YEARMODA <- TEMP <- DEWP <- WDSP <- MXSPD <- MAX <-
     MIN <- PRCP <- SNDP <- VISIB <- NULL
@@ -142,9 +144,10 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
   tf <- tempfile()
   td <- tempdir()
 
-  .validate_years(years)
+  path <- .get_data_path(path)
 
-  if(!is.null(country)) {
+  .validate_years(years)
+  if (!is.null(country)) {
     country <- .get_country(country)
   }
 
@@ -168,13 +171,13 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
   stations <- stations[stations$LAT != 0 & stations$LON != 0, ]
   stations$STNID <- paste(stations$USAF, stations$WBAN, sep = "-")
 
-  if(agroclimatology == TRUE){
+  if (agroclimatology == TRUE) {
     stations <- stations[stations$LAT >= -60 & stations$LAT <= 60, ]
   }
 
   for (yr in years) {
     # If country specified, make list of only those stations
-    if(!is.null(country)) {
+    if (!is.null(country)) {
       country_FIPS <- unlist(as.character(
         stats::na.omit(countries[countries$iso3c == country, ][1])))
       station_list <- stations[stations$CTRY == country_FIPS, ]$STNID
@@ -195,7 +198,7 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
                             full.names = FALSE)
 
     # if a country is specified, only select files from that country to use
-    if(!is.null(country)) {
+    if (!is.null(country)) {
       GSOD_list <- stats::na.omit(GSOD_list[GSOD_list %in% station_list])
     }
 
@@ -218,7 +221,8 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
                                na = c("9999.9", "999.9", "99.99"))
 
       # STEP 2.1: Check against maximum permissible missing days----------------
-      if (lubridate::leap_year(yr) == TRUE) {
+      if (lubridate::leap_year(yr) == FALSE) {
+        s <- 365 - max_missing
       } else {
         s <- 365 - max_missing + 1
       }
@@ -230,6 +234,7 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
         # STEP 2.2: Clean up the station and weather data---------------------
 
         tmp <- dplyr::mutate(tmp, STNID = (paste(STN, WBAN, sep = "-")))
+        tmp <- tmp[, -2]
         tmp <- dplyr::mutate(tmp, YEAR = stringr::str_sub(tmp$YEARMODA, 1, 4))
         tmp <- dplyr::mutate(tmp, MONTH = stringr::str_sub(tmp$YEARMODA, 5, 6))
         tmp <- dplyr::mutate(tmp, DAY = stringr::str_sub(tmp$YEARMODA, 7, 8))
@@ -308,9 +313,9 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
 
     # STEP 3: Write to csv file-------------------------------------------------
     if (!is.null(country)) {
-      outfile <- paste0(path, yr, "/GSOD-", country, "-", yr, ".csv")
+      outfile <- paste0(path, "GSOD-", country, "-", yr, ".csv")
     } else {
-      outfile <- paste0(path, yr, "/GSOD-", yr, ".csv")
+      outfile <- paste0(path, "GSOD-", yr, ".csv")
     }
     readr::write_csv(GSOD_XY, outfile, na = "-9999")
     do.call(file.remove, list(list.files(paste0(td, "/", yr),
@@ -382,15 +387,15 @@ get_GSOD <- function(years = NULL, country = NULL, path = "", max_missing = 5,
     stop("\nYou must provide at least one year of data to download")
   } else {
     for (i in years) {
-      if (i <= 0){
+      if (i <= 0) {
         stop("\nThis is not a valid year")
         return(0)
       }
-      if (i > this_year){
-        stop ("\nThe year cannot be greater than current year.")
-        return (0)
+      if (i > this_year) {
+        stop("\nThe year cannot be greater than current year.")
+        return(0)
       }
-      return (1)
+      return(1)
     }
   }
 }
