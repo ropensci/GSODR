@@ -38,7 +38,8 @@ Imports:
     raster,
     data.table,
     stats,
-    utils
+    utils,
+    RCurl
 RoxygenNote: 5.0.1
 Suggests: knitr,
     rmarkdown

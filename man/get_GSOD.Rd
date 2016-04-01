@@ -15,7 +15,8 @@ manipulate weather data.}
 
 \item{country}{Specify a country of interest for which to retrieve weather
 data, full name or 3 letter ISO code work. Use raster::getData('ISO3') to
-for a list of ISO country codes.}
+for a list of ISO country codes. If set, only a csv file is created,
+no dataframe will be returned.}
 
 \item{path}{Path entered by user indicating where to store resulting
 csv file(s). Defaults to the current working directory.}

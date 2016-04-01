@@ -33,7 +33,7 @@
 #' csv file(s). Defaults to the current working directory.
 #' @param max_missing The maximum number of days allowed to be missing from a
 #' station's data before it is excluded from .csv file output. Defaults to 5
-#' days (optional).
+#' days.
 #' @param agroclimatology Only clean data for stations between latitudes 60 and
 #' -60 for agroclimatology work, defaults to FALSE. Set to FALSE to override and
 #' include only stations within the confines of these latitudes.
@@ -147,17 +147,20 @@
 get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                      max_missing = 5, agroclimatology = FALSE) {
 
-  yr <- STN <- WBAN <- YEARMODA <- TEMP <- DEWP <- WDSP <- MXSPD <- MAX <-
-    MIN <- PRCP <- SNDP <- VISIB <- NULL
+  options(warn = 2)
 
   tf <- tempfile()
   td <- tempdir()
+  GSOD_df <- NULL
 
   path <- .get_data_path(path)
-
   .validate_years(years)
   if (!is.null(country)) {
     country <- .get_country(country)
+  }
+
+  if (!is.null(station)) {
+    max_missing <- 364
   }
 
   ftp_site <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
@@ -172,172 +175,181 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   stations <- stations[stations$LAT != 0 & stations$LON != 0, ]
   stations$STNID <- paste(stations$USAF, stations$WBAN, sep = "-")
 
-  # if a station is specified, select only that station or stations
+  # if a station is specified, select only that station
   # else if a country is listed, only list stations for that country
-  # else list all stations
+  # else download and create a list of all stations for given year
   for (yr in years) {
-    if (!is.null(station)) {
-      GSOD_list <- paste0(station, ".op.gz")
-      try(utils::download.file(paste0(ftp_site, yr, "/", station, "op.gz"),
-                               destfile = tf, mode = "wb"))
-    } else {
-      try(utils::download.file(paste0(ftp_site, yr, "/gsod_", yr, ".tar"),
-                               destfile = tf, mode = "wb"))
-      utils::untar(tarfile = tf, exdir  = paste0(td, "/", yr, "/"))
-    }
-    if (!is.null(country)) {
-      countries <- readr::read_table(
-        "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/country-list.txt")[-1, c(1, 3)]
-      countries <- dplyr::left_join(countries, countrycode::countrycode_data,
-                                    by = c(FIPS = "fips104"))
-      country_FIPS <- unlist(as.character(
-        stats::na.omit(countries[countries$iso3c == country, ][1])))
-      station_list <- stations[stations$CTRY == country_FIPS, ]$STNID
-      station_list <- sapply(station_list,
-                             function(x) rep(paste0(x, "-", yr, ".op.gz")))
-      GSOD_list <- stats::na.omit(GSOD_list[GSOD_list %in% station_list])
-    } else {
-      GSOD_list <- list.files(paste0(td, "/", yr, "/"),
-                              pattern = utils::glob2rx("*.gz"),
-                              full.names = FALSE)
-    }
+    if (is.null(station)) {
+      if (!is.null(country)) {
+        countries <- readr::read_table(
+          "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/country-list.txt")[-1, c(1, 3)]
+        countries <- dplyr::left_join(countries, countrycode::countrycode_data,
+                                      by = c(FIPS = "fips104"))
+        country_FIPS <- unlist(as.character(
+          stats::na.omit(countries[countries$iso3c == country, ][1])))
+        station_list <- stations[stations$CTRY == country_FIPS, ]$STNID
+        station_list <- sapply(station_list,
+                               function(x) rep(paste0(x, "-", yr, ".op.gz")))
 
-    # STEP 2: Reformat, tidy up and compute climate variables-------------------
-    GSOD_objects <- list()
+        GSOD_list <- readr::read_table(RCurl::getURL(paste0(ftp_site, yr, "/"),
+                                   ftp.use.epsv = FALSE),
+                                   col_names = FALSE, skip = 2)
 
-    if (!is.null(station)) {
-      tmp <- readr::read_table(tf,
-                               col_names = c("STN", "WBAN", "YEARMODA", "TEMP",
-                                             "COUNT.TEMP", "DEWP", "COUNT.DEWP",
-                                             "SLP", "COUNT.SLP", "STP",
-                                             "COUNT.STP", "VISIB",
-                                             "COUNT.VISIB", "WDSP",
-                                             "COUNT.WDSP", "MXSPD",
-                                             "GUST", "MAX", "MIN", "PRCP",
-                                             "SNDP", "FRSHTT"),
-                               col_types = "iiidididididididdddddc",
-                               skip = 1,
-                               na = c("9999.9", "999.9", "99.99"))
-    } else {
+        GSOD_list <- GSOD_list[GSOD_list$X9 %in% station_list == TRUE, ]
 
-      for (j in 1:length(GSOD_list)) {
-        tmp <- readr::read_table(paste0(td, "/", yr, "/", GSOD_list[j]),
-                                 col_names = c("STN", "WBAN", "YEARMODA", "TEMP",
-                                               "COUNT.TEMP", "DEWP", "COUNT.DEWP",
-                                               "SLP", "COUNT.SLP", "STP",
-                                               "COUNT.STP", "VISIB",
-                                               "COUNT.VISIB", "WDSP",
-                                               "COUNT.WDSP", "MXSPD",
-                                               "GUST", "MAX", "MIN", "PRCP",
-                                               "SNDP", "FRSHTT"),
-                                 col_types = "iiidididididididdddddc",
-                                 skip = 1,
-                                 na = c("9999.9", "999.9", "99.99"))
-      }
-      # STEP 2.1: Check against maximum permissible missing days----------------
-      if (lubridate::leap_year(yr) == FALSE) {
-        s <- 365 - max_missing
       } else {
-        s <- 365 - max_missing + 1
+        try(utils::download.file(paste0(ftp_site, yr, "/gsod_", yr, ".tar"),
+                                 destfile = tf, mode = "wb"))
+        tools::md5sum(tf)
+        utils::untar(tarfile = tf, exdir  = paste0(td, "/", yr, "/"))
+        GSOD_list <- list.files(paste0(td, "/", yr, "/"),
+                                pattern = utils::glob2rx("*.gz"),
+                                full.names = FALSE)
       }
-
-      if (nrow(tmp) < s) {
-        tmp[] <- NA
-      } else {
-
-        # STEP 2.2: Clean up the station and weather data---------------------
-
-        tmp <- dplyr::mutate(tmp, STNID = (paste(STN, WBAN, sep = "-")))
-        tmp <- tmp[, -2]
-        tmp <- dplyr::mutate(tmp, YEAR = stringr::str_sub(tmp$YEARMODA, 1, 4))
-        tmp <- dplyr::mutate(tmp, MONTH = stringr::str_sub(tmp$YEARMODA, 5, 6))
-        tmp <- dplyr::mutate(tmp, DAY = stringr::str_sub(tmp$YEARMODA, 7, 8))
-        tmp <- dplyr::mutate(tmp, YDAY = 1 + as.POSIXlt(as.Date(
-          as.character(YEARMODA), "%Y%m%d"), "GMT")$yday) # day of year
-
-        tmp <- dplyr::mutate(tmp, TEMP = ifelse(!is.na(tmp$TEMP), round(
-          (TEMP - 32) * (5 / 9), 1), NA_integer_))
-        tmp <- dplyr::mutate(tmp, DEWP = ifelse(!is.na(tmp$DEWP), round(
-          (DEWP - 32) * (5 / 9), 1), NA_integer_))
-        tmp <- dplyr::mutate(tmp, WDSP = ifelse(!is.na(tmp$WDSP), round(
-          WDSP * 0.514444444, 1), NA_integer_))
-        tmp <- dplyr::mutate(tmp, MXSPD = ifelse(!is.na(tmp$MXSPD), round(
-          MXSPD * 0.514444444, 1), NA_integer_))
-        tmp <- dplyr::mutate(tmp, VISIB = ifelse(!is.na(tmp$VISIB), round(
-          VISIB * 1.60934, 1), NA_integer_))
-        tmp <- dplyr::mutate(tmp, GUST = ifelse(!is.na(tmp$GUST), round(
-          WDSP * 0.514444444, 1), NA_integer_))
-        tmp$MAX <- as.numeric(stringr::str_sub(tmp$MAX, 1, 4))
-        tmp <- dplyr::mutate(tmp, MAX = ifelse(!is.na(tmp$MAX), round(
-          (MAX - 32) * (5 / 9), 2), NA_integer_))
-        tmp$MIN <- as.numeric(stringr::str_sub(tmp$MIN, 1, 4))
-        tmp <- dplyr::mutate(tmp, MIN = ifelse(!is.na(tmp$MIN), round(
-          (MIN - 32) * (5 / 9), 2), NA_integer_))
-        tmp <- dplyr::mutate(tmp, PRCP = ifelse(!is.na(tmp$PRCP),
-                                                round(PRCP * 25.4, 1) * 10,
-                                                NA_integer_))
-        tmp <- dplyr::mutate(tmp, SNDP = ifelse(!is.na(tmp$SNDP),
-                                                round(SNDP * 25.4, 1) * 10,
-                                                NA_integer_))
-        tmp$FLAGS.PRCP <- stringr::str_sub(tmp$PRCP, 5)
-        indicators <- matrix(as.numeric(unlist(stringr::str_split(tmp$FRSHTT,
-                                                                  ""))),
-                             byrow = TRUE, ncol = 6)
-        colnames(indicators) <- c("INDICATOR.FOG", "INDICATOR.RAIN",
-                                  "INDICATOR.SNOW", "INDICATOR.HAIL",
-                                  "INDICATOR.THUNDER", "INDICATOR.TORNADO")
-        tmp <- data.frame(tmp, indicators, stringsAsFactors = FALSE)
-
-        # STEP 2.3: Compute other weather vars----------------------------------
-        # Mean actual (EA) and mean saturation vapour pressure (ES)
-        # http://www.apesimulator.it/help/models/evapotranspiration/
-
-        # EA derived from dewpoint
-        tmp <- dplyr::mutate(tmp, EA = round(
-          0.61078 * exp( (17.2694 * tmp$DEWP) / (tmp$DEWP + 237.3)),
-          1))
-        # ES derived from average temperature
-        tmp <- dplyr::mutate(tmp, ES = round(
-          0.61078 * exp( (17.2694 * tmp$TEMP) / (tmp$TEMP + 237.3)),
-          1))
-        # Calculate relative humidity
-        tmp <- dplyr::mutate(tmp, RH = round(
-          tmp$EA / tmp$ES * 100, 1))
-
-        # STEP 2.4: Join to the station data------------------------------------
-        GSOD_df <- dplyr::inner_join(tmp, stations, by = "STNID")
-
-        GSOD_df <- GSOD_df[c("USAF", "WBAN", "STNID", "STATION.NAME", "CTRY",
-                             "LAT", "LON", "ELEV.M",
-                             "YEARMODA", "YEAR", "MONTH", "DAY", "YDAY",
-                             "TEMP", "COUNT.TEMP", "DEWP", "COUNT.DEWP",
-                             "SLP", "COUNT.SLP", "STP", "COUNT.STP",
-                             "VISIB", "COUNT.VISIB",
-                             "WDSP", "COUNT.WDSP", "MXSPD", "GUST",
-                             "MAX", "MIN",
-                             "PRCP", "FLAGS.PRCP",
-                             "INDICATOR.FOG", "INDICATOR.RAIN",
-                             "INDICATOR.SNOW", "INDICATOR.HAIL",
-                             "INDICATOR.THUNDER", "INDICATOR.TORNADO",
-                             "EA", "ES", "RH")]
-        GSOD_objects[[j]] <- GSOD_df
-      }
-      GSOD_XY <- data.table::rbindlist(GSOD_objects)
     }
-    # STEP 3: Write to csv file-------------------------------------------------
-    if (!is.null(country)) {
-      outfile <- paste0(path, "GSOD-", country, "-", yr, ".csv")
+
+    if (!is.null(station)) {
+      tmp <- .read_gz(paste0(ftp_site, yr, "/", station, "-", yr, ".op.gz"))
+      GSOD_XY <- .check_and_clean(tmp, yr = yr, max_missing = max_missing,
+                                  station = station, stations = stations)
     } else {
-      outfile <- paste0(path, "GSOD-", yr, ".csv")
+      GSOD_objects <- list()
+      for (j in GSOD_list) {
+        if (!is.null(country)) {
+          tmp <- try(.read_gz(GSOD_list[[j]]))
+          GSOD_objects[[j]] <- .check_and_clean(tmp, yr = yr,
+                                                max_missing = max_missing,
+                                                station = NULL,
+                                                stations = stations)
+        } else {
+          GSOD_objects <- list()
+          for (j in GSOD_list) {
+            tmp <- try(.read_gz(paste0(td, "/", yr, "/", GSOD_list[j])))
+            GSOD_objects[[j]] <- .check_and_clean(tmp, yr = yr,
+                                                  max_missing = max_missing,
+                                                  station = NULL,
+                                                  stations = stations)
+          }
+        }
+      }
     }
-    readr::write_csv(GSOD_XY, outfile, na = "-9999")
-    do.call(file.remove, list(list.files(paste0(td, "/", yr),
-                                         pattern = utils::glob2rx("*.gz"),
-                                         full.names = TRUE)))
+    GSOD_XY <- data.table::rbindlist(GSOD_objects)
   }
+
+  # Write to csv file-----------------------------------------------------------
+  if (!is.null(country)) {
+    outfile <- paste0(path, "GSOD-", country, "-", yr, ".csv")
+  } else {
+    outfile <- paste0(path, "GSOD-", yr, ".csv")
+  }
+  readr::write_csv(GSOD_XY, outfile, na = "-9999")
 }
 
+# Functions used within this package -------------------------------------------
+#
+.check_and_clean <- function(tmp, yr, max_missing, station, stations) {
+  STN <- WBAN <- YEARMODA <- TEMP <- DEWP <- WDSP <- MXSPD <- MAX <-  MIN <-
+    PRCP <- SNDP <- VISIB <- NULL
+  # Check against maximum permissible missing days
+  if (lubridate::leap_year(yr) == FALSE) {
+    if (nrow(tmp) < max_missing) {
+      if (!is.null(station)) {
+        stop("Station exceeds permissible missing days, cannot proceed.")
+      }
+      tmp[] <- NA
+    }
+  }
 
+  # Clean up and convert the station and weather data to metric
+  tmp <- dplyr::mutate(tmp, STNID = (paste(STN, WBAN, sep = "-")))
+  tmp <- tmp[, -2]
+  tmp <- dplyr::mutate(tmp, YEAR = stringr::str_sub(tmp$YEARMODA, 1, 4))
+  tmp <- dplyr::mutate(tmp, MONTH = stringr::str_sub(tmp$YEARMODA, 5, 6))
+  tmp <- dplyr::mutate(tmp, DAY = stringr::str_sub(tmp$YEARMODA, 7, 8))
+  tmp <- dplyr::mutate(tmp, YDAY = 1 + as.POSIXlt(as.Date(
+    as.character(YEARMODA), "%Y%m%d"), "GMT")$yday) # day of year
+
+  tmp <- dplyr::mutate(tmp, TEMP = ifelse(!is.na(tmp$TEMP), round(
+    (TEMP - 32) * (5 / 9), 1), NA_integer_))
+  tmp <- dplyr::mutate(tmp, DEWP = ifelse(!is.na(tmp$DEWP), round(
+    (DEWP - 32) * (5 / 9), 1), NA_integer_))
+  tmp <- dplyr::mutate(tmp, WDSP = ifelse(!is.na(tmp$WDSP), round(
+    WDSP * 0.514444444, 1), NA_integer_))
+  tmp <- dplyr::mutate(tmp, MXSPD = ifelse(!is.na(tmp$MXSPD), round(
+    MXSPD * 0.514444444, 1), NA_integer_))
+  tmp <- dplyr::mutate(tmp, VISIB = ifelse(!is.na(tmp$VISIB), round(
+    VISIB * 1.60934, 1), NA_integer_))
+  tmp <- dplyr::mutate(tmp, GUST = ifelse(!is.na(tmp$GUST), round(
+    WDSP * 0.514444444, 1), NA_integer_))
+  tmp$MAX <- as.numeric(stringr::str_sub(tmp$MAX, 1, 4))
+  tmp <- dplyr::mutate(tmp, MAX = ifelse(!is.na(tmp$MAX), round(
+    (MAX - 32) * (5 / 9), 2), NA_integer_))
+  tmp$MIN <- as.numeric(stringr::str_sub(tmp$MIN, 1, 4))
+  tmp <- dplyr::mutate(tmp, MIN = ifelse(!is.na(tmp$MIN), round(
+    (MIN - 32) * (5 / 9), 2), NA_integer_))
+  tmp <- dplyr::mutate(tmp, PRCP = ifelse(!is.na(tmp$PRCP),
+                                          round(PRCP * 25.4, 1) * 10,
+                                          NA_integer_))
+  tmp <- dplyr::mutate(tmp, SNDP = ifelse(!is.na(tmp$SNDP),
+                                          round(SNDP * 25.4, 1) * 10,
+                                          NA_integer_))
+  tmp$FLAGS.PRCP <- stringr::str_sub(tmp$PRCP, 5)
+  indicators <- matrix(as.numeric(unlist(stringr::str_split(tmp$FRSHTT,
+                                                            ""))),
+                       byrow = TRUE, ncol = 6)
+  colnames(indicators) <- c("INDICATOR.FOG", "INDICATOR.RAIN",
+                            "INDICATOR.SNOW", "INDICATOR.HAIL",
+                            "INDICATOR.THUNDER", "INDICATOR.TORNADO")
+  tmp <- data.frame(tmp, indicators, stringsAsFactors = FALSE)
+
+  # Compute other weather vars
+  # Mean actual (EA) and mean saturation vapour pressure (ES)
+  # http://www.apesimulator.it/help/models/evapotranspiration/
+
+  # EA derived from dewpoint
+  tmp <- dplyr::mutate(tmp, EA = round(
+    0.61078 * exp( (17.2694 * tmp$DEWP) / (tmp$DEWP + 237.3)),
+    1))
+  # ES derived from average temperature
+  tmp <- dplyr::mutate(tmp, ES = round(
+    0.61078 * exp( (17.2694 * tmp$TEMP) / (tmp$TEMP + 237.3)),
+    1))
+  # Calculate relative humidity
+  tmp <- dplyr::mutate(tmp, RH = round(
+    tmp$EA / tmp$ES * 100, 1))
+
+  # Join to the station data
+  GSOD_df <- dplyr::inner_join(tmp, stations, by = "STNID")
+
+  GSOD_df <- GSOD_df[c("USAF", "WBAN", "STNID", "STATION.NAME", "CTRY",
+                       "LAT", "LON", "ELEV.M",
+                       "YEARMODA", "YEAR", "MONTH", "DAY", "YDAY",
+                       "TEMP", "COUNT.TEMP", "DEWP", "COUNT.DEWP",
+                       "SLP", "COUNT.SLP", "STP", "COUNT.STP",
+                       "VISIB", "COUNT.VISIB",
+                       "WDSP", "COUNT.WDSP", "MXSPD", "GUST",
+                       "MAX", "MIN",
+                       "PRCP", "FLAGS.PRCP",
+                       "INDICATOR.FOG", "INDICATOR.RAIN",
+                       "INDICATOR.SNOW", "INDICATOR.HAIL",
+                       "INDICATOR.THUNDER", "INDICATOR.TORNADO",
+                       "EA", "ES", "RH")]
+
+  return(GSOD_df)
+}
+
+.read_gz <- function(gz_file) {
+  readr::read_table(gz_file,
+                    col_names = c("STN", "WBAN", "YEARMODA", "TEMP",
+                                  "COUNT.TEMP", "DEWP", "COUNT.DEWP",
+                                  "SLP", "COUNT.SLP", "STP",
+                                  "COUNT.STP", "VISIB",
+                                  "COUNT.VISIB", "WDSP",
+                                  "COUNT.WDSP", "MXSPD",
+                                  "GUST", "MAX", "MIN", "PRCP",
+                                  "SNDP", "FRSHTT"), skip = 1,
+                    na = c("9999.9", "999.9", "99.99"))
+}
 
 # the following 2 functions are shamelessly borrowed from RJ Hijmans raster pkg
 .get_data_path <- function(path) {
@@ -414,3 +426,4 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
     }
   }
 }
+
