@@ -232,28 +232,23 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   # If a single station is selected, then we only download that file------------
   if (!is.null(station)) {
     tmp <- .read_gz(paste0(ftp_site, yr, "/", station, "-", yr, ".op.gz"))
-    GSOD_XY <- .modify(tmp, yr = yr, max_missing = max_missing,
-                                station = station, stations = stations)
+    GSOD_XY <- .reformat(tmp, stations)
   } else {
     # For countries or the entire set (or agroclimatology) download multiple----
     GSOD_objects <- list()
     for (j in seq_len(nrow(GSOD_list))) {
       if (!is.null(country)) {
         tmp <- try(.read_gz(paste0(ftp_site, yr, "/", GSOD_list[[j, 9]])))
-        if (.check(tmp, yr = yr, max_missing = max_missing) == TRUE) next
-        GSOD_objects[[j]] <- .check_and_clean(tmp, yr = yr,
-                                              max_missing = max_missing,
-                                              station = NULL,
-                                              stations = stations)
+        # check to see if max_missing < missing days, if so, go to next
+        if (.check(tmp, yr, max_missing) == TRUE) next
+        GSOD_objects[[j]] <- .reformat(tmp, stations)
       } else {
         GSOD_objects <- list()
         for (j in seq_len(nrow(GSOD_list))) {
           tmp <- try(.read_gz(paste0(td, "/", yr, "/", GSOD_list[j])))
-          if (.check(tmp, yr = yr, max_missing = max_missing) == TRUE) next
-          GSOD_objects[[j]] <- .modify(tmp, yr = yr,
-                                                max_missing = max_missing,
-                                                station = NULL,
-                                                stations = stations)
+          # check to see if max_missing < missing days, if so, go to next
+          if (.check(tmp, yr, max_missing) == TRUE) next
+          GSOD_objects[[j]] <- .reformat(tmp, stations)
         }
       }
     }
@@ -281,56 +276,53 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   if (lubridate::leap_year(yr) == FALSE) {
     allow <- 365 - max_missing
     !is.null(records) && length(records) == 1 && !is.na(records) &&
-        records < allow
+      records < allow
   } else {
     if (lubridate::leap_year(yr) == TRUE) {
       allow <- 366 - max_missing
       !is.null(records) && length(records) == 1 && !is.na(records) &&
-          records < allow
+        records < allow
     }
   }
 }
-
 
 # Reformat and generate new variables
 .reformat <- function(tmp, stations) {
   STN <- WBAN <- YEARMODA <- TEMP <- DEWP <- WDSP <- MXSPD <- MAX <-  MIN <-
     PRCP <- SNDP <- VISIB <- NULL
   # Clean up and convert the station and weather data to metric
-  tmp <- dplyr::mutate(tmp, STNID = (paste(STN, WBAN, sep = "-")))
+  tmp$STNID <- paste(tmp$STN, tmp$WBAN, sep = "-")
   tmp <- tmp[, -2]
-  tmp <- dplyr::mutate(tmp, YEAR = stringr::str_sub(tmp$YEARMODA, 1, 4))
-  tmp <- dplyr::mutate(tmp, MONTH = stringr::str_sub(tmp$YEARMODA, 5, 6))
-  tmp <- dplyr::mutate(tmp, DAY = stringr::str_sub(tmp$YEARMODA, 7, 8))
-  tmp <- dplyr::mutate(tmp, YDAY = 1 + as.POSIXlt(as.Date(
-    as.character(YEARMODA), "%Y%m%d"), "GMT")$yday) # day of year
+  tmp$YEAR <- stringr::str_sub(tmp$YEARMODA, 1, 4)
+  tmp$MONTH <- stringr::str_sub(tmp$YEARMODA, 5, 6)
+  tmp$DAY <- stringr::str_sub(tmp$YEARMODA, 7, 8)
+  tmp$YDAY <- 1 + as.POSIXlt(as.Date(as.character(tmp$YEARMODA), "%Y%m%d"),
+                             "GMT")
 
-  tmp <- dplyr::mutate(tmp, TEMP = ifelse(!is.na(tmp$TEMP), round(
-    (TEMP - 32) * (5 / 9), 1), NA_integer_))
-  tmp <- dplyr::mutate(tmp, DEWP = ifelse(!is.na(tmp$DEWP), round(
-    (DEWP - 32) * (5 / 9), 1), NA_integer_))
-  tmp <- dplyr::mutate(tmp, WDSP = ifelse(!is.na(tmp$WDSP), round(
-    WDSP * 0.514444444, 1), NA_integer_))
-  tmp <- dplyr::mutate(tmp, MXSPD = ifelse(!is.na(tmp$MXSPD), round(
-    MXSPD * 0.514444444, 1), NA_integer_))
-  tmp <- dplyr::mutate(tmp, VISIB = ifelse(!is.na(tmp$VISIB), round(
-    VISIB * 1.60934, 1), NA_integer_))
-  tmp <- dplyr::mutate(tmp, GUST = ifelse(!is.na(tmp$GUST), round(
-    WDSP * 0.514444444, 1), NA_integer_))
-  tmp$MAX <- as.numeric(stringr::str_sub(tmp$MAX, 1, 4))
-  tmp <- dplyr::mutate(tmp, MAX = ifelse(!is.na(tmp$MAX), round(
-    (MAX - 32) * (5 / 9), 2), NA_integer_))
-  tmp$MIN <- as.numeric(stringr::str_sub(tmp$MIN, 1, 4))
-  tmp <- dplyr::mutate(tmp, MIN = ifelse(!is.na(tmp$MIN), round(
-    (MIN - 32) * (5 / 9), 2), NA_integer_))
-  tmp <- dplyr::mutate(tmp, PRCP = ifelse(!is.na(tmp$PRCP),
-                                          round(PRCP * 25.4, 1) * 10,
-                                          NA_integer_))
-  tmp <- dplyr::mutate(tmp, SNDP = ifelse(!is.na(tmp$SNDP),
-                                          round(SNDP * 25.4, 1) * 10,
-                                          NA_integer_))
+  tmp$TEMP <- ifelse(!is.na(tmp$TEMP), round( (tmp$TEMP - 32) * (5 / 9), 1),
+                     NA_integer_)
+  tmp$DEWP <- ifelse(!is.na(tmp$DEWP), round( (tmp$DEWP - 32) * (5 / 9), 1),
+                     NA_integer_)
+  tmp$WDPS <- ifelse(!is.na(tmp$WDSP), round(tmp$WDSP * 0.514444444, 1),
+                     NA_integer_)
+  tmp$MXSPD <- ifelse(!is.na(tmp$MXSPD), round(tmp$MXSPD * 0.514444444, 1),
+                      NA_integer_)
+  tmp$VISIB <- ifelse(!is.na(VISIB), round(tmp$VISIB * 1.60934, 1),
+                      NA_integer_)
+  tmp$WDSPC <- ifelse(!is.na(tmp$WDSPC), round(tmp$WDSPC * 0.514444444, 1),
+                      NA_integer_)
+  tmp$GUST <- ifelse(!is.na(tmp$GUST), round(tmp$GUST * 0.514444444, 1),
+                     NA_integer_)
+  tmp$MAX <- ifelse(!is.na(tmp$MAX), round( (tmp$MAX - 32) * (5 / 9), 2),
+                    NA_integer_)
+  tmp$MIN <- ifelse(!is.na(tmp$MIN), round( (tmp$MIN - 32) * (5 / 9), 2),
+                    NA_integer_)
+  tmp$PRCP <- ifelse(!is.na(tmp$PRCP), round( (tmp$PRCP * 25.4) *10, 1),
+                     NA_integer_)
+  tmp$SNDP <- ifelse(!is.na(tmp$SNDP), round( (tmp$SNDP * 25.4) * 10, 1),
+                     NA_integer_)
+
   tmp$FLAGS.PRCP <- stringr::str_sub(tmp$PRCP, 5)
-
   indicators <- data.frame(matrix(as.numeric(unlist(
     stringr::str_split(tmp$FRSHTT,""))), byrow = TRUE, ncol = 6))
   colnames(indicators) <- c("INDICATOR.FOG", "INDICATOR.RAIN",
@@ -342,17 +334,19 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   # Mean actual (EA) and mean saturation vapour pressure (ES)
   # http://www.apesimulator.it/help/models/evapotranspiration/
 
+  calc_EA <- function(dewp) {
+
+  }
+  calc_ES <- function(temp) {
+
+  }
   # EA derived from dewpoint
-  tmp <- dplyr::mutate(tmp, EA = round(
-    0.61078 * exp( (17.2694 * tmp$DEWP) / (tmp$DEWP + 237.3)),
-    1))
+  tmp$EA <- round(0.61078 * exp((17.2694 * tmp$DEWP) / (tmp$DEWP + 237.3)), 1)
   # ES derived from average temperature
-  tmp <- dplyr::mutate(tmp, ES = round(
-    0.61078 * exp( (17.2694 * tmp$TEMP) / (tmp$TEMP + 237.3)),
-    1))
+  tmp$ES <- round(0.61078 * exp((17.2694 * tmp$TEMP) / (tmp$TEMP + 237.3)), 1)
+
   # Calculate relative humidity
-  tmp <- dplyr::mutate(tmp, RH = round(
-    tmp$EA / tmp$ES * 100, 1))
+  tmp$RH <- round(tmp$EA / tmp$ES * 100, 1)
 
   # Join to the station data
   GSOD_df <- dplyr::inner_join(tmp, stations, by = "STNID")
