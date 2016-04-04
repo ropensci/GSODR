@@ -14,16 +14,15 @@ get_GSOD(years = NULL, station = NULL, country = NULL, path = "",
 manipulate weather data.}
 
 \item{country}{Specify a country of interest for which to retrieve weather
-data, full name or 3 letter ISO code work. Use raster::getData('ISO3') to
-for a list of ISO country codes. If set, only a csv file is created,
-no dataframe will be returned.}
+data, full name or 3 letter ISO code work. Use raster::getData('ISO3')
+for a list of possible ISO country codes.}
 
 \item{path}{Path entered by user indicating where to store resulting
-csv file(s). Defaults to the current working directory.}
+csv file. Defaults to the current working directory.}
 
 \item{max_missing}{The maximum number of days allowed to be missing from a
 station's data before it is excluded from .csv file output. Defaults to 5
-days (optional).}
+days.}
 
 \item{agroclimatology}{Only clean data for stations between latitudes 60 and
 -60 for agroclimatology work, defaults to FALSE. Set to FALSE to override and
@@ -34,11 +33,14 @@ This function automates downloading and cleaning data from the
 Global Summary of the Day (GSOD) data provided by the US National Climatic
 Data Center (NCDC). Stations are individually checked for number of missing
 days to assure data quality, stations with too many missing observations are
-omitted. All units are converted to metric, e.g. feet to metres and
-Fahrenheit to Celcius. Due to the size of the resulting data,
-output is saved as a .csv file in a directory specified by the user,
-the .csv file summarizes each year by station, which includes vapor pressure
-and relative humidity variables calculated from existing data in GSOD.
+omitted, stations with a Latitude of +/- 90 or Longitude of +/- 180 are
+removed. All units are converted to metric, e.g. Fahrenheit to Celcius and
+inches to milimetres. For convience elevation is converted from decimetres to
+metres.
+Due to the size of the resulting data, output is saved as a .csv file in a
+directory specified by the user, the .csv file summarizes each year by
+station, which includes vapor pressure and relative humidity variables
+calculated from existing data in GSOD.
 
 All missing values in resulting csv files are represented as -9999 regardless
 of which column they occur in.
@@ -46,12 +48,15 @@ of which column they occur in.
 Be sure to have disk space free and allocate the proper time for this to run.
 This is a time, processor and disk input/output/space intensive process.
 
-This function largely based on T. Hengl's "getGSOD.R" script, available from
-\url{http://spatial-analyst.net/book/system/files/getGSOD.R} with enhancements
-to be more cross platform and faster.
+This function was largely based on T. Hengl's "getGSOD.R" script, available
+from \url{http://spatial-analyst.net/book/system/files/getGSOD.R} with
+enhancements to be more cross-platform, faster and a bit more flexible.
 .
 For more information see the description of the data provided by NCDC,
-\url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}
+\url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
+
+For an up-to-date list of stations and locations, download:
+\url{ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv}
 }
 \details{
 This function generates a .csv file in the respective year directory
@@ -148,7 +153,7 @@ get_GSOD(years = 2010, station = "955510-99999", path = "~/tmp")
 
 # Examples not run due to lengthy time required to run.
 
-get_GSOD(years = c(2009:2010), path = '~/tmp', agroclimatology = TRUE)
+get_GSOD(years = c(2010:2011), path = '~/tmp', agroclimatology = TRUE)
 }
 
 \dontrun{
