@@ -75,7 +75,7 @@
 #' Missing = -9999;
 #' COUNT.VISIB - Number of observations used in calculating mean daily
 #' visibility;
-#' WDSPC - Mean daily wind speed value converted to metres/second to tenths.
+#' WDSP - Mean daily wind speed value converted to metres/second to tenths.
 #' Missing = -9999;
 #' COUNT.WDSP - Number of observations used in calculating mean daily windspeed;
 #' MXSPD - Maximum sustained wind speed reported for the day converted to
@@ -84,10 +84,12 @@
 #' tenths. Missing = -9999;
 #' MAX - Maximum temperature reported during the day converted to Celcious to
 #' tenths--time of max temp report varies by country and region, so this will
-#' sometimes not be the max for the calendar day.  Missing = -9999;
+#' sometimes not be the max for the calendar day. The "*" flag is dropped.
+#' Missing = -9999;
 #' MIN- Minimum temperature reported during the day converted to Celcious to
 #' tenths--time of min temp report varies by country and region, so this will
-#' sometimes not be the max for the calendar day.  Missing = -9999;
+#' sometimes not be the max for the calendar day.  The "*" flag is dropped.
+#' Missing = -9999;
 #' PRCP - Total precipitation (rain and/or melted snow) reported during the day
 #' converted to millimetres to hundredths; will usually not end with the
 #' midnight observation--i.e., may include latter part of previous day. .00
@@ -163,8 +165,9 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   tf <- tempfile()
   td <- tempdir()
 
-  # Create GSOD_df object for use later
+  # Create objects for use later
   GSOD_df <- NULL
+  missing_files <- list()
 
   # Check data path given by user, does it exist? Is it properly formatted?
   path <- .get_data_path(path)
@@ -218,8 +221,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
         GSOD_list <- GSOD_list[GSOD_list$X9 %in% station_list == TRUE, ]
 
       } else {
-        tf <- try(RCurl::getBinaryURL(paste0(ftp_site, yr, "/gsod_", yr,
-                                             ".tar")))
+        try(.download(paste0(ftp_site, yr, "/gsod_", yr, ".tar"), tf))
         utils::untar(tarfile = tf, exdir  = paste0(td, "/", yr, "/"))
         unlink(tf)
         GSOD_list <- list.files(paste0(td, "/", yr, "/"),
@@ -237,22 +239,16 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
     # For countries or the entire set (or agroclimatology) download multiple----
     GSOD_objects <- list()
     for (j in seq_len(nrow(GSOD_list))) {
-      if (!is.null(country)) {
-        tmp <- try(.read_gz(paste0(ftp_site, yr, "/", GSOD_list[[j, 9]])))
-        # check to see if max_missing < missing days, if so, go to next
-        if (.check(tmp, yr, max_missing) == TRUE) next
-        GSOD_objects[[j]] <- .reformat(tmp, stations)
-      } else {
-        GSOD_objects <- list()
-        for (j in seq_len(nrow(GSOD_list))) {
-          tmp <- try(.read_gz(paste0(td, "/", yr, "/", GSOD_list[j])))
-          # check to see if max_missing < missing days, if so, go to next
-          if (.check(tmp, yr, max_missing) == TRUE) next
-          GSOD_objects[[j]] <- .reformat(tmp, stations)
-        }
+      if (file.exists(paste0(td, "/", yr, "/", GSOD_list[j])) != TRUE) {
+        missing_files[] <- GSOD_list[j]
       }
+      tmp <- try(.read_gz(paste0(td, "/", yr, "/", GSOD_list[j])))
+      # check to see if max_missing < missing days, if so, go to next
+      if (.check(tmp, yr, max_missing) == TRUE) next
+      GSOD_objects[[j]] <- .reformat(tmp, stations)
     }
   }
+
   if (!is.null(station)) {
     GSOD_XY <- GSOD_XY
   } else {
@@ -291,7 +287,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   STN <- WBAN <- YEARMODA <- TEMP <- DEWP <- WDSP <- MXSPD <- MAX <-  MIN <-
     PRCP <- SNDP <- VISIB <- NULL
   # Clean up and convert the station and weather data to metric
-  tmp$STNID <- paste(tmp$STN, tmp$WBAN, sep = "-")
+  tmp <- dplyr::mutate(tmp, STNID = paste(tmp$STN, tmp$WBAN, sep = "-"))
   tmp <- tmp[, -2]
   tmp$YEAR <- stringr::str_sub(tmp$YEARMODA, 1, 4)
   tmp$MONTH <- stringr::str_sub(tmp$YEARMODA, 5, 6)
@@ -307,14 +303,16 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                      NA_integer_)
   tmp$MXSPD <- ifelse(!is.na(tmp$MXSPD), round(tmp$MXSPD * 0.514444444, 1),
                       NA_integer_)
-  tmp$VISIB <- ifelse(!is.na(VISIB), round(tmp$VISIB * 1.60934, 1),
+  tmp$VISIB <- ifelse(!is.na(tmp$VISIB), round(tmp$VISIB * 1.60934, 1),
                       NA_integer_)
-  tmp$WDSPC <- ifelse(!is.na(tmp$WDSPC), round(tmp$WDSPC * 0.514444444, 1),
-                      NA_integer_)
+  tmp$WDSP <- ifelse(!is.na(tmp$WDSP), round(tmp$WDSP * 0.514444444, 1),
+                     NA_integer_)
   tmp$GUST <- ifelse(!is.na(tmp$GUST), round(tmp$GUST * 0.514444444, 1),
                      NA_integer_)
+  tmp$MAX <- as.numeric(stringr::str_sub(tmp$MAX, 1, 4))
   tmp$MAX <- ifelse(!is.na(tmp$MAX), round( (tmp$MAX - 32) * (5 / 9), 2),
                     NA_integer_)
+  tmp$MIN <- as.numeric(stringr::str_sub(tmp$MIN, 1, 4))
   tmp$MIN <- ifelse(!is.na(tmp$MIN), round( (tmp$MIN - 32) * (5 / 9), 2),
                     NA_integer_)
   tmp$PRCP <- ifelse(!is.na(tmp$PRCP), round( (tmp$PRCP * 25.4) *10, 1),
@@ -333,13 +331,6 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   # Compute other weather vars
   # Mean actual (EA) and mean saturation vapour pressure (ES)
   # http://www.apesimulator.it/help/models/evapotranspiration/
-
-  calc_EA <- function(dewp) {
-
-  }
-  calc_ES <- function(temp) {
-
-  }
   # EA derived from dewpoint
   tmp$EA <- round(0.61078 * exp((17.2694 * tmp$DEWP) / (tmp$DEWP + 237.3)), 1)
   # ES derived from average temperature
@@ -381,7 +372,25 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                     na = c("9999.9", "999.9", "99.99"))
 }
 
-# the following 2 functions are shamelessly borrowed from RJ Hijmans raster pkg
+# the following 3 functions are shamelessly borrowed from RJ Hijmans raster pkg
+#
+.download <- function(aurl, filename) {
+  fn <- paste(tempfile(), .download, sep = )
+  res <- utils::download.file(url = aurl, destfile = fn, method = "auto",
+                              quiet = FALSE, mode = "wb", cacheOK = TRUE)
+  if (res == 0) {
+    w <- getOption(warn)
+    on.exit(options(warn = w))
+    options(warn = -1)
+    if (!file.rename(fn, filename) ) {
+      # rename failed, perhaps because fn and filename refer to different devices
+      file.copy(fn, filename)
+      file.remove(fn)
+    }
+  } else {
+    stop("Could not download the file")
+  }
+}
 
 .get_data_path <- function(path) {
   path <- raster::trim(path)

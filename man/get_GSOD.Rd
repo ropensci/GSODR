@@ -90,7 +90,7 @@ VISIB - Mean visibility for the day converted to kilometers to tenths.
 Missing = -9999;
 COUNT.VISIB - Number of observations used in calculating mean daily
 visibility;
-WDSPC - Mean daily wind speed value converted to metres/second to tenths.
+WDSP - Mean daily wind speed value converted to metres/second to tenths.
 Missing = -9999;
 COUNT.WDSP - Number of observations used in calculating mean daily windspeed;
 MXSPD - Maximum sustained wind speed reported for the day converted to
@@ -99,10 +99,12 @@ GUST = Maximum wind gust reported for the day converted to metres/second to
 tenths. Missing = -9999;
 MAX - Maximum temperature reported during the day converted to Celcious to
 tenths--time of max temp report varies by country and region, so this will
-sometimes not be the max for the calendar day.  Missing = -9999;
+sometimes not be the max for the calendar day. The "*" flag is dropped.
+Missing = -9999;
 MIN- Minimum temperature reported during the day converted to Celcious to
 tenths--time of min temp report varies by country and region, so this will
-sometimes not be the max for the calendar day.  Missing = -9999;
+sometimes not be the max for the calendar day.  The "*" flag is dropped.
+Missing = -9999;
 PRCP - Total precipitation (rain and/or melted snow) reported during the day
 converted to millimetres to hundredths; will usually not end with the
 midnight observation--i.e., may include latter part of previous day. .00
