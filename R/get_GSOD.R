@@ -236,8 +236,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   } else {
     # For countries or the entire set (or agroclimatology) ---------------------
     GSOD_objects <- list()
-    for (j in seq_len(nrow(GSOD_list))) {
-      if (file.exists(paste0(td, "/", yr, "/", GSOD_list[j])) != TRUE) {
+    for (j in seq_len(length(GSOD_list))) {
+      if (!file.exists(paste0(td, "/", yr, "/", GSOD_list[j])) != TRUE) {
         missing_files[] <- GSOD_list[j]
       }
       tmp <- try(.read_gz(paste0(td, "/", yr, "/", GSOD_list[j])))
@@ -366,7 +366,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                                   "COUNT.VISIB", "WDSP",
                                   "COUNT.WDSP", "MXSPD",
                                   "GUST", "MAX", "MIN", "PRCP",
-                                  "SNDP", "FRSHTT"), skip = 1,
+                                  "SNDP", "FRSHTT"),
+                    col_types = "iiidididididididdddddc", skip = 1,
                     na = c("9999.9", "999.9", "99.99"))
 }
 
