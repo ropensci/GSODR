@@ -158,9 +158,6 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   # Setting up options, creating objects, check variables entered by user-------
   options(warn = 2)
 
-  # Useful for slow connections to ftp server
-  options(timeout = 300)
-
   # Set up tempfile and directory for downloading data from server
   tf <- tempfile()
   td <- tempdir()
@@ -221,7 +218,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
         GSOD_list <- GSOD_list[GSOD_list$X9 %in% station_list == TRUE, ]
 
       } else {
-        try(.download(paste0(ftp_site, yr, "/gsod_", yr, ".tar"), tf))
+        try(curl::curl_download(url = paste0(ftp_site, yr, "/gsod_", yr, ".tar"),
+                                destfile = tf, quiet = FALSE, mode = "wb"))
         utils::untar(tarfile = tf, exdir  = paste0(td, "/", yr, "/"))
         unlink(tf)
         GSOD_list <- list.files(paste0(td, "/", yr, "/"),
@@ -231,12 +229,12 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
     }
   }
 
-  # If a single station is selected, then we only download that file------------
+  # If a single station is selected---------------------------------------------
   if (!is.null(station)) {
     tmp <- .read_gz(paste0(ftp_site, yr, "/", station, "-", yr, ".op.gz"))
     GSOD_XY <- .reformat(tmp, stations)
   } else {
-    # For countries or the entire set (or agroclimatology) download multiple----
+    # For countries or the entire set (or agroclimatology) ---------------------
     GSOD_objects <- list()
     for (j in seq_len(nrow(GSOD_list))) {
       if (file.exists(paste0(td, "/", yr, "/", GSOD_list[j])) != TRUE) {
@@ -372,25 +370,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                     na = c("9999.9", "999.9", "99.99"))
 }
 
-# the following 3 functions are shamelessly borrowed from RJ Hijmans raster pkg
+# the following 2 functions are shamelessly borrowed from RJ Hijmans raster pkg
 #
-.download <- function(aurl, filename) {
-  fn <- paste(tempfile(), .download, sep = )
-  res <- utils::download.file(url = aurl, destfile = fn, method = "auto",
-                              quiet = FALSE, mode = "wb", cacheOK = TRUE)
-  if (res == 0) {
-    w <- getOption(warn)
-    on.exit(options(warn = w))
-    options(warn = -1)
-    if (!file.rename(fn, filename) ) {
-      # rename failed, perhaps because fn and filename refer to different devices
-      file.copy(fn, filename)
-      file.remove(fn)
-    }
-  } else {
-    stop("Could not download the file")
-  }
-}
 
 .get_data_path <- function(path) {
   path <- raster::trim(path)

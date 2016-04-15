@@ -39,7 +39,7 @@ Imports:
     data.table,
     stats,
     utils,
-    RCurl
+    curl
 RoxygenNote: 5.0.1
 Suggests: knitr,
     rmarkdown
