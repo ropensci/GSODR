@@ -160,8 +160,8 @@ get_GSOD(years = c(2010:2011), path = '~/tmp', agroclimatology = TRUE)
 
 \dontrun{
 # Download data for Australia for year 2010 and generate a yearly
-# summary file, GSOD_2010_XY files in a folder named 2010 in the current
-# working directory with a maximum of five missing days per station allowed.
+# summary file, GSOD_2010_XY files in the current working directory with a
+maximum of five missing days per station allowed.
 
 get_GSOD(years = 2010, country = 'Australia')
 }

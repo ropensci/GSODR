@@ -145,8 +145,8 @@
 #'
 #'\dontrun{
 #' # Download data for Australia for year 2010 and generate a yearly
-#' # summary file, GSOD_2010_XY files in a folder named 2010 in the current
-#' # working directory with a maximum of five missing days per station allowed.
+#' # summary file, GSOD_2010_XY files in the current working directory with a
+#' maximum of five missing days per station allowed.
 #'
 #' get_GSOD(years = 2010, country = 'Australia')
 #' }
@@ -164,7 +164,6 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 
   # Create objects for use later
   GSOD_df <- NULL
-  missing_files <- list()
 
   # Check data path given by user, does it exist? Is it properly formatted?
   path <- .get_data_path(path)
@@ -201,6 +200,25 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   # For loop if there are more than one year entered ---------------------------
   for (yr in years) {
     if (is.null(station)) {
+
+      try(curl::curl_download(url = paste0(ftp_site, yr, "/gsod_", yr, ".tar"),
+                              destfile = tf, quiet = FALSE, mode = "wb"))
+      utils::untar(tarfile = tf, exdir  = paste0(td, "/", yr, "/"))
+
+      GSOD_list <- list.files(paste0(td, "/", yr, "/"),
+                              pattern = utils::glob2rx("*.gz"),
+                              full.names = FALSE)
+
+      # If agroclimatology == TRUE, subset list of stations to clean
+      if (agroclimatology == TRUE) {
+        station_list <- stations[stations$LAT > 60 & stations$LAT < 60, ]$STNID
+        station_list <- sapply(station_list,
+                               function(x) rep(paste0(x, "-", yr, ".op.gz")))
+        GSOD_list <- GSOD_list[GSOD_list %in% station_list == TRUE]
+        rm(station_list)
+      }
+
+      # If country is set, subset list of stations to clean
       if (!is.null(country)) {
         countries <- readr::read_table(
           "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/country-list.txt")[-1, c(1, 3)]
@@ -212,54 +230,40 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
         station_list <- sapply(station_list,
                                function(x) rep(paste0(x, "-", yr, ".op.gz")))
 
-        GSOD_list <- readr::read_table(paste0(ftp_site, yr, "/"),
-                                       col_names = FALSE, skip = 2)
-
-        GSOD_list <- GSOD_list[GSOD_list$X9 %in% station_list == TRUE, ]
-
-      } else {
-        try(curl::curl_download(url = paste0(ftp_site, yr, "/gsod_", yr, ".tar"),
-                                destfile = tf, quiet = FALSE, mode = "wb"))
-        utils::untar(tarfile = tf, exdir  = paste0(td, "/", yr, "/"))
-        unlink(tf)
-        GSOD_list <- list.files(paste0(td, "/", yr, "/"),
-                                pattern = utils::glob2rx("*.gz"),
-                                full.names = FALSE)
+        GSOD_list <- GSOD_list[GSOD_list %in% station_list == TRUE]
+        rm(station_list)
       }
     }
-  }
 
-  # If a single station is selected---------------------------------------------
-  if (!is.null(station)) {
-    tmp <- .read_gz(paste0(ftp_site, yr, "/", station, "-", yr, ".op.gz"))
-    GSOD_XY <- .reformat(tmp, stations)
-  } else {
-    # For countries or the entire set (or agroclimatology) ---------------------
-    GSOD_objects <- list()
-    for (j in seq_len(length(GSOD_list))) {
-      if (!file.exists(paste0(td, "/", yr, "/", GSOD_list[j])) != TRUE) {
-        missing_files[] <- GSOD_list[j]
+    # If a single station is selected---------------------- --------------------
+    if (!is.null(station)) {
+      tmp <- .read_gz(paste0(ftp_site, yr, "/", station, "-", yr, ".op.gz"))
+      GSOD_XY <- .reformat(tmp, stations)
+    } else {
+      # For a country, the entire set or agroclimatology -----------------------
+      GSOD_objects <- list()
+      for (j in seq_len(length(GSOD_list))) {
+        tmp <- try(.read_gz(paste0(td, "/", yr, "/", GSOD_list[j])))
+        # check to see if max_missing < missing days, if so, go to next
+        if (.check(tmp, yr, max_missing) == TRUE) next
+        GSOD_objects[[j]] <- .reformat(tmp, stations)
       }
-      tmp <- try(.read_gz(paste0(td, "/", yr, "/", GSOD_list[j])))
-      # check to see if max_missing < missing days, if so, go to next
-      if (.check(tmp, yr, max_missing) == TRUE) next
-      GSOD_objects[[j]] <- .reformat(tmp, stations)
     }
-  }
 
-  if (!is.null(station)) {
-    GSOD_XY <- GSOD_XY
-  } else {
-    GSOD_XY <- data.table::rbindlist(GSOD_objects)
-  }
+    if (!is.null(station)) {
+      GSOD_XY <- GSOD_XY
+    } else {
+      GSOD_XY <- data.table::rbindlist(GSOD_objects)
+    }
 
-  # Write to csv file-----------------------------------------------------------
-  if (!is.null(country)) {
-    outfile <- paste0(path, "GSOD-", country, "-", yr, ".csv")
-  } else {
-    outfile <- paste0(path, "GSOD-", yr, ".csv")
+    # Write to csv file---------------------------------------------------------
+    if (!is.null(country)) {
+      outfile <- paste0(path, "GSOD-", country, "-", yr, ".csv")
+    } else {
+      outfile <- paste0(path, "GSOD-", yr, ".csv")
+    }
+    readr::write_csv(GSOD_XY, outfile, na = "-9999")
   }
-  readr::write_csv(GSOD_XY, outfile, na = "-9999")
 }
 
 # Functions used within this package -------------------------------------------
