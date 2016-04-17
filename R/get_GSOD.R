@@ -129,8 +129,8 @@
 #'
 #' @examples
 #' # Download weather station for Toowoomba, Queensland for 2010, save resulting
-#' # file in ~/tmp.
-#' get_GSOD(years = 2010, station = "955510-99999", path = "~/tmp")
+#' # file in the current working directory.
+#' get_GSOD(years = 2010, station = "955510-99999")
 #'
 #' \dontrun{
 #' # Download global GSOD data for agroclimatology work for years 2009 and 2010
@@ -145,10 +145,10 @@
 #'
 #'\dontrun{
 #' # Download data for Australia for year 2010 and generate a yearly
-#' # summary file, GSOD_2010_XY files in the current working directory with a
+#' # summary file, GSOD_2010_XY files in a ~/tmp directory with a
 #' maximum of five missing days per station allowed.
 #'
-#' get_GSOD(years = 2010, country = 'Australia')
+#' get_GSOD(years = 2010, country = 'Australia', path = '~/tmp')
 #' }
 #' @export
 
