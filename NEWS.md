@@ -1,4 +1,4 @@
-weathR v2.5 (Release date: 2016-03-29)
+GSODR v0.1 (Release date: 2016-04-18)
 ==============
 
   Changes:

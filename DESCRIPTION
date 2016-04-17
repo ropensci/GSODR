@@ -1,6 +1,6 @@
-Package: weathR
+Package: GSODR
 Type: Package
-Title: Download, Clean and Generate New Variables from Freely Available Data
+Title: Download, Clean and Generate New Variables from GSOD data
 Version: 2.5
 Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     email = "adamhsparks@gmail.com"),
