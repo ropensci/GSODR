@@ -143,9 +143,11 @@ es - Mean daily saturation vapor pressure,
 RH - Mean daily relative humidity.
 }
 \examples{
+\dontrun{
 # Download weather station for Toowoomba, Queensland for 2010, save resulting
 # file in the current working directory.
 get_GSOD(years = 2010, station = "955510-99999")
+}
 
 \dontrun{
 # Download global GSOD data for agroclimatology work for years 2009 and 2010

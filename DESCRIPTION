@@ -41,6 +41,3 @@ Imports:
     utils,
     curl
 RoxygenNote: 5.0.1
-Suggests: knitr,
-    rmarkdown
-VignetteBuilder: knitr
