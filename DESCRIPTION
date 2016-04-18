@@ -1,7 +1,7 @@
 Package: GSODR
 Type: Package
 Title: Download, Clean and Generate New Variables from GSOD Data
-Version: 0.1
+Version: 0.1.1
 Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     email = "adamhsparks@gmail.com"),
     person("Tomislav", "Hengl", role = "ctb",
@@ -11,21 +11,32 @@ Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     person("Kay", "Sumfleth", role = "ctb",
     email = "kay@sumfleth.de"))
 Maintainer: Adam Sparks <adamhsparks@gmail.com>
-Description: Download and format weather data from USA National Climatic Data
-    GSOD weather data stations are individually checked for number of missing
-    days to assure data quality, stations with too many missing observations are
-    omitted. Due to the size of data involved, output is returned as a .csv file
-    written to disk in a location selected by the user, which summarizes each
-    year by station and includes new variables: actual and saturation vapor
-    pressure and relative humidity calculated from the original GSOD data. These
-    files can be as large as 500mb depending on your stringency for missing data
-    and geographic area of interest. Be sure to have sufficient RAM and disk
-    space to use this package to perform this operation. However, for much
+Description: Download, clean and reformat weather data from USA National
+    Climatic Data Center (NCDC) Global Surface Summary of the Day (GSOD) weather
+    stations,
+    <https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod>.
+    The function, get_GSOD(), retrieves data from the GSOD ftp site and
+    reformats it from United States customary system (USCS) units to metric
+    units, also for convenience elevation is converted from decimetres to
+    metres. Stations are individually checked for number of missing days, as
+    defined by the user, to assure data quality. Stations with too many missing
+    observations are omitted from final file. Also omitted are stations with a
+    latitude of < -90 or > 90 or longitude of < - 180 or > 180. Output is
+    returned as a .csv file, written to disk in a location selected by the user,
+    which summarises each year by station and includes new variables: actual and
+    saturation vapor pressure and relative humidity calculated from the original
+    GSOD data. The resulting files can be as large as 500mb depending on the
+    users stringency for missing data and geographic area of interest. Be sure
+    to have sufficient RAM and disk space as well as a reasonably fast internet
+    connection to use this package to perform this operation. However, for much
     smaller and more manageable data sets, an individual country of interest may
     be selected as well as only stations falling between -60/60 degrees latitude
     for agroclimatology work (this is the default behaviour). The output .csv
     files include station data (e.g., station name, country, latitude,
-    longitude, elevation) for use in a GIS.
+    longitude, elevation) for use in a GIS. The function was largely based on T.
+    Hengl's "getGSOD.R" script, available from
+    <http://spatial-analyst.net/book/system/files/getGSOD.R> with
+    enhancements to be more cross-platform, faster and a bit more flexible.
 Depends:
     R (>= 3.0.0)
 License: GPL (>= 3)

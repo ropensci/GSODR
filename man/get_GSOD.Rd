@@ -30,17 +30,19 @@ include only stations within the confines of these latitudes.}
 }
 \description{
 This function automates downloading and cleaning data from the
-Global Summary of the Day (GSOD) data provided by the US National Climatic
-Data Center (NCDC). Stations are individually checked for number of missing
-days to assure data quality, stations with too many missing observations are
-omitted, stations with a Latitude of +/- 90 or Longitude of +/- 180 are
-removed. All units are converted to metric, e.g. Fahrenheit to Celcius and
-inches to milimetres. For convience elevation is converted from decimetres to
-metres.
+Global Surface Summary of the Day (GSOD) data provided by the US National
+Climatic Data Center (NCDC),
+\url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod}.
+Stations are individually checked for number of missing days to assure data
+quality, stations with too many missing observations are omitted, stations
+with a latitude of < -90 or > 90 or longitude of < -180 or > 180 are removed.
+All units are converted to metric, e.g. Fahrenheit to Celcius and inches to
+millimetres. For convenience elevation is converted from decimetres to metres.
+
 Due to the size of the resulting data, output is saved as a .csv file in a
-directory specified by the user, the .csv file summarizes each year by
-station, which includes vapor pressure and relative humidity variables
-calculated from existing data in GSOD.
+directory specified by the user or defaults to the current working directory.
+The .csv file summarizes each year by station, which includes vapor pressure
+and relative humidity variables calculated from existing data in GSOD.
 
 All missing values in resulting csv files are represented as -9999 regardless
 of which column they occur in.
