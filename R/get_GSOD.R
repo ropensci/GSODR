@@ -132,24 +132,24 @@
 #' @examples
 #' \dontrun{
 #' # Download weather station for Toowoomba, Queensland for 2010, save resulting
-#' # file in the current working directory.
+#' # file in the user's Downloads directory.
 #'
-#' get_GSOD(years = 2010, station = "955510-99999")
+#' get_GSOD(years = 2010, station = "955510-99999", path = "~/Downloads")
 #'
 #'
 #' # Download global GSOD data for agroclimatology work for years 2009 and 2010
 #' # and generate yearly summary files, GSOD_2009_XY and GSOD_2010_XY in folders
-#' # named 2009 and 2010 in the specified working directory with a maximum of
+#' # named 2009 and 2010 in the user's Downloads directory with a maximum of
 #' # five missing days per weather station allowed.
 #'
-#' get_GSOD(years = 2010:2011, path = "~/tmp", agroclimatology = TRUE)
+#' get_GSOD(years = 2010:2011, path = "~/Downloads", agroclimatology = TRUE)
 #'
 #'
 #' # Download data for Australia for year 2010 and generate a yearly
-#' # summary file, GSOD_2010_XY files in a ~/tmp directory with a
+#' # summary file, GSOD_2010_XY files in the user's Downloads directory with a
 #' maximum of five missing days per station allowed.
 #'
-#' get_GSOD(years = 2010, country = "Australia", path = "~/tmp")
+#' get_GSOD(years = 2010, country = "Australia", path = "~/Downloads")
 #' }
 #' @export
 
@@ -318,14 +318,14 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   tmp$MIN <- as.numeric(stringr::str_sub(tmp$MIN, 1, 4))
   tmp$MIN <- ifelse(!is.na(tmp$MIN), round( (tmp$MIN - 32) * (5 / 9), 2),
                     NA_integer_)
-  tmp$PRCP <- ifelse(!is.na(tmp$PRCP), round( (tmp$PRCP * 25.4) *10, 1),
+  tmp$PRCP <- ifelse(!is.na(tmp$PRCP), round( (tmp$PRCP * 25.4) * 10, 1),
                      NA_integer_)
   tmp$SNDP <- ifelse(!is.na(tmp$SNDP), round( (tmp$SNDP * 25.4) * 10, 1),
                      NA_integer_)
 
   tmp$FLAGS.PRCP <- stringr::str_sub(tmp$PRCP, 5)
   indicators <- data.frame(matrix(as.numeric(unlist(
-    stringr::str_split(tmp$FRSHTT,""))), byrow = TRUE, ncol = 6))
+    stringr::str_split(tmp$FRSHTT, ""))), byrow = TRUE, ncol = 6))
   colnames(indicators) <- c("INDICATOR.FOG", "INDICATOR.RAIN",
                             "INDICATOR.SNOW", "INDICATOR.HAIL",
                             "INDICATOR.THUNDER", "INDICATOR.TORNADO")
@@ -335,9 +335,9 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   # Mean actual (EA) and mean saturation vapour pressure (ES)
   # http://www.apesimulator.it/help/models/evapotranspiration/
   # EA derived from dewpoint
-  tmp$EA <- round(0.61078 * exp((17.2694 * tmp$DEWP) / (tmp$DEWP + 237.3)), 1)
+  tmp$EA <- round(0.61078 * exp( (17.2694 * tmp$DEWP) / (tmp$DEWP + 237.3)), 1)
   # ES derived from average temperature
-  tmp$ES <- round(0.61078 * exp((17.2694 * tmp$TEMP) / (tmp$TEMP + 237.3)), 1)
+  tmp$ES <- round(0.61078 * exp( (17.2694 * tmp$TEMP) / (tmp$TEMP + 237.3)), 1)
 
   # Calculate relative humidity
   tmp$RH <- round(tmp$EA / tmp$ES * 100, 1)
@@ -382,7 +382,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 .get_data_path <- function(path) {
   path <- raster::trim(path)
   if (path == "") {
-    path <- getwd()
+    stop("\nYou must supply a valid file path for storing the .csv file")
   } else {
     if (substr(path, nchar(path) - 1, nchar(path)) == "//") {
       p <- substr(path, 1, nchar(path) - 2)
@@ -453,4 +453,3 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
     }
   }
 }
-
