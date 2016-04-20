@@ -1,9 +1,7 @@
 ## Resubmission
 This is a resubmission. In this version I have:
 
-* Added the full name of GSOD (Global Surface Summary of the Day) to the DESCRIPTION file
-
-* Modified the default behaviour of the package to stop and ask the user to specify a location in which they wish for the output file to be written
+* Added single quotes, " ' ", around possibly misspelled words in the DESCRIPTION file and also spelled out "comma-separated values" (CSV) and "Geographic Information System" (GIS).
 
 ## Test environments
 * local OS X install, R 3.2.4

@@ -22,21 +22,22 @@ Description: Download, clean and reformat weather data from USA National
     defined by the user, to assure data quality. Stations with too many missing
     observations are omitted from final file. Also omitted are stations with a
     latitude of < -90 or > 90 or longitude of < - 180 or > 180. Output is
-    returned as a .csv file, written to disk in a location selected by the user,
-    which summarises each year by station and includes new variables: actual and
-    saturation vapor pressure and relative humidity calculated from the original
-    GSOD data. The resulting files can be as large as 500mb depending on the
-    users stringency for missing data and geographic area of interest. Be sure
-    to have sufficient RAM and disk space as well as a reasonably fast internet
-    connection to use this package to perform this operation. However, for much
-    smaller and more manageable data sets, an individual country of interest may
-    be selected as well as only stations falling between -60/60 degrees latitude
-    for agroclimatology work (this is the default behaviour). The output .csv
-    files include station data (e.g., station name, country, latitude,
-    longitude, elevation) for use in a GIS. The function was largely based on T.
-    Hengl's "getGSOD.R" script, available from
-    <http://spatial-analyst.net/book/system/files/getGSOD.R> with
-    enhancements to be more cross-platform, faster and a bit more flexible.
+    returned as a comma-separated values (CSV) file written to disk in a
+    location selected by the user, which summarises each year by station and
+    includes new variables: actual and saturation vapor pressure and relative
+    humidity calculated from the original GSOD data. The resulting files can be
+    as large as 500mb depending on the user's stringency for missing data and
+    geographic area of interest. Be sure to have sufficient RAM and disk space
+    as well as a reasonably fast internet connection to use this package to
+    perform this operation. However, for much smaller and more manageable data
+    sets, an individual country of interest may be selected as well as only
+    stations falling between -60/60 degrees latitude for agroclimatology work.
+    The resulting files include station data (e.g., station name, country,
+    latitude, longitude, elevation) for use in a geographic information system
+    (GIS). The function was largely based on T. Hengl's 'getGSOD.R' script,
+    available from
+    <http://spatial-analyst.net/book/system/files/getGSOD.R> with enhancements
+    to be more cross-platform, faster and more flexible.
 Depends:
     R (>= 3.0.0)
 License: GPL (>= 3)
