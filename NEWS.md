@@ -1,4 +1,9 @@
-GSODR (Release date: 2016-04-20)
+GSODR v0.1.1 (Release date: 2016-04-21)
+==============
+  Changes:
+  * Now available on CRAN
+  
+GSODR v0.1.1 (Release date: 2016-04-21)
 ==============
 
   Changes:
