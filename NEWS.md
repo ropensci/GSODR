@@ -1,3 +1,8 @@
+GSODR v0.1.2 2016-05-03
+==============
+  Changes:
+  * Bug fix for country selection
+
 GSODR v0.1.1 (Release date: 2016-04-21)
 ==============
   Changes:

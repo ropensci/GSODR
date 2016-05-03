@@ -408,28 +408,36 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   country <- toupper(raster::trim(country[1]))
   cs <- raster::ccodes()
   cs <- toupper(cs)
-  iso3 <- substr(country, 1, 3)
-  if (iso3 %in% cs[, 2]) {
-    return(iso3)
-  } else {
-    iso2 <- substr(country, 1, 2)
-    if (iso2 %in% cs[, 3]) {
-      i <- which(country == cs[, 3])
-      return( cs[i, 2] )
-    } else if (country %in% cs[, 1]) {
-      i <- which(country == cs[, 1])
-      return( cs[i, 2] )
-    } else if (country %in% cs[, 4]) {
-      i <- which(country == cs[, 4])
-      return( cs[i, 2] )
-    } else if (country %in% cs[, 5]) {
-      i <- which(country == cs[, 5])
-      return( cs[i, 2])
+  nc <- nchar(country)
+
+  if (nc == 3) {
+    if (country %in% cs[, 2]) {
+      return(country)
     } else {
-      stop("\nPlease provide a valid name or 3 letter ISO country code;
-           you can get a list with: getData('ISO3')")
-      return(0)
+      stop("\nUnknown ISO code. Please provide a valid name or 2 or 3 letter ISO
+country code; you can get a list by using: getData('ISO3')")
     }
+  } else if (nc == 2) {
+    if (country %in% cs[, 3]) {
+      i <- which(country == cs[, 3])
+      return(cs[i, 2])
+    } else {
+      stop("\nUnknown ISO code. Please provide a valid name or 2 or 3 letter ISO
+country code; you can get a list by using: getData('ISO3')")
+    }
+  } else if (country %in% cs[, 1]) {
+    i <- which(country == cs[, 1])
+    return(cs[i, 2])
+  } else if (country %in% cs[, 4]) {
+    i <- which(country == cs[, 4])
+    return(cs[i, 2] )
+  } else if (country %in% cs[, 5]) {
+    i <- which(country == cs[, 5])
+    return(cs[i, 2])
+  } else {
+    stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you
+can get a list by using: getData('ISO3')")
+    return(0)
   }
 }
 
