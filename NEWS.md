@@ -1,7 +1,12 @@
+GSODR v0.1.2 2016-05-04
+==============
+  Changes:
+  * Bug fix if Agroclimatology selected. Previously this resulted in no records.
+  
 GSODR v0.1.2 2016-05-03
 ==============
   Changes:
-  * Bug fix for country selection
+  * Bug fix for country selection. Some countries did not return proper ISO code.
 
 GSODR v0.1.1 (Release date: 2016-04-21)
 ==============

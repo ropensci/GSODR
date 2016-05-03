@@ -212,7 +212,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 
       # If agroclimatology == TRUE, subset list of stations to clean
       if (agroclimatology == TRUE) {
-        station_list <- stations[stations$LAT > 60 & stations$LAT < 60, ]$STNID
+        station_list <- stations[stations$LAT >= -60 &
+                                   stations$LAT <= 60, ]$STNID
         station_list <- sapply(station_list,
                                function(x) rep(paste0(x, "-", yr, ".op.gz")))
         GSOD_list <- GSOD_list[GSOD_list %in% station_list == TRUE]
