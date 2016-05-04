@@ -380,7 +380,11 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 }
 
 # the following 2 functions are shamelessly borrowed from RJ Hijmans raster pkg
-#
+# Download geographic data and return as R object
+# Author: Robert J. Hijmans
+# License GPL3
+# Version 0.9
+# October 2008
 
 .get_data_path <- function(path) {
   path <- raster::trim(path)
@@ -407,6 +411,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   return(path)
 }
 
+# Original version as above from R J Hijmans.
+# Bug fixes by A H Sparks for 2 letter ISO code
 .get_country <- function(country = "") {
   country <- toupper(raster::trim(country[1]))
   cs <- raster::ccodes()
@@ -444,7 +450,9 @@ can get a list by using: getData('ISO3')")
   }
 }
 
-# Adapted from weatherData package, validity_checks.R
+# Ram Narasimhan
+# Version 0.4
+# License: GPL
 # https://github.com/Ram-N/weatherData/blob/master/R/validity_checks.R
 .validate_years <- function(years){
   this_year <- 1900 + as.POSIXlt(Sys.Date())$year
