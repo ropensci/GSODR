@@ -1,4 +1,3 @@
-
 ## New minor release
 This is a new minor release. In this version I have:
   * Fixed a bug when importing isd-history.csv file. Previous issues caused all lat/lon/elev values to be >0. Values now range between -90/90 latitude and -180/180 longitude.

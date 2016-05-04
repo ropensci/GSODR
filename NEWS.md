@@ -1,4 +1,4 @@
-GSODR v0.1.2 2016-05-04
+GSODR v0.1.2 2016-05-05
 ==============
   Changes:
   * Bug fix in importing isd-history.csv file. Previous issues caused all lat/lon/elev values to be >0.
