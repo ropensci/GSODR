@@ -1,7 +1,6 @@
 GSODR v0.1.2 2016-05-04
 ==============
   Changes:
-  * Bug fix for ALL records. Previously only values > 0 lat/lon were reported. Corrected.
   * Bug fix if Agroclimatology selected. Previously this resulted in no records.
   
 GSODR v0.1.2 2016-05-03
