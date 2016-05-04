@@ -1,10 +1,13 @@
-## Resubmission
-This is a resubmission. In this version I have:
 
-* Added single quotes, " ' ", around possibly misspelled words in the DESCRIPTION file and also spelled out "comma-separated values" (CSV) and "Geographic Information System" (GIS).
-
+## New minor release
+This is a new minor release. In this version I have:
+  * Fixed a bug when importing isd-history.csv file. Previous issues caused all lat/lon/elev values to be >0. Values now range between -90/90 latitude and -180/180 longitude.
+  * Fixed a bug where WDSP was mistyped as WDPS causing the creation of a new column, rather than the conversion of the existing
+  * Fixed a bug if Agroclimatology selected. Previously this resulted in no records being returned. It now returns stations between -60/60 latitude.
+  * Fixed a bug for country selection. Some countries did not return proper ISO code. All countries now should return a valid code.
+  
 ## Test environments
-* local OS X install, R 3.2.4
+* local OS X install, R 3.2.5
 * ubuntu 12.04 (on travis-ci), R 3.2.4
 * win-builder (devel and release)
 
@@ -12,11 +15,11 @@ This is a resubmission. In this version I have:
 
 0 errors | 0 warnings | 1 note
 
-* This is a new release.
+devtools::build_win()
 
 ## Reverse dependencies
 
-This is a new release, so there are no reverse dependencies.
+There are no reverse dependencies.
 
 ---
 ## Downstream dependencies

@@ -53,3 +53,4 @@ Imports:
     utils,
     curl
 RoxygenNote: 5.0.1
+Encoding: UTF-8
