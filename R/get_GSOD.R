@@ -188,9 +188,11 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   # Fetch station data from the ftp server so that we have most recent verion---
   stations <- readr::read_csv(
     "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
-    col_types = "cccc__nnn__",
+    col_types = "cccc__ddd__",
     col_names = c("USAF", "WBAN", "STATION.NAME", "CTRY", "LAT", "LON",
-                  "ELEV.M"), skip = 1, na = c("-999.9", "999"))
+                  "ELEV.M"),
+    skip = 1)
+  is.na(stations) <- stations == -999.9 | stations == -999.0
   stations <- stations[stats::complete.cases(stations), ]
   stations <- stations[stations$CTRY != "", ]
   stations <- stations[stations$LAT != 0 & stations$LON != 0, ]
@@ -303,7 +305,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                      NA_integer_)
   tmp$DEWP <- ifelse(!is.na(tmp$DEWP), round( (tmp$DEWP - 32) * (5 / 9), 1),
                      NA_integer_)
-  tmp$WDPS <- ifelse(!is.na(tmp$WDSP), round(tmp$WDSP * 0.514444444, 1),
+  tmp$WDSP <- ifelse(!is.na(tmp$WDSP), round(tmp$WDSP * 0.514444444, 1),
                      NA_integer_)
   tmp$MXSPD <- ifelse(!is.na(tmp$MXSPD), round(tmp$MXSPD * 0.514444444, 1),
                       NA_integer_)
