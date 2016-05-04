@@ -1,6 +1,8 @@
 GSODR v0.1.2 2016-05-04
 ==============
   Changes:
+  * Bug fix in importing isd-history.csv file. Previous issues caused all lat/lon/elev values to be >0.
+  * Bug fix where WDSP was mistyped as WDPS causing the creation of a new column, rather than the conversion of the existing
   * Bug fix if Agroclimatology selected. Previously this resulted in no records.
   
 GSODR v0.1.2 2016-05-03
