@@ -188,14 +188,12 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   # Fetch station data from the ftp server so that we have most recent verion---
   stations <- readr::read_csv(
     "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
-    col_types = "cccc__nnn__",
-    col_names = c("USAF", "WBAN", "STATION.NAME", "CTRY", "LAT", "LON",
-                  "ELEV.M"), skip = 1, na = c("-999.9", "999"))
+    na = c("-999.9", "999"))
   stations <- stations[stats::complete.cases(stations), ]
   stations <- stations[stations$CTRY != "", ]
   stations <- stations[stations$LAT != 0 & stations$LON != 0, ]
-  stations <- stations[stations$LON > -180 & stations$LON < 180, ]
-  stations <- stations[stations$LAT > -90 & stations$LAT < 90, ]
+  stations <- stations[stations$LON >= -180 & stations$LON <= 180, ]
+  stations <- stations[stations$LAT >= -90 & stations$LAT <= 90, ]
   stations$STNID <- paste(stations$USAF, stations$WBAN, sep = "-")
 
   # For loop if there are more than one year entered ---------------------------
