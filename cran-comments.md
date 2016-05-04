@@ -5,6 +5,7 @@ This is a new minor release. In this version I have:
   * Fixed a bug where WDSP was mistyped as WDPS causing the creation of a new column, rather than the conversion of the existing
   * Fixed a bug if Agroclimatology selected. Previously this resulted in no records being returned. It now returns stations between -60/60 latitude.
   * Fixed a bug for country selection. Some countries did not return proper ISO code. All countries now should return a valid code.
+  * Set default encoding to UTF8.
   
 ## Test environments
 * local OS X install, R 3.2.5

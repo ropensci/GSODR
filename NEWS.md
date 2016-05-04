@@ -4,10 +4,7 @@ GSODR v0.1.2 2016-05-04
   * Bug fix in importing isd-history.csv file. Previous issues caused all lat/lon/elev values to be >0.
   * Bug fix where WDSP was mistyped as WDPS causing the creation of a new column, rather than the conversion of the existing
   * Bug fix if Agroclimatology selected. Previously this resulted in no records.
-  
-GSODR v0.1.2 2016-05-03
-==============
-  Changes:
+  * Set the default encoding to UTF8.
   * Bug fix for country selection. Some countries did not return proper ISO code.
 
 GSODR v0.1.1 (Release date: 2016-04-21)
