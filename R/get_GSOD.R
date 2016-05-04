@@ -266,7 +266,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
     } else {
       outfile <- paste0(path, "GSOD-", yr, ".csv")
     }
-    readr::write_csv(GSOD_XY, outfile, na = "-9999")
+    write.csv(GSOD_XY, outfile, na = "-9999")
   }
 }
 

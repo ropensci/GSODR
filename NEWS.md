@@ -6,6 +6,7 @@ GSODR v0.1.2 2016-05-04
   * Bug fix if Agroclimatology selected. Previously this resulted in no records.
   * Set the default encoding to UTF8.
   * Bug fix for country selection. Some countries did not return proper ISO code.
+  * Use write.csv, not readr::write_csv due to issue converting double to string: https://github.com/hadley/readr/issues/387
 
 GSODR v0.1.1 (Release date: 2016-04-21)
 ==============
