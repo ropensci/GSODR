@@ -1,0 +1,20 @@
+#---------------------------------#
+#      general configuration      #
+#---------------------------------#
+
+# version format
+version: {build}
+
+#---------------------------------#
+#         notifications           #
+#---------------------------------#
+
+notifications:
+
+  # Email
+  - provider: Email
+    to:
+      - adamhsparks@gmail.com
+    subject: 'Build {{status}}'                  # optional
+    message: "{{message}}, {{commitId}}, ..."    # optional
+    on_build_status_changed: true
