@@ -375,7 +375,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                                   "COUNT.WDSP", "MXSPD",
                                   "GUST", "MAX", "MIN", "PRCP",
                                   "SNDP", "FRSHTT"),
-                    col_types = "iiidididididididdddddc", skip = 1,
+                    col_types = "iiidididididididdddcdc", skip = 1,
                     na = c("9999.9", "999.9", "99.99"))
 }
 
