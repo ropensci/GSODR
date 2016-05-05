@@ -2,7 +2,7 @@
 
 [![Travis-CI Build Status](https://travis-ci.org/adamhsparks/GSODR.svg?branch=master)](https://travis-ci.org/adamhsparks/GSODR)
 [![Build status](https://ci.appveyor.com/api/projects/status/8daqtllo2sg6me07/branch/master)](https://ci.appveyor.com/project/adamhsparks/GSODR/branch/master)
-[![codecov.io](https://codecov.io/github/adamhsparks/GSODR/coverage.svg?branch=master)](https://codecov.io/github/adamhsparks/GSODR?branch=master)
+[![codecov](https://codecov.io/gh/adamhsparks/GSODR/branch/master/graph/badge.svg)](https://codecov.io/gh/adamhsparks/GSODR)
 [![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/GSODR?color=C9A115)](https://github.com/metacran/cranlogs.app)
 [![cran version](http://www.r-pkg.org/badges/version/GSODR)](http://cran.rstudio.com/package=GSODR)
 
