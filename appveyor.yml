@@ -5,6 +5,29 @@
 # version format
 version: 0.1.2
 
+environment:
+  R_CHECK_ARGS: --no-build-vignettes --no-manual
+  _R_CHECK_FORCE_SUGGESTS_: FALSE
+
+init:
+  ps: |
+        $ErrorActionPreference = "Stop"
+        Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
+        Import-Module '..\appveyor-tool.ps1'
+install:
+  ps: Bootstrap
+
+build_script:
+  - travis-tool.sh install_deps
+  - travis-tool.sh r_binary_install proto rgdal
+
+test_script:
+  - travis-tool.sh run_tests
+
+on_failure:
+  - travis-tool.sh dump_logs
+
+
 #---------------------------------#
 #         notifications           #
 #---------------------------------#
