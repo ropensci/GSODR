@@ -242,6 +242,11 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
     # If a single station is selected---------------------- --------------------
     if (!is.null(station)) {
       tmp <- .read_gz(paste0(ftp_site, yr, "/", station, "-", yr, ".op.gz"))
+      tmp <- tidyr::separate(data = tmp, col = "PRCP", sep = 4,
+                              into = c("PRCP", "FLAGS.PRCP"))
+      tmp$MAX <- as.double(unlist(strsplit(tmp$MAX, "[\\*]")))
+      tmp$MIN <- as.double(unlist(strsplit(tmp$MIN, "[\\*]")))
+      tmp$PRCP <- as.double(tmp$PRCP)
       GSOD_XY <- .reformat(tmp, stations)
     } else {
       # For a country, the entire set or agroclimatology -----------------------
@@ -266,7 +271,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
     } else {
       outfile <- paste0(path, "GSOD-", yr, ".csv")
     }
-    utils::write.csv(GSOD_XY, outfile, na = "-9999", row.names = FALSE)
+    utils::write.csv(GSOD_XY, outfile, na = "-9999.99", row.names = FALSE)
   }
 }
 
@@ -290,8 +295,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 
 # Reformat and generate new variables
 .reformat <- function(tmp, stations) {
-  STN <- WBAN <- YEARMODA <- TEMP <- DEWP <- WDSP <- MXSPD <- MAX <-  MIN <-
-    PRCP <- SNDP <- VISIB <- NULL
+  STN <- WBAN <- YEARMODA <- TEMP <- DEWP <- WDSP <- MXSPD <- SNDP <-
+    VISIB <- NULL
   # Clean up and convert the station and weather data to metric
   tmp <- dplyr::mutate(tmp, STNID = paste(tmp$STN, tmp$WBAN, sep = "-"))
   tmp <- tmp[, -2]
@@ -315,10 +320,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                      NA_integer_)
   tmp$GUST <- ifelse(!is.na(tmp$GUST), round(tmp$GUST * 0.514444444, 1),
                      NA_integer_)
-  tmp$MAX <- as.numeric(stringr::str_sub(tmp$MAX, 1, 4))
   tmp$MAX <- ifelse(!is.na(tmp$MAX), round( (tmp$MAX - 32) * (5 / 9), 2),
                     NA_integer_)
-  tmp$MIN <- as.numeric(stringr::str_sub(tmp$MIN, 1, 4))
   tmp$MIN <- ifelse(!is.na(tmp$MIN), round( (tmp$MIN - 32) * (5 / 9), 2),
                     NA_integer_)
   tmp$PRCP <- ifelse(!is.na(tmp$PRCP), round( (tmp$PRCP * 25.4) * 10, 1),
@@ -326,7 +329,6 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   tmp$SNDP <- ifelse(!is.na(tmp$SNDP), round( (tmp$SNDP * 25.4) * 10, 1),
                      NA_integer_)
 
-  tmp$FLAGS.PRCP <- stringr::str_sub(tmp$PRCP, 5)
   indicators <- data.frame(matrix(as.numeric(unlist(
     stringr::str_split(tmp$FRSHTT, ""))), byrow = TRUE, ncol = 6))
   colnames(indicators) <- c("INDICATOR.FOG", "INDICATOR.RAIN",
@@ -375,8 +377,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                                   "COUNT.WDSP", "MXSPD",
                                   "GUST", "MAX", "MIN", "PRCP",
                                   "SNDP", "FRSHTT"),
-                    col_types = "iiidididididididdddcdc", skip = 1,
-                    na = c("9999.9", "999.9", "99.99"))
+                    col_types = "iiidididididididdcccdc", skip = 1,
+                    na = c("9999.9", "999.9", "99.99", "9.99"))
 }
 
 # the following 2 functions are shamelessly borrowed from RJ Hijmans raster pkg

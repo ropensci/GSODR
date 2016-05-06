@@ -1,7 +1,7 @@
 Package: GSODR
 Type: Package
 Title: Download, Clean and Generate New Variables from GSOD Data
-Version: 0.1.2
+Version: 0.1.3
 Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     email = "adamhsparks@gmail.com"),
     person("Tomislav", "Hengl", role = "ctb",
@@ -42,15 +42,16 @@ Depends:
     R (>= 3.0.0)
 License: GPL (>= 3)
 Imports:
+    countrycode,
+    curl,
+    data.table,
     dplyr,
     lubridate,
-    stringr,
-    readr,
-    countrycode,
     raster,
-    data.table,
+    readr,
     stats,
-    utils,
-    curl
+    stringr,
+    tidyr,
+    utils
 RoxygenNote: 5.0.1
 Encoding: UTF-8

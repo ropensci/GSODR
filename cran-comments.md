@@ -9,6 +9,9 @@ There were no ERRORs or WARNINGs.
 
 ## New minor release
 This is a new minor release. In this version I have:
+  * Set NA to -9999.99
+  * Fixed a bug in MIN/MAX with flags. Some columns have differing widths, which caused a flag to be left attached to some values
+  * Correct URL in README.md for CRAN to point to CRAN not GitHub
   * Fixed a bug when importing isd-history.csv file. Previous issues caused all lat/lon/elev values to be >0. Values now range between -90/90 latitude and -180/180 longitude.
   * Fixed a bug where WDSP was mistyped as WDPS causing the creation of a new column, rather than the conversion of the existing
   * Fixed a bug if Agroclimatology selected. Previously this resulted in no records being returned. It now returns stations between -60/60 latitude.
