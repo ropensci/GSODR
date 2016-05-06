@@ -13,7 +13,13 @@ Be sure to have disk space free and allocate the proper time for this to run. Th
 
 For more information see the description of the data provided by NCDC, http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt.
 
-##To install this package
+## To install this package
+### Stable release from CRAN
+GSODR is available on cran.
+
+`install.packages("GSODR", dep = TRUE)`
+
+### The development version from GitHub
 Install the devtools package, available from CRAN.
 
 `install.packages("devtools")`
