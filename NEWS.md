@@ -1,10 +1,11 @@
-GSODR v0.1.3 2016-05-06
+GSODR v0.1.3 (Release date: 2016-05-06)
+==============
 Changes
   * Set NA to -9999.99
   * Bug fix in MIN/MAX with flags. Some columns have differing widths, which caused a flag to be left attached to some values
   * Correct URL in README.md for CRAN to point to CRAN not GitHub
   
-GSODR v0.1.2 2016-05-05
+GSODR v0.1.2 (Release date: 2016-05-05)
 ==============
   Changes:
   * Bug fix in importing isd-history.csv file. Previous issues caused all lat/lon/elev values to be >0.

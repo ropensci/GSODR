@@ -2,7 +2,7 @@
 * local OS X install, R 3.3.0
 * Ubuntu 12.04 (on travis-ci), R 3.3.0
 * win-builder (release)
-* There currently is no devel version
+* win-builder (devel)
 
 ## R CMD check results
 There were no ERRORs or WARNINGs. 
