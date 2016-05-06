@@ -35,6 +35,6 @@ Use `install_github("author/package")` to install this package.
 ##Using get_GSOD()
 See `?get_GSOD()` for the help file.
 
-Example from help file, to download data for years 2009 and 2010 and generate yearly summary files, GSOD_TP2009_XY and GSOD_TP2010_XY files in folders 2009 and 2010 of your Downloads directory with a maximum of five missing days per weather station allowed.
+Example from help file, to download data for years 2009 and 2010 and generate yearly summary files, GSOD_2009 and GSOD_2010 files in your Downloads directory with a maximum of five missing days per weather station allowed.
 
 `get_GSOD(years = 2009:2010, max_missing = 5, path = "~/Downloads")`
