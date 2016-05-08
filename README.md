@@ -15,7 +15,7 @@ For more information see the description of the data provided by NCDC, http://ww
 
 ## To install this package
 ### Stable release from CRAN
-GSODR is available on cran.
+GSODR is available on CRAN.
 
 `install.packages("GSODR", dep = TRUE)`
 
