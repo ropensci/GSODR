@@ -160,7 +160,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   options(warn = 2)
 
   # Set up tempfile and directory for downloading data from server
-  tf <- tempfile()
+  tf <- "~/tmp/GSOD-2010.tar"
   td <- tempdir()
 
   # Create objects for use later
@@ -255,6 +255,11 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
         tmp <- try(.read_gz(paste0(td, "/", yr, "/", GSOD_list[j])))
         # check to see if max_missing < missing days, if so, go to next
         if (.check(tmp, yr, max_missing) == TRUE) next
+        tmp <- tidyr::separate(data = tmp, col = "PRCP", sep = 4,
+                               into = c("PRCP", "FLAGS.PRCP"))
+        tmp$MAX <- as.double(unlist(strsplit(tmp$MAX, "[\\*]")))
+        tmp$MIN <- as.double(unlist(strsplit(tmp$MIN, "[\\*]")))
+        tmp$PRCP <- as.double(tmp$PRCP)
         GSOD_objects[[j]] <- .reformat(tmp, stations)
       }
     }

@@ -1,3 +1,11 @@
+
+GSODR v0.1.4 (Release date: 2016-05-09)
+==============
+
+Changes
+  * Fixed bug related to MIN/MAX columns when agroclimatology or all stations are selected where flags were not removed properly from numeric values.
+  * Add more detail to DESCRIPTION regarding flags found in original GSOD data.
+
 GSODR v0.1.3 (Release date: 2016-05-06)
 ==============
 Changes
