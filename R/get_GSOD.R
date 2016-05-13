@@ -244,12 +244,16 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
     if (!is.null(station)) {
       tmp <- .read_gz(paste0(ftp_site, yr, "/", station, "-", yr, ".op.gz"))
       tmp <- tidyr::separate(data = tmp, col = "PRCP", sep = 4,
-                              into = c("PRCP", "FLAGS.PRCP"))
+                             into = c("PRCP", "FLAGS.PRCP"))
       tmp$MAX <- as.double(unlist(strsplit(tmp$MAX, "[\\*]")))
       tmp$MIN <- as.double(unlist(strsplit(tmp$MIN, "[\\*]")))
       tmp$PRCP <- as.double(tmp$PRCP)
       tmp$MAX[tmp$MAX == 99] <- NA
       tmp$MIN[tmp$MIN == 99] <- NA
+      if (tmp$MIN > tmp$MAX) {
+        tmp$MAX <- NA
+        tmp$MIN <- NA
+      }
       GSOD_XY <- .reformat(tmp, stations)
     } else {
       # For a country, the entire set or agroclimatology -----------------------
@@ -265,6 +269,10 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
         tmp$PRCP <- as.double(tmp$PRCP)
         tmp$MAX[tmp$MAX == 99] <- NA
         tmp$MIN[tmp$MIN == 99] <- NA
+        if (tmp$MIN > tmp$MAX) {
+          tmp$MAX <- NA
+          tmp$MIN <- NA
+        }
         GSOD_objects[[j]] <- .reformat(tmp, stations)
       }
     }
