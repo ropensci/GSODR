@@ -41,11 +41,11 @@ millimetres. For convenience elevation is converted from decimetres to metres.
 
 Due to the size of the resulting data, output is saved as a .csv file in a
 directory specified by the user or defaults to the current working directory.
-The .csv file summarizes each year by station, which includes vapor pressure
+The .csv file summarizes each year by station, which includes vapour pressure
 and relative humidity variables calculated from existing data in GSOD.
 
-All missing values in resulting csv files are represented as -9999 regardless
-of which column they occur in.
+All missing values in resulting csv files are represented as -9999.99
+regardless of which column they occur in.
 
 Be sure to have disk space free and allocate the proper time for this to run.
 This is a time, processor and disk input/output/space intensive process.
@@ -66,8 +66,8 @@ containing the following variables:
 STNID - Station number (WMO/DATSAV3 number) for the location;
 WBAN - number where applicable--this is the historical "Weather Bureau Air
 Force Navy" number - with WBAN being the acronym;
-STATION NAME
-CTRY - Country
+STATION NAME;
+CTRY - Country;
 LAT - Latitude;
 LON - Longitude;
 ELEV.M - Elevation converted to metres;
@@ -77,59 +77,60 @@ MONTH - The month;
 DAY - The day;
 YDAY - Sequential day of year (not in original GSOD);
 TEMP - Mean daily temperature converted to degrees C to tenths. Missing =
--9999;
+-9999.99;
 COUNT.TEMP - Number of observations used in calculating mean daily
-temperature
-DEWP-  Mean daily dewpoint convrted to degrees C to tenths. Missing = -9999;
+temperature;
+DEWP-  Mean daily dewpoint converted to degrees C to tenths. Missing =
+-9999.99;
 COUNT.DEWP - Number of observations used in calculating mean daily dew point;
-SLP - Mean sea level pressure in millibars to tenths. Missing = -9999;
+SLP - Mean sea level pressure in millibars to tenths. Missing = -9999.99;
 COUNT.SLP - Number of observations used in calculating mean sea level
 pressure;
-STP - Mean station pressure for the day in millibars to tenths.
-Missing = -9999.9;
+STP - Mean station pressure for the day in millibars to tenths
+Missing = -9999.99;
 COUNT.STP - Number of observations used in calculating mean station pressure;
-VISIB - Mean visibility for the day converted to kilometers to tenths.
-Missing = -9999;
+VISIB - Mean visibility for the day converted to kilometers to tenths
+Missing = -9999.99;
 COUNT.VISIB - Number of observations used in calculating mean daily
 visibility;
-WDSP - Mean daily wind speed value converted to metres/second to tenths.
-Missing = -9999;
+WDSP - Mean daily wind speed value converted to metres/second to tenths
+Missing = -9999.99;
 COUNT.WDSP - Number of observations used in calculating mean daily windspeed;
 MXSPD - Maximum sustained wind speed reported for the day converted to
-metres/second to tenths. Missing = -9999;
+metres/second to tenths. Missing = -9999.99;
 GUST = Maximum wind gust reported for the day converted to metres/second to
-tenths. Missing = -9999;
-MAX - Maximum temperature reported during the day converted to Celcious to
+tenths. Missing = -9999.99;
+MAX - Maximum temperature reported during the day converted to Celsius to
 tenths--time of max temp report varies by country and region, so this will
 sometimes not be the max for the calendar day. The "*" flag is dropped.
-Missing = -9999;
+Missing = -9999.99;
 MIN- Minimum temperature reported during the day converted to Celcious to
 tenths--time of min temp report varies by country and region, so this will
 sometimes not be the max for the calendar day.  The "*" flag is dropped.
-Missing = -9999;
+Missing = -9999.99;
 PRCP - Total precipitation (rain and/or melted snow) reported during the day
 converted to millimetres to hundredths; will usually not end with the
 midnight observation--i.e., may include latter part of previous day. .00
-indicates no measurable precipitation (includes a trace). Missing = -9999.
+indicates no measurable precipitation (includes a trace). Missing = -9999.99.
 Note:  Many stations do not report '0' on days with no precipitation--
-therefore, '-9999' will often appear on these days. Also, for example,
-a station may only report a 6-hour amount for the period during which rain
+therefore, '-9999.99' will often appear on these days. For example, a
+station may only report a 6-hour amount for the period during which rain
 fell. See FLAGS.PRCP column for source of data;
-FLAGS.PRCP -  A = 1 report of 6-hour precipitation amount.
-B = Summation of 2 reports of 6-hour precipitation amount.
-C = Summation of 3 reports of 6-hour precipitation amount.
-D = Summation of 4 reports of 6-hour precipitation amount.
-E = 1 report of 12-hour precipitation amount.
-F = Summation of 2 reports of 12-hour precipitation amount.
-G = 1 report of 24-hour precipitation amount.
+FLAGS.PRCP -  A = 1 report of 6-hour precipitation amount;
+B = Summation of 2 reports of 6-hour precipitation amount;
+C = Summation of 3 reports of 6-hour precipitation amount;
+D = Summation of 4 reports of 6-hour precipitation amount;
+E = 1 report of 12-hour precipitation amount;
+F = Summation of 2 reports of 12-hour precipitation amount;
+G = 1 report of 24-hour precipitation amount;
 H = Station reported '0' as the amount for the day (eg, from 6-hour reports),
 but also reported at least one occurrence of precipitation in hourly
 observations--this could indicate a trace occurred, but should be considered
-as incomplete data for the day.
+as incomplete data for the day;
 I = Station did not report any precip data for the day and did not report any
 occurrences of precipitation in its hourly observations--it's still possible
 that precip occurred but was not reported;
-SNDP - Snow depth in milimetres to tenths. Missing = -9999;
+SNDP - Snow depth in millimetres to tenths. Missing = -9999.99;
 INDICATOR.* (1 = yes, 0 = no/not reported) for the occurrence during the day
 of:
 FOG,
@@ -137,12 +138,12 @@ RAIN or drizzle,
 SNOW or ice pellets,
 HAIL,
 THUNDER,
-TORNADO or funnel cloud.
+TORNADO or funnel cloud;
 
 Values calculated by this package:
-ea - Mean daily actual vapor pressure,
-es - Mean daily saturation vapor pressure,
-RH - Mean daily relative humidity.
+ea - Mean daily actual vapour pressure;
+es - Mean daily saturation vapour pressure;
+RH - Mean daily relative humidity;
 }
 \examples{
 \dontrun{
