@@ -398,7 +398,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                                   "GUST", "MAX", "MIN", "PRCP",
                                   "SNDP", "FRSHTT"),
                     col_types = "iiidididididididdcccdc", skip = 1,
-                    na = c("9999.9", "999.9", "99.99", "99.9", "99", "9.99"))
+                    na = c("9999.9", "999.9", "99.9", "99"))
 }
 
 # The following 2 functions are shamelessly borrowed from RJ Hijmans raster pkg
