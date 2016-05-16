@@ -252,10 +252,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
       tmp$PRCP <- as.double(tmp$PRCP)
       tmp$MAX[tmp$MAX == 99] <- NA
       tmp$MIN[tmp$MIN == 99] <- NA
-      if (tmp$MIN > tmp$MAX) {
-        tmp$MAX <- NA
-        tmp$MIN <- NA
-      }
+      tmp$MIN[which(tmp$MIN > tmp$MAX)] <- NA
+      tmp$MAX[is.na(tmp$MIN)] <- NA
       GSOD_XY <- .reformat(tmp, stations)
     } else {
       # For a country, the entire set or agroclimatology -----------------------
@@ -271,10 +269,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
         tmp$PRCP <- as.double(tmp$PRCP)
         tmp$MAX[tmp$MAX == 99] <- NA
         tmp$MIN[tmp$MIN == 99] <- NA
-        if (tmp$MIN > tmp$MAX) {
-          tmp$MAX <- NA
-          tmp$MIN <- NA
-        }
+        tmp$MIN[which(tmp$MIN > tmp$MAX)] <- NA
+        tmp$MAX[is.na(tmp$MIN)] <- NA
         GSOD_objects[[j]] <- .reformat(tmp, stations)
       }
     }
