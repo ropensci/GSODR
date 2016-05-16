@@ -9,8 +9,11 @@ There were no ERRORs or WARNINGs.
 
 ## New minor release
 This is a new minor release. In this version I have:
-  * Fixed bug related to MIN/MAX columns when agroclimatology or all stations are selected where flags were not removed properly from numeric values.
-  * Add more detail to DESCRIPTION regarding flags found in original GSOD data.
+  * Set values where MIN > MAX to NA
+  * Set more MIN/MAX/DEWP values to NA. GSOD README indicates that 999 indicates missing values in these columns, this does not appear to always be true. There are instances where 99 is the value recorded for missing data. While 99F is possible, the vast majority of these recorded values are missing data, thus the function now converts them to NA
+  * Fixed bug where YDAY not correctly calculated and reported in CSV file
+  * CSV files for station only queries now are names with the Station Identifier. Previously named same as Global data
+  * Likesise, CSV files for agroclimatology now are names with the Station Identifier. Previously named same as Global data
 
 ## Reverse dependencies
 
