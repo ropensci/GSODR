@@ -317,8 +317,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   tmp$YEAR <- stringr::str_sub(tmp$YEARMODA, 1, 4)
   tmp$MONTH <- stringr::str_sub(tmp$YEARMODA, 5, 6)
   tmp$DAY <- stringr::str_sub(tmp$YEARMODA, 7, 8)
-  tmp$YDAY <- 1 + as.POSIXlt(as.Date(as.character(tmp$YEARMODA), "%Y%m%d"),
-                             "GMT")
+  tmp$YDAY <- lubridate::yday(as.Date(paste(tmp$YEAR, tmp$MONTH, tmp$DAY,
+                                            sep = "-")))
 
   tmp$TEMP <- ifelse(!is.na(tmp$TEMP), round( ( (5 / 9) * (tmp$TEMP - 32)), 1),
                      NA_integer_)
