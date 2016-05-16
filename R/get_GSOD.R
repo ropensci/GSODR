@@ -282,7 +282,9 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
     }
 
     # Write to csv file---------------------------------------------------------
-    if (!is.null(country)) {
+    if (!is.null(station)) {
+      outfile <- paste0(path, "GSOD-", station, "-", yr, ".csv")
+    } else if (!is.null(country)) {
       outfile <- paste0(path, "GSOD-", country, "-", yr, ".csv")
     } else {
       outfile <- paste0(path, "GSOD-", yr, ".csv")
