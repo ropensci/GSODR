@@ -286,6 +286,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
       outfile <- paste0(path, "GSOD-", station, "-", yr, ".csv")
     } else if (!is.null(country)) {
       outfile <- paste0(path, "GSOD-", country, "-", yr, ".csv")
+    } else if (agroclimatology == TRUE) {
+      outfile <- paste0(path, "GSOD-agroclimatology-", yr, ".csv")
     } else {
       outfile <- paste0(path, "GSOD-", yr, ".csv")
     }
