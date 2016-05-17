@@ -2,7 +2,7 @@
 * local OS X install, R 3.3.0
 * Ubuntu 12.04 (on travis-ci), R 3.3.0
 * win-builder (release)
-* win-builder (R Under development (unstable) (2016-05-14 r70617)
+* win-builder (R Under development (unstable) (2016-05-14 r70617))
 
 ## R CMD check results
 There were no ERRORs or WARNINGs. 
