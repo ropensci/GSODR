@@ -166,6 +166,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 
   # Setting up options, creating objects, check variables entered by user-------
   options(warn = 2)
+  utils::data("stations", package = "GSODR", envir = environment())
+  stations <- get("stations", envir = environment())
 
   # Set up tempfile and directory for downloading data from server
   tf <- "~/tmp/GSOD-2010.tar"
@@ -192,21 +194,6 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   }
 
   ftp_site <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
-
-  # Fetch station data from the ftp server so that we have most recent verion---
-  stations <- readr::read_csv(
-    "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
-    col_types = "cccc__ddd__",
-    col_names = c("USAF", "WBAN", "STATION.NAME", "CTRY", "LAT", "LON",
-                  "ELEV.M"),
-    skip = 1)
-  is.na(stations) <- stations == -999.9 | stations == -999.0
-  stations <- stations[stats::complete.cases(stations), ]
-  stations <- stations[stations$CTRY != "", ]
-  stations <- stations[stations$LAT != 0 & stations$LON != 0, ]
-  stations <- stations[stations$LON > -180 & stations$LON < 180, ]
-  stations <- stations[stations$LAT > -90 & stations$LAT < 90, ]
-  stations$STNID <- paste(stations$USAF, stations$WBAN, sep = "-")
 
   # For loop if there are more than one year entered ---------------------------
   for (yr in years) {

@@ -2,7 +2,7 @@
 #' Global Surface Summary of the Day (GSOD) weather data. The original file has
 #' missing and incorrect information. This is a clean version of this dataset,
 #' provided by this package. The following changes were made.
-#' 1. All stations with no Country Code were removed.
+#' 1. All stations with incomplete records were removed.
 #' 2. Stations with both a latitude and longitude of 0 degrees were removed.
 #' 3. Stations with longitude values that are beyond -180/180 degrees were
 #' removed.
@@ -11,7 +11,7 @@
 #' 5. All units are converted to International System of Units (SI), e.g.
 #' Fahrenheit to Celcius and inches to millimetres.
 #' 6. For convenience elevation is converted from decimetres to metres.
-#' 6. StationID is added as a column, a concatenation of USAF and WBAN.
+#' 7. STNID is added as a column, a concatenation of USAF and WBAN.
 #'
 #' Users of these data should take into account the following (from the NCDC
 #' website): "The following data and products may have conditions placed on
@@ -20,19 +20,26 @@
 #' data cannot be redistributed for commercial purposes. Re-distribution of
 #' these data by others must provide this same notification."
 #'
-#' A dataset containing the prices and other attributes of almost 54,000
-#' diamonds.
+#'Note that ST (state) and Call (ICAO call sign) are dropped from this dataset
+#'and STNID is added.
 #'
-#' @format A data frame with 27252 observations of 8 variables:
+#' @format A data frame with 27602 observations of 12 variables:
 #' \describe{
-#'   \item{USAF}{}
-#'   \item{WBAN}{}
-#'   \item{STATION.NAME}{}
-#'   \item{CTRY}{}
-#'   \item{LAT}{}
-#'   \item{LON}{}
-#'   \item{ELEV.M}{}
-#'   \item{STNID}{}
+#'   \item{USAF}{Air Force Datsav3 station number}
+#'   \item{WBAN}{Weather Bureau Army Navy (5 digit identifier)}
+#'   \item{STATION.NAME}{Unique station name }
+#'   \item{CTRY}{FIPS country ID}
+#'   \item{STATE}{If applicable, US states only (2 letter code)}
+#'   \item{CALL}{ICAO Identifier, identifiers approved for use under the
+#'   International Civil Aviation Administration plan of identifiers
+#'   (4 letter identifier)}
+#'   \item{LAT}{Latitude in thousandths of decimal degrees}
+#'   \item{LON}{Longitude in thousandths of decimal degrees}
+#'   \item{ELEV.M}{Elevation to tenthts in metres}
+#'   \item{BEGIN}{First available date of data for station, YYYYMMDD format}
+#'   \item{END}{Last available date of data for station, YYYYMMDD format}
+#'   \item{STNID}{Unique station ID, a concatenation of USAF and WBAN number,
+#'   used for merging with station data weather files}
 #' }
 #' @source \url{ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv}
 "stations"
