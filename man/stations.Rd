@@ -6,18 +6,8 @@
 \title{Station information for the US National Climatic Data Centre (NCDC)
 Global Surface Summary of the Day (GSOD) weather data. The original file has
 missing and incorrect information. This is a clean version of this dataset,
-provided by this package. The following changes were made.
-1. All stations with incomplete records were removed.
-2. Stations with both a latitude and longitude of 0 degrees were removed.
-3. Stations with longitude values that are beyond -180/180 degrees were
-removed.
-4. Stations with latitude values that are beyond -90/90 degrees were
-removed.
-5. All units are converted to International System of Units (SI), e.g.
-Fahrenheit to Celcius and inches to millimetres.
-6. For convenience elevation is converted from decimetres to metres.
-7. STNID is added as a column, a concatenation of USAF and WBAN.}
-\format{A data frame with 27602 observations of 12 variables:
+provided by this package. The following changes were made.}
+\format{A data frame with 27699 observations of 12 variables:
 \describe{
   \item{USAF}{Air Force Datsav3 station number}
   \item{WBAN}{Weather Bureau Army Navy (5 digit identifier)}
@@ -42,16 +32,21 @@ Fahrenheit to Celcius and inches to millimetres.
 stations
 }
 \description{
+1. Stations with both a latitude and longitude of 0 degrees were removed.
+2. Stations with longitude values that are beyond -180/180 degrees were
+removed.
+3. Stations with latitude values that are beyond -90/90 degrees were
+removed.
+4. For convenience elevation is converted from decimetres to metres.
+5. STNID is added as a column, a concatenation of USAF and WBAN.
+}
+\details{
 Users of these data should take into account the following (from the NCDC
 website): "The following data and products may have conditions placed on
 their international commercial use. They can be used within the U.S. or for
 non-commercial international activities without restriction. The non-U.S.
 data cannot be redistributed for commercial purposes. Re-distribution of
 these data by others must provide this same notification."
-}
-\details{
-Note that ST (state) and Call (ICAO call sign) are dropped from this dataset
-and STNID is added.
 }
 \keyword{datasets}
 

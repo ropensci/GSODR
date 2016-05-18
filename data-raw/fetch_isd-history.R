@@ -17,7 +17,7 @@ stations <- readr::read_csv(
   col_names = c("USAF", "WBAN", "STATION.NAME", "CTRY", "STATE", "CALL",
                 "LAT", "LON", "ELEV.M", "BEGIN", "END"), skip = 1,
   na = c("-999.9", "-999.0"))
-stations <- stations <- stations[stats::complete.cases(stations), ]
+stations <- stations[!is.na(stations$LAT) & !is.na(stations$LON), ]
 stations <- stations[stations$LAT != 0 & stations$LON != 0, ]
 stations <- stations[stations$LAT > -90 & stations$LAT < 90, ]
 stations <- stations[stations$LON > -180 & stations$LON < 180, ]
