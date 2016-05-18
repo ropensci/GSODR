@@ -47,6 +47,9 @@ their international commercial use. They can be used within the U.S. or for
 non-commercial international activities without restriction. The non-U.S.
 data cannot be redistributed for commercial purposes. Re-distribution of
 these data by others must provide this same notification."
+
+To access this data frame of station information, use data(stations) to load
+it into the global environment.
 }
 \keyword{datasets}
 

@@ -105,7 +105,7 @@ instances where MAX < MIN, both MAX and MIN are set to Missing.
 Missing = -9999.99;
 MIN- Minimum temperature reported during the day converted to Celcious to
 tenths--time of min temp report varies by country and region, so this will
-sometimes not be the max for the calendar day.  The "*" flag is dropped.  In
+sometimes not be the max for the calendar day.  The "*" flag is dropped. In
 instances where MAX < MIN, both MAX and MIN are set to Missing.
 Missing = -9999.99;
 PRCP - Total precipitation (rain and/or melted snow) reported during the day

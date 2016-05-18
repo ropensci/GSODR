@@ -18,6 +18,9 @@
 #' data cannot be redistributed for commercial purposes. Re-distribution of
 #' these data by others must provide this same notification."
 #'
+#' To access this data frame of station information, use data(stations) to load
+#' it into the global environment.
+#'
 #' @format A data frame with 27699 observations of 12 variables:
 #' \describe{
 #'   \item{USAF}{Air Force Datsav3 station number}
