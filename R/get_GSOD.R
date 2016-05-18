@@ -7,8 +7,9 @@
 #'Stations are individually checked for number of missing days to assure data
 #'quality, stations with too many missing observations are omitted, stations
 #'with a latitude of < -90 or > 90 or longitude of < -180 or > 180 are removed.
-#'All units are converted to metric, e.g. Fahrenheit to Celcius and inches to
-#'millimetres. For convenience elevation is converted from decimetres to metres.
+#'All units are converted to International System of Units (SI), e.g. Fahrenheit
+#'to Celcius and inches to millimetres. For convenience elevation is
+#'converted from decimetres to metres.
 #'
 #'Due to the size of the resulting data, output is saved as a .csv file in a
 #'directory specified by the user or defaults to the current working directory.
@@ -27,9 +28,6 @@
 #'.
 #'For more information see the description of the data provided by NCDC,
 #'\url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
-#'
-#'For an up-to-date list of stations and locations, download:
-#'\url{ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv}
 #'
 #' @param years Year(s) of weather data to download.
 #' @param station Specify single station for which to retrieve, check and
