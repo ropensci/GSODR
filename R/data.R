@@ -18,7 +18,7 @@
 #' their international commercial use. They can be used within the U.S. or for
 #' non-commercial international activities without restriction. The non-U.S.
 #' data cannot be redistributed for commercial purposes. Re-distribution of
-#' these data by others must provide this same notification.".
+#' these data by others must provide this same notification."
 #'
 #' A dataset containing the prices and other attributes of almost 54,000
 #' diamonds.

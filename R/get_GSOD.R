@@ -130,6 +130,13 @@
 #' es - Mean daily saturation vapour pressure;
 #' RH - Mean daily relative humidity;
 #'
+#' Users of these data should take into account the following (from the NCDC
+#' website): "The following data and products may have conditions placed on
+#' their international commercial use. They can be used within the U.S. or for
+#' non-commercial international activities without restriction. The non-U.S.
+#' data cannot be redistributed for commercial purposes. Re-distribution of
+#' these data by others must provide this same notification."
+#'
 #' @examples
 #' \dontrun{
 #' # Download weather station for Toowoomba, Queensland for 2010, save resulting
