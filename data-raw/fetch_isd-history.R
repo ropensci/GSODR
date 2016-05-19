@@ -11,12 +11,14 @@
 # data cannot be redistributed for commercial purposes. Re-distribution of
 # these data by others must provide this same notification."
 
+# import data ------------------------------------------------------------------
 stations <- readr::read_csv(
   "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
   col_types = "ccccccddddd",
   col_names = c("USAF", "WBAN", "STATION.NAME", "CTRY", "STATE", "CALL",
                 "LAT", "LON", "ELEV.M", "BEGIN", "END"), skip = 1,
   na = c("-999.9", "-999.0"))
+
 stations <- stations[!is.na(stations$LAT) & !is.na(stations$LON), ]
 stations <- stations[stations$LAT != 0 & stations$LON != 0, ]
 stations <- stations[stations$LAT > -90 & stations$LAT < 90, ]
