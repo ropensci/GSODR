@@ -11,9 +11,9 @@ Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     person("Kay", "Sumfleth", role = "ctb",
     email = "kay@sumfleth.de"))
 Maintainer: Adam Sparks <adamhsparks@gmail.com>
-Description: Download, clean and reformat weather data from USA National
-    Climatic Data Center (NCDC) Global Surface Summary of the Day (GSOD) weather
-    stations,
+Description: Download, clean, reformat and create new variables from the
+    USA National Climatic Data Center (NCDC) Global Surface Summary of the Day
+    (GSOD) weather stations data,
     <https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod>.
     The function, get_GSOD(), retrieves data from the GSOD ftp site and
     reformats it from United States Customary System (USCS) units to
@@ -63,3 +63,5 @@ Imports:
     utils
 RoxygenNote: 5.0.1
 Encoding: UTF-8
+NeedsCompilation: no
+Repository: CRAN
