@@ -7,8 +7,9 @@
 #'Stations are individually checked for number of missing days to assure data
 #'quality, stations with too many missing observations are omitted, stations
 #'with a latitude of < -90 or > 90 or longitude of < -180 or > 180 are removed.
-#'All units are converted to metric, e.g. Fahrenheit to Celcius and inches to
-#'millimetres. For convenience elevation is converted from decimetres to metres.
+#'All units are converted to International System of Units (SI), e.g. Fahrenheit
+#'to Celcius and inches to millimetres. For convenience elevation is
+#'converted from decimetres to metres.
 #'
 #'Due to the size of the resulting data, output is saved as a .csv file in a
 #'directory specified by the user or defaults to the current working directory.
@@ -27,9 +28,6 @@
 #'.
 #'For more information see the description of the data provided by NCDC,
 #'\url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
-#'
-#'For an up-to-date list of stations and locations, download:
-#'\url{ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv}
 #'
 #' @param years Year(s) of weather data to download.
 #' @param station Specify single station for which to retrieve, check and
@@ -92,7 +90,7 @@
 #' Missing = -9999.99;
 #' MIN- Minimum temperature reported during the day converted to Celcious to
 #' tenths--time of min temp report varies by country and region, so this will
-#' sometimes not be the max for the calendar day.  The "*" flag is dropped.  In
+#' sometimes not be the max for the calendar day.  The "*" flag is dropped. In
 #' instances where MAX < MIN, both MAX and MIN are set to Missing.
 #' Missing = -9999.99;
 #' PRCP - Total precipitation (rain and/or melted snow) reported during the day
@@ -132,6 +130,13 @@
 #' es - Mean daily saturation vapour pressure;
 #' RH - Mean daily relative humidity;
 #'
+#' Users of these data should take into account the following (from the NCDC
+#' website): "The following data and products may have conditions placed on
+#' their international commercial use. They can be used within the U.S. or for
+#' non-commercial international activities without restriction. The non-U.S.
+#' data cannot be redistributed for commercial purposes. Re-distribution of
+#' these data by others must provide this same notification."
+#'
 #' @examples
 #' \dontrun{
 #' # Download weather station for Toowoomba, Queensland for 2010, save resulting
@@ -161,6 +166,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 
   # Setting up options, creating objects, check variables entered by user-------
   options(warn = 2)
+  utils::data("stations", package = "GSODR", envir = environment())
+  stations <- get("stations", envir = environment())
 
   # Set up tempfile and directory for downloading data from server
   tf <- "~/tmp/GSOD-2010.tar"
@@ -187,21 +194,6 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   }
 
   ftp_site <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
-
-  # Fetch station data from the ftp server so that we have most recent verion---
-  stations <- readr::read_csv(
-    "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
-    col_types = "cccc__ddd__",
-    col_names = c("USAF", "WBAN", "STATION.NAME", "CTRY", "LAT", "LON",
-                  "ELEV.M"),
-    skip = 1)
-  is.na(stations) <- stations == -999.9 | stations == -999.0
-  stations <- stations[stats::complete.cases(stations), ]
-  stations <- stations[stations$CTRY != "", ]
-  stations <- stations[stations$LAT != 0 & stations$LON != 0, ]
-  stations <- stations[stations$LON > -180 & stations$LON < 180, ]
-  stations <- stations[stations$LAT > -90 & stations$LAT < 90, ]
-  stations$STNID <- paste(stations$USAF, stations$WBAN, sep = "-")
 
   # For loop if there are more than one year entered ---------------------------
   for (yr in years) {
