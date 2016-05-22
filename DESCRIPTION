@@ -11,6 +11,8 @@ Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     person("Kay", "Sumfleth", role = "ctb",
     email = "kay@sumfleth.de"))
 Maintainer: Adam Sparks <adamhsparks@gmail.com>
+URL: https://github.com/adamhsparks/GSODR
+BugReports: https://github.com/adamhsparks/GSODR/issues
 Description: Download, clean, reformat and create new variables from the
     USA National Climatic Data Center (NCDC) Global Surface Summary of the Day
     (GSOD) weather stations data,
