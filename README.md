@@ -125,14 +125,14 @@ website):
 > The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification."
 
 ## Examples
-```
+```r
 # Download weather station for Toowoomba, Queensland for 2010, save resulting
 # file in the user's Downloads directory.
 
 get_GSOD(years = 2010, station = "955510-99999", path = "~/Downloads")
 ```
 
-```
+```r
 # Download global GSOD data for agroclimatology work for years 2009 and 2010
 # and generate yearly summary files, GSOD_2009_XY and GSOD_2010_XY in folders
 # named 2009 and 2010 in the user's Downloads directory with a maximum of
@@ -141,7 +141,7 @@ get_GSOD(years = 2010, station = "955510-99999", path = "~/Downloads")
 get_GSOD(years = 2010:2011, path = "~/Downloads", agroclimatology = TRUE)
 ```
 
-```
+```r
 # Download data for Australia for year 2010 and generate a yearly
 # summary file, GSOD_2010_XY files in the user's Downloads directory with a
 maximum of five missing days per station allowed.
