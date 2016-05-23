@@ -34,76 +34,76 @@ See `?get_GSOD()` for the help file.
 ## Function description
 This package consists of a single function, get_GSOD(), which generates a 
 .csv file in the respective year directory containing the following variables:
-STNID - Station number (WMO/DATSAV3 number) for the location;
+STNID - Station number (WMO/DATSAV3 number) for the location;  
 WBAN - number where applicable--this is the historical "Weather Bureau Air
-Force Navy" number - with WBAN being the acronym;
-STATION NAME;
-CTRY - Country;
-LAT - Latitude;
-LON - Longitude;
-ELEV.M - Elevation converted to metres;
-YEARMODA - Date in YYYY-MM-DD format;
-YEAR - The year;
-MONTH - The month;
-DAY - The day;
-YDAY - Sequential day of year (not in original GSOD);
+Force Navy" number - with WBAN being the acronym;  
+STATION NAME;  
+CTRY - Country;  
+LAT - Latitude;  
+LON - Longitude;  
+ELEV.M - Elevation converted to metres;  
+YEARMODA - Date in YYYY-MM-DD format;  
+YEAR - The year;  
+MONTH - The month;  
+DAY - The day;  
+YDAY - Sequential day of year (not in original GSOD);  
 TEMP - Mean daily temperature converted to degrees C to tenths. Missing =
--9999.99;
+-9999.99;  
 COUNT.TEMP - Number of observations used in calculating mean daily
-temperature;
+temperature;  
 DEWP-  Mean daily dewpoint converted to degrees C to tenths. Missing =
--9999.99;
-COUNT.DEWP - Number of observations used in calculating mean daily dew point;
-SLP - Mean sea level pressure in millibars to tenths. Missing = -9999.99;
+-9999.99;  
+COUNT.DEWP - Number of observations used in calculating mean daily dew point;  
+SLP - Mean sea level pressure in millibars to tenths. Missing = -9999.99;  
 COUNT.SLP - Number of observations used in calculating mean sea level
-pressure;
+pressure;  
 STP - Mean station pressure for the day in millibars to tenths
-Missing = -9999.99;
-COUNT.STP - Number of observations used in calculating mean station pressure;
+Missing = -9999.99;  
+COUNT.STP - Number of observations used in calculating mean station pressure;  
 VISIB - Mean visibility for the day converted to kilometers to tenths
-Missing = -9999.99;
+Missing = -9999.99;  
 COUNT.VISIB - Number of observations used in calculating mean daily
-visibility;
+visibility;  
 WDSP - Mean daily wind speed value converted to metres/second to tenths
-Missing = -9999.99;
-COUNT.WDSP - Number of observations used in calculating mean daily windspeed;
+Missing = -9999.99;  
+COUNT.WDSP - Number of observations used in calculating mean daily windspeed;  
 MXSPD - Maximum sustained wind speed reported for the day converted to
-metres/second to tenths. Missing = -9999.99;
+metres/second to tenths. Missing = -9999.99;  
 GUST = Maximum wind gust reported for the day converted to metres/second to
-tenths. Missing = -9999.99;
+tenths. Missing = -9999.99;  
 MAX - Maximum temperature reported during the day converted to Celsius to
 tenths--time of max temp report varies by country and region, so this will
 sometimes not be the max for the calendar day. The "*" flag is dropped. In
 instances where MAX < MIN, both MAX and MIN are set to Missing.
-Missing = -9999.99;
+Missing = -9999.99;  
 MIN- Minimum temperature reported during the day converted to Celcious to
 tenths--time of min temp report varies by country and region, so this will
 sometimes not be the max for the calendar day.  The "*" flag is dropped. In
 instances where MAX < MIN, both MAX and MIN are set to Missing.
-Missing = -9999.99;
+Missing = -9999.99;  
 PRCP - Total precipitation (rain and/or melted snow) reported during the day
-converted to millimetres to hundredths; will usually not end with the
+converted to millimetres to hundredths;   will usually not end with the
 midnight observation--i.e., may include latter part of previous day. .00
 indicates no measurable precipitation (includes a trace). Missing = -9999.99.
 Note:  Many stations do not report '0' on days with no precipitation--
 therefore, '-9999.99' will often appear on these days. For example, a
 station may only report a 6-hour amount for the period during which rain
-fell. See FLAGS.PRCP column for source of data;
-FLAGS.PRCP -  A = 1 report of 6-hour precipitation amount;
-B = Summation of 2 reports of 6-hour precipitation amount;
-C = Summation of 3 reports of 6-hour precipitation amount;
-D = Summation of 4 reports of 6-hour precipitation amount;
-E = 1 report of 12-hour precipitation amount;
-F = Summation of 2 reports of 12-hour precipitation amount;
-G = 1 report of 24-hour precipitation amount;
+fell. See FLAGS.PRCP column for source of data;  
+FLAGS.PRCP -  A = 1 report of 6-hour precipitation amount;  
+B = Summation of 2 reports of 6-hour precipitation amount;  
+C = Summation of 3 reports of 6-hour precipitation amount;  
+D = Summation of 4 reports of 6-hour precipitation amount;  
+E = 1 report of 12-hour precipitation amount;  
+F = Summation of 2 reports of 12-hour precipitation amount;  
+G = 1 report of 24-hour precipitation amount;  
 H = Station reported '0' as the amount for the day (eg, from 6-hour reports),
 but also reported at least one occurrence of precipitation in hourly
 observations--this could indicate a trace occurred, but should be considered
-as incomplete data for the day;
+as incomplete data for the day;  
 I = Station did not report any precip data for the day and did not report any
 occurrences of precipitation in its hourly observations--it's still possible
-that precip occurred but was not reported;
-SNDP - Snow depth in millimetres to tenths. Missing = -9999.99;
+that precip occurred but was not reported;  
+SNDP - Snow depth in millimetres to tenths. Missing = -9999.99;  
 INDICATOR.* (1 = yes, 0 = no/not reported) for the occurrence during the day
 of:
 FOG,
@@ -111,12 +111,12 @@ RAIN or drizzle,
 SNOW or ice pellets,
 HAIL,
 THUNDER,
-TORNADO or funnel cloud;
+TORNADO or funnel cloud;  
 
 ### Values calculated by this package:
-ea - Mean daily actual vapour pressure;
-es - Mean daily saturation vapour pressure;
-RH - Mean daily relative humidity;
+ea - Mean daily actual vapour pressure;  
+es - Mean daily saturation vapour pressure;  
+RH - Mean daily relative humidity;  
 
 ## Disclaimer
 Users of these data should take into account the following (from the NCDC
