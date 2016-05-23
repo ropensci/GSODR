@@ -44,8 +44,8 @@
 #' -60 for agroclimatology work, defaults to FALSE. Set to FALSE to override and
 #' include only stations within the confines of these latitudes.
 #'
-#' @details This function generates a .csv file in the respective year directory
-#' containing the following variables:
+#' @details This function, get_GSOD(), generates a .csv file in the respective
+#' year directory containing the following variables:
 #' STNID - Station number (WMO/DATSAV3 number) for the location;
 #' WBAN - number where applicable--this is the historical "Weather Bureau Air
 #' Force Navy" number - with WBAN being the acronym;
