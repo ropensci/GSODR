@@ -44,10 +44,10 @@ Force Navy" number - with WBAN being the acronym;
 **ELEV.M** - Elevation converted to metres. *Station dropped where ELEV is NA*;  
 **YEARMODA** - Date in YYYY-MM-DD format;  
 **YEAR** - The year;  
-vMONTH** - The month;  
+**MONTH** - The month;  
 **DAY** - The day;  
-**YDAYv - Sequential day of year (not in original GSOD);  
-**TEMPv - Mean daily temperature converted to degrees C to tenths. Missing =
+**YDAY** - Sequential day of year (not in original GSOD);  
+**TEMP** - Mean daily temperature converted to degrees C to tenths. Missing =
 -9999.99;  
 **COUNT.TEMP** - Number of observations used in calculating mean daily
 temperature;  
