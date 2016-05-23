@@ -39,9 +39,9 @@ WBAN - number where applicable--this is the historical "Weather Bureau Air
 Force Navy" number - with WBAN being the acronym;  
 STATION NAME;  
 CTRY - Country;  
-LAT - Latitude;  
-LON - Longitude;  
-ELEV.M - Elevation converted to metres;  
+LAT - Latitude. **Station dropped in cases where values are <-90/>90 degrees or Lat = 0 and Lon = 0**;  
+LON - Longitude. **Station dropped in cases where values are <-180/>180 degrees or Lat = 0 and Lon = 0**;  
+ELEV.M - Elevation converted to metres. **Station dropped where ELEV is NA**;  
 YEARMODA - Date in YYYY-MM-DD format;  
 YEAR - The year;  
 MONTH - The month;  
@@ -73,13 +73,13 @@ GUST = Maximum wind gust reported for the day converted to metres/second to
 tenths. Missing = -9999.99;  
 MAX - Maximum temperature reported during the day converted to Celsius to
 tenths--time of max temp report varies by country and region, so this will
-sometimes not be the max for the calendar day. The "*" flag is dropped. In
-instances where MAX < MIN, both MAX and MIN are set to Missing.
+sometimes not be the max for the calendar day. The "*" flag is dropped. **In
+instances where MAX < MIN, both MAX and MIN are set to Missing.**
 Missing = -9999.99;  
 MIN- Minimum temperature reported during the day converted to Celcious to
 tenths--time of min temp report varies by country and region, so this will
-sometimes not be the max for the calendar day.  The "*" flag is dropped. In
-instances where MAX < MIN, both MAX and MIN are set to Missing.
+sometimes not be the max for the calendar day. The "\*" flag is dropped. **In
+instances where MAX < MIN, both MAX and MIN are set to Missing.**
 Missing = -9999.99;  
 PRCP - Total precipitation (rain and/or melted snow) reported during the day
 converted to millimetres to hundredths;   will usually not end with the
