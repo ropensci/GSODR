@@ -8,7 +8,7 @@
 #'quality, stations with too many missing observations are omitted, stations
 #'with a latitude of < -90 or > 90 or longitude of < -180 or > 180 are removed.
 #'All units are converted to International System of Units (SI), e.g. Fahrenheit
-#'to Celcius and inches to millimetres. For convenience elevation is
+#'to Celsius and inches to millimetres. For convenience elevation is
 #'converted from decimetres to metres.
 #'
 #'Due to the size of the resulting data, output is saved as a .csv file in a
@@ -44,8 +44,8 @@
 #' -60 for agroclimatology work, defaults to FALSE. Set to FALSE to override and
 #' include only stations within the confines of these latitudes.
 #'
-#' @details This function generates a .csv file in the respective year directory
-#' containing the following variables:
+#' @details This function, get_GSOD(), generates a .csv file in the respective
+#' year directory containing the following variables:
 #' STNID - Station number (WMO/DATSAV3 number) for the location;
 #' WBAN - number where applicable--this is the historical "Weather Bureau Air
 #' Force Navy" number - with WBAN being the acronym;
@@ -61,38 +61,44 @@
 #' YDAY - Sequential day of year (not in original GSOD);
 #' TEMP - Mean daily temperature converted to degrees C to tenths. Missing =
 #' -9999.99;
-#' COUNT.TEMP - Number of observations used in calculating mean daily
+#' TEMP.COUNT - Number of observations used in calculating mean daily
 #' temperature;
 #' DEWP-  Mean daily dewpoint converted to degrees C to tenths. Missing =
 #' -9999.99;
-#' COUNT.DEWP - Number of observations used in calculating mean daily dew point;
+#' DEWP.COUNT - Number of observations used in calculating mean daily dew point;
 #' SLP - Mean sea level pressure in millibars to tenths. Missing = -9999.99;
-#' COUNT.SLP - Number of observations used in calculating mean sea level
+#' SLP.COUNT - Number of observations used in calculating mean sea level
 #' pressure;
 #' STP - Mean station pressure for the day in millibars to tenths
 #' Missing = -9999.99;
-#' COUNT.STP - Number of observations used in calculating mean station pressure;
+#' STP.COUNT - Number of observations used in calculating mean station pressure;
 #' VISIB - Mean visibility for the day converted to kilometers to tenths
 #' Missing = -9999.99;
-#' COUNT.VISIB - Number of observations used in calculating mean daily
+#' VISIB.COUNT - Number of observations used in calculating mean daily
 #' visibility;
 #' WDSP - Mean daily wind speed value converted to metres/second to tenths
 #' Missing = -9999.99;
-#' COUNT.WDSP - Number of observations used in calculating mean daily windspeed;
+#' WDSP.COUNT - Number of observations used in calculating mean daily windspeed;
 #' MXSPD - Maximum sustained wind speed reported for the day converted to
 #' metres/second to tenths. Missing = -9999.99;
 #' GUST = Maximum wind gust reported for the day converted to metres/second to
 #' tenths. Missing = -9999.99;
 #' MAX - Maximum temperature reported during the day converted to Celsius to
 #' tenths--time of max temp report varies by country and region, so this will
-#' sometimes not be the max for the calendar day. The "*" flag is dropped. In
-#' instances where MAX < MIN, both MAX and MIN are set to Missing.
-#' Missing = -9999.99;
-#' MIN- Minimum temperature reported during the day converted to Celcious to
+#' sometimes not be the max for the calendar day. In instances where MAX < MIN,
+#' both MAX and MIN are set to missing. In instances where MIN is missing, MAX
+#' is correspondingly set to missing as well. Missing = -9999.99;
+#' MAX.FLAG -  Blank indicates max temp was taken from the explicit max temp
+#' report and not from the 'hourly' data.  * indicates max temp was derived from
+#' the hourly data (i.e., highest hourly or synoptic-reported temperature);
+#' MIN- Minimum temperature reported during the day converted to Celsius to
 #' tenths--time of min temp report varies by country and region, so this will
-#' sometimes not be the max for the calendar day.  The "*" flag is dropped. In
-#' instances where MAX < MIN, both MAX and MIN are set to Missing.
-#' Missing = -9999.99;
+#' sometimes not be the max for the calendar day. In instances where MAX < MIN,
+#' both MAX and MIN are set to missing. In instances where MAX is missing, MIN
+#' is correspondingly set to missing as well. Missing = -9999.99;
+#' #' MIN.FLAG -  Blank indicates max temp was taken from the explicit max temp
+#' report and not from the 'hourly' data.  * indicates max temp was derived from
+#' the hourly data (i.e., highest hourly or synoptic-reported temperature);
 #' PRCP - Total precipitation (rain and/or melted snow) reported during the day
 #' converted to millimetres to hundredths; will usually not end with the
 #' midnight observation--i.e., may include latter part of previous day. .00
@@ -101,7 +107,7 @@
 #' therefore, '-9999.99' will often appear on these days. For example, a
 #' station may only report a 6-hour amount for the period during which rain
 #' fell. See FLAGS.PRCP column for source of data;
-#' FLAGS.PRCP -  A = 1 report of 6-hour precipitation amount;
+#' PRCP.FLAG -  A = 1 report of 6-hour precipitation amount;
 #' B = Summation of 2 reports of 6-hour precipitation amount;
 #' C = Summation of 3 reports of 6-hour precipitation amount;
 #' D = Summation of 4 reports of 6-hour precipitation amount;
@@ -116,16 +122,18 @@
 #' occurrences of precipitation in its hourly observations--it's still possible
 #' that precip occurred but was not reported;
 #' SNDP - Snow depth in millimetres to tenths. Missing = -9999.99;
-#' INDICATOR.* (1 = yes, 0 = no/not reported) for the occurrence during the day
-#' of:
-#' FOG,
-#' RAIN or drizzle,
-#' SNOW or ice pellets,
-#' HAIL,
-#' THUNDER,
-#' TORNADO or funnel cloud;
+#' I.FOG- (1 = yes, 0 = no/not reported) for the occurrence during the day;
+#' I.RAIN_DRIZZLE - (1 = yes, 0 = no/not reported) for the occurrence during the
+#' day;
+#' I.SNOW_ICE - (1 = yes, 0 = no/not reported) for the occurrence during the
+#' day;
+#' I.HAIL - (1 = yes, 0 = no/not reported) for the occurrence during the day
+#' I.THUNDER  - (1 = yes, 0 = no/not reported) for the occurrence during the
+#' day;
+#' I.TORNADO_FUNNEL - (1 = yes, 0 = no/not reported) for the occurrence during
+# 'the day
 #'
-#' Values calculated by this package:
+#' Values calculated by this package and included in final output:
 #' ea - Mean daily actual vapour pressure;
 #' es - Mean daily saturation vapour pressure;
 #' RH - Mean daily relative humidity;
@@ -166,6 +174,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 
   # Setting up options, creating objects, check variables entered by user-------
   options(warn = 2)
+
   utils::data("stations", package = "GSODR", envir = environment())
   stations <- get("stations", envir = environment())
 
@@ -237,15 +246,6 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
     # If a single station is selected---------------------- --------------------
     if (!is.null(station)) {
       tmp <- .read_gz(paste0(ftp_site, yr, "/", station, "-", yr, ".op.gz"))
-      tmp <- tidyr::separate(data = tmp, col = "PRCP", sep = 4,
-                             into = c("PRCP", "FLAGS.PRCP"))
-      tmp$MAX <- as.double(unlist(strsplit(tmp$MAX, "[\\*]")))
-      tmp$MIN <- as.double(unlist(strsplit(tmp$MIN, "[\\*]")))
-      tmp$PRCP <- as.double(tmp$PRCP)
-      tmp$MAX[tmp$MAX == 99] <- NA
-      tmp$MIN[tmp$MIN == 99] <- NA
-      tmp$MIN[which(tmp$MIN > tmp$MAX)] <- NA
-      tmp$MAX[is.na(tmp$MIN)] <- NA
       GSOD_XY <- .reformat(tmp, stations)
     } else {
       # For a country, the entire set or agroclimatology -----------------------
@@ -254,15 +254,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
         tmp <- try(.read_gz(paste0(td, "/", yr, "/", GSOD_list[j])))
         # check to see if max_missing < missing days, if so, go to next
         if (.check(tmp, yr, max_missing) == TRUE) next
-        tmp <- tidyr::separate(data = tmp, col = "PRCP", sep = 4,
-                               into = c("PRCP", "FLAGS.PRCP"))
-        tmp$MAX <- as.double(unlist(strsplit(tmp$MAX, "[\\*]")))
-        tmp$MIN <- as.double(unlist(strsplit(tmp$MIN, "[\\*]")))
-        tmp$PRCP <- as.double(tmp$PRCP)
-        tmp$MAX[tmp$MAX == 99] <- NA
-        tmp$MIN[tmp$MIN == 99] <- NA
-        tmp$MIN[which(tmp$MIN > tmp$MAX)] <- NA
-        tmp$MAX[is.na(tmp$MIN)] <- NA
+
         GSOD_objects[[j]] <- .reformat(tmp, stations)
       }
     }
@@ -307,10 +299,26 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 
 # Reformat and generate new variables
 .reformat <- function(tmp, stations) {
+  # add names to columns in data frame
+  names(tmp) <- c("STN", "WBAN", "YEAR", "MODA", "TEMP", "TEMP.COUNT",
+                  "DEWP", "DEWP.COUNT", "SLP", "SLP.COUNT", "STP",
+                  "STP.COUNT", "VISIB", "VISIB.COUNT", "WDSP", "WDSP.COUNT",
+                  "MXSPD", "GUST", "MAX", "MAX.FLAG", "MIN", "MIN.FLAG",
+                  "PRCP", "PRCP.FLAG", "SNDP", "I.FOG", "I.RAIN_DRIZZLE",
+                  "I.SNOW_ICE", "I.HAIL", "I.THUNDER", "I.TORNADO_FUNNEL")
+
+  # data quality assurance with MIN/MAX temperatures. In some cases MIN > MAX.
+  # Set these instances to NA, also set correpsonding MIN/MAX NA values to NA in
+  # other column
+  tmp$MIN[which(tmp$MIN > tmp$MAX)] <- NA
+  tmp$MAX[is.na(tmp$MIN)] <- NA
+  tmp$MIN[is.na(tmp$MAX)] <- NA
+
   # Clean up and convert the station and weather data to metric
   tmp <- dplyr::mutate(tmp, STNID = paste(tmp$STN, tmp$WBAN, sep = "-"))
   tmp <- tmp[, -2]
-  tmp$YEAR <- stringr::str_sub(tmp$YEARMODA, 1, 4)
+
+  tmp <- dplyr::mutate(tmp, YEARMODA = paste(tmp$YEAR, tmp$MODA, sep = ""))
   tmp$MONTH <- stringr::str_sub(tmp$YEARMODA, 5, 6)
   tmp$DAY <- stringr::str_sub(tmp$YEARMODA, 7, 8)
   tmp$YDAY <- lubridate::yday(as.Date(paste(tmp$YEAR, tmp$MONTH, tmp$DAY,
@@ -339,13 +347,6 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   tmp$SNDP <- ifelse(!is.na(tmp$SNDP), round( (tmp$SNDP * 25.4) * 10, 1),
                      NA_integer_)
 
-  indicators <- data.frame(matrix(as.numeric(unlist(
-    stringr::str_split(tmp$FRSHTT, ""))), byrow = TRUE, ncol = 6))
-  colnames(indicators) <- c("INDICATOR.FOG", "INDICATOR.RAIN",
-                            "INDICATOR.SNOW", "INDICATOR.HAIL",
-                            "INDICATOR.THUNDER", "INDICATOR.TORNADO")
-  tmp <- data.frame(tmp, indicators, stringsAsFactors = FALSE)
-
   # Compute other weather vars--------------------------------------------------
   # Mean actual (EA) and mean saturation vapour pressure (ES)
   # Monteith JL (1973) Principles of environmental physics.
@@ -365,32 +366,30 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   GSOD_df <- GSOD_df[c("USAF", "WBAN", "STNID", "STATION.NAME", "CTRY",
                        "LAT", "LON", "ELEV.M",
                        "YEARMODA", "YEAR", "MONTH", "DAY", "YDAY",
-                       "TEMP", "COUNT.TEMP", "DEWP", "COUNT.DEWP",
-                       "SLP", "COUNT.SLP", "STP", "COUNT.STP",
-                       "VISIB", "COUNT.VISIB",
-                       "WDSP", "COUNT.WDSP", "MXSPD", "GUST",
+                       "TEMP", "TEMP.COUNT", "DEWP", "DEWP.COUNT",
+                       "SLP", "SLP.COUNT", "STP", "STP.COUNT",
+                       "VISIB", "VISIB.COUNT",
+                       "WDSP", "WDSP.COUNT", "MXSPD", "GUST",
                        "MAX", "MIN",
-                       "PRCP", "FLAGS.PRCP",
-                       "INDICATOR.FOG", "INDICATOR.RAIN",
-                       "INDICATOR.SNOW", "INDICATOR.HAIL",
-                       "INDICATOR.THUNDER", "INDICATOR.TORNADO",
+                       "PRCP", "PRCP.FLAG",
+                       "I.FOG", "I.RAIN_DRIZZLE", "I.SNOW_ICE", "I.HAIL",
+                       "I.THUNDER", "I.TORNADO_FUNNEL",
                        "EA", "ES", "RH")]
-
   return(GSOD_df)
 }
 
 .read_gz <- function(gz_file) {
-  readr::read_table(gz_file,
-                    col_names = c("STN", "WBAN", "YEARMODA", "TEMP",
-                                  "COUNT.TEMP", "DEWP", "COUNT.DEWP",
-                                  "SLP", "COUNT.SLP", "STP",
-                                  "COUNT.STP", "VISIB",
-                                  "COUNT.VISIB", "WDSP",
-                                  "COUNT.WDSP", "MXSPD",
-                                  "GUST", "MAX", "MIN", "PRCP",
-                                  "SNDP", "FRSHTT"),
-                    col_types = "iiidididididididdcccdc", skip = 1,
-                    na = c("9999.9", "999.9", "99.9", "99"))
+  readr::read_fwf(file = gz_file,
+                  readr::fwf_positions(c(1, 8, 15, 19, 25, 32, 36, 43, 47, 54,
+                                         58, 65, 69, 75, 79, 85, 89, 96, 103,
+                                         109, 111, 117, 119, 124, 126, 133, 134,
+                                         135, 136, 137, 138),
+                                       c(6, 12, 18, 22, 30, 33, 41, 44, 52, 55,
+                                         63, 66, 73, 76, 83, 86, 93, 100, 108,
+                                         109, 116, 117, 123, 124, 130, 133, 134,
+                                         135, 136, 137, 138)),
+                  skip = 1,
+                  na = c("9999.9", "999.9", "99.9", "99"))
 }
 
 # The following 2 functions are shamelessly borrowed from RJ Hijmans raster pkg
