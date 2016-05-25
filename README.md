@@ -9,7 +9,7 @@ An R package that provides a function that automates downloading and cleaning da
 
 This package was largely based on Tomislav Hengl's work in "[A Practical Guide to Geostatistical Mapping](http://spatial-analyst.net/book/getGSOD.R)", with updates for speed, cross-platform functionality and some added functionality.
 
-Be sure to have disk space free and allocate the proper time for this to run. This is a time, processor and disk space intensive process.
+Be sure to have disk space free and allocate the proper time for this to run. This is a time, RAM and disk space intensive process, however it does not require much processing power. 
 
 For more information see the description of the data provided by NCDC, http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt.
 
@@ -73,18 +73,20 @@ metres/second to tenths. Missing = -9999.99;
 tenths. Missing = -9999.99;  
 **MAX** - Maximum temperature reported during the day converted to Celsius to
 tenths--time of max temp report varies by country and region, so this will
-sometimes not be the max for the calendar day. The "*" flag is dropped. *In
-instances where MAX < MIN, both MAX and MIN are set to Missing.*
-Missing = -9999.99;  
+sometimes not be the max for the calendar day;
+**MAX.FLAG** - Blank indicates max temp was taken from the explicit max
+temp report and not from the 'hourly' data.  * indicates max temp was derived
+from the hourly data (i.e., highest hourly or synoptic-reported temperature);
 **MIN**- Minimum temperature reported during the day converted to Celcious to
 tenths--time of min temp report varies by country and region, so this will
-sometimes not be the max for the calendar day. The "\*" flag is dropped. *In
-instances where MAX < MIN, both MAX and MIN are set to Missing.*
-Missing = -9999.99;  
+sometimes not be the max for the calendar day;
+**MIN.FLAG** - Blank indicates max temp was taken from the explicit max
+temp report and not from the 'hourly' data.  * indicates max temp was derived
+from the hourly data (i.e., highest hourly or synoptic-reported temperature);
 **PRCP** - Total precipitation (rain and/or melted snow) reported during the day
 converted to millimetres to hundredths;   will usually not end with the
 midnight observation--i.e., may include latter part of previous day. .00
-indicates no measurable precipitation (includes a trace). Missing = -9999.99.
+indicates no measurable precipitation (includes a trace). Missing = -9999.99;
 *Note:  Many stations do not report '0' on days with no precipitation--
 therefore, '-9999.99' will often appear on these days. For example, a
 station may only report a 6-hour amount for the period during which rain
@@ -105,14 +107,17 @@ I = Station did not report any precip data for the day and did not report any
 occurrences of precipitation in its hourly observations--it's still possible
 that precip occurred but was not reported;  
 **SNDP** - Snow depth in millimetres to tenths. Missing = -9999.99;  
-**INDICATOR** - (1 = yes, 0 = no/not reported) for the occurrence during the day
-of:  
-FOG,  
-RAIN or drizzle,  
-SNOW or ice pellets,  
-HAIL,  
-THUNDER,  
-TORNADO or funnel cloud;  
+**FOG** - (1 = yes, 0 = no/not reported) for the occurrence during the day;
+**RAIN_DRIZZLE** - (1 = yes, 0 = no/not reported) for the occurrence during
+the day;
+**SNOW_ICE** - (1 = yes, 0 = no/not reported) for the occurrence during
+the day;
+**HAIL** - (1 = yes, 0 = no/not reported) for the occurrence during the
+day;
+**THUNDER**  - (1 = yes, 0 = no/not reported) for the occurrence during the
+day;
+**TORNADO_FUNNEL** - (1 = yes, 0 = no/not reported) for the occurrence during
+the day;
 
 ### Values calculated by this package:
 **ea** - Mean daily actual vapour pressure;  
