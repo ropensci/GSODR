@@ -37,7 +37,7 @@ Stations are individually checked for number of missing days to assure data
 quality, stations with too many missing observations are omitted, stations
 with a latitude of < -90 or > 90 or longitude of < -180 or > 180 are removed.
 All units are converted to International System of Units (SI), e.g. Fahrenheit
-to Celcius and inches to millimetres. For convenience elevation is
+to Celsius and inches to millimetres. For convenience elevation is
 converted from decimetres to metres.
 
 Due to the size of the resulting data, output is saved as a .csv file in a
@@ -59,8 +59,8 @@ For more information see the description of the data provided by NCDC,
 \url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
 }
 \details{
-This function generates a .csv file in the respective year directory
-containing the following variables:
+This function, get_GSOD(), generates a .csv file in the respective
+year directory containing the following variables:
 STNID - Station number (WMO/DATSAV3 number) for the location;
 WBAN - number where applicable--this is the historical "Weather Bureau Air
 Force Navy" number - with WBAN being the acronym;
@@ -76,38 +76,44 @@ DAY - The day;
 YDAY - Sequential day of year (not in original GSOD);
 TEMP - Mean daily temperature converted to degrees C to tenths. Missing =
 -9999.99;
-COUNT.TEMP - Number of observations used in calculating mean daily
+TEMP.COUNT - Number of observations used in calculating mean daily
 temperature;
 DEWP-  Mean daily dewpoint converted to degrees C to tenths. Missing =
 -9999.99;
-COUNT.DEWP - Number of observations used in calculating mean daily dew point;
+DEWP.COUNT - Number of observations used in calculating mean daily dew point;
 SLP - Mean sea level pressure in millibars to tenths. Missing = -9999.99;
-COUNT.SLP - Number of observations used in calculating mean sea level
+SLP.COUNT - Number of observations used in calculating mean sea level
 pressure;
 STP - Mean station pressure for the day in millibars to tenths
 Missing = -9999.99;
-COUNT.STP - Number of observations used in calculating mean station pressure;
+STP.COUNT - Number of observations used in calculating mean station pressure;
 VISIB - Mean visibility for the day converted to kilometers to tenths
 Missing = -9999.99;
-COUNT.VISIB - Number of observations used in calculating mean daily
+VISIB.COUNT - Number of observations used in calculating mean daily
 visibility;
 WDSP - Mean daily wind speed value converted to metres/second to tenths
 Missing = -9999.99;
-COUNT.WDSP - Number of observations used in calculating mean daily windspeed;
+WDSP.COUNT - Number of observations used in calculating mean daily windspeed;
 MXSPD - Maximum sustained wind speed reported for the day converted to
 metres/second to tenths. Missing = -9999.99;
 GUST = Maximum wind gust reported for the day converted to metres/second to
 tenths. Missing = -9999.99;
 MAX - Maximum temperature reported during the day converted to Celsius to
 tenths--time of max temp report varies by country and region, so this will
-sometimes not be the max for the calendar day. The "*" flag is dropped. In
-instances where MAX < MIN, both MAX and MIN are set to Missing.
-Missing = -9999.99;
-MIN- Minimum temperature reported during the day converted to Celcious to
+sometimes not be the max for the calendar day. In instances where MAX < MIN,
+both MAX and MIN are set to missing. In instances where MIN is missing, MAX
+is correspondingly set to missing as well. Missing = -9999.99;
+MAX.FLAG -  Blank indicates max temp was taken from the explicit max temp
+report and not from the 'hourly' data.  * indicates max temp was derived from
+the hourly data (i.e., highest hourly or synoptic-reported temperature);
+MIN- Minimum temperature reported during the day converted to Celsius to
 tenths--time of min temp report varies by country and region, so this will
-sometimes not be the max for the calendar day.  The "*" flag is dropped. In
-instances where MAX < MIN, both MAX and MIN are set to Missing.
-Missing = -9999.99;
+sometimes not be the max for the calendar day. In instances where MAX < MIN,
+both MAX and MIN are set to missing. In instances where MAX is missing, MIN
+is correspondingly set to missing as well. Missing = -9999.99;
+#' MIN.FLAG -  Blank indicates max temp was taken from the explicit max temp
+report and not from the 'hourly' data.  * indicates max temp was derived from
+the hourly data (i.e., highest hourly or synoptic-reported temperature);
 PRCP - Total precipitation (rain and/or melted snow) reported during the day
 converted to millimetres to hundredths; will usually not end with the
 midnight observation--i.e., may include latter part of previous day. .00
@@ -116,7 +122,7 @@ Note:  Many stations do not report '0' on days with no precipitation--
 therefore, '-9999.99' will often appear on these days. For example, a
 station may only report a 6-hour amount for the period during which rain
 fell. See FLAGS.PRCP column for source of data;
-FLAGS.PRCP -  A = 1 report of 6-hour precipitation amount;
+PRCP.FLAG -  A = 1 report of 6-hour precipitation amount;
 B = Summation of 2 reports of 6-hour precipitation amount;
 C = Summation of 3 reports of 6-hour precipitation amount;
 D = Summation of 4 reports of 6-hour precipitation amount;
@@ -131,16 +137,17 @@ I = Station did not report any precip data for the day and did not report any
 occurrences of precipitation in its hourly observations--it's still possible
 that precip occurred but was not reported;
 SNDP - Snow depth in millimetres to tenths. Missing = -9999.99;
-INDICATOR.* (1 = yes, 0 = no/not reported) for the occurrence during the day
-of:
-FOG,
-RAIN or drizzle,
-SNOW or ice pellets,
-HAIL,
-THUNDER,
-TORNADO or funnel cloud;
+I.FOG- (1 = yes, 0 = no/not reported) for the occurrence during the day;
+I.RAIN_DRIZZLE - (1 = yes, 0 = no/not reported) for the occurrence during the
+day;
+I.SNOW_ICE - (1 = yes, 0 = no/not reported) for the occurrence during the
+day;
+I.HAIL - (1 = yes, 0 = no/not reported) for the occurrence during the day
+I.THUNDER  - (1 = yes, 0 = no/not reported) for the occurrence during the
+day;
+I.TORNADO_FUNNEL - (1 = yes, 0 = no/not reported) for the occurrence during
 
-Values calculated by this package:
+Values calculated by this package and included in final output:
 ea - Mean daily actual vapour pressure;
 es - Mean daily saturation vapour pressure;
 RH - Mean daily relative humidity;

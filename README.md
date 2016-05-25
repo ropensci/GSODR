@@ -5,13 +5,13 @@
 [![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/GSODR?color=brightgreen)](https://github.com/metacran/cranlogs.app)
 [![cran version](http://www.r-pkg.org/badges/version/GSODR)](https://cran.r-project.org/package=GSODR)
 
-An R package that provides a function that automates downloading and cleaning data from the "[Global Surface Summary of the Day (GSOD)](https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod)" data provided by the US National Climatic Data Center (NCDC). Stations are individually checked for number of missing days to assure data quality, stations with too many missing observations are omitted. All units are converted to metric, e.g. feet to metres and Fahrenheit to Celcius. Output is saved as a Comma Separated Value (CSV) file summarizing each year by station, which includes vapor pressure and relative humidity variables calculated from existing data in GSOD.
+An R package that provides a function that automates downloading and cleaning data from the "[Global Surface Summary of the Day (GSOD)](https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod)" data provided by the US National Climatic Data Center (NCDC). Stations are individually checked for number of missing days to assure data quality, stations with too many missing observations are omitted. All units are converted to metric, e.g. feet to metres and Fahrenheit to Celsius. Output is saved as a Comma Separated Value (CSV) file summarizing each year by station, which includes vapor pressure and relative humidity variables calculated from existing data in GSOD.
 
 This package was largely based on Tomislav Hengl's work in "[A Practical Guide to Geostatistical Mapping](http://spatial-analyst.net/book/getGSOD.R)", with updates for speed, cross-platform functionality and some added functionality.
 
 Be sure to have disk space free and allocate the proper time for this to run. This is a time, RAM and disk space intensive process, however it does not require much processing power. 
 
-For more information see the description of the data provided by NCDC, http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt.
+For more information see the description of the data provided by NCDC, [http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt](http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt).
 
 ## To install this package
 ### Stable release from CRAN
@@ -49,24 +49,24 @@ Force Navy" number - with WBAN being the acronym;
 **YDAY** - Sequential day of year (not in original GSOD);  
 **TEMP** - Mean daily temperature converted to degrees C to tenths. Missing =
 -9999.99;  
-**COUNT.TEMP** - Number of observations used in calculating mean daily
+**TEMP.COUNT** - Number of observations used in calculating mean daily
 temperature;  
 **DEWP**-  Mean daily dewpoint converted to degrees C to tenths. Missing =
 -9999.99;  
-**COUNT.DEWP** - Number of observations used in calculating mean daily dew point;  
+**DEWP.COUNT** - Number of observations used in calculating mean daily dew point;  
 **SLP** - Mean sea level pressure in millibars to tenths. Missing = -9999.99;  
-**COUNT.SLP** - Number of observations used in calculating mean sea level
+**SLP.COUNT** - Number of observations used in calculating mean sea level
 pressure;  
 **STP** - Mean station pressure for the day in millibars to tenths
 Missing = -9999.99;  
-**COUNT.STP** - Number of observations used in calculating mean station pressure;  
+**STP.COUNT** - Number of observations used in calculating mean station pressure;  
 **VISIB** - Mean visibility for the day converted to kilometers to tenths
 Missing = -9999.99;  
-**COUNT.VISIB** - Number of observations used in calculating mean daily
+**VISIB.COUNT** - Number of observations used in calculating mean daily
 visibility;  
 **WDSP** - Mean daily wind speed value converted to metres/second to tenths
 Missing = -9999.99;  
-**COUNT.WDSP** - Number of observations used in calculating mean daily windspeed;  
+**WDSP.COUNT** - Number of observations used in calculating mean daily windspeed;  
 **MXSPD** - Maximum sustained wind speed reported for the day converted to
 metres/second to tenths. Missing = -9999.99;  
 **GUST** = Maximum wind gust reported for the day converted to metres/second to
@@ -77,7 +77,7 @@ sometimes not be the max for the calendar day;
 **MAX.FLAG** - Blank indicates max temp was taken from the explicit max
 temp report and not from the 'hourly' data.  * indicates max temp was derived
 from the hourly data (i.e., highest hourly or synoptic-reported temperature);  
-**MIN**- Minimum temperature reported during the day converted to Celcious to
+**MIN**- Minimum temperature reported during the day converted to Celsius to
 tenths--time of min temp report varies by country and region, so this will
 sometimes not be the max for the calendar day;  
 **MIN.FLAG** - Blank indicates max temp was taken from the explicit max
@@ -91,7 +91,7 @@ indicates no measurable precipitation (includes a trace). Missing = -9999.99;
 therefore, '-9999.99' will often appear on these days. For example, a
 station may only report a 6-hour amount for the period during which rain
 fell.* See FLAGS.PRCP column for source of data;  
-**FLAGS.PRCP** -  
+**PRCP.FLAG** -  
 A = 1 report of 6-hour precipitation amount;  
 B = Summation of 2 reports of 6-hour precipitation amount;  
 C = Summation of 3 reports of 6-hour precipitation amount;  
@@ -107,19 +107,19 @@ I = Station did not report any precip data for the day and did not report any
 occurrences of precipitation in its hourly observations--it's still possible
 that precip occurred but was not reported;  
 **SNDP** - Snow depth in millimetres to tenths. Missing = -9999.99;  
-**FOG** - (1 = yes, 0 = no/not reported) for the occurrence during the day;  
-**RAIN_DRIZZLE** - (1 = yes, 0 = no/not reported) for the occurrence during
+**I.FOG** - (1 = yes, 0 = no/not reported) for the occurrence during the day;  
+**I.RAIN_DRIZZLE** - (1 = yes, 0 = no/not reported) for the occurrence during
 the day;  
-**SNOW_ICE** - (1 = yes, 0 = no/not reported) for the occurrence during
+**I.SNOW_ICE** - (1 = yes, 0 = no/not reported) for the occurrence during
 the day;  
-**HAIL** - (1 = yes, 0 = no/not reported) for the occurrence during the
+**I.HAIL** - (1 = yes, 0 = no/not reported) for the occurrence during the
 day;  
-**THUNDER**  - (1 = yes, 0 = no/not reported) for the occurrence during the
+**I.THUNDER**  - (1 = yes, 0 = no/not reported) for the occurrence during the
 day;  
-**TORNADO_FUNNEL** - (1 = yes, 0 = no/not reported) for the occurrence during
+**I.TORNADO_FUNNEL** - (1 = yes, 0 = no/not reported) for the occurrence during
 the day;  
 
-### Values calculated by this package:
+### Values calculated by this package and included in final output:
 **ea** - Mean daily actual vapour pressure;  
 **es** - Mean daily saturation vapour pressure;  
 **RH** - Mean daily relative humidity;  
