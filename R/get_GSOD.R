@@ -166,6 +166,13 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 
   # Setting up options, creating objects, check variables entered by user-------
   options(warn = 2)
+  tmp_names <- c("STN", "WBAN",  "YEAR", "MODA", "TEMP", "COUNT.TEMP",
+                  "DEWP", "COUNT.DEWP", "SLP", "COUNT.SLP", "STP",
+                  "COUNT.STP", "VISIB", "COUNT.VISIB", "WDSP", "COUNT.WDSP",
+                  "MXSPD", "GUST", "MAX", "MAX.FLAG", "MIN", "MIN.FLAG",
+                  "PRCP", "PRCP.FLAG", "SNDP", "FOG", "RAIN_DRIZZLE",
+                  "SNOW_ICE", "HAIL", "THUNDER", "TORNADO_FUNNEL")
+
   utils::data("stations", package = "GSODR", envir = environment())
   stations <- get("stations", envir = environment())
 
@@ -237,13 +244,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
     # If a single station is selected---------------------- --------------------
     if (!is.null(station)) {
       tmp <- .read_gz(paste0(ftp_site, yr, "/", station, "-", yr, ".op.gz"))
-      tmp <- tidyr::separate(data = tmp, col = "PRCP", sep = 4,
-                             into = c("PRCP", "FLAGS.PRCP"))
-      tmp$MAX <- as.double(unlist(strsplit(tmp$MAX, "[\\*]")))
-      tmp$MIN <- as.double(unlist(strsplit(tmp$MIN, "[\\*]")))
-      tmp$PRCP <- as.double(tmp$PRCP)
-      tmp$MAX[tmp$MAX == 99] <- NA
-      tmp$MIN[tmp$MIN == 99] <- NA
+      names(tmp) <- tmp_names
+
       tmp$MIN[which(tmp$MIN > tmp$MAX)] <- NA
       tmp$MAX[is.na(tmp$MIN)] <- NA
       GSOD_XY <- .reformat(tmp, stations)
@@ -252,15 +254,10 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
       GSOD_objects <- list()
       for (j in seq_len(length(GSOD_list))) {
         tmp <- try(.read_gz(paste0(td, "/", yr, "/", GSOD_list[j])))
+        names(tmp) <- tmp_names
         # check to see if max_missing < missing days, if so, go to next
         if (.check(tmp, yr, max_missing) == TRUE) next
-        tmp <- tidyr::separate(data = tmp, col = "PRCP", sep = 4,
-                               into = c("PRCP", "FLAGS.PRCP"))
-        tmp$MAX <- as.double(unlist(strsplit(tmp$MAX, "[\\*]")))
-        tmp$MIN <- as.double(unlist(strsplit(tmp$MIN, "[\\*]")))
-        tmp$PRCP <- as.double(tmp$PRCP)
-        tmp$MAX[tmp$MAX == 99] <- NA
-        tmp$MIN[tmp$MIN == 99] <- NA
+
         tmp$MIN[which(tmp$MIN > tmp$MAX)] <- NA
         tmp$MAX[is.na(tmp$MIN)] <- NA
         GSOD_objects[[j]] <- .reformat(tmp, stations)
@@ -375,22 +372,19 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                        "INDICATOR.SNOW", "INDICATOR.HAIL",
                        "INDICATOR.THUNDER", "INDICATOR.TORNADO",
                        "EA", "ES", "RH")]
-
   return(GSOD_df)
 }
 
 .read_gz <- function(gz_file) {
-  readr::read_table(gz_file,
-                    col_names = c("STN", "WBAN", "YEARMODA", "TEMP",
-                                  "COUNT.TEMP", "DEWP", "COUNT.DEWP",
-                                  "SLP", "COUNT.SLP", "STP",
-                                  "COUNT.STP", "VISIB",
-                                  "COUNT.VISIB", "WDSP",
-                                  "COUNT.WDSP", "MXSPD",
-                                  "GUST", "MAX", "MIN", "PRCP",
-                                  "SNDP", "FRSHTT"),
-                    col_types = "iiidididididididdcccdc", skip = 1,
-                    na = c("9999.9", "999.9", "99.9", "99"))
+  readr::read_fwf(file = gz_file,
+                  fwf_positions(c(1, 8, 15, 19, 25, 32, 36, 43, 47, 54, 58, 65,
+                                  69, 75, 79, 85, 89, 96, 103, 109, 111, 117,
+                                  119, 124, 126, 133, 134, 135, 136, 137, 138),
+                                c(6, 12, 18, 22, 30, 33, 41, 44, 52, 55, 63, 66,
+                                  73, 76, 83, 86, 93, 100, 108, 109, 116, 117,
+                                  123, 124, 130, 133, 134, 135, 136, 137, 138)),
+                  skip = 1,
+                  na = c("9999.9", "999.9", "99.9", "99"))
 }
 
 # The following 2 functions are shamelessly borrowed from RJ Hijmans raster pkg
