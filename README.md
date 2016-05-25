@@ -73,16 +73,16 @@ metres/second to tenths. Missing = -9999.99;
 tenths. Missing = -9999.99;  
 **MAX** - Maximum temperature reported during the day converted to Celsius to
 tenths--time of max temp report varies by country and region, so this will
-sometimes not be the max for the calendar day;
+sometimes not be the max for the calendar day;  
 **MAX.FLAG** - Blank indicates max temp was taken from the explicit max
 temp report and not from the 'hourly' data.  * indicates max temp was derived
 from the hourly data (i.e., highest hourly or synoptic-reported temperature);
 **MIN**- Minimum temperature reported during the day converted to Celcious to
 tenths--time of min temp report varies by country and region, so this will
-sometimes not be the max for the calendar day;
+sometimes not be the max for the calendar day;  
 **MIN.FLAG** - Blank indicates max temp was taken from the explicit max
-temp report and not from the 'hourly' data.  * indicates max temp was derived
-from the hourly data (i.e., highest hourly or synoptic-reported temperature);
+temp report and not from the 'hourly' data. * indicates max temp was derived
+from the hourly data (i.e., highest hourly or synoptic-reported temperature);  
 **PRCP** - Total precipitation (rain and/or melted snow) reported during the day
 converted to millimetres to hundredths;   will usually not end with the
 midnight observation--i.e., may include latter part of previous day. .00
@@ -107,17 +107,17 @@ I = Station did not report any precip data for the day and did not report any
 occurrences of precipitation in its hourly observations--it's still possible
 that precip occurred but was not reported;  
 **SNDP** - Snow depth in millimetres to tenths. Missing = -9999.99;  
-**FOG** - (1 = yes, 0 = no/not reported) for the occurrence during the day;
+**FOG** - (1 = yes, 0 = no/not reported) for the occurrence during the day;  
 **RAIN_DRIZZLE** - (1 = yes, 0 = no/not reported) for the occurrence during
-the day;
+the day;  
 **SNOW_ICE** - (1 = yes, 0 = no/not reported) for the occurrence during
-the day;
+the day;  
 **HAIL** - (1 = yes, 0 = no/not reported) for the occurrence during the
-day;
+day;  
 **THUNDER**  - (1 = yes, 0 = no/not reported) for the occurrence during the
-day;
+day;  
 **TORNADO_FUNNEL** - (1 = yes, 0 = no/not reported) for the occurrence during
-the day;
+the day;  
 
 ### Values calculated by this package:
 **ea** - Mean daily actual vapour pressure;  
