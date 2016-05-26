@@ -1,8 +1,8 @@
-#' @title Download, Clean and Generate New Variables From GSOD Weather Data
+#' Download, Clean and Generate New Variables From GSOD Weather Data
 #'
-#'@description This function automates downloading and cleaning data from the
-#'Global Surface Summary of the Day (GSOD) data provided by the US National
-#'Climatic Data Center (NCDC),
+#'This function automates downloading and cleaning data from the Global Surface
+#'Summary of the Day (GSOD) data provided by the US National Climatic Data
+#'Center (NCDC),
 #'\url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod}.
 #'Stations are individually checked for number of missing days to assure data
 #'quality, stations with too many missing observations are omitted, stations
@@ -10,22 +10,17 @@
 #'All units are converted to International System of Units (SI), e.g. Fahrenheit
 #'to Celsius and inches to millimetres. For convenience elevation is
 #'converted from decimetres to metres.
-#'
 #'Due to the size of the resulting data, output is saved as a .csv file in a
 #'directory specified by the user or defaults to the current working directory.
 #'The .csv file summarizes each year by station, which includes vapour pressure
 #'and relative humidity variables calculated from existing data in GSOD.
-#'
 #'All missing values in resulting csv files are represented as -9999.99
 #'regardless of which column they occur in.
-#'
 #'Be sure to have disk space free and allocate the proper time for this to run.
 #'This is a time, processor and disk input/output/space intensive process.
-#'
 #'This function was largely based on T. Hengl's "getGSOD.R" script, available
 #'from \url{http://spatial-analyst.net/book/system/files/getGSOD.R} with
 #'enhancements to be more cross-platform, faster and a bit more flexible.
-#'.
 #'For more information see the description of the data provided by NCDC,
 #'\url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
 #'
