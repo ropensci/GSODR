@@ -2,7 +2,7 @@ Package: GSODR
 Type: Package
 Title: Download, Clean and Generate New Variables from GSOD Data
 Version: 0.1.6
-Date: 2016-05-22
+Date: 2016-05-26
 Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     email = "adamhsparks@gmail.com"),
     person("Tomislav", "Hengl", role = "ctb",
@@ -28,27 +28,22 @@ Description: Download, clean, reformat and create new variables from the
     omitted. Also omitted are stations with a latitude of < -90 or > 90 or
     longitude of < - 180 or > 180. Output is returned as a comma-separated
     values (CSV) file written to disk in a location selected by the user, which
-    summarises each year by station and includes new variables: actual and
-    saturation vapor pressure and relative humidity calculated from the original
-    GSOD data. The resulting files can be as large as 500mb depending on the
-    user's stringency for missing data and geographic area of interest. Be sure
-    to have sufficient RAM and disk space as well as a reasonably fast internet
-    connection to use this package to perform this operation. However, for much
-    smaller and more manageable data sets, an individual country of interest may
-    be selected as well as only stations falling between -60/60 degrees latitude
-    for agroclimatology work. The resulting files include station data (e.g.,
-    station name, country, latitude, longitude, elevation) for use in a
-    geographic information system (GIS). The function was largely based on
-    T. Hengl's 'getGSOD.R' script, available from
+    summarises each year by station and includes new variables: actual vapor
+    pressure, saturation vapor pressure and relative humidity are calculated
+    from the original GSOD data. The resulting files can be as large as 500mb
+    depending on the user's stringency for missing data and geographic area of
+    interest. Be sure to have sufficient RAM and disk space as well as a
+    reasonably fast internet connection to use this package to perform this
+    operation. However, for much smaller and more manageable data sets, an
+    individual country of interest may be selected as well as only stations
+    falling between -60/60 degrees latitude for agroclimatology work or
+    individual stations if the station ID is known. The resulting files include
+    station data (e.g., station name, country, latitude, longitude, elevation)
+    for use in a geographic information system (GIS). The function was largely
+    based on T. Hengl's 'getGSOD.R' script, available from
     <http://spatial-analyst.net/book/system/files/getGSOD.R> with enhancements
-    to be more cross-platform, faster and more flexible. Currently flags are
-    maintained for all of the columns except for MIN/MAX. In the original
-    MIN/MAX columns of the GSOD data, "blank indicates max temp was taken from
-    the explicit max temp report and not from the 'hourly' data. * indicates max
-    temp was derived from the hourly data (i.e., highest hourly or
-    synoptic-reported temperature).", GSOD readme.txt
-    <http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt>. For CSV files
-    resulting from GSODR the flags are stripped.
+    to be more cross-platform, faster and more flexible. See the GSOD readme.txt
+    <http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt>.
 Depends:
     R (>= 3.0.0)
 License: GPL (>= 3)

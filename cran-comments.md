@@ -9,11 +9,11 @@ There were no ERRORs or WARNINGs.
 
 ## New minor release
 This is a new minor release. In this version I have:
-  * Set values where MIN > MAX to NA
-  * Set more MIN/MAX/DEWP values to NA. GSOD README indicates that 999 indicates missing values in these columns, this does not appear to always be true. There are instances where 99 is the value recorded for missing data. While 99F is possible, the vast majority of these recorded values are missing data, thus the function now converts them to NA
-  * Fixed bug where YDAY not correctly calculated and reported in CSV file
-  * CSV files for station only queries now are names with the Station Identifier. Previously named same as Global data
-  * Likesise, CSV files for agroclimatology now are names with the Station Identifier. Previously named same as Global data
+Changes
+  * Fixed an issue when reading .op files into R where temperature was incorrectly read causing negative values where T >= 100F, this issue caused RH values of >100% and incorrect TEMP values
+  * Made spelling corrections
+  * Included MIN/MAX flag columns
+  * Included station data in package rather than downloading from NCDC every time get_GSOD() is run
 
 ## Reverse dependencies
 
