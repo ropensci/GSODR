@@ -32,7 +32,7 @@ Use `install_github("author/package")` to install this package.
 See `?get_GSOD()` for the help file.
 
 ## Function description
-This package consists of a single function, get_GSOD(), which generates a 
+This package consists of a single function, `get_GSOD()`, which generates a 
 .csv file in the respective year directory containing the following variables:  
 **STNID** - Station number (WMO/DATSAV3 number) for the location;  
 **WBAN** - number where applicable--this is the historical "Weather Bureau Air

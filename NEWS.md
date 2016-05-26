@@ -1,3 +1,10 @@
+GSODR v0.1.6 (Release date: 2016-05-16)
+==============
+Changes
+  * Fix issue when reading .op files into R where temperature was incorrectly read causing negative values where T >= 100F, this issue caused RH values of >100% and incorrect TEMP values
+  * Spelling corrections
+  * Include MIN/MAX flag column
+  * Station data is now included in package rather than downloading from NCDC every time get_GSOD() is run, this data has some corrections where stations with missing LAT/LON values or elevation are omitted, this is **not** the original complete station list provided by NCDC
 
 GSODR v0.1.5 (Release date: 2016-05-16)
 ==============
