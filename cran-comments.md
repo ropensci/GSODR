@@ -2,7 +2,7 @@
 * local OS X install, R 3.3.0
 * Ubuntu 12.04 (on travis-ci), R 3.3.0
 * win-builder (release)
-* win-builder (R Under development (unstable) (2016-05-14 r70617))
+* win-builder (R Under development (unstable) (2016-05-24 r70665))
 
 ## R CMD check results
 There were no ERRORs or WARNINGs. 
@@ -14,6 +14,7 @@ Changes
   * Made spelling corrections
   * Included MIN/MAX flag columns
   * Included station data in package rather than downloading from NCDC every time get_GSOD() is run
+  * Clarified documentation and descriptions
 
 ## Reverse dependencies
 
