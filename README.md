@@ -5,7 +5,7 @@
 [![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/GSODR?color=brightgreen)](https://github.com/metacran/cranlogs.app)
 [![cran version](http://www.r-pkg.org/badges/version/GSODR)](https://cran.r-project.org/package=GSODR)
 
-An R package that provides a function that automates downloading and cleaning data from the "[Global Surface Summary of the Day (GSOD)](https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod)" data provided by the US National Climatic Data Center (NCDC). Stations are individually checked for number of missing days to assure data quality, stations with too many missing observations are omitted. All units are converted to metric, e.g. feet to metres and Fahrenheit to Celsius. Output is saved as a Comma Separated Value (CSV) file summarizing each year by station, which includes vapor pressure and relative humidity variables calculated from existing data in GSOD.
+An R package that provides a function that automates downloading and cleaning data from the "[Global Surface Summary of the Day (GSOD)](https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod)" data provided by the US National Climatic Data Center (NCDC). Stations are individually checked for number of missing days to assure data quality, stations with too many missing observations are omitted. All units are converted to metric, e.g. feet to metres and Fahrenheit to Celsius. Output is saved as a Comma Separated Value (CSV) file or ESRI format shapefile summarizing each year by station, which includes vapor pressure and relative humidity variables calculated from existing data in GSOD.
 
 This package was largely based on Tomislav Hengl's work in "[A Practical Guide to Geostatistical Mapping](http://spatial-analyst.net/book/getGSOD.R)", with updates for speed, cross-platform functionality and some added functionality.
 
@@ -33,11 +33,11 @@ See `?get_GSOD()` for the help file.
 
 ## Function description
 This package consists of a single function, `get_GSOD()`, which generates a 
-.csv file in the respective year directory containing the following variables:  
+.csv file or ESRI format shapefile in the respective year directory containing the following variables:  
 **STNID** - Station number (WMO/DATSAV3 number) for the location;  
 **WBAN** - number where applicable--this is the historical "Weather Bureau Air
 Force Navy" number - with WBAN being the acronym;  
-**STATION NAME** - Unique text identifier;  
+**STN NAME** - Unique text identifier;  
 **CTRY** - Country;  
 **LAT** - Latitude. *Station dropped in cases where values are <-90 or >90 degrees or Lat = 0 and Lon = 0*;  
 **LON** - Longitude. *Station dropped in cases where values are <-180 or >180 degrees or Lat = 0 and Lon = 0*;  
@@ -49,24 +49,24 @@ Force Navy" number - with WBAN being the acronym;
 **YDAY** - Sequential day of year (not in original GSOD);  
 **TEMP** - Mean daily temperature converted to degrees C to tenths. Missing =
 -9999.99;  
-**TEMP.COUNT** - Number of observations used in calculating mean daily
+**TEMP.CNT** - Number of observations used in calculating mean daily
 temperature;  
 **DEWP**-  Mean daily dewpoint converted to degrees C to tenths. Missing =
 -9999.99;  
-**DEWP.COUNT** - Number of observations used in calculating mean daily dew point;  
+**DEWP.CNT** - Number of observations used in calculating mean daily dew point;  
 **SLP** - Mean sea level pressure in millibars to tenths. Missing = -9999.99;  
-**SLP.COUNT** - Number of observations used in calculating mean sea level
+**SLP.CNT** - Number of observations used in calculating mean sea level
 pressure;  
 **STP** - Mean station pressure for the day in millibars to tenths
 Missing = -9999.99;  
-**STP.COUNT** - Number of observations used in calculating mean station pressure;  
+**STP.CNT** - Number of observations used in calculating mean station pressure;  
 **VISIB** - Mean visibility for the day converted to kilometers to tenths
 Missing = -9999.99;  
-**VISIB.COUNT** - Number of observations used in calculating mean daily
+**VISIB.CNT** - Number of observations used in calculating mean daily
 visibility;  
 **WDSP** - Mean daily wind speed value converted to metres/second to tenths
 Missing = -9999.99;  
-**WDSP.COUNT** - Number of observations used in calculating mean daily windspeed;  
+**WDSP.CNT** - Number of observations used in calculating mean daily windspeed;  
 **MXSPD** - Maximum sustained wind speed reported for the day converted to
 metres/second to tenths. Missing = -9999.99;  
 **GUST** = Maximum wind gust reported for the day converted to metres/second to
@@ -108,15 +108,15 @@ occurrences of precipitation in its hourly observations--it's still possible
 that precip occurred but was not reported;  
 **SNDP** - Snow depth in millimetres to tenths. Missing = -9999.99;  
 **I.FOG** - (1 = yes, 0 = no/not reported) for the occurrence during the day;  
-**I.RAIN_DRIZZLE** - (1 = yes, 0 = no/not reported) for the occurrence during
+**I.RAIN_DZL** - (1 = yes, 0 = no/not reported) for the occurrence during
 the day;  
-**I.SNOW_ICE** - (1 = yes, 0 = no/not reported) for the occurrence during
+**I.SNW_ICE** - (1 = yes, 0 = no/not reported) for the occurrence during
 the day;  
 **I.HAIL** - (1 = yes, 0 = no/not reported) for the occurrence during the
 day;  
 **I.THUNDER**  - (1 = yes, 0 = no/not reported) for the occurrence during the
 day;  
-**I.TORNADO_FUNNEL** - (1 = yes, 0 = no/not reported) for the occurrence during
+**I.TDO_FNL** - (1 = yes, 0 = no/not reported) for the occurrence during
 the day;  
 
 ### Values calculated by this package and included in final output:
