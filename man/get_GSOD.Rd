@@ -48,13 +48,17 @@ with a latitude of < -90 or > 90 or longitude of < -180 or > 180 are removed.
 All units are converted to International System of Units (SI), e.g. Fahrenheit
 to Celsius and inches to millimetres. For convenience elevation is
 converted from decimetres to metres.
-Due to the size of the resulting data, output is saved as a comma-delimited
-csv file (default) or ESRI shapefile in a directory specified by the user or
+}
+\details{
+Due to the size of the resulting data, output is saved as a comma-separated,
+csv, file (default) or ESRI shapefile in a directory specified by the user or
 defaults to the current working directory. The files summarize each year by
 station, which includes vapour pressure and relative humidity variables
 calculated from existing data in GSOD.
+
 All missing values in resulting files are represented as -9999.99
 regardless of which field they occur in.
+
 Be sure to have disk space free and allocate the proper time for this to run.
 This is a time, processor and disk input/output/space intensive process.
 This function was largely based on T. Hengl's "getGSOD.R" script, available
@@ -62,10 +66,9 @@ from \url{http://spatial-analyst.net/book/system/files/getGSOD.R} with
 enhancements to be more cross-platform, faster and a bit more flexible.
 For more information see the description of the data provided by NCDC,
 \url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
-}
-\details{
-This function generates a CSV or ESRI format shapefile in the
-respective year-directory containing the following variables:
+
+The CSV or ESRI format shapefile in the respective year-directory
+will contain the following fields/values:
 \describe{
 \item{STNID}{Station number (WMO/DATSAV3 number) for the location}
 \item{WBAN}{Number where applicable--this is the historical "Weather Bureau
