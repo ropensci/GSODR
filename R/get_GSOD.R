@@ -313,7 +313,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
     #### shapefile--------------------------------------------------------------
     if (shapefile == TRUE) {
       GSOD_XY <- as.data.frame(GSOD_XY) # convert tbl.df to dataframe for sp
-      sp::coordinates(GSOD_XY) <- ~LON+LAT
+      sp::coordinates(GSOD_XY) <- ~ LON + LAT
       sp::proj4string(GSOD_XY) <- sp::CRS("+proj=longlat +datum=WGS84")
       raster::shapefile(GSOD_XY, filename = path.expand(outfile),
                         overwrite = TRUE, encoding = "UTF-8")
