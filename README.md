@@ -107,7 +107,7 @@ I = Station did not report any precip data for the day and did not report any
 occurrences of precipitation in its hourly observations--it's still possible
 that precip occurred but was not reported;  
 **SNDP** - Snow depth in millimetres to tenths. Missing = -9999.99;  
-**I.FOG** - Fog, (1 = yes, 0 = no/not reported) for the occurrence during the
+**I.FOG** - Indicator for fog, (1 = yes, 0 = no/not reported) for the occurrence during the
 day;  
 **I.RAIN_DZL** - Indicator for rain or drizzle, (1 = yes, 0 = no/not reported)
 for the occurrence during the day;  
