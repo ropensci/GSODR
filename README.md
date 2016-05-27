@@ -37,7 +37,7 @@ This package consists of a single function, `get_GSOD()`, which generates a
 **STNID** - Station number (WMO/DATSAV3 number) for the location;  
 **WBAN** - number where applicable--this is the historical "Weather Bureau Air
 Force Navy" number - with WBAN being the acronym;  
-**STN NAME** - Unique text identifier;  
+**STN.NAME** - Unique text identifier;  
 **CTRY** - Country;  
 **LAT** - Latitude. *Station dropped in cases where values are <-90 or >90 degrees or Lat = 0 and Lon = 0*;  
 **LON** - Longitude. *Station dropped in cases where values are <-180 or >180 degrees or Lat = 0 and Lon = 0*;  
