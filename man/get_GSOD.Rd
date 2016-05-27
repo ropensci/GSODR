@@ -5,7 +5,8 @@
 \title{Download, Clean and Generate New Variables From GSOD Weather Data}
 \usage{
 get_GSOD(years = NULL, station = NULL, country = NULL, path = "",
-  max_missing = 5, agroclimatology = FALSE)
+  max_missing = 5, agroclimatology = FALSE, shapefile = FALSE,
+  CSV = TRUE)
 }
 \arguments{
 \item{years}{Year(s) of weather data to download.}
@@ -18,20 +19,27 @@ data, full name or 3 letter ISO code work. Use raster::getData('ISO3')
 for a list of possible ISO country codes.}
 
 \item{path}{Path entered by user indicating where to store resulting
-csv file. Defaults to the current working directory.}
+output file. Defaults to the current working directory.}
 
 \item{max_missing}{The maximum number of days allowed to be missing from a
-station's data before it is excluded from .csv file output. Defaults to 5
+station's data before it is excluded from final file output. Defaults to 5
 days.}
 
 \item{agroclimatology}{Only clean data for stations between latitudes 60 and
 -60 for agroclimatology work, defaults to FALSE. Set to FALSE to override and
 include only stations within the confines of these latitudes.}
+
+\item{shapefile}{If set to TRUE, create an ESRI shapefile of vector type,
+points, of the data for use in a GIS. Defaults to FALSE, no shapefile
+created.}
+
+\item{CSV}{If set to TRUE, create a comma separated value (CSV) file of data,
+defaults to TRUE, a CSV file is created.}
 }
 \description{
-This function automates downloading and cleaning data from the
-Global Surface Summary of the Day (GSOD) data provided by the US National
-Climatic Data Center (NCDC),
+This function automates downloading and cleaning data from the Global Surface
+Summary of the Day (GSOD) data provided by the US National Climatic Data
+Center (NCDC),
 \url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod}.
 Stations are individually checked for number of missing days to assure data
 quality, stations with too many missing observations are omitted, stations
@@ -39,32 +47,29 @@ with a latitude of < -90 or > 90 or longitude of < -180 or > 180 are removed.
 All units are converted to International System of Units (SI), e.g. Fahrenheit
 to Celsius and inches to millimetres. For convenience elevation is
 converted from decimetres to metres.
-
-Due to the size of the resulting data, output is saved as a .csv file in a
-directory specified by the user or defaults to the current working directory.
-The .csv file summarizes each year by station, which includes vapour pressure
-and relative humidity variables calculated from existing data in GSOD.
-
-All missing values in resulting csv files are represented as -9999.99
-regardless of which column they occur in.
-
+Due to the size of the resulting data, output is saved as a comma-delimited
+csv file (default) or ESRI shapefile in a directory specified by the user or
+defaults to the current working directory. The files summarize each year by
+station, which includes vapour pressure and relative humidity variables
+calculated from existing data in GSOD.
+All missing values in resulting files are represented as -9999.99
+regardless of which field they occur in.
 Be sure to have disk space free and allocate the proper time for this to run.
 This is a time, processor and disk input/output/space intensive process.
-
 This function was largely based on T. Hengl's "getGSOD.R" script, available
 from \url{http://spatial-analyst.net/book/system/files/getGSOD.R} with
 enhancements to be more cross-platform, faster and a bit more flexible.
-.
 For more information see the description of the data provided by NCDC,
 \url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
 }
 \details{
-This function, get_GSOD(), generates a .csv file in the respective
-year directory containing the following variables:
+This function, get_GSOD(), generates a CSV or ESRI format
+shapefile in the respective year-directory containing the following
+variables:
 STNID - Station number (WMO/DATSAV3 number) for the location;
 WBAN - number where applicable--this is the historical "Weather Bureau Air
 Force Navy" number - with WBAN being the acronym;
-STATION NAME;
+STN.NAME;
 CTRY - Country;
 LAT - Latitude;
 LON - Longitude;
@@ -76,24 +81,24 @@ DAY - The day;
 YDAY - Sequential day of year (not in original GSOD);
 TEMP - Mean daily temperature converted to degrees C to tenths. Missing =
 -9999.99;
-TEMP.COUNT - Number of observations used in calculating mean daily
+TEMP.CNT - Number of observations used in calculating mean daily
 temperature;
 DEWP-  Mean daily dewpoint converted to degrees C to tenths. Missing =
 -9999.99;
-DEWP.COUNT - Number of observations used in calculating mean daily dew point;
+DEWP.CNT - Number of observations used in calculating mean daily dew point;
 SLP - Mean sea level pressure in millibars to tenths. Missing = -9999.99;
-SLP.COUNT - Number of observations used in calculating mean sea level
+SLP.CNT - Number of observations used in calculating mean sea level
 pressure;
 STP - Mean station pressure for the day in millibars to tenths
 Missing = -9999.99;
-STP.COUNT - Number of observations used in calculating mean station pressure;
+STP.CNT - Number of observations used in calculating mean station pressure;
 VISIB - Mean visibility for the day converted to kilometers to tenths
 Missing = -9999.99;
-VISIB.COUNT - Number of observations used in calculating mean daily
+VISIB.CNT - Number of observations used in calculating mean daily
 visibility;
 WDSP - Mean daily wind speed value converted to metres/second to tenths
 Missing = -9999.99;
-WDSP.COUNT - Number of observations used in calculating mean daily windspeed;
+WDSP.CNT - Number of observations used in calculating mean daily windspeed;
 MXSPD - Maximum sustained wind speed reported for the day converted to
 metres/second to tenths. Missing = -9999.99;
 GUST = Maximum wind gust reported for the day converted to metres/second to
@@ -138,14 +143,14 @@ occurrences of precipitation in its hourly observations--it's still possible
 that precip occurred but was not reported;
 SNDP - Snow depth in millimetres to tenths. Missing = -9999.99;
 I.FOG- (1 = yes, 0 = no/not reported) for the occurrence during the day;
-I.RAIN_DRIZZLE - (1 = yes, 0 = no/not reported) for the occurrence during the
+I.RAIN_DZL - (1 = yes, 0 = no/not reported) for the occurrence during the
 day;
-I.SNOW_ICE - (1 = yes, 0 = no/not reported) for the occurrence during the
+I.SNW_ICE - (1 = yes, 0 = no/not reported) for the occurrence during the
 day;
 I.HAIL - (1 = yes, 0 = no/not reported) for the occurrence during the day
 I.THUNDER  - (1 = yes, 0 = no/not reported) for the occurrence during the
 day;
-I.TORNADO_FUNNEL - (1 = yes, 0 = no/not reported) for the occurrence during
+I.TDO_FNL - (1 = yes, 0 = no/not reported) for the occurrence during
 
 Values calculated by this package and included in final output:
 ea - Mean daily actual vapour pressure;

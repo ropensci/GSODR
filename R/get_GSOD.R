@@ -1,8 +1,8 @@
-#' @title Download, Clean and Generate New Variables From GSOD Weather Data
+#' Download, Clean and Generate New Variables From GSOD Weather Data
 #'
-#'@description This function automates downloading and cleaning data from the
-#'Global Surface Summary of the Day (GSOD) data provided by the US National
-#'Climatic Data Center (NCDC),
+#'This function automates downloading and cleaning data from the Global Surface
+#'Summary of the Day (GSOD) data provided by the US National Climatic Data
+#'Center (NCDC),
 #'\url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod}.
 #'Stations are individually checked for number of missing days to assure data
 #'quality, stations with too many missing observations are omitted, stations
@@ -10,22 +10,18 @@
 #'All units are converted to International System of Units (SI), e.g. Fahrenheit
 #'to Celsius and inches to millimetres. For convenience elevation is
 #'converted from decimetres to metres.
-#'
-#'Due to the size of the resulting data, output is saved as a .csv file in a
-#'directory specified by the user or defaults to the current working directory.
-#'The .csv file summarizes each year by station, which includes vapour pressure
-#'and relative humidity variables calculated from existing data in GSOD.
-#'
-#'All missing values in resulting csv files are represented as -9999.99
-#'regardless of which column they occur in.
-#'
+#'Due to the size of the resulting data, output is saved as a comma-delimited
+#'csv file (default) or ESRI shapefile in a directory specified by the user or
+#'defaults to the current working directory. The files summarize each year by
+#'station, which includes vapour pressure and relative humidity variables
+#'calculated from existing data in GSOD.
+#'All missing values in resulting files are represented as -9999.99
+#'regardless of which field they occur in.
 #'Be sure to have disk space free and allocate the proper time for this to run.
 #'This is a time, processor and disk input/output/space intensive process.
-#'
 #'This function was largely based on T. Hengl's "getGSOD.R" script, available
 #'from \url{http://spatial-analyst.net/book/system/files/getGSOD.R} with
 #'enhancements to be more cross-platform, faster and a bit more flexible.
-#'.
 #'For more information see the description of the data provided by NCDC,
 #'\url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
 #'
@@ -36,20 +32,27 @@
 #' data, full name or 3 letter ISO code work. Use raster::getData('ISO3')
 #' for a list of possible ISO country codes.
 #' @param  path Path entered by user indicating where to store resulting
-#' csv file. Defaults to the current working directory.
+#' output file. Defaults to the current working directory.
 #' @param max_missing The maximum number of days allowed to be missing from a
-#' station's data before it is excluded from .csv file output. Defaults to 5
+#' station's data before it is excluded from final file output. Defaults to 5
 #' days.
 #' @param agroclimatology Only clean data for stations between latitudes 60 and
 #' -60 for agroclimatology work, defaults to FALSE. Set to FALSE to override and
 #' include only stations within the confines of these latitudes.
+#' @param shapefile If set to TRUE, create an ESRI shapefile of vector type,
+#' points, of the data for use in a GIS. Defaults to FALSE, no shapefile
+#' created.
+#' @param CSV If set to TRUE, create a comma separated value (CSV) file of data,
+#' defaults to TRUE, a CSV file is created.
 #'
-#' @details This function, get_GSOD(), generates a .csv file in the respective
-#' year directory containing the following variables:
+#'
+#' @details This function, get_GSOD(), generates a CSV or ESRI format
+#' shapefile in the respective year-directory containing the following
+#' variables:
 #' STNID - Station number (WMO/DATSAV3 number) for the location;
 #' WBAN - number where applicable--this is the historical "Weather Bureau Air
 #' Force Navy" number - with WBAN being the acronym;
-#' STATION NAME;
+#' STN.NAME;
 #' CTRY - Country;
 #' LAT - Latitude;
 #' LON - Longitude;
@@ -61,24 +64,24 @@
 #' YDAY - Sequential day of year (not in original GSOD);
 #' TEMP - Mean daily temperature converted to degrees C to tenths. Missing =
 #' -9999.99;
-#' TEMP.COUNT - Number of observations used in calculating mean daily
+#' TEMP.CNT - Number of observations used in calculating mean daily
 #' temperature;
 #' DEWP-  Mean daily dewpoint converted to degrees C to tenths. Missing =
 #' -9999.99;
-#' DEWP.COUNT - Number of observations used in calculating mean daily dew point;
+#' DEWP.CNT - Number of observations used in calculating mean daily dew point;
 #' SLP - Mean sea level pressure in millibars to tenths. Missing = -9999.99;
-#' SLP.COUNT - Number of observations used in calculating mean sea level
+#' SLP.CNT - Number of observations used in calculating mean sea level
 #' pressure;
 #' STP - Mean station pressure for the day in millibars to tenths
 #' Missing = -9999.99;
-#' STP.COUNT - Number of observations used in calculating mean station pressure;
+#' STP.CNT - Number of observations used in calculating mean station pressure;
 #' VISIB - Mean visibility for the day converted to kilometers to tenths
 #' Missing = -9999.99;
-#' VISIB.COUNT - Number of observations used in calculating mean daily
+#' VISIB.CNT - Number of observations used in calculating mean daily
 #' visibility;
 #' WDSP - Mean daily wind speed value converted to metres/second to tenths
 #' Missing = -9999.99;
-#' WDSP.COUNT - Number of observations used in calculating mean daily windspeed;
+#' WDSP.CNT - Number of observations used in calculating mean daily windspeed;
 #' MXSPD - Maximum sustained wind speed reported for the day converted to
 #' metres/second to tenths. Missing = -9999.99;
 #' GUST = Maximum wind gust reported for the day converted to metres/second to
@@ -123,14 +126,14 @@
 #' that precip occurred but was not reported;
 #' SNDP - Snow depth in millimetres to tenths. Missing = -9999.99;
 #' I.FOG- (1 = yes, 0 = no/not reported) for the occurrence during the day;
-#' I.RAIN_DRIZZLE - (1 = yes, 0 = no/not reported) for the occurrence during the
+#' I.RAIN_DZL - (1 = yes, 0 = no/not reported) for the occurrence during the
 #' day;
-#' I.SNOW_ICE - (1 = yes, 0 = no/not reported) for the occurrence during the
+#' I.SNW_ICE - (1 = yes, 0 = no/not reported) for the occurrence during the
 #' day;
 #' I.HAIL - (1 = yes, 0 = no/not reported) for the occurrence during the day
 #' I.THUNDER  - (1 = yes, 0 = no/not reported) for the occurrence during the
 #' day;
-#' I.TORNADO_FUNNEL - (1 = yes, 0 = no/not reported) for the occurrence during
+#' I.TDO_FNL - (1 = yes, 0 = no/not reported) for the occurrence during
 # 'the day
 #'
 #' Values calculated by this package and included in final output:
@@ -168,9 +171,9 @@
 #' get_GSOD(years = 2010, country = "Australia", path = "~/Downloads")
 #' }
 #' @export
-
 get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
-                     max_missing = 5, agroclimatology = FALSE) {
+                     max_missing = 5, agroclimatology = FALSE,
+                     shapefile = FALSE, CSV = TRUE) {
 
   # Setting up options, creating objects, check variables entered by user-------
   options(warn = 2)
@@ -265,22 +268,37 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
       GSOD_XY <- data.table::rbindlist(GSOD_objects)
     }
 
-    # Write to csv file---------------------------------------------------------
+    #### Write to disk ---------------------------------------------------------
     if (!is.null(station)) {
-      outfile <- paste0(path, "GSOD-", station, "-", yr, ".csv")
+      outfile <- paste0(path, "/GSOD-", station, "-", yr)
     } else if (!is.null(country)) {
-      outfile <- paste0(path, "GSOD-", country, "-", yr, ".csv")
+      outfile <- paste0(path, "/GSOD-", country, "-", yr)
     } else if (agroclimatology == TRUE) {
-      outfile <- paste0(path, "GSOD-agroclimatology-", yr, ".csv")
+      outfile <- paste0(path, "/GSOD-agroclimatology-", yr)
     } else {
-      outfile <- paste0(path, "GSOD-", yr, ".csv")
+      outfile <- paste0(path, "/GSOD-", yr)
     }
-    utils::write.csv(GSOD_XY, outfile, na = "-9999.99", row.names = FALSE)
+
+    #### csv file---------------------------------------------------------------
+    if (CSV == TRUE) {
+      utils::write.csv(GSOD_XY, file = paste0(path.expand(outfile), ".csv"),
+                       na = "-9999.99", row.names = FALSE,
+                       fileEncoding = "UTF-8")
+    }
+
+    #### shapefile--------------------------------------------------------------
+    if (shapefile == TRUE) {
+      GSOD_XY <- as.data.frame(GSOD_XY) # convert tbl.df to dataframe for sp
+      sp::coordinates(GSOD_XY) <- ~LON+LAT
+      sp::proj4string(GSOD_XY) <- sp::CRS("+proj=longlat +datum=WGS84")
+      raster::shapefile(GSOD_XY, filename = path.expand(outfile),
+                        overwrite = TRUE, encoding = "UTF-8")
+      rm(GSOD_XY)
+    }
   }
 }
 
 # Functions used within this package -------------------------------------------
-#
 # Check against maximum permissible missing days
 .check <- function(tmp, yr, max_missing) {
   records <- nrow(tmp)
@@ -300,15 +318,15 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 # Reformat and generate new variables
 .reformat <- function(tmp, stations) {
   # add names to columns in data frame
-  names(tmp) <- c("STN", "WBAN", "YEAR", "MODA", "TEMP", "TEMP.COUNT",
-                  "DEWP", "DEWP.COUNT", "SLP", "SLP.COUNT", "STP",
-                  "STP.COUNT", "VISIB", "VISIB.COUNT", "WDSP", "WDSP.COUNT",
+  names(tmp) <- c("STN", "WBAN", "YEAR", "MODA", "TEMP", "TEMP.CNT",
+                  "DEWP", "DEWP.CNT", "SLP", "SLP.CNT", "STP",
+                  "STP.CNT", "VISIB", "VISIB.CNT", "WDSP", "WDSP.CNT",
                   "MXSPD", "GUST", "MAX", "MAX.FLAG", "MIN", "MIN.FLAG",
-                  "PRCP", "PRCP.FLAG", "SNDP", "I.FOG", "I.RAIN_DRIZZLE",
-                  "I.SNOW_ICE", "I.HAIL", "I.THUNDER", "I.TORNADO_FUNNEL")
+                  "PRCP", "PRCP.FLAG", "SNDP", "I.FOG", "I.RAIN_DZL",
+                  "I.SNW_ICE", "I.HAIL", "I.THUNDER", "I.TDO_FNL")
 
   # data quality assurance with MIN/MAX temperatures. In some cases MIN > MAX.
-  # Set these instances to NA, also set correpsonding MIN/MAX NA values to NA in
+  # Set these instances to NA, also set corresponding MIN/MAX NA values to NA in
   # other column
   tmp$MIN[which(tmp$MIN > tmp$MAX)] <- NA
   tmp$MAX[is.na(tmp$MIN)] <- NA
@@ -363,17 +381,17 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   # Join to the station data----------------------------------------------------
   GSOD_df <- dplyr::inner_join(tmp, stations, by = "STNID")
 
-  GSOD_df <- GSOD_df[c("USAF", "WBAN", "STNID", "STATION.NAME", "CTRY",
+  GSOD_df <- GSOD_df[c("USAF", "WBAN", "STNID", "STN.NAME", "CTRY",
                        "LAT", "LON", "ELEV.M",
                        "YEARMODA", "YEAR", "MONTH", "DAY", "YDAY",
-                       "TEMP", "TEMP.COUNT", "DEWP", "DEWP.COUNT",
-                       "SLP", "SLP.COUNT", "STP", "STP.COUNT",
-                       "VISIB", "VISIB.COUNT",
-                       "WDSP", "WDSP.COUNT", "MXSPD", "GUST",
+                       "TEMP", "TEMP.CNT", "DEWP", "DEWP.CNT",
+                       "SLP", "SLP.CNT", "STP", "STP.CNT",
+                       "VISIB", "VISIB.CNT",
+                       "WDSP", "WDSP.CNT", "MXSPD", "GUST",
                        "MAX", "MIN",
                        "PRCP", "PRCP.FLAG",
-                       "I.FOG", "I.RAIN_DRIZZLE", "I.SNOW_ICE", "I.HAIL",
-                       "I.THUNDER", "I.TORNADO_FUNNEL",
+                       "I.FOG", "I.RAIN_DZL", "I.SNW_ICE", "I.HAIL",
+                       "I.THUNDER", "I.TDO_FNL",
                        "EA", "ES", "RH")]
   return(GSOD_df)
 }
