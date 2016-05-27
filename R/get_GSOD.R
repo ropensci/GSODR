@@ -25,16 +25,18 @@
 #'For more information see the description of the data provided by NCDC,
 #'\url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
 #'
+#'
 #' @param years Year(s) of weather data to download.
-#' @param station Specify single station for which to retrieve, check and
-#' manipulate weather data.
+#' @param station Specify single station for which to retrieve, check and clean
+#' weather data.
 #' @param country Specify a country of interest for which to retrieve weather
-#' data, full name or 3 letter ISO code work. Use raster::getData('ISO3')
-#' for a list of possible ISO country codes.
+#' data, full name or 3 letter ISO code work. Use
+#' \code{\link[raster]{getData}("ISO3")} to retrieve a list of possible three
+#' letter ISO country codes.
 #' @param  path Path entered by user indicating where to store resulting
 #' output file. Defaults to the current working directory.
 #' @param max_missing The maximum number of days allowed to be missing from a
-#' station's data before it is excluded from final file output. Defaults to 5
+#' station's data before it is excluded from final file output. Defaults to five
 #' days.
 #' @param agroclimatology Only clean data for stations between latitudes 60 and
 #' -60 for agroclimatology work, defaults to FALSE. Set to FALSE to override and
@@ -46,103 +48,122 @@
 #' defaults to TRUE, a CSV file is created.
 #'
 #'
-#' @details This function, get_GSOD(), generates a CSV or ESRI format
-#' shapefile in the respective year-directory containing the following
-#' variables:
-#' STNID - Station number (WMO/DATSAV3 number) for the location;
-#' WBAN - number where applicable--this is the historical "Weather Bureau Air
-#' Force Navy" number - with WBAN being the acronym;
-#' STN.NAME;
-#' CTRY - Country;
-#' LAT - Latitude;
-#' LON - Longitude;
-#' ELEV.M - Elevation converted to metres;
-#' YEARMODA - Date in YYYY-MM-DD format;
-#' YEAR - The year;
-#' MONTH - The month;
-#' DAY - The day;
-#' YDAY - Sequential day of year (not in original GSOD);
-#' TEMP - Mean daily temperature converted to degrees C to tenths. Missing =
-#' -9999.99;
-#' TEMP.CNT - Number of observations used in calculating mean daily
-#' temperature;
-#' DEWP-  Mean daily dewpoint converted to degrees C to tenths. Missing =
-#' -9999.99;
-#' DEWP.CNT - Number of observations used in calculating mean daily dew point;
-#' SLP - Mean sea level pressure in millibars to tenths. Missing = -9999.99;
-#' SLP.CNT - Number of observations used in calculating mean sea level
-#' pressure;
-#' STP - Mean station pressure for the day in millibars to tenths
-#' Missing = -9999.99;
-#' STP.CNT - Number of observations used in calculating mean station pressure;
-#' VISIB - Mean visibility for the day converted to kilometers to tenths
-#' Missing = -9999.99;
-#' VISIB.CNT - Number of observations used in calculating mean daily
-#' visibility;
-#' WDSP - Mean daily wind speed value converted to metres/second to tenths
-#' Missing = -9999.99;
-#' WDSP.CNT - Number of observations used in calculating mean daily windspeed;
-#' MXSPD - Maximum sustained wind speed reported for the day converted to
-#' metres/second to tenths. Missing = -9999.99;
-#' GUST = Maximum wind gust reported for the day converted to metres/second to
-#' tenths. Missing = -9999.99;
-#' MAX - Maximum temperature reported during the day converted to Celsius to
-#' tenths--time of max temp report varies by country and region, so this will
-#' sometimes not be the max for the calendar day. In instances where MAX < MIN,
-#' both MAX and MIN are set to missing. In instances where MIN is missing, MAX
-#' is correspondingly set to missing as well. Missing = -9999.99;
-#' MAX.FLAG -  Blank indicates max temp was taken from the explicit max temp
-#' report and not from the 'hourly' data.  * indicates max temp was derived from
-#' the hourly data (i.e., highest hourly or synoptic-reported temperature);
-#' MIN- Minimum temperature reported during the day converted to Celsius to
-#' tenths--time of min temp report varies by country and region, so this will
-#' sometimes not be the max for the calendar day. In instances where MAX < MIN,
-#' both MAX and MIN are set to missing. In instances where MAX is missing, MIN
-#' is correspondingly set to missing as well. Missing = -9999.99;
-#' #' MIN.FLAG -  Blank indicates max temp was taken from the explicit max temp
-#' report and not from the 'hourly' data.  * indicates max temp was derived from
-#' the hourly data (i.e., highest hourly or synoptic-reported temperature);
-#' PRCP - Total precipitation (rain and/or melted snow) reported during the day
-#' converted to millimetres to hundredths; will usually not end with the
-#' midnight observation--i.e., may include latter part of previous day. .00
+#' @details This function generates a CSV or ESRI format shapefile in the
+#' respective year-directory containing the following variables:
+#' \describe{
+#' \item{STNID}{Station number (WMO/DATSAV3 number) for the location}
+#' \item{WBAN}{Number where applicable--this is the historical "Weather Bureau
+#' Air Force Navy" number - with WBAN being the acronym}
+#' \item{STN.NAME}{Unique text string identifier}
+#' \item{CTRY}{Country}
+#' \item{LAT}{Latitude}
+#' \item{LON}{Longitude}
+#' \item{ELEV.M}{Elevation converted to metres}
+#' \item{YEARMODA}{Date in YYYY-MM-DD format}
+#' \item{YEAR}{The year}
+#' \item{MONTH}{The month}
+#' \item{DAY}{The day}
+#' \item{YDAY}{Sequential day of year (not in original GSOD)}
+#' \item{TEMP}{Mean daily temperature converted to degrees C to tenths.
+#' Missing = -9999.99}
+#' \item{TEMP.CNT}{Number of observations used in calculating mean daily
+#' temperature}
+#' \item{DEWP}{Mean daily dew point converted to degrees C to tenths. Missing =
+#' -9999.99}
+#' \item{DEWP.CNT}{Number of observations used in calculating mean daily
+#' dew point}
+#' \item{SLP}{Mean sea level pressure in millibars to tenths. Missing =
+#' -9999.99}
+#' \item{SLP.CNT}{Number of observations used in calculating mean sea level
+#' pressure}
+#' \item{STP}{Mean station pressure for the day in millibars to tenths
+#' Missing = -9999.99}
+#' \item{STP.CNT}{Number of observations used in calculating mean station
+#' pressure}
+#' \item{VISIB}{Mean visibility for the day converted to kilometers to tenths
+#' Missing = -9999.99}
+#' \item{VISIB.CNT}{Number of observations used in calculating mean daily
+#' visibility}
+#' \item{WDSP}{Mean daily wind speed value converted to metres/second to tenths
+#' Missing = -9999.99}
+#' \item{WDSP.CNT}{Number of observations used in calculating mean daily
+#' windspeed}
+#' \item{MXSPD}{Maximum sustained wind speed reported for the day converted to
+#' metres/second to tenths. Missing = -9999.99}
+#' \item{GUST}{Maximum wind gust reported for the day converted to
+#' metres/second to tenths. Missing = -9999.99}
+#' \item{MAX}{Maximum temperature reported during the day converted to Celsius
+#' to tenths--time of maximum temperature report varies by country and region,
+#' so this will sometimes not be the maximum for the calendar day. In instances
+#' where MAX < MIN, both MAX and MIN are set to missing. In instances where MIN
+#' is missing, MAX is correspondingly set to missing as well. Missing =
+#' -9999.99}
+#' \item{MAX.FLAG}{Blank indicates maximum temperature was taken from the
+#' explicit maximum temperature report and not from the 'hourly' data. " * "
+#' indicates maximum temperature was derived from the hourly data (i.e., highest
+#' hourly or synoptic-reported temperature)}
+#' \item{MIN}{Minimum temperature reported during the day converted to Celsius
+#' to tenths--time of minimum temperature report varies by country and region,
+#' so this will sometimes not be the minimum for the calendar day. In instances
+#' where MIN > MAX, both MAX and MIN are set to missing. In instances where MIN
+#' is missing, MAX is correspondingly set to missing as well. Missing =
+#' -9999.99}
+#' \item{MIN.FLAG}{Blank indicates minimum temperature was taken from the
+#' explicit minimum temperature report and not from the 'hourly' data. " * "
+#' indicates minimum temperature was derived from the hourly data (i.e., lowest
+#' hourly or synoptic-reported temperature)}
+#' \item{PRCP}{Total precipitation (rain and/or melted snow) reported during
+#' the day converted to millimetres to hundredths will usually not end with the
+#' midnight observation--i.e., may include latter part of previous day. ".00"
 #' indicates no measurable precipitation (includes a trace). Missing = -9999.99.
-#' Note:  Many stations do not report '0' on days with no precipitation--
+#' \emph{Note}: Many stations do not report '0' on days with no precipitation--
 #' therefore, '-9999.99' will often appear on these days. For example, a
 #' station may only report a 6-hour amount for the period during which rain
-#' fell. See FLAGS.PRCP column for source of data;
-#' PRCP.FLAG -  A = 1 report of 6-hour precipitation amount;
-#' B = Summation of 2 reports of 6-hour precipitation amount;
-#' C = Summation of 3 reports of 6-hour precipitation amount;
-#' D = Summation of 4 reports of 6-hour precipitation amount;
-#' E = 1 report of 12-hour precipitation amount;
-#' F = Summation of 2 reports of 12-hour precipitation amount;
-#' G = 1 report of 24-hour precipitation amount;
-#' H = Station reported '0' as the amount for the day (eg, from 6-hour reports),
-#' but also reported at least one occurrence of precipitation in hourly
-#' observations--this could indicate a trace occurred, but should be considered
-#' as incomplete data for the day;
-#' I = Station did not report any precip data for the day and did not report any
-#' occurrences of precipitation in its hourly observations--it's still possible
-#' that precip occurred but was not reported;
-#' SNDP - Snow depth in millimetres to tenths. Missing = -9999.99;
-#' I.FOG- Fog, (1 = yes, 0 = no/not reported) for the occurrence during the day;
-#' I.RAIN_DZL - Rain or drizzle, (1 = yes, 0 = no/not reported) for the
-#' occurrence during the day;
-#' I.SNW_ICE - Snow or ice pellets, (1 = yes, 0 = no/not reported) for the
-#' occurrence during the day;
-#' I.HAIL - (1 = yes, 0 = no/not reported) for the occurrence during the day
-#' I.THUNDER  - Thunder, (1 = yes, 0 = no/not reported) for the occurrence during the
-#' day;
-#' I.TDO_FNL - Tornado or funnel cloud, (1 = yes, 0 = no/not reported) for the
-#' occurrence during the day
+#' fell. See PRCP.FLAG column for source of data}
+#' \item{PRCP.FLAG}{
+#'  \describe{
+#'    \item{A}{= 1 report of 6-hour precipitation amount}
+#'    \item{B}{= Summation of 2 reports of 6-hour precipitation amount}
+#'    \item{C}{= Summation of 3 reports of 6-hour precipitation amount}
+#'    \item{D}{= Summation of 4 reports of 6-hour precipitation amount}
+#'    \item{E}{= 1 report of 12-hour precipitation amount}
+#'    \item{F}{= Summation of 2 reports of 12-hour precipitation amount}
+#'    \item{G}{= 1 report of 24-hour precipitation amount}
+#'    \item{H}{= Station reported '0' as the amount for the day (eg, from
+#'    6-hour reports), but also reported at least one occurrence of
+#'    precipitation in hourly observations--this could indicate a trace
+#'    occurred, but should be considered as incomplete data for the day}
+#'    \item{I}{= Station did not report any precipitation data for the day and
+#'    did not report any occurrences of precipitation in its hourly
+#'    observations. It's still possible that precipitation occurred but was not
+#'    reported}
+#'    }
+#'  }
+#' \item{SNDP}{Snow depth in millimetres to tenths. Missing = -9999.99}
+#' \item{I.FOG}{Fog, (1 = yes, 0 = no/not reported) for the occurrence during
+#' the day}
+#' \item{I.RAIN_DZL}{Rain or drizzle, (1 = yes, 0 = no/not reported) for the
+#' occurrence during the day}
+#' \item{I.SNW_ICE}{Snow or ice pellets, (1 = yes, 0 = no/not reported) for the
+#' occurrence during the day}
+#' \item{I.HAIL}{Hail, (1 = yes, 0 = no/not reported) for the occurrence during
+#' the day}
+#' \item{I.THUNDER}{Thunder, (1 = yes, 0 = no/not reported) for the occurrence
+#' during the #' day}
+#' \item{I.TDO_FNL}{Tornado or funnel cloud, (1 = yes, 0 = no/not reported) for
+#' the occurrence during the day}
+#'}
 #'
-#' Values calculated by this package and included in final output:
-#' ea - Mean daily actual vapour pressure;
-#' es - Mean daily saturation vapour pressure;
-#' RH - Mean daily relative humidity;
+#' \emph{Values calculated by this package and included in final output:}
+#' \describe{
+#' \item{ea}{Mean daily actual vapour pressure}
+#' \item{es}{Mean daily saturation vapour pressure}
+#' \item{RH}{Mean daily relative humidity}
+#'}
 #'
-#' Users of these data should take into account the following (from the NCDC
-#' website): "The following data and products may have conditions placed on
+#'
+#'@note Users of these data should take into account the following (from the
+#' NCDC website): "The following data and products may have conditions placed on
 #' their international commercial use. They can be used within the U.S. or for
 #' non-commercial international activities without restriction. The non-U.S.
 #' data cannot be redistributed for commercial purposes. Re-distribution of
@@ -370,7 +391,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   # Monteith JL (1973) Principles of environmental physics.
   #   Edward Arnold, London
 
-  # EA derived from dewpoint
+  # EA derived from dew point
   tmp$EA <- round(0.61078 * exp( (17.2694 * tmp$DEWP) / (tmp$DEWP + 237.3)), 1)
   # ES derived from average temperature
   tmp$ES <- round(0.61078 * exp( (17.2694 * tmp$TEMP) / (tmp$TEMP + 237.3)), 1)
@@ -457,17 +478,17 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
       stop("\nUnknown ISO code. Please provide a valid name or 2 or 3 letter ISO
            country code; you can get a list by using: getData('ISO3')")
     }
-    } else if (nc == 2) {
-      if (country %in% cs[, 3]) {
-        i <- which(country == cs[, 3])
-        return(cs[i, 2])
-      } else {
-        stop("\nUnknown ISO code. Please provide a valid name or 2 or 3 letter ISO
+  } else if (nc == 2) {
+    if (country %in% cs[, 3]) {
+      i <- which(country == cs[, 3])
+      return(cs[i, 2])
+    } else {
+      stop("\nUnknown ISO code. Please provide a valid name or 2 or 3 letter ISO
              country code; you can get a list by using: getData('ISO3')")
-      }
-      } else if (country %in% cs[, 1]) {
-        i <- which(country == cs[, 1])
-        return(cs[i, 2])
+    }
+  } else if (country %in% cs[, 1]) {
+    i <- which(country == cs[, 1])
+    return(cs[i, 2])
   } else if (country %in% cs[, 4]) {
     i <- which(country == cs[, 4])
     return(cs[i, 2] )
@@ -479,7 +500,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
          can get a list by using: getData('ISO3')")
     return(0)
   }
-  }
+}
 
 # Ram Narasimhan
 # Version 0.4
