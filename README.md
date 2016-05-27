@@ -109,16 +109,16 @@ that precip occurred but was not reported;
 **SNDP** - Snow depth in millimetres to tenths. Missing = -9999.99;  
 **I.FOG** - Fog, (1 = yes, 0 = no/not reported) for the occurrence during the
 day;  
-**I.RAIN_DZL** - Rain or drizzle, (1 = yes, 0 = no/not reported) for the
+**I.RAIN_DZL** - Indicator for rain or drizzle, (1 = yes, 0 = no/not reported)
+for the occurrence during the day;  
+**I.SNW_ICE** - Indicator for snow or ice pellets, (1 = yes, 0 = no/not
+reported) for the occurrence during the day;  
+**I.HAIL** - Indicator for hail, (1 = yes, 0 = no/not reported) for the
 occurrence during the day;  
-**I.SNW_ICE** - Snow or ice pellets, (1 = yes, 0 = no/not reported) for the
+**I.THUNDER** - Indicator for thunder, (1 = yes, 0 = no/not reported) for the
 occurrence during the day;  
-**I.HAIL** - Hail, (1 = yes, 0 = no/not reported) for the occurrence during the
-day;  
-**I.THUNDER** - Thunder, (1 = yes, 0 = no/not reported) for the occurrence during
-the day;  
-**I.TDO_FNL** - Tornado or funnel cloud, (1 = yes, 0 = no/not reported) for the
-occurrence during the day;  
+**I.TDO_FNL** - Indicator for tornado or funnel cloud, (1 = yes, 0 = no/not
+reported) for the occurrence during the day;  
 
 ### Values calculated by this package and included in final output:
 **ea** - Mean daily actual vapour pressure;  
