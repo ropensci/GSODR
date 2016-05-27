@@ -15,7 +15,7 @@
 stations <- readr::read_csv(
   "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
   col_types = "ccccccddddd",
-  col_names = c("USAF", "WBAN", "STATION.NAME", "CTRY", "STATE", "CALL",
+  col_names = c("USAF", "WBAN", "STN.NAME", "CTRY", "STATE", "CALL",
                 "LAT", "LON", "ELEV.M", "BEGIN", "END"), skip = 1,
   na = c("-999.9", "-999.0"))
 

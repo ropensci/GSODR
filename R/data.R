@@ -25,7 +25,7 @@
 #' \describe{
 #'   \item{USAF}{Air Force Datsav3 station number}
 #'   \item{WBAN}{Weather Bureau Army Navy (5 digit identifier)}
-#'   \item{STATION.NAME}{Unique station name }
+#'   \item{STN.NAME}{Unique station name}
 #'   \item{CTRY}{FIPS country ID}
 #'   \item{STATE}{If applicable, US states only (2 letter code)}
 #'   \item{CALL}{ICAO Identifier, identifiers approved for use under the
