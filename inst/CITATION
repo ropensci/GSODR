@@ -2,7 +2,7 @@ year <- sub("-.*", "", meta$Date)
 note <- sprintf("R package version %s", meta$Version)
 
 bibentry(bibtype = "Manual",
-         title = "{weathR}: Download, Clean and Generate New Weather Variables",
+         title = "{GSODR}: Download, Clean and Generate New Weather Variables",
          author = c(person("Adam", "Sparks"),
                     person("Tomislav", "Hengl"),
                     person("Andy", "Nelson"),
