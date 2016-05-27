@@ -206,7 +206,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   stations <- get("stations", envir = environment())
 
   # Set up tempfile and directory for downloading data from server
-  tf <- "~/tmp/GSOD-2010.tar"
+  tf <- tempfile()
   td <- tempdir()
 
   # Create objects for use later
