@@ -125,16 +125,16 @@
 #' occurrences of precipitation in its hourly observations--it's still possible
 #' that precip occurred but was not reported;
 #' SNDP - Snow depth in millimetres to tenths. Missing = -9999.99;
-#' I.FOG- (1 = yes, 0 = no/not reported) for the occurrence during the day;
-#' I.RAIN_DZL - (1 = yes, 0 = no/not reported) for the occurrence during the
-#' day;
-#' I.SNW_ICE - (1 = yes, 0 = no/not reported) for the occurrence during the
-#' day;
+#' I.FOG- Fog, (1 = yes, 0 = no/not reported) for the occurrence during the day;
+#' I.RAIN_DZL - Rain or drizzle, (1 = yes, 0 = no/not reported) for the
+#' occurrence during the day;
+#' I.SNW_ICE - Snow or ice pellets, (1 = yes, 0 = no/not reported) for the
+#' occurrence during the day;
 #' I.HAIL - (1 = yes, 0 = no/not reported) for the occurrence during the day
-#' I.THUNDER  - (1 = yes, 0 = no/not reported) for the occurrence during the
+#' I.THUNDER  - Thunder, (1 = yes, 0 = no/not reported) for the occurrence during the
 #' day;
-#' I.TDO_FNL - (1 = yes, 0 = no/not reported) for the occurrence during
-# 'the day
+#' I.TDO_FNL - Tornado or funnel cloud, (1 = yes, 0 = no/not reported) for the
+#' occurrence during the day
 #'
 #' Values calculated by this package and included in final output:
 #' ea - Mean daily actual vapour pressure;
@@ -455,19 +455,19 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
       return(country)
     } else {
       stop("\nUnknown ISO code. Please provide a valid name or 2 or 3 letter ISO
-country code; you can get a list by using: getData('ISO3')")
+           country code; you can get a list by using: getData('ISO3')")
     }
-  } else if (nc == 2) {
-    if (country %in% cs[, 3]) {
-      i <- which(country == cs[, 3])
-      return(cs[i, 2])
-    } else {
-      stop("\nUnknown ISO code. Please provide a valid name or 2 or 3 letter ISO
-country code; you can get a list by using: getData('ISO3')")
-    }
-  } else if (country %in% cs[, 1]) {
-    i <- which(country == cs[, 1])
-    return(cs[i, 2])
+    } else if (nc == 2) {
+      if (country %in% cs[, 3]) {
+        i <- which(country == cs[, 3])
+        return(cs[i, 2])
+      } else {
+        stop("\nUnknown ISO code. Please provide a valid name or 2 or 3 letter ISO
+             country code; you can get a list by using: getData('ISO3')")
+      }
+      } else if (country %in% cs[, 1]) {
+        i <- which(country == cs[, 1])
+        return(cs[i, 2])
   } else if (country %in% cs[, 4]) {
     i <- which(country == cs[, 4])
     return(cs[i, 2] )
@@ -476,10 +476,10 @@ country code; you can get a list by using: getData('ISO3')")
     return(cs[i, 2])
   } else {
     stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you
-can get a list by using: getData('ISO3')")
+         can get a list by using: getData('ISO3')")
     return(0)
   }
-}
+  }
 
 # Ram Narasimhan
 # Version 0.4
