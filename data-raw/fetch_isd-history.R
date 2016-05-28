@@ -30,6 +30,7 @@ stations <- as.data.frame(readr::read_csv(
   na = c("-999.9", "-999.0")))
 
 dem_tiles <- list.files(path.expand("~/Data/Jarvis_SRTM"), full.names = TRUE)
+cor_stations <- list()
 
 #### format data
 stations <- stations[!is.na(stations$LAT) & !is.na(stations$LON), ]
@@ -42,7 +43,9 @@ sp::coordinates(stations) <- ~ LON + LAT
 sp::proj4string(stations) <- sp::CRS(" +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 ")
 
 #### Loop to check and correct altitude for stations ---------------------------
+
 for (i in dem_tiles) {
+
   # Load the DEM tile
   dem <- raster::raster(list.files(paste0(i, "/"), pattern = glob2rx("*.tif"),
                                    full.names = TRUE))
@@ -55,21 +58,24 @@ for (i in dem_tiles) {
   # if original elevation == 0 and DEM indicates difference >= 15m, use DEM
   sub_stations[, 13] <- ifelse(sub_stations[, 9] == 0 &
                                  sub_stations[, 13] >= sub_stations[, 9] + 15,
-                               sub_stations[, 13],
-                               sub_stations[, 9])
+                               sub_stations[, 9],
+                               sub_stations[, 13])
 
   # if original elevation > 0 and DEM indicates difference <= / >= 50m, use DEM
   sub_stations[, 13] <- ifelse(sub_stations[, 9] > 0 &
                                  sub_stations[, 13] >= sub_stations[, 9] + 50 |
                                  sub_stations[, 13] >= sub_stations[, 9] - 50,
-                               sub_stations[, 13],
-                               sub_stations[, 9])
+                               sub_stations[, 9],
+                               sub_stations[, 13])
 
   # if DEM elevation == NA, use original elevation
-  sub_stations[, 13] <- ifelse(is.na(sub_stations[, 13]) & !is.na(sub_stations[, 9]),
+  sub_stations[, 13] <- ifelse(is.na(sub_stations[, 13]) &
+                                 !is.na(sub_stations[, 9]),
                                sub_stations[, 9], sub_stations[, 13])
 
-  # build data frame here
+  cor_stations[[i]] <- sub_stations
 }
+
+stations <- data.table::rbindlist(cor_stations)
 
 devtools::use_data(stations, overwrite = TRUE)
