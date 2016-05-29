@@ -1,27 +1,31 @@
+---
+  title: "Fetch, clean and correct altitude in GSOD isd_history.csv Data"
+output:
+  tufte::tufte_handout: default
+---
 
-# title: fetch_isd-history.R
-#
-# description: This script will fetch station data from the ftp server and
-# clean up for inclusion in package in /data/stations.rda for the GSODR package
+  ```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
-# Users of these data should take into account the following (from the NCDC
-# website): "The following data and products may have conditions placed on
-# their international commercial use. They can be used within the U.S. or for
-# non-commercial international activities without restriction. The non-U.S.
-# data cannot be redistributed for commercial purposes. Re-distribution of
-# these data by others must provide this same notification."
+This script will fetch station data from the ftp server and clean up for
+inclusion in package in /data/stations.rda for the GSODR package
 
-# Reference
-# 90m hole filled SRTM files from Jarvis et al. (2008)
-# http://www.ncdc.noaa.gov/cgi-bin/res40.pl?page=gsod.html
-# Jarvis A., H.I. Reuter, A. Nelson, E. Guevara, 2008, Hole-filled seamless SRTM
-# data V4, International Centre for Tropical Agriculture (CIAT), available from
-# http://srtm.csi.cgiar.org.
+Users of these data should take into account the following (from the NCDC
+website): 
 
-# Correction for altitude methodology from Van Etten (2011)
-# http://rpackages.ianhowson.com/rforge/gsod/man/stations.html
+> "The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification."
 
-#### import data ---------------------------------------------------------------
+# References
+Jarvis A., H.I. Reuter, A. Nelson, E. Guevara, 2008, Hole-filled seamless SRTM
+data V4, International Centre for Tropical Agriculture (CIAT), available from
+[http://srtm.csi.cgiar.org]("http://srtm.csi.cgiar.org").
+
+Correction for altitude methodology from Van Etten (2011)
+[http://rpackages.ianhowson.com/rforge/gsod/man/stations.html]("http://rpackages.ianhowson.com/rforge/gsod/man/stations.html")
+
+```{r, echo=TRUE}
+#### Download, reformat and clean station data file from NCDC ------------------
 stations <- as.data.frame(readr::read_csv(
   "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
   col_types = "ccccccddddd",
@@ -30,20 +34,18 @@ stations <- as.data.frame(readr::read_csv(
   na = c("-999.9", "-999.0")))
 
 dem_tiles <- list.files(path.expand("~/Data/Jarvis_SRTM"), full.names = TRUE)
-cor_stations <- list()
 
-#### format data
+#### reformat and clean data
 stations <- stations[!is.na(stations$LAT) & !is.na(stations$LON), ]
 stations <- stations[stations$LAT != 0 & stations$LON != 0, ]
 stations <- stations[stations$LAT > -90 & stations$LAT < 90, ]
 stations <- stations[stations$LON > -180 & stations$LON < 180, ]
 stations$STNID <- paste(stations$USAF, stations$WBAN, sep = "-")
 
-sp::coordinates(stations) <- ~ LON + LAT
+sp::coordinates(stations) <- ~LON + LAT
 sp::proj4string(stations) <- sp::CRS(" +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 ")
 
 #### Loop to check and correct altitude for stations ---------------------------
-
 for (i in dem_tiles) {
 
   # Load the DEM tile
@@ -76,10 +78,9 @@ for (i in dem_tiles) {
   # if original elevation == NA, use DEM elevation
   sub_stations[, 13] <- ifelse(is.na(sub_stations[, 9]) & !is.na(sub_stations[, 13]),
                                sub_stations[, 9], sub_stations[, 13])
-
+  
   cor_stations[[i]] <- sub_stations
 }
 
 stations <- data.table::rbindlist(cor_stations)
-
-devtools::use_data(stations, overwrite = TRUE)
+```
