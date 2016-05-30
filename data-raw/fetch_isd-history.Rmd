@@ -16,20 +16,20 @@ inclusion in package in /data/stations.rda for the GSODR package.
 
 The following changes are made:
 
-  * Stations where latitude or longitude are NA or both 0 were removed
+* Stations where latitude or longitude are NA or both 0 were removed
 
-  * Stations where latitude is < -90˚ or > 90˚ were removed
+* Stations where latitude is < -90˚ or > 90˚ were removed
 
-  * Stations where longitude is < -180˚ or > 180˚ were removed
+* Stations where longitude is < -180˚ or > 180˚ were removed
 
-  * A new field, STNID, a concatenation of the USAF and WBAN fields, was added
+* A new field, STNID, a concatenation of the USAF and WBAN fields, was added
 
-  * Stations were checked against FAO-GAUL 2015 data, countries not mapping
-  in the isd-history reported country were dropped
+* Stations were checked against FAO-GAUL 2015 data, countries not mapping
+in the isd-history reported country were dropped
 
-  * 90m hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was used to
-  identify and correct/remove elevation errors in dat for station locations
-  between -60˚ and 60˚. *Only for agroclimatology option data*
+* 90m hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was used to
+identify and correct/remove elevation errors in dat for station locations
+between -60˚ and 60˚. *Only for agroclimatology option data*
 
 
 # R Data Processing
@@ -37,11 +37,6 @@ The following changes are made:
 ## Load libraries and set up workspace
 
 ```{r, echo=TRUE, messages=FALSE}
-
-library(sp)
-library(readr)
-library(raster)
-
 dem_tiles <- list.files(path.expand("~/tmp/srtm"), full.names = TRUE)
 crs <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
 cor_stations <- list()
@@ -53,13 +48,20 @@ cor_stations <- list()
 
 ```{r, echo=TRUE}
 
+# Load GAUL
+GAUL <- raster::shapefile("~/Google Drive/Data/GAUL/g2015_2014_0/g2015_2014_0.shp")
+
 # Download data
-stations <- read_csv(
+stations <- readr::read_csv(
   "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
   col_types = "ccccccddddd",
   col_names = c("USAF", "WBAN", "STN.NAME", "CTRY", "STATE", "CALL",
                 "LAT", "LON", "ELEV.M", "BEGIN", "END"), skip = 1,
   na = c("-999.9", "-999.0"))
+
+countries <- readr::read_table(
+  "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/country-list.txt")[-1, c(1, 3)]
+
 
 # Clean data
 stations <- stations[!is.na(stations$LAT) & !is.na(stations$LON), ]
@@ -68,11 +70,15 @@ stations <- stations[stations$LAT > -90 & stations$LAT < 90, ]
 stations <- stations[stations$LON > -180 & stations$LON < 180, ]
 stations$STNID <- paste(stations$USAF, stations$WBAN, sep = "-")
 
-stations <- as.data.frame(stations) # convert to dataframe object 
+
+countries <- dplyr::left_join(countries, countrycode::countrycode_data,
+                              by = c(FIPS = "fips104"))
+stations <- dplyr::left_join(stations, countries, by = c("CTRY" = "FIPS"))
+stations <- as.data.frame(stations) # convert to dataframe object
 
 # Create spatial object extracting elevation values using spatial points
-coordinates(stations) <- ~LON + LAT
-proj4string(stations) <- CRS(crs)
+sp::coordinates(stations) <- ~LON + LAT
+sp::proj4string(stations) <- sp::CRS(crs)
 
 ```
 
@@ -103,35 +109,43 @@ using an FTP client to facilitate this next step.
 
 ```{r, echo=TRUE}
 
-for (i in dem_tiles) {
 
+point_check <- over(stations, GAUL)
+
+#http://gis.stackexchange.com/questions/133625/checking-if-points-fall-within-polygon-shapefile
+#http://www.inside-r.org/packages/cran/sp/docs/point.in.polygon
+#http://gis.stackexchange.com/questions/64513/checking-if-lng-and-lat-fall-inside-polygons-from-esri-shape-file
+#http://gis.stackexchange.com/questions/63793/how-to-overlay-a-polygon-over-spatialpointsdataframe-and-preserving-the-spdf-dat
+
+for (i in dem_tiles) {
+  
   # Load the DEM tile
-  dem <- raster(list.files(paste0(i, "/"), pattern = glob2rx("*.tif"),
+  dem <- raster::raster(list.files(paste0(i, "/"), pattern = glob2rx("*.tif"),
                                    full.names = TRUE))
   sub_stations <- crop(stations, dem)
   gI <- extract(dem, sub_stations)
-
+  
   sub_stations <- as.data.frame(sub_stations)
   sub_stations$ELEV.M.COR <- gI
-
+  
   # if original elevation == 0 and DEM indicates difference >= 15m, use DEM
   sub_stations[, 13] <- ifelse(sub_stations[, 9] == 0 &
                                  sub_stations[, 13] >= sub_stations[, 9] + 15,
                                sub_stations[, 9],
                                sub_stations[, 13])
-
+  
   # if original elevation > 0 and DEM indicates difference <= / >= 50m, use DEM
   sub_stations[, 13] <- ifelse(sub_stations[, 9] > 0 &
                                  sub_stations[, 13] >= sub_stations[, 9] + 50 |
                                  sub_stations[, 13] >= sub_stations[, 9] - 50,
                                sub_stations[, 9],
                                sub_stations[, 13])
-
+  
   # if DEM elevation == NA, use original elevation
   sub_stations[, 13] <- ifelse(is.na(sub_stations[, 13]) &
                                  !is.na(sub_stations[, 9]),
                                sub_stations[, 9], sub_stations[, 13])
-
+  
   # if original elevation == NA, use DEM elevation
   sub_stations[, 13] <- ifelse(is.na(sub_stations[, 9]) & !is.na(sub_stations[, 13]),
                                sub_stations[, 9], sub_stations[, 13])
