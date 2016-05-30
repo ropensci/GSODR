@@ -96,7 +96,10 @@ their own digital elevation model using Jarvis *et al.* (2004) and [GTOPO30 data
 for areas where there was no SRTM data available (>60˚). Here only the
 hole-filled SRTM data, V4 (Jarvis *et al.* 2008) was used for correction of
 agroclimatology data (-60˚ to 60˚). Any incorrect station elevations beyond
-these values were ignored in this data set.
+these values were ignored in this data set. Stations with incorrect elevation
+were identified using `raster::extract(x, y, method = "bilinear")` in order that
+values of the four nearest cells are also used to determine elevation errors.
+See Hijmans *et al.* (2005) for more detailed information on this.
 
 The hole-filled SRTM data is large enough that it won't all fit in-memory on
 most desktop computers. Using tiles allows this process to run on a modest
@@ -109,13 +112,13 @@ using an FTP client to facilitate this next step.
 
 ```{r, echo=TRUE}
 
-
+# Quality check station locations for reported country and lat/lon position
+# agreement
 point_check <- over(stations, GAUL)
+stations <- as.data.frame(stations)
 
-#http://gis.stackexchange.com/questions/133625/checking-if-points-fall-within-polygon-shapefile
-#http://www.inside-r.org/packages/cran/sp/docs/point.in.polygon
-#http://gis.stackexchange.com/questions/64513/checking-if-lng-and-lat-fall-inside-polygons-from-esri-shape-file
-#http://gis.stackexchange.com/questions/63793/how-to-overlay-a-polygon-over-spatialpointsdataframe-and-preserving-the-spdf-dat
+stations_keep <- stations[stations$country.name %in% point_check$ADM0_NAME == TRUE, ]
+stations_discard <- stations[stations$country.name %in% point_check$ADM0_NAME == FALSE, ]
 
 for (i in dem_tiles) {
   
@@ -123,7 +126,7 @@ for (i in dem_tiles) {
   dem <- raster::raster(list.files(paste0(i, "/"), pattern = glob2rx("*.tif"),
                                    full.names = TRUE))
   sub_stations <- crop(stations, dem)
-  gI <- extract(dem, sub_stations)
+  gI <- extract(dem, sub_stations, method = "bilinear")
   
   sub_stations <- as.data.frame(sub_stations)
   sub_stations$ELEV.M.COR <- gI
