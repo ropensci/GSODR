@@ -181,19 +181,19 @@ unlink(list.files(path = "./data-raw",
 
 # Figures
 
-```{r, echo=TRUE, fig.cap="CGIAR-CSI SRTM Elevation versus GSOD Reported Elevation"}
+```{r, echo=TRUE, fig.cap="GSOD Reported Elevation versus CGIAR-CSI SRTM Elevation "}
 
 plot(stations$ELEV.M.SRTM.90m ~ stations$ELEV.M)
 
 ```
 
-```{r, echo=TRUE, fig.cap="CGIAR-CSI SRTM Buffered Elevation versus GSOD Reported Elevation"}
+```{r, echo=TRUE, fig.cap="GSOD Reported Elevation versus CGIAR-CSI SRTM Buffered Elevation"}
 
 plot(stations$ELEV.M.SRTM_buffered ~ stations$ELEV.M)
 
 ```
 
-```{r, echo=TRUE, fig.cap="CGIAR-CSI SRTM Buffered Elevation versus SRTM 90m"}
+```{r, echo=TRUE, fig.cap="CGIAR-CSI SRTM Buffered Elevation versus CGIAR-CSI SRTM 90m"}
 
 plot(stations$ELEV.M.SRTM_buffered ~ stations$ELEV.M.90m)
 
