@@ -321,6 +321,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
       rm(GSOD_XY)
     }
   }
+  unlink(tf)
+  unlink(td)
 }
 
 # Functions used within this package -------------------------------------------

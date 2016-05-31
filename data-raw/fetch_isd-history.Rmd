@@ -24,8 +24,8 @@ The following changes are made:
 
 * A new field, STNID, a concatenation of the USAF and WBAN fields, was added
 
-* Stations were checked against FAO-GAUL 2015 data, countries not mapping
-in the isd-history reported country were dropped
+* Stations were checked against Natural Earth 1:10 ADM0 Cultural data, stations
+not mapping in the isd-history reported country were dropped
 
 * 90m hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was used to
 identify and correct/remove elevation errors in dat for station locations
@@ -37,57 +37,64 @@ between -60˚ and 60˚. *Only for agroclimatology option data*
 ## Load libraries and set up workspace
 
 ```{r, echo=TRUE, messages=FALSE}
-dem_tiles <- list.files(path.expand("~/tmp/srtm"), full.names = TRUE)
+dem_tiles <- list.files(path.expand("~/Data/CGIAR-CSI SRTM"), 
+                        pattern = glob2rx("*.tif"), full.names = TRUE)
 crs <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
 cor_stations <- list()
+tf <- tempfile()
 
 ```
 
-
-## Download, reformat and clean station data file from NCDC
+## Download from Natural Earth and NCDC
 
 ```{r, echo=TRUE}
 
-# Load GAUL
-GAUL <- raster::shapefile("~/Google Drive/Data/GAUL/g2015_2014_0/g2015_2014_0.shp")
+# import Natural Earth cultural 1:10m data (last download 31/05/2016)
+curl::curl_download("http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_0_countries.zip",
+                    destfile = tf)
+NE <- unzip(tf, exdir = "data-raw")
+NE <- raster::shapefile("data-raw/ne_10m_admin_0_countries.shp")
+unlink(tf)
 
-# Download data
+# download data
 stations <- readr::read_csv(
   "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
   col_types = "ccccccddddd",
   col_names = c("USAF", "WBAN", "STN.NAME", "CTRY", "STATE", "CALL",
-                "LAT", "LON", "ELEV.M", "BEGIN", "END"), skip = 1,
-  na = c("-999.9", "-999.0"))
+                "LAT", "LON", "ELEV.M", "BEGIN", "END"), skip = 1)
+
+stations[stations == -999.9] <- NA
+stations[stations == -999] <- NA
 
 countries <- readr::read_table(
   "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/country-list.txt")[-1, c(1, 3)]
 
+# join with countrycode data (do we need this?)
+countries <- dplyr::left_join(countries, countrycode::countrycode_data,
+                              by = c(FIPS = "fips104"))
 
-# Clean data
+```
+## Reformat and clean station data file from NCDC
+
+```{r, echo=TRUE}
+
+# clean data
 stations <- stations[!is.na(stations$LAT) & !is.na(stations$LON), ]
 stations <- stations[stations$LAT != 0 & stations$LON != 0, ]
 stations <- stations[stations$LAT > -90 & stations$LAT < 90, ]
 stations <- stations[stations$LON > -180 & stations$LON < 180, ]
 stations$STNID <- paste(stations$USAF, stations$WBAN, sep = "-")
 
-
-countries <- dplyr::left_join(countries, countrycode::countrycode_data,
-                              by = c(FIPS = "fips104"))
 stations <- dplyr::left_join(stations, countries, by = c("CTRY" = "FIPS"))
-stations <- as.data.frame(stations) # convert to dataframe object
-
-# Create spatial object extracting elevation values using spatial points
-sp::coordinates(stations) <- ~LON + LAT
-sp::proj4string(stations) <- sp::CRS(crs)
 
 ```
 
-## Loop to check elevation values for inconsistencies
+## Check data for inconsistencies
 
 GSOD data have some inconsistencies in them, some of this has been removed
 above with filtering. Further filtering is used remove stations reporting
 locations in countries that do not match the physical coordinates reported.
-Using [FAO-GAUL (Global Administrative Unit Layers) 2015](http://www.fao.org/geonetwork/srv/en/metadata.show?id=12691),
+Using [Natural Earth Data 1:10 Cultural Data](http://www.naturalearthdata.com/downloads/10m-cultural-vectors/),
 the stations reported countries are checked against the country in which the
 coordinates map.
 
@@ -97,9 +104,10 @@ for areas where there was no SRTM data available (>60˚). Here only the
 hole-filled SRTM data, V4 (Jarvis *et al.* 2008) was used for correction of
 agroclimatology data (-60˚ to 60˚). Any incorrect station elevations beyond
 these values were ignored in this data set. Stations with incorrect elevation
-were identified using `raster::extract(x, y, method = "bilinear")` in order that
-values of the four nearest cells are also used to determine elevation errors.
-See Hijmans *et al.* (2005) for more detailed information on this.
+were identified using `raster::extract(x, y, buffer = 200, fun = mean)` so that
+surrounding cells are also used to determine the elevation at that point, 
+reducing the chances of over or underestimating in mountainous areas.
+See Hijmans *et al.* (2005) for more detailed information on this methodology.
 
 The hole-filled SRTM data is large enough that it won't all fit in-memory on
 most desktop computers. Using tiles allows this process to run on a modest
@@ -112,67 +120,69 @@ using an FTP client to facilitate this next step.
 
 ```{r, echo=TRUE}
 
-# Quality check station locations for reported country and lat/lon position
+# quality check station locations for reported country and lat/lon position
 # agreement
-point_check <- over(stations, GAUL)
+
+# create spatial object to check for location
+stations <- as.data.frame(stations)
+sp::coordinates(stations) <- ~LON + LAT
+sp::proj4string(stations) <- sp::CRS(crs)
+
+# check for location in country
+point_check <- sp::over(stations, NE)
 stations <- as.data.frame(stations)
 
-stations_keep <- stations[stations$country.name %in% point_check$ADM0_NAME == TRUE, ]
-stations_discard <- stations[stations$country.name %in% point_check$ADM0_NAME == FALSE, ]
+stations_discard <- stations[stations$FIPS %in% point_check$FIPS_10_ == FALSE, ]
+str(stations_discard)
+
+# 0 observations in stations_discard, the data look good, no need to remove any
+
+# recreate spatial object for extracting elevation values using spatial points
+sp::coordinates(stations) <- ~LON + LAT
+sp::proj4string(stations) <- sp::CRS(crs)
 
 for (i in dem_tiles) {
   
   # Load the DEM tile
-  dem <- raster::raster(list.files(paste0(i, "/"), pattern = glob2rx("*.tif"),
-                                   full.names = TRUE))
-  sub_stations <- crop(stations, dem)
-  gI <- extract(dem, sub_stations, method = "bilinear")
+  dem <- raster::raster(i)
+  sub_stations <- raster::crop(stations, dem)
   
+  # in some cases the DEM represents areas where there is no station
+  # check for that here and if no stations, go on to next iteration
+  if (is.null(sub_stations)) next
+  
+  # use a 200m buffer to extract elevation from the DEM
+  gI <- raster::extract(dem, sub_stations, buffer = 200, fun = mean)
   sub_stations <- as.data.frame(sub_stations)
-  sub_stations$ELEV.M.COR <- gI
-  
-  # if original elevation == 0 and DEM indicates difference >= 15m, use DEM
-  sub_stations[, 13] <- ifelse(sub_stations[, 9] == 0 &
-                                 sub_stations[, 13] >= sub_stations[, 9] + 15,
-                               sub_stations[, 9],
-                               sub_stations[, 13])
-  
-  # if original elevation > 0 and DEM indicates difference <= / >= 50m, use DEM
-  sub_stations[, 13] <- ifelse(sub_stations[, 9] > 0 &
-                                 sub_stations[, 13] >= sub_stations[, 9] + 50 |
-                                 sub_stations[, 13] >= sub_stations[, 9] - 50,
-                               sub_stations[, 9],
-                               sub_stations[, 13])
-  
-  # if DEM elevation == NA, use original elevation
-  sub_stations[, 13] <- ifelse(is.na(sub_stations[, 13]) &
-                                 !is.na(sub_stations[, 9]),
-                               sub_stations[, 9], sub_stations[, 13])
-  
-  # if original elevation == NA, use DEM elevation
-  sub_stations[, 13] <- ifelse(is.na(sub_stations[, 9]) & !is.na(sub_stations[, 13]),
-                               sub_stations[, 9], sub_stations[, 13])
+  sub_stations$ELEV.M.SRTM <- gI
   
   cor_stations[[i]] <- sub_stations
-  
+  rm(sub_stations)
 }
-```
 
+stations <- as.data.frame(data.table::rbindlist(cor_stations))
 
-# Combine list into one dataframe, check and write data to disk
-
-```{r, echo=TRUE}
-
-stations <- data.table::rbindlist(cor_stations)
+# some stations occur in areas where DEM has no data
+# use original station elevation in these cells
+stations[, 28] <- ifelse(is.na(stations[, 28]), stations[, 9], stations[, 28])
 
 summary(stations)
 
-#devtools::use_data(stations, overwrite = TRUE)
+devtools::use_data(stations, overwrite = TRUE)
+
+# clean up Natural Earth data files before we leave
+unlink(list.files(path = "./data-raw",
+                  pattern = glob2rx("ne_10m_admin_0_countries*")))
 
 ```
 
-# Figures and tables
-<!-- insert graphs of uncorrected vs corrected elevation? Table of dropped stations? --->
+# Figure
+
+```{r, echo=TRUE, fig.cap="CGIAR-CSI SRTM Elevation versus GSOD Reported Elevation"}
+
+plot(stations$ELEV.M.SRTM ~ stations$ELEV.M)
+
+```
 
 # Notes
 
