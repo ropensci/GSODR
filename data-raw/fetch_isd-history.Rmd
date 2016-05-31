@@ -152,9 +152,11 @@ for (i in dem_tiles) {
   if (is.null(sub_stations)) next
   
   # use a 200m buffer to extract elevation from the DEM
-  gI <- raster::extract(dem, sub_stations, buffer = 200, fun = mean)
+  SRTM_90m <- raster::extract(dem, sub_stations)
+  SRTM_buffered <- raster::extract(dem, sub_stations, buffer = 200, fun = mean)
   sub_stations <- as.data.frame(sub_stations)
-  sub_stations$ELEV.M.SRTM <- gI
+  sub_stations$ELEV.M.SRTM_buffered <- SRTM_buffered
+  sub_stations$ELEV.M.SRTM.90m <- SRTM_90m
   
   cor_stations[[i]] <- sub_stations
   rm(sub_stations)
@@ -165,6 +167,7 @@ stations <- as.data.frame(data.table::rbindlist(cor_stations))
 # some stations occur in areas where DEM has no data
 # use original station elevation in these cells
 stations[, 28] <- ifelse(is.na(stations[, 28]), stations[, 9], stations[, 28])
+stations[, 29] <- ifelse(is.na(stations[, 29]), stations[, 9], stations[, 29])
 
 summary(stations)
 
@@ -176,11 +179,23 @@ unlink(list.files(path = "./data-raw",
 
 ```
 
-# Figure
+# Figures
 
 ```{r, echo=TRUE, fig.cap="CGIAR-CSI SRTM Elevation versus GSOD Reported Elevation"}
 
-plot(stations$ELEV.M.SRTM ~ stations$ELEV.M)
+plot(stations$ELEV.M.SRTM.90m ~ stations$ELEV.M)
+
+```
+
+```{r, echo=TRUE, fig.cap="CGIAR-CSI SRTM Buffered Elevation versus GSOD Reported Elevation"}
+
+plot(stations$ELEV.M.SRTM_buffered ~ stations$ELEV.M)
+
+```
+
+```{r, echo=TRUE, fig.cap="CGIAR-CSI SRTM Buffered Elevation versus SRTM 90m"}
+
+plot(stations$ELEV.M.SRTM_buffered ~ stations$ELEV.M.90m)
 
 ```
 
