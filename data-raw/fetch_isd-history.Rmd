@@ -85,7 +85,7 @@ stations <- stations[stations$LAT > -90 & stations$LAT < 90, ]
 stations <- stations[stations$LON > -180 & stations$LON < 180, ]
 stations$STNID <- paste(stations$USAF, stations$WBAN, sep = "-")
 
-stations <- dplyr::left_join(stations, countries, by = c("CTRY" = "FIPS"))
+xy <- dplyr::left_join(stations, countries, by = c("CTRY" = "FIPS"))
 
 ```
 
@@ -124,20 +124,18 @@ using an FTP client to facilitate this next step.
 # agreement
 
 # create spatial object to check for location
-stations <- as.data.frame(stations)
-sp::coordinates(stations) <- ~LON + LAT
-sp::proj4string(stations) <- sp::CRS(crs)
+xy <- as.data.frame(point_check)
+sp::coordinates(xy) <- ~LON + LAT
+sp::proj4string(xy) <- sp::CRS(crs)
 
 # check for location in country
-point_check <- sp::over(stations, NE)
-stations <- as.data.frame(stations)
-
-stations_discard <- stations[stations$FIPS %in% point_check$FIPS_10_ == FALSE, ]
+point_check <- sp::over(xy, NE)
+point_check <- as.data.frame(point_check)
+stations_discard <- point_check[point_check$FIPS %in% point_check$FIPS_10_ == FALSE, ]
 str(stations_discard)
-
 # 0 observations in stations_discard, the data look good, no need to remove any
 
-# recreate spatial object for extracting elevation values using spatial points
+# create a spatial object for extracting elevation values using spatial points
 sp::coordinates(stations) <- ~LON + LAT
 sp::proj4string(stations) <- sp::CRS(crs)
 
@@ -166,8 +164,8 @@ stations <- as.data.frame(data.table::rbindlist(cor_stations))
 
 # some stations occur in areas where DEM has no data
 # use original station elevation in these cells
-stations[, 28] <- ifelse(is.na(stations[, 28]), stations[, 9], stations[, 28])
-stations[, 29] <- ifelse(is.na(stations[, 29]), stations[, 9], stations[, 29])
+stations[, 12] <- ifelse(is.na(stations[, 12]), stations[, 9], stations[, 12])
+stations[, 13] <- ifelse(is.na(stations[, 13]), stations[, 9], stations[, 13])
 
 summary(stations)
 
