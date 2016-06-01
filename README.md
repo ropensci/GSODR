@@ -38,7 +38,9 @@ Force Navy" number - with WBAN being the acronym;
 **CTRY** - Country;  
 **LAT** - Latitude. *Station dropped in cases where values are <-90 or >90 degrees or Lat = 0 and Lon = 0*;  
 **LON** - Longitude. *Station dropped in cases where values are <-180 or >180 degrees or Lat = 0 and Lon = 0*;  
-**ELEV.M** - Elevation converted to metres. *Station dropped where ELEV is NA*;  
+**ELEV.M** - Elevation converted to metres. *Station dropped where ELEV is NA*; 
+**ELEV.M.SRTM.90m** - Elevation in metres corrected for possible errors, see
+Notes for more;
 **YEARMODA** - Date in YYYY-MM-DD format;  
 **YEAR** - The year;  
 **MONTH** - The month;  
@@ -122,7 +124,14 @@ reported) for the occurrence during the day;
 **es** - Mean daily saturation vapour pressure;  
 **RH** - Mean daily relative humidity;  
 
-## Note
+## Notes
+90m hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was used to
+identify and correct/remove elevation errors in data for station locations
+between -60˚ and 60˚. This applies to cases here where elevation was missing in
+the reported values as well. In case the station reported an elevation and the
+DEM does not, the station reported is taken. For stations beyond -60˚ and 60˚the
+values are station reported values in every instance. See [https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md](https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md) for more detail on the correction methods.
+
 Users of these data should take into account the following (from the [NCDC website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)): 
 
 > "The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification." [WMO Resolution 40. NOAA Policy](http://www.wmo.int/pages/about/Resolution40.html)
@@ -151,3 +160,9 @@ maximum of five missing days per station allowed.
 
 get_GSOD(years = 2010, country = "Australia", path = "~/Downloads")
 ```
+
+# References
+
+Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled SRTM for the
+globe Version 4, available from the CGIAR-CSI SRTM 90m Database
+([http://srtm.csi.cgiar.org](http://srtm.csi.cgiar.org))
