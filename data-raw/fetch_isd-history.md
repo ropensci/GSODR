@@ -205,7 +205,7 @@ plot(stations$ELEV.M.SRTM.90m.BUFFER ~ stations$ELEV.M.SRTM.90m.NO_BUFFER)
 
 ![CGIAR-CSI SRTM Buffered Elevation versus CGIAR-CSI SRTM 90m](fetch_isd-history_files/figure-markdown_github/SRTM%2090m%20vs%20Buffered%20SRTM%2090m-1.png)
 
-From the last plot, the differences between the buffered and unbuffered elevation checks are minor. However, in some cases the unbuffered 90m is much lower than the buffered. The buffered values are the values that are included in the final data for distribution with the GSODR package following the approach of Hijmans *et al.* (2005). The new field is simply called ELEV.M.SRTM.90m in the stations.rda file.
+From the last plot, the differences between the buffered and unbuffered elevation checks are minor. However, in some cases the buffered 90m is much lower than the unbuffered. The buffered values are the values that are included in the final data for distribution with the GSODR package following the approach of Hijmans *et al.* (2005). The new field is simply called ELEV.M.SRTM.90m in the stations.rda file.
 
 Notes
 =====

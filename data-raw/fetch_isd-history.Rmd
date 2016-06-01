@@ -185,11 +185,11 @@ plot(stations$ELEV.M.SRTM.90m.BUFFER ~ stations$ELEV.M.SRTM.90m.NO_BUFFER)
 ```
 
 From the last plot, the differences between the buffered and unbuffered
-elevation checks are minor. However, in some cases the unbuffered 90m is much
-lower than the buffered. The buffered values are the values that are included in
-the final data for distribution with the GSODR package following the approach of
-Hijmans *et al.* (2005). The new field is simply called ELEV.M.SRTM.90m in the
-stations.rda file.
+elevation checks are minor. However, in some cases the buffered 90m is much
+lower than the unbuffered. The buffered values are the values that are included
+in the final data for distribution with the GSODR package following the approach
+of Hijmans *et al.* (2005). The new field is simply called ELEV.M.SRTM.90m in
+the stations.rda file.
 
 ```{r cleanup and .rda file creation, messages=FALSE, echo=FALSE, warning=FALSE, error=FALSE}
 
