@@ -195,7 +195,7 @@ these data by others must provide this same notification."
 \examples{
 \dontrun{
 # Download weather station for Toowoomba, Queensland for 2010, save resulting
-# file in the user's Downloads directory.
+# file in the user's "Downloads" directory.
 
 get_GSOD(years = 2010, station = "955510-99999", path = "~/Downloads")
 

@@ -127,7 +127,8 @@ sp::proj4string(xy) <- sp::CRS(crs)
 point_check <- sp::over(xy, NE)
 point_check <- as.data.frame(point_check)
 stations_discard <- point_check[point_check$FIPS %in% point_check$FIPS_10_ == FALSE, ]
-str(stations_discard)
+nrow(stations_discard)
+
 # 0 observations in stations_discard, the data look good, no need to remove any
 
 # create a spatial object for extracting elevation values using spatial points
@@ -146,11 +147,15 @@ for (i in dem_tiles) {
   if (is.null(sub_stations)) next
   
   # use a 200m buffer to extract elevation from the DEM
-  SRTM_90m <- raster::extract(dem, sub_stations)
   SRTM_buffered <- raster::extract(dem, sub_stations, buffer = 200, fun = mean)
+  
+  # extract without using the buffer, strictly using 90m data
+  SRTM_90m <- raster::extract(dem, sub_stations)
+  
+  # convert spatial object back to normal data frame and add new fields
   sub_stations <- as.data.frame(sub_stations)
-  sub_stations$ELEV.M.SRTM_buffered <- SRTM_buffered
-  sub_stations$ELEV.M.SRTM.90m <- SRTM_90m
+  sub_stations$ELEV.M.SRTM.90m.BUFFER <- SRTM_buffered
+  sub_stations$ELEV.M.SRTM.90m.NO_BUFFER <- SRTM_90m
   
   cor_stations[[i]] <- sub_stations
   rm(sub_stations)
@@ -160,8 +165,8 @@ stations <- as.data.frame(data.table::rbindlist(cor_stations))
 
 # some stations occur in areas where DEM has no data
 # use original station elevation in these cells
-stations[, 12] <- ifelse(is.na(stations[, 12]), stations[, 9], stations[, 12])
 stations[, 13] <- ifelse(is.na(stations[, 13]), stations[, 9], stations[, 13])
+stations[, 14] <- ifelse(is.na(stations[, 14]), stations[, 9], stations[, 14])
 
 summary(stations)
 ```
@@ -169,37 +174,34 @@ summary(stations)
 # Figures
 
 ```{r SRTM 90m vs Reported Elevation, echo=TRUE, fig.cap="GSOD Reported Elevation versus CGIAR-CSI SRTM Elevation"}
-plot(stations$ELEV.M.SRTM.90m ~ stations$ELEV.M)
+plot(stations$ELEV.M.SRTM.90m.NO_BUFFER ~ stations$ELEV.M)
 ```
 
 ```{r Buffered SRTM 90m vs Reported Elevation, echo=TRUE, fig.cap="GSOD Reported Elevation versus CGIAR-CSI SRTM Buffered Elevation"}
-plot(stations$ELEV.M.SRTM_buffered ~ stations$ELEV.M)
+plot(stations$ELEV.M.SRTM.90m.BUFFER ~ stations$ELEV.M)
 ```
 
 ```{r SRTM 90m vs Buffered SRTM 90m, echo=TRUE, fig.cap="CGIAR-CSI SRTM Buffered Elevation versus CGIAR-CSI SRTM 90m"}
-plot(stations$ELEV.M.SRTM_buffered ~ stations$ELEV.M.SRTM.90m)
+plot(stations$ELEV.M.SRTM.90m.BUFFER ~ stations$ELEV.M.SRTM.90m.NO_BUFFER)
 ```
 
 From the last plot, the differences between the buffered and unbuffered
-elevation checks are extremely minor. We can assume that the values of the 90m
-check are sufficient and provide them as a "corrected" elevation option with
-the cleaned GSOD station data provided by this package.
+elevation checks are minor. However, in some cases the unbuffered 90m is much
+lower than the buffered. The buffered values are the values that are included in
+the final data for distribution with the GSODR package following the approach of
+Hijmans *et al.* (2005). The new field is simply called ELEV.M.SRTM.90m in the
+stations.rda file.
 
-## Cleanup and save data to disk
+```{r cleanup and .rda file creation, messages=FALSE, echo=FALSE, warning=FALSE, results=hide, error=FALSE}
 
-Finally, drop the buffered station field, write the .rda file to disk (I've
-already checked for the optimal compression of the rda file using
-`tools::checkRdaFiles()`, using bzip2) and clean up the downloaded Natural Earth
-Data files.
+# drop the 90m only station field
+stations[, 14] <- NULL
 
-```{r cleanup and .rda file creation, messages=FALSE}
+# round SRTM.90m.Buffer field to whole number in cases where station reported
+# data was used
+stations[, 13] <- round(stations[, 13], 0)
 
-# drop the buffered station field
-stations$ELEV.M.SRTM_buffered <- NULL
-
-# round SRTM.90m field to whole number in cases where station reported data was
-# used
-stations$ELEV.M.SRTM.90m <- round(stations$ELEV.M.SRTM.90m, 0)
+names(stations)[13] <- "ELEV.M.SRTM.90m"
 
 # write rda file to disk
 devtools::use_data(stations, overwrite = TRUE, compress = "bzip2")

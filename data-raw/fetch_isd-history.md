@@ -103,75 +103,10 @@ sp::proj4string(xy) <- sp::CRS(crs)
 point_check <- sp::over(xy, NE)
 point_check <- as.data.frame(point_check)
 stations_discard <- point_check[point_check$FIPS %in% point_check$FIPS_10_ == FALSE, ]
-str(stations_discard)
+nrow(stations_discard)
 ```
 
-    ## 'data.frame':    0 obs. of  65 variables:
-    ##  $ scalerank : int 
-    ##  $ featurecla: chr 
-    ##  $ LABELRANK : num 
-    ##  $ SOVEREIGNT: chr 
-    ##  $ SOV_A3    : chr 
-    ##  $ ADM0_DIF  : num 
-    ##  $ LEVEL     : num 
-    ##  $ TYPE      : chr 
-    ##  $ ADMIN     : chr 
-    ##  $ ADM0_A3   : chr 
-    ##  $ GEOU_DIF  : num 
-    ##  $ GEOUNIT   : chr 
-    ##  $ GU_A3     : chr 
-    ##  $ SU_DIF    : num 
-    ##  $ SUBUNIT   : chr 
-    ##  $ SU_A3     : chr 
-    ##  $ BRK_DIFF  : num 
-    ##  $ NAME      : chr 
-    ##  $ NAME_LONG : chr 
-    ##  $ BRK_A3    : chr 
-    ##  $ BRK_NAME  : chr 
-    ##  $ BRK_GROUP : chr 
-    ##  $ ABBREV    : chr 
-    ##  $ POSTAL    : chr 
-    ##  $ FORMAL_EN : chr 
-    ##  $ FORMAL_FR : chr 
-    ##  $ NOTE_ADM0 : chr 
-    ##  $ NOTE_BRK  : chr 
-    ##  $ NAME_SORT : chr 
-    ##  $ NAME_ALT  : chr 
-    ##  $ MAPCOLOR7 : num 
-    ##  $ MAPCOLOR8 : num 
-    ##  $ MAPCOLOR9 : num 
-    ##  $ MAPCOLOR13: num 
-    ##  $ POP_EST   : num 
-    ##  $ GDP_MD_EST: num 
-    ##  $ POP_YEAR  : num 
-    ##  $ LASTCENSUS: num 
-    ##  $ GDP_YEAR  : num 
-    ##  $ ECONOMY   : chr 
-    ##  $ INCOME_GRP: chr 
-    ##  $ WIKIPEDIA : num 
-    ##  $ FIPS_10_  : chr 
-    ##  $ ISO_A2    : chr 
-    ##  $ ISO_A3    : chr 
-    ##  $ ISO_N3    : chr 
-    ##  $ UN_A3     : chr 
-    ##  $ WB_A2     : chr 
-    ##  $ WB_A3     : chr 
-    ##  $ WOE_ID    : num 
-    ##  $ WOE_ID_EH : num 
-    ##  $ WOE_NOTE  : chr 
-    ##  $ ADM0_A3_IS: chr 
-    ##  $ ADM0_A3_US: chr 
-    ##  $ ADM0_A3_UN: num 
-    ##  $ ADM0_A3_WB: num 
-    ##  $ CONTINENT : chr 
-    ##  $ REGION_UN : chr 
-    ##  $ SUBREGION : chr 
-    ##  $ REGION_WB : chr 
-    ##  $ NAME_LEN  : num 
-    ##  $ LONG_LEN  : num 
-    ##  $ ABBREV_LEN: num 
-    ##  $ TINY      : num 
-    ##  $ HOMEPART  : num
+    ## [1] 0
 
 ``` r
 # 0 observations in stations_discard, the data look good, no need to remove any
@@ -192,11 +127,15 @@ for (i in dem_tiles) {
   if (is.null(sub_stations)) next
   
   # use a 200m buffer to extract elevation from the DEM
-  SRTM_90m <- raster::extract(dem, sub_stations)
   SRTM_buffered <- raster::extract(dem, sub_stations, buffer = 200, fun = mean)
+  
+  # extract without using the buffer, strictly using 90m data
+  SRTM_90m <- raster::extract(dem, sub_stations)
+  
+  # convert spatial object back to normal data frame and add new fields
   sub_stations <- as.data.frame(sub_stations)
-  sub_stations$ELEV.M.SRTM_buffered <- SRTM_buffered
-  sub_stations$ELEV.M.SRTM.90m <- SRTM_90m
+  sub_stations$ELEV.M.SRTM.90m.BUFFER <- SRTM_buffered
+  sub_stations$ELEV.M.SRTM.90m.NO_BUFFER <- SRTM_90m
   
   cor_stations[[i]] <- sub_stations
   rm(sub_stations)
@@ -206,8 +145,8 @@ stations <- as.data.frame(data.table::rbindlist(cor_stations))
 
 # some stations occur in areas where DEM has no data
 # use original station elevation in these cells
-stations[, 12] <- ifelse(is.na(stations[, 12]), stations[, 9], stations[, 12])
 stations[, 13] <- ifelse(is.na(stations[, 13]), stations[, 9], stations[, 13])
+stations[, 14] <- ifelse(is.na(stations[, 14]), stations[, 9], stations[, 14])
 
 summary(stations)
 ```
@@ -236,63 +175,37 @@ summary(stations)
     ##  3rd Qu.:  69.212   3rd Qu.: 454.9   3rd Qu.:20010816   3rd Qu.:20160529  
     ##  Max.   : 179.750   Max.   :5304.0   Max.   :20160526   Max.   :20160531  
     ##                     NA's   :194                                           
-    ##      STNID       ELEV.M.SRTM_buffered ELEV.M.SRTM.90m 
-    ##  Min.   :    1   Min.   :-360.94      Min.   :-361.0  
-    ##  1st Qu.: 6198   1st Qu.:  24.52      1st Qu.:  44.0  
-    ##  Median :12382   Median : 153.24      Median : 187.0  
-    ##  Mean   :12381   Mean   : 379.36      Mean   : 417.6  
-    ##  3rd Qu.:18569   3rd Qu.: 456.33      3rd Qu.: 524.0  
-    ##  Max.   :24750   Max.   :5273.35      Max.   :5269.0  
-    ##                  NA's   :52           NA's   :2442
+    ##           STNID       ELEV.M.SRTM.90m.BUFFER ELEV.M.SRTM.90m.NO_BUFFER
+    ##  992390-99999:    4   Min.   :-360.94        Min.   :-361.0           
+    ##  997225-99999:    4   1st Qu.:  24.52        1st Qu.:  25.0           
+    ##  992570-99999:    2   Median : 153.24        Median : 154.0           
+    ##  997242-99999:    2   Mean   : 379.36        Mean   : 379.6           
+    ##  919450-99999:    2   3rd Qu.: 456.33        3rd Qu.: 457.0           
+    ##  719584-99999:    2   Max.   :5273.35        Max.   :5269.0           
+    ##  (Other)     :24861   NA's   :52             NA's   :54
 
 Figures
 =======
 
 ``` r
-plot(stations$ELEV.M.SRTM.90m ~ stations$ELEV.M)
+plot(stations$ELEV.M.SRTM.90m.NO_BUFFER ~ stations$ELEV.M)
 ```
 
 ![GSOD Reported Elevation versus CGIAR-CSI SRTM Elevation](fetch_isd-history_files/figure-markdown_github/SRTM%2090m%20vs%20Reported%20Elevation-1.png)
 
 ``` r
-plot(stations$ELEV.M.SRTM_buffered ~ stations$ELEV.M)
+plot(stations$ELEV.M.SRTM.90m.BUFFER ~ stations$ELEV.M)
 ```
 
 ![GSOD Reported Elevation versus CGIAR-CSI SRTM Buffered Elevation](fetch_isd-history_files/figure-markdown_github/Buffered%20SRTM%2090m%20vs%20Reported%20Elevation-1.png)
 
 ``` r
-plot(stations$ELEV.M.SRTM_buffered ~ stations$ELEV.M.SRTM.90m)
+plot(stations$ELEV.M.SRTM.90m.BUFFER ~ stations$ELEV.M.SRTM.90m.NO_BUFFER)
 ```
 
 ![CGIAR-CSI SRTM Buffered Elevation versus CGIAR-CSI SRTM 90m](fetch_isd-history_files/figure-markdown_github/SRTM%2090m%20vs%20Buffered%20SRTM%2090m-1.png)
 
-From the last plot, the differences between the buffered and unbuffered elevation checks are extremely minor. We can assume that the values of the 90m check are sufficient and provide them as a "corrected" elevation option with the cleaned GSOD station data provided by this package.
-
-Cleanup and save data to disk
------------------------------
-
-Finally, drop the buffered station field, write the .rda file to disk (I've already checked for the optimal compression of the rda file using `tools::checkRdaFiles()`, using bzip2) and clean up the downloaded Natural Earth Data files.
-
-``` r
-# drop the buffered station field
-stations$ELEV.M.SRTM_buffered <- NULL
-
-# round SRTM.90m field to whole number in cases where station reported data was
-# used
-stations$ELEV.M.SRTM.90m <- round(stations$ELEV.M.SRTM.90m, 0)
-
-# write rda file to disk
-devtools::use_data(stations, overwrite = TRUE, compress = "bzip2")
-```
-
-    ## Saving stations as stations.rda to /Users/U8004755/Development/GSODR/data
-
-``` r
-# clean up Natural Earth data files before we leave
-file.remove(list.files(pattern = glob2rx("ne_10m_admin_0_countries*")))
-```
-
-    ## [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+From the last plot, the differences between the buffered and unbuffered elevation checks are minor. However, in some cases the unbuffered 90m is much lower than the buffered. The buffered values are the values that are included in the final data for distribution with the GSODR package following the approach of Hijmans *et al.* (2005). The new field is simply called ELEV.M.SRTM.90m in the stations.rda file.
 
 Notes
 =====

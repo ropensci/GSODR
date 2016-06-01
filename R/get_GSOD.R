@@ -179,7 +179,7 @@
 #' @examples
 #' \dontrun{
 #' # Download weather station for Toowoomba, Queensland for 2010, save resulting
-#' # file in the user's Downloads directory.
+#' # file in the user's "Downloads" directory.
 #'
 #' get_GSOD(years = 2010, station = "955510-99999", path = "~/Downloads")
 #'
@@ -213,6 +213,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 
   utils::data("stations", package = "GSODR", envir = environment())
   stations <- get("stations", envir = environment())
+  stations[, 12] <- as.character(stations[, 12])
 
   # Set up tempfile and directory for downloading data from server
   tf <- tempfile()
@@ -417,7 +418,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   GSOD_df <- dplyr::inner_join(tmp, stations, by = "STNID")
 
   GSOD_df <- GSOD_df[c("USAF", "WBAN", "STNID", "STN.NAME", "CTRY",
-                       "LAT", "LON", "ELEV.M", "ELEV.SRTM.90m",
+                       "LAT", "LON", "ELEV.M", "ELEV.M.SRTM.90m",
                        "YEARMODA", "YEAR", "MONTH", "DAY", "YDAY",
                        "TEMP", "TEMP.CNT", "DEWP", "DEWP.CNT",
                        "SLP", "SLP.CNT", "STP", "STP.CNT",
