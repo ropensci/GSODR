@@ -277,6 +277,10 @@ Finally, drop the buffered station field, write the .rda file to disk (I've alre
 # drop the buffered station field
 stations$ELEV.M.SRTM_buffered <- NULL
 
+# round SRTM.90m field to whole number in cases where station reported data was
+# used
+stations$ELEV.M.SRTM.90m <- round(stations$ELEV.M.SRTM.90m, 0)
+
 # write rda file to disk
 devtools::use_data(stations, overwrite = TRUE, compress = "bzip2")
 ```
@@ -285,8 +289,7 @@ devtools::use_data(stations, overwrite = TRUE, compress = "bzip2")
 
 ``` r
 # clean up Natural Earth data files before we leave
-file.remove(list.files(path = ".",
-                       pattern = glob2rx("ne_10m_admin_0_countries*")))
+file.remove(list.files(pattern = glob2rx("ne_10m_admin_0_countries*")))
 ```
 
     ## [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE
@@ -318,10 +321,11 @@ R System Information
     ##  [1] Rcpp_0.12.5      knitr_1.13       raster_2.5-2     magrittr_1.5    
     ##  [5] devtools_1.11.1  lattice_0.20-33  R6_2.1.2         stringr_1.0.0   
     ##  [9] dplyr_0.4.3      tools_3.3.0      parallel_3.3.0   rgdal_1.1-10    
-    ## [13] grid_3.3.0       DBI_0.4-1        withr_1.0.1      htmltools_0.3.5 
-    ## [17] yaml_2.1.13      digest_0.6.9     assertthat_0.1   countrycode_0.18
-    ## [21] readr_0.2.2      formatR_1.4      curl_0.9.7       memoise_1.0.0   
-    ## [25] evaluate_0.9     rmarkdown_0.9.6  sp_1.2-3         stringi_1.1.1
+    ## [13] grid_3.3.0       data.table_1.9.6 DBI_0.4-1        withr_1.0.1     
+    ## [17] htmltools_0.3.5  yaml_2.1.13      digest_0.6.9     assertthat_0.1  
+    ## [21] countrycode_0.18 readr_0.2.2      formatR_1.4      curl_0.9.7      
+    ## [25] memoise_1.0.0    evaluate_0.9     rmarkdown_0.9.6  sp_1.2-3        
+    ## [29] stringi_1.1.1    chron_2.3-47
 
 References
 ==========

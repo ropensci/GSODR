@@ -114,7 +114,7 @@ Data can be downloaded from the [CGIAR-CSI's](http://csi.cgiar.org/WhtIsCGIAR_CS
 ftp server, [srtm.csi.cgiar.org](ftp://srtm.csi.cgiar.org),
 using an FTP client to facilitate this next step.
 
-```{r check station data for errors, echo=TRUE, cache=TRUE}
+```{r check station data for errors, echo=TRUE}
 # quality check station locations for reported country and lat/lon position
 # agreement
 
@@ -197,12 +197,15 @@ Data files.
 # drop the buffered station field
 stations$ELEV.M.SRTM_buffered <- NULL
 
+# round SRTM.90m field to whole number in cases where station reported data was
+# used
+stations$ELEV.M.SRTM.90m <- round(stations$ELEV.M.SRTM.90m, 0)
+
 # write rda file to disk
 devtools::use_data(stations, overwrite = TRUE, compress = "bzip2")
 
 # clean up Natural Earth data files before we leave
-file.remove(list.files(path = ".",
-                       pattern = glob2rx("ne_10m_admin_0_countries*")))
+file.remove(list.files(pattern = glob2rx("ne_10m_admin_0_countries*")))
 
 ```
 

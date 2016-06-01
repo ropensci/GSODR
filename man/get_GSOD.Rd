@@ -78,7 +78,10 @@ Air Force Navy" number - with WBAN being the acronym}
 \item{CTRY}{Country}
 \item{LAT}{Latitude}
 \item{LON}{Longitude}
-\item{ELEV.M}{Elevation converted to metres}
+\item{ELEV.M}{Station reported elevation (metres to tenths)}
+\item{ELEV.M.SRTM.90m}{Corrected elevation data in whole metres for stations
+derived from Jarvis et al. (2008), extracted from DEM using reported LAT/LON
+values in metres}
 \item{YEARMODA}{Date in YYYY-MM-DD format}
 \item{YEAR}{The year}
 \item{MONTH}{The month}
@@ -211,5 +214,11 @@ maximum of five missing days per station allowed.
 
 get_GSOD(years = 2010, country = "Australia", path = "~/Downloads")
 }
+
+}
+\references{
+{Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled
+SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
+\url{http://srtm.csi.cgiar.org}}
 }
 

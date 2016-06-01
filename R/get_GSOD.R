@@ -62,7 +62,10 @@
 #' \item{CTRY}{Country}
 #' \item{LAT}{Latitude}
 #' \item{LON}{Longitude}
-#' \item{ELEV.M}{Elevation converted to metres}
+#' \item{ELEV.M}{Station reported elevation (metres to tenths)}
+#' \item{ELEV.M.SRTM.90m}{Corrected elevation data in whole metres for stations
+#' derived from Jarvis et al. (2008), extracted from DEM using reported LAT/LON
+#' values in metres}
 #' \item{YEARMODA}{Date in YYYY-MM-DD format}
 #' \item{YEAR}{The year}
 #' \item{MONTH}{The month}
@@ -195,6 +198,11 @@
 #'
 #' get_GSOD(years = 2010, country = "Australia", path = "~/Downloads")
 #' }
+#'
+#' @references {Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled
+#' SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
+#' \url{http://srtm.csi.cgiar.org}}
+#'
 #' @export
 get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                      max_missing = 5, agroclimatology = FALSE,
@@ -409,7 +417,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   GSOD_df <- dplyr::inner_join(tmp, stations, by = "STNID")
 
   GSOD_df <- GSOD_df[c("USAF", "WBAN", "STNID", "STN.NAME", "CTRY",
-                       "LAT", "LON", "ELEV.M",
+                       "LAT", "LON", "ELEV.M", "ELEV.SRTM.90m",
                        "YEARMODA", "YEAR", "MONTH", "DAY", "YDAY",
                        "TEMP", "TEMP.CNT", "DEWP", "DEWP.CNT",
                        "SLP", "SLP.CNT", "STP", "STP.CNT",
