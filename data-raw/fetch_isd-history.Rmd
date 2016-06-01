@@ -41,7 +41,6 @@ dem_tiles <- list.files(path.expand("~/Data/CGIAR-CSI SRTM"),
 crs <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
 cor_stations <- list()
 tf <- tempfile()
-
 ```
 
 ## Download from Natural Earth and NCDC
@@ -50,7 +49,7 @@ tf <- tempfile()
 # import Natural Earth cultural 1:10m data (last download 31/05/2016)
 curl::curl_download("http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_0_countries.zip",
                     destfile = tf)
-NE <- unzip(tf, exdir = "./")
+NE <- unzip(tf)
 NE <- raster::shapefile("./ne_10m_admin_0_countries.shp")
 unlink(tf)
 
@@ -192,7 +191,7 @@ the final data for distribution with the GSODR package following the approach of
 Hijmans *et al.* (2005). The new field is simply called ELEV.M.SRTM.90m in the
 stations.rda file.
 
-```{r cleanup and .rda file creation, messages=FALSE, echo=FALSE, warning=FALSE, results=hide, error=FALSE}
+```{r cleanup and .rda file creation, messages=FALSE, echo=FALSE, warning=FALSE, error=FALSE}
 
 # drop the 90m only station field
 stations[, 14] <- NULL
