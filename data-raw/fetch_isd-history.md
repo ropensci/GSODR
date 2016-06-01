@@ -20,7 +20,7 @@ The following changes are made:
 
 -   Stations were checked against Natural Earth 1:10 ADM0 Cultural data, stations not mapping in the isd-history reported country were dropped
 
--   90m hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was used to identify and correct/remove elevation errors in dat for station locations between -60˚ and 60˚. *Only for agroclimatology option data*
+-   90m hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was used to identify and correct/remove elevation errors in data for station locations between -60˚ and 60˚. *Only for agroclimatology option data*
 
 R Data Processing
 =================
