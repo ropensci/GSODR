@@ -1,7 +1,7 @@
 Fetch, clean and correct altitude in GSOD isd\_history.csv Data
 ================
 Adam H. Sparks - Center for Crop Health, University of Southern Queensland
-05-30-2016
+06-01-2016
 
 Introduction
 ============
@@ -25,8 +25,8 @@ The following changes are made:
 R Data Processing
 =================
 
-Load libraries and set up workspace
------------------------------------
+Set up workspace
+----------------
 
 ``` r
 dem_tiles <- list.files(path.expand("~/Data/CGIAR-CSI SRTM"), 
@@ -43,8 +43,8 @@ Download from Natural Earth and NCDC
 # import Natural Earth cultural 1:10m data (last download 31/05/2016)
 curl::curl_download("http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_0_countries.zip",
                     destfile = tf)
-NE <- unzip(tf, exdir = "data-raw")
-NE <- raster::shapefile("data-raw/ne_10m_admin_0_countries.shp")
+NE <- unzip(tf, exdir = "./")
+NE <- raster::shapefile("./ne_10m_admin_0_countries.shp")
 unlink(tf)
 
 # download data
@@ -76,7 +76,7 @@ stations <- stations[stations$LAT > -90 & stations$LAT < 90, ]
 stations <- stations[stations$LON > -180 & stations$LON < 180, ]
 stations$STNID <- paste(stations$USAF, stations$WBAN, sep = "-")
 
-stations <- dplyr::left_join(stations, countries, by = c("CTRY" = "FIPS"))
+xy <- dplyr::left_join(stations, countries, by = c("CTRY" = "FIPS"))
 ```
 
 Check data for inconsistencies
@@ -84,7 +84,7 @@ Check data for inconsistencies
 
 GSOD data have some inconsistencies in them, some of this has been removed above with filtering. Further filtering is used remove stations reporting locations in countries that do not match the physical coordinates reported. Using [Natural Earth Data 1:10 Cultural Data](http://www.naturalearthdata.com/downloads/10m-cultural-vectors/), the stations reported countries are checked against the country in which the coordinates map.
 
-Also, reported elevation may differ from actual. Hijmans *et al.* (2005) created their own digital elevation model using Jarvis *et al.* (2004) and [GTOPO30 data](https://lta.cr.usgs.gov/GTOPO30) for areas where there was no SRTM data available (&gt;60˚). Here only the hole-filled SRTM data, V4 (Jarvis *et al.* 2008) was used for correction of agroclimatology data (-60˚ to 60˚). Any incorrect station elevations beyond these values were ignored in this data set. Stations with incorrect elevation were identified using `raster::extract(x, y, method = "bilinear")` in order that values of the four nearest cells are also used to determine elevation errors. See Hijmans *et al.* (2005) for more detailed information on this.
+Also, reported elevation may differ from actual. Hijmans *et al.* (2005) created their own digital elevation model using Jarvis *et al.* (2004) and [GTOPO30 data](https://lta.cr.usgs.gov/GTOPO30) for areas where there was no SRTM data available (&gt;60˚). Here only the hole-filled SRTM data, V4 (Jarvis *et al.* 2008) was used for correction of agroclimatology data (-60˚ to 60˚). Any incorrect station elevations beyond these values were ignored in this data set. Stations with incorrect elevation were identified using `raster::extract(x, y, buffer = 200, fun = mean)` so that surrounding cells are also used to determine the elevation at that point, reducing the chances of over or underestimating in mountainous areas. See Hijmans *et al.* (2005) for more detailed information on this methodology.
 
 The hole-filled SRTM data is large enough that it won't all fit in-memory on most desktop computers. Using tiles allows this process to run on a modest machine with minimal effort but does take some time to loop through all of the tiles.
 
@@ -95,51 +95,89 @@ Data can be downloaded from the [CGIAR-CSI's](http://csi.cgiar.org/WhtIsCGIAR_CS
 # agreement
 
 # create spatial object to check for location
-stations <- as.data.frame(stations)
-sp::coordinates(stations) <- ~LON + LAT
-sp::proj4string(stations) <- sp::CRS(crs)
+xy <- as.data.frame(xy)
+sp::coordinates(xy) <- ~LON + LAT
+sp::proj4string(xy) <- sp::CRS(crs)
 
 # check for location in country
-point_check <- sp::over(stations, NE)
-stations <- as.data.frame(stations)
-
-stations_discard <- stations[stations$FIPS %in% point_check$FIPS_10_ == FALSE, ]
+point_check <- sp::over(xy, NE)
+point_check <- as.data.frame(point_check)
+stations_discard <- point_check[point_check$FIPS %in% point_check$FIPS_10_ == FALSE, ]
 str(stations_discard)
 ```
 
-    ## 'data.frame':    0 obs. of  27 variables:
-    ##  $ USAF        : Factor w/ 24217 levels "008268","010010",..: 
-    ##  $ WBAN        : Factor w/ 3051 levels "00001","00002",..: 
-    ##  $ STN.NAME    : Factor w/ 25812 levels "","...","/OPEN WATER/",..: 
-    ##  $ CTRY        : Factor w/ 249 levels "","AA","AC","AE",..: 
-    ##  $ STATE       : Factor w/ 74 levels "","AK","AL","AR",..: 
-    ##  $ CALL        : Factor w/ 7944 levels "","050E","07MT",..: 
-    ##  $ LAT         : num 
-    ##  $ LON         : num 
-    ##  $ ELEV.M      : num 
-    ##  $ BEGIN       : num 
-    ##  $ END         : num 
-    ##  $ STNID       : Factor w/ 27703 levels "008268-99999",..: 
-    ##  $ COUNTRY.NAME: Factor w/ 246 levels "AFGHANISTAN",..: 
-    ##  $ country.name: Factor w/ 220 levels "Afghanistan",..: 
-    ##  $ cowc        : Factor w/ 189 levels "AAB","AFG","ALB",..: 
-    ##  $ cown        : int 
-    ##  $ fao         : int 
-    ##  $ imf         : int 
-    ##  $ ioc         : Factor w/ 195 levels "AFG","AIA","ALB",..: 
-    ##  $ iso2c       : Factor w/ 219 levels "AF","AG","AI",..: 
-    ##  $ iso3c       : Factor w/ 219 levels "ABW","AFG","AGO",..: 
-    ##  $ iso3n       : int 
-    ##  $ un          : int 
-    ##  $ wb          : Factor w/ 220 levels "ABW","AFG","AGO",..: 
-    ##  $ regex       : Factor w/ 220 levels "\\bcen.*\\baf|^c\\.?a\\.?r\\.?$",..: 
-    ##  $ continent   : Factor w/ 5 levels "Africa","Americas",..: 
-    ##  $ region      : Factor w/ 22 levels "Australia and New Zealand",..:
+    ## 'data.frame':    0 obs. of  65 variables:
+    ##  $ scalerank : int 
+    ##  $ featurecla: chr 
+    ##  $ LABELRANK : num 
+    ##  $ SOVEREIGNT: chr 
+    ##  $ SOV_A3    : chr 
+    ##  $ ADM0_DIF  : num 
+    ##  $ LEVEL     : num 
+    ##  $ TYPE      : chr 
+    ##  $ ADMIN     : chr 
+    ##  $ ADM0_A3   : chr 
+    ##  $ GEOU_DIF  : num 
+    ##  $ GEOUNIT   : chr 
+    ##  $ GU_A3     : chr 
+    ##  $ SU_DIF    : num 
+    ##  $ SUBUNIT   : chr 
+    ##  $ SU_A3     : chr 
+    ##  $ BRK_DIFF  : num 
+    ##  $ NAME      : chr 
+    ##  $ NAME_LONG : chr 
+    ##  $ BRK_A3    : chr 
+    ##  $ BRK_NAME  : chr 
+    ##  $ BRK_GROUP : chr 
+    ##  $ ABBREV    : chr 
+    ##  $ POSTAL    : chr 
+    ##  $ FORMAL_EN : chr 
+    ##  $ FORMAL_FR : chr 
+    ##  $ NOTE_ADM0 : chr 
+    ##  $ NOTE_BRK  : chr 
+    ##  $ NAME_SORT : chr 
+    ##  $ NAME_ALT  : chr 
+    ##  $ MAPCOLOR7 : num 
+    ##  $ MAPCOLOR8 : num 
+    ##  $ MAPCOLOR9 : num 
+    ##  $ MAPCOLOR13: num 
+    ##  $ POP_EST   : num 
+    ##  $ GDP_MD_EST: num 
+    ##  $ POP_YEAR  : num 
+    ##  $ LASTCENSUS: num 
+    ##  $ GDP_YEAR  : num 
+    ##  $ ECONOMY   : chr 
+    ##  $ INCOME_GRP: chr 
+    ##  $ WIKIPEDIA : num 
+    ##  $ FIPS_10_  : chr 
+    ##  $ ISO_A2    : chr 
+    ##  $ ISO_A3    : chr 
+    ##  $ ISO_N3    : chr 
+    ##  $ UN_A3     : chr 
+    ##  $ WB_A2     : chr 
+    ##  $ WB_A3     : chr 
+    ##  $ WOE_ID    : num 
+    ##  $ WOE_ID_EH : num 
+    ##  $ WOE_NOTE  : chr 
+    ##  $ ADM0_A3_IS: chr 
+    ##  $ ADM0_A3_US: chr 
+    ##  $ ADM0_A3_UN: num 
+    ##  $ ADM0_A3_WB: num 
+    ##  $ CONTINENT : chr 
+    ##  $ REGION_UN : chr 
+    ##  $ SUBREGION : chr 
+    ##  $ REGION_WB : chr 
+    ##  $ NAME_LEN  : num 
+    ##  $ LONG_LEN  : num 
+    ##  $ ABBREV_LEN: num 
+    ##  $ TINY      : num 
+    ##  $ HOMEPART  : num
 
 ``` r
 # 0 observations in stations_discard, the data look good, no need to remove any
 
-# recreate spatial object for extracting elevation values using spatial points
+# create a spatial object for extracting elevation values using spatial points
+stations <- as.data.frame(stations)
 sp::coordinates(stations) <- ~LON + LAT
 sp::proj4string(stations) <- sp::CRS(crs)
 
@@ -154,9 +192,11 @@ for (i in dem_tiles) {
   if (is.null(sub_stations)) next
   
   # use a 200m buffer to extract elevation from the DEM
-  gI <- raster::extract(dem, sub_stations, buffer = 200, fun = mean)
+  SRTM_90m <- raster::extract(dem, sub_stations)
+  SRTM_buffered <- raster::extract(dem, sub_stations, buffer = 200, fun = mean)
   sub_stations <- as.data.frame(sub_stations)
-  sub_stations$ELEV.M.SRTM <- gI
+  sub_stations$ELEV.M.SRTM_buffered <- SRTM_buffered
+  sub_stations$ELEV.M.SRTM.90m <- SRTM_90m
   
   cor_stations[[i]] <- sub_stations
   rm(sub_stations)
@@ -166,117 +206,122 @@ stations <- as.data.frame(data.table::rbindlist(cor_stations))
 
 # some stations occur in areas where DEM has no data
 # use original station elevation in these cells
-stations[, 28] <- ifelse(is.na(stations[, 28]), stations[, 9], stations[, 28])
+stations[, 12] <- ifelse(is.na(stations[, 12]), stations[, 9], stations[, 12])
+stations[, 13] <- ifelse(is.na(stations[, 13]), stations[, 9], stations[, 13])
 
 summary(stations)
 ```
 
-    ##       USAF            WBAN                      STN.NAME    
-    ##  999999 : 1226   99999  :20980   APPROXIMATE LOCALE :   36  
-    ##  949999 :  373   03849  :    5   MOORED BUOY        :   20  
-    ##  722250 :    4   23176  :    5   ...                :   15  
-    ##  746929 :    4   13786  :    4   BOGUS CHINESE      :   13  
-    ##  992390 :    4   13829  :    4   PACIFIC BUOY       :    8  
-    ##  997225 :    4   13877  :    4   APPROXIMATE LOCATIO:    7  
-    ##  (Other):23263   (Other): 3876   (Other)            :24779  
+    ##       USAF            WBAN                     STN.NAME    
+    ##  999999 : 1226   99999  :20979   APPROXIMATE LOCALE:   36  
+    ##  949999 :  373   23176  :    5   MOORED BUOY       :   20  
+    ##  722250 :    4   03849  :    5   ...               :   15  
+    ##  746929 :    4   24255  :    4   BOGUS CHINESE     :   13  
+    ##  992390 :    4   24135  :    4   PACIFIC BUOY      :    8  
+    ##  997225 :    4   24027  :    4   DEASE LAKE        :    7  
+    ##  (Other):23262   (Other): 3876   (Other)           :24778  
     ##       CTRY           STATE            CALL            LAT        
-    ##  US     : 6739          :18584          :14948   Min.   :-56.50  
-    ##  CA     : 1609   CA     :  505   KLSF   :    6   1st Qu.: 21.79  
-    ##  RS     : 1471   TX     :  487   KMLF   :    6   Median : 37.74  
-    ##  AS     : 1411   FL     :  319   KBGR   :    5   Mean   : 29.35  
-    ##  CH     : 1042   MI     :  231   KCXY   :    5   3rd Qu.: 47.17  
-    ##  UK     :  675   NC     :  212   KDHN   :    5   Max.   : 60.00  
-    ##  (Other):11931   (Other): 4540   (Other): 9903                   
+    ##  US     : 6739          :18583          :14948   Min.   :-56.50  
+    ##  CA     : 1609   CA     :  505   KMLF   :    6   1st Qu.: 21.78  
+    ##  RS     : 1471   TX     :  487   KLSF   :    6   Median : 37.74  
+    ##  AS     : 1411   FL     :  319   PAMD   :    5   Mean   : 29.35  
+    ##  CH     : 1042   MI     :  231   KONT   :    5   3rd Qu.: 47.17  
+    ##  UK     :  675   NC     :  212   KLRD   :    5   Max.   : 60.00  
+    ##  (Other):11930   (Other): 4540   (Other): 9902                   
     ##       LON               ELEV.M           BEGIN               END          
     ##  Min.   :-179.983   Min.   :-350.0   Min.   :19010101   Min.   :19301231  
-    ##  1st Qu.: -83.737   1st Qu.:  25.0   1st Qu.:19570601   1st Qu.:20020208  
-    ##  Median :   7.292   Median : 152.0   Median :19750618   Median :20150602  
-    ##  Mean   :  -1.647   Mean   : 376.2   Mean   :19774305   Mean   :20040154  
-    ##  3rd Qu.:  69.228   3rd Qu.: 455.0   3rd Qu.:20010816   3rd Qu.:20160528  
-    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20160526   Max.   :20160530  
+    ##  1st Qu.: -83.738   1st Qu.:  25.0   1st Qu.:19570601   1st Qu.:20020208  
+    ##  Median :   7.283   Median : 152.0   Median :19750618   Median :20150602  
+    ##  Mean   :  -1.651   Mean   : 376.2   Mean   :19774291   Mean   :20040150  
+    ##  3rd Qu.:  69.212   3rd Qu.: 454.9   3rd Qu.:20010816   3rd Qu.:20160529  
+    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20160526   Max.   :20160531  
     ##                     NA's   :194                                           
-    ##           STNID              COUNTRY.NAME               country.name  
-    ##  992390-99999:    4   UNITED STATES: 6739   United States     : 6739  
-    ##  997225-99999:    4   CANADA       : 1609   Canada            : 1609  
-    ##  030490-99999:    2   RUSSIA       : 1471   Russian Federation: 1471  
-    ##  031160-99999:    2   AUSTRALIA    : 1411   Australia         : 1411  
-    ##  031180-99999:    2   CHINA        : 1042   China             : 1042  
-    ##  037000-99999:    2   (Other)      :12470   (Other)           :12391  
-    ##  (Other)     :24862   NA's         :  136   NA's              :  215  
-    ##       cowc            cown            fao             imf       
-    ##  USA    : 6739   Min.   :  2.0   Min.   :  1.0   Min.   :111.0  
-    ##  CAN    : 1609   1st Qu.:  2.0   1st Qu.: 73.0   1st Qu.:111.0  
-    ##  RUS    : 1471   Median :255.0   Median :185.0   Median :193.0  
-    ##  AUL    : 1411   Mean   :330.6   Mean   :156.2   Mean   :370.8  
-    ##  CHN    : 1042   3rd Qu.:651.0   3rd Qu.:231.0   3rd Qu.:612.0  
-    ##  (Other):12135   Max.   :990.0   Max.   :351.0   Max.   :968.0  
-    ##  NA's   :  471   NA's   :471     NA's   :484     NA's   :356    
-    ##       ioc            iso2c           iso3c           iso3n      
-    ##  USA    : 6739   US     : 6739   USA    : 6739   Min.   :  4.0  
-    ##  CAN    : 1609   CA     : 1609   CAN    : 1609   1st Qu.:158.0  
-    ##  RUS    : 1471   RU     : 1471   RUS    : 1471   Median :598.0  
-    ##  AUS    : 1411   AU     : 1411   AUS    : 1411   Mean   :506.6  
-    ##  CHN    : 1042   CN     : 1042   CHN    : 1042   3rd Qu.:840.0  
-    ##  (Other):12242   (Other):12385   (Other):12385   Max.   :894.0  
-    ##  NA's   :  364   NA's   :  221   NA's   :  221   NA's   :221    
-    ##        un              wb       
-    ##  Min.   :  4.0   USA    : 6739  
-    ##  1st Qu.:170.0   CAN    : 1609  
-    ##  Median :598.0   RUS    : 1471  
-    ##  Mean   :507.6   AUS    : 1411  
-    ##  3rd Qu.:840.0   CHN    : 1042  
-    ##  Max.   :894.0   (Other):12391  
-    ##  NA's   :287     NA's   :  215  
-    ##                                                         regex           
-    ##  ^(?!.*islands).*united.?states|^u\\.?s\\.?a\\.?$|^u\\.?s\\.?$  : 6739  
-    ##  canada                                                         : 1609  
-    ##  \\brussia|soviet.?union|u\\.?s\\.?s\\.?r|socialist.?republics  : 1471  
-    ##  australia                                                      : 1411  
-    ##  ^(?!.*\\bmac)(?!.*\\bhong)(?!.*\\btai).*china|^p\\.?r\\.?c\\.?$: 1042  
-    ##  (Other)                                                        :12391  
-    ##  NA's                                                           :  215  
-    ##     continent                           region      ELEV.M.SRTM     
-    ##  Africa  : 1713   Northern America         :8349   Min.   :-360.94  
-    ##  Americas:10286   Eastern Europe           :2368   1st Qu.:  24.52  
-    ##  Asia    : 4817   Eastern Asia             :1772   Median : 153.26  
-    ##  Europe  : 5915   Australia and New Zealand:1511   Mean   : 379.43  
-    ##  Oceania : 1860   Western Europe           :1413   3rd Qu.: 456.35  
-    ##  NA's    :  287   (Other)                  :9178   Max.   :5273.35  
-    ##                   NA's                     : 287   NA's   :52
+    ##      STNID       ELEV.M.SRTM_buffered ELEV.M.SRTM.90m 
+    ##  Min.   :    1   Min.   :-360.94      Min.   :-361.0  
+    ##  1st Qu.: 6198   1st Qu.:  24.52      1st Qu.:  44.0  
+    ##  Median :12382   Median : 153.24      Median : 187.0  
+    ##  Mean   :12381   Mean   : 379.36      Mean   : 417.6  
+    ##  3rd Qu.:18569   3rd Qu.: 456.33      3rd Qu.: 524.0  
+    ##  Max.   :24750   Max.   :5273.35      Max.   :5269.0  
+    ##                  NA's   :52           NA's   :2442
+
+Figures
+=======
 
 ``` r
-devtools::use_data(stations, overwrite = TRUE)
+plot(stations$ELEV.M.SRTM.90m ~ stations$ELEV.M)
+```
+
+![GSOD Reported Elevation versus CGIAR-CSI SRTM Elevation](fetch_isd-history_files/figure-markdown_github/SRTM%2090m%20vs%20Reported%20Elevation-1.png)
+
+``` r
+plot(stations$ELEV.M.SRTM_buffered ~ stations$ELEV.M)
+```
+
+![GSOD Reported Elevation versus CGIAR-CSI SRTM Buffered Elevation](fetch_isd-history_files/figure-markdown_github/Buffered%20SRTM%2090m%20vs%20Reported%20Elevation-1.png)
+
+``` r
+plot(stations$ELEV.M.SRTM_buffered ~ stations$ELEV.M.SRTM.90m)
+```
+
+![CGIAR-CSI SRTM Buffered Elevation versus CGIAR-CSI SRTM 90m](fetch_isd-history_files/figure-markdown_github/SRTM%2090m%20vs%20Buffered%20SRTM%2090m-1.png)
+
+From the last plot, the differences between the buffered and unbuffered elevation checks are extremely minor. We can assume that the values of the 90m check are sufficient and provide them as a "corrected" elevation option with the cleaned GSOD station data provided by this package.
+
+Cleanup and save data to disk
+-----------------------------
+
+Finally, drop the buffered station field, write the .rda file to disk (I've already checked for the optimal compression of the rda file using `tools::checkRdaFiles()`, using bzip2) and clean up the downloaded Natural Earth Data files.
+
+``` r
+# drop the buffered station field
+stations$ELEV.M.SRTM_buffered <- NULL
+
+# write rda file to disk
+devtools::use_data(stations, overwrite = TRUE, compress = "bzip2")
 ```
 
     ## Saving stations as stations.rda to /Users/U8004755/Development/GSODR/data
 
 ``` r
 # clean up Natural Earth data files before we leave
-file.remove(path = "data-raw", pattern = glob2rx("ne_10m_admin_0_countries.*"))
+file.remove(list.files(path = ".",
+                       pattern = glob2rx("ne_10m_admin_0_countries*")))
 ```
 
-    ## Warning in file.remove(path = "data-raw", pattern =
-    ## glob2rx("ne_10m_admin_0_countries.*")): cannot remove file 'data-raw',
-    ## reason 'Directory not empty'
+    ## [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE
 
-    ## Warning in file.remove(path = "data-raw", pattern =
-    ## glob2rx("ne_10m_admin_0_countries.*")): cannot remove file
-    ## '^ne_10m_admin_0_countries\.', reason 'No such file or directory'
+Notes
+=====
 
-    ## [1] FALSE FALSE
-
-Figure
-======
-
-``` r
-plot(stations$ELEV.M.SRTM ~ stations$ELEV.M)
-```
-
-![CGIAR-CSI SRTM Elevation versus GSOD Reported Elevation](fetch_isd-history_files/figure-markdown_github/unnamed-chunk-5-1.png) \# Notes
+NOAA Policy
+-----------
 
 Users of these data should take into account the following (from the [NCDC website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):
 
 > "The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification." [WMO Resolution 40. NOAA Policy](http://www.wmo.int/pages/about/Resolution40.html)
+
+R System Information
+--------------------
+
+    ## R version 3.3.0 (2016-05-03)
+    ## Platform: x86_64-apple-darwin15.4.0 (64-bit)
+    ## Running under: OS X 10.11.5 (El Capitan)
+    ## 
+    ## locale:
+    ## [1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8
+    ## 
+    ## attached base packages:
+    ## [1] stats     graphics  grDevices utils     datasets  methods   base     
+    ## 
+    ## loaded via a namespace (and not attached):
+    ##  [1] Rcpp_0.12.5      knitr_1.13       raster_2.5-2     magrittr_1.5    
+    ##  [5] devtools_1.11.1  lattice_0.20-33  R6_2.1.2         stringr_1.0.0   
+    ##  [9] dplyr_0.4.3      tools_3.3.0      parallel_3.3.0   rgdal_1.1-10    
+    ## [13] grid_3.3.0       DBI_0.4-1        withr_1.0.1      htmltools_0.3.5 
+    ## [17] yaml_2.1.13      digest_0.6.9     assertthat_0.1   countrycode_0.18
+    ## [21] readr_0.2.2      formatR_1.4      curl_0.9.7       memoise_1.0.0   
+    ## [25] evaluate_0.9     rmarkdown_0.9.6  sp_1.2-3         stringi_1.1.1
 
 References
 ==========

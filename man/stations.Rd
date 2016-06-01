@@ -24,6 +24,7 @@ provided by this package. The following changes were made.}
   \item{END}{Last available date of data for station, YYYYMMDD format}
   \item{STNID}{Unique station ID, a concatenation of USAF and WBAN number,
   used for merging with station data weather files}
+  \item{ELEV.M.SRTM.90m}{Elevation in metres corrected for errors using CGIAR-CSI hole-filled 90m SRTM data (Jarvis et al. 2008)}
 }}
 \source{
 \url{ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv}
@@ -48,8 +49,12 @@ non-commercial international activities without restriction. The non-U.S.
 data cannot be redistributed for commercial purposes. Re-distribution of
 these data by others must provide this same notification."
 
-To access this data frame of station information, use data(stations) to load
-it into the global environment.
+To access this data frame of station information, use
+\code{\link[utils]{data}("stations")} to load it into the global environment
+for inspection or use by the user.
+}
+\references{
+{Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database \url{http://srtm.csi.cgiar.org}}
 }
 \keyword{datasets}
 

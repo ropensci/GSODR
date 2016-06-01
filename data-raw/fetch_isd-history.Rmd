@@ -1,7 +1,7 @@
 ---
 title: "Fetch, clean and correct altitude in GSOD isd_history.csv Data"
 author: "Adam H. Sparks - Center for Crop Health, University of Southern Queensland"
-date: "05-30-2016"
+date: "06-01-2016"
 output: github_document
 ---
 
@@ -31,12 +31,11 @@ not mapping in the isd-history reported country were dropped
 identify and correct/remove elevation errors in dat for station locations
 between -60˚ and 60˚. *Only for agroclimatology option data*
 
-
 # R Data Processing
 
-## Load libraries and set up workspace
+## Set up workspace
 
-```{r, echo=TRUE, messages=FALSE}
+```{r set up workspace, echo=TRUE, messages=FALSE}
 dem_tiles <- list.files(path.expand("~/Data/CGIAR-CSI SRTM"), 
                         pattern = glob2rx("*.tif"), full.names = TRUE)
 crs <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
@@ -47,13 +46,12 @@ tf <- tempfile()
 
 ## Download from Natural Earth and NCDC
 
-```{r, echo=TRUE}
-
+```{r download NE data, echo=TRUE}
 # import Natural Earth cultural 1:10m data (last download 31/05/2016)
 curl::curl_download("http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_0_countries.zip",
                     destfile = tf)
-NE <- unzip(tf, exdir = "data-raw")
-NE <- raster::shapefile("data-raw/ne_10m_admin_0_countries.shp")
+NE <- unzip(tf, exdir = "./")
+NE <- raster::shapefile("./ne_10m_admin_0_countries.shp")
 unlink(tf)
 
 # download data
@@ -72,12 +70,11 @@ countries <- readr::read_table(
 # join with countrycode data (do we need this?)
 countries <- dplyr::left_join(countries, countrycode::countrycode_data,
                               by = c(FIPS = "fips104"))
-
 ```
+
 ## Reformat and clean station data file from NCDC
 
-```{r, echo=TRUE}
-
+```{r clean and reformat station data, echo=TRUE, cache=TRUE}
 # clean data
 stations <- stations[!is.na(stations$LAT) & !is.na(stations$LON), ]
 stations <- stations[stations$LAT != 0 & stations$LON != 0, ]
@@ -86,7 +83,6 @@ stations <- stations[stations$LON > -180 & stations$LON < 180, ]
 stations$STNID <- paste(stations$USAF, stations$WBAN, sep = "-")
 
 xy <- dplyr::left_join(stations, countries, by = c("CTRY" = "FIPS"))
-
 ```
 
 ## Check data for inconsistencies
@@ -118,13 +114,12 @@ Data can be downloaded from the [CGIAR-CSI's](http://csi.cgiar.org/WhtIsCGIAR_CS
 ftp server, [srtm.csi.cgiar.org](ftp://srtm.csi.cgiar.org),
 using an FTP client to facilitate this next step.
 
-```{r, echo=TRUE}
-
+```{r check station data for errors, echo=TRUE, cache=TRUE}
 # quality check station locations for reported country and lat/lon position
 # agreement
 
 # create spatial object to check for location
-xy <- as.data.frame(point_check)
+xy <- as.data.frame(xy)
 sp::coordinates(xy) <- ~LON + LAT
 sp::proj4string(xy) <- sp::CRS(crs)
 
@@ -136,6 +131,7 @@ str(stations_discard)
 # 0 observations in stations_discard, the data look good, no need to remove any
 
 # create a spatial object for extracting elevation values using spatial points
+stations <- as.data.frame(stations)
 sp::coordinates(stations) <- ~LON + LAT
 sp::proj4string(stations) <- sp::CRS(crs)
 
@@ -168,41 +164,61 @@ stations[, 12] <- ifelse(is.na(stations[, 12]), stations[, 9], stations[, 12])
 stations[, 13] <- ifelse(is.na(stations[, 13]), stations[, 9], stations[, 13])
 
 summary(stations)
-
-devtools::use_data(stations, overwrite = TRUE)
-
-# clean up Natural Earth data files before we leave
-unlink(list.files(path = "./data-raw",
-                  pattern = glob2rx("ne_10m_admin_0_countries*")))
-
 ```
 
 # Figures
 
-```{r, echo=TRUE, fig.cap="GSOD Reported Elevation versus CGIAR-CSI SRTM Elevation "}
-
+```{r SRTM 90m vs Reported Elevation, echo=TRUE, fig.cap="GSOD Reported Elevation versus CGIAR-CSI SRTM Elevation"}
 plot(stations$ELEV.M.SRTM.90m ~ stations$ELEV.M)
-
 ```
 
-```{r, echo=TRUE, fig.cap="GSOD Reported Elevation versus CGIAR-CSI SRTM Buffered Elevation"}
-
+```{r Buffered SRTM 90m vs Reported Elevation, echo=TRUE, fig.cap="GSOD Reported Elevation versus CGIAR-CSI SRTM Buffered Elevation"}
 plot(stations$ELEV.M.SRTM_buffered ~ stations$ELEV.M)
-
 ```
 
-```{r, echo=TRUE, fig.cap="CGIAR-CSI SRTM Buffered Elevation versus CGIAR-CSI SRTM 90m"}
+```{r SRTM 90m vs Buffered SRTM 90m, echo=TRUE, fig.cap="CGIAR-CSI SRTM Buffered Elevation versus CGIAR-CSI SRTM 90m"}
+plot(stations$ELEV.M.SRTM_buffered ~ stations$ELEV.M.SRTM.90m)
+```
 
-plot(stations$ELEV.M.SRTM_buffered ~ stations$ELEV.M.90m)
+From the last plot, the differences between the buffered and unbuffered
+elevation checks are extremely minor. We can assume that the values of the 90m
+check are sufficient and provide them as a "corrected" elevation option with
+the cleaned GSOD station data provided by this package.
+
+## Cleanup and save data to disk
+
+Finally, drop the buffered station field, write the .rda file to disk (I've
+already checked for the optimal compression of the rda file using
+`tools::checkRdaFiles()`, using bzip2) and clean up the downloaded Natural Earth
+Data files.
+
+```{r cleanup and .rda file creation, messages=FALSE}
+
+# drop the buffered station field
+stations$ELEV.M.SRTM_buffered <- NULL
+
+# write rda file to disk
+devtools::use_data(stations, overwrite = TRUE, compress = "bzip2")
+
+# clean up Natural Earth data files before we leave
+file.remove(list.files(path = ".",
+                       pattern = glob2rx("ne_10m_admin_0_countries*")))
 
 ```
 
 # Notes
 
+## NOAA Policy
+
 Users of these data should take into account the following (from the [NCDC website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)): 
 
 > "The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification." [WMO Resolution 40. NOAA Policy](http://www.wmo.int/pages/about/Resolution40.html)
 
+## R System Information
+
+```{r system information, echo=FALSE}
+sessionInfo()
+```
 
 # References
 
