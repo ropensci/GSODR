@@ -20,7 +20,7 @@ The following changes are made:
 
 -   Stations were checked against Natural Earth 1:10 ADM0 Cultural data, stations not mapping in the isd-history reported country were dropped
 
--   90m hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was used to identify and correct/remove elevation errors in data for station locations between -60˚ and 60˚. *Only for agroclimatology option data*
+-   90m hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was used to identify and correct/remove elevation errors in data for station locations between -60˚ and 60˚. This applies to cases here where elevation was missing in the reported values as well. In case the station reported an elevation and the DEM does not, the station reported is taken. For stations beyond -60˚ and 60˚the values are station reported values in every instance.
 
 R Data Processing
 =================
@@ -43,7 +43,7 @@ Download from Natural Earth and NCDC
 # import Natural Earth cultural 1:10m data (last download 31/05/2016)
 curl::curl_download("http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_0_countries.zip",
                     destfile = tf)
-NE <- unzip(tf, exdir = "./")
+NE <- unzip(tf)
 NE <- raster::shapefile("./ne_10m_admin_0_countries.shp")
 unlink(tf)
 
@@ -188,24 +188,40 @@ Figures
 =======
 
 ``` r
-plot(stations$ELEV.M.SRTM.90m.NO_BUFFER ~ stations$ELEV.M)
+ggplot(data = stations, aes(x = ELEV.M, y = ELEV.M.SRTM.90m.NO_BUFFER)) +
+  geom_point(alpha = 0.4, size = 0.5)
 ```
 
 ![GSOD Reported Elevation versus CGIAR-CSI SRTM Elevation](fetch_isd-history_files/figure-markdown_github/SRTM%2090m%20vs%20Reported%20Elevation-1.png)
 
 ``` r
-plot(stations$ELEV.M.SRTM.90m.BUFFER ~ stations$ELEV.M)
+ggplot(data = stations, aes(x = ELEV.M, y = ELEV.M.SRTM.90m.BUFFER)) +
+  geom_point(alpha = 0.4, size = 0.5)
 ```
 
 ![GSOD Reported Elevation versus CGIAR-CSI SRTM Buffered Elevation](fetch_isd-history_files/figure-markdown_github/Buffered%20SRTM%2090m%20vs%20Reported%20Elevation-1.png)
 
 ``` r
-plot(stations$ELEV.M.SRTM.90m.BUFFER ~ stations$ELEV.M.SRTM.90m.NO_BUFFER)
+ggplot(data = stations, aes(x = LON, y = LAT)) +
+  geom_point(aes(alpha = (ELEV.M.SRTM.90m.NO_BUFFER - ELEV.M.SRTM.90m.BUFFER)),
+             size = 0.08) +
+  labs(alpha = "No Buffer\n-Buffer") +
+  coord_map()
 ```
 
 ![CGIAR-CSI SRTM Buffered Elevation versus CGIAR-CSI SRTM 90m](fetch_isd-history_files/figure-markdown_github/SRTM%2090m%20vs%20Buffered%20SRTM%2090m-1.png)
 
-From the last plot, the differences between the buffered and unbuffered elevation checks are minor. However, in some cases the buffered 90m is much lower than the unbuffered. The buffered values are the values that are included in the final data for distribution with the GSODR package following the approach of Hijmans *et al.* (2005). The new field is simply called ELEV.M.SRTM.90m in the stations.rda file.
+``` r
+ggplot(data = stations) +
+  geom_histogram(aes(ELEV.M.SRTM.90m.NO_BUFFER - ELEV.M.SRTM.90m.BUFFER),
+                 binwidth = 1)
+```
+
+![Histogram of CGIAR-CSI SRTM Buffered Elevation versus CGIAR-CSI SRTM 90m](fetch_isd-history_files/figure-markdown_github/Hist%20difference%20SRTM%2090m%20vs%20Buffered%20SRTM%2090m-1.png)
+
+The differences between the buffered and unbuffered elevation checks are minor and appear to be normally distributed while also not showing any discernable geographic pattern. To help avoid within cell and between cell variation the buffered values are the values that are included in the final data for distribution with the GSODR package following the approach of Hijmans *et al.* (2005). The new field is simply called ELEV.M.SRTM.90m in the stations.rda file.
+
+    ## logical(0)
 
 Notes
 =====
@@ -230,15 +246,16 @@ R System Information
     ## attached base packages:
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
+    ## other attached packages:
+    ## [1] ggplot2_2.1.0
+    ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] Rcpp_0.12.5      knitr_1.13       raster_2.5-2     magrittr_1.5    
-    ##  [5] devtools_1.11.1  lattice_0.20-33  R6_2.1.2         stringr_1.0.0   
-    ##  [9] dplyr_0.4.3      tools_3.3.0      parallel_3.3.0   rgdal_1.1-10    
-    ## [13] grid_3.3.0       data.table_1.9.6 DBI_0.4-1        withr_1.0.1     
-    ## [17] htmltools_0.3.5  yaml_2.1.13      digest_0.6.9     assertthat_0.1  
-    ## [21] countrycode_0.18 readr_0.2.2      formatR_1.4      curl_0.9.7      
-    ## [25] memoise_1.0.0    evaluate_0.9     rmarkdown_0.9.6  sp_1.2-3        
-    ## [29] stringi_1.1.1    chron_2.3-47
+    ##  [1] Rcpp_0.12.5      withr_1.0.1      digest_0.6.9     plyr_1.8.3      
+    ##  [5] grid_3.3.0       gtable_0.2.0     formatR_1.4      magrittr_1.5    
+    ##  [9] evaluate_0.9     scales_0.4.0     stringi_1.1.1    mapproj_1.2-4   
+    ## [13] rmarkdown_0.9.6  devtools_1.11.1  labeling_0.3     tools_3.3.0     
+    ## [17] stringr_1.0.0    munsell_0.4.3    maps_3.1.0       yaml_2.1.13     
+    ## [21] colorspace_1.2-6 memoise_1.0.0    htmltools_0.3.5  knitr_1.13
 
 References
 ==========

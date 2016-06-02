@@ -48,7 +48,7 @@ tf <- tempfile()
 
 ## Download from Natural Earth and NCDC
 
-```{r download NE data, echo=TRUE}
+```{r download NE data, echo=TRUE, cache=TRUE}
 # import Natural Earth cultural 1:10m data (last download 31/05/2016)
 curl::curl_download("http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_0_countries.zip",
                     destfile = tf)
@@ -116,7 +116,7 @@ Data can be downloaded from the [CGIAR-CSI's](http://csi.cgiar.org/WhtIsCGIAR_CS
 ftp server, [srtm.csi.cgiar.org](ftp://srtm.csi.cgiar.org),
 using an FTP client to facilitate this next step.
 
-```{r check station data for errors, echo=TRUE}
+```{r check station data for errors, echo=TRUE, cache=TRUE}
 # quality check station locations for reported country and lat/lon position
 # agreement
 
@@ -175,26 +175,44 @@ summary(stations)
 
 # Figures
 
-```{r SRTM 90m vs Reported Elevation, echo=TRUE, fig.cap="GSOD Reported Elevation versus CGIAR-CSI SRTM Elevation"}
-plot(stations$ELEV.M.SRTM.90m.NO_BUFFER ~ stations$ELEV.M)
+```{r ggplot, echo=FALSE, message=FALSE}
+library(ggplot2)
 ```
 
-```{r Buffered SRTM 90m vs Reported Elevation, echo=TRUE, fig.cap="GSOD Reported Elevation versus CGIAR-CSI SRTM Buffered Elevation"}
-plot(stations$ELEV.M.SRTM.90m.BUFFER ~ stations$ELEV.M)
+```{r SRTM 90m vs Reported Elevation, echo=TRUE, fig.cap="GSOD Reported Elevation versus CGIAR-CSI SRTM Elevation", warning=FALSE}
+ggplot(data = stations, aes(x = ELEV.M, y = ELEV.M.SRTM.90m.NO_BUFFER)) +
+  geom_point(alpha = 0.4, size = 0.5)
+
+```
+
+```{r Buffered SRTM 90m vs Reported Elevation, echo=TRUE, fig.cap="GSOD Reported Elevation versus CGIAR-CSI SRTM Buffered Elevation", warning=FALSE}
+ggplot(data = stations, aes(x = ELEV.M, y = ELEV.M.SRTM.90m.BUFFER)) +
+  geom_point(alpha = 0.4, size = 0.5)
 ```
 
 ```{r SRTM 90m vs Buffered SRTM 90m, echo=TRUE, fig.cap="CGIAR-CSI SRTM Buffered Elevation versus CGIAR-CSI SRTM 90m"}
-plot(stations$ELEV.M.SRTM.90m.BUFFER ~ stations$ELEV.M.SRTM.90m.NO_BUFFER)
+ggplot(data = stations, aes(x = LON, y = LAT)) +
+  geom_point(aes(alpha = (ELEV.M.SRTM.90m.NO_BUFFER - ELEV.M.SRTM.90m.BUFFER)),
+             size = 0.08) +
+  labs(alpha = "No Buffer\n-Buffer") +
+  coord_map()
 ```
 
-From the last plot, the differences between the buffered and unbuffered
-elevation checks are minor. However, in some cases the buffered 90m is much
-lower than the unbuffered. The buffered values are the values that are included
-in the final data for distribution with the GSODR package following the approach
-of Hijmans *et al.* (2005). The new field is simply called ELEV.M.SRTM.90m in
-the stations.rda file.
 
-```{r cleanup and .rda file creation, messages=FALSE, echo=FALSE, warning=FALSE, error=FALSE}
+```{r Hist difference SRTM 90m vs Buffered SRTM 90m, echo=TRUE, fig.cap="Histogram of CGIAR-CSI SRTM Buffered Elevation versus CGIAR-CSI SRTM 90m", warning=FALSE, error=FALSE, message=FALSE}
+ggplot(data = stations) +
+  geom_histogram(aes(ELEV.M.SRTM.90m.NO_BUFFER - ELEV.M.SRTM.90m.BUFFER),
+                 binwidth = 1)
+```
+
+The differences between the buffered and unbuffered elevation checks are minor
+and appear to be normally distributed while also not showing any discernable
+geographic pattern. To help avoid within cell and between cell variation the
+buffered values are the values that are included in the final data for
+distribution with the GSODR package following the approach of Hijmans *et al.*
+(2005). The new field is simply called ELEV.M.SRTM.90m in the stations.rda file.
+
+```{r cleanup and .rda file creation, message=FALSE, echo=FALSE, warning=FALSE, error=FALSE}
 
 # drop the 90m only station field
 stations[, 14] <- NULL
