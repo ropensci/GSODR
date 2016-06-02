@@ -48,7 +48,7 @@ tf <- tempfile()
 
 ## Download from Natural Earth and NCDC
 
-```{r download NE data, echo=TRUE, cache=TRUE}
+```{r download NE data, echo=TRUE}
 # import Natural Earth cultural 1:10m data (last download 31/05/2016)
 curl::curl_download("http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_0_countries.zip",
                     destfile = tf)
@@ -122,20 +122,23 @@ using an FTP client to facilitate this next step.
 
 # create spatial object to check for location
 xy <- as.data.frame(xy)
-sp::coordinates(xy) <- ~LON + LAT
+sp::coordinates(xy) <- ~ LON + LAT
 sp::proj4string(xy) <- sp::CRS(crs)
 
 # check for location in country
 point_check <- sp::over(xy, NE)
 point_check <- as.data.frame(point_check)
-stations_discard <- point_check[point_check$FIPS %in% point_check$FIPS_10_ == FALSE, ]
-nrow(stations_discard)
+stn_discard <- point_check[point_check$FIPS %in% point_check$FIPS_10_ == FALSE, ]
+nrow(stn_discard)
+```
+Zero observations (rows) in stations_discard, the data look good, no need to
+remove any
 
-# 0 observations in stations_discard, the data look good, no need to remove any
 
+```{r check elvation errors, echo=TRUE, cache=TRUE}
 # create a spatial object for extracting elevation values using spatial points
 stations <- as.data.frame(stations)
-sp::coordinates(stations) <- ~LON + LAT
+sp::coordinates(stations) <- ~ LON + LAT
 sp::proj4string(stations) <- sp::CRS(crs)
 
 for (i in dem_tiles) {
@@ -207,15 +210,15 @@ not important. Setting any values with a difference of >= -10 and <=10 to `NA`;
 the results are still not geographically clustered in any one location or
 feature.
 
-```{r Hist difference SRTM 90m vs Buffered SRTM 90m, echo=TRUE, fig.cap="Histogram of CGIAR-CSI SRTM Buffered Elevation versus CGIAR-CSI SRTM 90m", warning=FALSE, error=FALSE, message=FALSE}
+```{r Hist difference SRTM 90m vs Buffered SRTM 90m, echo=TRUE, fig.cap="Histogram plot of CGIAR-CSI SRTM Buffered Elevation versus CGIAR-CSI SRTM 90m", warning=FALSE, error=FALSE, message=FALSE}
 ggplot(data = stations) +
-  geom_histogram(aes(ELEV.M.SRTM.90m.NO_BUFFER - ELEV.M.SRTM.90m.BUFFER),
-                 binwidth = 1)
+  geom_histogram(aes(ELEV.M.SRTM.90m.NO_BUFFER - ELEV.M.SRTM.90m.BUFFER))
 ```
 
 The differences between the buffered and unbuffered elevation checks are minor
 and appear to be normally distributed while also not showing any discernable
-geographic pattern. To help avoid within cell and between cell variation the
+geographic pattern. However, The buffered elevation data are higher than the
+unbuffered data. To help avoid within cell and between cell variation the
 buffered values are the values that are included in the final data for
 distribution with the GSODR package following the approach of Hijmans *et al.*
 (2005). The new field is simply called ELEV.M.SRTM.90m in the stations.rda file.

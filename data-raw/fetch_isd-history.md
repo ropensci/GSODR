@@ -96,24 +96,24 @@ Data can be downloaded from the [CGIAR-CSI's](http://csi.cgiar.org/WhtIsCGIAR_CS
 
 # create spatial object to check for location
 xy <- as.data.frame(xy)
-sp::coordinates(xy) <- ~LON + LAT
+sp::coordinates(xy) <- ~ LON + LAT
 sp::proj4string(xy) <- sp::CRS(crs)
 
 # check for location in country
 point_check <- sp::over(xy, NE)
 point_check <- as.data.frame(point_check)
-stations_discard <- point_check[point_check$FIPS %in% point_check$FIPS_10_ == FALSE, ]
-nrow(stations_discard)
+stn_discard <- point_check[point_check$FIPS %in% point_check$FIPS_10_ == FALSE, ]
+nrow(stn_discard)
 ```
 
     ## [1] 0
 
-``` r
-# 0 observations in stations_discard, the data look good, no need to remove any
+Zero observations (rows) in stations\_discard, the data look good, no need to remove any
 
+``` r
 # create a spatial object for extracting elevation values using spatial points
 stations <- as.data.frame(stations)
-sp::coordinates(stations) <- ~LON + LAT
+sp::coordinates(stations) <- ~ LON + LAT
 sp::proj4string(stations) <- sp::CRS(crs)
 
 for (i in dem_tiles) {
@@ -218,15 +218,14 @@ Assuming that a 10m difference in elevation between the buffered and unbuffered 
 
 ``` r
 ggplot(data = stations) +
-  geom_histogram(aes(ELEV.M.SRTM.90m.NO_BUFFER - ELEV.M.SRTM.90m.BUFFER),
-                 binwidth = 1)
+  geom_histogram(aes(ELEV.M.SRTM.90m.NO_BUFFER - ELEV.M.SRTM.90m.BUFFER))
 ```
 
-![Histogram of CGIAR-CSI SRTM Buffered Elevation versus CGIAR-CSI SRTM 90m](fetch_isd-history_files/figure-markdown_github/Hist%20difference%20SRTM%2090m%20vs%20Buffered%20SRTM%2090m-1.png)
+![Histogram plot of CGIAR-CSI SRTM Buffered Elevation versus CGIAR-CSI SRTM 90m](fetch_isd-history_files/figure-markdown_github/Hist%20difference%20SRTM%2090m%20vs%20Buffered%20SRTM%2090m-1.png)
 
-The differences between the buffered and unbuffered elevation checks are minor and appear to be normally distributed while also not showing any discernable geographic pattern. To help avoid within cell and between cell variation the buffered values are the values that are included in the final data for distribution with the GSODR package following the approach of Hijmans *et al.* (2005). The new field is simply called ELEV.M.SRTM.90m in the stations.rda file.
+The differences between the buffered and unbuffered elevation checks are minor and appear to be normally distributed while also not showing any discernable geographic pattern. However, The buffered elevation data are higher than the unbuffered data. To help avoid within cell and between cell variation the buffered values are the values that are included in the final data for distribution with the GSODR package following the approach of Hijmans *et al.* (2005). The new field is simply called ELEV.M.SRTM.90m in the stations.rda file.
 
-    ## logical(0)
+    ## [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE
 
 Notes
 =====
@@ -255,18 +254,20 @@ R System Information
     ## [1] ggalt_0.1.1   ggplot2_2.1.0
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] Rcpp_0.12.5        knitr_1.13         magrittr_1.5      
-    ##  [4] devtools_1.11.1    maps_3.1.0         MASS_7.3-45       
-    ##  [7] munsell_0.4.3      colorspace_1.2-6   R6_2.1.2          
-    ## [10] stringr_1.0.0      plyr_1.8.3         dplyr_0.4.3       
-    ## [13] tools_3.3.0        parallel_3.3.0     grid_3.3.0        
-    ## [16] gtable_0.2.0       ash_1.0-15         KernSmooth_2.23-15
-    ## [19] DBI_0.4-1          withr_1.0.1        htmltools_0.3.5   
-    ## [22] lazyeval_0.1.10    assertthat_0.1     yaml_2.1.13       
-    ## [25] digest_0.6.9       proj4_1.0-8        RColorBrewer_1.1-2
-    ## [28] formatR_1.4        memoise_1.0.0      evaluate_0.9      
-    ## [31] rmarkdown_0.9.6    labeling_0.3       stringi_1.1.1     
-    ## [34] scales_0.4.0
+    ##  [1] Rcpp_0.12.5        formatR_1.4        RColorBrewer_1.1-2
+    ##  [4] plyr_1.8.3         tools_3.3.0        digest_0.6.9      
+    ##  [7] memoise_1.0.0      evaluate_0.9       gtable_0.2.0      
+    ## [10] lattice_0.20-33    DBI_0.4-1          curl_0.9.7        
+    ## [13] yaml_2.1.13        rgdal_1.1-10       parallel_3.3.0    
+    ## [16] withr_1.0.1        dplyr_0.4.3        stringr_1.0.0     
+    ## [19] raster_2.5-2       knitr_1.13         maps_3.1.0        
+    ## [22] devtools_1.11.1    grid_3.3.0         R6_2.1.2          
+    ## [25] rmarkdown_0.9.6    sp_1.2-3           readr_0.2.2       
+    ## [28] magrittr_1.5       scales_0.4.0       htmltools_0.3.5   
+    ## [31] MASS_7.3-45        assertthat_0.1     proj4_1.0-8       
+    ## [34] countrycode_0.18   colorspace_1.2-6   labeling_0.3      
+    ## [37] KernSmooth_2.23-15 ash_1.0-15         stringi_1.1.1     
+    ## [40] lazyeval_0.1.10    munsell_0.4.3
 
 References
 ==========
