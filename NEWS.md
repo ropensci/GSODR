@@ -1,13 +1,22 @@
+# GSODR v0.1.8
+## Changes
+  * stations.rda is compressed
+
+  * stations.rda now includes a field for "corrected" elevation using
+  hole-filled SRTM data from Jarvis et al. 2008, see
+  [https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md](https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md)
+  for a description
+
 # GSODR v0.1.7 (Release Date: 2016-06-02)
 
 ## Bug fixes
   * Fix issues with MIN/MAX where MIN referred to MAX [(Issue 5)](https://github.com/adamhsparks/GSODR/issues/5)
   * Fix bug where the `tf` item was incorrectly set as `tf <- "~/tmp/GSOD-2010.tar`, not `tf <- tempfile`, in `get_GSOD` [(Issue 6)](https://github.com/adamhsparks/GSODR/issues/6)
   * CITATION file is updated and corrected
-  
+
 ## Changes
   * User now has the ability to generate a shapefile as well as CSV file output [(Issue 3)](https://github.com/adamhsparks/GSODR/issues/3)
-  
+
 ## Improvements
   * Documentation is more complete and easier to use
 
@@ -56,9 +65,9 @@
 
 ## Changes
   * Set NA to -9999.99
-  
+
 ******
-  
+
 # GSODR v0.1.2 (Release date: 2016-05-05)
 
 ## Bug fixes
@@ -77,7 +86,7 @@
 
 ## Changes
   * Now available on CRAN
-  
+
 ******
 
 # GSODR v0.1.1 (Release date: 2016-04-21)

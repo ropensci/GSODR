@@ -7,7 +7,7 @@
 
 An R package that provides a function that automates downloading and cleaning data from the "[Global Surface Summary of the Day (GSOD)](https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod)" data provided by the US National Climatic Data Center (NCDC). Stations are individually checked for number of missing days to assure data quality, stations with too many missing observations are omitted. All units are converted to metric, e.g. feet to metres and Fahrenheit to Celsius. Output is saved as a Comma Separated Value (CSV) file or ESRI format shapefile summarizing each year by station, which includes vapor pressure and relative humidity variables calculated from existing data in GSOD.
 
-This package was largely based on Tomislav Hengl's work in "[A Practical Guide to Geostatistical Mapping](http://spatial-analyst.net/book/getGSOD.R)", with updates for speed, cross-platform functionality and some added functionality.
+This package was largely based on Tomislav Hengl's work in "[A Practical Guide to Geostatistical Mapping](http://spatial-analyst.net/book/getGSOD.R)", with updates for speed, cross-platform functionality. Now it's added and more options for data retrieval and error correction.
 
 Be sure to have disk space free and allocate the proper time for this to run. This is a time, RAM and disk space intensive process, however it does not require much processing power. 
 
@@ -28,10 +28,7 @@ Use `install_github("author/package")` to install this package.
 
 `devtools::install_github("adamhsparks/GSODR")`
 
-## Using get_GSOD()
-See `?get_GSOD()` for the help file.
-
-## Function description
+# Output
 This package consists of a single function, `get_GSOD()`, which generates a 
 .csv file or ESRI format shapefile in the respective year directory containing the following variables:  
 **STNID** - Station number (WMO/DATSAV3 number) for the location;  
@@ -41,7 +38,9 @@ Force Navy" number - with WBAN being the acronym;
 **CTRY** - Country;  
 **LAT** - Latitude. *Station dropped in cases where values are <-90 or >90 degrees or Lat = 0 and Lon = 0*;  
 **LON** - Longitude. *Station dropped in cases where values are <-180 or >180 degrees or Lat = 0 and Lon = 0*;  
-**ELEV.M** - Elevation converted to metres. *Station dropped where ELEV is NA*;  
+**ELEV.M** - Elevation converted to metres. *Station dropped where ELEV is NA*; 
+**ELEV.M.SRTM.90m** - Elevation in metres corrected for possible errors, see
+Notes for more;
 **YEARMODA** - Date in YYYY-MM-DD format;  
 **YEAR** - The year;  
 **MONTH** - The month;  
@@ -125,10 +124,17 @@ reported) for the occurrence during the day;
 **es** - Mean daily saturation vapour pressure;  
 **RH** - Mean daily relative humidity;  
 
-## Disclaimer
-Users of these data should take into account the following (from the NCDC
-website): 
-> The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification."
+## Notes
+90m hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was used to
+identify and correct/remove elevation errors in data for station locations
+between -60˚ and 60˚. This applies to cases here where elevation was missing in
+the reported values as well. In case the station reported an elevation and the
+DEM does not, the station reported is taken. For stations beyond -60˚ and 60˚the
+values are station reported values in every instance. See [https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md](https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md) for more detail on the correction methods.
+
+Users of these data should take into account the following (from the [NCDC website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)): 
+
+> "The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification." [WMO Resolution 40. NOAA Policy](http://www.wmo.int/pages/about/Resolution40.html)
 
 ## Examples
 ```r
@@ -154,3 +160,9 @@ maximum of five missing days per station allowed.
 
 get_GSOD(years = 2010, country = "Australia", path = "~/Downloads")
 ```
+
+# References
+
+Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled SRTM for the
+globe Version 4, available from the CGIAR-CSI SRTM 90m Database
+([http://srtm.csi.cgiar.org](http://srtm.csi.cgiar.org))

@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_GSOD.R
 \name{get_GSOD}
 \alias{get_GSOD}
-\title{Download, Clean and Generate New Variables From GSOD Weather Data}
+\title{Download, Clean, Reformat and Generate New Variables From GSOD Weather Data}
 \usage{
 get_GSOD(years = NULL, station = NULL, country = NULL, path = "",
   max_missing = 5, agroclimatology = FALSE, shapefile = FALSE,
@@ -38,16 +38,17 @@ created.}
 defaults to TRUE, a CSV file is created.}
 }
 \description{
-This function automates downloading and cleaning data from the Global Surface
-Summary of the Day (GSOD) data provided by the US National Climatic Data
-Center (NCDC),
-\url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod}.
-Stations are individually checked for number of missing days to assure data
-quality, stations with too many missing observations are omitted, stations
-with a latitude of < -90 or > 90 or longitude of < -180 or > 180 are removed.
-All units are converted to International System of Units (SI), e.g. Fahrenheit
-to Celsius and inches to millimetres. For convenience elevation is
-converted from decimetres to metres.
+This function automates downloading, cleaning, reformatting of data from
+the Global Surface Summary of the Day (GSOD) data provided by the US National
+Climatic Data Center (NCDC),
+\url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod},
+and generates three new variables; Saturation Vapor Pressure (ES) – Actual
+Vapor Pressure (EA) and relative humidity. Stations are individually checked
+for number of missing days to assure data quality, stations with too many
+missing observations are omitted, stations with a latitude of < -90 or > 90 or
+longitude of < -180 or > 180 are removed. All units are converted to
+International System of Units (SI), e.g. Fahrenheit to Celsius and inches to
+millimetres. For convenience elevation is converted from decimetres to metres.
 }
 \details{
 Due to the size of the resulting data, output is saved as a comma-separated,
@@ -77,7 +78,10 @@ Air Force Navy" number - with WBAN being the acronym}
 \item{CTRY}{Country}
 \item{LAT}{Latitude}
 \item{LON}{Longitude}
-\item{ELEV.M}{Elevation converted to metres}
+\item{ELEV.M}{Station reported elevation (metres to tenths)}
+\item{ELEV.M.SRTM.90m}{Corrected elevation data in whole metres for stations
+derived from Jarvis et al. (2008), extracted from DEM using reported LAT/LON
+values in metres}
 \item{YEARMODA}{Date in YYYY-MM-DD format}
 \item{YEAR}{The year}
 \item{MONTH}{The month}
@@ -191,7 +195,7 @@ these data by others must provide this same notification."
 \examples{
 \dontrun{
 # Download weather station for Toowoomba, Queensland for 2010, save resulting
-# file in the user's Downloads directory.
+# file in the user's "Downloads" directory.
 
 get_GSOD(years = 2010, station = "955510-99999", path = "~/Downloads")
 
@@ -210,5 +214,11 @@ maximum of five missing days per station allowed.
 
 get_GSOD(years = 2010, country = "Australia", path = "~/Downloads")
 }
+
+}
+\references{
+{Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled
+SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
+\url{http://srtm.csi.cgiar.org}}
 }
 
