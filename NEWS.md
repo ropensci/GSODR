@@ -1,4 +1,13 @@
-# GSODR v0.1.7
+# GSODR v0.1.8
+## Changes
+  * stations.rda is compressed
+  
+  * stations.rda now includes a field for "corrected" elevation using
+  hole-filled SRTM data from Jarvis et al. 2008, see
+  [https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md](https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md)
+  for a description
+
+# GSODR v0.1.7 (Release Date: 2016-06-02)
 
 ## Bug fixes
   * Format documentation for easier reading and fix issues with MIN/MAX where MIN referred to MAX [(Issue 5)](https://github.com/adamhsparks/GSODR/issues/5)
@@ -9,7 +18,7 @@
 
 ******
 
-# GSODR v0.1.6 (Release date: 2016-05-16)
+# GSODR v0.1.6 (Release date: 2016-05-26)
 
 ## Bug fixes
   * Fix issue when reading .op files into R where temperature was incorrectly read causing negative values where T >= 100F, this issue caused RH values of >100% and incorrect TEMP values [(Issue 1)](https://github.com/adamhsparks/GSODR/issues/1)
