@@ -1,4 +1,4 @@
-# GSODR v0.1.7 (Release Date 02-06-2016)
+# GSODR v0.1.7 (Release Date: 2016-06-02)
 
 ## Bug fixes
   * Fix issues with MIN/MAX where MIN referred to MAX [(Issue 5)](https://github.com/adamhsparks/GSODR/issues/5)
@@ -13,7 +13,7 @@
 
 ******
 
-# GSODR v0.1.6 (Release date: 2016-05-16)
+# GSODR v0.1.6 (Release date: 2016-05-26)
 
 ## Bug fixes
   * Fix issue when reading .op files into R where temperature was incorrectly read causing negative values where T >= 100F, this issue caused RH values of >100% and incorrect TEMP values [(Issue 1)](https://github.com/adamhsparks/GSODR/issues/1)
