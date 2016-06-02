@@ -1,4 +1,4 @@
-# GSODR v0.1.7
+# GSODR v0.1.7 (Release Date 02-06-2016)
 
 ## Bug fixes
   * Fix issues with MIN/MAX where MIN referred to MAX [(Issue 5)](https://github.com/adamhsparks/GSODR/issues/5)
