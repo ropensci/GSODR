@@ -1,7 +1,7 @@
 # GSODR v0.1.7
 
 ## Bug fixes
-  * Format documentation for easier reading and fix issues with MIN/MAX where MIN referred to MAX [(Issue 5)](https://github.com/adamhsparks/GSODR/issues/5)
+  * Fix issues with MIN/MAX where MIN referred to MAX [(Issue 5)](https://github.com/adamhsparks/GSODR/issues/5)
   * Fix bug where the `tf` item was incorrectly set as `tf <- "~/tmp/GSOD-2010.tar`, not `tf <- tempfile`, in `get_GSOD` [(Issue 6)](https://github.com/adamhsparks/GSODR/issues/6)
   * CITATION file is updated and corrected
   
