@@ -1,7 +1,7 @@
 Fetch, clean and correct altitude in GSOD isd\_history.csv Data
 ================
 Adam H. Sparks - Center for Crop Health, University of Southern Queensland
-06-01-2016
+06-02-2016
 
 Introduction
 ============
@@ -260,7 +260,7 @@ R System Information
     ## [10] lattice_0.20-33    DBI_0.4-1          curl_0.9.7        
     ## [13] yaml_2.1.13        rgdal_1.1-10       parallel_3.3.0    
     ## [16] withr_1.0.1        dplyr_0.4.3        stringr_1.0.0     
-    ## [19] raster_2.5-2       knitr_1.13         maps_3.1.0        
+    ## [19] raster_2.5-8       knitr_1.13         maps_3.1.0        
     ## [22] devtools_1.11.1    grid_3.3.0         R6_2.1.2          
     ## [25] rmarkdown_0.9.6    sp_1.2-3           readr_0.2.2       
     ## [28] magrittr_1.5       scales_0.4.0       htmltools_0.3.5   
