@@ -177,6 +177,7 @@ summary(stations)
 
 ```{r ggplot, echo=FALSE, message=FALSE}
 library(ggplot2)
+library(ggalt)
 ```
 
 ```{r SRTM 90m vs Reported Elevation, echo=TRUE, fig.cap="GSOD Reported Elevation versus CGIAR-CSI SRTM Elevation", warning=FALSE}
@@ -191,13 +192,20 @@ ggplot(data = stations, aes(x = ELEV.M, y = ELEV.M.SRTM.90m.BUFFER)) +
 ```
 
 ```{r SRTM 90m vs Buffered SRTM 90m, echo=TRUE, fig.cap="CGIAR-CSI SRTM Buffered Elevation versus CGIAR-CSI SRTM 90m"}
+stations <- dplyr::mutate(stations, DIFFERENCE =
+                            ELEV.M.SRTM.90m.NO_BUFFER - ELEV.M.SRTM.90m.BUFFER)
+stations$DIFFERENCE[stations$DIFFERENCE >= -10 & stations$DIFFERENCE <= 10] <- NA
+
 ggplot(data = stations, aes(x = LON, y = LAT)) +
-  geom_point(aes(alpha = (ELEV.M.SRTM.90m.NO_BUFFER - ELEV.M.SRTM.90m.BUFFER)),
-             size = 0.08) +
-  labs(alpha = "No Buffer\n-Buffer") +
-  coord_map()
+  geom_point(aes(alpha = (DIFFERENCE)), size = 0.08) +
+  labs(alpha = "NB - B") +
+  coord_proj()
 ```
 
+Assuming that a 10m difference in elevation between the buffered and unbuffered is
+not important. Setting any values with a difference of >= -10 and <=10 to `NA`;
+the results are still not geographically clustered in any one location or
+feature.
 
 ```{r Hist difference SRTM 90m vs Buffered SRTM 90m, echo=TRUE, fig.cap="Histogram of CGIAR-CSI SRTM Buffered Elevation versus CGIAR-CSI SRTM 90m", warning=FALSE, error=FALSE, message=FALSE}
 ggplot(data = stations) +
@@ -215,7 +223,7 @@ distribution with the GSODR package following the approach of Hijmans *et al.*
 ```{r cleanup and .rda file creation, message=FALSE, echo=FALSE, warning=FALSE, error=FALSE}
 
 # drop the 90m only station field
-stations[, 14] <- NULL
+stations[, 14:15] <- NULL
 
 # round SRTM.90m.Buffer field to whole number in cases where station reported
 # data was used

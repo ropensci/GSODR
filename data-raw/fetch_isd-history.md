@@ -202,14 +202,19 @@ ggplot(data = stations, aes(x = ELEV.M, y = ELEV.M.SRTM.90m.BUFFER)) +
 ![GSOD Reported Elevation versus CGIAR-CSI SRTM Buffered Elevation](fetch_isd-history_files/figure-markdown_github/Buffered%20SRTM%2090m%20vs%20Reported%20Elevation-1.png)
 
 ``` r
+stations <- dplyr::mutate(stations, DIFFERENCE =
+                            ELEV.M.SRTM.90m.NO_BUFFER - ELEV.M.SRTM.90m.BUFFER)
+stations$DIFFERENCE[stations$DIFFERENCE >= -10 & stations$DIFFERENCE <= 10] <- NA
+
 ggplot(data = stations, aes(x = LON, y = LAT)) +
-  geom_point(aes(alpha = (ELEV.M.SRTM.90m.NO_BUFFER - ELEV.M.SRTM.90m.BUFFER)),
-             size = 0.08) +
-  labs(alpha = "No Buffer\n-Buffer") +
-  coord_map()
+  geom_point(aes(alpha = (DIFFERENCE)), size = 0.08) +
+  labs(alpha = "NB - B") +
+  coord_proj()
 ```
 
 ![CGIAR-CSI SRTM Buffered Elevation versus CGIAR-CSI SRTM 90m](fetch_isd-history_files/figure-markdown_github/SRTM%2090m%20vs%20Buffered%20SRTM%2090m-1.png)
+
+Assuming that a 10m difference in elevation between the buffered and unbuffered is not important. Setting any values with a difference of &gt;= -10 and &lt;=10 to `NA`; the results are still not geographically clustered in any one location or feature.
 
 ``` r
 ggplot(data = stations) +
@@ -247,15 +252,21 @@ R System Information
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ## [1] ggplot2_2.1.0
+    ## [1] ggalt_0.1.1   ggplot2_2.1.0
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] Rcpp_0.12.5      withr_1.0.1      digest_0.6.9     plyr_1.8.3      
-    ##  [5] grid_3.3.0       gtable_0.2.0     formatR_1.4      magrittr_1.5    
-    ##  [9] evaluate_0.9     scales_0.4.0     stringi_1.1.1    mapproj_1.2-4   
-    ## [13] rmarkdown_0.9.6  devtools_1.11.1  labeling_0.3     tools_3.3.0     
-    ## [17] stringr_1.0.0    munsell_0.4.3    maps_3.1.0       yaml_2.1.13     
-    ## [21] colorspace_1.2-6 memoise_1.0.0    htmltools_0.3.5  knitr_1.13
+    ##  [1] Rcpp_0.12.5        knitr_1.13         magrittr_1.5      
+    ##  [4] devtools_1.11.1    maps_3.1.0         MASS_7.3-45       
+    ##  [7] munsell_0.4.3      colorspace_1.2-6   R6_2.1.2          
+    ## [10] stringr_1.0.0      plyr_1.8.3         dplyr_0.4.3       
+    ## [13] tools_3.3.0        parallel_3.3.0     grid_3.3.0        
+    ## [16] gtable_0.2.0       ash_1.0-15         KernSmooth_2.23-15
+    ## [19] DBI_0.4-1          withr_1.0.1        htmltools_0.3.5   
+    ## [22] lazyeval_0.1.10    assertthat_0.1     yaml_2.1.13       
+    ## [25] digest_0.6.9       proj4_1.0-8        RColorBrewer_1.1-2
+    ## [28] formatR_1.4        memoise_1.0.0      evaluate_0.9      
+    ## [31] rmarkdown_0.9.6    labeling_0.3       stringi_1.1.1     
+    ## [34] scales_0.4.0
 
 References
 ==========
