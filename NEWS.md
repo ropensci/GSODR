@@ -6,6 +6,11 @@
   hole-filled SRTM data from Jarvis et al. 2008, see
   [https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md](https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md)
   for a description
+  
+## Bug fixes
+  * Somehow the previously working function that checked country names broke
+  with the toupper() function. A new [function from juba](http://stackoverflow.com/questions/16516593/convert-from-lowercase-to-uppercase-all-values-in-all-character-variables-in-dat)
+  fixes this issue and users can now select country again.
 
 # GSODR v0.1.7 (Release Date: 2016-06-02)
 
