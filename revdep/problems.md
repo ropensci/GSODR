@@ -10,13 +10,13 @@
 |language |(EN)                         |
 |collate  |en_AU.UTF-8                  |
 |tz       |Australia/Brisbane           |
-|date     |2016-05-26                   |
+|date     |2016-06-02                   |
 
 ## Packages
 
 |package |*  |version |date       |source                    |
 |:-------|:--|:-------|:----------|:-------------------------|
-|GSODR   |*  |0.1.6   |2016-05-26 |local (adamhsparks/GSODR) |
+|GSODR   |*  |0.1.7   |2016-06-02 |local (adamhsparks/GSODR) |
 
 # Check results
 0 packages with problems

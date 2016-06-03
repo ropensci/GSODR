@@ -483,7 +483,11 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 .get_country <- function(country = "") {
   country <- toupper(raster::trim(country[1]))
   cs <- raster::ccodes()
-  cs <- toupper(cs)
+  # from user juba, http://stackoverflow.com/questions/16516593/convert-from-lowercase-to-uppercase-all-values-in-all-character-variables-in-dat
+  cs <- data.frame(lapply(cs, function(x) {
+    if (is.character(x)) return(toupper(x))
+    else return(x)
+  }))
   nc <- nchar(country)
 
   if (nc == 3) {

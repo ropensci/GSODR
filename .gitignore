@@ -5,5 +5,4 @@ inst/doc
 
 *.Rproj
 
-*fetch_isd-history_cache
-
+fetch_isd-history_cache
