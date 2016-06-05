@@ -488,6 +488,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
     if (is.character(x)) return(toupper(x))
     else return(x)
   }))
+  # end juba
   nc <- nchar(country)
 
   if (nc == 3) {
