@@ -41,7 +41,7 @@
 #'station, which includes vapour pressure and relative humidity variables
 #'calculated from existing data in GSOD.
 #'
-#'All missing values in resulting files are represented as -9999.99
+#'All missing values in resulting files are represented as -9999
 #'regardless of which field they occur in.
 #'
 #'Be sure to have disk space free and allocate the proper time for this to run.
@@ -72,39 +72,39 @@
 #' \item{DAY}{The day}
 #' \item{YDAY}{Sequential day of year (not in original GSOD)}
 #' \item{TEMP}{Mean daily temperature converted to degrees C to tenths.
-#' Missing = -9999.99}
+#' Missing = -9999}
 #' \item{TEMP.CNT}{Number of observations used in calculating mean daily
 #' temperature}
 #' \item{DEWP}{Mean daily dew point converted to degrees C to tenths. Missing =
-#' -9999.99}
+#' -9999}
 #' \item{DEWP.CNT}{Number of observations used in calculating mean daily
 #' dew point}
 #' \item{SLP}{Mean sea level pressure in millibars to tenths. Missing =
-#' -9999.99}
+#' -9999}
 #' \item{SLP.CNT}{Number of observations used in calculating mean sea level
 #' pressure}
 #' \item{STP}{Mean station pressure for the day in millibars to tenths
-#' Missing = -9999.99}
+#' Missing = -9999}
 #' \item{STP.CNT}{Number of observations used in calculating mean station
 #' pressure}
 #' \item{VISIB}{Mean visibility for the day converted to kilometers to tenths
-#' Missing = -9999.99}
+#' Missing = -9999}
 #' \item{VISIB.CNT}{Number of observations used in calculating mean daily
 #' visibility}
 #' \item{WDSP}{Mean daily wind speed value converted to metres/second to tenths
-#' Missing = -9999.99}
+#' Missing = -9999}
 #' \item{WDSP.CNT}{Number of observations used in calculating mean daily
 #' windspeed}
 #' \item{MXSPD}{Maximum sustained wind speed reported for the day converted to
-#' metres/second to tenths. Missing = -9999.99}
+#' metres/second to tenths. Missing = -9999}
 #' \item{GUST}{Maximum wind gust reported for the day converted to
-#' metres/second to tenths. Missing = -9999.99}
+#' metres/second to tenths. Missing = -9999}
 #' \item{MAX}{Maximum temperature reported during the day converted to Celsius
 #' to tenths--time of maximum temperature report varies by country and region,
 #' so this will sometimes not be the maximum for the calendar day. In instances
 #' where MAX < MIN, both MAX and MIN are set to missing. In instances where MIN
 #' is missing, MAX is correspondingly set to missing as well. Missing =
-#' -9999.99}
+#' -9999}
 #' \item{MAX.FLAG}{Blank indicates maximum temperature was taken from the
 #' explicit maximum temperature report and not from the 'hourly' data. " * "
 #' indicates maximum temperature was derived from the hourly data (i.e., highest
@@ -114,7 +114,7 @@
 #' so this will sometimes not be the minimum for the calendar day. In instances
 #' where MIN > MAX, both MAX and MIN are set to missing. In instances where MIN
 #' is missing, MAX is correspondingly set to missing as well. Missing =
-#' -9999.99}
+#' -9999}
 #' \item{MIN.FLAG}{Blank indicates minimum temperature was taken from the
 #' explicit minimum temperature report and not from the 'hourly' data. " * "
 #' indicates minimum temperature was derived from the hourly data (i.e., lowest
@@ -122,9 +122,9 @@
 #' \item{PRCP}{Total precipitation (rain and/or melted snow) reported during
 #' the day converted to millimetres to hundredths will usually not end with the
 #' midnight observation--i.e., may include latter part of previous day. ".00"
-#' indicates no measurable precipitation (includes a trace). Missing = -9999.99.
+#' indicates no measurable precipitation (includes a trace). Missing = -9999.
 #' \emph{Note}: Many stations do not report '0' on days with no precipitation--
-#' therefore, '-9999.99' will often appear on these days. For example, a
+#' therefore, '-9999' will often appear on these days. For example, a
 #' station may only report a 6-hour amount for the period during which rain
 #' fell. See PRCP.FLAG column for source of data}
 #' \item{PRCP.FLAG}{
@@ -146,7 +146,7 @@
 #'    reported}
 #'    }
 #'  }
-#' \item{SNDP}{Snow depth in millimetres to tenths. Missing = -9999.99}
+#' \item{SNDP}{Snow depth in millimetres to tenths. Missing = -9999}
 #' \item{I.FOG}{Fog, (1 = yes, 0 = no/not reported) for the occurrence during
 #' the day}
 #' \item{I.RAIN_DZL}{Rain or drizzle, (1 = yes, 0 = no/not reported) for the
@@ -316,7 +316,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
     #### csv file---------------------------------------------------------------
     if (CSV == TRUE) {
       utils::write.csv(GSOD_XY, file = paste0(path.expand(outfile), ".csv"),
-                       na = "-9999.99", row.names = FALSE,
+                       na = "-9999", row.names = FALSE,
                        fileEncoding = "UTF-8")
     }
 
