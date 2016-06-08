@@ -7,6 +7,8 @@
   [https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md](https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md)
   for a description
   
+  * Set NA or missing values in CSV or Shapefile to -9999 from -9999.99 to align with other data sources such as Worldclim
+  
 ## Bug fixes
   * Somehow the previously working function that checked country names broke
   with the toupper() function. A new [function from juba](http://stackoverflow.com/questions/16516593/convert-from-lowercase-to-uppercase-all-values-in-all-character-variables-in-dat)
