@@ -1,7 +1,7 @@
 #GSODR
 
 [![Travis-CI Build Status](https://travis-ci.org/adamhsparks/GSODR.svg?branch=master)](https://travis-ci.org/adamhsparks/GSODR)
-[![Build status](https://ci.appveyor.com/api/projects/status/8daqtllo2sg6me07/branch/master)](https://ci.appveyor.com/project/adamhsparks/GSODR/branch/master)
+[![Build status](https://ci.appveyor.com/api/projects/status/8daqtllo2sg6me07/branch/master?svg=true)](https://ci.appveyor.com/project/adamhsparks/GSODR/branch/master?svg=true)
 [![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/GSODR?color=brightgreen)](https://github.com/metacran/cranlogs.app)
 [![cran version](http://www.r-pkg.org/badges/version/GSODR)](https://cran.r-project.org/package=GSODR)
 
