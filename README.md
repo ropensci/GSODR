@@ -129,8 +129,8 @@ reported) for the occurrence during the day;
 identify and correct/remove elevation errors in data for station locations
 between -60˚ and 60˚. This applies to cases here where elevation was missing in
 the reported values as well. In case the station reported an elevation and the
-DEM does not, the station reported is taken. For stations beyond -60˚ and 60˚the
-values are station reported values in every instance. See [https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md](https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md) for more detail on the correction methods.  
+DEM does not, the station reported is taken. For stations beyond -60˚ and 60˚
+the values are station reported values in every instance. See [https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md](https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md) for more detail on the correction methods.  
 
 Users of these data should take into account the following (from the [NCDC website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):  
 
