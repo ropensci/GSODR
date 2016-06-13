@@ -31,9 +31,9 @@ not mapping in the isd-history reported country were dropped
 identify and correct/remove elevation errors in data for station locations
 between -60˚ and 60˚ latitude. This applies to cases here where elevation was
 missing in the reported values as well. In case the station reported an
-elevation and the DEM does not, the station reported is taken. For stations
-beyond -60˚ and 60˚ latitude, the values are station reported values in every
-instance.
+elevation and the DEM does not, the station reported value is taken. For
+stations beyond -60˚ and 60˚ latitude, the values are station reported values in
+every instance for the 90m column.
 
 # R Data Processing
 
