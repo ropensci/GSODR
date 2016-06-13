@@ -101,9 +101,7 @@
 #' metres/second to tenths. Missing = -9999}
 #' \item{MAX}{Maximum temperature reported during the day converted to Celsius
 #' to tenths--time of maximum temperature report varies by country and region,
-#' so this will sometimes not be the maximum for the calendar day. In instances
-#' where MAX < MIN, both MAX and MIN are set to missing. In instances where MIN
-#' is missing, MAX is correspondingly set to missing as well. Missing =
+#' so this will sometimes not be the maximum for the calendar day. Missing =
 #' -9999}
 #' \item{MAX.FLAG}{Blank indicates maximum temperature was taken from the
 #' explicit maximum temperature report and not from the 'hourly' data. " * "
@@ -111,9 +109,7 @@
 #' hourly or synoptic-reported temperature)}
 #' \item{MIN}{Minimum temperature reported during the day converted to Celsius
 #' to tenths--time of minimum temperature report varies by country and region,
-#' so this will sometimes not be the minimum for the calendar day. In instances
-#' where MIN > MAX, both MAX and MIN are set to missing. In instances where MIN
-#' is missing, MAX is correspondingly set to missing as well. Missing =
+#' so this will sometimes not be the minimum for the calendar day. Missing =
 #' -9999}
 #' \item{MIN.FLAG}{Blank indicates minimum temperature was taken from the
 #' explicit minimum temperature report and not from the 'hourly' data. " * "
@@ -360,13 +356,6 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                   "MXSPD", "GUST", "MAX", "MAX.FLAG", "MIN", "MIN.FLAG",
                   "PRCP", "PRCP.FLAG", "SNDP", "I.FOG", "I.RAIN_DZL",
                   "I.SNW_ICE", "I.HAIL", "I.THUNDER", "I.TDO_FNL")
-
-  # data quality assurance with MIN/MAX temperatures. In some cases MIN > MAX.
-  # Set these instances to NA, also set corresponding MIN/MAX NA values to NA in
-  # other column
-  tmp$MIN[which(tmp$MIN > tmp$MAX)] <- NA
-  tmp$MAX[is.na(tmp$MIN)] <- NA
-  tmp$MIN[is.na(tmp$MAX)] <- NA
 
   # Clean up and convert the station and weather data to metric
   tmp <- dplyr::mutate(tmp, STNID = paste(tmp$STN, tmp$WBAN, sep = "-"))

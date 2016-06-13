@@ -38,7 +38,7 @@ Force Navy" number - with WBAN being the acronym;
 **CTRY** - Country;  
 **LAT** - Latitude. *Station dropped in cases where values are <-90 or >90 degrees or Lat = 0 and Lon = 0*;  
 **LON** - Longitude. *Station dropped in cases where values are <-180 or >180 degrees or Lat = 0 and Lon = 0*;  
-**ELEV.M** - Elevation converted to metres. *Station dropped where ELEV is NA*;  
+**ELEV.M** - Elevation converted to metres.  
 **ELEV.M.SRTM.90m** - Elevation in metres corrected for possible errors, see
 Notes for more;  
 **YEARMODA** - Date in YYYY-MM-DD format;  
@@ -47,47 +47,47 @@ Notes for more;
 **DAY** - The day;  
 **YDAY** - Sequential day of year (not in original GSOD);  
 **TEMP** - Mean daily temperature converted to degrees C to tenths. Missing =
--9999.99;  
+-9999;  
 **TEMP.CNT** - Number of observations used in calculating mean daily
 temperature;  
 **DEWP**-  Mean daily dewpoint converted to degrees C to tenths. Missing =
--9999.99;  
+-9999;  
 **DEWP.CNT** - Number of observations used in calculating mean daily dew point;  
-**SLP** - Mean sea level pressure in millibars to tenths. Missing = -9999.99;  
+**SLP** - Mean sea level pressure in millibars to tenths. Missing = -9999;  
 **SLP.CNT** - Number of observations used in calculating mean sea level
 pressure;  
 **STP** - Mean station pressure for the day in millibars to tenths
-Missing = -9999.99;  
+Missing = -9999;  
 **STP.CNT** - Number of observations used in calculating mean station pressure;  
 **VISIB** - Mean visibility for the day converted to kilometers to tenths
-Missing = -9999.99;  
+Missing = -9999;  
 **VISIB.CNT** - Number of observations used in calculating mean daily
 visibility;  
 **WDSP** - Mean daily wind speed value converted to metres/second to tenths
-Missing = -9999.99;  
+Missing = -9999;  
 **WDSP.CNT** - Number of observations used in calculating mean daily windspeed;  
 **MXSPD** - Maximum sustained wind speed reported for the day converted to
-metres/second to tenths. Missing = -9999.99;  
+metres/second to tenths. Missing = -9999;  
 **GUST** = Maximum wind gust reported for the day converted to metres/second to
-tenths. Missing = -9999.99;  
+tenths. Missing = -9999;  
 **MAX** - Maximum temperature reported during the day converted to Celsius to
 tenths--time of max temp report varies by country and region, so this will
-sometimes not be the max for the calendar day;  
+sometimes not be the max for the calendar day. Missing = -9999;  
 **MAX.FLAG** - Blank indicates max temp was taken from the explicit max
-temp report and not from the 'hourly' data.  * indicates max temp was derived
+temp report and not from the 'hourly' data. * indicates max temp was derived
 from the hourly data (i.e., highest hourly or synoptic-reported temperature);  
 **MIN**- Minimum temperature reported during the day converted to Celsius to
 tenths--time of min temp report varies by country and region, so this will
-sometimes not be the max for the calendar day;  
+sometimes not be the max for the calendar day. Missing = -9999;  ;  
 **MIN.FLAG** - Blank indicates max temp was taken from the explicit max
 temp report and not from the 'hourly' data. * indicates max temp was derived
 from the hourly data (i.e., highest hourly or synoptic-reported temperature);  
 **PRCP** - Total precipitation (rain and/or melted snow) reported during the day
-converted to millimetres to hundredths;   will usually not end with the
+converted to millimetres to hundredths; will usually not end with the
 midnight observation--i.e., may include latter part of previous day. .00
-indicates no measurable precipitation (includes a trace). Missing = -9999.99;
+indicates no measurable precipitation (includes a trace). Missing = -9999;
 *Note:  Many stations do not report '0' on days with no precipitation--
-therefore, '-9999.99' will often appear on these days. For example, a
+therefore, '-9999' will often appear on these days. For example, a
 station may only report a 6-hour amount for the period during which rain
 fell.* See FLAGS.PRCP column for source of data;  
 **PRCP.FLAG** -  
@@ -105,7 +105,7 @@ as incomplete data for the day;
 I = Station did not report any precip data for the day and did not report any
 occurrences of precipitation in its hourly observations--it's still possible
 that precip occurred but was not reported;  
-**SNDP** - Snow depth in millimetres to tenths. Missing = -9999.99;  
+**SNDP** - Snow depth in millimetres to tenths. Missing = -9999;  
 **I.FOG** - Indicator for fog, (1 = yes, 0 = no/not reported) for the occurrence during the
 day;  
 **I.RAIN_DZL** - Indicator for rain or drizzle, (1 = yes, 0 = no/not reported)
