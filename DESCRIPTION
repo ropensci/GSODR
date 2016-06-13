@@ -42,7 +42,8 @@ Description: Download, clean, reformat and create new variables from the
     for use in a geographic information system (GIS). The function was largely
     based on T. Hengl's 'getGSOD.R' script, available from
     <http://spatial-analyst.net/book/system/files/getGSOD.R> with enhancements
-    to be more cross-platform, faster and more flexible. See the GSOD readme.txt
+    to be more cross-platform, faster and more flexible. For information on the
+    data themseves, please see the GSOD readme.txt,
     <http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt>.
 Depends:
     R (>= 3.0.0)
