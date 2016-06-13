@@ -241,7 +241,7 @@ R System Information
 --------------------
 
     ## R version 3.3.0 (2016-05-03)
-    ## Platform: x86_64-apple-darwin15.4.0 (64-bit)
+    ## Platform: x86_64-apple-darwin15.5.0 (64-bit)
     ## Running under: OS X 10.11.5 (El Capitan)
     ## 
     ## locale:
@@ -255,7 +255,7 @@ R System Information
     ## 
     ## loaded via a namespace (and not attached):
     ##  [1] Rcpp_0.12.5        formatR_1.4        RColorBrewer_1.1-2
-    ##  [4] plyr_1.8.3         tools_3.3.0        digest_0.6.9      
+    ##  [4] plyr_1.8.4         tools_3.3.0        digest_0.6.9      
     ##  [7] memoise_1.0.0      evaluate_0.9       gtable_0.2.0      
     ## [10] lattice_0.20-33    DBI_0.4-1          curl_0.9.7        
     ## [13] yaml_2.1.13        rgdal_1.1-10       parallel_3.3.0    
@@ -267,7 +267,7 @@ R System Information
     ## [31] MASS_7.3-45        assertthat_0.1     proj4_1.0-8       
     ## [34] countrycode_0.18   colorspace_1.2-6   labeling_0.3      
     ## [37] KernSmooth_2.23-15 ash_1.0-15         stringi_1.1.1     
-    ## [40] lazyeval_0.1.10    munsell_0.4.3
+    ## [40] lazyeval_0.2.0     munsell_0.4.3
 
 References
 ==========

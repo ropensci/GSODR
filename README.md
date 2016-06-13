@@ -9,7 +9,7 @@ An R package that provides a function that automates downloading and cleaning da
 
 This package was largely based on Tomislav Hengl's work in "[A Practical Guide to Geostatistical Mapping](http://spatial-analyst.net/book/getGSOD.R)", with updates for speed, cross-platform functionality. Now it's added and more options for data retrieval and error correction.
 
-Be sure to have disk space free and allocate the proper time for this to run. This is a time, RAM and disk space intensive process, however it does not require much processing power. 
+Be sure to have disk space free and allocate the proper time for this to run. This is a time, RAM and disk space intensive process, however it does not require much processing power.
 
 For more information see the description of the data provided by NCDC, [http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt](http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt).
 
@@ -29,7 +29,7 @@ Use `install_github("author/package")` to install this package.
 `devtools::install_github("adamhsparks/GSODR")`
 
 # Output
-This package consists of a single function, `get_GSOD()`, which generates a 
+This package consists of a single function, `get_GSOD()`, which generates a
 .csv file or ESRI format shapefile in the respective year directory containing the following variables:  
 **STNID** - Station number (WMO/DATSAV3 number) for the location;  
 **WBAN** - number where applicable--this is the historical "Weather Bureau Air
@@ -56,8 +56,8 @@ temperature;
 **SLP** - Mean sea level pressure in millibars to tenths. Missing = -9999;  
 **SLP.CNT** - Number of observations used in calculating mean sea level
 pressure;  
-**STP** - Mean station pressure for the day in millibars to tenths
-Missing = -9999;  
+**STP** - Mean station pressure for the day in millibars to tenths. Missing =
+-9999;  
 **STP.CNT** - Number of observations used in calculating mean station pressure;  
 **VISIB** - Mean visibility for the day converted to kilometers to tenths
 Missing = -9999;  
@@ -68,7 +68,7 @@ Missing = -9999;
 **WDSP.CNT** - Number of observations used in calculating mean daily windspeed;  
 **MXSPD** - Maximum sustained wind speed reported for the day converted to
 metres/second to tenths. Missing = -9999;  
-**GUST** = Maximum wind gust reported for the day converted to metres/second to
+**GUST** - Maximum wind gust reported for the day converted to metres/second to
 tenths. Missing = -9999;  
 **MAX** - Maximum temperature reported during the day converted to Celsius to
 tenths--time of max temp report varies by country and region, so this will
@@ -86,7 +86,7 @@ from the hourly data (i.e., highest hourly or synoptic-reported temperature);
 converted to millimetres to hundredths; will usually not end with the
 midnight observation--i.e., may include latter part of previous day. .00
 indicates no measurable precipitation (includes a trace). Missing = -9999;
-*Note:  Many stations do not report '0' on days with no precipitation--
+*Note: Many stations do not report '0' on days with no precipitation--
 therefore, '-9999' will often appear on these days. For example, a
 station may only report a 6-hour amount for the period during which rain
 fell.* See FLAGS.PRCP column for source of data;  
@@ -98,7 +98,7 @@ D = Summation of 4 reports of 6-hour precipitation amount;
 E = 1 report of 12-hour precipitation amount;  
 F = Summation of 2 reports of 12-hour precipitation amount;  
 G = 1 report of 24-hour precipitation amount;  
-H = Station reported '0' as the amount for the day (eg, from 6-hour reports),
+H = Station reported '0' as the amount for the day (eg., from 6-hour reports),
 but also reported at least one occurrence of precipitation in hourly
 observations--this could indicate a trace occurred, but should be considered
 as incomplete data for the day;  
@@ -106,8 +106,8 @@ I = Station did not report any precip data for the day and did not report any
 occurrences of precipitation in its hourly observations--it's still possible
 that precip occurred but was not reported;  
 **SNDP** - Snow depth in millimetres to tenths. Missing = -9999;  
-**I.FOG** - Indicator for fog, (1 = yes, 0 = no/not reported) for the occurrence during the
-day;  
+**I.FOG** - Indicator for fog, (1 = yes, 0 = no/not reported) for the occurrence
+during the day;  
 **I.RAIN_DZL** - Indicator for rain or drizzle, (1 = yes, 0 = no/not reported)
 for the occurrence during the day;  
 **I.SNW_ICE** - Indicator for snow or ice pellets, (1 = yes, 0 = no/not
@@ -127,12 +127,14 @@ reported) for the occurrence during the day;
 ## Notes
 90m hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was used to
 identify and correct/remove elevation errors in data for station locations
-between -60˚ and 60˚. This applies to cases here where elevation was missing in
-the reported values as well. In case the station reported an elevation and the
-DEM does not, the station reported is taken. For stations beyond -60˚ and 60˚
-the values are station reported values in every instance. See [https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md](https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md) for more detail on the correction methods.  
+between -60˚ and 60˚ latitude. This applies to cases here where elevation was
+missing in the reported values as well. In case the station reported an
+elevation and the DEM does not, the station reported is taken. For stations
+beyond -60˚ and 60˚latitude, the values are station reported values in every
+instance. See
+[https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md](https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md) for more detail on the correction methods.  
 
-Users of these data should take into account the following (from the [NCDC website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):  
+*Users of these data should take into account the following (from the [NCDC website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):*  
 
 > "The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification." [WMO Resolution 40. NOAA Policy](http://www.wmo.int/pages/about/Resolution40.html)
 
