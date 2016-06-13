@@ -99,21 +99,23 @@ coordinates map.
 
 Also, reported elevation may differ from actual. Hijmans *et al.* (2005) created
 their own digital elevation model using Jarvis *et al.* (2004) and [GTOPO30 data](https://lta.cr.usgs.gov/GTOPO30)
-for areas where there was no SRTM data available (>60˚). Here only the
-hole-filled SRTM data, V4 (Jarvis *et al.* 2008) was used for correction of
-agroclimatology data (-60˚ to 60˚). Any incorrect station elevations beyond
-these values were ignored in this data set. Stations with incorrect elevation
-were identified using `raster::extract(x, y, buffer = 200, fun = mean)` so that
-surrounding cells are also used to determine the elevation at that point, 
-reducing the chances of over or underestimating in mountainous areas.
-See Hijmans *et al.* (2005) for more detailed information on this methodology.
+for areas where there was no SRTM data available (>+/-60˚ latitude). Here only
+the hole-filled SRTM data, V4 (Jarvis *et al.* 2008) was used for correction of
+agroclimatology data (-60˚ to 60˚ latitude). Any incorrect station elevations
+beyond these values were ignored in this data set. Stations with incorrect
+elevation were identified using
+`raster::extract(x, y, buffer = 200, fun = mean)` so that surrounding cells are
+also used to determine the elevation at that point, reducing the chances of over
+or underestimating in mountainous areas. See Hijmans *et al.* (2005) for more 
+detailed information on this methodology.
 
 The hole-filled SRTM data is large enough that it won't all fit in-memory on
 most desktop computers. Using tiles allows this process to run on a modest
 machine with minimal effort but does take some time to loop through all of the
 tiles.
 
-Data can be downloaded from the [CGIAR-CSI's](http://csi.cgiar.org/WhtIsCGIAR_CSI.asp)
+Data can be downloaded from the
+[CGIAR-CSI's](http://csi.cgiar.org/WhtIsCGIAR_CSI.asp)
 ftp server, [srtm.csi.cgiar.org](ftp://srtm.csi.cgiar.org),
 using an FTP client to facilitate this next step.
 

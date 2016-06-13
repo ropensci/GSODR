@@ -20,7 +20,7 @@ The following changes are made:
 
 -   Stations were checked against Natural Earth 1:10 ADM0 Cultural data, stations not mapping in the isd-history reported country were dropped
 
--   90m hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was used to identify and correct/remove elevation errors in data for station locations between -60˚ and 60˚. This applies to cases here where elevation was missing in the reported values as well. In case the station reported an elevation and the DEM does not, the station reported is taken. For stations beyond -60˚ and 60˚the values are station reported values in every instance.
+-   90m hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was used to identify and correct/remove elevation errors in data for station locations between -60˚ and 60˚ latitude. This applies to cases here where elevation was missing in the reported values as well. In case the station reported an elevation and the DEM does not, the station reported value is taken. For stations beyond -60˚ and 60˚ latitude, the values are station reported values in every instance for the 90m column.
 
 R Data Processing
 =================
@@ -84,7 +84,7 @@ Check data for inconsistencies
 
 GSOD data have some inconsistencies in them, some of this has been removed above with filtering. Further filtering is used remove stations reporting locations in countries that do not match the physical coordinates reported. Using [Natural Earth Data 1:10 Cultural Data](http://www.naturalearthdata.com/downloads/10m-cultural-vectors/), the stations reported countries are checked against the country in which the coordinates map.
 
-Also, reported elevation may differ from actual. Hijmans *et al.* (2005) created their own digital elevation model using Jarvis *et al.* (2004) and [GTOPO30 data](https://lta.cr.usgs.gov/GTOPO30) for areas where there was no SRTM data available (&gt;60˚). Here only the hole-filled SRTM data, V4 (Jarvis *et al.* 2008) was used for correction of agroclimatology data (-60˚ to 60˚). Any incorrect station elevations beyond these values were ignored in this data set. Stations with incorrect elevation were identified using `raster::extract(x, y, buffer = 200, fun = mean)` so that surrounding cells are also used to determine the elevation at that point, reducing the chances of over or underestimating in mountainous areas. See Hijmans *et al.* (2005) for more detailed information on this methodology.
+Also, reported elevation may differ from actual. Hijmans *et al.* (2005) created their own digital elevation model using Jarvis *et al.* (2004) and [GTOPO30 data](https://lta.cr.usgs.gov/GTOPO30) for areas where there was no SRTM data available (&gt;+/-60˚ latitude). Here only the hole-filled SRTM data, V4 (Jarvis *et al.* 2008) was used for correction of agroclimatology data (-60˚ to 60˚ latitude). Any incorrect station elevations beyond these values were ignored in this data set. Stations with incorrect elevation were identified using `raster::extract(x, y, buffer = 200, fun = mean)` so that surrounding cells are also used to determine the elevation at that point, reducing the chances of over or underestimating in mountainous areas. See Hijmans *et al.* (2005) for more detailed information on this methodology.
 
 The hole-filled SRTM data is large enough that it won't all fit in-memory on most desktop computers. Using tiles allows this process to run on a modest machine with minimal effort but does take some time to loop through all of the tiles.
 
@@ -241,7 +241,7 @@ R System Information
 --------------------
 
     ## R version 3.3.0 (2016-05-03)
-    ## Platform: x86_64-apple-darwin15.4.0 (64-bit)
+    ## Platform: x86_64-apple-darwin15.5.0 (64-bit)
     ## Running under: OS X 10.11.5 (El Capitan)
     ## 
     ## locale:
@@ -255,7 +255,7 @@ R System Information
     ## 
     ## loaded via a namespace (and not attached):
     ##  [1] Rcpp_0.12.5        formatR_1.4        RColorBrewer_1.1-2
-    ##  [4] plyr_1.8.3         tools_3.3.0        digest_0.6.9      
+    ##  [4] plyr_1.8.4         tools_3.3.0        digest_0.6.9      
     ##  [7] memoise_1.0.0      evaluate_0.9       gtable_0.2.0      
     ## [10] lattice_0.20-33    DBI_0.4-1          curl_0.9.7        
     ## [13] yaml_2.1.13        rgdal_1.1-10       parallel_3.3.0    
@@ -267,7 +267,7 @@ R System Information
     ## [31] MASS_7.3-45        assertthat_0.1     proj4_1.0-8       
     ## [34] countrycode_0.18   colorspace_1.2-6   labeling_0.3      
     ## [37] KernSmooth_2.23-15 ash_1.0-15         stringi_1.1.1     
-    ## [40] lazyeval_0.1.10    munsell_0.4.3
+    ## [40] lazyeval_0.2.0     munsell_0.4.3
 
 References
 ==========

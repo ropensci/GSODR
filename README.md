@@ -9,7 +9,7 @@ An R package that provides a function that automates downloading and cleaning da
 
 This package was largely based on Tomislav Hengl's work in "[A Practical Guide to Geostatistical Mapping](http://spatial-analyst.net/book/getGSOD.R)", with updates for speed, cross-platform functionality. Now it's added and more options for data retrieval and error correction.
 
-Be sure to have disk space free and allocate the proper time for this to run. This is a time, RAM and disk space intensive process, however it does not require much processing power. 
+Be sure to have disk space free and allocate the proper time for this to run. This is a time, RAM and disk space intensive process, however it does not require much processing power.
 
 For more information see the description of the data provided by NCDC, [http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt](http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt).
 
@@ -29,7 +29,7 @@ Use `install_github("author/package")` to install this package.
 `devtools::install_github("adamhsparks/GSODR")`
 
 # Output
-This package consists of a single function, `get_GSOD()`, which generates a 
+This package consists of a single function, `get_GSOD()`, which generates a
 .csv file or ESRI format shapefile in the respective year directory containing the following variables:  
 **STNID** - Station number (WMO/DATSAV3 number) for the location;  
 **WBAN** - number where applicable--this is the historical "Weather Bureau Air
@@ -126,7 +126,7 @@ reported) for the occurrence during the day;
 
 ## Notes
 90m hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was used to
-identify and correct/remove elevation errors in data for station locations 
+identify and correct/remove elevation errors in data for station locations
 between -60˚ and 60˚ latitude. This applies to cases here where elevation was
 missing in the reported values as well. In case the station reported an
 elevation and the DEM does not, the station reported is taken. For stations
