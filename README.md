@@ -68,7 +68,7 @@ Missing = -9999;
 **WDSP.CNT** - Number of observations used in calculating mean daily windspeed;  
 **MXSPD** - Maximum sustained wind speed reported for the day converted to
 metres/second to tenths. Missing = -9999;  
-**GUST** = Maximum wind gust reported for the day converted to metres/second to
+**GUST** - Maximum wind gust reported for the day converted to metres/second to
 tenths. Missing = -9999;  
 **MAX** - Maximum temperature reported during the day converted to Celsius to
 tenths--time of max temp report varies by country and region, so this will
@@ -126,7 +126,7 @@ reported) for the occurrence during the day;
 
 ## Notes
 90m hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was used to
-identify and correct/remove elevation errors in data for station locations
+identify and correct/remove elevation errors in data for station locations 
 between -60˚ and 60˚ latitude. This applies to cases here where elevation was
 missing in the reported values as well. In case the station reported an
 elevation and the DEM does not, the station reported is taken. For stations
@@ -135,6 +135,7 @@ instance. See
 [https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md](https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md) for more detail on the correction methods.  
 
 *Users of these data should take into account the following (from the [NCDC website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):*  
+>>>>>>> devel
 
 > "The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification." [WMO Resolution 40. NOAA Policy](http://www.wmo.int/pages/about/Resolution40.html)
 
