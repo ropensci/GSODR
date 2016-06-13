@@ -68,7 +68,7 @@ Missing = -9999;
 **WDSP.CNT** - Number of observations used in calculating mean daily windspeed;  
 **MXSPD** - Maximum sustained wind speed reported for the day converted to
 metres/second to tenths. Missing = -9999;  
-**GUST** = Maximum wind gust reported for the day converted to metres/second to
+**GUST** - Maximum wind gust reported for the day converted to metres/second to
 tenths. Missing = -9999;  
 **MAX** - Maximum temperature reported during the day converted to Celsius to
 tenths--time of max temp report varies by country and region, so this will
