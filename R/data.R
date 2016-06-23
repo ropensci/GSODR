@@ -1,3 +1,5 @@
+#' GSOD Station Data
+#' 
 #' Station information for the US National Climatic Data Centre (NCDC)
 #' Global Surface Summary of the Day (GSOD) weather data. The original file has
 #' missing and incorrect information. This is a clean version of this dataset,
