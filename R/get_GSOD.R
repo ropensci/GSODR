@@ -23,7 +23,8 @@
 #' output file. Defaults to the current working directory.
 #' @param max_missing The maximum number of days allowed to be missing from a
 #' station's data before it is excluded from final file output. Defaults to five
-#' days.
+#' days. If a single station is specified, this option is ignored and any data
+#' available, even an empty file,from NCDC will be returned.
 #' @param agroclimatology Only clean data for stations between latitudes 60 and
 #' -60 for agroclimatology work, defaults to FALSE. Set to FALSE to override and
 #' include only stations within the confines of these latitudes.
@@ -232,7 +233,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   # By default, if a single station is selected, then we will report even just
   # one day of data if that's all that is recorded
   if (!is.null(station)) {
-    max_missing <- 364
+    max_missing <- 366
   }
 
   ftp_site <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"

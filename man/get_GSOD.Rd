@@ -24,7 +24,8 @@ output file. Defaults to the current working directory.}
 
 \item{max_missing}{The maximum number of days allowed to be missing from a
 station's data before it is excluded from final file output. Defaults to five
-days.}
+days. If a single station is specified, this option is ignored and any data
+available, even an empty file,from NCDC will be returned.}
 
 \item{agroclimatology}{Only clean data for stations between latitudes 60 and
 -60 for agroclimatology work, defaults to FALSE. Set to FALSE to override and
