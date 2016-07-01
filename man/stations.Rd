@@ -56,9 +56,8 @@ Re-distribution of these data by others must provide this same
 notification."}
 }
 \details{
-To access this data frame of station information, use
-\code{\link[utils]{data}("stations")} to load it into the global environment
-for inspection or use by the user.
+The data are automatically loaded with the package, to see the stations, type
+\code{stations}
 }
 \references{
 {Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled
