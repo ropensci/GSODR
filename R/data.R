@@ -1,3 +1,5 @@
+#' GSOD Station Data
+#'
 #' Station information for the US National Climatic Data Centre (NCDC)
 #' Global Surface Summary of the Day (GSOD) weather data. The original file has
 #' missing and incorrect information. This is a clean version of this dataset,
@@ -23,9 +25,8 @@
 #' Re-distribution of these data by others must provide this same
 #' notification."}
 #'
-#' To access this data frame of station information, use
-#' \code{\link[utils]{data}("stations")} to load it into the global environment
-#' for inspection or use by the user.
+#' The data are automatically loaded with the package, to see the stations, type
+#' \code{stations}
 #'
 #' @format A data frame with 27699 observations of 12 variables:
 #' \describe{

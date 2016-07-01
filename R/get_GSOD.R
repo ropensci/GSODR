@@ -23,7 +23,8 @@
 #' output file. Defaults to the current working directory.
 #' @param max_missing The maximum number of days allowed to be missing from a
 #' station's data before it is excluded from final file output. Defaults to five
-#' days.
+#' days. If a single station is specified, this option is ignored and any data
+#' available, even an empty file,from NCDC will be returned.
 #' @param agroclimatology Only clean data for stations between latitudes 60 and
 #' -60 for agroclimatology work, defaults to FALSE. Set to FALSE to override and
 #' include only stations within the confines of these latitudes.
@@ -205,7 +206,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                      shapefile = FALSE, CSV = TRUE) {
 
   # Setting up options, creating objects, check variables entered by user-------
-  options(warn = 2)
+
+  opt <- settings::options_manager(warn = 2, timeout = 300)
 
   utils::data("stations", package = "GSODR", envir = environment())
   stations <- get("stations", envir = environment())
@@ -232,7 +234,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   # By default, if a single station is selected, then we will report even just
   # one day of data if that's all that is recorded
   if (!is.null(station)) {
-    max_missing <- 364
+    max_missing <- 366
   }
 
   ftp_site <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
@@ -278,7 +280,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 
     # If a single station is selected---------------------- --------------------
     if (!is.null(station)) {
-      tmp <- .read_gz(paste0(ftp_site, yr, "/", station, "-", yr, ".op.gz"))
+      tmp <- try(.read_gz(paste0(ftp_site, yr, "/", station, "-", yr,
+                                 ".op.gz")))
       GSOD_XY <- .reformat(tmp, stations)
     } else {
       # For a country, the entire set or agroclimatology -----------------------
@@ -367,9 +370,9 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   tmp$YDAY <- lubridate::yday(as.Date(paste(tmp$YEAR, tmp$MONTH, tmp$DAY,
                                             sep = "-")))
 
-  tmp$TEMP <- ifelse(!is.na(tmp$TEMP), round( ( (5 / 9) * (tmp$TEMP - 32)), 1),
+  tmp$TEMP <- ifelse(!is.na(tmp$TEMP), round( ((5 / 9) * (tmp$TEMP - 32)), 1),
                      NA_integer_)
-  tmp$DEWP <- ifelse(!is.na(tmp$DEWP), round( ( (5 / 9) * (tmp$DEWP - 32)), 1),
+  tmp$DEWP <- ifelse(!is.na(tmp$DEWP), round( ((5 / 9) * (tmp$DEWP - 32)), 1),
                      NA_integer_)
   tmp$WDSP <- ifelse(!is.na(tmp$WDSP), round(tmp$WDSP * 0.514444444, 1),
                      NA_integer_)
@@ -419,6 +422,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                        "I.THUNDER", "I.TDO_FNL",
                        "EA", "ES", "RH")]
   return(GSOD_df)
+  settings::reset(opt)
 }
 
 .read_gz <- function(gz_file) {
