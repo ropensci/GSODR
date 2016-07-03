@@ -206,7 +206,6 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                      shapefile = FALSE, CSV = TRUE) {
 
   # Setting up options, creating objects, check variables entered by user-------
-
   opt <- settings::options_manager(warn = 2, timeout = 300)
 
   utils::data("stations", package = "GSODR", envir = environment())
@@ -225,6 +224,9 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 
   # Check years given by the user, are they valid?
   .validate_years(years)
+
+  # Check station given by user, is it valid?
+  .validate_station(station)
 
   # Check country given by user and format for use in function
   if (!is.null(country)) {
@@ -331,6 +333,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   }
   unlink(tf)
   unlink(td)
+  settings::reset(opt)
 }
 
 # Functions used within this package -------------------------------------------
@@ -422,7 +425,6 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                        "I.THUNDER", "I.TDO_FNL",
                        "EA", "ES", "RH")]
   return(GSOD_df)
-  settings::reset(opt)
 }
 
 .read_gz <- function(gz_file) {
@@ -535,5 +537,18 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
       }
       return(1)
     }
+  }
+}
+
+.validate_station <- function(station){
+  utils::data("stations", package = "GSODR", envir = environment())
+  stations <- get("stations", envir = environment())
+  stations[, 12] <- as.character(stations[, 12])
+
+  if (station %in% stations[, 12] == FALSE) {
+    stop("\nThis is not a valid station ID number, please check.\n
+         Station IDs are provided as a part of the GSODR package in the
+         'stations' data frame in the STNID column.")
+    return(0)
   }
 }
