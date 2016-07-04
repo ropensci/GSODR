@@ -2,7 +2,7 @@ Package: GSODR
 Type: Package
 Title: Download, Clean and Generate New Variables from GSOD Data
 Version: 0.1.8
-Date: 2016-05-26
+Date: 2016-07-04
 Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     email = "adamhsparks@gmail.com"),
     person("Tomislav", "Hengl", role = "ctb",
