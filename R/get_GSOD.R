@@ -4,13 +4,20 @@
 #'the Global Surface Summary of the Day (GSOD) data provided by the US National
 #'Climatic Data Center (NCDC),
 #'\url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod},
-#'and generates three new variables; Saturation Vapor Pressure (ES) – Actual
-#'Vapor Pressure (EA) and relative humidity. Stations are individually checked
-#'for number of missing days to assure data quality, stations with too many
-#'missing observations are omitted, stations with a latitude of < -90 or > 90 or
-#'longitude of < -180 or > 180 are removed. All units are converted to
-#'International System of Units (SI), e.g. Fahrenheit to Celsius and inches to
+#'and calculates three new variables; Saturation Vapor Pressure (ES) – Actual
+#'Vapor Pressure (EA) and relative humidity (RH). Stations are individually
+#'checked for number of missing days to assure data quality, stations with too
+#'many missing observations are omitted, stations with a latitude of < -90 or >
+#'90 or longitude of < -180 or > 180 are removed. All units are converted to
+#'International System of Units (SI), e.g., Fahrenheit to Celsius and inches to
 #'millimetres. For convenience elevation is converted from decimetres to metres.
+#'Alternative elevation measurements are supplied for missing values or values
+#'found to be questionable based on the Consulatative Group for International
+#'Agricultural Research's Consortium for Spatial Information group's (CGIAR-CSI)
+#'Shuttle Radar Topography Mission 90 metre (SRTM 90m) digital elevation data
+#'based on NASA's original SRTM 90m data. Further information on these data and
+#'methods can be found on GSODR's GitHub repository here:
+#'\url{https://github.com/adamhsparks/GSODR/blob/master/data-raw/fetch_isd-history.md}
 #'
 #' @param years Year(s) of weather data to download.
 #' @param station Specify single station for which to retrieve, check and clean
@@ -198,7 +205,7 @@
 #'
 #' @references {Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled
 #' SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
-#' \url{http://www.cgiar-csi.org/data/srtm-90m-digital-elevation-database-v4-1}}
+#' \url{http://srtm.csi.cgiar.org}}
 #'
 #' @export
 get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
