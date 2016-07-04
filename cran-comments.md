@@ -25,7 +25,8 @@ This is a new minor release.
   [https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md](https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md)
   for a description
   * Updated documentation
-  * Set NA or missing values in CSV or Shapefile to -9999 from -9999.99 to align with other data sources such as Worldclim
+  * Set NA or missing values in CSV or Shapefile to -9999 from -9999.99 to align
+  with other data sources such as Worldclim
   
 ### Improvements
   * Documentation is more complete and easier to use
