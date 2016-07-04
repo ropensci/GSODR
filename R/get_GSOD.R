@@ -198,7 +198,7 @@
 #'
 #' @references {Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled
 #' SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
-#' \url{http://srtm.csi.cgiar.org}}
+#' \url{http://www.cgiar-csi.org/data/srtm-90m-digital-elevation-database-v4-1}}
 #'
 #' @export
 get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
