@@ -373,9 +373,9 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   tmp$YDAY <- lubridate::yday(as.Date(paste(tmp$YEAR, tmp$MONTH, tmp$DAY,
                                             sep = "-")))
 
-  tmp$TEMP <- ifelse(!is.na(tmp$TEMP), round( ((5 / 9) * (tmp$TEMP - 32)), 1),
+  tmp$TEMP <- ifelse(!is.na(tmp$TEMP), round( ( (5 / 9) * (tmp$TEMP - 32)), 1),
                      NA_integer_)
-  tmp$DEWP <- ifelse(!is.na(tmp$DEWP), round( ((5 / 9) * (tmp$DEWP - 32)), 1),
+  tmp$DEWP <- ifelse(!is.na(tmp$DEWP), round( ( (5 / 9) * (tmp$DEWP - 32)), 1),
                      NA_integer_)
   tmp$WDSP <- ifelse(!is.na(tmp$WDSP), round(tmp$WDSP * 0.514444444, 1),
                      NA_integer_)
@@ -478,7 +478,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 .get_country <- function(country = "") {
   country <- toupper(raster::trim(country[1]))
   cs <- raster::ccodes()
-  # from user juba, http://stackoverflow.com/questions/16516593/convert-from-lowercase-to-uppercase-all-values-in-all-character-variables-in-dat
+  # from Stack Overflow user juba, goo.gl/S31jyk
   cs <- data.frame(lapply(cs, function(x) {
     if (is.character(x)) return(toupper(x))
     else return(x)
