@@ -29,7 +29,7 @@ Description: Download, clean, reformat and create new variables from the
     longitude of < - 180 or > 180. Output is returned as a comma-separated
     values (CSV) file written to disk in a location selected by the user, which
     summarises each year by station and includes new variables: actual vapor
-    pressure, saturation vapor pressure and relative humidity are calculated
+    pressure, saturation vapor pressure and relative humidity, calculated
     from the original GSOD data. The resulting files can be as large as 500mb
     depending on the user's stringency for missing data and geographic area of
     interest. Be sure to have sufficient RAM and disk space as well as a
