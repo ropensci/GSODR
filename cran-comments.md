@@ -1,8 +1,8 @@
 ## Test environments
-* local OS X install, R 3.3.0
-* Ubuntu 12.04 (on travis-ci), R-3.3.0
-* Windows Server 2012 R2 x64 (build 9600) (on appveyor), R-3.3.0
-* win-builder, R Under development (unstable) (2016-05-31 r70688)
+* local OS X install, R version 3.3.1 (2016-06-21)
+* Ubuntu 12.04 (on travis-ci), R version 3.3.1 (2016-06-21)
+* Windows (on win-builder), R version 3.3.1 (2016-06-21)
+* Windows (on win-builder), R Under development (unstable) (2016-06-30 r70858)
 
 ## R CMD check results
 There were no ERRORs or WARNINGs. 
