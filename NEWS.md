@@ -1,3 +1,8 @@
+# GSODR v0.1.8.1
+
+## Bug fixes
+  * Fix bug where no station is specified, function fails to run
+ 
 # GSODR v0.1.8
 
 ## Bug fixes
