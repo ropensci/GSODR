@@ -235,8 +235,11 @@ get_GSOD <- function(years = NULL, stations = NULL, country = NULL, path = "",
   # Check years given by the user, are they valid?
   .validate_years(years)
 
-  # Check stations given by user, is it valid?
-  .validate_station(stations)
+  # Check station given by user, is it valid?
+  if (!is.null(station)) {
+  .validate_station(station)
+  }
+
 
   # Check country given by user and format for use in function
   if (!is.null(country)) {
@@ -341,10 +344,12 @@ get_GSOD <- function(years = NULL, stations = NULL, country = NULL, path = "",
       rm(GSOD_XY)
     }
   }
+
   unlink(tf)
   unlink(td)
   settings::reset(opt)
-}
+
+  }
 
 # Functions used within this package -------------------------------------------
 # Check against maximum permissible missing days

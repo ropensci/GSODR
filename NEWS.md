@@ -1,12 +1,17 @@
+<<<<<<< HEAD
 # GSODR v0.1.9
 ## Changes
 
-# GSODR v0.1.8 (Release Date: 2016-07-04)
+# GSODR v0.1.8.1 (Release Date: 2016-07-07)
 
+## Bug fixes
+  * Fix bug where no station is specified, function fails to run
+
+# GSODR v0.1.8 (Release Date: 2016-07-04)
 ## Bug fixes
   * Fix bug with connection timing out for single station queries commit:  [a126641e00dc7acc21844ff0436e5702f8b6e04a](https://github.com/adamhsparks/GSODR/commit/a126641e00dc7acc21844ff0436e5702f8b6e04a)  
   * Somehow the previously working function that checked country names broke
-  with the toupper() function. A new [function from juba](http://stackoverflow.com/questions/16516593/convert-from-lowercase-to-uppercase-all-values-in-all-character-variables-in-dat)
+  with the `toupper()` function. A new [function from juba](http://stackoverflow.com/questions/16516593/convert-from-lowercase-to-uppercase-all-values-in-all-character-variables-in-dat)
   fixes this issue and users can now select country again  
 
 ## Changes
@@ -20,10 +25,10 @@
   * Set NA or missing values in CSV or shapefile to -9999 from -9999.99 to align
   with other data sources such as Worldclim
 
-  
+
 ## Improvements
   * Documentation is more complete and easier to use  
-  
+
 # GSODR v0.1.7 (Release Date: 2016-06-02)
 
 ## Bug fixes
