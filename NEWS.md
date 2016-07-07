@@ -1,4 +1,7 @@
-# GSODR v0.1.8
+# GSODR v0.1.9
+## Changes
+
+# GSODR v0.1.8 (Release Date: 2016-07-04)
 
 ## Bug fixes
   * Fix bug with connection timing out for single station queries commit:  [a126641e00dc7acc21844ff0436e5702f8b6e04a](https://github.com/adamhsparks/GSODR/commit/a126641e00dc7acc21844ff0436e5702f8b6e04a)  
