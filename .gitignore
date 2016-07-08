@@ -1,8 +1,13 @@
-.Rproj.user
-.Rhistory
+.DS_Store
+
 .RData
-inst/doc
+
+.Rhistory
 
 *.Rproj
 
+.Rproj.user
+
 fetch_isd-history_cache
+
+inst/doc

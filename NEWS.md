@@ -3,7 +3,6 @@
 
 # GSODR v0.1.8.1 (Release Date: 2016-07-07)
 
-## Bug fixes
   * Fix bug where no station is specified, function fails to run
 
 # GSODR v0.1.8 (Release Date: 2016-07-04)
