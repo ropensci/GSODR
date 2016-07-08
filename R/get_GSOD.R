@@ -402,7 +402,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                     NA_integer_)
   tmp$MIN <- ifelse(!is.na(tmp$MIN), round( (tmp$MIN - 32) * (5 / 9), 2),
                     NA_integer_)
-  tmp$PRCP <- ifelse(!is.na(tmp$PRCP), round( (tmp$PRCP * 25.4) * 10, 1),
+  tmp$PRCP <- ifelse(!is.na(tmp$PRCP), round( (tmp$PRCP * 25.4) * 100, 1),
                      NA_integer_)
   tmp$SNDP <- ifelse(!is.na(tmp$SNDP), round( (tmp$SNDP * 25.4) * 10, 1),
                      NA_integer_)
