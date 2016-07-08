@@ -2,7 +2,7 @@
 * local OS X install, R version 3.3.1 (2016-06-21)
 * Ubuntu 12.04 (on travis-ci), R version 3.3.1 (2016-06-21)
 * Windows (on win-builder), R version 3.3.1 (2016-06-21)
-* Windows (on win-builder), R Under development (unstable) (2016-06-30 r70858)
+* Windows (on win-builder), R Under development (unstable) (2016-07-05 r70861)
 
 ## R CMD check results
 There were no ERRORs or WARNINGs. 

@@ -11,8 +11,9 @@ get_GSOD(years = NULL, station = NULL, country = NULL, path = "",
 \arguments{
 \item{years}{Year(s) of weather data to download.}
 
-\item{station}{Specify single station for which to retrieve, check and clean
-weather data.}
+\item{station}{Specify a single station for which to retrieve, check and
+clean weather data. When this option is selected. When using this option,
+the max_missing parameter is ignored and any available data are returned.}
 
 \item{country}{Specify a country of interest for which to retrieve weather
 data, full name or 3 letter ISO code work. Use
@@ -24,12 +25,12 @@ output file. Defaults to the current working directory.}
 
 \item{max_missing}{The maximum number of days allowed to be missing from a
 station's data before it is excluded from final file output. Defaults to five
-days. If a single station is specified, this option is ignored and any data
-available, even an empty file,from NCDC will be returned.}
+days. If the station parameter is specified, this option is ignored and any
+data available, even an empty file,from NCDC will be returned.}
 
-\item{agroclimatology}{Only clean data for stations between latitudes 60 and
+\item{agroclimatology}{Only clean data for station between latitudes 60 and
 -60 for agroclimatology work, defaults to FALSE. Set to FALSE to override and
-include only stations within the confines of these latitudes.}
+include only station within the confines of these latitudes.}
 
 \item{shapefile}{If set to TRUE, create an ESRI shapefile of vector type,
 points, of the data for use in a GIS. Defaults to FALSE, no shapefile
@@ -45,8 +46,8 @@ Climatic Data Center (NCDC),
 \url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod},
 and calculates three new variables; Saturation Vapor Pressure (ES) – Actual
 Vapor Pressure (EA) and relative humidity (RH). Stations are individually
-checked for number of missing days to assure data quality, stations with too
-many missing observations are omitted, stations with a latitude of < -90 or >
+checked for number of missing days to assure data quality, station with too
+many missing observations are omitted, station with a latitude of < -90 or >
 90 or longitude of < -180 or > 180 are removed. All units are converted to
 International System of Units (SI), e.g., Fahrenheit to Celsius and inches to
 millimetres. For convenience elevation is converted from decimetres to metres.
@@ -87,7 +88,7 @@ Air Force Navy" number - with WBAN being the acronym}
 \item{LAT}{Latitude}
 \item{LON}{Longitude}
 \item{ELEV.M}{Station reported elevation (metres to tenths)}
-\item{ELEV.M.SRTM.90m}{Corrected elevation data in whole metres for stations
+\item{ELEV.M.SRTM.90m}{Corrected elevation data in whole metres for station
 derived from Jarvis et al. (2008), extracted from DEM using reported LAT/LON
 values in metres}
 \item{YEARMODA}{Date in YYYY-MM-DD format}
@@ -143,7 +144,7 @@ hourly or synoptic-reported temperature)}
 the day converted to millimetres to hundredths will usually not end with the
 midnight observation--i.e., may include latter part of previous day. ".00"
 indicates no measurable precipitation (includes a trace). Missing = -9999.
-\emph{Note}: Many stations do not report '0' on days with no precipitation--
+\emph{Note}: Many station do not report '0' on days with no precipitation--
 therefore, '-9999' will often appear on these days. For example, a
 station may only report a 6-hour amount for the period during which rain
 fell. See PRCP.FLAG column for source of data}
