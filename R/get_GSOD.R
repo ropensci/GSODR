@@ -207,6 +207,8 @@
 #' SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
 #' \url{http://srtm.csi.cgiar.org}}
 #'
+#' @importFrom foreach %dopar%
+#'
 #' @export
 get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                      max_missing = 5, agroclimatology = FALSE,
@@ -225,7 +227,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 
   # Create objects for use later
   GSOD_df <- NULL
-
+  j <- NULL
   # Check data path given by user, does it exist? Is it properly formatted?
   path <- .get_data_path(path)
 
@@ -254,8 +256,12 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   for (yr in years) {
     if (is.null(station)) {
 
-      try(curl::curl_download(url = paste0(ftp_site, yr, "/gsod_", yr, ".tar"),
-                              destfile = tf, quiet = FALSE, mode = "wb"))
+      tryCatch(curl::curl_download(url = paste0(ftp_site, yr, "/gsod_", yr, ".tar"),
+                              destfile = tf, quiet = FALSE, mode = "wb"),
+               error = function(x) cat(paste0("\nThe download stoped at year ",
+                                              yr, ".\nPlease restart the
+                                              'get_GSOD()' function starting at
+                                              this point.\n")))
       utils::untar(tarfile = tf, exdir  = paste0(td, "/", yr, "/"))
 
       GSOD_list <- list.files(paste0(td, "/", yr, "/"),
@@ -295,15 +301,19 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                                  ".op.gz")))
       GSOD_XY <- .reformat(tmp, stations)
     } else {
+      cl <- parallel::makeCluster(parallel::detectCores() - 2)
+      doParallel::registerDoParallel(cl)
       # For a country, the entire set or agroclimatology -----------------------
       GSOD_objects <- list()
-      for (j in seq_len(length(GSOD_list))) {
+      foreach::foreach(j = seq_len(length(GSOD_list))) %dopar% {
         tmp <- try(.read_gz(paste0(td, "/", yr, "/", GSOD_list[j])))
-        # check to see if max_missing < missing days, if so, go to next
-        if (.check(tmp, yr, max_missing) == TRUE) next
 
-        GSOD_objects[[j]] <- .reformat(tmp, stations)
+        # check to see if max_missing < missing days, if not, go to next
+        if (.check(tmp, yr, max_missing) == FALSE) {
+          GSOD_objects[[j]] <- .reformat(tmp, stations)
+        }
       }
+      parallel::stopCluster(cl)
     }
 
     if (!is.null(station)) {
@@ -341,10 +351,10 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
     }
   }
 
+  # cleanup and reset to default state
   unlink(tf)
   unlink(td)
   settings::reset(opt)
-
 }
 
 # Functions used within this package -------------------------------------------
@@ -504,17 +514,17 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
       stop("\nUnknown ISO code. Please provide a valid name or 2 or 3 letter ISO
            country code; you can get a list by using: getData('ISO3')")
     }
-    } else if (nc == 2) {
-      if (country %in% cs[, 3]) {
-        i <- which(country == cs[, 3])
-        return(cs[i, 2])
-      } else {
-        stop("\nUnknown ISO code. Please provide a valid name or 2 or 3 letter ISO
+  } else if (nc == 2) {
+    if (country %in% cs[, 3]) {
+      i <- which(country == cs[, 3])
+      return(cs[i, 2])
+    } else {
+      stop("\nUnknown ISO code. Please provide a valid name or 2 or 3 letter ISO
              country code; you can get a list by using: getData('ISO3')")
-      }
-      } else if (country %in% cs[, 1]) {
-        i <- which(country == cs[, 1])
-        return(cs[i, 2])
+    }
+  } else if (country %in% cs[, 1]) {
+    i <- which(country == cs[, 1])
+    return(cs[i, 2])
   } else if (country %in% cs[, 4]) {
     i <- which(country == cs[, 4])
     return(cs[i, 2] )
@@ -526,7 +536,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
          can get a list by using: getData('ISO3')")
     return(0)
   }
-  }
+}
 
 # Ram Narasimhan
 # Version 0.4
