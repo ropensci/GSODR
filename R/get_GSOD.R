@@ -20,9 +20,8 @@
 #'\url{https://github.com/adamhsparks/GSODR/blob/master/data-raw/fetch_isd-history.md}
 #'
 #' @param years Year(s) of weather data to download.
-#' @param stations Specify a single or list of stations for which to retrieve,
-#' check and clean weather data. When this option is selected, the max_missing
-#' parameter is ignored and any available data are returned.
+#' @param station Specify single station for which to retrieve, check and clean
+#' weather data.
 #' @param country Specify a country of interest for which to retrieve weather
 #' data, full name or 3 letter ISO code work. Use
 #' \code{\link[raster]{getData}("ISO3")} to retrieve a list of possible three
@@ -31,8 +30,8 @@
 #' output file. Defaults to the current working directory.
 #' @param max_missing The maximum number of days allowed to be missing from a
 #' station's data before it is excluded from final file output. Defaults to five
-#' days. If the stations parameter is specified, this option is ignored and any
-#' data available, even an empty file,from NCDC will be returned.
+#' days. If a single station is specified, this option is ignored and any data
+#' available, even an empty file,from NCDC will be returned.
 #' @param agroclimatology Only clean data for stations between latitudes 60 and
 #' -60 for agroclimatology work, defaults to FALSE. Set to FALSE to override and
 #' include only stations within the confines of these latitudes.
@@ -41,8 +40,6 @@
 #' created.
 #' @param CSV If set to TRUE, create a comma separated value (CSV) file of data,
 #' defaults to TRUE, a CSV file is created.
-#' @param merge If set to TRUE, merge yearly file outputs into one file written
-#' to disk.
 #'
 #'
 #' @details
@@ -188,20 +185,20 @@
 #' # Download weather station for Toowoomba, Queensland for 2010, save resulting
 #' # file in the user's "Downloads" directory.
 #'
-#' get_GSOD(years = 2010, stations = "955510-99999", path = "~/Downloads")
+#' get_GSOD(years = 2010, station = "955510-99999", path = "~/Downloads")
 #'
 #'
 #' # Download global GSOD data for agroclimatology work for years 2009 and 2010
 #' # and generate yearly summary files, GSOD_2009_XY and GSOD_2010_XY in folders
 #' # named 2009 and 2010 in the user's Downloads directory with a maximum of
-#' # five missing days per weather stations allowed.
+#' # five missing days per weather station allowed.
 #'
 #' get_GSOD(years = 2010:2011, path = "~/Downloads", agroclimatology = TRUE)
 #'
 #'
 #' # Download data for Australia for year 2010 and generate a yearly
 #' # summary file, GSOD_2010_XY files in the user's Downloads directory with a
-#' maximum of five missing days per stations allowed.
+#' maximum of five missing days per station allowed.
 #'
 #' get_GSOD(years = 2010, country = "Australia", path = "~/Downloads")
 #' }
@@ -211,9 +208,9 @@
 #' \url{http://srtm.csi.cgiar.org}}
 #'
 #' @export
-get_GSOD <- function(years = NULL, stations = NULL, country = NULL, path = "",
+get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                      max_missing = 5, agroclimatology = FALSE,
-                     shapefile = FALSE, CSV = TRUE, merge = FALSE) {
+                     shapefile = FALSE, CSV = TRUE) {
 
   # Setting up options, creating objects, check variables entered by user-------
   opt <- settings::options_manager(warn = 2, timeout = 300)
@@ -237,18 +234,17 @@ get_GSOD <- function(years = NULL, stations = NULL, country = NULL, path = "",
 
   # Check station given by user, is it valid?
   if (!is.null(station)) {
-  .validate_station(station)
+    .validate_station(station)
   }
-
 
   # Check country given by user and format for use in function
   if (!is.null(country)) {
     country <- .get_country(country)
   }
 
-  # By default, if a single stations is selected, then we will report even just
+  # By default, if a single station is selected, then we will report even just
   # one day of data if that's all that is recorded
-  if (!is.null(stations)) {
+  if (!is.null(station)) {
     max_missing <- 366
   }
 
@@ -256,7 +252,7 @@ get_GSOD <- function(years = NULL, stations = NULL, country = NULL, path = "",
 
   # For loop if there are more than one year entered ---------------------------
   for (yr in years) {
-    if (is.null(stations)) {
+    if (is.null(station)) {
 
       try(curl::curl_download(url = paste0(ftp_site, yr, "/gsod_", yr, ".tar"),
                               destfile = tf, quiet = FALSE, mode = "wb"))
@@ -293,9 +289,9 @@ get_GSOD <- function(years = NULL, stations = NULL, country = NULL, path = "",
       }
     }
 
-    # If a stations are selected--------------------------- --------------------
-    if (!is.null(stations)) {
-      tmp <- try(.read_gz(paste0(ftp_site, yr, "/", stations, "-", yr,
+    # If a single station is selected---------------------- --------------------
+    if (!is.null(station)) {
+      tmp <- try(.read_gz(paste0(ftp_site, yr, "/", station, "-", yr,
                                  ".op.gz")))
       GSOD_XY <- .reformat(tmp, stations)
     } else {
@@ -310,14 +306,14 @@ get_GSOD <- function(years = NULL, stations = NULL, country = NULL, path = "",
       }
     }
 
-    if (!is.null(stations)) {
+    if (!is.null(station)) {
       GSOD_XY <- GSOD_XY
     } else {
       GSOD_XY <- data.table::rbindlist(GSOD_objects)
     }
 
     #### Write to disk ---------------------------------------------------------
-    if (!is.null(stations)) {
+    if (!is.null(station)) {
       outfile <- paste0(path, "/GSOD-", station, "-", yr)
     } else if (!is.null(country)) {
       outfile <- paste0(path, "/GSOD-", country, "-", yr)
@@ -349,7 +345,7 @@ get_GSOD <- function(years = NULL, stations = NULL, country = NULL, path = "",
   unlink(td)
   settings::reset(opt)
 
-  }
+}
 
 # Functions used within this package -------------------------------------------
 # Check against maximum permissible missing days
@@ -508,17 +504,17 @@ get_GSOD <- function(years = NULL, stations = NULL, country = NULL, path = "",
       stop("\nUnknown ISO code. Please provide a valid name or 2 or 3 letter ISO
            country code; you can get a list by using: getData('ISO3')")
     }
-  } else if (nc == 2) {
-    if (country %in% cs[, 3]) {
-      i <- which(country == cs[, 3])
-      return(cs[i, 2])
-    } else {
-      stop("\nUnknown ISO code. Please provide a valid name or 2 or 3 letter ISO
+    } else if (nc == 2) {
+      if (country %in% cs[, 3]) {
+        i <- which(country == cs[, 3])
+        return(cs[i, 2])
+      } else {
+        stop("\nUnknown ISO code. Please provide a valid name or 2 or 3 letter ISO
              country code; you can get a list by using: getData('ISO3')")
-    }
-  } else if (country %in% cs[, 1]) {
-    i <- which(country == cs[, 1])
-    return(cs[i, 2])
+      }
+      } else if (country %in% cs[, 1]) {
+        i <- which(country == cs[, 1])
+        return(cs[i, 2])
   } else if (country %in% cs[, 4]) {
     i <- which(country == cs[, 4])
     return(cs[i, 2] )
@@ -530,7 +526,7 @@ get_GSOD <- function(years = NULL, stations = NULL, country = NULL, path = "",
          can get a list by using: getData('ISO3')")
     return(0)
   }
-}
+  }
 
 # Ram Narasimhan
 # Version 0.4
@@ -555,12 +551,12 @@ get_GSOD <- function(years = NULL, stations = NULL, country = NULL, path = "",
   }
 }
 
-.validate_station <- function(stations){
+.validate_station <- function(station){
   utils::data("stations", package = "GSODR", envir = environment())
   stations <- get("stations", envir = environment())
   stations[, 12] <- as.character(stations[, 12])
 
-  if (stations %in% stations[, 12] == FALSE) {
+  if (station %in% stations[, 12] == FALSE) {
     stop("\nThis is not a valid station ID number, please check.\n
          Station IDs are provided as a part of the GSODR package in the
          'stations' data frame in the STNID column.")
