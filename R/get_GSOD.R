@@ -297,8 +297,12 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 
     # If a single station is selected---------------------- --------------------
     if (!is.null(station)) {
-      tmp <- try(.read_gz(paste0(ftp_site, yr, "/", station, "-", yr,
-                                 ".op.gz")))
+      tmp <- tryCatch(
+        .read_gz(paste0(ftp_site, yr, "/", station, "-", yr, ".op.gz")),
+        error = function(x) cat(paste0("\nThe download stoped at year ",
+                                       yr, ".\nPlease restart the
+                                       'get_GSOD()' function starting at
+                                       this point.\n")))
       GSOD_XY <- .reformat(tmp, stations)
     } else {
       cl <- parallel::makeCluster(parallel::detectCores() - 2)
@@ -412,7 +416,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                     NA_integer_)
   tmp$MIN <- ifelse(!is.na(tmp$MIN), round( (tmp$MIN - 32) * (5 / 9), 2),
                     NA_integer_)
-  tmp$PRCP <- ifelse(!is.na(tmp$PRCP), round( (tmp$PRCP * 25.4) * 10, 1),
+  tmp$PRCP <- ifelse(!is.na(tmp$PRCP), round( (tmp$PRCP * 25.4) * 100, 1),
                      NA_integer_)
   tmp$SNDP <- ifelse(!is.na(tmp$SNDP), round( (tmp$SNDP * 25.4) * 10, 1),
                      NA_integer_)
