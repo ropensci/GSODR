@@ -7,9 +7,9 @@
 
 An R package that provides a function that automates downloading and cleaning data from the "[Global Surface Summary of the Day (GSOD)](https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod)" data provided by the US National Climatic Data Center (NCDC). Stations are individually checked for number of missing days to assure data quality, stations with too many missing observations are omitted. All units are converted to metric, e.g. feet to metres and Fahrenheit to Celsius. Output is saved as a Comma Separated Value (CSV) file or ESRI format shapefile summarizing each year by station, which includes vapor pressure and relative humidity variables calculated from existing data in GSOD.
 
-This package was largely based on Tomislav Hengl's work in "[A Practical Guide to Geostatistical Mapping](http://spatial-analyst.net/book/getGSOD.R)", with updates for speed, cross-platform functionality. Now it's added and more options for data retrieval and error correction.
+This package was largely based on Tomislav Hengl's work in "[A Practical Guide to Geostatistical Mapping](http://spatial-analyst.net/book/getGSOD.R)", with updates for speed, cross-platform functionality, and added more options for data retrieval and error correction.
 
-Be sure to have disk space free and allocate the proper time for this to run. This is a time, RAM and disk space intensive process, however it does not require much processing power.
+Be sure to have disk space free and allocate the proper time for this to run. This is a time, RAM and disk space intensive process. For any query of GSOD data other than a single station, the process is parallelised to use `number of cores - 2` to clean and reformat the data.
 
 For more information see the description of the data provided by NCDC, [http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt](http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt).
 
