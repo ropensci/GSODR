@@ -1,6 +1,19 @@
 # GSODR v0.1.9
 ## Changes
 
+## Bug fixes
+  * Fix bug in precipitation calculation. Documentation states that PRCP is in
+  mm, was only calculated as cm  
+  
+## Changes
+  * Country level, agroclimatology and global data query conversions and
+  calculations are processed in parallel now to reduce runtime  
+  
+## Improvements
+  * Users can now select to merge output for station queries across multiple
+  years. Previously one year = one file per station. Now by setting
+  `merge_station_years = TRUE` parameter, only one output file is generated  
+
 # GSODR v0.1.8.1 (Release Date: 2016-07-07)
 
   * Fix bug where no station is specified, function fails to run

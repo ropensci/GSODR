@@ -6,7 +6,7 @@
 \usage{
 get_GSOD(years = NULL, station = NULL, country = NULL, path = "",
   max_missing = 5, agroclimatology = FALSE, shapefile = FALSE,
-  CSV = TRUE)
+  CSV = TRUE, merge_station_years = FALSE)
 }
 \arguments{
 \item{years}{Year(s) of weather data to download.}
@@ -37,6 +37,9 @@ created.}
 
 \item{CSV}{If set to TRUE, create a comma separated value (CSV) file of data,
 defaults to TRUE, a CSV file is created.}
+
+\item{merge_station_years}{If set to TRUE, merge output files into one output
+file for all years when selecting a single station, defaults to FALSE.}
 }
 \description{
 This function automates downloading, cleaning, reformatting of data from
@@ -63,7 +66,10 @@ Due to the size of the resulting data, output is saved as a comma-separated,
 csv, file (default) or ESRI shapefile in a directory specified by the user or
 defaults to the current working directory. The files summarize each year by
 station, which includes vapour pressure and relative humidity variables
-calculated from existing data in GSOD.
+calculated from existing data in GSOD. Optionally, because the file sizes are
+much smaller, when selecting a single station, all years queried may be
+merged into one final ouptut file (CSV or shapefile) using the \code{
+merge_station_years} option.
 
 All missing values in resulting files are represented as -9999
 regardless of which field they occur in.
