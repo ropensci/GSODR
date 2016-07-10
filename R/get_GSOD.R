@@ -249,7 +249,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   # Check if user set merge to TRUE,
   # is there more than one year selected for the station?
   if (merge_station_years == TRUE) {
-    .validate_merge(years)
+    .validate_merge(years, station)
   }
 
   # Check country given by user and format for use in function
@@ -599,7 +599,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   }
 }
 
-.validate_merge <- function(years) {
+.validate_merge <- function(years, station) {
   if (is.null(station)) {
     stop("\nThe option to merge multiple years into one file is only possible
          when selecting a single station.\n")
