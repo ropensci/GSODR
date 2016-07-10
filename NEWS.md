@@ -1,10 +1,24 @@
-# GSODR v0.1.8.1
+# GSODR v0.1.9
+## Changes
 
 ## Bug fixes
-  * Fix bug where no station is specified, function fails to run  
- 
-# GSODR v0.1.8
+  * Fix bug in precipitation calculation. Documentation states that PRCP is in
+  mm, was only calculated as cm  
+  
+## Changes
+  * Country level, agroclimatology and global data query conversions and
+  calculations are processed in parallel now to reduce runtime  
+  
+## Improvements
+  * Users can now select to merge output for station queries across multiple
+  years. Previously one year = one file per station. Now by setting
+  `merge_station_years = TRUE` parameter, only one output file is generated  
 
+# GSODR v0.1.8.1 (Release Date: 2016-07-07)
+
+  * Fix bug where no station is specified, function fails to run
+
+# GSODR v0.1.8 (Release Date: 2016-07-04)
 ## Bug fixes
   * Fix bug with connection timing out for single station queries commit:  [a126641e00dc7acc21844ff0436e5702f8b6e04a](https://github.com/adamhsparks/GSODR/commit/a126641e00dc7acc21844ff0436e5702f8b6e04a)  
   * Somehow the previously working function that checked country names broke
@@ -22,10 +36,10 @@
   * Set NA or missing values in CSV or shapefile to -9999 from -9999.99 to align
   with other data sources such as Worldclim
 
-  
+
 ## Improvements
   * Documentation is more complete and easier to use  
-  
+
 # GSODR v0.1.7 (Release Date: 2016-06-02)
 
 ## Bug fixes
