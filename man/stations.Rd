@@ -3,7 +3,7 @@
 \docType{data}
 \name{stations}
 \alias{stations}
-\title{GSOD Station Data}
+\title{Stations}
 \format{A data frame with 27699 observations of 12 variables:
 \describe{
   \item{USAF}{Air Force Datsav3 station number}
@@ -22,14 +22,8 @@
   \item{STNID}{Unique station ID, a concatenation of USAF and WBAN number,
   used for merging with station data weather files}
   \item{ELEV.M.SRTM.90m}{Elevation in metres corrected for possible errors}
-}}
-\source{
-\url{ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv}
 }
-\usage{
-stations
-}
-\description{
+
 Station information for the US National Climatic Data Centre (NCDC)
 Global Surface Summary of the Day (GSOD) weather data. The original file has
 missing and incorrect information. This is a clean version of this dataset,
@@ -46,18 +40,26 @@ removed.}
 using mean values of a 200m buffer around the reported LAT/LON station
 location within the CGIAR-CSI hole-filled 90m SRTM digital elevation model
 (Jarvis et al. 2008)}
+}}
+\source{
+\url{ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv}
 }
-Users of these data should take into account the following (from the NCDC
-website): \dQuote{"The following data and products may have conditions
+\usage{
+stations
+}
+\description{
+Stations
+}
+\note{
+Users of these data should take into account the following (from the
+NCDC website): \dQuote{The following data and products may have conditions
 placed on their international commercial use. They can be used within the
 U.S. or for non-commercial international activities without restriction. The
 non-U.S. data cannot be redistributed for commercial purposes.
 Re-distribution of these data by others must provide this same
-notification."}
-}
-\details{
-The data are automatically loaded with the package, to see the stations, type
-\code{stations}
+notification.}
+
+The data are automatically loaded with the \code{GSODR} package.
 }
 \references{
 {Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled

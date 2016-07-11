@@ -23,9 +23,10 @@
 #' @param station Specify single station for which to retrieve, check and clean
 #' weather data.
 #' @param country Specify a country of interest for which to retrieve weather
-#' data, full name or 3 letter ISO code work. Use
-#' \code{\link[raster]{getData}("ISO3")} to retrieve a list of possible three
-#' letter ISO country codes.
+#' data; full name. For stations located in locales
+#' having an ISO code 2 or 3 letter ISO code can also be used if known. See
+#' \code{\link{country_list}} for a full list of country names and ISO codes
+#' available.
 #' @param  path Path entered by user indicating where to store resulting
 #' output file. Defaults to the current working directory.
 #' @param max_missing The maximum number of days allowed to be missing from a
@@ -178,11 +179,12 @@
 #'}
 #'
 #'@note Users of these data should take into account the following (from the
-#' NCDC website): "The following data and products may have conditions placed on
-#' their international commercial use. They can be used within the U.S. or for
-#' non-commercial international activities without restriction. The non-U.S.
-#' data cannot be redistributed for commercial purposes. Re-distribution of
-#' these data by others must provide this same notification."
+#' NCDC website): \dQuote{The following data and products may have conditions
+#' placed on their international commercial use. They can be used within the
+#' U.S. or for non-commercial international activities without restriction. The
+#' non-U.S. data cannot be redistributed for commercial purposes.
+#' Re-distribution of these data by others must provide this same
+#' notification.}
 
 #' @examples
 #' \dontrun{
@@ -226,12 +228,14 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   stations <- get("stations", envir = environment())
   stations[, 12] <- as.character(stations[, 12])
 
+  utils::data("country_list", package = "GSODR", envir = environment())
+  country_list <- get("country_list", envir = environment())
+
   # Set up tempfile and directory for downloading data from server
   tf <- tempfile()
   td <- tempdir()
 
   # Create objects for use later
-  GSOD_df <- NULL
   j <- NULL
   GSOD_objects <- list()
 
@@ -265,7 +269,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 
   ftp_site <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
 
-  # For loop if there are more than one year entered ---------------------------
+  # For loop if there are more than one year being queried ---------------------
   for (yr in years) {
     if (is.null(station)) {
 
@@ -293,12 +297,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 
       # If country is set, subset list of stations to clean
       if (!is.null(country)) {
-        countries <- readr::read_table(
-          "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/country-list.txt")[-1, c(1, 3)]
-        countries <- dplyr::left_join(countries, countrycode::countrycode_data,
-                                      by = c(FIPS = "fips104"))
-        country_FIPS <- unlist(as.character(
-          stats::na.omit(countries[countries$iso3c == country, ][1])))
+        country_FIPS <- unlist(as.character(stats::na.omit(
+          country_list[country_list$iso3c == country, ][1])))
         station_list <- stations[stations$CTRY == country_FIPS, ]$STNID
         station_list <- sapply(station_list,
                                function(x) rep(paste0(x, "-", yr, ".op.gz")))
@@ -367,7 +367,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
     #### shapefile--------------------------------------------------------------
     if (shapefile == TRUE) {
       GSOD_XY <- as.data.frame(GSOD_XY) # convert tbl.df to dataframe for sp
-      sp::coordinates(GSOD_XY) <- ~ LON + LAT
+      sp::coordinates(GSOD_XY) <- ~LON + LAT
       sp::proj4string(GSOD_XY) <- sp::CRS("+proj=longlat +datum=WGS84")
       raster::shapefile(GSOD_XY, filename = path.expand(outfile),
                         overwrite = TRUE, encoding = "UTF-8")
@@ -400,6 +400,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 
 # Reformat and generate new variables
 .reformat <- function(tmp, stations) {
+  GSOD_df <- NULL
+
   # add names to columns in data frame
   names(tmp) <- c("STN", "WBAN", "YEAR", "MODA", "TEMP", "TEMP.CNT",
                   "DEWP", "DEWP.CNT", "SLP", "SLP.CNT", "STP",
