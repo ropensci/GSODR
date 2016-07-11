@@ -15,9 +15,10 @@ get_GSOD(years = NULL, station = NULL, country = NULL, path = "",
 weather data.}
 
 \item{country}{Specify a country of interest for which to retrieve weather
-data, full name or 3 letter ISO code work. Use
-\code{\link[raster]{getData}("ISO3")} to retrieve a list of possible three
-letter ISO country codes.}
+data; full name. For stations located in locales
+having an ISO code 2 or 3 letter ISO code can also be used if known. See
+\code{\link{country_list}} for a full list of country names and ISO codes
+available.}
 
 \item{path}{Path entered by user indicating where to store resulting
 output file. Defaults to the current working directory.}
@@ -196,11 +197,12 @@ the occurrence during the day}
 }
 \note{
 Users of these data should take into account the following (from the
-NCDC website): "The following data and products may have conditions placed on
-their international commercial use. They can be used within the U.S. or for
-non-commercial international activities without restriction. The non-U.S.
-data cannot be redistributed for commercial purposes. Re-distribution of
-these data by others must provide this same notification."
+NCDC website): \dQuote{The following data and products may have conditions
+placed on their international commercial use. They can be used within the
+U.S. or for non-commercial international activities without restriction. The
+non-U.S. data cannot be redistributed for commercial purposes.
+Re-distribution of these data by others must provide this same
+notification.}
 }
 \examples{
 \dontrun{

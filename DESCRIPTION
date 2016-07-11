@@ -49,7 +49,6 @@ Depends:
     R (>= 3.0.0)
 License: GPL (>= 3)
 Imports:
-    countrycode,
     curl,
     data.table,
     dplyr,
