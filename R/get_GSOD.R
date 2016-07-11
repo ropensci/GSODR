@@ -321,25 +321,24 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
       } else {
         GSOD_XY <- .reformat(tmp, stations)
       }
+      if (merge_station_years == FALSE) {
+        GSOD_XY <- GSOD_XY
+      }
     } else {
       cl <- parallel::makeCluster(parallel::detectCores() - 2)
       doParallel::registerDoParallel(cl)
       # For a country, the entire set or agroclimatology -----------------------
-      foreach::foreach(j = seq_len(length(GSOD_list))) %dopar% {
-        tmp <- try(.read_gz(paste0(td, "/", yr, "/", GSOD_list[j])))
+      GSOD_XY <- data.table::rbindlist(foreach::foreach(
+        j = seq_len(length(GSOD_list))) %dopar% {
+          tmp <- try(.read_gz(paste0(td, "/", yr, "/", GSOD_list[j])))
 
-        # check to see if max_missing < missing days, if not, go to next
-        if (.check(tmp, yr, max_missing) == FALSE) {
-          GSOD_objects[[j]] <- .reformat(tmp, stations)
+          # check to see if max_missing < missing days, if not, go to next
+          if (.check(tmp, yr, max_missing) == FALSE) {
+            .reformat(tmp, stations)
+          }
         }
-      }
+      )
       parallel::stopCluster(cl)
-    }
-
-    if (merge_station_years == FALSE) {
-      GSOD_XY <- GSOD_XY
-    } else {
-      GSOD_XY <- data.table::rbindlist(GSOD_objects)
     }
 
     #### Write to disk ---------------------------------------------------------
