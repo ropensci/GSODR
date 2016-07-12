@@ -438,9 +438,9 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                     NA_integer_)
   tmp$MIN <- ifelse(!is.na(tmp$MIN), round( (tmp$MIN - 32) * (5 / 9), 2),
                     NA_integer_)
-  tmp$PRCP <- ifelse(!is.na(tmp$PRCP), round( (tmp$PRCP * 25.4) * 100, 1),
+  tmp$PRCP <- ifelse(!is.na(tmp$PRCP), round( (tmp$PRCP * 25.4), 1),
                      NA_integer_)
-  tmp$SNDP <- ifelse(!is.na(tmp$SNDP), round( (tmp$SNDP * 25.4) * 10, 1),
+  tmp$SNDP <- ifelse(!is.na(tmp$SNDP), round( (tmp$SNDP * 25.4), 1),
                      NA_integer_)
 
   # Compute other weather vars--------------------------------------------------
@@ -485,7 +485,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                                          109, 116, 117, 123, 124, 130, 133, 134,
                                          135, 136, 137, 138)),
                   skip = 1,
-                  na = c("9999.9", "999.9", "99.9", "99"))
+                  na = c("9999.9", "999.9", "99.99", "99.9", "99"))
 }
 
 # The following 2 functions are shamelessly borrowed from RJ Hijmans raster pkg
