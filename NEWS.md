@@ -3,11 +3,15 @@
 
 ## Bug fixes
   * Fix bug in precipitation calculation. Documentation states that PRCP is in
-  mm, was only calculated as cm  
+  mm to hundredths. Issues with conversion and missing values meant that this
+  was not always the case.  
   
 ## Changes
   * Country level, agroclimatology and global data query conversions and
   calculations are processed in parallel now to reduce runtime  
+  * Country list is now included in the package to reduce run time necessary
+  when querying for a specific country. However, this means any time that the
+  country-list.txt file is updated, this package needs to be updated as well.
   
 ## Improvements
   * Users can now select to merge output for station queries across multiple
