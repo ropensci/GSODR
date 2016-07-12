@@ -275,8 +275,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 
       tryCatch(curl::curl_download(url = paste0(ftp_site, yr, "/gsod_", yr, ".tar"),
                                    destfile = tf, quiet = FALSE, mode = "wb"),
-               error = function(x) cat(paste0("\nThe download stoped at year ",
-                                              yr, ".\nPlease restart the 'get_GSOD()' function starting at this point.\n")))
+               error = function(x) cat(paste0("\nThe download stoped at year ", yr,
+                                              ".\nPlease restart the 'get_GSOD()' function starting at this point.\n")))
       utils::untar(tarfile = tf, exdir  = paste0(td, "/", yr, "/"))
 
       GSOD_list <- list.files(paste0(td, "/", yr, "/"),
@@ -310,8 +310,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
     if (!is.null(station)) {
       tmp <- tryCatch(
         .read_gz(paste0(ftp_site, yr, "/", station, "-", yr, ".op.gz")),
-        error = function(x) cat(paste0("\nThe download stoped at year ",
-                                       yr, ".\nPlease restart the 'get_GSOD()' function starting at this point.\n")))
+        error = function(x) cat(paste0("\nThe download stoped at year ", yr,
+                                       ".\nPlease restart the 'get_GSOD()' function starting at this point.\n")))
       if (merge_station_years == TRUE) {
         GSOD_objects[[yr]] <- .reformat(tmp, stations)
       } else {
@@ -533,20 +533,18 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
     if (country %in% cs[, 2]) {
       return(country)
     } else {
-      stop("\nUnknown ISO code. Please provide a valid name or 2 or 3 letter ISO
-           country code; you can get a list by using: getData('ISO3').\n")
+      stop("\nUnknown ISO code. Please provide a valid name or 2 or 3 letter ISO country code; you can get a list by using: getData('ISO3').\n")
     }
-  } else if (nc == 2) {
-    if (country %in% cs[, 3]) {
-      i <- which(country == cs[, 3])
-      return(cs[i, 2])
-    } else {
-      stop("\nUnknown ISO code. Please provide a valid name or 2 or 3 letter ISO
-             country code; you can get a list by using: getData('ISO3').\n")
-    }
-  } else if (country %in% cs[, 1]) {
-    i <- which(country == cs[, 1])
-    return(cs[i, 2])
+    } else if (nc == 2) {
+      if (country %in% cs[, 3]) {
+        i <- which(country == cs[, 3])
+        return(cs[i, 2])
+      } else {
+        stop("\nUnknown ISO code. Please provide a valid name or 2 or 3 letter ISO country code; you can get a list by using: getData('ISO3').\n")
+      }
+      } else if (country %in% cs[, 1]) {
+        i <- which(country == cs[, 1])
+        return(cs[i, 2])
   } else if (country %in% cs[, 4]) {
     i <- which(country == cs[, 4])
     return(cs[i, 2] )
@@ -554,11 +552,10 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
     i <- which(country == cs[, 5])
     return(cs[i, 2])
   } else {
-    stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you
-         can get a list by using: getData('ISO3').\n")
+    stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you can get a list by using: getData('ISO3').\n")
     return(0)
   }
-}
+  }
 
 # Ram Narasimhan
 # Version 0.4
@@ -590,18 +587,15 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 
   if (station %in% stations[, 12] == FALSE) {
     stop("\nThis is not a valid station ID number, please check.\n
-         Station IDs are provided as a part of the GSODR package in the
-         'stations' data frame in the STNID column.\n")
+         Station IDs are provided as a part of the GSODR package in the  'stations' data frame in the STNID column.\n")
     return(0)
   }
 }
 
 .validate_merge <- function(years, station) {
   if (is.null(station)) {
-    stop("\nThe option to merge multiple years into one file is only possible
-         when selecting a single station.\n")
+    stop("\nThe option to merge multiple years into one file is only possible when selecting a single station.\n")
   }
   if (length(years) == 1)
-    stop("\nYou have set 'merge = TRUE'' but have only one year to fetch and
-         clean. Did you intend to query more than one year?\n")
-}
+    stop("\nYou have set 'merge = TRUE'' but have only one year to fetch and clean. Did you intend to query more than one year?\n")
+  }
