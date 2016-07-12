@@ -275,10 +275,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 
       tryCatch(curl::curl_download(url = paste0(ftp_site, yr, "/gsod_", yr, ".tar"),
                                    destfile = tf, quiet = FALSE, mode = "wb"),
-               error = function(x) cat(paste0("\nThe download stoped at year ",
-                                              yr, ".\nPlease restart the
-                                              'get_GSOD()' function starting at
-                                              this point.\n")))
+               error = function(x) cat(paste0("\nThe download stoped at year ", yr,
+                                              ".\nPlease restart the 'get_GSOD()' function starting at this point.\n")))
       utils::untar(tarfile = tf, exdir  = paste0(td, "/", yr, "/"))
 
       GSOD_list <- list.files(paste0(td, "/", yr, "/"),
@@ -312,10 +310,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
     if (!is.null(station)) {
       tmp <- tryCatch(
         .read_gz(paste0(ftp_site, yr, "/", station, "-", yr, ".op.gz")),
-        error = function(x) cat(paste0("\nThe download stoped at year ",
-                                       yr, ".\nPlease restart the
-                                       'get_GSOD()' function starting at
-                                       this point.\n")))
+        error = function(x) cat(paste0("\nThe download stoped at year ", yr,
+                                       ".\nPlease restart the 'get_GSOD()' function starting at this point.\n")))
       if (merge_station_years == TRUE) {
         GSOD_objects[[yr]] <- .reformat(tmp, stations)
       } else {
