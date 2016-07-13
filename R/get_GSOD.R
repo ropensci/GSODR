@@ -215,6 +215,7 @@
 #' \url{http://srtm.csi.cgiar.org}}
 #'
 #' @importFrom foreach %dopar%
+#' @importFrom foreach %do%
 #'
 #' @export
 get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
@@ -270,8 +271,9 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 
   ftp_site <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
 
-  # For loop if there are more than one year being queried ---------------------
-  for (yr in years) {
+  # Loop if there are more than one year being queried ---------------------
+  itw <- iterators::iter(years)
+  foreach::foreach(yr = iterators::nextElem(itw)) %do% {
     if (is.null(station)) {
 
       tryCatch(curl::curl_download(url = paste0(ftp_site, yr, "/gsod_", yr, ".tar"),
@@ -324,10 +326,12 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
     } else {
       cl <- parallel::makeCluster(parallel::detectCores() - 2)
       doParallel::registerDoParallel(cl)
+
+      itx <- iterators::iter(GSOD_list)
       # For a country, the entire set or agroclimatology -----------------------
-      GSOD_XY <- data.table::rbindlist(foreach::foreach(
-        j = seq_len(length(GSOD_list))) %dopar% {
-          tmp <- try(.read_gz(paste0(td, "/", yr, "/", GSOD_list[j])))
+      GSOD_XY <- data.table::rbindlist(
+        foreach::foreach(j = nextElem(itx)) %dopar% {
+          tmp <- try(.read_gz(paste0(td, "/", yr, "/", j)))
 
           # check to see if max_missing < missing days, if not, go to next
           if (.check(tmp, yr, max_missing) == FALSE) {
@@ -536,16 +540,16 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
     } else {
       stop("\nUnknown ISO code. Please provide a valid name or 2 or 3 letter ISO country code; you can get a list by using: getData('ISO3').\n")
     }
-    } else if (nc == 2) {
-      if (country %in% cs[, 3]) {
-        i <- which(country == cs[, 3])
-        return(cs[i, 2])
-      } else {
-        stop("\nUnknown ISO code. Please provide a valid name or 2 or 3 letter ISO country code; you can get a list by using: getData('ISO3').\n")
-      }
-      } else if (country %in% cs[, 1]) {
-        i <- which(country == cs[, 1])
-        return(cs[i, 2])
+  } else if (nc == 2) {
+    if (country %in% cs[, 3]) {
+      i <- which(country == cs[, 3])
+      return(cs[i, 2])
+    } else {
+      stop("\nUnknown ISO code. Please provide a valid name or 2 or 3 letter ISO country code; you can get a list by using: getData('ISO3').\n")
+    }
+  } else if (country %in% cs[, 1]) {
+    i <- which(country == cs[, 1])
+    return(cs[i, 2])
   } else if (country %in% cs[, 4]) {
     i <- which(country == cs[, 4])
     return(cs[i, 2] )
@@ -556,7 +560,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
     stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you can get a list by using: getData('ISO3').\n")
     return(0)
   }
-  }
+}
 
 # Ram Narasimhan
 # Version 0.4
@@ -599,4 +603,4 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   }
   if (length(years) == 1)
     stop("\nYou have set 'merge = TRUE'' but have only one year to fetch and clean. Did you intend to query more than one year?\n")
-  }
+}
