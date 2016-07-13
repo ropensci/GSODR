@@ -187,12 +187,18 @@
 #' notification.}
 
 #' @examples
-#' \dontrun{
 #' # Download weather station for Toowoomba, Queensland for 2010, save resulting
 #' # file in the user's "Downloads" directory.
 #'
 #' get_GSOD(years = 2010, station = "955510-99999", path = "~/Downloads")
 #'
+#'#'
+#' # Download data for Australia for year 2010 and generate a yearly
+#' # summary file, GSOD_2010_XY files in the user's Downloads directory with a
+#' maximum of five missing days per station allowed.
+#' \dontrun{
+#' # Not run
+#' get_GSOD(years = 2010, country = "Australia", path = "~/Downloads")
 #'
 #' # Download global GSOD data for agroclimatology work for years 2009 and 2010
 #' # and generate yearly summary files, GSOD_2009_XY and GSOD_2010_XY in folders
@@ -200,13 +206,7 @@
 #' # five missing days per weather station allowed.
 #'
 #' get_GSOD(years = 2010:2011, path = "~/Downloads", agroclimatology = TRUE)
-#'
-#'
-#' # Download data for Australia for year 2010 and generate a yearly
-#' # summary file, GSOD_2010_XY files in the user's Downloads directory with a
-#' maximum of five missing days per station allowed.
-#'
-#' get_GSOD(years = 2010, country = "Australia", path = "~/Downloads")
+#' # End not run
 #' }
 #'
 #' @references {Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled

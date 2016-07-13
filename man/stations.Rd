@@ -39,7 +39,7 @@ removed.}
 \item{A new field for elevation is included, ELEV.M.90m. This was created
 using mean values of a 200m buffer around the reported LAT/LON station
 location within the CGIAR-CSI hole-filled 90m SRTM digital elevation model
-(Jarvis et al. 2008)}
+(Jarvis \emph{et al}. 2008)}
 }}
 \source{
 \url{ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv}
