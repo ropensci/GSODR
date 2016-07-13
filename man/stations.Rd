@@ -4,7 +4,7 @@
 \name{stations}
 \alias{stations}
 \title{Stations}
-\format{A data frame with 27699 observations of 12 variables:
+\format{A data frame with 24878 observations of 13 variables:
 \describe{
   \item{USAF}{Air Force Datsav3 station number}
   \item{WBAN}{Weather Bureau Army Navy (5 digit identifier)}
@@ -16,12 +16,13 @@
   (4 letter identifier)}
   \item{LAT}{Latitude in thousandths of decimal degrees}
   \item{LON}{Longitude in thousandths of decimal degrees}
-  \item{ELEV.M}{Elevation to tenthts in metres}
+  \item{ELEV.M}{Elevation to tenths in metres}
   \item{BEGIN}{First available date of data for station, YYYYMMDD format}
   \item{END}{Last available date of data for station, YYYYMMDD format}
   \item{STNID}{Unique station ID, a concatenation of USAF and WBAN number,
   used for merging with station data weather files}
-  \item{ELEV.M.SRTM.90m}{Elevation in metres corrected for possible errors}
+  \item{ELEV.M.SRTM.90m}{Elevation in metres extracted from SRTM data (Jarvis
+  \emph{et al.} 2008)}
 }
 
 Station information for the US National Climatic Data Centre (NCDC)
@@ -39,7 +40,7 @@ removed.}
 \item{A new field for elevation is included, ELEV.M.90m. This was created
 using mean values of a 200m buffer around the reported LAT/LON station
 location within the CGIAR-CSI hole-filled 90m SRTM digital elevation model
-(Jarvis et al. 2008)}
+(Jarvis \emph{et al}. 2008)}
 }}
 \source{
 \url{ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv}
@@ -59,7 +60,7 @@ non-U.S. data cannot be redistributed for commercial purposes.
 Re-distribution of these data by others must provide this same
 notification.}
 
-The \code{data(stations)} data are automatically loaded with the
+The \code{stations} data are automatically loaded with the
 \code{GSODR} package.
 }
 \references{
