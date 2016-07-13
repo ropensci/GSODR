@@ -1,7 +1,7 @@
 Fetch, clean and correct altitude in GSOD isd\_history.csv Data
 ================
 Adam H. Sparks - Center for Crop Health, University of Southern Queensland
-06-02-2016
+07-12-2016
 
 Introduction
 ============
@@ -116,7 +116,12 @@ stations <- as.data.frame(stations)
 sp::coordinates(stations) <- ~ LON + LAT
 sp::proj4string(stations) <- sp::CRS(crs)
 
-for (i in dem_tiles) {
+# set up cluster for parallel processing
+library(foreach)
+cl <- parallel::makeCluster(parallel::detectCores() - 2)
+doParallel::registerDoParallel(cl)
+
+stations <- as.data.frame(data.table::rbindlist(foreach(i = dem_tiles) %dopar% {
   
   # Load the DEM tile
   dem <- raster::raster(i)
@@ -124,75 +129,65 @@ for (i in dem_tiles) {
   
   # in some cases the DEM represents areas where there is no station
   # check for that here and if no stations, go on to next iteration
-  if (is.null(sub_stations)) next
-  
-  # use a 200m buffer to extract elevation from the DEM
-  SRTM_buffered <- raster::extract(dem, sub_stations, buffer = 200, fun = mean)
-  
-  # extract without using the buffer, strictly using 90m data
-  SRTM_90m <- raster::extract(dem, sub_stations)
-  
-  # convert spatial object back to normal data frame and add new fields
-  sub_stations <- as.data.frame(sub_stations)
-  sub_stations$ELEV.M.SRTM.90m.BUFFER <- SRTM_buffered
-  sub_stations$ELEV.M.SRTM.90m.NO_BUFFER <- SRTM_90m
-  
-  cor_stations[[i]] <- sub_stations
-  rm(sub_stations)
-}
+  if (!is.null(sub_stations)) {
+    
+    # use a 200m buffer to extract elevation from the DEM
+    SRTM_buffered <- raster::extract(dem, sub_stations, buffer = 200, fun = mean)
 
-stations <- as.data.frame(data.table::rbindlist(cor_stations))
+    # convert spatial object back to normal data frame and add new fields
+    sub_stations <- as.data.frame(sub_stations)
+    sub_stations$ELEV.M.SRTM.90m.BUFFER <- SRTM_buffered
+    return(sub_stations)
+  }
+}
+)
+)
+
+# stop cluster
+parallel::stopCluster(cl)
 
 # some stations occur in areas where DEM has no data
 # use original station elevation in these cells
 stations[, 13] <- ifelse(is.na(stations[, 13]), stations[, 9], stations[, 13])
-stations[, 14] <- ifelse(is.na(stations[, 14]), stations[, 9], stations[, 14])
 
 summary(stations)
 ```
 
     ##       USAF            WBAN                     STN.NAME    
-    ##  999999 : 1226   99999  :20979   APPROXIMATE LOCALE:   36  
+    ##  999999 : 1226   99999  :20980   APPROXIMATE LOCALE:   36  
     ##  949999 :  373   23176  :    5   MOORED BUOY       :   20  
     ##  722250 :    4   03849  :    5   ...               :   15  
     ##  746929 :    4   24255  :    4   BOGUS CHINESE     :   13  
     ##  992390 :    4   24135  :    4   PACIFIC BUOY      :    8  
     ##  997225 :    4   24027  :    4   DEASE LAKE        :    7  
-    ##  (Other):23262   (Other): 3876   (Other)           :24778  
+    ##  (Other):23263   (Other): 3876   (Other)           :24779  
     ##       CTRY           STATE            CALL            LAT        
-    ##  US     : 6739          :18583          :14948   Min.   :-56.50  
-    ##  CA     : 1609   CA     :  505   KMLF   :    6   1st Qu.: 21.78  
-    ##  RS     : 1471   TX     :  487   KLSF   :    6   Median : 37.74  
+    ##  US     : 6740          :18583          :14950   Min.   :-56.50  
+    ##  CA     : 1609   CA     :  505   KMLF   :    6   1st Qu.: 21.79  
+    ##  RS     : 1471   TX     :  488   KLSF   :    6   Median : 37.73  
     ##  AS     : 1411   FL     :  319   PAMD   :    5   Mean   : 29.35  
     ##  CH     : 1042   MI     :  231   KONT   :    5   3rd Qu.: 47.17  
     ##  UK     :  675   NC     :  212   KLRD   :    5   Max.   : 60.00  
-    ##  (Other):11930   (Other): 4540   (Other): 9902                   
+    ##  (Other):11930   (Other): 4540   (Other): 9901                   
     ##       LON               ELEV.M           BEGIN               END          
     ##  Min.   :-179.983   Min.   :-350.0   Min.   :19010101   Min.   :19301231  
-    ##  1st Qu.: -83.738   1st Qu.:  25.0   1st Qu.:19570601   1st Qu.:20020208  
-    ##  Median :   7.283   Median : 152.0   Median :19750618   Median :20150602  
-    ##  Mean   :  -1.651   Mean   : 376.2   Mean   :19774291   Mean   :20040150  
-    ##  3rd Qu.:  69.212   3rd Qu.: 454.9   3rd Qu.:20010816   3rd Qu.:20160529  
-    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20160526   Max.   :20160531  
+    ##  1st Qu.: -83.742   1st Qu.:  25.0   1st Qu.:19570601   1st Qu.:20020209  
+    ##  Median :   7.283   Median : 152.0   Median :19750618   Median :20150612  
+    ##  Mean   :  -1.654   Mean   : 376.1   Mean   :19774307   Mean   :20040302  
+    ##  3rd Qu.:  69.209   3rd Qu.: 454.2   3rd Qu.:20010816   3rd Qu.:20160709  
+    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20160616   Max.   :20160711  
     ##                     NA's   :194                                           
-    ##           STNID       ELEV.M.SRTM.90m.BUFFER ELEV.M.SRTM.90m.NO_BUFFER
-    ##  992390-99999:    4   Min.   :-360.94        Min.   :-361.0           
-    ##  997225-99999:    4   1st Qu.:  24.52        1st Qu.:  25.0           
-    ##  992570-99999:    2   Median : 153.24        Median : 154.0           
-    ##  997242-99999:    2   Mean   : 379.36        Mean   : 379.6           
-    ##  919450-99999:    2   3rd Qu.: 456.33        3rd Qu.: 457.0           
-    ##  719584-99999:    2   Max.   :5273.35        Max.   :5269.0           
-    ##  (Other)     :24861   NA's   :52             NA's   :54
+    ##           STNID       ELEV.M.SRTM.90m.BUFFER
+    ##  992390-99999:    4   Min.   :-360.9        
+    ##  997225-99999:    4   1st Qu.:  24.5        
+    ##  992570-99999:    2   Median : 153.2        
+    ##  997242-99999:    2   Mean   : 379.3        
+    ##  919450-99999:    2   3rd Qu.: 456.1        
+    ##  719584-99999:    2   Max.   :5273.4        
+    ##  (Other)     :24862   NA's   :52
 
 Figures
 =======
-
-``` r
-ggplot(data = stations, aes(x = ELEV.M, y = ELEV.M.SRTM.90m.NO_BUFFER)) +
-  geom_point(alpha = 0.4, size = 0.5)
-```
-
-![GSOD Reported Elevation versus CGIAR-CSI SRTM Elevation](fetch_isd-history_files/figure-markdown_github/SRTM%2090m%20vs%20Reported%20Elevation-1.png)
 
 ``` r
 ggplot(data = stations, aes(x = ELEV.M, y = ELEV.M.SRTM.90m.BUFFER)) +
@@ -201,31 +196,25 @@ ggplot(data = stations, aes(x = ELEV.M, y = ELEV.M.SRTM.90m.BUFFER)) +
 
 ![GSOD Reported Elevation versus CGIAR-CSI SRTM Buffered Elevation](fetch_isd-history_files/figure-markdown_github/Buffered%20SRTM%2090m%20vs%20Reported%20Elevation-1.png)
 
-``` r
-stations <- dplyr::mutate(stations, DIFFERENCE =
-                            ELEV.M.SRTM.90m.NO_BUFFER - ELEV.M.SRTM.90m.BUFFER)
-stations$DIFFERENCE[stations$DIFFERENCE >= -10 & stations$DIFFERENCE <= 10] <- NA
-
-ggplot(data = stations, aes(x = LON, y = LAT)) +
-  geom_point(aes(alpha = (DIFFERENCE)), size = 0.08) +
-  labs(alpha = "NB - B") +
-  coord_proj()
-```
-
-![CGIAR-CSI SRTM Buffered Elevation versus CGIAR-CSI SRTM 90m](fetch_isd-history_files/figure-markdown_github/SRTM%2090m%20vs%20Buffered%20SRTM%2090m-1.png)
-
-Assuming that a 10m difference in elevation between the buffered and unbuffered is not important. Setting any values with a difference of &gt;= -10 and &lt;=10 to `NA`; the results are still not geographically clustered in any one location or feature.
+Buffered versus unbuffered elevation values were previously checked and found not to be different while also not showing any discernable geographic patterns. However, The buffered elevation data are higher than the unbuffered data. To help avoid within cell and between cell variation the buffered values are the values that are included in the final data for distribution with the GSODR package following the approach of Hijmans *et al.* (2005).
 
 ``` r
-ggplot(data = stations) +
-  geom_histogram(aes(ELEV.M.SRTM.90m.NO_BUFFER - ELEV.M.SRTM.90m.BUFFER))
+# round SRTM.90m.Buffer field to whole number in cases where station reported
+# data was used
+stations[, 13] <- round(stations[, 13], 0)
+
+names(stations)[13] <- "ELEV.M.SRTM.90m"
+
+# write rda file to disk
+devtools::use_data(stations, overwrite = TRUE, compress = "bzip2")
+
+# clean up Natural Earth data files before we leave
+file.remove(list.files(pattern = glob2rx("ne_10m_admin_0_countries*")))
 ```
-
-![Histogram plot of CGIAR-CSI SRTM Buffered Elevation versus CGIAR-CSI SRTM 90m](fetch_isd-history_files/figure-markdown_github/Hist%20difference%20SRTM%2090m%20vs%20Buffered%20SRTM%2090m-1.png)
-
-The differences between the buffered and unbuffered elevation checks are minor and appear to be normally distributed while also not showing any discernable geographic pattern. However, The buffered elevation data are higher than the unbuffered data. To help avoid within cell and between cell variation the buffered values are the values that are included in the final data for distribution with the GSODR package following the approach of Hijmans *et al.* (2005). The new field is simply called ELEV.M.SRTM.90m in the stations.rda file.
 
     ## [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+
+The stations.rda file included in the GSODR package includes the new elevation data as the field; ELEV.M.SRTM.90m.
 
 Notes
 =====
@@ -240,7 +229,7 @@ Users of these data should take into account the following (from the [NCDC websi
 R System Information
 --------------------
 
-    ## R version 3.3.0 (2016-05-03)
+    ## R version 3.3.1 (2016-06-21)
     ## Platform: x86_64-apple-darwin15.5.0 (64-bit)
     ## Running under: OS X 10.11.5 (El Capitan)
     ## 
@@ -251,23 +240,25 @@ R System Information
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ## [1] ggalt_0.1.1   ggplot2_2.1.0
+    ## [1] ggalt_0.1.1   ggplot2_2.1.0 foreach_1.4.3
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] Rcpp_0.12.5        formatR_1.4        RColorBrewer_1.1-2
-    ##  [4] plyr_1.8.4         tools_3.3.0        digest_0.6.9      
-    ##  [7] memoise_1.0.0      evaluate_0.9       gtable_0.2.0      
-    ## [10] lattice_0.20-33    DBI_0.4-1          curl_0.9.7        
-    ## [13] yaml_2.1.13        rgdal_1.1-10       parallel_3.3.0    
-    ## [16] withr_1.0.1        dplyr_0.4.3        stringr_1.0.0     
-    ## [19] raster_2.5-8       knitr_1.13         maps_3.1.0        
-    ## [22] devtools_1.11.1    grid_3.3.0         R6_2.1.2          
-    ## [25] rmarkdown_0.9.6    sp_1.2-3           readr_0.2.2       
-    ## [28] magrittr_1.5       scales_0.4.0       htmltools_0.3.5   
-    ## [31] MASS_7.3-45        assertthat_0.1     proj4_1.0-8       
-    ## [34] countrycode_0.18   colorspace_1.2-6   labeling_0.3      
-    ## [37] KernSmooth_2.23-15 ash_1.0-15         stringi_1.1.1     
-    ## [40] lazyeval_0.2.0     munsell_0.4.3
+    ##  [1] Rcpp_0.12.5        RColorBrewer_1.1-2 compiler_3.3.1    
+    ##  [4] formatR_1.4        plyr_1.8.4         iterators_1.0.8   
+    ##  [7] tools_3.3.1        digest_0.6.9       memoise_1.0.0     
+    ## [10] evaluate_0.9       tibble_1.1         gtable_0.2.0      
+    ## [13] lattice_0.20-33    DBI_0.4-1          curl_0.9.7        
+    ## [16] yaml_2.1.13        rgdal_1.1-10       parallel_3.3.1    
+    ## [19] withr_1.0.2        dplyr_0.5.0        stringr_1.0.0     
+    ## [22] raster_2.5-8       knitr_1.13         devtools_1.12.0   
+    ## [25] maps_3.1.0         grid_3.3.1         data.table_1.9.6  
+    ## [28] R6_2.1.2           rmarkdown_1.0      sp_1.2-3          
+    ## [31] readr_0.2.2        magrittr_1.5       MASS_7.3-45       
+    ## [34] scales_0.4.0       codetools_0.2-14   htmltools_0.3.5   
+    ## [37] proj4_1.0-8        assertthat_0.1     countrycode_0.18  
+    ## [40] colorspace_1.2-6   labeling_0.3       ash_1.0-15        
+    ## [43] KernSmooth_2.23-15 stringi_1.1.1      doParallel_1.0.10 
+    ## [46] munsell_0.4.3      chron_2.3-47
 
 References
 ==========

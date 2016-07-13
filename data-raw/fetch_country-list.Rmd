@@ -1,7 +1,7 @@
 ---
 title: "Fetch GSOD Country List and Merge with ISO Country Codes"
 author: "Adam H. Sparks - Center for Crop Health, University of Southern Queensland"
-date: "07-011-2016"
+date: "07-12-2016"
 output: github_document
 ---
 
@@ -22,7 +22,7 @@ a country for weather data downloading.
 
 # R Data Processing
 
-Read "country-list.txt"" file from NCDC FTP server and merge with`countrycode`
+Read "country-list.txt"" file from NCDC FTP server and merge with `countrycode`
 data.
 
 ```{r download_merge_inspect, echo=TRUE, messages=FALSE}
@@ -48,4 +48,17 @@ Write .rda file to disk for inclusion in `GSODR` package.
 
 ```{r write, echo=TRUE, messages=FALSE}
 devtools::use_data(country_list, overwrite = TRUE, compress = "bzip2")
+```
+# Notes
+
+## NOAA Policy
+
+Users of these data should take into account the following (from the [NCDC website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)): 
+
+> "The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification." [WMO Resolution 40. NOAA Policy](http://www.wmo.int/pages/about/Resolution40.html)
+
+## R System Information
+
+```{r system information, echo=FALSE}
+sessionInfo()
 ```

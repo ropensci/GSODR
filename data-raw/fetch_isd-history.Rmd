@@ -1,7 +1,7 @@
 ---
 title: "Fetch, clean and correct altitude in GSOD isd_history.csv Data"
 author: "Adam H. Sparks - Center for Crop Health, University of Southern Queensland"
-date: "06-02-2016"
+date: "07-12-2016"
 output: github_document
 ---
 
@@ -77,7 +77,7 @@ countries <- dplyr::left_join(countries, countrycode::countrycode_data,
 
 ## Reformat and clean station data file from NCDC
 
-```{r clean and reformat station data, echo=TRUE, cache=TRUE}
+```{r clean and reformat station data, echo=TRUE, cache=FALSE}
 # clean data
 stations <- stations[!is.na(stations$LAT) & !is.na(stations$LON), ]
 stations <- stations[stations$LAT != 0 & stations$LON != 0, ]
@@ -119,7 +119,7 @@ Data can be downloaded from the
 ftp server, [srtm.csi.cgiar.org](ftp://srtm.csi.cgiar.org),
 using an FTP client to facilitate this next step.
 
-```{r check station data for errors, echo=TRUE, cache=TRUE}
+```{r check station data for errors, echo=TRUE, cache=FALSE}
 # quality check station locations for reported country and lat/lon position
 # agreement
 
@@ -138,13 +138,18 @@ Zero observations (rows) in stations_discard, the data look good, no need to
 remove any
 
 
-```{r check elvation errors, echo=TRUE, cache=TRUE}
+```{r check elevation errors, echo=TRUE, cache=FALSE}
 # create a spatial object for extracting elevation values using spatial points
 stations <- as.data.frame(stations)
 sp::coordinates(stations) <- ~ LON + LAT
 sp::proj4string(stations) <- sp::CRS(crs)
 
-for (i in dem_tiles) {
+# set up cluster for parallel processing
+library(foreach)
+cl <- parallel::makeCluster(parallel::detectCores() - 2)
+doParallel::registerDoParallel(cl)
+
+stations <- as.data.frame(data.table::rbindlist(foreach(i = dem_tiles) %dopar% {
   
   # Load the DEM tile
   dem <- raster::raster(i)
@@ -152,29 +157,26 @@ for (i in dem_tiles) {
   
   # in some cases the DEM represents areas where there is no station
   # check for that here and if no stations, go on to next iteration
-  if (is.null(sub_stations)) next
-  
-  # use a 200m buffer to extract elevation from the DEM
-  SRTM_buffered <- raster::extract(dem, sub_stations, buffer = 200, fun = mean)
-  
-  # extract without using the buffer, strictly using 90m data
-  SRTM_90m <- raster::extract(dem, sub_stations)
-  
-  # convert spatial object back to normal data frame and add new fields
-  sub_stations <- as.data.frame(sub_stations)
-  sub_stations$ELEV.M.SRTM.90m.BUFFER <- SRTM_buffered
-  sub_stations$ELEV.M.SRTM.90m.NO_BUFFER <- SRTM_90m
-  
-  cor_stations[[i]] <- sub_stations
-  rm(sub_stations)
-}
+  if (!is.null(sub_stations)) {
+    
+    # use a 200m buffer to extract elevation from the DEM
+    SRTM_buffered <- raster::extract(dem, sub_stations, buffer = 200, fun = mean)
 
-stations <- as.data.frame(data.table::rbindlist(cor_stations))
+    # convert spatial object back to normal data frame and add new fields
+    sub_stations <- as.data.frame(sub_stations)
+    sub_stations$ELEV.M.SRTM.90m.BUFFER <- SRTM_buffered
+    return(sub_stations)
+  }
+}
+)
+)
+
+# stop cluster
+parallel::stopCluster(cl)
 
 # some stations occur in areas where DEM has no data
 # use original station elevation in these cells
 stations[, 13] <- ifelse(is.na(stations[, 13]), stations[, 9], stations[, 13])
-stations[, 14] <- ifelse(is.na(stations[, 14]), stations[, 9], stations[, 14])
 
 summary(stations)
 ```
@@ -186,50 +188,19 @@ library(ggplot2)
 library(ggalt)
 ```
 
-```{r SRTM 90m vs Reported Elevation, echo=TRUE, fig.cap="GSOD Reported Elevation versus CGIAR-CSI SRTM Elevation", warning=FALSE}
-ggplot(data = stations, aes(x = ELEV.M, y = ELEV.M.SRTM.90m.NO_BUFFER)) +
-  geom_point(alpha = 0.4, size = 0.5)
-
-```
-
 ```{r Buffered SRTM 90m vs Reported Elevation, echo=TRUE, fig.cap="GSOD Reported Elevation versus CGIAR-CSI SRTM Buffered Elevation", warning=FALSE}
 ggplot(data = stations, aes(x = ELEV.M, y = ELEV.M.SRTM.90m.BUFFER)) +
   geom_point(alpha = 0.4, size = 0.5)
 ```
 
-```{r SRTM 90m vs Buffered SRTM 90m, echo=TRUE, fig.cap="CGIAR-CSI SRTM Buffered Elevation versus CGIAR-CSI SRTM 90m"}
-stations <- dplyr::mutate(stations, DIFFERENCE =
-                            ELEV.M.SRTM.90m.NO_BUFFER - ELEV.M.SRTM.90m.BUFFER)
-stations$DIFFERENCE[stations$DIFFERENCE >= -10 & stations$DIFFERENCE <= 10] <- NA
+Buffered versus unbuffered elevation values were previously checked and found
+not to be different while also not showing any discernable geographic patterns.
+However, The buffered elevation data are higher than the unbuffered data. To
+help avoid within cell and between cell variation the buffered values are the
+values that are included in the final data for distribution with the GSODR
+package following the approach of Hijmans *et al.* (2005).
 
-ggplot(data = stations, aes(x = LON, y = LAT)) +
-  geom_point(aes(alpha = (DIFFERENCE)), size = 0.08) +
-  labs(alpha = "NB - B") +
-  coord_proj()
-```
-
-Assuming that a 10m difference in elevation between the buffered and unbuffered is
-not important. Setting any values with a difference of >= -10 and <=10 to `NA`;
-the results are still not geographically clustered in any one location or
-feature.
-
-```{r Hist difference SRTM 90m vs Buffered SRTM 90m, echo=TRUE, fig.cap="Histogram plot of CGIAR-CSI SRTM Buffered Elevation versus CGIAR-CSI SRTM 90m", warning=FALSE, error=FALSE, message=FALSE}
-ggplot(data = stations) +
-  geom_histogram(aes(ELEV.M.SRTM.90m.NO_BUFFER - ELEV.M.SRTM.90m.BUFFER))
-```
-
-The differences between the buffered and unbuffered elevation checks are minor
-and appear to be normally distributed while also not showing any discernable
-geographic pattern. However, The buffered elevation data are higher than the
-unbuffered data. To help avoid within cell and between cell variation the
-buffered values are the values that are included in the final data for
-distribution with the GSODR package following the approach of Hijmans *et al.*
-(2005). The new field is simply called ELEV.M.SRTM.90m in the stations.rda file.
-
-```{r cleanup and .rda file creation, message=FALSE, echo=FALSE, warning=FALSE, error=FALSE}
-
-# drop the 90m only station field
-stations[, 14:15] <- NULL
+```{r cleanup and .rda file creation, message=FALSE, echo=TRUE, warning=FALSE, error=FALSE}
 
 # round SRTM.90m.Buffer field to whole number in cases where station reported
 # data was used
@@ -244,6 +215,9 @@ devtools::use_data(stations, overwrite = TRUE, compress = "bzip2")
 file.remove(list.files(pattern = glob2rx("ne_10m_admin_0_countries*")))
 
 ```
+
+The stations.rda file included in the GSODR package includes
+the new elevation data as the field; ELEV.M.SRTM.90m.
 
 # Notes
 
