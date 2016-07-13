@@ -187,20 +187,20 @@
 
 #' @examples
 #'
-#' \dontrun{
+#'
 #' # Download weather station for Toowoomba, Queensland for 2010, save resulting
 #' # file, GSOD-955510-99999-2010.csv, in the user's home directory.
 #'
 #' get_GSOD(years = 2010, station = "955510-99999", path = "~/")
 #'
-#'
+#' \dontrun{
 #' # Download global GSOD data for agroclimatology work for years 2009 and 2010
 #' # and generate yearly summary files, GSOD-agroclimatology-2010.csv and
 #' # GSOD-agroclimatology-2011.csv in the user's home directory with a maximum
 #' # of five missing days per weather station allowed.
 #'
 #' get_GSOD(years = 2010:2011, path = "~/", agroclimatology = TRUE)
-#'
+#' }
 #'
 #' # Download data for Philippines for year 2010 and generate a yearly
 #' # summary file, GSOD-PHL-2010.csv, file in the user's home directory with a
@@ -208,7 +208,7 @@
 #'
 #' get_GSOD(years = 2010, country = "Philippines", path = "~/")
 #'
-#' }
+#'
 #'
 #' @references {Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled
 #' SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
@@ -238,6 +238,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   td <- tempdir()
 
   # Create objects for use later
+  yr <- NULL
   j <- NULL
   GSOD_objects <- list()
 
@@ -330,7 +331,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
       itx <- iterators::iter(GSOD_list)
       # For a country, the entire set or agroclimatology -----------------------
       GSOD_XY <- data.table::rbindlist(
-        foreach::foreach(j = nextElem(itx)) %dopar% {
+        foreach::foreach(j = iterators::nextElem(itx)) %dopar% {
           tmp <- try(.read_gz(paste0(td, "/", yr, "/", j)))
 
           # check to see if max_missing < missing days, if not, go to next
