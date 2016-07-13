@@ -184,11 +184,10 @@
 #' non-U.S. data cannot be redistributed for commercial purposes.
 #' Re-distribution of these data by others must provide this same
 #' notification.}
-
-#' @examples
 #'
+#' @examples
 #' \dontrun{
-#' # Download weather station for Toowoomba, Queensland for 2010, save resulting
+# Download weather station for Toowoomba, Queensland for 2010, save resulting
 #' # file, GSOD-955510-99999-2010.csv, in the user's home directory.
 #'
 #' get_GSOD(years = 2010, station = "955510-99999", path = "~/")
