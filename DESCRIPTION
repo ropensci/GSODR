@@ -69,3 +69,4 @@ Encoding: UTF-8
 NeedsCompilation: no
 Repository: CRAN
 LazyData: TRUE
+ByteCompile: TRUE
