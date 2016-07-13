@@ -211,6 +211,12 @@ notification.}
 
 get_GSOD(years = 2010, station = "955510-99999", path = "~/")
 
+# Download data for Philippines for year 2010 and generate a yearly
+# summary file, GSOD-PHL-2010.csv, file in the user's home directory with a
+# maximum of five missing days per station allowed.
+
+get_GSOD(years = 2010, country = "Philippines", path = "~/")
+
 \dontrun{
 # Download global GSOD data for agroclimatology work for years 2009 and 2010
 # and generate yearly summary files, GSOD-agroclimatology-2010.csv and
@@ -219,13 +225,6 @@ get_GSOD(years = 2010, station = "955510-99999", path = "~/")
 
 get_GSOD(years = 2010:2011, path = "~/", agroclimatology = TRUE)
 }
-
-# Download data for Philippines for year 2010 and generate a yearly
-# summary file, GSOD-PHL-2010.csv, file in the user's home directory with a
-# maximum of five missing days per station allowed.
-
-get_GSOD(years = 2010, country = "Philippines", path = "~/")
-
 
 
 }
