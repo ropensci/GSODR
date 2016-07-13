@@ -53,14 +53,13 @@ checked for number of missing days to assure data quality, stations with too
 many missing observations are omitted, stations with a latitude of < -90 or >
 90 or longitude of < -180 or > 180 are removed. All units are converted to
 International System of Units (SI), e.g., Fahrenheit to Celsius and inches to
-millimetres. For convenience elevation is converted from decimetres to metres.
-Alternative elevation measurements are supplied for missing values or values
-found to be questionable based on the Consulatative Group for International
-Agricultural Research's Consortium for Spatial Information group's (CGIAR-CSI)
-Shuttle Radar Topography Mission 90 metre (SRTM 90m) digital elevation data
-based on NASA's original SRTM 90m data. Further information on these data and
-methods can be found on GSODR's GitHub repository here:
-\url{https://github.com/adamhsparks/GSODR/blob/master/data-raw/fetch_isd-history.md}
+millimetres. Alternative elevation measurements are supplied for missing
+values or values found to be questionable based on the Consulatative Group
+for International Agricultural Research's Consortium for Spatial Information
+group's (CGIAR-CSI) Shuttle Radar Topography Mission 90 metre (SRTM 90m)
+digital elevation data based on NASA's original SRTM 90m data. Further
+information on these data and methods can be found on GSODR's GitHub
+repository here: \url{https://github.com/adamhsparks/GSODR/blob/master/data-raw/fetch_isd-history.md}
 }
 \details{
 Due to the size of the resulting data, output is saved as a comma-separated,
@@ -79,7 +78,7 @@ Be sure to have disk space free and allocate the proper time for this to run.
 This is a time, processor and disk input/output/space intensive process.
 This function was largely based on T. Hengl's "getGSOD.R" script, available
 from \url{http://spatial-analyst.net/book/system/files/getGSOD.R} with
-enhancements to be more cross-platform, faster and a bit more flexible.
+enhancements to be cross-platform, faster and a bit more flexible.
 For more information see the description of the data provided by NCDC,
 \url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
 
