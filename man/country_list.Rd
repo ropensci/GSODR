@@ -29,7 +29,8 @@ non-U.S. data cannot be redistributed for commercial purposes.
 Re-distribution of these data by others must provide this same
 notification.}
 
-The data are automatically loaded with the \code{GSODR} package.
+The \code{data(country_list)} data are automatically loaded with the
+\code{GSODR} package.
 }
 \keyword{datasets}
 
