@@ -16,7 +16,7 @@ cleaning data from the "[Global Surface Summary of the Day
 data provided by the US National Climatic Data Center (NCDC). Stations
 are individually checked for number of missing days to assure data
 quality, stations with too many missing observations are omitted. All
-units are converted to metric, e.g., feet to metres and Fahrenheit to
+units are converted to metric, e.g., inches to milimetres and Fahrenheit to
 Celsius. Output is saved as a Comma Separated Value (CSV) file or ESRI
 format shapefile summarizing each year by station, which includes vapor
 pressure and relative humidity variables calculated from existing data
@@ -30,8 +30,8 @@ retrieval and error correction.
 
 Be sure to have disk space free and allocate the proper time for this to
 run. This is a time, RAM and disk space intensive process. For any query
-of GSOD data other than a single station, the process is parallelised to
-use number of cores minus 2 (ncore-2) to clean and reformat the data.
+of GSOD data other than a single station, the process runs in parallel
+to clean and reformat the data.
 
 For more information see the description of the data provided by NCDC,
 <http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
@@ -61,7 +61,7 @@ devtools::install_github("adamhsparks/GSODR")
 Output
 ======
 
-This package consists of a single function, get\_GSOD(), which generates
+This package consists of a single function, `get_GSOD()`, which generates
 a .csv file or ESRI format shapefile in the respective year directory
 containing the following variables:  
 **STNID** - Station number (WMO/DATSAV3 number) for the location;  
@@ -199,29 +199,26 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
 
 Examples
 --------
-
 ``` r
 # Download weather station for Toowoomba, Queensland for 2010, save resulting
-# file in the user's Downloads directory.
+# file, GSOD-955510-99999-2010.csv, in the user's home directory.
 
-get_GSOD(years = 2010, station = "955510-99999", path = "~/Downloads")
-```
+get_GSOD(years = 2010, station = "955510-99999", path = "~/")
 
-``` r
+
 # Download global GSOD data for agroclimatology work for years 2009 and 2010
-# and generate yearly summary files, GSOD_2009_XY and GSOD_2010_XY in folders
-# named 2009 and 2010 in the user's Downloads directory with a maximum of
-# five missing days per weather station allowed.
+# and generate yearly summary files, GSOD-agroclimatology-2010.csv and
+# GSOD-agroclimatology-2011.csv in the user's home directory with a maximum
+# of five missing days per weather station allowed.
 
-get_GSOD(years = 2010:2011, path = "~/Downloads", agroclimatology = TRUE)
-```
+get_GSOD(years = 2010:2011, path = "~/", agroclimatology = TRUE)
 
-``` r
-# Download data for Australia for year 2010 and generate a yearly
-# summary file, GSOD_2010_XY files in the user's Downloads directory with a
-maximum of five missing days per station allowed.
 
-get_GSOD(years = 2010, country = "Australia", path = "~/Downloads")
+# Download data for Philippines for year 2010 and generate a yearly
+# summary file, GSOD-PHL-2010.csv, file in the user's home directory with a
+# maximum of five missing days per station allowed.
+
+get_GSOD(years = 2010, country = "Philippines", path = "~/")
 ```
 
 References
