@@ -11,16 +11,23 @@
   calculations are processed in parallel now to reduce runtime  
   * Country list is now included in the package to reduce run time necessary
   when querying for a specific country. However, this means any time that the
-  country-list.txt file is updated, this package needs to be updated as well.
+  country-list.txt file is updated, this package needs to be updated as well.  
+  * Enable ByteCompile option upon installation for small increase in speed.  
   
 ## Improvements
   * Users can now select to merge output for station queries across multiple
   years. Previously one year = one file per station. Now by setting
   `merge_station_years = TRUE` parameter, only one output file is generated  
+  * Updated stations list with latest version from NCDC published 12-07-2016.
+  * Improved documentation with spelling fixes, clarification and updates.  
+
+******
 
 # GSODR v0.1.8.1 (Release Date: 2016-07-07)
 
   * Fix bug where no station is specified, function fails to run
+
+******
 
 # GSODR v0.1.8 (Release Date: 2016-07-04)
 ## Bug fixes
@@ -43,6 +50,8 @@
 
 ## Improvements
   * Documentation is more complete and easier to use  
+
+******
 
 # GSODR v0.1.7 (Release Date: 2016-06-02)
 
