@@ -60,7 +60,7 @@ non-U.S. data cannot be redistributed for commercial purposes.
 Re-distribution of these data by others must provide this same
 notification.}
 
-The \code{data(stations)} data are automatically loaded with the
+The \code{stations} data are automatically loaded with the
 \code{GSODR} package.
 }
 \references{

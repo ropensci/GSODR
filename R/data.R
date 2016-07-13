@@ -46,7 +46,7 @@
 #' Re-distribution of these data by others must provide this same
 #' notification.}
 #'
-#' The \code{data(stations)} data are automatically loaded with the
+#' The \code{stations} data are automatically loaded with the
 #' \code{GSODR} package.
 #'
 #' @source \url{ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv}
@@ -72,7 +72,7 @@
 #' Re-distribution of these data by others must provide this same
 #' notification.}
 #'
-#' The \code{data(country_list)} data are automatically loaded with the
+#' The \code{country_list} data are automatically loaded with the
 #' \code{GSODR} package.
 #'
 #' @source \url{ftp://ftp.ncdc.noaa.gov/pub/data/noaa/country-list.txt}
