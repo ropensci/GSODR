@@ -78,7 +78,7 @@ Be sure to have disk space free and allocate the proper time for this to run.
 This is a time, processor and disk input/output/space intensive process.
 This function was largely based on T. Hengl's "getGSOD.R" script, available
 from \url{http://spatial-analyst.net/book/system/files/getGSOD.R} with
-enhancements to be cross-platform, faster and a bit more flexible.
+enhancements to be cross-platform, faster and more flexible.
 For more information see the description of the data provided by NCDC,
 \url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
 

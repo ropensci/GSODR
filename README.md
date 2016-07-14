@@ -25,7 +25,7 @@ in GSOD.
 This package was largely based on Tomislav Hengl's work in "[A Practical
 Guide to Geostatistical
 Mapping](http://spatial-analyst.net/book/getGSOD.R)", with updates for
-speed, cross-platform functionality, and added more options for data
+speed, cross-platform functionality, and more options for data
 retrieval and error correction.
 
 Be sure to have disk space free and allocate the proper time for this to

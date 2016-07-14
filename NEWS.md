@@ -20,6 +20,15 @@
   `merge_station_years = TRUE` parameter, only one output file is generated  
   * Updated stations list with latest version from NCDC published 12-07-2016.
   * Improved documentation with spelling fixes, clarification and updates.  
+  * The speed with which the function runs is now greatly improved when
+  only writing CSV files to disk by using write.csv.raw from `[iotools]("https://cran.r-project.org/web/packages/iotools/index.html")`. This
+  should make the runtime for any operation using this function much shorter. In
+  testing, it resulted in roughly halving the time necessary to generate a CSV
+  file for one year. However, writing shapefiles when setting
+  `shapefile = TRUE`, does not benefit from this speed enhancement.
+  * However, shapefiles are now written out to disk using `rgdal::writeOGR` in
+  place of `raster::shapefile`, which improves the disk write speed of the
+  operation.
 
 ******
 
