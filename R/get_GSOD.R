@@ -359,11 +359,11 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 
     #### csv file---------------------------------------------------------------
     if (CSV == TRUE) {
-      cat(noquote(paste0(paste0(names(GSOD_XY), collapse = ","),"\n")),
+      cat(noquote(paste0(paste0(names(GSOD_XY), collapse = ","), "\n")),
           file = paste0(path.expand(outfile), ".csv"))
       iotools::write.csv.raw(GSOD_XY,
                              file = paste0(path.expand(outfile), ".csv"),
-                             sep = ",", append = TRUE, fileEncoding = "ascii")
+                             append = TRUE)
     }
 
     #### shapefile--------------------------------------------------------------
