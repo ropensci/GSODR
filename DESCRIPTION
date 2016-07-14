@@ -55,6 +55,7 @@ Imports:
     doParallel,
     foreach,
     lubridate,
+    iotools,
     iterators,
     parallel,
     raster,

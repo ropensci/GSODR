@@ -359,9 +359,11 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 
     #### csv file---------------------------------------------------------------
     if (CSV == TRUE) {
-      utils::write.csv(GSOD_XY, file = paste0(path.expand(outfile), ".csv"),
-                       na = "-9999", row.names = FALSE,
-                       fileEncoding = "UTF-8")
+      cat(noquote(paste0(paste0(names(GSOD_XY), collapse = ","),"\n")),
+          file = paste0(path.expand(outfile), ".csv"))
+      iotools::write.csv.raw(GSOD_XY,
+                             file = paste0(path.expand(outfile), ".csv"),
+                             sep = ",", append = TRUE, fileEncoding = "ascii")
     }
 
     #### shapefile--------------------------------------------------------------
@@ -370,7 +372,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
       sp::coordinates(GSOD_XY) <- ~LON + LAT
       sp::proj4string(GSOD_XY) <- sp::CRS("+proj=longlat +datum=WGS84")
       raster::shapefile(GSOD_XY, filename = path.expand(outfile),
-                        overwrite = TRUE, encoding = "UTF-8")
+                        overwrite = TRUE, encoding = "ascii")
       rm(GSOD_XY)
     }
   }
@@ -471,6 +473,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                        "I.FOG", "I.RAIN_DZL", "I.SNW_ICE", "I.HAIL",
                        "I.THUNDER", "I.TDO_FNL",
                        "EA", "ES", "RH")]
+  GSOD_df[is.na(GSOD_df)] <- -9999
   return(GSOD_df)
 }
 
