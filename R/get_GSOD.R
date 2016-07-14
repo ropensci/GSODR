@@ -327,16 +327,15 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 
       itx <- iterators::iter(GSOD_list)
       # For a country, the entire set or agroclimatology -----------------------
-      GSOD_XY <- data.table::rbindlist(
-        foreach::foreach(j = itx) %dopar% {
-
-          tmp <- try(.read_gz(paste0(td, "/", yr, "/", j)))
-
-          # check to see if max_missing < missing days, if not, go to next
-          if (.check(tmp, yr, max_missing) == FALSE) {
-            .reformat(tmp, stations)
+      GSOD_XY <- as.data.frame(
+        data.table::rbindlist(
+          foreach::foreach(j = itx) %dopar% {
+            tmp <- try(.read_gz(paste0(td, "/", yr, "/", j)))
+            if (.check(tmp, yr, max_missing) == FALSE) {
+              .reformat(tmp, stations)
+            }
           }
-        }
+        )
       )
       parallel::stopCluster(cl)
     }
@@ -361,7 +360,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
     if (CSV == TRUE) {
       cat(noquote(paste0(paste0(names(GSOD_XY), collapse = ","), "\n")),
           file = paste0(path.expand(outfile), ".csv"))
-      iotools::write.csv.raw(GSOD_XY,
+      iotools::write.csv.raw(as.data.frame(GSOD_XY),
                              file = paste0(path.expand(outfile), ".csv"),
                              append = TRUE)
     }
@@ -373,7 +372,6 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
       sp::proj4string(GSOD_XY) <- sp::CRS("+proj=longlat +datum=WGS84")
       raster::shapefile(GSOD_XY, filename = path.expand(outfile),
                         overwrite = TRUE, encoding = "ascii")
-      rm(GSOD_XY)
     }
   }
 
@@ -459,7 +457,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   tmp$RH <- round(tmp$EA / tmp$ES * 100, 1)
 
   # Join to the station data----------------------------------------------------
-  GSOD_df <- dplyr::inner_join(tmp, stations, by = "STNID")
+  GSOD_df <- suppressWarnings(suppressMessages(
+    dplyr::inner_join(tmp, stations, by = "STNID")))
 
   GSOD_df <- GSOD_df[c("USAF", "WBAN", "STNID", "STN.NAME", "CTRY",
                        "LAT", "LON", "ELEV.M", "ELEV.M.SRTM.90m",
