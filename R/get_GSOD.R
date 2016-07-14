@@ -187,8 +187,8 @@
 #'
 #' @examples
 #' \dontrun{
-#' Download weather station for Toowoomba, Queensland for 2010, save resulting
-#' file, GSOD-955510-99999-2010.csv, in the user's home directory.
+#' # Download weather station for Toowoomba, Queensland for 2010, save resulting
+#' # file, GSOD-955510-99999-2010.csv, in the user's home directory.
 #'
 #' get_GSOD(years = 2010, station = "955510-99999", path = "~/")
 #'
@@ -220,7 +220,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                      shapefile = FALSE, CSV = TRUE,
                      merge_station_years = FALSE) {
 
-  # Setting up options, creating objects, check variables entered by user-------
+  # Set up options, creating objects, check variables entered by user-----------
   opt <- settings::options_manager(warn = 2, timeout = 300)
 
   utils::data("stations", package = "GSODR", envir = environment())
@@ -270,8 +270,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   ftp_site <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
 
   # Loop if there are more than one year being queried ---------------------
-  itw <- iterators::iter(years)
-  foreach::foreach(yr = iterators::nextElem(itw)) %do% {
+  ity <- iterators::iter(years)
+  foreach::foreach(yr = ity) %do% {
     if (is.null(station)) {
 
       tryCatch(curl::curl_download(url = paste0(ftp_site, yr, "/gsod_", yr, ".tar"),
@@ -328,7 +328,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
       itx <- iterators::iter(GSOD_list)
       # For a country, the entire set or agroclimatology -----------------------
       GSOD_XY <- data.table::rbindlist(
-        foreach::foreach(j = iterators::nextElem(itx)) %dopar% {
+        foreach::foreach(j = itx) %dopar% {
+
           tmp <- try(.read_gz(paste0(td, "/", yr, "/", j)))
 
           # check to see if max_missing < missing days, if not, go to next
