@@ -20,10 +20,10 @@
   calculations are processed in parallel now to reduce runtime  
   * Improved documentation with spelling fixes, clarification and updates  
   * Enable `ByteCompile` option upon installation for small increase in speed  
-  * Use `write.csv.raw` from `iotools` to greatly improve runtime by decreasing
-  time used to write CSV files to disk  
-  * Use `writeOGR` from `rgdal` to improve runtime by decreasing time used to
-  write shapefiles to disk  
+  * Use `write.csv.raw` from `[iotools]("https://cran.r-project.org/web/packages/iotools/index.html")`
+  to greatly improve runtime by decreasing time used to write CSV files to disk  
+  * Use `writeOGR` from `rgdal`, in place of `raster's` `shapefile` to improve
+  runtime by decreasing time used to write shapefiles to disk  
 
 ******
 

@@ -61,7 +61,7 @@
 #'This is a time, processor and disk input/output/space intensive process.
 #'This function was largely based on T. Hengl's "getGSOD.R" script, available
 #'from \url{http://spatial-analyst.net/book/system/files/getGSOD.R} with
-#'enhancements to be cross-platform, faster and a bit more flexible.
+#'enhancements to be cross-platform, faster and more flexible.
 #'For more information see the description of the data provided by NCDC,
 #'\url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
 #'
@@ -343,25 +343,25 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
     #### Write to disk ---------------------------------------------------------
     if (!is.null(station)) {
       if (length(years) == 1) {
-        outfile <- paste0(path, "GSOD-", station, "-", yr)
+        outfile <- paste0("GSOD-", station, "-", yr)
       } else {
-        outfile <- paste0(path, "GSOD-", station, "-", min(years), "-to-",
+        outfile <- paste0("GSOD-", station, "-", min(years), "-to-",
                           max(years))
       }
     } else if (!is.null(country)) {
-      outfile <- paste0(path, "GSOD-", country, "-", yr)
+      outfile <- paste0("GSOD-", country, "-", yr)
     } else if (agroclimatology == TRUE) {
-      outfile <- paste0(path, "GSOD-agroclimatology-", yr)
+      outfile <- paste0("GSOD-agroclimatology-", yr)
     } else {
-      outfile <- paste0(path, "GSOD-", yr)
+      outfile <- paste0("GSOD-", yr)
     }
 
     #### csv file---------------------------------------------------------------
     if (CSV == TRUE) {
       cat(noquote(paste0(paste0(names(GSOD_XY), collapse = ","), "\n")),
-          file = paste0(path.expand(outfile), ".csv"))
+          file = paste0(path.expand(path), outfile, ".csv"))
       iotools::write.csv.raw(as.data.frame(GSOD_XY),
-                             file = paste0(path.expand(outfile), ".csv"),
+                             file = paste0(path.expand(path), outfile, ".csv"),
                              append = TRUE)
     }
 
@@ -370,8 +370,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
       GSOD_XY <- as.data.frame(GSOD_XY) # convert tbl.df to dataframe for sp
       sp::coordinates(GSOD_XY) <- ~LON + LAT
       sp::proj4string(GSOD_XY) <- sp::CRS("+proj=longlat +datum=WGS84")
-      raster::shapefile(GSOD_XY, filename = path.expand(outfile),
-                        overwrite = TRUE, encoding = "ascii")
+      rgdal::writeOGR(GSOD_XY, dsn = path.expand(path), layer = outfile,
+                      driver = "ESRI Shapefile", overwrite_layer = TRUE)
     }
   }
 
@@ -498,7 +498,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 # October 2008
 
 .get_data_path <- function(path) {
-  path <- raster::trim(path)
+  path <- stringr::str_trim(path, side = "both")
   if (path == "") {
     stop("\nYou must supply a valid file path for storing the .csv file.\n")
   } else {
@@ -525,7 +525,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 # Original version as above from R J Hijmans.
 # Bug fixes by A H Sparks for 2 letter ISO code
 .get_country <- function(country = "") {
-  country <- toupper(raster::trim(country[1]))
+  country <- toupper(stringr::str_trim(country[1], side = "both"))
   cs <- raster::ccodes()
   # from Stack Overflow user juba, goo.gl/S31jyk
   cs <- data.frame(lapply(cs, function(x) {
@@ -539,14 +539,14 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
     if (country %in% cs[, 2]) {
       return(country)
     } else {
-      stop("\nUnknown ISO code. Please provide a valid name or 2 or 3 letter ISO country code; you can get a list by using: getData('ISO3').\n")
+      stop("\nUnknown ISO code. Please provide a valid name or 2 or 3 letter ISO country code; you can get a list by using: raster::getData('ISO3').\n")
     }
   } else if (nc == 2) {
     if (country %in% cs[, 3]) {
       i <- which(country == cs[, 3])
       return(cs[i, 2])
     } else {
-      stop("\nUnknown ISO code. Please provide a valid name or 2 or 3 letter ISO country code; you can get a list by using: getData('ISO3').\n")
+      stop("\nUnknown ISO code. Please provide a valid name or 2 or 3 letter ISO country code; you can get a list by using: raster::getData('ISO3').\n")
     }
   } else if (country %in% cs[, 1]) {
     i <- which(country == cs[, 1])
@@ -558,7 +558,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
     i <- which(country == cs[, 5])
     return(cs[i, 2])
   } else {
-    stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you can get a list by using: getData('ISO3').\n")
+    stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you can get a list by using: raster::getData('ISO3').\n")
     return(0)
   }
 }
