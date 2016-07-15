@@ -16,7 +16,7 @@ cleaning data from the "[Global Surface Summary of the Day
 data provided by the US National Climatic Data Center (NCDC). Stations
 are individually checked for number of missing days to assure data
 quality, stations with too many missing observations are omitted. All
-units are converted to metric, e.g., inches to milimetres and Fahrenheit to
+units are converted to metric, e.g., inches to millimetres and Fahrenheit to
 Celsius. Output is saved as a Comma Separated Value (CSV) file or ESRI
 format shapefile summarizing each year by station, which includes vapor
 pressure and relative humidity variables calculated from existing data
