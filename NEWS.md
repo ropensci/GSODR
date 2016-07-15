@@ -1,4 +1,4 @@
-# GSODR v0.1.9
+# GSODR v0.1.9 (Release Date: 2016-15-07)
 
 ## Bug fixes
   * Fix bug in precipitation calculation. Documentation states that PRCP is in
