@@ -225,7 +225,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   opt <- settings::options_manager(warn = 2, timeout = 300)
 
   utils::data("stations", package = "GSODR", envir = environment())
-  stations <- data.table(get("stations", envir = environment()))
+  stations <- data.table::data.table(get("stations", envir = environment()))
 
   utils::data("country_list", package = "GSODR", envir = environment())
   country_list <- get("country_list", envir = environment())
@@ -416,6 +416,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 
   # Clean up and convert the station and weather data to metric
   STNID <- "STNID"
+  WBAN <- "WBAN"
   YEARMODA <- "YEARMODA"
   tmp <- tmp[, (STNID) := paste(tmp$STN, tmp$WBAN, sep = "-")]
   tmp[, WBAN := NULL]
