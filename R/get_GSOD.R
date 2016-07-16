@@ -226,7 +226,6 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 
   utils::data("stations", package = "GSODR", envir = environment())
   stations <- data.table(get("stations", envir = environment()))
-  stations$STNID <- as.character(stations$STNID)
 
   utils::data("country_list", package = "GSODR", envir = environment())
   country_list <- get("country_list", envir = environment())
