@@ -213,6 +213,7 @@
 #'
 #' @importFrom foreach %dopar%
 #' @importFrom foreach %do%
+#' @importFrom data.table :=
 #'
 #' @export
 get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
@@ -224,8 +225,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   opt <- settings::options_manager(warn = 2, timeout = 300)
 
   utils::data("stations", package = "GSODR", envir = environment())
-  stations <- get("stations", envir = environment())
-  stations[, 12] <- as.character(stations[, 12])
+  stations <- data.table(get("stations", envir = environment()))
+  stations$STNID <- as.character(stations$STNID)
 
   utils::data("country_list", package = "GSODR", envir = environment())
   country_list <- get("country_list", envir = environment())
@@ -401,22 +402,27 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 # Reformat and generate new variables
 .reformat <- function(tmp, stations) {
   GSOD_df <- NULL
+  STNID <- NULL
+  YEARMODA <- NULL
+
 
   # add names to columns in data frame
-  names(tmp) <- c("STN", "WBAN", "YEAR", "MODA", "TEMP", "TEMP.CNT",
-                  "DEWP", "DEWP.CNT", "SLP", "SLP.CNT", "STP",
-                  "STP.CNT", "VISIB", "VISIB.CNT", "WDSP", "WDSP.CNT",
-                  "MXSPD", "GUST", "MAX", "MAX.FLAG", "MIN", "MIN.FLAG",
-                  "PRCP", "PRCP.FLAG", "SNDP", "I.FOG", "I.RAIN_DZL",
-                  "I.SNW_ICE", "I.HAIL", "I.THUNDER", "I.TDO_FNL")
+  data.table::setnames(tmp, c("STN", "WBAN", "YEAR", "MODA", "TEMP", "TEMP.CNT",
+                              "DEWP", "DEWP.CNT", "SLP", "SLP.CNT", "STP",
+                              "STP.CNT", "VISIB", "VISIB.CNT", "WDSP",
+                              "WDSP.CNT", "MXSPD", "GUST", "MAX", "MAX.FLAG",
+                              "MIN", "MIN.FLAG", "PRCP", "PRCP.FLAG", "SNDP",
+                              "I.FOG", "I.RAIN_DZL", "I.SNW_ICE", "I.HAIL",
+                              "I.THUNDER", "I.TDO_FNL"))
 
   # Clean up and convert the station and weather data to metric
-  tmp <- dplyr::mutate(tmp, STNID = paste(tmp$STN, tmp$WBAN, sep = "-"))
-  tmp <- tmp[, -2]
-
-  tmp <- dplyr::mutate(tmp, YEARMODA = paste(tmp$YEAR, tmp$MODA, sep = ""))
-  tmp$MONTH <- stringr::str_sub(tmp$YEARMODA, 5, 6)
-  tmp$DAY <- stringr::str_sub(tmp$YEARMODA, 7, 8)
+  STNID <- "STNID"
+  YEARMODA <- "YEARMODA"
+  tmp <- tmp[, (STNID) := paste(tmp$STN, tmp$WBAN, sep = "-")]
+  tmp[, WBAN := NULL]
+  tmp <- tmp[, (YEARMODA) := paste0(tmp$YEAR, tmp$MODA)]
+  tmp$MONTH <- substr(tmp$YEARMODA, 5, 6)
+  tmp$DAY <- substr(tmp$YEARMODA, 7, 8)
   tmp$YDAY <- lubridate::yday(as.Date(paste(tmp$YEAR, tmp$MONTH, tmp$DAY,
                                             sep = "-")))
 
@@ -457,8 +463,10 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   tmp$RH <- round(tmp$EA / tmp$ES * 100, 1)
 
   # Join to the station data----------------------------------------------------
-  GSOD_df <- suppressWarnings(suppressMessages(
-    dplyr::inner_join(tmp, stations, by = "STNID")))
+
+  tmp <- data.table::setkey(tmp, STNID)
+  stations <- data.table::setkey(stations, STNID)
+  GSOD_df <- stations[tmp]
 
   GSOD_df <- GSOD_df[c("USAF", "WBAN", "STNID", "STN.NAME", "CTRY",
                        "LAT", "LON", "ELEV.M", "ELEV.M.SRTM.90m",
@@ -477,17 +485,18 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 }
 
 .read_gz <- function(gz_file) {
-  readr::read_fwf(file = gz_file,
-                  readr::fwf_positions(c(1, 8, 15, 19, 25, 32, 36, 43, 47, 54,
-                                         58, 65, 69, 75, 79, 85, 89, 96, 103,
-                                         109, 111, 117, 119, 124, 126, 133, 134,
-                                         135, 136, 137, 138),
-                                       c(6, 12, 18, 22, 30, 33, 41, 44, 52, 55,
-                                         63, 66, 73, 76, 83, 86, 93, 100, 108,
-                                         109, 116, 117, 123, 124, 130, 133, 134,
-                                         135, 136, 137, 138)),
-                  skip = 1,
-                  na = c("9999.9", "999.9", "99.99"))
+  data.table::setDT(
+    readr::read_fwf(file = gz_file,
+                    readr::fwf_positions(c(1, 8, 15, 19, 25, 32, 36, 43, 47, 54,
+                                           58, 65, 69, 75, 79, 85, 89, 96, 103,
+                                           109, 111, 117, 119, 124, 126, 133,
+                                           134, 135, 136, 137, 138),
+                                         c(6, 12, 18, 22, 30, 33, 41, 44, 52,
+                                           55, 63, 66, 73, 76, 83, 86, 93, 100,
+                                           108, 109, 116, 117, 123, 124, 130,
+                                           133, 134, 135, 136, 137, 138)),
+                    skip = 1,
+                    na = c("9999.9", "999.9", "99.99")))
 }
 
 # The following 2 functions are shamelessly borrowed from RJ Hijmans raster pkg
@@ -498,7 +507,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 # October 2008
 
 .get_data_path <- function(path) {
-  path <- stringr::str_trim(path, side = "both")
+  path <- trimws(path)
   if (path == "") {
     stop("\nYou must supply a valid file path for storing the .csv file.\n")
   } else {
@@ -525,7 +534,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 # Original version as above from R J Hijmans.
 # Bug fixes by A H Sparks for 2 letter ISO code
 .get_country <- function(country = "") {
-  country <- toupper(stringr::str_trim(country[1], side = "both"))
+  country <- toupper(trimws(country[1]))
   cs <- raster::ccodes()
   # from Stack Overflow user juba, goo.gl/S31jyk
   cs <- data.frame(lapply(cs, function(x) {
