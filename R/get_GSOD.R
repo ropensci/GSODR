@@ -293,8 +293,9 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
       if (agroclimatology == TRUE) {
         station_list <- stations[stations$LAT >= -60 &
                                    stations$LAT <= 60, ]$STNID
-        station_list <- sapply(station_list,
-                               function(x) rep(paste0(x, "-", yr, ".op.gz")))
+        station_list <- vapply(station_list,
+                               function(x) rep(paste0(x, "-", yr, ".op.gz")),
+                               "")
         GSOD_list <- GSOD_list[GSOD_list %in% station_list == TRUE]
         rm(station_list)
       }
@@ -302,13 +303,13 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
       # If country is set, subset list of stations to clean
       if (!is.null(country)) {
         country_FIPS <- unlist(as.character(stats::na.omit(
-          country_list[country_list$iso3c == country, ][1])))
+          country_list[country_list$iso3c == country, ][1]),
+          use.names = FALSE))
         station_list <- stations[stations$CTRY == country_FIPS, ]$STNID
-        station_list <- sapply(station_list,
-                               function(x) rep(paste0(x, "-", yr, ".op.gz")))
-
+        station_list <- vapply(station_list,
+                               function(x) rep(paste0(x, "-", yr, ".op.gz")),
+                               "")
         GSOD_list <- GSOD_list[GSOD_list %in% station_list == TRUE]
-        rm(station_list)
       }
     }
 
@@ -447,39 +448,17 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   tmp[, (MODA) := NULL]
   tmp[, (YDAY) := lubridate::yday(as.Date(paste(tmp$YEAR, tmp$MONTH,
                                                 tmp$DAY, sep = "-")))]
-  tmp[, (TEMP)  := ifelse(!is.na(tmp$TEMP),
-                          round( ( (5 / 9) * (tmp$TEMP - 32)), 1),
-                          NA_integer_)]
-  tmp[, (DEWP)  := ifelse(!is.na(tmp$DEWP),
-                          round( ( (5 / 9) * (tmp$DEWP - 32)), 1),
-                          NA_integer_)]
-  tmp[, (WDSP)  :=  ifelse(!is.na(tmp$WDSP),
-                           round(tmp$WDSP * 0.514444444, 1),
-                           NA_integer_)]
-  tmp[, (MXSPD) :=  ifelse(!is.na(tmp$MXSPD),
-                           round(tmp$MXSPD * 0.514444444, 1),
-                           NA_integer_)]
-  tmp[, (VISIB) := ifelse(!is.na(tmp$VISIB),
-                          round(tmp$VISIB * 1.60934, 1),
-                          NA_integer_)]
-  tmp[, (WDSP)  := ifelse(!is.na(tmp$WDSP),
-                          round(tmp$WDSP * 0.514444444, 1),
-                          NA_integer_)]
-  tmp[, (GUST)  := ifelse(!is.na(tmp$GUST),
-                          round(tmp$GUST * 0.514444444, 1),
-                          NA_integer_)]
-  tmp[, (MAX)   := ifelse(!is.na(tmp$MAX),
-                          round( (tmp$MAX - 32) * (5 / 9), 2),
-                          NA_integer_)]
-  tmp[, (MIN)   := ifelse(!is.na(tmp$MIN),
-                          round( (tmp$MIN - 32) * (5 / 9), 2),
-                          NA_integer_)]
-  tmp[, (PRCP)  := ifelse(!is.na(tmp$PRCP),
-                          round( (tmp$PRCP * 25.4), 1),
-                          NA_integer_)]
-  tmp[, (SNDP)  := ifelse(!is.na(tmp$SNDP),
-                          round( (tmp$SNDP * 25.4), 1),
-                          NA_integer_)]
+  tmp[, (TEMP)  := round( ( (5 / 9) * (as.numeric(tmp$TEMP) - 32)), 1)]
+  tmp[, (DEWP)  := round( ( (5 / 9) * (as.numeric(tmp$DEWP) - 32)), 1)]
+  tmp[, (WDSP)  := round(as.numeric(tmp$WDSP) * 0.514444444, 1)]
+  tmp[, (MXSPD) := round(as.numeric(tmp$MXSPD) * 0.514444444, 1)]
+  tmp[, (VISIB) := round(as.numeric(tmp$VISIB) * 1.60934, 1)]
+  tmp[, (WDSP)  := round(as.numeric(tmp$WDSP) * 0.514444444, 1)]
+  tmp[, (GUST)  := round(as.numeric(tmp$GUST) * 0.514444444, 1)]
+  tmp[, (MAX)   := round( (as.numeric(tmp$MAX) - 32) * (5 / 9), 2)]
+  tmp[, (MIN)   := round( (as.numeric(tmp$MIN) - 32) * (5 / 9), 2)]
+  tmp[, (PRCP)  := round( (as.numeric(tmp$PRCP) * 25.4), 1)]
+  tmp[, (SNDP)  := round( (as.numeric(tmp$SNDP) * 25.4), 1)]
 
   # Compute other weather vars--------------------------------------------------
   # Mean actual (EA) and mean saturation vapour pressure (ES)
@@ -487,19 +466,13 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   #   Edward Arnold, London
 
   # EA derived from dew point
-  tmp[, (EA) := ifelse(!is.na(tmp$DEWP),
-                       round(0.61078 * exp((17.2694 * tmp$DEWP) /
-                                             (tmp$DEWP + 237.3)), 1),
-                       NA_integer_)]
+  tmp[, (EA) := round(0.61078 * exp((17.2694 * as.numeric(tmp$DEWP)) /
+                                             (as.numeric(tmp$DEWP) + 237.3)), 1)]
   # ES derived from average temperature
-  tmp[, (ES) := ifelse(!is.na(tmp$TEMP),
-                       round(0.61078 * exp((17.2694 * tmp$TEMP) /
-                                             (tmp$TEMP + 237.3)), 1),
-                       NA_integer_)]
+  tmp[, (ES) := round(0.61078 * exp((17.2694 * as.numeric(tmp$TEMP)) /
+                                             (as.numeric(tmp$TEMP) + 237.3)), 1)]
   # Calculate relative humidity
-  tmp[, (RH) := ifelse(!is.na(tmp$EA) & !is.na(tmp$ES),
-                       round(tmp$EA / tmp$ES * 100, 1),
-                       NA_integer_)]
+  tmp[, (RH) := round(tmp$EA / tmp$ES * 100, 1)]
 
   # Join to the station data----------------------------------------------------
   tmp <- data.table::setkey(tmp, STNID)
