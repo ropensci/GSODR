@@ -448,17 +448,17 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   tmp[, (MODA) := NULL]
   tmp[, (YDAY) := lubridate::yday(as.Date(paste(tmp$YEAR, tmp$MONTH,
                                                 tmp$DAY, sep = "-")))]
-  tmp[, (TEMP)  := round( ( (5 / 9) * (as.numeric(tmp$TEMP) - 32)), 1)]
-  tmp[, (DEWP)  := round( ( (5 / 9) * (as.numeric(tmp$DEWP) - 32)), 1)]
-  tmp[, (WDSP)  := round(as.numeric(tmp$WDSP) * 0.514444444, 1)]
-  tmp[, (MXSPD) := round(as.numeric(tmp$MXSPD) * 0.514444444, 1)]
-  tmp[, (VISIB) := round(as.numeric(tmp$VISIB) * 1.60934, 1)]
-  tmp[, (WDSP)  := round(as.numeric(tmp$WDSP) * 0.514444444, 1)]
-  tmp[, (GUST)  := round(as.numeric(tmp$GUST) * 0.514444444, 1)]
-  tmp[, (MAX)   := round( (as.numeric(tmp$MAX) - 32) * (5 / 9), 2)]
-  tmp[, (MIN)   := round( (as.numeric(tmp$MIN) - 32) * (5 / 9), 2)]
-  tmp[, (PRCP)  := round( (as.numeric(tmp$PRCP) * 25.4), 1)]
-  tmp[, (SNDP)  := round( (as.numeric(tmp$SNDP) * 25.4), 1)]
+  tmp[, (TEMP)  := round( ( (5 / 9) * ((tmp$TEMP) - 32)), 1)]
+  tmp[, (DEWP)  := round( ( (5 / 9) * ((tmp$DEWP) - 32)), 1)]
+  tmp[, (WDSP)  := round((tmp$WDSP) * 0.514444444, 1)]
+  tmp[, (MXSPD) := round((tmp$MXSPD) * 0.514444444, 1)]
+  tmp[, (VISIB) := round((tmp$VISIB) * 1.60934, 1)]
+  tmp[, (WDSP)  := round((tmp$WDSP) * 0.514444444, 1)]
+  tmp[, (GUST)  := round((tmp$GUST) * 0.514444444, 1)]
+  tmp[, (MAX)   := round( ((tmp$MAX) - 32) * (5 / 9), 2)]
+  tmp[, (MIN)   := round( ((tmp$MIN) - 32) * (5 / 9), 2)]
+  tmp[, (PRCP)  := round( ((tmp$PRCP) * 25.4), 1)]
+  tmp[, (SNDP)  := round( ((tmp$SNDP) * 25.4), 1)]
 
   # Compute other weather vars--------------------------------------------------
   # Mean actual (EA) and mean saturation vapour pressure (ES)
@@ -466,11 +466,11 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   #   Edward Arnold, London
 
   # EA derived from dew point
-  tmp[, (EA) := round(0.61078 * exp((17.2694 * as.numeric(tmp$DEWP)) /
-                                             (as.numeric(tmp$DEWP) + 237.3)), 1)]
+  tmp[, (EA) := round(0.61078 * exp((17.2694 * (tmp$DEWP)) /
+                                      ((tmp$DEWP) + 237.3)), 1)]
   # ES derived from average temperature
-  tmp[, (ES) := round(0.61078 * exp((17.2694 * as.numeric(tmp$TEMP)) /
-                                             (as.numeric(tmp$TEMP) + 237.3)), 1)]
+  tmp[, (ES) := round(0.61078 * exp((17.2694 * (tmp$TEMP)) /
+                                      ((tmp$TEMP) + 237.3)), 1)]
   # Calculate relative humidity
   tmp[, (RH) := round(tmp$EA / tmp$ES * 100, 1)]
 
@@ -499,6 +499,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 .read_gz <- function(gz_file) {
   data.table::setDT(
     readr::read_fwf(file = gz_file,
+                    skip = 1,
                     readr::fwf_positions(c(1, 8, 15, 19, 25, 32, 36, 43, 47, 54,
                                            58, 65, 69, 75, 79, 85, 89, 96, 103,
                                            109, 111, 117, 119, 124, 126, 133,
@@ -506,9 +507,25 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                                          c(6, 12, 18, 22, 30, 33, 41, 44, 52,
                                            55, 63, 66, 73, 76, 83, 86, 93, 100,
                                            108, 109, 116, 117, 123, 124, 130,
-                                           133, 134, 135, 136, 137, 138)),
-                    skip = 1,
-                    na = c("9999.9", "999.9", "99.99")))
+                                           133, 134, 135, 136, 137, 138),
+                                         col_names = c("STN", "WBAN", "YEAR",
+                                                       "MODA", "TEMP",
+                                                       "TEMP.CNT", "DEWP",
+                                                       "DEWP.CNT", "SLP",
+                                                       "SLP.CNT", "STP",
+                                                       "STP.CNT", "VISIB",
+                                                       "VISIB.CNT", "WDSP",
+                                                       "WDSP.CNT", "MXSPD",
+                                                       "GUST", "MAX",
+                                                       "MAX.FLAG", "MIN",
+                                                       "MIN.FLAG",
+                                                       "PRCP", "PRCP.FLAG",
+                                                       "SNDP", "I.FOG",
+                                                       "I.RAIN_DZL",
+                                                       "I.SNW_ICE", "I.HAIL",
+                                                       "I.THUNDER",
+                                                       "I.TDO_FNL")),
+                    col_types = c("iiiidididididididddcdcdcdiiiiii")))
 }
 
 # The following 2 functions are shamelessly borrowed from RJ Hijmans raster pkg
