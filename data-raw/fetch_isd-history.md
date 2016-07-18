@@ -74,7 +74,7 @@ stations <- stations[!is.na(stations$LAT) & !is.na(stations$LON), ]
 stations <- stations[stations$LAT != 0 & stations$LON != 0, ]
 stations <- stations[stations$LAT > -90 & stations$LAT < 90, ]
 stations <- stations[stations$LON > -180 & stations$LON < 180, ]
-stations$STNID <- paste(stations$USAF, stations$WBAN, sep = "-")
+stations$STNID <- as.character(paste(stations$USAF, stations$WBAN, sep = "-"))
 
 xy <- dplyr::left_join(stations, countries, by = c("CTRY" = "FIPS"))
 ```
@@ -154,37 +154,37 @@ summary(stations)
 ```
 
     ##       USAF            WBAN                     STN.NAME    
-    ##  999999 : 1226   99999  :20980   APPROXIMATE LOCALE:   36  
+    ##  999999 : 1227   99999  :20981   APPROXIMATE LOCALE:   36  
     ##  949999 :  373   23176  :    5   MOORED BUOY       :   20  
     ##  722250 :    4   03849  :    5   ...               :   15  
     ##  746929 :    4   24255  :    4   BOGUS CHINESE     :   13  
     ##  992390 :    4   24135  :    4   PACIFIC BUOY      :    8  
     ##  997225 :    4   24027  :    4   DEASE LAKE        :    7  
-    ##  (Other):23263   (Other): 3876   (Other)           :24779  
+    ##  (Other):23264   (Other): 3877   (Other)           :24781  
     ##       CTRY           STATE            CALL            LAT        
-    ##  US     : 6740          :18583          :14950   Min.   :-56.50  
-    ##  CA     : 1609   CA     :  505   KMLF   :    6   1st Qu.: 21.79  
+    ##  US     : 6742          :18583          :14951   Min.   :-56.50  
+    ##  CA     : 1609   CA     :  505   KMLF   :    6   1st Qu.: 21.81  
     ##  RS     : 1471   TX     :  488   KLSF   :    6   Median : 37.73  
-    ##  AS     : 1411   FL     :  319   PAMD   :    5   Mean   : 29.35  
+    ##  AS     : 1411   FL     :  320   PAMD   :    5   Mean   : 29.35  
     ##  CH     : 1042   MI     :  231   KONT   :    5   3rd Qu.: 47.17  
     ##  UK     :  675   NC     :  212   KLRD   :    5   Max.   : 60.00  
-    ##  (Other):11930   (Other): 4540   (Other): 9901                   
+    ##  (Other):11930   (Other): 4541   (Other): 9902                   
     ##       LON               ELEV.M           BEGIN               END          
     ##  Min.   :-179.983   Min.   :-350.0   Min.   :19010101   Min.   :19301231  
-    ##  1st Qu.: -83.742   1st Qu.:  25.0   1st Qu.:19570601   1st Qu.:20020209  
-    ##  Median :   7.283   Median : 152.0   Median :19750618   Median :20150612  
-    ##  Mean   :  -1.654   Mean   : 376.1   Mean   :19774307   Mean   :20040302  
-    ##  3rd Qu.:  69.209   3rd Qu.: 454.2   3rd Qu.:20010816   3rd Qu.:20160709  
-    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20160616   Max.   :20160711  
+    ##  1st Qu.: -83.743   1st Qu.:  25.0   1st Qu.:19570601   1st Qu.:20020209  
+    ##  Median :   7.275   Median : 152.0   Median :19750618   Median :20150612  
+    ##  Mean   :  -1.661   Mean   : 376.1   Mean   :19774309   Mean   :20040292  
+    ##  3rd Qu.:  69.203   3rd Qu.: 454.0   3rd Qu.:20010816   3rd Qu.:20160715  
+    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20160714   Max.   :20160717  
     ##                     NA's   :194                                           
     ##           STNID       ELEV.M.SRTM.90m.BUFFER
     ##  992390-99999:    4   Min.   :-360.9        
     ##  997225-99999:    4   1st Qu.:  24.5        
     ##  992570-99999:    2   Median : 153.2        
     ##  997242-99999:    2   Mean   : 379.3        
-    ##  919450-99999:    2   3rd Qu.: 456.1        
+    ##  919450-99999:    2   3rd Qu.: 456.0        
     ##  719584-99999:    2   Max.   :5273.4        
-    ##  (Other)     :24862   NA's   :52
+    ##  (Other)     :24864   NA's   :52
 
 Figures
 =======
