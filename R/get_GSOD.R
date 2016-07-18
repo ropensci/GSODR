@@ -525,7 +525,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                                                        "I.SNW_ICE", "I.HAIL",
                                                        "I.THUNDER",
                                                        "I.TDO_FNL")),
-                    col_types = c("iiiidididididididddcdcdcdiiiiii")))
+                    col_types = c("iiiidididididididddcdcdcdiiiiii"),
+                    na = c("9999.9", "999.9", "99.99")))
 }
 
 # The following 2 functions are shamelessly borrowed from RJ Hijmans raster pkg
