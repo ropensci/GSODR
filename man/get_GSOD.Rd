@@ -90,6 +90,8 @@ will contain the following fields/values:
 Air Force Navy" number - with WBAN being the acronym}
 \item{STN.NAME}{Unique text string identifier}
 \item{CTRY}{Country}
+\item{STATE}{State (for US stations if applicable)}
+\item{CALL}{International Civil Aviation Organization (ICAO) Airport Code}
 \item{LAT}{Latitude}
 \item{LON}{Longitude}
 \item{ELEV.M}{Station reported elevation (metres to tenths)}
