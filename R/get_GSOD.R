@@ -195,7 +195,7 @@
 #' get_GSOD(years = 2010, station = "955510-99999", path = "~/")
 #'
 #' # Download data for Philippines for year 2010 and generate a yearly
-#' # summary file, GSOD-PHL-2010.csv, file in the user's home directory with a
+#' # summary file, GSOD-RP-2010.csv, file in the user's home directory with a
 #' # maximum of five missing days per station allowed.
 #'
 #' get_GSOD(years = 2010, country = "Philippines", path = "~/")
