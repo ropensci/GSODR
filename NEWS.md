@@ -8,6 +8,11 @@
   from NCDC server  
   * Use FIPS codes in place of ISO3c for filenames and in output files because
   some stations have countries that do not have an ISO code  
+  * Output files now include fields for State (US only) and Call (International
+  Civil Aviation Organization (ICAO) Airport Code)  
+  * Country is specified using FIPS codes in filename and output file contents
+  due to stations occurring in some locales that lack ISO 3166 3 letter country
+  codes
 
 ******
 
