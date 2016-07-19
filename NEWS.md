@@ -2,10 +2,12 @@
 
 ## Changes
   * R >= 3.2.0 now required  
-  * Reduce package dependencies, remove `dplyr` and `stringr`  
+  * Reduce package dependencies, remove `dplyr`,`raster` and `stringr`  
   * Updated `stations` list with latest version from NCDC published 18-07-2016  
   * `get_GSOD` function optimised for speed as best possible after ftping files
   from NCDC server  
+  * Use FIPS codes in place of ISO3c for filenames and in output files because
+  some stations have countries that do not have an ISO code  
 
 ******
 

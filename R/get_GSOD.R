@@ -72,7 +72,7 @@
 #' \item{WBAN}{Number where applicable--this is the historical "Weather Bureau
 #' Air Force Navy" number - with WBAN being the acronym}
 #' \item{STN.NAME}{Unique text string identifier}
-#' \item{CTRY}{Country (ISO Alpha 3)}
+#' \item{CTRY}{Country (FIPS (Federal Information Processing Standards) Code)}
 #' \item{STATE}{State (for US stations if applicable)}
 #' \item{CALL}{International Civil Aviation Organization (ICAO) Airport Code}
 #' \item{LAT}{Latitude}
@@ -303,7 +303,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
       # If country is set, subset list of stations to clean
       if (!is.null(country)) {
         country_FIPS <- unlist(as.character(stats::na.omit(
-          country_list[country_list$iso3c == country, ][1]),
+          country_list[country_list$FIPS == country, ][1]),
           use.names = FALSE))
         station_list <- stations[stations$CTRY == country_FIPS, ]$STNID
         station_list <- vapply(station_list,
@@ -320,9 +320,9 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
         error = function(x) cat(paste0("\nThe download stoped at year ", yr,
                                        ".\nPlease restart the 'get_GSOD()' function starting at this point.\n")))
       if (merge_station_years == TRUE) {
-        GSOD_objects[[yr]] <- .reformat(tmp, stations, country)
+        GSOD_objects[[yr]] <- .reformat(tmp, stations)
       } else {
-        GSOD_XY <- .reformat(tmp, stations, country)
+        GSOD_XY <- .reformat(tmp, stations)
       }
       if (merge_station_years == FALSE) {
         GSOD_XY <- GSOD_XY
@@ -338,7 +338,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
           foreach::foreach(j = itx) %dopar% {
             tmp <- try(.read_gz(paste0(td, "/", yr, "/", j)))
             if (.check(tmp, yr, max_missing) == FALSE) {
-              .reformat(tmp, stations, country)
+              .reformat(tmp, stations)
             }
           }
         )
@@ -405,7 +405,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 }
 
 # Reformat and generate new variables
-.reformat <- function(tmp, stations, country) {
+.reformat <- function(tmp, stations) {
 
   YEARMODA <- "YEARMODA"
   MONTH <- "MONTH"
@@ -494,7 +494,6 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                                      "I.THUNDER", "I.TDO_FNL", "EA", "ES",
                                      "RH"))
   GSOD_df[is.na(GSOD_df)] <- -9999
-  GSOD_df[, (CTRY) := country]
   return(GSOD_df)
 }
 
@@ -566,20 +565,20 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   nc <- nchar(country)
   if (nc == 3) {
     if (country %in% country_list[, 4]) {
-      return(country)
+      return(country_list[i, 1])
     } else {
       stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you can view the entire list of valid countries in this data by typing, 'country_list'.\n")
     }
   } else if (nc == 2) {
     if (country %in% country_list[, 3]) {
       i <- which(country == country_list[, 3])
-      return(country_list[i, 4])
+      return(country_list[i, 1])
     } else {
       stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you can view the entire list of valid countries in this data by typing, 'country_list'.\n")
     }
   } else if (country %in% country_list[, 2]) {
     i <- which(country == country_list[, 2])
-    return(country_list[i, 4])
+    return(country_list[i, 1])
   } else {
     stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you can view the entire list of valid countries in this data by typing, 'country_list'.\n")
     return(0)

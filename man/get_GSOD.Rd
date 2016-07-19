@@ -89,7 +89,7 @@ will contain the following fields/values:
 \item{WBAN}{Number where applicable--this is the historical "Weather Bureau
 Air Force Navy" number - with WBAN being the acronym}
 \item{STN.NAME}{Unique text string identifier}
-\item{CTRY}{Country (ISO Alpha 3)}
+\item{CTRY}{Country (FIPS (Federal Information Processing Standards) Code)}
 \item{STATE}{State (for US stations if applicable)}
 \item{CALL}{International Civil Aviation Organization (ICAO) Airport Code}
 \item{LAT}{Latitude}
