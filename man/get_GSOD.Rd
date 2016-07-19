@@ -89,7 +89,9 @@ will contain the following fields/values:
 \item{WBAN}{Number where applicable--this is the historical "Weather Bureau
 Air Force Navy" number - with WBAN being the acronym}
 \item{STN.NAME}{Unique text string identifier}
-\item{CTRY}{Country}
+\item{CTRY}{Country (FIPS (Federal Information Processing Standards) Code)}
+\item{STATE}{State (for US stations if applicable)}
+\item{CALL}{International Civil Aviation Organization (ICAO) Airport Code}
 \item{LAT}{Latitude}
 \item{LON}{Longitude}
 \item{ELEV.M}{Station reported elevation (metres to tenths)}
@@ -211,7 +213,7 @@ notification.}
 get_GSOD(years = 2010, station = "955510-99999", path = "~/")
 
 # Download data for Philippines for year 2010 and generate a yearly
-# summary file, GSOD-PHL-2010.csv, file in the user's home directory with a
+# summary file, GSOD-RP-2010.csv, file in the user's home directory with a
 # maximum of five missing days per station allowed.
 
 get_GSOD(years = 2010, country = "Philippines", path = "~/")

@@ -1,7 +1,7 @@
 ---
 title: "Fetch GSOD Country List and Merge with ISO Country Codes"
 author: "Adam H. Sparks - Center for Crop Health, University of Southern Queensland"
-date: "07-12-2016"
+date: "07-19-2016"
 output: github_document
 ---
 
@@ -22,7 +22,7 @@ a country for weather data downloading.
 
 # R Data Processing
 
-Read "country-list.txt"" file from NCDC FTP server and merge with `countrycode`
+Read "country-list.txt" file from NCDC FTP server and merge with `countrycode`
 data.
 
 ```{r download_merge_inspect, echo=TRUE, messages=FALSE}

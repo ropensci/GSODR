@@ -83,7 +83,7 @@ stations <- stations[!is.na(stations$LAT) & !is.na(stations$LON), ]
 stations <- stations[stations$LAT != 0 & stations$LON != 0, ]
 stations <- stations[stations$LAT > -90 & stations$LAT < 90, ]
 stations <- stations[stations$LON > -180 & stations$LON < 180, ]
-stations$STNID <- paste(stations$USAF, stations$WBAN, sep = "-")
+stations$STNID <- as.character(paste(stations$USAF, stations$WBAN, sep = "-"))
 
 xy <- dplyr::left_join(stations, countries, by = c("CTRY" = "FIPS"))
 ```

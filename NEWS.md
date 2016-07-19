@@ -1,4 +1,22 @@
-# GSODR v0.1.9 (Release Date: 2016-15-07)
+# GSODR v0.2
+
+## Changes
+  * R >= 3.2.0 now required  
+  * Reduce package dependencies, remove `dplyr`,`raster` and `stringr`  
+  * Updated `stations` list with latest version from NCDC published 18-07-2016  
+  * `get_GSOD` function optimised for speed as best possible after ftping files
+  from NCDC server  
+  * Use FIPS codes in place of ISO3c for filenames and in output files because
+  some stations have countries that do not have an ISO code  
+  * Output files now include fields for State (US only) and Call (International
+  Civil Aviation Organization (ICAO) Airport Code)  
+  * Country is specified using FIPS codes in filename and output file contents
+  due to stations occurring in some locales that lack ISO 3166 3 letter country
+  codes
+
+******
+
+# GSODR v0.1.9 (Release Date: 2016-07-15)
 
 ## Bug fixes
   * Fix bug in precipitation calculation. Documentation states that PRCP is in

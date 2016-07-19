@@ -72,7 +72,9 @@
 #' \item{WBAN}{Number where applicable--this is the historical "Weather Bureau
 #' Air Force Navy" number - with WBAN being the acronym}
 #' \item{STN.NAME}{Unique text string identifier}
-#' \item{CTRY}{Country}
+#' \item{CTRY}{Country (FIPS (Federal Information Processing Standards) Code)}
+#' \item{STATE}{State (for US stations if applicable)}
+#' \item{CALL}{International Civil Aviation Organization (ICAO) Airport Code}
 #' \item{LAT}{Latitude}
 #' \item{LON}{Longitude}
 #' \item{ELEV.M}{Station reported elevation (metres to tenths)}
@@ -193,7 +195,7 @@
 #' get_GSOD(years = 2010, station = "955510-99999", path = "~/")
 #'
 #' # Download data for Philippines for year 2010 and generate a yearly
-#' # summary file, GSOD-PHL-2010.csv, file in the user's home directory with a
+#' # summary file, GSOD-RP-2010.csv, file in the user's home directory with a
 #' # maximum of five missing days per station allowed.
 #'
 #' get_GSOD(years = 2010, country = "Philippines", path = "~/")
@@ -213,6 +215,7 @@
 #'
 #' @importFrom foreach %dopar%
 #' @importFrom foreach %do%
+#' @importFrom data.table :=
 #'
 #' @export
 get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
@@ -221,11 +224,11 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                      merge_station_years = FALSE) {
 
   # Set up options, creating objects, check variables entered by user-----------
-  opt <- settings::options_manager(warn = 2, timeout = 300)
+  opt <- settings::options_manager(warn = 2, timeout = 300,
+                                   stringsAsFactors = FALSE)
 
   utils::data("stations", package = "GSODR", envir = environment())
-  stations <- get("stations", envir = environment())
-  stations[, 12] <- as.character(stations[, 12])
+  stations <- data.table::setDT(get("stations", envir = environment()))
 
   utils::data("country_list", package = "GSODR", envir = environment())
   country_list <- get("country_list", envir = environment())
@@ -235,9 +238,10 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   td <- tempdir()
 
   # Create objects for use later
-  yr <- NULL
-  j <- NULL
-  GSOD_objects <- list()
+  GSOD_objects <- list(NULL)
+  GSOD_df <- data.table::data.table()
+
+  j <- YEARMODA <- yr <- NULL
 
   # Check data path given by user, does it exist? Is it properly formatted?
   path <- .get_data_path(path)
@@ -258,7 +262,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 
   # Check country given by user and format for use in function
   if (!is.null(country)) {
-    country <- .get_country(country)
+    country <- .get_country(country, country_list)
   }
 
   # By default, if a single station is selected, then we will report even just
@@ -274,7 +278,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   foreach::foreach(yr = ity) %do% {
     if (is.null(station)) {
 
-      tryCatch(curl::curl_download(url = paste0(ftp_site, yr, "/gsod_", yr, ".tar"),
+      tryCatch(curl::curl_download(url = paste0(ftp_site, yr, "/gsod_", yr,
+                                                ".tar"),
                                    destfile = tf, quiet = FALSE, mode = "wb"),
                error = function(x) cat(paste0("\nThe download stoped at year ", yr,
                                               ".\nPlease restart the 'get_GSOD()' function starting at this point.\n")))
@@ -288,8 +293,9 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
       if (agroclimatology == TRUE) {
         station_list <- stations[stations$LAT >= -60 &
                                    stations$LAT <= 60, ]$STNID
-        station_list <- sapply(station_list,
-                               function(x) rep(paste0(x, "-", yr, ".op.gz")))
+        station_list <- vapply(station_list,
+                               function(x) rep(paste0(x, "-", yr, ".op.gz")),
+                               "")
         GSOD_list <- GSOD_list[GSOD_list %in% station_list == TRUE]
         rm(station_list)
       }
@@ -297,13 +303,13 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
       # If country is set, subset list of stations to clean
       if (!is.null(country)) {
         country_FIPS <- unlist(as.character(stats::na.omit(
-          country_list[country_list$iso3c == country, ][1])))
+          country_list[country_list$FIPS == country, ][1]),
+          use.names = FALSE))
         station_list <- stations[stations$CTRY == country_FIPS, ]$STNID
-        station_list <- sapply(station_list,
-                               function(x) rep(paste0(x, "-", yr, ".op.gz")))
-
+        station_list <- vapply(station_list,
+                               function(x) rep(paste0(x, "-", yr, ".op.gz")),
+                               "")
         GSOD_list <- GSOD_list[GSOD_list %in% station_list == TRUE]
-        rm(station_list)
       }
     }
 
@@ -400,48 +406,60 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 
 # Reformat and generate new variables
 .reformat <- function(tmp, stations) {
-  GSOD_df <- NULL
+
+  YEARMODA <- "YEARMODA"
+  MONTH <- "MONTH"
+  CTRY <- "CTRY"
+  DAY <- "DAY"
+  YDAY <- "YDAY"
+  DEWP <- "DEWP"
+  EA <- "EA"
+  ES <- "ES"
+  GUST <- "GUST"
+  MAX <- "MAX"
+  MIN <- "MIN"
+  MODA <- "MODA"
+  MXSPD <- "MXSPD"
+  PRCP <- "PRCP"
+  RH <- "RH"
+  SNDP <- "SNDP"
+  STN <- "STN"
+  STNID <- "STNID"
+  TEMP <- "TEMP"
+  VISIB <- "VISIB"
+  WBAN <- "WBAN"
+  WDSP <- "WDSP"
 
   # add names to columns in data frame
-  names(tmp) <- c("STN", "WBAN", "YEAR", "MODA", "TEMP", "TEMP.CNT",
-                  "DEWP", "DEWP.CNT", "SLP", "SLP.CNT", "STP",
-                  "STP.CNT", "VISIB", "VISIB.CNT", "WDSP", "WDSP.CNT",
-                  "MXSPD", "GUST", "MAX", "MAX.FLAG", "MIN", "MIN.FLAG",
-                  "PRCP", "PRCP.FLAG", "SNDP", "I.FOG", "I.RAIN_DZL",
-                  "I.SNW_ICE", "I.HAIL", "I.THUNDER", "I.TDO_FNL")
+  data.table::setnames(tmp, c("STN", "WBAN", "YEAR", "MODA", "TEMP", "TEMP.CNT",
+                              "DEWP", "DEWP.CNT", "SLP", "SLP.CNT", "STP",
+                              "STP.CNT", "VISIB", "VISIB.CNT", "WDSP",
+                              "WDSP.CNT", "MXSPD", "GUST", "MAX", "MAX.FLAG",
+                              "MIN", "MIN.FLAG", "PRCP", "PRCP.FLAG", "SNDP",
+                              "I.FOG", "I.RAIN_DZL", "I.SNW_ICE", "I.HAIL",
+                              "I.THUNDER", "I.TDO_FNL"))
 
   # Clean up and convert the station and weather data to metric
-  tmp <- dplyr::mutate(tmp, STNID = paste(tmp$STN, tmp$WBAN, sep = "-"))
-  tmp <- tmp[, -2]
-
-  tmp <- dplyr::mutate(tmp, YEARMODA = paste(tmp$YEAR, tmp$MODA, sep = ""))
-  tmp$MONTH <- stringr::str_sub(tmp$YEARMODA, 5, 6)
-  tmp$DAY <- stringr::str_sub(tmp$YEARMODA, 7, 8)
-  tmp$YDAY <- lubridate::yday(as.Date(paste(tmp$YEAR, tmp$MONTH, tmp$DAY,
-                                            sep = "-")))
-
-  tmp$TEMP <- ifelse(!is.na(tmp$TEMP), round( ( (5 / 9) * (tmp$TEMP - 32)), 1),
-                     NA_integer_)
-  tmp$DEWP <- ifelse(!is.na(tmp$DEWP), round( ( (5 / 9) * (tmp$DEWP - 32)), 1),
-                     NA_integer_)
-  tmp$WDSP <- ifelse(!is.na(tmp$WDSP), round(tmp$WDSP * 0.514444444, 1),
-                     NA_integer_)
-  tmp$MXSPD <- ifelse(!is.na(tmp$MXSPD), round(tmp$MXSPD * 0.514444444, 1),
-                      NA_integer_)
-  tmp$VISIB <- ifelse(!is.na(tmp$VISIB), round(tmp$VISIB * 1.60934, 1),
-                      NA_integer_)
-  tmp$WDSP <- ifelse(!is.na(tmp$WDSP), round(tmp$WDSP * 0.514444444, 1),
-                     NA_integer_)
-  tmp$GUST <- ifelse(!is.na(tmp$GUST), round(tmp$GUST * 0.514444444, 1),
-                     NA_integer_)
-  tmp$MAX <- ifelse(!is.na(tmp$MAX), round( (tmp$MAX - 32) * (5 / 9), 2),
-                    NA_integer_)
-  tmp$MIN <- ifelse(!is.na(tmp$MIN), round( (tmp$MIN - 32) * (5 / 9), 2),
-                    NA_integer_)
-  tmp$PRCP <- ifelse(!is.na(tmp$PRCP), round( (tmp$PRCP * 25.4), 1),
-                     NA_integer_)
-  tmp$SNDP <- ifelse(!is.na(tmp$SNDP), round( (tmp$SNDP * 25.4), 1),
-                     NA_integer_)
+  tmp[, (STNID) := paste(tmp$STN, tmp$WBAN, sep = "-")]
+  tmp[, (WBAN) := NULL]
+  tmp[, (STN) := NULL]
+  tmp[, (YEARMODA) := paste0(tmp$YEAR, tmp$MODA)]
+  tmp[, (MONTH) := substr(tmp$YEARMODA, 5, 6)]
+  tmp[, (DAY) := substr(tmp$YEARMODA, 7, 8)]
+  tmp[, (MODA) := NULL]
+  tmp[, (YDAY) := lubridate::yday(as.Date(paste(tmp$YEAR, tmp$MONTH,
+                                                tmp$DAY, sep = "-")))]
+  tmp[, (TEMP)  := round( ( (5 / 9) * ((tmp$TEMP) - 32)), 1)]
+  tmp[, (DEWP)  := round( ( (5 / 9) * ((tmp$DEWP) - 32)), 1)]
+  tmp[, (WDSP)  := round((tmp$WDSP) * 0.514444444, 1)]
+  tmp[, (MXSPD) := round((tmp$MXSPD) * 0.514444444, 1)]
+  tmp[, (VISIB) := round((tmp$VISIB) * 1.60934, 1)]
+  tmp[, (WDSP)  := round((tmp$WDSP) * 0.514444444, 1)]
+  tmp[, (GUST)  := round((tmp$GUST) * 0.514444444, 1)]
+  tmp[, (MAX)   := round( ((tmp$MAX) - 32) * (5 / 9), 2)]
+  tmp[, (MIN)   := round( ((tmp$MIN) - 32) * (5 / 9), 2)]
+  tmp[, (PRCP)  := round( ((tmp$PRCP) * 25.4), 1)]
+  tmp[, (SNDP)  := round( ((tmp$SNDP) * 25.4), 1)]
 
   # Compute other weather vars--------------------------------------------------
   # Mean actual (EA) and mean saturation vapour pressure (ES)
@@ -449,56 +467,74 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   #   Edward Arnold, London
 
   # EA derived from dew point
-  tmp$EA <- round(0.61078 * exp( (17.2694 * tmp$DEWP) / (tmp$DEWP + 237.3)), 1)
+  tmp[, (EA) := round(0.61078 * exp((17.2694 * (tmp$DEWP)) /
+                                      ((tmp$DEWP) + 237.3)), 1)]
   # ES derived from average temperature
-  tmp$ES <- round(0.61078 * exp( (17.2694 * tmp$TEMP) / (tmp$TEMP + 237.3)), 1)
-
+  tmp[, (ES) := round(0.61078 * exp((17.2694 * (tmp$TEMP)) /
+                                      ((tmp$TEMP) + 237.3)), 1)]
   # Calculate relative humidity
-  tmp$RH <- round(tmp$EA / tmp$ES * 100, 1)
+  tmp[, (RH) := round(tmp$EA / tmp$ES * 100, 1)]
 
   # Join to the station data----------------------------------------------------
-  GSOD_df <- suppressWarnings(suppressMessages(
-    dplyr::inner_join(tmp, stations, by = "STNID")))
+  tmp <- data.table::setkey(tmp, STNID)
+  stations <- data.table::setkey(stations, STNID)
+  GSOD_df <- stations[tmp]
 
-  GSOD_df <- GSOD_df[c("USAF", "WBAN", "STNID", "STN.NAME", "CTRY",
-                       "LAT", "LON", "ELEV.M", "ELEV.M.SRTM.90m",
-                       "YEARMODA", "YEAR", "MONTH", "DAY", "YDAY",
-                       "TEMP", "TEMP.CNT", "DEWP", "DEWP.CNT",
-                       "SLP", "SLP.CNT", "STP", "STP.CNT",
-                       "VISIB", "VISIB.CNT",
-                       "WDSP", "WDSP.CNT", "MXSPD", "GUST",
-                       "MAX", "MIN",
-                       "PRCP", "PRCP.FLAG",
-                       "I.FOG", "I.RAIN_DZL", "I.SNW_ICE", "I.HAIL",
-                       "I.THUNDER", "I.TDO_FNL",
-                       "EA", "ES", "RH")]
+  data.table::setcolorder(GSOD_df, c("USAF", "WBAN", "STNID", "STN.NAME",
+                                     "CTRY", "STATE", "CALL", "LAT", "LON",
+                                     "ELEV.M", "ELEV.M.SRTM.90m", "BEGIN",
+                                     "END", "YEARMODA", "YEAR", "MONTH", "DAY",
+                                     "YDAY", "TEMP", "TEMP.CNT", "DEWP",
+                                     "DEWP.CNT", "SLP", "SLP.CNT", "STP",
+                                     "STP.CNT", "VISIB", "VISIB.CNT", "WDSP",
+                                     "WDSP.CNT", "MXSPD", "GUST", "MAX",
+                                     "MAX.FLAG", "MIN", "MIN.FLAG",
+                                     "PRCP", "PRCP.FLAG", "SNDP", "I.FOG",
+                                     "I.RAIN_DZL", "I.SNW_ICE", "I.HAIL",
+                                     "I.THUNDER", "I.TDO_FNL", "EA", "ES",
+                                     "RH"))
   GSOD_df[is.na(GSOD_df)] <- -9999
   return(GSOD_df)
 }
 
 .read_gz <- function(gz_file) {
-  readr::read_fwf(file = gz_file,
-                  readr::fwf_positions(c(1, 8, 15, 19, 25, 32, 36, 43, 47, 54,
-                                         58, 65, 69, 75, 79, 85, 89, 96, 103,
-                                         109, 111, 117, 119, 124, 126, 133, 134,
-                                         135, 136, 137, 138),
-                                       c(6, 12, 18, 22, 30, 33, 41, 44, 52, 55,
-                                         63, 66, 73, 76, 83, 86, 93, 100, 108,
-                                         109, 116, 117, 123, 124, 130, 133, 134,
-                                         135, 136, 137, 138)),
-                  skip = 1,
-                  na = c("9999.9", "999.9", "99.99"))
+  data.table::setDT(
+    readr::read_fwf(file = gz_file,
+                    skip = 1,
+                    readr::fwf_positions(c(1, 8, 15, 19, 25, 32, 36, 43, 47, 54,
+                                           58, 65, 69, 75, 79, 85, 89, 96, 103,
+                                           109, 111, 117, 119, 124, 126, 133,
+                                           134, 135, 136, 137, 138),
+                                         c(6, 12, 18, 22, 30, 33, 41, 44, 52,
+                                           55, 63, 66, 73, 76, 83, 86, 93, 100,
+                                           108, 109, 116, 117, 123, 124, 130,
+                                           133, 134, 135, 136, 137, 138),
+                                         col_names = c("STN", "WBAN", "YEAR",
+                                                       "MODA", "TEMP",
+                                                       "TEMP.CNT", "DEWP",
+                                                       "DEWP.CNT", "SLP",
+                                                       "SLP.CNT", "STP",
+                                                       "STP.CNT", "VISIB",
+                                                       "VISIB.CNT", "WDSP",
+                                                       "WDSP.CNT", "MXSPD",
+                                                       "GUST", "MAX",
+                                                       "MAX.FLAG", "MIN",
+                                                       "MIN.FLAG",
+                                                       "PRCP", "PRCP.FLAG",
+                                                       "SNDP", "I.FOG",
+                                                       "I.RAIN_DZL",
+                                                       "I.SNW_ICE", "I.HAIL",
+                                                       "I.THUNDER",
+                                                       "I.TDO_FNL")),
+                    col_types = c("ccccdididididididddcdcdcdiiiiii"),
+                    na = c("9999.9", "999.9", "99.99")))
 }
 
-# The following 2 functions are shamelessly borrowed from RJ Hijmans raster pkg
-# Download geographic data and return as R object
-# Author: Robert J. Hijmans
-# License GPL3
-# Version 0.9
-# October 2008
+# Original .get_data_path from R.J. Hijmans R Raster package, modified for use
+# in GSODR
 
 .get_data_path <- function(path) {
-  path <- stringr::str_trim(path, side = "both")
+  path <- trimws(path)
   if (path == "") {
     stop("\nYou must supply a valid file path for storing the .csv file.\n")
   } else {
@@ -522,43 +558,29 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   return(path)
 }
 
-# Original version as above from R J Hijmans.
-# Bug fixes by A H Sparks for 2 letter ISO code
-.get_country <- function(country = "") {
-  country <- toupper(stringr::str_trim(country[1], side = "both"))
-  cs <- raster::ccodes()
-  # from Stack Overflow user juba, goo.gl/S31jyk
-  cs <- data.frame(lapply(cs, function(x) {
-    if (is.character(x)) return(toupper(x))
-    else return(x)
-  }))
-  # end juba
+# Original .get_country from R.J. Hijmans R Raster package, modified for use in
+# GSODR
+.get_country <- function(country = "", country_list) {
+  country <- toupper(trimws(country[1]))
   nc <- nchar(country)
-
   if (nc == 3) {
-    if (country %in% cs[, 2]) {
-      return(country)
+    if (country %in% country_list[, 4]) {
+      return(country_list[i, 1])
     } else {
-      stop("\nUnknown ISO code. Please provide a valid name or 2 or 3 letter ISO country code; you can get a list by using: raster::getData('ISO3').\n")
+      stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you can view the entire list of valid countries in this data by typing, 'country_list'.\n")
     }
   } else if (nc == 2) {
-    if (country %in% cs[, 3]) {
-      i <- which(country == cs[, 3])
-      return(cs[i, 2])
+    if (country %in% country_list[, 3]) {
+      i <- which(country == country_list[, 3])
+      return(country_list[i, 1])
     } else {
-      stop("\nUnknown ISO code. Please provide a valid name or 2 or 3 letter ISO country code; you can get a list by using: raster::getData('ISO3').\n")
+      stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you can view the entire list of valid countries in this data by typing, 'country_list'.\n")
     }
-  } else if (country %in% cs[, 1]) {
-    i <- which(country == cs[, 1])
-    return(cs[i, 2])
-  } else if (country %in% cs[, 4]) {
-    i <- which(country == cs[, 4])
-    return(cs[i, 2] )
-  } else if (country %in% cs[, 5]) {
-    i <- which(country == cs[, 5])
-    return(cs[i, 2])
+  } else if (country %in% country_list[, 2]) {
+    i <- which(country == country_list[, 2])
+    return(country_list[i, 1])
   } else {
-    stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you can get a list by using: raster::getData('ISO3').\n")
+    stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you can view the entire list of valid countries in this data by typing, 'country_list'.\n")
     return(0)
   }
 }

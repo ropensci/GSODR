@@ -1,7 +1,7 @@
 Fetch GSOD Country List and Merge with ISO Country Codes
 ================
 Adam H. Sparks - Center for Crop Health, University of Southern Queensland
-07-12-2016
+07-19-2016
 
 Introduction
 ============
@@ -13,7 +13,7 @@ This inclusion decreases the time necessary to query the server when specifying 
 R Data Processing
 =================
 
-Read "country-list.txt"" file from NCDC FTP server and merge with `countrycode` data.
+Read "country-list.txt" file from NCDC FTP server and merge with `countrycode` data.
 
 ``` r
 countries <- readr::read_table(
@@ -71,7 +71,7 @@ Write .rda file to disk for inclusion in `GSODR` package.
 devtools::use_data(country_list, overwrite = TRUE, compress = "bzip2")
 ```
 
-    ## Saving country_list as country_list.rda to /Users/U8004755/Development/GSODR/data
+    ## Saving country_list as country_list.rda to /Users/asparks/Development/GSODR/data
 
 Notes
 =====
@@ -86,9 +86,9 @@ Users of these data should take into account the following (from the [NCDC websi
 R System Information
 --------------------
 
-    ## R version 3.3.1 (2016-06-21)
+    ## R version 3.3.0 (2016-05-03)
     ## Platform: x86_64-apple-darwin15.5.0 (64-bit)
-    ## Running under: OS X 10.11.5 (El Capitan)
+    ## Running under: OS X 10.11.6 (El Capitan)
     ## 
     ## locale:
     ## [1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8
@@ -100,6 +100,6 @@ R System Information
     ##  [1] Rcpp_0.12.5      countrycode_0.18 withr_1.0.2      digest_0.6.9    
     ##  [5] dplyr_0.5.0      assertthat_0.1   R6_2.1.2         DBI_0.4-1       
     ##  [9] formatR_1.4      magrittr_1.5     evaluate_0.9     stringi_1.1.1   
-    ## [13] curl_0.9.7       rmarkdown_1.0    devtools_1.12.0  tools_3.3.1     
+    ## [13] curl_0.9.7       rmarkdown_1.0    devtools_1.12.0  tools_3.3.0     
     ## [17] stringr_1.0.0    readr_0.2.2      yaml_2.1.13      memoise_1.0.0   
     ## [21] htmltools_0.3.5  knitr_1.13       tibble_1.1
