@@ -2,7 +2,7 @@
 
 ## Changes
   * R >= 3.2.0 now required  
-  * Reduce package dependencies, remove `dplyr`, `stringr` and `raster`  
+  * Reduce package dependencies, remove `dplyr` and `stringr`  
   * Updated `stations` list with latest version from NCDC published 18-07-2016  
   * `get_GSOD` function optimised for speed as best possible after ftping files
   from NCDC server  
