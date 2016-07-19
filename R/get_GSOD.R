@@ -262,7 +262,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 
   # Check country given by user and format for use in function
   if (!is.null(country)) {
-    country <- .get_country(country)
+    country <- .get_country(country, country_list)
   }
 
   # By default, if a single station is selected, then we will report even just
@@ -320,9 +320,9 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
         error = function(x) cat(paste0("\nThe download stoped at year ", yr,
                                        ".\nPlease restart the 'get_GSOD()' function starting at this point.\n")))
       if (merge_station_years == TRUE) {
-        GSOD_objects[[yr]] <- .reformat(tmp, stations)
+        GSOD_objects[[yr]] <- .reformat(tmp, stations, country)
       } else {
-        GSOD_XY <- .reformat(tmp, stations)
+        GSOD_XY <- .reformat(tmp, stations, country)
       }
       if (merge_station_years == FALSE) {
         GSOD_XY <- GSOD_XY
@@ -338,7 +338,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
           foreach::foreach(j = itx) %dopar% {
             tmp <- try(.read_gz(paste0(td, "/", yr, "/", j)))
             if (.check(tmp, yr, max_missing) == FALSE) {
-              .reformat(tmp, stations)
+              .reformat(tmp, stations, country)
             }
           }
         )
@@ -405,10 +405,11 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 }
 
 # Reformat and generate new variables
-.reformat <- function(tmp, stations) {
+.reformat <- function(tmp, stations, country) {
 
   YEARMODA <- "YEARMODA"
   MONTH <- "MONTH"
+  CTRY <- "CTRY"
   DAY <- "DAY"
   YDAY <- "YDAY"
   DEWP <- "DEWP"
@@ -493,7 +494,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                                      "I.THUNDER", "I.TDO_FNL", "EA", "ES",
                                      "RH"))
   GSOD_df[is.na(GSOD_df)] <- -9999
-  GSOD_df[CTRY := country]
+  GSOD_df[, (CTRY) := country]
   return(GSOD_df)
 }
 
@@ -560,7 +561,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 
 # Original .get_country from R.J. Hijmans R Raster package, modified for use in
 # GSODR
-.get_country <- function(country = "") {
+.get_country <- function(country = "", country_list) {
   country <- toupper(trimws(country[1]))
   nc <- nchar(country)
   if (nc == 3) {
