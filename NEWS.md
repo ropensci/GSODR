@@ -1,4 +1,15 @@
-# GSODR v0.1.9
+# GSODR v0.2
+
+## Changes
+  * R >= 3.2.0 now required  
+  * Reduce package dependencies, remove `dplyr` and `stringr`  
+  * Updated `stations` list with latest version from NCDC published 18-07-2016  
+  * `get_GSOD` function optimised for speed as best possible after ftping files
+  from NCDC server  
+
+******
+
+# GSODR v0.1.9 (Release Date: 2016-07-15)
 
 ## Bug fixes
   * Fix bug in precipitation calculation. Documentation states that PRCP is in

@@ -72,7 +72,7 @@
 #' \item{WBAN}{Number where applicable--this is the historical "Weather Bureau
 #' Air Force Navy" number - with WBAN being the acronym}
 #' \item{STN.NAME}{Unique text string identifier}
-#' \item{CTRY}{Country}
+#' \item{CTRY}{Country (ISO Alpha 3)}
 #' \item{STATE}{State (for US stations if applicable)}
 #' \item{CALL}{International Civil Aviation Organization (ICAO) Airport Code}
 #' \item{LAT}{Latitude}
@@ -493,6 +493,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                                      "I.THUNDER", "I.TDO_FNL", "EA", "ES",
                                      "RH"))
   GSOD_df[is.na(GSOD_df)] <- -9999
+  GSOD_df[CTRY := country]
   return(GSOD_df)
 }
 
@@ -529,12 +530,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                     na = c("9999.9", "999.9", "99.99")))
 }
 
-# The following 2 functions are shamelessly borrowed from RJ Hijmans raster pkg
-# Download geographic data and return as R object
-# Author: Robert j. Hijmans
-# License GPL3
-# Version 0.9
-# October 2008
+# Original .get_data_path from R.J. Hijmans R Raster package, modified for use
+# in GSODR
 
 .get_data_path <- function(path) {
   path <- trimws(path)
@@ -561,43 +558,29 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   return(path)
 }
 
-# Original version as above from R j Hijmans.
-# Bug fixes by A H Sparks for 2 letter ISO code
+# Original .get_country from R.J. Hijmans R Raster package, modified for use in
+# GSODR
 .get_country <- function(country = "") {
   country <- toupper(trimws(country[1]))
-  cs <- raster::ccodes()
-  # from Stack Overflow user juba, goo.gl/S31jyk
-  cs <- data.frame(lapply(cs, function(x) {
-    if (is.character(x)) return(toupper(x))
-    else return(x)
-  }))
-  # end juba
   nc <- nchar(country)
-
   if (nc == 3) {
-    if (country %in% cs[, 2]) {
+    if (country %in% country_list[, 4]) {
       return(country)
     } else {
-      stop("\nUnknown ISO code. Please provide a valid name or 2 or 3 letter ISO country code; you can get a list by using: raster::getData('ISO3').\n")
+      stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you can view the entire list of valid countries in this data by typing, 'country_list'.\n")
     }
   } else if (nc == 2) {
-    if (country %in% cs[, 3]) {
-      i <- which(country == cs[, 3])
-      return(cs[i, 2])
+    if (country %in% country_list[, 3]) {
+      i <- which(country == country_list[, 3])
+      return(country_list[i, 4])
     } else {
-      stop("\nUnknown ISO code. Please provide a valid name or 2 or 3 letter ISO country code; you can get a list by using: raster::getData('ISO3').\n")
+      stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you can view the entire list of valid countries in this data by typing, 'country_list'.\n")
     }
-  } else if (country %in% cs[, 1]) {
-    i <- which(country == cs[, 1])
-    return(cs[i, 2])
-  } else if (country %in% cs[, 4]) {
-    i <- which(country == cs[, 4])
-    return(cs[i, 2] )
-  } else if (country %in% cs[, 5]) {
-    i <- which(country == cs[, 5])
-    return(cs[i, 2])
+  } else if (country %in% country_list[, 2]) {
+    i <- which(country == country_list[, 2])
+    return(country_list[i, 4])
   } else {
-    stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you can get a list by using: raster::getData('ISO3').\n")
+    stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you can view the entire list of valid countries in this data by typing, 'country_list'.\n")
     return(0)
   }
 }

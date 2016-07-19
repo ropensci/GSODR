@@ -56,7 +56,6 @@ Imports:
     iotools,
     iterators,
     parallel,
-    raster,
     readr,
     rgdal,
     settings,
