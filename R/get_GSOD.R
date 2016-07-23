@@ -34,7 +34,7 @@
 #' available, even an empty file,from NCDC will be returned.
 #' @param agroclimatology Boolean. Only clean data for stations between
 #' latitudes 60 and -60 for agroclimatology work, defaults to FALSE. Set to
-#' TRUE to override and include only stations within the confines of these
+#' TRUE to include only stations within the confines of these
 #' latitudes.
 #' @param shapefile If set to TRUE, create an ESRI shapefile of vector type,
 #' points, of the data for use in a GIS. Defaults to FALSE, no shapefile
