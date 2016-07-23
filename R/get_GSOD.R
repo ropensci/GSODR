@@ -36,7 +36,7 @@
 #' latitudes 60 and -60 for agroclimatology work, defaults to FALSE. Set to
 #' TRUE to include only stations within the confines of these
 #' latitudes.
-#' @param shapefile If set to TRUE, create an ESRI shapefile of vector type,
+#' @param shapefile If set to TRUE, create an ESRI shapefile of vector type
 #' points, of the data for use in a GIS. Defaults to FALSE, no shapefile
 #' created.
 #' @param CSV If set to TRUE, create a comma separated value (CSV) file of data,
