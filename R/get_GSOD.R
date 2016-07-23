@@ -31,8 +31,8 @@
 #' @param max_missing The maximum number of days allowed to be missing from a
 #' station's data before it is excluded from final file output. Defaults to five
 #' days. If a single station is specified, this option is ignored and any data
-#' available, even an empty file,from NCDC will be returned.
-#' @param agroclimatology Boolean. Only clean data for stations between
+#' available, even an empty file, from NCDC will be returned.
+#' @param agroclimatology Logical. Only clean data for stations between
 #' latitudes 60 and -60 for agroclimatology work, defaults to FALSE. Set to
 #' TRUE to include only stations within the confines of these
 #' latitudes.
