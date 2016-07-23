@@ -40,7 +40,7 @@ created.}
 \item{CSV}{Logical. If set to TRUE, create a comma separated value (CSV) file of data,
 defaults to TRUE, a CSV file is created.}
 
-\item{merge_station_years}{If set to TRUE, merge output files into one output
+\item{merge_station_years}{Logical. If set to TRUE, merge output files into one output
 file for all years when selecting a single station, defaults to FALSE.}
 }
 \description{
