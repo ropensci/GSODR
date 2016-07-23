@@ -21,7 +21,7 @@ having an ISO code 2 or 3 letter ISO code can also be used if known. See
 available.}
 
 \item{path}{Path entered by user indicating where to store resulting
-output file. Defaults to the current working directory.}
+output file.}
 
 \item{max_missing}{The maximum number of days allowed to be missing from a
 station's data before it is excluded from final file output. Defaults to five

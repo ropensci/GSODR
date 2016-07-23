@@ -26,8 +26,8 @@
 #' having an ISO code 2 or 3 letter ISO code can also be used if known. See
 #' \code{\link{country_list}} for a full list of country names and ISO codes
 #' available.
-#' @param  path Path entered by user indicating where to store resulting
-#' output file. Defaults to the current working directory.
+#' @param path Path entered by user indicating where to store resulting
+#' output file.
 #' @param max_missing The maximum number of days allowed to be missing from a
 #' station's data before it is excluded from final file output. Defaults to five
 #' days. If a single station is specified, this option is ignored and any data
