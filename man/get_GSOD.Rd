@@ -4,7 +4,7 @@
 \alias{get_GSOD}
 \title{Download, Clean, Reformat and Generate New Variables From GSOD Weather Data}
 \usage{
-get_GSOD(years = NULL, station = NULL, country = NULL, path = "",
+get_GSOD(years = NULL, station = NULL, country = NULL, dsn = "",
   max_missing = 5, agroclimatology = FALSE, shapefile = FALSE,
   CSV = TRUE, merge_station_years = FALSE)
 }
@@ -20,7 +20,7 @@ having an ISO code 2 or 3 letter ISO code can also be used if known. See
 \code{\link{country_list}} for a full list of country names and ISO codes
 available.}
 
-\item{path}{Path entered by user indicating where to store resulting
+\item{dsn}{File path entered by user indicating where to store resulting
 output file.}
 
 \item{max_missing}{The maximum number of days allowed to be missing from a
@@ -211,20 +211,20 @@ notification.}
 # Download weather station for Toowoomba, Queensland for 2010, save resulting
 # file, GSOD-955510-99999-2010.csv, in the user's home directory.
 
-get_GSOD(years = 2010, station = "955510-99999", path = "~/")
+get_GSOD(years = 2010, station = "955510-99999", dsn = "~/")
 
 # Download data for Philippines for year 2010 and generate a yearly
 # summary file, GSOD-RP-2010.csv, file in the user's home directory with a
 # maximum of five missing days per station allowed.
 
-get_GSOD(years = 2010, country = "Philippines", path = "~/")
+get_GSOD(years = 2010, country = "Philippines", dsn = "~/")
 
 # Download global GSOD data for agroclimatology work for years 2009 and 2010
 # and generate yearly summary files, GSOD-agroclimatology-2010.csv and
 # GSOD-agroclimatology-2011.csv in the user's home directory with a maximum
 # of five missing days per weather station allowed.
 
-get_GSOD(years = 2010:2011, path = "~/", agroclimatology = TRUE)
+get_GSOD(years = 2010:2011, dsn = "~/", agroclimatology = TRUE)
 }
 
 
