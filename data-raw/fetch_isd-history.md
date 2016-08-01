@@ -1,12 +1,12 @@
 Fetch, clean and correct altitude in GSOD isd\_history.csv Data
 ================
 Adam H. Sparks - Center for Crop Health, University of Southern Queensland
-07-12-2016
+2016-08-01
 
 Introduction
 ============
 
-This script will fetch station data from the ftp server and clean up for inclusion in package in /data/stations.rda for the GSODR package.
+This script will fetch station data from the ftp server and clean up for inclusion in package in /data/stations.rda\` for the GSODR package.
 
 The following changes are made:
 
@@ -154,28 +154,28 @@ summary(stations)
 ```
 
     ##       USAF            WBAN                     STN.NAME    
-    ##  999999 : 1227   99999  :20981   APPROXIMATE LOCALE:   36  
+    ##  999999 : 1227   99999  :20982   APPROXIMATE LOCALE:   36  
     ##  949999 :  373   23176  :    5   MOORED BUOY       :   20  
     ##  722250 :    4   03849  :    5   ...               :   15  
     ##  746929 :    4   24255  :    4   BOGUS CHINESE     :   13  
     ##  992390 :    4   24135  :    4   PACIFIC BUOY      :    8  
     ##  997225 :    4   24027  :    4   DEASE LAKE        :    7  
-    ##  (Other):23264   (Other): 3877   (Other)           :24781  
+    ##  (Other):23265   (Other): 3877   (Other)           :24782  
     ##       CTRY           STATE            CALL            LAT        
-    ##  US     : 6742          :18583          :14951   Min.   :-56.50  
-    ##  CA     : 1609   CA     :  505   KMLF   :    6   1st Qu.: 21.81  
+    ##  US     : 6743          :18583          :14951   Min.   :-56.50  
+    ##  CA     : 1609   CA     :  505   KMLF   :    6   1st Qu.: 21.82  
     ##  RS     : 1471   TX     :  488   KLSF   :    6   Median : 37.73  
     ##  AS     : 1411   FL     :  320   PAMD   :    5   Mean   : 29.35  
     ##  CH     : 1042   MI     :  231   KONT   :    5   3rd Qu.: 47.17  
     ##  UK     :  675   NC     :  212   KLRD   :    5   Max.   : 60.00  
-    ##  (Other):11930   (Other): 4541   (Other): 9902                   
+    ##  (Other):11930   (Other): 4542   (Other): 9903                   
     ##       LON               ELEV.M           BEGIN               END          
     ##  Min.   :-179.983   Min.   :-350.0   Min.   :19010101   Min.   :19301231  
     ##  1st Qu.: -83.743   1st Qu.:  25.0   1st Qu.:19570601   1st Qu.:20020209  
-    ##  Median :   7.275   Median : 152.0   Median :19750618   Median :20150612  
-    ##  Mean   :  -1.661   Mean   : 376.1   Mean   :19774309   Mean   :20040292  
-    ##  3rd Qu.:  69.203   3rd Qu.: 454.0   3rd Qu.:20010816   3rd Qu.:20160715  
-    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20160714   Max.   :20160717  
+    ##  Median :   7.267   Median : 152.0   Median :19750618   Median :20150628  
+    ##  Mean   :  -1.663   Mean   : 376.1   Mean   :19774325   Mean   :20040362  
+    ##  3rd Qu.:  69.200   3rd Qu.: 454.0   3rd Qu.:20010817   3rd Qu.:20160723  
+    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20160720   Max.   :20160725  
     ##                     NA's   :194                                           
     ##           STNID       ELEV.M.SRTM.90m.BUFFER
     ##  992390-99999:    4   Min.   :-360.9        
@@ -184,7 +184,7 @@ summary(stations)
     ##  997242-99999:    2   Mean   : 379.3        
     ##  919450-99999:    2   3rd Qu.: 456.0        
     ##  719584-99999:    2   Max.   :5273.4        
-    ##  (Other)     :24864   NA's   :52
+    ##  (Other)     :24865   NA's   :52
 
 Figures
 =======
@@ -231,7 +231,7 @@ R System Information
 
     ## R version 3.3.1 (2016-06-21)
     ## Platform: x86_64-apple-darwin15.5.0 (64-bit)
-    ## Running under: OS X 10.11.5 (El Capitan)
+    ## Running under: OS X 10.11.6 (El Capitan)
     ## 
     ## locale:
     ## [1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8
@@ -243,15 +243,15 @@ R System Information
     ## [1] ggalt_0.1.1   ggplot2_2.1.0 foreach_1.4.3
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] Rcpp_0.12.5        RColorBrewer_1.1-2 compiler_3.3.1    
+    ##  [1] Rcpp_0.12.6        RColorBrewer_1.1-2 compiler_3.3.1    
     ##  [4] formatR_1.4        plyr_1.8.4         iterators_1.0.8   
     ##  [7] tools_3.3.1        digest_0.6.9       memoise_1.0.0     
     ## [10] evaluate_0.9       tibble_1.1         gtable_0.2.0      
-    ## [13] lattice_0.20-33    DBI_0.4-1          curl_0.9.7        
+    ## [13] lattice_0.20-33    DBI_0.4-1          curl_1.1          
     ## [16] yaml_2.1.13        rgdal_1.1-10       parallel_3.3.1    
     ## [19] withr_1.0.2        dplyr_0.5.0        stringr_1.0.0     
     ## [22] raster_2.5-8       knitr_1.13         devtools_1.12.0   
-    ## [25] maps_3.1.0         grid_3.3.1         data.table_1.9.6  
+    ## [25] maps_3.1.1         grid_3.3.1         data.table_1.9.6  
     ## [28] R6_2.1.2           rmarkdown_1.0      sp_1.2-3          
     ## [31] readr_0.2.2        magrittr_1.5       MASS_7.3-45       
     ## [34] scales_0.4.0       codetools_0.2-14   htmltools_0.3.5   
