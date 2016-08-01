@@ -26,7 +26,7 @@
 #' having an ISO code 2 or 3 letter ISO code can also be used if known. See
 #' \code{\link{country_list}} for a full list of country names and ISO codes
 #' available.
-#' @param path Path entered by user indicating where to store resulting
+#' @param dsn File path entered by user indicating where to store resulting
 #' output file.
 #' @param max_missing The maximum number of days allowed to be missing from a
 #' station's data before it is excluded from final file output. Defaults to five
@@ -219,7 +219,7 @@
 #' @importFrom data.table :=
 #'
 #' @export
-get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
+get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
                      max_missing = 5, agroclimatology = FALSE,
                      shapefile = FALSE, CSV = TRUE,
                      merge_station_years = FALSE) {
@@ -245,7 +245,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   j <- YEARMODA <- yr <- NULL
 
   # Check data path given by user, does it exist? Is it properly formatted?
-  path <- .get_data_path(path)
+  dsn <- .get_data_path(dsn)
 
   # Check years given by the user, are they valid?
   .validate_years(years)
@@ -366,9 +366,9 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
     #### csv file---------------------------------------------------------------
     if (CSV == TRUE) {
       cat(noquote(paste0(paste0(names(GSOD_XY), collapse = ","), "\n")),
-          file = paste0(path.expand(path), outfile, ".csv"))
+          file = paste0(path.expand(dsn), outfile, ".csv"))
       iotools::write.csv.raw(as.data.frame(GSOD_XY),
-                             file = paste0(path.expand(path), outfile, ".csv"),
+                             file = paste0(path.expand(dsn), outfile, ".csv"),
                              append = TRUE)
     }
 
@@ -377,7 +377,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
       GSOD_XY <- as.data.frame(GSOD_XY) # convert tbl.df to dataframe for sp
       sp::coordinates(GSOD_XY) <- ~LON + LAT
       sp::proj4string(GSOD_XY) <- sp::CRS("+proj=longlat +datum=WGS84")
-      rgdal::writeOGR(GSOD_XY, dsn = path.expand(path), layer = outfile,
+      rgdal::writeOGR(GSOD_XY, dsn = path.expand(dsn), layer = outfile,
                       driver = "ESRI Shapefile", overwrite_layer = TRUE)
     }
   }
@@ -534,29 +534,29 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 # Original .get_data_path from R.J. Hijmans R Raster package, modified for use
 # in GSODR
 
-.get_data_path <- function(path) {
-  path <- trimws(path)
-  if (path == "") {
+.get_data_path <- function(dsn) {
+  path <- trimws(dsn)
+  if (dsn == "") {
     stop("\nYou must supply a valid file path for storing the .csv file.\n")
   } else {
-    if (substr(path, nchar(path) - 1, nchar(path)) == "//") {
-      p <- substr(path, 1, nchar(path) - 2)
-    } else if (substr(path, nchar(path), nchar(path)) == "/" |
-               substr(path, nchar(path), nchar(path)) == "\\") {
-      p <- substr(path, 1, nchar(path) - 1)
+    if (substr(dsn, nchar(dsn) - 1, nchar(dsn)) == "//") {
+      p <- substr(dsn, 1, nchar(dsn) - 2)
+    } else if (substr(dsn, nchar(dsn), nchar(dsn)) == "/" |
+               substr(dsn, nchar(dsn), nchar(dsn)) == "\\") {
+      p <- substr(dsn, 1, nchar(dsn) - 1)
     } else {
-      p <- path
+      p <- dsn
     }
-    if (!file.exists(p) & !file.exists(path)) {
-      stop("\nFile path does not exist: ", path, ".\n")
+    if (!file.exists(p) & !file.exists(dsn)) {
+      stop("\nFile dsn does not exist: ", dsn, ".\n")
       return(0)
     }
   }
-  if (substr(path, nchar(path), nchar(path)) != "/" &
-      substr(path, nchar(path), nchar(path)) != "\\") {
-    path <- paste0(path, "/")
+  if (substr(dsn, nchar(dsn), nchar(dsn)) != "/" &
+      substr(dsn, nchar(dsn), nchar(dsn)) != "\\") {
+    dsn <- paste0(dsn, "/")
   }
-  return(path)
+  return(dsn)
 }
 
 # Original .get_country from R.J. Hijmans R Raster package, modified for use in
