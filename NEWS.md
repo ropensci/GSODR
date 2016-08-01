@@ -3,7 +3,7 @@
 ## Changes
   * R >= 3.2.0 now required  
   * Reduce package dependencies, remove `dplyr`,`raster` and `stringr`  
-  * Updated `stations` list with latest version from NCDC published 18-07-2016  
+  * Updated `stations` list with latest version from NCDC published 28-07-2016  
   * `get_GSOD` function optimised for speed as best possible after ftping files
   from NCDC server  
   * Use FIPS codes in place of ISO3c for filenames and in output files because
@@ -13,6 +13,9 @@
   * Country is specified using FIPS codes in filename and output file contents
   due to stations occurring in some locales that lack ISO 3166 3 letter country
   codes
+  * The `path` parameter is now instead called `dsn` to be more inline with
+  other tools like `readOGR()` and the possibility of writing directly to a
+  database from `get_GSOD()`
 
 ******
 
@@ -23,16 +26,16 @@
   mm to hundredths. Issues with conversion and missing values meant that this
   was not the case. Thanks to Gwenael Giboire for reporting and help with fixing
   this  
-  
+
 ## Changes
   * Users can now select to merge output for station queries across multiple
-  years. Previously one year = one file per station. Now were set by user, 
+  years. Previously one year = one file per station. Now were set by user,
   `merge_station_years = TRUE` parameter, only one output file is generated  
   * Country list is now included in the package to reduce run time necessary
   when querying for a specific country. However, this means any time that the
   country-list.txt file is updated, this package needs to be updated as well  
   * Updated `stations` list with latest version from NCDC published 12-07-2016  
-  
+
 ## Improvements
   * Country level, agroclimatology and global data query conversions and
   calculations are processed in parallel now to reduce runtime  
@@ -154,7 +157,7 @@
 
 ## Changes
   * Now available on CRAN
-  
+
 ## Changes
   * Add single quotes around possibly misspelled words and spell out comma-separated values and geographic information system rather than just using "CSV" or "GIS" in DESCRIPTION.
   * Add full name of GSOD (Global Surface Summary of the Day) and URL for GSOD, https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod to DESCRIPTION as requested by CRAN.

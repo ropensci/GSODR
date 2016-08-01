@@ -26,21 +26,22 @@
 #' having an ISO code 2 or 3 letter ISO code can also be used if known. See
 #' \code{\link{country_list}} for a full list of country names and ISO codes
 #' available.
-#' @param  path Path entered by user indicating where to store resulting
-#' output file. Defaults to the current working directory.
+#' @param dsn File path entered by user indicating where to store resulting
+#' output file.
 #' @param max_missing The maximum number of days allowed to be missing from a
 #' station's data before it is excluded from final file output. Defaults to five
 #' days. If a single station is specified, this option is ignored and any data
-#' available, even an empty file,from NCDC will be returned.
-#' @param agroclimatology Only clean data for stations between latitudes 60 and
-#' -60 for agroclimatology work, defaults to FALSE. Set to FALSE to override and
-#' include only stations within the confines of these latitudes.
-#' @param shapefile If set to TRUE, create an ESRI shapefile of vector type,
+#' available, even an empty file, from NCDC will be returned.
+#' @param agroclimatology Logical. Only clean data for stations between
+#' latitudes 60 and -60 for agroclimatology work, defaults to FALSE. Set to
+#' TRUE to include only stations within the confines of these
+#' latitudes.
+#' @param shapefile Logical. If set to TRUE, create an ESRI shapefile of vector type
 #' points, of the data for use in a GIS. Defaults to FALSE, no shapefile
 #' created.
-#' @param CSV If set to TRUE, create a comma separated value (CSV) file of data,
+#' @param CSV Logical. If set to TRUE, create a comma separated value (CSV) file of data,
 #' defaults to TRUE, a CSV file is created.
-#' @param merge_station_years If set to TRUE, merge output files into one output
+#' @param merge_station_years Logical. If set to TRUE, merge output files into one output
 #' file for all years when selecting a single station, defaults to FALSE.
 #'
 #'
@@ -192,20 +193,20 @@
 #' # Download weather station for Toowoomba, Queensland for 2010, save resulting
 #' # file, GSOD-955510-99999-2010.csv, in the user's home directory.
 #'
-#' get_GSOD(years = 2010, station = "955510-99999", path = "~/")
+#' get_GSOD(years = 2010, station = "955510-99999", dsn = "~/")
 #'
 #' # Download data for Philippines for year 2010 and generate a yearly
 #' # summary file, GSOD-RP-2010.csv, file in the user's home directory with a
 #' # maximum of five missing days per station allowed.
 #'
-#' get_GSOD(years = 2010, country = "Philippines", path = "~/")
+#' get_GSOD(years = 2010, country = "Philippines", dsn = "~/")
 #'
 #' # Download global GSOD data for agroclimatology work for years 2009 and 2010
 #' # and generate yearly summary files, GSOD-agroclimatology-2010.csv and
 #' # GSOD-agroclimatology-2011.csv in the user's home directory with a maximum
 #' # of five missing days per weather station allowed.
 #'
-#' get_GSOD(years = 2010:2011, path = "~/", agroclimatology = TRUE)
+#' get_GSOD(years = 2010:2011, dsn = "~/", agroclimatology = TRUE)
 #' }
 #'
 #'
@@ -218,7 +219,7 @@
 #' @importFrom data.table :=
 #'
 #' @export
-get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
+get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
                      max_missing = 5, agroclimatology = FALSE,
                      shapefile = FALSE, CSV = TRUE,
                      merge_station_years = FALSE) {
@@ -244,7 +245,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   j <- YEARMODA <- yr <- NULL
 
   # Check data path given by user, does it exist? Is it properly formatted?
-  path <- .get_data_path(path)
+  dsn <- .get_data_path(dsn)
 
   # Check years given by the user, are they valid?
   .validate_years(years)
@@ -365,9 +366,9 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
     #### csv file---------------------------------------------------------------
     if (CSV == TRUE) {
       cat(noquote(paste0(paste0(names(GSOD_XY), collapse = ","), "\n")),
-          file = paste0(path.expand(path), outfile, ".csv"))
+          file = paste0(path.expand(dsn), outfile, ".csv"))
       iotools::write.csv.raw(as.data.frame(GSOD_XY),
-                             file = paste0(path.expand(path), outfile, ".csv"),
+                             file = paste0(path.expand(dsn), outfile, ".csv"),
                              append = TRUE)
     }
 
@@ -376,7 +377,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
       GSOD_XY <- as.data.frame(GSOD_XY) # convert tbl.df to dataframe for sp
       sp::coordinates(GSOD_XY) <- ~LON + LAT
       sp::proj4string(GSOD_XY) <- sp::CRS("+proj=longlat +datum=WGS84")
-      rgdal::writeOGR(GSOD_XY, dsn = path.expand(path), layer = outfile,
+      rgdal::writeOGR(GSOD_XY, dsn = path.expand(dsn), layer = outfile,
                       driver = "ESRI Shapefile", overwrite_layer = TRUE)
     }
   }
@@ -533,29 +534,29 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 # Original .get_data_path from R.J. Hijmans R Raster package, modified for use
 # in GSODR
 
-.get_data_path <- function(path) {
-  path <- trimws(path)
-  if (path == "") {
+.get_data_path <- function(dsn) {
+  path <- trimws(dsn)
+  if (dsn == "") {
     stop("\nYou must supply a valid file path for storing the .csv file.\n")
   } else {
-    if (substr(path, nchar(path) - 1, nchar(path)) == "//") {
-      p <- substr(path, 1, nchar(path) - 2)
-    } else if (substr(path, nchar(path), nchar(path)) == "/" |
-               substr(path, nchar(path), nchar(path)) == "\\") {
-      p <- substr(path, 1, nchar(path) - 1)
+    if (substr(dsn, nchar(dsn) - 1, nchar(dsn)) == "//") {
+      p <- substr(dsn, 1, nchar(dsn) - 2)
+    } else if (substr(dsn, nchar(dsn), nchar(dsn)) == "/" |
+               substr(dsn, nchar(dsn), nchar(dsn)) == "\\") {
+      p <- substr(dsn, 1, nchar(dsn) - 1)
     } else {
-      p <- path
+      p <- dsn
     }
-    if (!file.exists(p) & !file.exists(path)) {
-      stop("\nFile path does not exist: ", path, ".\n")
+    if (!file.exists(p) & !file.exists(dsn)) {
+      stop("\nFile dsn does not exist: ", dsn, ".\n")
       return(0)
     }
   }
-  if (substr(path, nchar(path), nchar(path)) != "/" &
-      substr(path, nchar(path), nchar(path)) != "\\") {
-    path <- paste0(path, "/")
+  if (substr(dsn, nchar(dsn), nchar(dsn)) != "/" &
+      substr(dsn, nchar(dsn), nchar(dsn)) != "\\") {
+    dsn <- paste0(dsn, "/")
   }
-  return(path)
+  return(dsn)
 }
 
 # Original .get_country from R.J. Hijmans R Raster package, modified for use in
