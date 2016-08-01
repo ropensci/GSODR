@@ -3,7 +3,7 @@
 ## Changes
   * R >= 3.2.0 now required  
   * Reduce package dependencies, remove `dplyr`,`raster` and `stringr`  
-  * Updated `stations` list with latest version from NCDC published 18-07-2016  
+  * Updated `stations` list with latest version from NCDC published 28-07-2016  
   * `get_GSOD` function optimised for speed as best possible after ftping files
   from NCDC server  
   * Use FIPS codes in place of ISO3c for filenames and in output files because
@@ -13,6 +13,9 @@
   * Country is specified using FIPS codes in filename and output file contents
   due to stations occurring in some locales that lack ISO 3166 3 letter country
   codes
+  * The `path` parameter is now instead called `dsn` to be more inline with
+  other tools like `readOGR()` and the possibility of writing directly to a
+  database from `get_GSOD()`
 
 ******
 
