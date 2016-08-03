@@ -1,5 +1,7 @@
 ---
-output: github_document
+output:
+  github_document:
+    hard_line_breaks: false
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
