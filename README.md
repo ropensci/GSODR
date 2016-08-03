@@ -94,7 +94,7 @@ Output
 ======
 
 The function, `get_GSOD()` generates a Comma Separated Value (CSV) file
-or GeoPackagein the respective year directory containing the following
+or GeoPackage in the respective year directory containing the following
 variables:
 
 **STNID** - Station number (WMO/DATSAV3 number) for the location;  
