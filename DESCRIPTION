@@ -5,12 +5,16 @@ Version: 0.2
 Date: 2016-07-19
 Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     email = "adamhsparks@gmail.com"),
-    person("Tomislav", "Hengl", role = "ctb",
+    person("Tomislav", "Hengl", role = "aut",
     email = "tom.hengl@wur.nl"),
-    person("Andy", "Nelson", role = "ctb",
+    person("Andy", "Nelson", role = "aut",
     email = "dr.andy.nelson@gmail.com"),
-    person("Kay", "Sumfleth", role = "ctb",
-    email = "kay@sumfleth.de"))
+    person("Kay", "Sumfleth", role = "aut",
+    email = "kay@sumfleth.de"),
+    person("Robert", "Hijmans", role = "aut",
+    email = "robert.hijmans@gmail.com"),
+    person("Ram", "Narasimhan", role = "aut",
+    email = "ramnarasimhan@gmail.com"))
 Maintainer: Adam Sparks <adamhsparks@gmail.com>
 URL: https://github.com/adamhsparks/GSODR
 BugReports: https://github.com/adamhsparks/GSODR/issues

@@ -5,3 +5,6 @@
 ^revdep$
 ^appveyor\.yml
 ^data-raw$
+^README\.Rmd$
+^README-.*\.png$
+^CONDUCT\.md$

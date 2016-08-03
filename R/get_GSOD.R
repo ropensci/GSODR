@@ -390,6 +390,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
 
 # Functions used within this package -------------------------------------------
 # Check against maximum permissible missing days
+#' @noRd
 .check <- function(tmp, yr, max_missing) {
   records <- nrow(tmp)
   if (lubridate::leap_year(yr) == FALSE) {
@@ -405,6 +406,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
   }
 }
 
+#' @noRd
 # Reformat and generate new variables
 .reformat <- function(tmp, stations) {
 
@@ -481,6 +483,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
   stations <- data.table::setkey(stations, STNID)
   GSOD_df <- stations[tmp]
 
+#' @noRd
   data.table::setcolorder(GSOD_df, c("USAF", "WBAN", "STNID", "STN.NAME",
                                      "CTRY", "STATE", "CALL", "LAT", "LON",
                                      "ELEV.M", "ELEV.M.SRTM.90m", "BEGIN",
@@ -498,6 +501,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
   return(GSOD_df)
 }
 
+#' @noRd
 .read_gz <- function(gz_file) {
   data.table::setDT(
     readr::read_fwf(file = gz_file,
@@ -533,7 +537,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
 
 # Original .get_data_path from R.J. Hijmans R Raster package, modified for use
 # in GSODR
-
+#' @noRd
 .get_data_path <- function(dsn) {
   path <- trimws(dsn)
   if (dsn == "") {
@@ -561,6 +565,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
 
 # Original .get_country from R.J. Hijmans R Raster package, modified for use in
 # GSODR
+#' @noRd
 .get_country <- function(country = "", country_list) {
   country <- toupper(trimws(country[1]))
   nc <- nchar(country)
@@ -590,6 +595,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
 # Version 0.4
 # License: GPL
 # https://github.com/Ram-N/weatherData/blob/master/R/validity_checks.R
+#' @noRd
 .validate_years <- function(years) {
   this_year <- 1900 + as.POSIXlt(Sys.Date())$year
   if (is.null(years)) {
@@ -609,6 +615,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
   }
 }
 
+#' @noRd
 .validate_station <- function(station) {
   utils::data("stations", package = "GSODR", envir = environment())
   stations <- get("stations", envir = environment())
@@ -621,6 +628,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
   }
 }
 
+#' @noRd
 .validate_merge <- function(years, station) {
   if (is.null(station)) {
     stop("\nThe option to merge multiple years into one file is only possible when selecting a single station.\n")
