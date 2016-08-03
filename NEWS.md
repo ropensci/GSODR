@@ -1,9 +1,6 @@
 # GSODR v0.2
 
 ## NEW FEATURES
-  * The `path` parameter is now instead called `dsn` to be more inline with
-  other tools like `readOGR()` and the possibility of writing directly to a
-  database from `get_GSOD()`
   * Output files now include fields for State (US only) and Call (International
   Civil Aviation Organization (ICAO) Airport Code)  
   * Country is specified using FIPS codes in filename and output file contents
@@ -22,7 +19,9 @@
 ## BUG FIXES
 
 ## DEPRECATED AND DEFUNCT
-  
+  * The `path` parameter is now instead called `dsn` to be more inline with
+  other tools like `readOGR()` and the possibility of writing directly to a
+  database from `get_GSOD()`
 
 ******
 
