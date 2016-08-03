@@ -1,21 +1,28 @@
 # GSODR v0.2
 
-## Changes
-  * R >= 3.2.0 now required  
-  * Reduce package dependencies, remove `dplyr`,`raster` and `stringr`  
-  * Updated `stations` list with latest version from NCDC published 28-07-2016  
-  * `get_GSOD` function optimised for speed as best possible after ftping files
-  from NCDC server  
-  * Use FIPS codes in place of ISO3c for filenames and in output files because
-  some stations have countries that do not have an ISO code  
+## NEW FEATURES
+  * The `path` parameter is now instead called `dsn` to be more inline with
+  other tools like `readOGR()` and the possibility of writing directly to a
+  database from `get_GSOD()`
   * Output files now include fields for State (US only) and Call (International
   Civil Aviation Organization (ICAO) Airport Code)  
   * Country is specified using FIPS codes in filename and output file contents
   due to stations occurring in some locales that lack ISO 3166 3 letter country
   codes
-  * The `path` parameter is now instead called `dsn` to be more inline with
-  other tools like `readOGR()` and the possibility of writing directly to a
-  database from `get_GSOD()`
+  * R >= 3.2.0 now required    * Use FIPS codes in place of ISO3c for filename
+  and in output files because some stations do not have an ISO country code  
+  
+## MINOR IMPROVEMENTS
+
+  * `get_GSOD` function optimised for speed as best possible after ftping files
+  from NCDC server  
+  * Updated `stations` list with latest version from NCDC published 28-07-2016  
+  * Reduce package dependencies, remove `dplyr`,`raster` and `stringr`  
+
+## BUG FIXES
+
+## DEPRECATED AND DEFUNCT
+  
 
 ******
 

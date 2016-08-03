@@ -282,7 +282,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
       tryCatch(curl::curl_download(url = paste0(ftp_site, yr, "/gsod_", yr,
                                                 ".tar"),
                                    destfile = tf, quiet = FALSE, mode = "wb"),
-               error = function(x) cat(paste0("\nThe download stoped at year ", yr,
+               error = function(x) message(paste0("\nThe download stoped at year ", yr,
                                               ".\nPlease restart the 'get_GSOD()' function starting at this point.\n")))
       utils::untar(tarfile = tf, exdir  = paste0(td, "/", yr, "/"))
 
@@ -318,7 +318,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
     if (!is.null(station)) {
       tmp <- tryCatch(
         .read_gz(paste0(ftp_site, yr, "/", station, "-", yr, ".op.gz")),
-        error = function(x) cat(paste0("\nThe download stoped at year ", yr,
+        error = function(x) message(paste0("\nThe download stoped at year ", yr,
                                        ".\nPlease restart the 'get_GSOD()' function starting at this point.\n")))
       if (merge_station_years == TRUE) {
         GSOD_objects[[yr]] <- .reformat(tmp, stations)
@@ -365,7 +365,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
 
     #### csv file---------------------------------------------------------------
     if (CSV == TRUE) {
-      cat(noquote(paste0(paste0(names(GSOD_XY), collapse = ","), "\n")),
+      message(noquote(paste0(paste0(names(GSOD_XY), collapse = ","), "\n")),
           file = paste0(path.expand(dsn), outfile, ".csv"))
       iotools::write.csv.raw(as.data.frame(GSOD_XY),
                              file = paste0(path.expand(dsn), outfile, ".csv"),

@@ -92,7 +92,7 @@ get_GSOD(years = 2010, country = "Philippines", path = "~/")
 Output
 ======
 
-The function, `get_GSOD()` generates a Comma Separated Value (.csv) file
+The function, `get_GSOD()` generates a Comma Separated Value (CSV) file
 or ESRI format shapefile in the respective year directory containing the
 following variables:
 
@@ -109,9 +109,9 @@ or &gt;180 degrees or Lat = 0 and Lon = 0*;
 **ELEV.M.SRTM.90m** - Elevation in metres corrected for possible errors,
 see Notes for more;  
 **YEARMODA** - Date in YYYY-MM-DD format;  
-**YEAR** - The year;  
-**MONTH** - The month;  
-**DAY** - The day;  
+**YEAR** - The year (YYYY);  
+**MONTH** - The month (mm);  
+**DAY** - The day (dd);  
 **YDAY** - Sequential day of year (not in original GSOD);  
 **TEMP** - Mean daily temperature converted to degrees C to tenths.
 Missing = -9999;  
@@ -212,7 +212,7 @@ to identify and correct/remove elevation errors in data for station
 locations between -60˚ and 60˚ latitude. This applies to cases here
 where elevation was missing in the reported values as well. In case the
 station reported an elevation and the DEM does not, the station reported
-is taken. For stations beyond -60˚ and 60˚latitude, the values are
+is taken. For stations beyond -60˚ and 60˚ latitude, the values are
 station reported values in every instance. See
 <https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md>
 for more detail on the correction methods.
