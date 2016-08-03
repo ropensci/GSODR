@@ -36,6 +36,9 @@ Using GSODR
 -----------
 
 ``` r
+
+library(GSODR)
+
 # Download weather station for Toowoomba, Queensland for 2010, save resulting
 # file, GSOD-955510-99999-2010.csv, in the user's home directory.
 
