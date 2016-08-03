@@ -93,7 +93,7 @@ get_GSOD(years = 2010, country = "Philippines", path = "~/")
 Output
 ======
 
-The function, `get_GSOD()` generates a Comma Separated Value (CSV) file
+The function, `get_GSOD()`, generates a Comma Separated Value (CSV) file
 or GeoPackage in the respective year directory containing the following
 variables:
 

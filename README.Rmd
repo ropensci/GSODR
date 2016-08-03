@@ -99,7 +99,7 @@ get_GSOD(years = 2010, country = "Philippines", path = "~/")
 
 # Output
 
-The function, `get_GSOD()` generates a Comma Separated Value (CSV) file or
+The function, `get_GSOD()`, generates a Comma Separated Value (CSV) file or
 GeoPackage in the respective year directory containing the following
 variables:  
 
@@ -236,7 +236,8 @@ Policy](http://www.wmo.int/pages/about/Resolution40.html)
 
 ## Code of Conduct
 
-Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
+Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md).
+By participating in this project you agree to abide by its terms.
 
 # References
 
