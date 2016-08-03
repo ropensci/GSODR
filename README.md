@@ -3,8 +3,8 @@
 GSODR
 =====
 
-[![Travis-CI
-BuildStatus](https://travis-ci.org/adamhsparks/GSODR.svg?branch=master)](https://travis-ci.org/adamhsparks/GSODR)
+[![Travis-CI Build
+Status](https://travis-ci.org/adamhsparks/GSODR.svg?branch=master)](https://travis-ci.org/adamhsparks/GSODR)
 [![Build
 status](https://ci.appveyor.com/api/projects/status/8daqtllo2sg6me07/branch/master?svg=true)](https://ci.appveyor.com/project/adamhsparks/GSODR/branch/master?svg=true)
 [![rstudio mirror
@@ -20,9 +20,9 @@ are individually checked for number of missing days to assure data
 quality, stations with too many missing observations are omitted. All
 units are converted to metric, e.g., inches to millimetres and
 Fahrenheit to Celsius. Output is saved as a Comma Separated Value (CSV)
-file or ESRI format shapefile summarizing each year by station, which
-includes vapor pressure and relative humidity variables calculated from
-existing data in GSOD.
+file or a spatial file in a GeoPackage file format summarizing each year
+by station, which includes vapour pressure and relative humidity
+variables calculated from existing data in GSOD.
 
 This package was largely based on Tomislav Hengl's work in "[A Practical
 Guide to Geostatistical
@@ -147,7 +147,7 @@ so this will sometimes not be the max for the calendar day. Missing =
 -9999;  
 **MAX.FLAG** - Blank indicates max temp was taken from the explicit max
 temp report and not from the 'hourly' data. \* indicates max temp was
-derived from the hourly data (i.e., highest hourly or synoptic-reported
+derived from the hourly data (I\_e., highest hourly or synoptic-reported
 temperature);  
 **MIN**- Minimum temperature reported during the day converted to
 Celsius to tenths--time of min temp report varies by country and region,
@@ -155,16 +155,17 @@ so this will sometimes not be the max for the calendar day. Missing =
 -9999; ;  
 **MIN.FLAG** - Blank indicates max temp was taken from the explicit max
 temp report and not from the 'hourly' data. \* indicates max temp was
-derived from the hourly data (i.e., highest hourly or synoptic-reported
+derived from the hourly data (I\_e., highest hourly or synoptic-reported
 temperature);  
 **PRCP** - Total precipitation (rain and/or melted snow) reported during
 the day converted to millimetres to hundredths; will usually not end
-with the midnight observation--i.e., may include latter part of previous
-day. .00 indicates no measurable precipitation (includes a trace).
-Missing = -9999; *Note: Many stations do not report '0' on days with no
-precipitation-- therefore, '-9999' will often appear on these days. For
-example, a station may only report a 6-hour amount for the period during
-which rain fell.* See FLAGS.PRCP column for source of data;  
+with the midnight observation--I\_e., may include latter part of
+previous day. .00 indicates no measurable precipitation (includes a
+trace). Missing = -9999; *Note: Many stations do not report '0' on days
+with no precipitation-- therefore, '-9999' will often appear on these
+days. For example, a station may only report a 6-hour amount for the
+period during which rain fell.* See FLAGS.PRCP column for source of
+data;  
 **PRCP.FLAG** -  
 A = 1 report of 6-hour precipitation amount;  
 B = Summation of 2 reports of 6-hour precipitation amount;  
@@ -181,17 +182,17 @@ I = Station did not report any precip data for the day and did not
 report any occurrences of precipitation in its hourly observations--it's
 still possible that precip occurred but was not reported;  
 **SNDP** - Snow depth in millimetres to tenths. Missing = -9999;  
-**I.FOG** - Indicator for fog, (1 = yes, 0 = no/not reported) for the
+**I\_FOG** - Indicator for fog, (1 = yes, 0 = no/not reported) for the
 occurrence during the day;  
-**I.RAIN\_DZL** - Indicator for rain or drizzle, (1 = yes, 0 = no/not
+**I\_RN\_DZL** - Indicator for rain or drizzle, (1 = yes, 0 = no/not
 reported) for the occurrence during the day;  
-**I.SNW\_ICE** - Indicator for snow or ice pellets, (1 = yes, 0 = no/not
-reported) for the occurrence during the day;  
-**I.HAIL** - Indicator for hail, (1 = yes, 0 = no/not reported) for the
+**I\_SNW\_ICE** - Indicator for snow or ice pellets, (1 = yes, 0 =
+no/not reported) for the occurrence during the day;  
+**I\_HAIL** - Indicator for hail, (1 = yes, 0 = no/not reported) for the
 occurrence during the day;  
-**I.THUNDER** - Indicator for thunder, (1 = yes, 0 = no/not reported)
+**I\_THUNDER** - Indicator for thunder, (1 = yes, 0 = no/not reported)
 for the occurrence during the day;  
-**I.TDO\_FNL** - Indicator for tornado or funnel cloud, (1 = yes, 0 =
+**I\_TDO\_FNL** - Indicator for tornado or funnel cloud, (1 = yes, 0 =
 no/not reported) for the occurrence during the day;
 
 Values calculated by this package and included in final output:
@@ -244,4 +245,4 @@ References
 
 Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled SRTM for
 the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
-(<http://srtm.csi.cgiar.org>)
+(<http://srtm.csI_cgiar.org>)

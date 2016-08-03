@@ -61,8 +61,8 @@ unlink(tf)
 stations <- readr::read_csv(
   "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
   col_types = "ccccccddddd",
-  col_names = c("USAF", "WBAN", "STN.NAME", "CTRY", "STATE", "CALL",
-                "LAT", "LON", "ELEV.M", "BEGIN", "END"), skip = 1)
+  col_names = c("USAF", "WBAN", "STN_NAME", "CTRY", "STATE", "CALL",
+                "LAT", "LON", "ELEV_M", "BEGIN", "END"), skip = 1)
 
 stations[stations == -999.9] <- NA
 stations[stations == -999] <- NA
@@ -206,7 +206,7 @@ package following the approach of Hijmans *et al.* (2005).
 # data was used
 stations[, 13] <- round(stations[, 13], 0)
 
-names(stations)[13] <- "ELEV.M.SRTM.90m"
+names(stations)[13] <- "ELEV_M_SRTM_90m"
 
 # write rda file to disk
 devtools::use_data(stations, overwrite = TRUE, compress = "bzip2")

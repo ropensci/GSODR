@@ -36,23 +36,24 @@
 #' latitudes 60 and -60 for agroclimatology work, defaults to FALSE. Set to
 #' TRUE to include only stations within the confines of these
 #' latitudes.
-#' @param shapefile Logical. If set to TRUE, create an ESRI shapefile of vector type
-#' points, of the data for use in a GIS. Defaults to FALSE, no shapefile
-#' created.
-#' @param CSV Logical. If set to TRUE, create a comma separated value (CSV) file of data,
-#' defaults to TRUE, a CSV file is created.
-#' @param merge_station_years Logical. If set to TRUE, merge output files into one output
-#' file for all years when selecting a single station, defaults to FALSE.
+#' #' @param CSV Logical. If set to TRUE, create a comma separated value (CSV)
+#' file of data, defaults to TRUE, a CSV file is created.
+#' @param GPKG Logical. If set to TRUE, create a GeoPackage file, if
+#' set to FALSE, no GPKG file is created. Defaults to FALSE, no GPKG file is
+#' created
+#' @param merge_station_years Logical. If set to TRUE, merge output files into
+#' one output file for all years when selecting a single station, defaults to
+#' FALSE.
 #'
 #'
 #' @details
 #'Due to the size of the resulting data, output is saved as a comma-separated,
-#'csv, file (default) or ESRI shapefile in a directory specified by the user or
+#'csv, file (default) or GeoPackage in a directory specified by the user or
 #'defaults to the current working directory. The files summarize each year by
 #'station, which includes vapour pressure and relative humidity variables
 #'calculated from existing data in GSOD. Optionally, because the file sizes are
 #'much smaller, when selecting a single station, all years queried may be
-#'merged into one final ouptut file (CSV or shapefile) using the \code{
+#'merged into one final ouptut file (CSV or GeoPackage) using the \code{
 #'merge_station_years} option.
 #'
 #'All missing values in resulting files are represented as -9999
@@ -66,8 +67,8 @@
 #'For more information see the description of the data provided by NCDC,
 #'\url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
 #'
-#' The CSV or ESRI format shapefile in the respective year-directory
-#' will contain the following fields/values:
+#' The CSV or GeoPackage in the respective year-directory will contain the
+#' following fields/values:
 #' \describe{
 #' \item{STNID}{Station number (WMO/DATSAV3 number) for the location}
 #' \item{WBAN}{Number where applicable--this is the historical "Weather Bureau
@@ -121,7 +122,7 @@
 #' -9999}
 #' \item{MAX.FLAG}{Blank indicates maximum temperature was taken from the
 #' explicit maximum temperature report and not from the 'hourly' data. " * "
-#' indicates maximum temperature was derived from the hourly data (i.e., highest
+#' indicates maximum temperature was derived from the hourly data (I_e., highest
 #' hourly or synoptic-reported temperature)}
 #' \item{MIN}{Minimum temperature reported during the day converted to Celsius
 #' to tenths--time of minimum temperature report varies by country and region,
@@ -129,11 +130,11 @@
 #' -9999}
 #' \item{MIN.FLAG}{Blank indicates minimum temperature was taken from the
 #' explicit minimum temperature report and not from the 'hourly' data. " * "
-#' indicates minimum temperature was derived from the hourly data (i.e., lowest
+#' indicates minimum temperature was derived from the hourly data (I_e., lowest
 #' hourly or synoptic-reported temperature)}
 #' \item{PRCP}{Total precipitation (rain and/or melted snow) reported during
 #' the day converted to millimetres to hundredths will usually not end with the
-#' midnight observation--i.e., may include latter part of previous day. ".00"
+#' midnight observation--I_e., may include latter part of previous day. ".00"
 #' indicates no measurable precipitation (includes a trace). Missing = -9999.
 #' \emph{Note}: Many stations do not report '0' on days with no precipitation--
 #' therefore, '-9999' will often appear on these days. For example, a
@@ -159,17 +160,17 @@
 #'    }
 #'  }
 #' \item{SNDP}{Snow depth in millimetres to tenths. Missing = -9999}
-#' \item{I.FOG}{Fog, (1 = yes, 0 = no/not reported) for the occurrence during
+#' \item{I_FOG}{Fog, (1 = yes, 0 = no/not reported) for the occurrence during
 #' the day}
-#' \item{I.RAIN_DZL}{Rain or drizzle, (1 = yes, 0 = no/not reported) for the
+#' \item{I_RN_DZL}{Rain or drizzle, (1 = yes, 0 = no/not reported) for the
 #' occurrence during the day}
-#' \item{I.SNW_ICE}{Snow or ice pellets, (1 = yes, 0 = no/not reported) for the
+#' \item{I_SNW_ICE}{Snow or ice pellets, (1 = yes, 0 = no/not reported) for the
 #' occurrence during the day}
-#' \item{I.HAIL}{Hail, (1 = yes, 0 = no/not reported) for the occurrence during
+#' \item{I_HAIL}{Hail, (1 = yes, 0 = no/not reported) for the occurrence during
 #' the day}
-#' \item{I.THUNDER}{Thunder, (1 = yes, 0 = no/not reported) for the occurrence
+#' \item{I_THUNDER}{Thunder, (1 = yes, 0 = no/not reported) for the occurrence
 #' during the #' day}
-#' \item{I.TDO_FNL}{Tornado or funnel cloud, (1 = yes, 0 = no/not reported) for
+#' \item{I_TDO_FNL}{Tornado or funnel cloud, (1 = yes, 0 = no/not reported) for
 #' the occurrence during the day}
 #'}
 #'
@@ -212,7 +213,7 @@
 #'
 #' @references {Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled
 #' SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
-#' \url{http://srtm.csi.cgiar.org}}
+#' \url{http://srtm.csI_cgiar.org}}
 #'
 #' @importFrom foreach %dopar%
 #' @importFrom foreach %do%
@@ -221,7 +222,7 @@
 #' @export
 get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
                      max_missing = 5, agroclimatology = FALSE,
-                     shapefile = FALSE, CSV = TRUE,
+                     CSV = TRUE, GPKG = FALSE,
                      merge_station_years = FALSE) {
 
   # Set up options, creating objects, check variables entered by user-----------
@@ -253,6 +254,11 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
   # Check station given by user, is it valid?
   if (!is.null(station)) {
     .validate_station(station)
+  }
+
+  # Check that at least one output file format is selected
+  if (CSV == FALSE && GPKG == FALSE) {
+    stop("\nYou must select for one file format to save the data to your local disk. The options are CSV or GPKG. Please set the desired file format(s) to TRUE.\n")
   }
 
   # Check if user set merge to TRUE,
@@ -372,13 +378,15 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
                              append = TRUE)
     }
 
-    #### shapefile--------------------------------------------------------------
-    if (shapefile == TRUE) {
+    #### GPKG--------------------------------------------------------------------
+    if (GPKG == TRUE) {
       GSOD_XY <- as.data.frame(GSOD_XY) # convert tbl.df to dataframe for sp
       sp::coordinates(GSOD_XY) <- ~LON + LAT
       sp::proj4string(GSOD_XY) <- sp::CRS("+proj=longlat +datum=WGS84")
-      rgdal::writeOGR(GSOD_XY, dsn = path.expand(dsn), layer = outfile,
-                      driver = "ESRI Shapefile", overwrite_layer = TRUE)
+      rgdal::writeOGR(GSOD_XY, dsn = outname, layer = "cities", driver = "GPKG")
+      rgdal::writeOGR(GSOD_XY, dsn = paste0(outfile, ".gpkg"),
+                                            layer = "GSOD", driver = "GPKG",
+                                            overwrite_layer = TRUE)
     }
   }
 
@@ -434,13 +442,13 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
   WDSP <- "WDSP"
 
   # add names to columns in data frame
-  data.table::setnames(tmp, c("STN", "WBAN", "YEAR", "MODA", "TEMP", "TEMP.CNT",
-                              "DEWP", "DEWP.CNT", "SLP", "SLP.CNT", "STP",
-                              "STP.CNT", "VISIB", "VISIB.CNT", "WDSP",
-                              "WDSP.CNT", "MXSPD", "GUST", "MAX", "MAX.FLAG",
-                              "MIN", "MIN.FLAG", "PRCP", "PRCP.FLAG", "SNDP",
-                              "I.FOG", "I.RAIN_DZL", "I.SNW_ICE", "I.HAIL",
-                              "I.THUNDER", "I.TDO_FNL"))
+  data.table::setnames(tmp, c("STN", "WBAN", "YEAR", "MODA", "TEMP", "TEMP_CNT",
+                              "DEWP", "DEWP_CNT", "SLP", "SLP_CNT", "STP",
+                              "STP_CNT", "VISIB", "VISIB_CNT", "WDSP",
+                              "WDSP_CNT", "MXSPD", "GUST", "MAX", "MAX_FLAG",
+                              "MIN", "MIN_FLAG", "PRCP", "PRCP_FLAG", "SNDP",
+                              "I_FOG", "I_RN_DZL", "I_SNW_ICE", "I_HAIL",
+                              "I_THUNDER", "I_TDO_FNL"))
 
   # Clean up and convert the station and weather data to metric
   tmp[, (STNID) := paste(tmp$STN, tmp$WBAN, sep = "-")]
@@ -483,20 +491,19 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
   stations <- data.table::setkey(stations, STNID)
   GSOD_df <- stations[tmp]
 
-#' @noRd
-  data.table::setcolorder(GSOD_df, c("USAF", "WBAN", "STNID", "STN.NAME",
+  data.table::setcolorder(GSOD_df, c("USAF", "WBAN", "STNID", "STN_NAME",
                                      "CTRY", "STATE", "CALL", "LAT", "LON",
-                                     "ELEV.M", "ELEV.M.SRTM.90m", "BEGIN",
+                                     "ELEV_M", "ELEV_M_SRTM_90m", "BEGIN",
                                      "END", "YEARMODA", "YEAR", "MONTH", "DAY",
-                                     "YDAY", "TEMP", "TEMP.CNT", "DEWP",
-                                     "DEWP.CNT", "SLP", "SLP.CNT", "STP",
-                                     "STP.CNT", "VISIB", "VISIB.CNT", "WDSP",
-                                     "WDSP.CNT", "MXSPD", "GUST", "MAX",
-                                     "MAX.FLAG", "MIN", "MIN.FLAG",
-                                     "PRCP", "PRCP.FLAG", "SNDP", "I.FOG",
-                                     "I.RAIN_DZL", "I.SNW_ICE", "I.HAIL",
-                                     "I.THUNDER", "I.TDO_FNL", "EA", "ES",
-                                     "RH"))
+                                     "YDAY", "TEMP", "TEMP_CNT", "DEWP",
+                                     "DEWP_CNT", "SLP", "SLP_CNT", "STP",
+                                     "STP_CNT", "VISIB", "VISIB_CNT", "WDSP",
+                                     "WDSP_CNT", "MXSPD", "GUST", "MAX",
+                                     "MAX_FLAG", "MIN", "MIN_FLAG",
+                                     "PRCP", "PRCP_FLAG", "SNDP", "I_FOG",
+                                     "I_RAIN_DZL", "I_SNOW_ICE", "I_HAIL",
+                                     "I_THUNDER", "I_TORNADO_FUNNEL", "EA",
+                                     "ES", "RH"))
   GSOD_df[is.na(GSOD_df)] <- -9999
   return(GSOD_df)
 }
@@ -516,21 +523,21 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
                                            133, 134, 135, 136, 137, 138),
                                          col_names = c("STN", "WBAN", "YEAR",
                                                        "MODA", "TEMP",
-                                                       "TEMP.CNT", "DEWP",
-                                                       "DEWP.CNT", "SLP",
-                                                       "SLP.CNT", "STP",
-                                                       "STP.CNT", "VISIB",
-                                                       "VISIB.CNT", "WDSP",
-                                                       "WDSP.CNT", "MXSPD",
+                                                       "TEMP_CNT", "DEWP",
+                                                       "DEWP_CNT", "SLP",
+                                                       "SLP_CNT", "STP",
+                                                       "STP_CNT", "VISIB",
+                                                       "VISIB_CNT", "WDSP",
+                                                       "WDSP_CNT", "MXSPD",
                                                        "GUST", "MAX",
-                                                       "MAX.FLAG", "MIN",
-                                                       "MIN.FLAG",
-                                                       "PRCP", "PRCP.FLAG",
-                                                       "SNDP", "I.FOG",
-                                                       "I.RAIN_DZL",
-                                                       "I.SNW_ICE", "I.HAIL",
-                                                       "I.THUNDER",
-                                                       "I.TDO_FNL")),
+                                                       "MAX_FLAG", "MIN",
+                                                       "MIN_FLAG",
+                                                       "PRCP", "PRCP_FLAG",
+                                                       "SNDP", "I_FOG",
+                                                       "I_RN_DZL",
+                                                       "I_SNW_ICE", "I_HAIL",
+                                                       "I_THUNDER",
+                                                       "I_TDO_FNL")),
                     col_types = c("ccccdididididididddcdcdcdiiiiii"),
                     na = c("9999.9", "999.9", "99.99")))
 }
@@ -541,7 +548,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
 .get_data_path <- function(dsn) {
   path <- trimws(dsn)
   if (dsn == "") {
-    stop("\nYou must supply a valid file path for storing the .csv file.\n")
+    stop("\nYou must supply a valid file path for storing the resulting file(s).\n")
   } else {
     if (substr(dsn, nchar(dsn) - 1, nchar(dsn)) == "//") {
       p <- substr(dsn, 1, nchar(dsn) - 2)
@@ -625,8 +632,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
   stations[, 12] <- as.character(stations[, 12])
 
   if (station %in% stations[, 12] == FALSE) {
-    stop("\nThis is not a valid station ID number, please check.\n
-         Station IDs are provided as a part of the GSODR package in the  'stations' data frame in the STNID column.\n")
+    stop("\nThis is not a valid station ID number, please check your entry.\n
+         Station IDs are provided as a part of the GSODR package in the 'stations' data frame in the STNID column.\n")
     return(0)
   }
 }
