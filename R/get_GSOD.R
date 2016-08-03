@@ -365,7 +365,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
 
     #### csv file---------------------------------------------------------------
     if (CSV == TRUE) {
-      message(noquote(paste0(paste0(names(GSOD_XY), collapse = ","), "\n")),
+      cat(noquote(paste0(paste0(names(GSOD_XY), collapse = ","), "\n")),
           file = paste0(path.expand(dsn), outfile, ".csv"))
       iotools::write.csv.raw(as.data.frame(GSOD_XY),
                              file = paste0(path.expand(dsn), outfile, ".csv"),
@@ -603,9 +603,12 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
   } else {
     for (i in years) {
       if (i <= 0) {
-        stop("\nThis is not a valid year")
+        stop("\nThis is not a valid year.\n")
         return(0)
       }
+      if (i < 1929)
+        stop("\nThe GSOD data files start at 1929, you have entered a year prior to 1929.\n")
+        return(0)
       if (i > this_year) {
         stop("\nThe year cannot be greater than current year.\n")
         return(0)
