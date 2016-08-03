@@ -20,9 +20,10 @@ are individually checked for number of missing days to assure data
 quality, stations with too many missing observations are omitted. All
 units are converted to metric, e.g., inches to millimetres and
 Fahrenheit to Celsius. Output is saved as a Comma Separated Value (CSV)
-file or a spatial file in a GeoPackage file format summarizing each year
-by station, which includes vapour pressure and relative humidity
-variables calculated from existing data in GSOD.
+file or in a spatial GeoPackage file, implemented by most major GIS
+softwares, summarizing each year y station, which includes vapour
+pressure and relative humidity variables calculated from existing data
+in GSOD.
 
 This package was largely based on Tomislav Hengl's work in "[A Practical
 Guide to Geostatistical
@@ -93,8 +94,8 @@ Output
 ======
 
 The function, `get_GSOD()` generates a Comma Separated Value (CSV) file
-or ESRI format shapefile in the respective year directory containing the
-following variables:
+or GeoPackagein the respective year directory containing the following
+variables:
 
 **STNID** - Station number (WMO/DATSAV3 number) for the location;  
 **WBAN** - number where applicable--this is the historical "Weather
