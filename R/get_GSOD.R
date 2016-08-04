@@ -122,7 +122,7 @@
 #' -9999}
 #' \item{MAX.FLAG}{Blank indicates maximum temperature was taken from the
 #' explicit maximum temperature report and not from the 'hourly' data. " * "
-#' indicates maximum temperature was derived from the hourly data (I_e., highest
+#' indicates maximum temperature was derived from the hourly data (i.e., highest
 #' hourly or synoptic-reported temperature)}
 #' \item{MIN}{Minimum temperature reported during the day converted to Celsius
 #' to tenths--time of minimum temperature report varies by country and region,
@@ -130,11 +130,11 @@
 #' -9999}
 #' \item{MIN.FLAG}{Blank indicates minimum temperature was taken from the
 #' explicit minimum temperature report and not from the 'hourly' data. " * "
-#' indicates minimum temperature was derived from the hourly data (I_e., lowest
+#' indicates minimum temperature was derived from the hourly data (i.e., lowest
 #' hourly or synoptic-reported temperature)}
 #' \item{PRCP}{Total precipitation (rain and/or melted snow) reported during
 #' the day converted to millimetres to hundredths will usually not end with the
-#' midnight observation--I_e., may include latter part of previous day. ".00"
+#' midnight observation--i.e., may include latter part of previous day. ".00"
 #' indicates no measurable precipitation (includes a trace). Missing = -9999.
 #' \emph{Note}: Many stations do not report '0' on days with no precipitation--
 #' therefore, '-9999' will often appear on these days. For example, a
@@ -213,7 +213,7 @@
 #'
 #' @references {Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled
 #' SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
-#' \url{http://srtm.csI_cgiar.org}}
+#' \url{http://srtm.csi.cgiar.org}}
 #'
 #' @importFrom foreach %dopar%
 #' @importFrom foreach %do%

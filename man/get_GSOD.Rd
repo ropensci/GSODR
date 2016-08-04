@@ -176,17 +176,17 @@ fell. See PRCP.FLAG column for source of data}
    }
  }
 \item{SNDP}{Snow depth in millimetres to tenths. Missing = -9999}
-\item{I.FOG}{Fog, (1 = yes, 0 = no/not reported) for the occurrence during
+\item{I_FOG}{Fog, (1 = yes, 0 = no/not reported) for the occurrence during
 the day}
-\item{I.RN_DZL}{Rain or drizzle, (1 = yes, 0 = no/not reported) for the
+\item{I_RN_DZL}{Rain or drizzle, (1 = yes, 0 = no/not reported) for the
 occurrence during the day}
-\item{I.SNW_ICE}{Snow or ice pellets, (1 = yes, 0 = no/not reported) for the
+\item{I_SNW_ICE}{Snow or ice pellets, (1 = yes, 0 = no/not reported) for the
 occurrence during the day}
-\item{I.HAIL}{Hail, (1 = yes, 0 = no/not reported) for the occurrence during
+\item{I_HAIL}{Hail, (1 = yes, 0 = no/not reported) for the occurrence during
 the day}
-\item{I.THUNDER}{Thunder, (1 = yes, 0 = no/not reported) for the occurrence
+\item{I_THUNDER}{Thunder, (1 = yes, 0 = no/not reported) for the occurrence
 during the #' day}
-\item{I.TDO_FNL}{Tornado or funnel cloud, (1 = yes, 0 = no/not reported) for
+\item{I_TDO_FNL}{Tornado or funnel cloud, (1 = yes, 0 = no/not reported) for
 the occurrence during the day}
 }
 
