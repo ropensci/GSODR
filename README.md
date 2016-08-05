@@ -20,10 +20,10 @@ are individually checked for number of missing days to assure data
 quality, stations with too many missing observations are omitted. All
 units are converted to metric, e.g., inches to millimetres and
 Fahrenheit to Celsius. Output is saved as a Comma Separated Value (CSV)
-file or in a spatial GeoPackage file, implemented by most major GIS
-softwares, summarizing each year y station, which includes vapour
-pressure and relative humidity variables calculated from existing data
-in GSOD.
+file or in a spatial GeoPackage (GPKG) file, implemented by most major
+GIS softwares, summarising each year by station, which also includes
+vapour pressure and relative humidity variables calculated from existing
+data in GSOD.
 
 This package was largely based on Tomislav Hengl's work in "[A Practical
 Guide to Geostatistical
@@ -51,11 +51,12 @@ A stable version of GSODR is available from CRAN.
 install.packages("GSODR", dependencies = TRUE)
 ```
 
-A Development version is available from from GitHub. If you wish to
+A development version is available from from GitHub. If you wish to
 install the development version that may have new features (but also may
 not work properly), install the devtools package, available from CRAN. I
 strive to keep the master branch on GitHub functional and working
-properly, you have been warned.
+properly this may not always happen. If you find bugs, please file a
+report as an issue.
 
 ``` r
 install.packages("devtools", dependencies = TRUE)
@@ -75,40 +76,40 @@ library(GSODR)
 get_GSOD(years = 2010, station = "955510-99999", path = "~/")
 
 
-# Download global GSOD data for agroclimatology work for years 2009 and 2010
-# and generate yearly summary files, GSOD-agroclimatology-2010.csv and
-# GSOD-agroclimatology-2011.csv, in the user's home directory with a maximum
-# of five missing days per weather station allowed.
+# Download GSOD data and generate agroclimatology files for years 2010 and 2011,
+# GSOD-agroclimatology-2010.csv and GSOD-agroclimatology-2011.csv, in the user's
+# home directory with a maximum of five missing days per weather station allowed.
 
-get_GSOD(years = 2010:2011, path = "~/", agroclimatology = TRUE)
+get_GSOD(years = 2010:2011, path = "~/", agroclimatology = TRUE, max_missing = 5)
 
 
-# Download data for Philippines for year 2010 and generate a yearly
-# summary file, GSOD-PHL-2010.csv, file in the user's home directory with a
-# maximum of five missing days per station allowed.
+# Download data for Philippines for year 2010 and generate a spatial, year
+# summary file, GSOD-RP-2010.gpkg, in the user's home directory with a
+# maximum of five missing days per station allowed and no CSV file creation.
 
-get_GSOD(years = 2010, country = "Philippines", path = "~/")
+get_GSOD(years = 2010, country = "Philippines", dsn = "~/", GPKG = TRUE,
+         CSV = FALSE)
 ```
 
 Output
 ======
 
 The function, `get_GSOD()`, generates a Comma Separated Value (CSV) file
-or GeoPackage in the respective year directory containing the following
-variables:
+or GeoPackage (GPKG) file in the respective year directory containing
+the following fields/values:
 
 **STNID** - Station number (WMO/DATSAV3 number) for the location;  
 **WBAN** - number where applicable--this is the historical "Weather
 Bureau Air Force Navy" number - with WBAN being the acronym;  
-**STN.NAME** - Unique text identifier;  
+**STN\_NAME** - Unique text identifier;  
 **CTRY** - Country;  
 **LAT** - Latitude. *Station dropped in cases where values are &lt;-90
 or &gt;90 degrees or Lat = 0 and Lon = 0*;  
 **LON** - Longitude. *Station dropped in cases where values are &lt;-180
 or &gt;180 degrees or Lat = 0 and Lon = 0*;  
-**ELEV.M** - Elevation converted to metres.  
-**ELEV.M.SRTM.90m** - Elevation in metres corrected for possible errors,
-see Notes for more;  
+**ELEV\_M** - Elevation converted to metres.  
+**ELEV\_M\_SRTM\_90m** - Elevation in metres corrected for possible
+errors, see Notes for more;  
 **YEARMODA** - Date in YYYY-MM-DD format;  
 **YEAR** - The year (YYYY);  
 **MONTH** - The month (mm);  
@@ -116,27 +117,27 @@ see Notes for more;
 **YDAY** - Sequential day of year (not in original GSOD);  
 **TEMP** - Mean daily temperature converted to degrees C to tenths.
 Missing = -9999;  
-**TEMP.CNT** - Number of observations used in calculating mean daily
+**TEMP\_CNT** - Number of observations used in calculating mean daily
 temperature;  
 **DEWP**- Mean daily dewpoint converted to degrees C to tenths. Missing
 = -9999;  
-**DEWP.CNT** - Number of observations used in calculating mean daily dew
-point;  
+**DEWP\_CNT** - Number of observations used in calculating mean daily
+dew point;  
 **SLP** - Mean sea level pressure in millibars to tenths. Missing =
 -9999;  
-**SLP.CNT** - Number of observations used in calculating mean sea level
+**SLP\_CNT** - Number of observations used in calculating mean sea level
 pressure;  
 **STP** - Mean station pressure for the day in millibars to tenths.
 Missing = -9999;  
-**STP.CNT** - Number of observations used in calculating mean station
+**STP\_CNT** - Number of observations used in calculating mean station
 pressure;  
 **VISIB** - Mean visibility for the day converted to kilometers to
 tenths Missing = -9999;  
-**VISIB.CNT** - Number of observations used in calculating mean daily
+**VISIB\_CNT** - Number of observations used in calculating mean daily
 visibility;  
 **WDSP** - Mean daily wind speed value converted to metres/second to
 tenths Missing = -9999;  
-**WDSP.CNT** - Number of observations used in calculating mean daily
+**WDSP\_CNT** - Number of observations used in calculating mean daily
 windspeed;  
 **MXSPD** - Maximum sustained wind speed reported for the day converted
 to metres/second to tenths. Missing = -9999;  
@@ -146,28 +147,27 @@ metres/second to tenths. Missing = -9999;
 Celsius to tenths--time of max temp report varies by country and region,
 so this will sometimes not be the max for the calendar day. Missing =
 -9999;  
-**MAX.FLAG** - Blank indicates max temp was taken from the explicit max
+**MAX\_FLAG** - Blank indicates max temp was taken from the explicit max
 temp report and not from the 'hourly' data. \* indicates max temp was
 derived from the hourly data (I\_e., highest hourly or synoptic-reported
 temperature);  
 **MIN**- Minimum temperature reported during the day converted to
 Celsius to tenths--time of min temp report varies by country and region,
 so this will sometimes not be the max for the calendar day. Missing =
--9999; ;  
-**MIN.FLAG** - Blank indicates max temp was taken from the explicit max
+-9999;  
+**MIN\_FLAG** - Blank indicates max temp was taken from the explicit max
 temp report and not from the 'hourly' data. \* indicates max temp was
 derived from the hourly data (I\_e., highest hourly or synoptic-reported
 temperature);  
 **PRCP** - Total precipitation (rain and/or melted snow) reported during
 the day converted to millimetres to hundredths; will usually not end
-with the midnight observation--I\_e., may include latter part of
-previous day. .00 indicates no measurable precipitation (includes a
-trace). Missing = -9999; *Note: Many stations do not report '0' on days
-with no precipitation-- therefore, '-9999' will often appear on these
-days. For example, a station may only report a 6-hour amount for the
-period during which rain fell.* See FLAGS.PRCP column for source of
-data;  
-**PRCP.FLAG** -  
+with the midnight observation, i.e., may include latter part of previous
+day. .00 indicates no measurable precipitation (includes a trace).
+Missing = -9999; *Note: Many stations do not report '0' on days with no
+precipitation-- therefore, '-9999' will often appear on these days. For
+example, a station may only report a 6-hour amount for the period during
+which rain fell.* See FLAGS\_PRCP column for source of data;  
+**PRCP\_FLAG** -  
 A = 1 report of 6-hour precipitation amount;  
 B = Summation of 2 reports of 6-hour precipitation amount;  
 C = Summation of 3 reports of 6-hour precipitation amount;  
@@ -175,7 +175,7 @@ D = Summation of 4 reports of 6-hour precipitation amount;
 E = 1 report of 12-hour precipitation amount;  
 F = Summation of 2 reports of 12-hour precipitation amount;  
 G = 1 report of 24-hour precipitation amount;  
-H = Station reported '0' as the amount for the day (eg., from 6-hour
+H = Station reported '0' as the amount for the day (e.g., from 6-hour
 reports), but also reported at least one occurrence of precipitation in
 hourly observations--this could indicate a trace occurred, but should be
 considered as incomplete data for the day;  
@@ -185,16 +185,16 @@ still possible that precip occurred but was not reported;
 **SNDP** - Snow depth in millimetres to tenths. Missing = -9999;  
 **I\_FOG** - Indicator for fog, (1 = yes, 0 = no/not reported) for the
 occurrence during the day;  
-**I\_RN\_DZL** - Indicator for rain or drizzle, (1 = yes, 0 = no/not
-reported) for the occurrence during the day;  
-**I\_SNW\_ICE** - Indicator for snow or ice pellets, (1 = yes, 0 =
+**I\_RAIN\_DRIZZLE** - Indicator for rain or drizzle, (1 = yes, 0 =
+no/not reported) for the occurrence during the day;  
+**I\_SNOW\_ICE** - Indicator for snow or ice pellets, (1 = yes, 0 =
 no/not reported) for the occurrence during the day;  
 **I\_HAIL** - Indicator for hail, (1 = yes, 0 = no/not reported) for the
 occurrence during the day;  
 **I\_THUNDER** - Indicator for thunder, (1 = yes, 0 = no/not reported)
 for the occurrence during the day;  
-**I\_TDO\_FNL** - Indicator for tornado or funnel cloud, (1 = yes, 0 =
-no/not reported) for the occurrence during the day;
+**I\_TORNADO\_FUNNEL** - Indicator for tornado or funnel cloud, (1 =
+yes, 0 = no/not reported) for the occurrence during the day;
 
 Values calculated by this package and included in final output:
 ---------------------------------------------------------------
