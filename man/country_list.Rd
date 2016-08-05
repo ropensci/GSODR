@@ -7,7 +7,7 @@
 \format{A data frame with 293 observations of 4 variables:
 \describe{
 \item{FIPS}{Federal Information Processing Standards (FIPS) code}
-\item{COUNTRY NAME}{English language name}
+\item{COUNTRY_NAME}{English language name}
 \item{iso2c}{ISO 3166-1 alpha-2 – two-letter country codes}
 \item{iso3c}{ISO 3166-1 alpha-3 – three-letter country codes}
 }}

@@ -8,7 +8,7 @@
 \describe{
   \item{USAF}{Air Force Datsav3 station number}
   \item{WBAN}{Weather Bureau Army Navy (5 digit identifier)}
-  \item{STN.NAME}{Unique station name}
+  \item{STN_NAME}{Unique station name}
   \item{CTRY}{FIPS country ID}
   \item{STATE}{If applicable, US states only (2 letter code)}
   \item{CALL}{ICAO Identifier, identifiers approved for use under the
@@ -16,12 +16,12 @@
   (4 letter identifier)}
   \item{LAT}{Latitude in thousandths of decimal degrees}
   \item{LON}{Longitude in thousandths of decimal degrees}
-  \item{ELEV.M}{Elevation to tenths in metres}
+  \item{ELEV_M}{Elevation to tenths in metres}
   \item{BEGIN}{First available date of data for station, YYYYMMDD format}
   \item{END}{Last available date of data for station, YYYYMMDD format}
   \item{STNID}{Unique station ID, a concatenation of USAF and WBAN number,
   used for merging with station data weather files}
-  \item{ELEV.M.SRTM.90m}{Elevation in metres extracted from SRTM data (Jarvis
+  \item{ELEV_M_SRTM_90m}{Elevation in metres extracted from SRTM data (Jarvis
   \emph{et al.} 2008)}
 }
 

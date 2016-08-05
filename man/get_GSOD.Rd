@@ -31,8 +31,9 @@ available, even an empty file, from NCDC will be returned.}
 \item{agroclimatology}{Logical. Only clean data for stations between
 latitudes 60 and -60 for agroclimatology work, defaults to FALSE. Set to
 TRUE to include only stations within the confines of these
-latitudes.
-#' @param CSV Logical. If set to TRUE, create a comma separated value (CSV)
+latitudes.}
+
+\item{CSV}{Logical. If set to TRUE, create a comma separated value (CSV)
 file of data, defaults to TRUE, a CSV file is created.}
 
 \item{GPKG}{Logical. If set to TRUE, create a GeoPackage file, if

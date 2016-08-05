@@ -6,22 +6,29 @@
   * Country is specified using FIPS codes in filename and output file contents
   due to stations occurring in some locales that lack ISO 3166 3 letter country
   codes
-  * R >= 3.2.0 now required    * Use FIPS codes in place of ISO3c for filename
-  and in output files because some stations do not have an ISO country code  
+  * R >= 3.2.0 now required   
+  * Use FIPS codes in place of ISO3c for filename and in output files because
+  some stations do not have an ISO country code  
+  * Spatial file output is now in GeoPackage format (GPKG). This results in a single
+  file and allows for long field names  
+  * Long field names now used in file outputs  
+  * Field names in output files use "\_" in place of "."  
   
 ## MINOR IMPROVEMENTS
 
-  * `get_GSOD` function optimised for speed as best possible after ftping files
+  * `get_GSOD` function optimised for speed as best possible after FTPing files
   from NCDC server  
   * Updated `stations` list with latest version from NCDC published 28-07-2016  
-  * Reduce package dependencies, remove `dplyr`,`raster` and `stringr`  
+  * Reduce package dependencies, remove `dplyr`, `iotools`, `raster`,
+  `settings`, and `stringr`  
 
 ## BUG FIXES
 
 ## DEPRECATED AND DEFUNCT
   * The `path` parameter is now instead called `dsn` to be more inline with
   other tools like `readOGR()` and the possibility of writing directly to a
-  database from `get_GSOD()`
+  database from `get_GSOD()`  
+  * Shapefile file out is no longer supported. Use GeoPackage (GPKG)  instead  
 
 ******
 

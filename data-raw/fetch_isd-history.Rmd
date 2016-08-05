@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 # Introduction
 
 This script will fetch station data from the ftp server and clean up for
-inclusion in package in /data/stations.rda` for the GSODR package.
+inclusion in package in /data/stations.rda for the GSODR package.
 
 The following changes are made:
 
@@ -35,7 +35,7 @@ elevation and the DEM does not, the station reported value is taken. For
 stations beyond -60˚ and 60˚ latitude, the values are station reported values in
 every instance for the 90m column.
 
-# R Data Processing
+# Data Processing
 
 ## Set up workspace
 
@@ -50,7 +50,7 @@ tf <- tempfile()
 ## Download from Natural Earth and NCDC
 
 ```{r download NE data, echo=TRUE}
-# import Natural Earth cultural 1:10m data (last download 31/05/2016)
+# import Natural Earth cultural 1:10m data
 curl::curl_download("http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_0_countries.zip",
                     destfile = tf)
 NE <- unzip(tf)
@@ -164,7 +164,7 @@ stations <- as.data.frame(data.table::rbindlist(foreach(i = dem_tiles) %dopar% {
 
     # convert spatial object back to normal data frame and add new fields
     sub_stations <- as.data.frame(sub_stations)
-    sub_stations$ELEV.M.SRTM.90m.BUFFER <- SRTM_buffered
+    sub_stations$ELEV_M_SRTM_90m_BUFFER <- SRTM_buffered
     return(sub_stations)
   }
 }
@@ -189,7 +189,7 @@ library(ggalt)
 ```
 
 ```{r Buffered SRTM 90m vs Reported Elevation, echo=TRUE, fig.cap="GSOD Reported Elevation versus CGIAR-CSI SRTM Buffered Elevation", warning=FALSE}
-ggplot(data = stations, aes(x = ELEV.M, y = ELEV.M.SRTM.90m.BUFFER)) +
+ggplot(data = stations, aes(x = ELEV_M, y = ELEV_M_SRTM_90m_BUFFER)) +
   geom_point(alpha = 0.4, size = 0.5)
 ```
 
@@ -202,13 +202,16 @@ package following the approach of Hijmans *et al.* (2005).
 
 ```{r cleanup and .rda file creation, message=FALSE, echo=TRUE, warning=FALSE, error=FALSE}
 
-# round SRTM.90m.Buffer field to whole number in cases where station reported
-# data was used
+# round SRTM_90m_Buffer field to whole number in cases where station reported
+# data was used and rename column
 stations[, 13] <- round(stations[, 13], 0)
-
 names(stations)[13] <- "ELEV_M_SRTM_90m"
 
-# write rda file to disk
+# Set STNID column to character
+stations[, 12] <- as.character(stations[, 12])
+
+# convert to regular data.frame object and write rda file to disk
+stations <- data.frame(stations)
 devtools::use_data(stations, overwrite = TRUE, compress = "bzip2")
 
 # clean up Natural Earth data files before we leave
@@ -217,7 +220,7 @@ file.remove(list.files(pattern = glob2rx("ne_10m_admin_0_countries*")))
 ```
 
 The stations.rda file included in the GSODR package includes
-the new elevation data as the field; ELEV.M.SRTM.90m.
+the new elevation data as the field; ELEV\_M\_SRTM\_90m.
 
 # Notes
 
