@@ -5,11 +5,11 @@ Version: 0.2
 Date: 2016-07-19
 Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     email = "adamhsparks@gmail.com"),
-    person("Tomislav", "Hengl", role = "ctb",
+    person("Tomislav", "Hengl", role = "aut",
     email = "tom.hengl@wur.nl"),
-    person("Andy", "Nelson", role = "ctb",
+    person("Andy", "Nelson", role = "aut",
     email = "dr.andy.nelson@gmail.com"),
-    person("Kay", "Sumfleth", role = "ctb",
+    person("Kay", "Sumfleth", role = "aut",
     email = "kay@sumfleth.de"))
 Maintainer: Adam Sparks <adamhsparks@gmail.com>
 URL: https://github.com/adamhsparks/GSODR
@@ -53,15 +53,15 @@ Imports:
     doParallel,
     foreach,
     lubridate,
-    iotools,
     iterators,
     parallel,
     readr,
     rgdal,
-    settings,
     sp,
     stats,
     utils
+Suggests:
+    testthat
 RoxygenNote: 5.0.1
 Encoding: UTF-8
 NeedsCompilation: no

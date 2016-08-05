@@ -1,12 +1,12 @@
 Fetch, clean and correct altitude in GSOD isd\_history.csv Data
 ================
 Adam H. Sparks - Center for Crop Health, University of Southern Queensland
-2016-08-01
+2016-08-05
 
 Introduction
 ============
 
-This script will fetch station data from the ftp server and clean up for inclusion in package in /data/stations.rda\` for the GSODR package.
+This script will fetch station data from the ftp server and clean up for inclusion in package in /data/stations.rda for the GSODR package.
 
 The following changes are made:
 
@@ -22,8 +22,8 @@ The following changes are made:
 
 -   90m hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was used to identify and correct/remove elevation errors in data for station locations between -60˚ and 60˚ latitude. This applies to cases here where elevation was missing in the reported values as well. In case the station reported an elevation and the DEM does not, the station reported value is taken. For stations beyond -60˚ and 60˚ latitude, the values are station reported values in every instance for the 90m column.
 
-R Data Processing
-=================
+Data Processing
+===============
 
 Set up workspace
 ----------------
@@ -40,7 +40,7 @@ Download from Natural Earth and NCDC
 ------------------------------------
 
 ``` r
-# import Natural Earth cultural 1:10m data (last download 31/05/2016)
+# import Natural Earth cultural 1:10m data
 curl::curl_download("http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_0_countries.zip",
                     destfile = tf)
 NE <- unzip(tf)
@@ -51,8 +51,8 @@ unlink(tf)
 stations <- readr::read_csv(
   "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
   col_types = "ccccccddddd",
-  col_names = c("USAF", "WBAN", "STN.NAME", "CTRY", "STATE", "CALL",
-                "LAT", "LON", "ELEV.M", "BEGIN", "END"), skip = 1)
+  col_names = c("USAF", "WBAN", "STN_NAME", "CTRY", "STATE", "CALL",
+                "LAT", "LON", "ELEV_M", "BEGIN", "END"), skip = 1)
 
 stations[stations == -999.9] <- NA
 stations[stations == -999] <- NA
@@ -136,7 +136,7 @@ stations <- as.data.frame(data.table::rbindlist(foreach(i = dem_tiles) %dopar% {
 
     # convert spatial object back to normal data frame and add new fields
     sub_stations <- as.data.frame(sub_stations)
-    sub_stations$ELEV.M.SRTM.90m.BUFFER <- SRTM_buffered
+    sub_stations$ELEV_M_SRTM_90m_BUFFER <- SRTM_buffered
     return(sub_stations)
   }
 }
@@ -153,44 +153,44 @@ stations[, 13] <- ifelse(is.na(stations[, 13]), stations[, 9], stations[, 13])
 summary(stations)
 ```
 
-    ##       USAF            WBAN                     STN.NAME    
-    ##  999999 : 1227   99999  :20982   APPROXIMATE LOCALE:   36  
+    ##       USAF            WBAN                     STN_NAME    
+    ##  999999 : 1227   99999  :20983   APPROXIMATE LOCALE:   36  
     ##  949999 :  373   23176  :    5   MOORED BUOY       :   20  
     ##  722250 :    4   03849  :    5   ...               :   15  
     ##  746929 :    4   24255  :    4   BOGUS CHINESE     :   13  
     ##  992390 :    4   24135  :    4   PACIFIC BUOY      :    8  
-    ##  997225 :    4   24027  :    4   DEASE LAKE        :    7  
-    ##  (Other):23265   (Other): 3877   (Other)           :24782  
+    ##  997225 :    4   24027  :    4   (Other)           :24790  
+    ##  (Other):23267   (Other): 3878   NA's              :    1  
     ##       CTRY           STATE            CALL            LAT        
-    ##  US     : 6743          :18583          :14951   Min.   :-56.50  
-    ##  CA     : 1609   CA     :  505   KMLF   :    6   1st Qu.: 21.82  
-    ##  RS     : 1471   TX     :  488   KLSF   :    6   Median : 37.73  
-    ##  AS     : 1411   FL     :  320   PAMD   :    5   Mean   : 29.35  
-    ##  CH     : 1042   MI     :  231   KONT   :    5   3rd Qu.: 47.17  
-    ##  UK     :  675   NC     :  212   KLRD   :    5   Max.   : 60.00  
-    ##  (Other):11930   (Other): 4542   (Other): 9903                   
-    ##       LON               ELEV.M           BEGIN               END          
-    ##  Min.   :-179.983   Min.   :-350.0   Min.   :19010101   Min.   :19301231  
-    ##  1st Qu.: -83.743   1st Qu.:  25.0   1st Qu.:19570601   1st Qu.:20020209  
-    ##  Median :   7.267   Median : 152.0   Median :19750618   Median :20150628  
-    ##  Mean   :  -1.663   Mean   : 376.1   Mean   :19774325   Mean   :20040362  
-    ##  3rd Qu.:  69.200   3rd Qu.: 454.0   3rd Qu.:20010817   3rd Qu.:20160723  
-    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20160720   Max.   :20160725  
-    ##                     NA's   :194                                           
-    ##           STNID       ELEV.M.SRTM.90m.BUFFER
+    ##  US     : 6744   CA     :  505   KMLF   :    6   Min.   :-56.50  
+    ##  CA     : 1609   TX     :  488   KLSF   :    6   1st Qu.: 21.80  
+    ##  RS     : 1471   FL     :  320   PAMD   :    5   Median : 37.73  
+    ##  AS     : 1411   MI     :  231   KONT   :    5   Mean   : 29.35  
+    ##  CH     : 1042   NC     :  212   KLRD   :    5   3rd Qu.: 47.17  
+    ##  (Other):12495   (Other): 4543   (Other): 9906   Max.   : 60.00  
+    ##  NA's   :  111   NA's   :18584   NA's   :14950                   
+    ##       LON               ELEV_M         BEGIN               END          
+    ##  Min.   :-179.983   Min.   :-350   Min.   :19010101   Min.   :19301231  
+    ##  1st Qu.: -83.743   1st Qu.:  25   1st Qu.:19570601   1st Qu.:20020210  
+    ##  Median :   7.267   Median : 152   Median :19750618   Median :20150630  
+    ##  Mean   :  -1.669   Mean   : 376   Mean   :19774356   Mean   :20040421  
+    ##  3rd Qu.:  69.195   3rd Qu.: 454   3rd Qu.:20010818   3rd Qu.:20160801  
+    ##  Max.   : 179.750   Max.   :5304   Max.   :20160728   Max.   :20160803  
+    ##                     NA's   :194                                         
+    ##           STNID       ELEV_M_SRTM_90m_BUFFER
     ##  992390-99999:    4   Min.   :-360.9        
     ##  997225-99999:    4   1st Qu.:  24.5        
-    ##  992570-99999:    2   Median : 153.2        
-    ##  997242-99999:    2   Mean   : 379.3        
-    ##  919450-99999:    2   3rd Qu.: 456.0        
+    ##  992570-99999:    2   Median : 153.1        
+    ##  997242-99999:    2   Mean   : 379.2        
+    ##  919450-99999:    2   3rd Qu.: 455.9        
     ##  719584-99999:    2   Max.   :5273.4        
-    ##  (Other)     :24865   NA's   :52
+    ##  (Other)     :24867   NA's   :52
 
 Figures
 =======
 
 ``` r
-ggplot(data = stations, aes(x = ELEV.M, y = ELEV.M.SRTM.90m.BUFFER)) +
+ggplot(data = stations, aes(x = ELEV_M, y = ELEV_M_SRTM_90m_BUFFER)) +
   geom_point(alpha = 0.4, size = 0.5)
 ```
 
@@ -199,13 +199,16 @@ ggplot(data = stations, aes(x = ELEV.M, y = ELEV.M.SRTM.90m.BUFFER)) +
 Buffered versus unbuffered elevation values were previously checked and found not to be different while also not showing any discernable geographic patterns. However, The buffered elevation data are higher than the unbuffered data. To help avoid within cell and between cell variation the buffered values are the values that are included in the final data for distribution with the GSODR package following the approach of Hijmans *et al.* (2005).
 
 ``` r
-# round SRTM.90m.Buffer field to whole number in cases where station reported
-# data was used
+# round SRTM_90m_Buffer field to whole number in cases where station reported
+# data was used and rename column
 stations[, 13] <- round(stations[, 13], 0)
+names(stations)[13] <- "ELEV_M_SRTM_90m"
 
-names(stations)[13] <- "ELEV.M.SRTM.90m"
+# Set STNID column to character
+stations[, 12] <- as.character(stations[, 12])
 
-# write rda file to disk
+# convert to regular data.frame object and write rda file to disk
+stations <- data.frame(stations)
 devtools::use_data(stations, overwrite = TRUE, compress = "bzip2")
 
 # clean up Natural Earth data files before we leave
@@ -214,7 +217,7 @@ file.remove(list.files(pattern = glob2rx("ne_10m_admin_0_countries*")))
 
     ## [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE
 
-The stations.rda file included in the GSODR package includes the new elevation data as the field; ELEV.M.SRTM.90m.
+The stations.rda file included in the GSODR package includes the new elevation data as the field; ELEV\_M\_SRTM\_90m.
 
 Notes
 =====
@@ -245,7 +248,7 @@ R System Information
     ## loaded via a namespace (and not attached):
     ##  [1] Rcpp_0.12.6        RColorBrewer_1.1-2 compiler_3.3.1    
     ##  [4] formatR_1.4        plyr_1.8.4         iterators_1.0.8   
-    ##  [7] tools_3.3.1        digest_0.6.9       memoise_1.0.0     
+    ##  [7] tools_3.3.1        digest_0.6.10      memoise_1.0.0     
     ## [10] evaluate_0.9       tibble_1.1         gtable_0.2.0      
     ## [13] lattice_0.20-33    DBI_0.4-1          curl_1.1          
     ## [16] yaml_2.1.13        rgdal_1.1-10       parallel_3.3.1    
@@ -253,7 +256,7 @@ R System Information
     ## [22] raster_2.5-8       knitr_1.13         devtools_1.12.0   
     ## [25] maps_3.1.1         grid_3.3.1         data.table_1.9.6  
     ## [28] R6_2.1.2           rmarkdown_1.0      sp_1.2-3          
-    ## [31] readr_0.2.2        magrittr_1.5       MASS_7.3-45       
+    ## [31] readr_1.0.0        magrittr_1.5       MASS_7.3-45       
     ## [34] scales_0.4.0       codetools_0.2-14   htmltools_0.3.5   
     ## [37] proj4_1.0-8        assertthat_0.1     countrycode_0.18  
     ## [40] colorspace_1.2-6   labeling_0.3       ash_1.0-15        

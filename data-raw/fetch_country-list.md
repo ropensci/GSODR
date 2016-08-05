@@ -1,7 +1,7 @@
 Fetch GSOD Country List and Merge with ISO Country Codes
 ================
 Adam H. Sparks - Center for Crop Health, University of Southern Queensland
-2016-08-01
+2016-08-05
 
 Introduction
 ============
@@ -18,6 +18,7 @@ Read "country-list.txt" file from NCDC FTP server and merge with `countrycode` d
 ``` r
 countries <- readr::read_table(
   "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/country-list.txt")[-1, c(1, 3)]
+names(countries)[2] <- "COUNTRY_NAME"
 
 country_list <- dplyr::left_join(countries, countrycode::countrycode_data,
                               by = c(FIPS = "fips104"))
@@ -26,7 +27,7 @@ print(country_list)
 ```
 
     ## # A tibble: 293 x 16
-    ##     FIPS        COUNTRY NAME        country.name  cowc  cown   fao   imf
+    ##     FIPS        COUNTRY_NAME        country.name  cowc  cown   fao   imf
     ##    <chr>               <chr>               <chr> <chr> <int> <int> <int>
     ## 1     AA               ARUBA               Aruba  <NA>    NA    NA   314
     ## 2     AC ANTIGUA AND BARBUDA Antigua and Barbuda   AAB    58     8   311
@@ -51,7 +52,7 @@ print(country_list)
 ```
 
     ## # A tibble: 293 x 4
-    ##     FIPS        COUNTRY NAME iso2c iso3c
+    ##     FIPS        COUNTRY_NAME iso2c iso3c
     ##    <chr>               <chr> <chr> <chr>
     ## 1     AA               ARUBA    AW   ABW
     ## 2     AC ANTIGUA AND BARBUDA    AG   ATG
@@ -65,9 +66,10 @@ print(country_list)
     ## 10    AO              ANGOLA    AO   AGO
     ## # ... with 283 more rows
 
-Write .rda file to disk for inclusion in `GSODR` package.
+Convert to regular `data.frame` object and write .rda file to disk.
 
 ``` r
+country_list <- data.frame(country_list)
 devtools::use_data(country_list, overwrite = TRUE, compress = "bzip2")
 ```
 
@@ -97,9 +99,9 @@ R System Information
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] Rcpp_0.12.6      countrycode_0.18 withr_1.0.2      digest_0.6.9    
+    ##  [1] Rcpp_0.12.6      countrycode_0.18 withr_1.0.2      digest_0.6.10   
     ##  [5] dplyr_0.5.0      assertthat_0.1   R6_2.1.2         DBI_0.4-1       
     ##  [9] formatR_1.4      magrittr_1.5     evaluate_0.9     stringi_1.1.1   
     ## [13] curl_1.1         rmarkdown_1.0    devtools_1.12.0  tools_3.3.1     
-    ## [17] stringr_1.0.0    readr_0.2.2      yaml_2.1.13      memoise_1.0.0   
+    ## [17] stringr_1.0.0    readr_1.0.0      yaml_2.1.13      memoise_1.0.0   
     ## [21] htmltools_0.3.5  knitr_1.13       tibble_1.1

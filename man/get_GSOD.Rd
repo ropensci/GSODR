@@ -5,8 +5,8 @@
 \title{Download, Clean, Reformat and Generate New Variables From GSOD Weather Data}
 \usage{
 get_GSOD(years = NULL, station = NULL, country = NULL, dsn = "",
-  max_missing = 5, agroclimatology = FALSE, shapefile = FALSE,
-  CSV = TRUE, merge_station_years = FALSE)
+  max_missing = 5, agroclimatology = FALSE, CSV = TRUE, GPKG = FALSE,
+  merge_station_years = FALSE)
 }
 \arguments{
 \item{years}{Year(s) of weather data to download.}
@@ -33,15 +33,16 @@ latitudes 60 and -60 for agroclimatology work, defaults to FALSE. Set to
 TRUE to include only stations within the confines of these
 latitudes.}
 
-\item{shapefile}{Logical. If set to TRUE, create an ESRI shapefile of vector type
-points, of the data for use in a GIS. Defaults to FALSE, no shapefile
-created.}
+\item{CSV}{Logical. If set to TRUE, create a comma separated value (CSV)
+file of data, defaults to TRUE, a CSV file is created.}
 
-\item{CSV}{Logical. If set to TRUE, create a comma separated value (CSV) file of data,
-defaults to TRUE, a CSV file is created.}
+\item{GPKG}{Logical. If set to TRUE, create a GeoPackage file, if
+set to FALSE, no GPKG file is created. Defaults to FALSE, no GPKG file is
+created}
 
-\item{merge_station_years}{Logical. If set to TRUE, merge output files into one output
-file for all years when selecting a single station, defaults to FALSE.}
+\item{merge_station_years}{Logical. If set to TRUE, merge output files into
+one output file for all years when selecting a single station, defaults to
+FALSE.}
 }
 \description{
 This function automates downloading, cleaning, reformatting of data from
@@ -64,12 +65,12 @@ repository here: \url{https://github.com/adamhsparks/GSODR/blob/master/data-raw/
 }
 \details{
 Due to the size of the resulting data, output is saved as a comma-separated,
-csv, file (default) or ESRI shapefile in a directory specified by the user or
+csv, file (default) or GeoPackage in a directory specified by the user or
 defaults to the current working directory. The files summarize each year by
 station, which includes vapour pressure and relative humidity variables
 calculated from existing data in GSOD. Optionally, because the file sizes are
 much smaller, when selecting a single station, all years queried may be
-merged into one final ouptut file (CSV or shapefile) using the \code{
+merged into one final ouptut file (CSV or GeoPackage) using the \code{
 merge_station_years} option.
 
 All missing values in resulting files are represented as -9999
@@ -83,8 +84,8 @@ enhancements to be cross-platform, faster and more flexible.
 For more information see the description of the data provided by NCDC,
 \url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
 
-The CSV or ESRI format shapefile in the respective year-directory
-will contain the following fields/values:
+The CSV or GeoPackage in the respective year-directory will contain the
+following fields/values:
 \describe{
 \item{STNID}{Station number (WMO/DATSAV3 number) for the location}
 \item{WBAN}{Number where applicable--this is the historical "Weather Bureau
@@ -176,17 +177,17 @@ fell. See PRCP.FLAG column for source of data}
    }
  }
 \item{SNDP}{Snow depth in millimetres to tenths. Missing = -9999}
-\item{I.FOG}{Fog, (1 = yes, 0 = no/not reported) for the occurrence during
+\item{I_FOG}{Fog, (1 = yes, 0 = no/not reported) for the occurrence during
 the day}
-\item{I.RAIN_DZL}{Rain or drizzle, (1 = yes, 0 = no/not reported) for the
+\item{I_RN_DZL}{Rain or drizzle, (1 = yes, 0 = no/not reported) for the
 occurrence during the day}
-\item{I.SNW_ICE}{Snow or ice pellets, (1 = yes, 0 = no/not reported) for the
+\item{I_SNW_ICE}{Snow or ice pellets, (1 = yes, 0 = no/not reported) for the
 occurrence during the day}
-\item{I.HAIL}{Hail, (1 = yes, 0 = no/not reported) for the occurrence during
+\item{I_HAIL}{Hail, (1 = yes, 0 = no/not reported) for the occurrence during
 the day}
-\item{I.THUNDER}{Thunder, (1 = yes, 0 = no/not reported) for the occurrence
+\item{I_THUNDER}{Thunder, (1 = yes, 0 = no/not reported) for the occurrence
 during the #' day}
-\item{I.TDO_FNL}{Tornado or funnel cloud, (1 = yes, 0 = no/not reported) for
+\item{I_TDO_FNL}{Tornado or funnel cloud, (1 = yes, 0 = no/not reported) for
 the occurrence during the day}
 }
 
