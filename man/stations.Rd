@@ -9,7 +9,8 @@
   \item{USAF}{Air Force Datsav3 station number}
   \item{WBAN}{Weather Bureau Army Navy (5 digit identifier)}
   \item{STN_NAME}{Unique station name}
-  \item{CTRY}{FIPS country ID}
+  \item{CTRY}{United States Federal Information Processing Standards (FIPS)
+  country ID (2 letter identifier)}
   \item{STATE}{If applicable, US states only (2 letter code)}
   \item{CALL}{ICAO Identifier, identifiers approved for use under the
   International Civil Aviation Administration plan of identifiers

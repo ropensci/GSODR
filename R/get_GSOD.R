@@ -38,7 +38,7 @@
 #' latitudes.
 #' @param CSV Logical. If set to TRUE, create a comma separated value (CSV)
 #' file of data, defaults to TRUE, a CSV file is created.
-#' @param GPKG Logical. If set to TRUE, create a GeoPackage file, if
+#' @param GPKG Logical. If set to TRUE, create a GeoPackage spatial file, if
 #' set to FALSE, no GPKG file is created. Defaults to FALSE, no GPKG file is
 #' created
 #' @param merge_station_years Logical. If set to TRUE, merge output files into
@@ -48,8 +48,8 @@
 #'
 #' @details
 #'Due to the size of the resulting data, output is saved as a comma-separated,
-#'csv, file (default) or GeoPackage in a directory specified by the user or
-#'defaults to the current working directory. The files summarize each year by
+#'CSV, file (default) or GeoPackage in a directory specified by the user or
+#'defaults to the current working directory. The files summarise each year by
 #'station, which includes vapour pressure and relative humidity variables
 #'calculated from existing data in GSOD. Optionally, because the file sizes are
 #'much smaller, when selecting a single station, all years queried may be
@@ -67,20 +67,20 @@
 #'For more information see the description of the data provided by NCDC,
 #'\url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
 #'
-#' The CSV or GeoPackage in the respective year-directory will contain the
-#' following fields/values:
+#' The CSV or GeoPackage file(s) in the respective year-directory will contain
+#' the following fields/values:
 #' \describe{
 #' \item{STNID}{Station number (WMO/DATSAV3 number) for the location}
 #' \item{WBAN}{Number where applicable--this is the historical "Weather Bureau
 #' Air Force Navy" number - with WBAN being the acronym}
-#' \item{STN.NAME}{Unique text string identifier}
-#' \item{CTRY}{Country (FIPS (Federal Information Processing Standards) Code)}
+#' \item{STN_NAME}{Unique text string identifier}
+#' \item{CTRY}{Country (FIPS (US Federal Information Processing Standards) Code)}
 #' \item{STATE}{State (for US stations if applicable)}
 #' \item{CALL}{International Civil Aviation Organization (ICAO) Airport Code}
 #' \item{LAT}{Latitude}
 #' \item{LON}{Longitude}
-#' \item{ELEV.M}{Station reported elevation (metres to tenths)}
-#' \item{ELEV.M.SRTM.90m}{Corrected elevation data in whole metres for stations
+#' \item{ELEV_M}{Station reported elevation (metres to tenths)}
+#' \item{ELEV_M_SRTM_90m}{Corrected elevation data in whole metres for stations
 #' derived from Jarvis et al. (2008), extracted from DEM using reported LAT/LON
 #' values in metres}
 #' \item{YEARMODA}{Date in YYYY-MM-DD format}
@@ -90,27 +90,27 @@
 #' \item{YDAY}{Sequential day of year (not in original GSOD)}
 #' \item{TEMP}{Mean daily temperature converted to degrees C to tenths.
 #' Missing = -9999}
-#' \item{TEMP.CNT}{Number of observations used in calculating mean daily
+#' \item{TEMP_CNT}{Number of observations used in calculating mean daily
 #' temperature}
 #' \item{DEWP}{Mean daily dew point converted to degrees C to tenths. Missing =
 #' -9999}
-#' \item{DEWP.CNT}{Number of observations used in calculating mean daily
+#' \item{DEWP_CNT}{Number of observations used in calculating mean daily
 #' dew point}
 #' \item{SLP}{Mean sea level pressure in millibars to tenths. Missing =
 #' -9999}
-#' \item{SLP.CNT}{Number of observations used in calculating mean sea level
+#' \item{SLP_CNT}{Number of observations used in calculating mean sea level
 #' pressure}
 #' \item{STP}{Mean station pressure for the day in millibars to tenths
 #' Missing = -9999}
-#' \item{STP.CNT}{Number of observations used in calculating mean station
+#' \item{STP_CNT}{Number of observations used in calculating mean station
 #' pressure}
 #' \item{VISIB}{Mean visibility for the day converted to kilometers to tenths
 #' Missing = -9999}
-#' \item{VISIB.CNT}{Number of observations used in calculating mean daily
+#' \item{VISIB_CNT}{Number of observations used in calculating mean daily
 #' visibility}
 #' \item{WDSP}{Mean daily wind speed value converted to metres/second to tenths
 #' Missing = -9999}
-#' \item{WDSP.CNT}{Number of observations used in calculating mean daily
+#' \item{WDSP_CNT}{Number of observations used in calculating mean daily
 #' windspeed}
 #' \item{MXSPD}{Maximum sustained wind speed reported for the day converted to
 #' metres/second to tenths. Missing = -9999}
@@ -120,7 +120,7 @@
 #' to tenths--time of maximum temperature report varies by country and region,
 #' so this will sometimes not be the maximum for the calendar day. Missing =
 #' -9999}
-#' \item{MAX.FLAG}{Blank indicates maximum temperature was taken from the
+#' \item{MAX_FLAG}{Blank indicates maximum temperature was taken from the
 #' explicit maximum temperature report and not from the 'hourly' data. " * "
 #' indicates maximum temperature was derived from the hourly data (i.e., highest
 #' hourly or synoptic-reported temperature)}
@@ -128,19 +128,19 @@
 #' to tenths--time of minimum temperature report varies by country and region,
 #' so this will sometimes not be the minimum for the calendar day. Missing =
 #' -9999}
-#' \item{MIN.FLAG}{Blank indicates minimum temperature was taken from the
+#' \item{MIN_FLAG}{Blank indicates minimum temperature was taken from the
 #' explicit minimum temperature report and not from the 'hourly' data. " * "
 #' indicates minimum temperature was derived from the hourly data (i.e., lowest
 #' hourly or synoptic-reported temperature)}
 #' \item{PRCP}{Total precipitation (rain and/or melted snow) reported during
 #' the day converted to millimetres to hundredths will usually not end with the
-#' midnight observation--i.e., may include latter part of previous day. ".00"
+#' midnight observation (i.e., may include latter part of previous day). ".00"
 #' indicates no measurable precipitation (includes a trace). Missing = -9999.
 #' \emph{Note}: Many stations do not report '0' on days with no precipitation--
 #' therefore, '-9999' will often appear on these days. For example, a
 #' station may only report a 6-hour amount for the period during which rain
-#' fell. See PRCP.FLAG column for source of data}
-#' \item{PRCP.FLAG}{
+#' fell. See PRCP_FLAG column for source of data}
+#' \item{PRCP_FLAG}{
 #'  \describe{
 #'    \item{A}{= 1 report of 6-hour precipitation amount}
 #'    \item{B}{= Summation of 2 reports of 6-hour precipitation amount}
@@ -149,7 +149,7 @@
 #'    \item{E}{= 1 report of 12-hour precipitation amount}
 #'    \item{F}{= Summation of 2 reports of 12-hour precipitation amount}
 #'    \item{G}{= 1 report of 24-hour precipitation amount}
-#'    \item{H}{= Station reported '0' as the amount for the day (eg, from
+#'    \item{H}{= Station reported '0' as the amount for the day (e.g., from
 #'    6-hour reports), but also reported at least one occurrence of
 #'    precipitation in hourly observations--this could indicate a trace
 #'    occurred, but should be considered as incomplete data for the day}
@@ -162,16 +162,16 @@
 #' \item{SNDP}{Snow depth in millimetres to tenths. Missing = -9999}
 #' \item{I_FOG}{Fog, (1 = yes, 0 = no/not reported) for the occurrence during
 #' the day}
-#' \item{I_RN_DZL}{Rain or drizzle, (1 = yes, 0 = no/not reported) for the
+#' \item{I_RAIN_DRIZZLE}{Rain or drizzle, (1 = yes, 0 = no/not reported) for the
 #' occurrence during the day}
-#' \item{I_SNW_ICE}{Snow or ice pellets, (1 = yes, 0 = no/not reported) for the
+#' \item{I_SNOW_ICE}{Snow or ice pellets, (1 = yes, 0 = no/not reported) for the
 #' occurrence during the day}
 #' \item{I_HAIL}{Hail, (1 = yes, 0 = no/not reported) for the occurrence during
 #' the day}
 #' \item{I_THUNDER}{Thunder, (1 = yes, 0 = no/not reported) for the occurrence
-#' during the #' day}
-#' \item{I_TDO_FNL}{Tornado or funnel cloud, (1 = yes, 0 = no/not reported) for
-#' the occurrence during the day}
+#' during the day}
+#' \item{I_TORNADO_FUNNEL}{Tornado or funnel cloud, (1 = yes, 0 = no/not
+#' reported) for the occurrence during the day}
 #'}
 #'
 #' \emph{Values calculated by this package and included in final output:}
