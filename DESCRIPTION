@@ -24,22 +24,22 @@ Description: Download, clean, reformat and create new variables from the
     number of missing days, as defined by the user, to assure data quality.
     Stations with too many missing observations are omitted from final file.
     Stations with missing latitude or longitude or values for both of 0 are
-    omitted. Also omitted are stations with a latitude of < -90 or > 90 or
-    longitude of < - 180 or > 180. Output is returned as a comma-separated
-    values (CSV) file written to disk in a location selected by the user, which
-    summarises each year by station and includes new variables: actual vapor
-    pressure, saturation vapor pressure and relative humidity, calculated
-    from the original GSOD data. The resulting files can be as large as 500mb
-    depending on the user's stringency for missing data and geographic area of
-    interest. Be sure to have sufficient RAM and disk space as well as a
-    reasonably fast internet connection to use this package to perform this
-    operation. However, for much smaller and more manageable data sets, an
-    individual country of interest may be selected as well as only stations
-    falling between -60/60 degrees latitude for agroclimatology work or
-    individual stations if the station ID is known. The resulting files include
-    station data (e.g., station name, country, latitude, longitude, elevation)
-    for use in a geographic information system (GIS). The function was largely
-    based on T. Hengl's 'getGSOD.R' script, available from
+    omitted. Any stations with a latitude of < -90 or > 90 or
+    longitude of < - 180 or > 180 are omitted. Output is returned as a
+    comma-separated values (CSV) or GeoPackage (GPKG) file written to disk in a
+    location selected by the user, which summarises each year by station and
+    includes new variables: actual vapor pressure, saturation vapor pressure and
+    relative humidity, calculated from the original GSOD data. The resulting
+    files can be as larger than 500mb depending on the user's stringency for
+    missing data and geographic area of interest. Be sure to have sufficient RAM
+    and disk space as well as a reasonably fast internet connection to use this
+    package to perform this operation. However, for much smaller and more
+    manageable data sets, an individual country of interest may be selected as
+    well as only stations falling between -60/60 degrees latitude for
+    agroclimatology work or individual stations if the station ID is known. The
+    resulting files include station data (e.g., station name, country, latitude,
+    longitude, elevation) dor use in a geographic information system (GIS). The
+    function was largely based on T. Hengl's 'getGSOD.R' script, available from
     <http://spatial-analyst.net/book/system/files/getGSOD.R> with enhancements
     to be cross-platform, faster and more flexible. For information on the
     original data from NCDC, please see the GSOD readme.txt file available from,
@@ -61,10 +61,17 @@ Imports:
     stats,
     utils
 Suggests:
-    testthat
+    dplyr,
+    ggalt,
+    ggplot2,
+    knitr,
+    rmarkdown,
+    testthat,
+    tidyr
 RoxygenNote: 5.0.1
 Encoding: UTF-8
 NeedsCompilation: no
 Repository: CRAN
 LazyData: TRUE
 ByteCompile: TRUE
+VignetteBuilder: knitr

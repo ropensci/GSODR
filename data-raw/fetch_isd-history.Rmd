@@ -1,6 +1,6 @@
 ---
 title: "Fetch, clean and correct altitude in GSOD isd_history.csv Data"
-author: "Adam H. Sparks - Center for Crop Health, University of Southern Queensland"
+author: "Adam H. Sparks"
 date: "`r Sys.Date()`"
 output: github_document
 ---

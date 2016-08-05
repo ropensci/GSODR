@@ -1,6 +1,6 @@
 ---
 title: "Fetch GSOD Country List and Merge with ISO Country Codes"
-author: "Adam H. Sparks - Center for Crop Health, University of Southern Queensland"
+author: "Adam H. Sparks"
 date: "`r Sys.Date()`"
 output: github_document
 ---

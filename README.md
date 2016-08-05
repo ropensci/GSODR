@@ -18,12 +18,12 @@ cleaning data from the "[Global Surface Summary of the Day
 data provided by the US National Climatic Data Center (NCDC). Stations
 are individually checked for number of missing days to assure data
 quality, stations with too many missing observations are omitted. All
-units are converted to metric, e.g., inches to millimetres and
-Fahrenheit to Celsius. Output is saved as a Comma Separated Value (CSV)
-file or in a spatial GeoPackage (GPKG) file, implemented by most major
-GIS softwares, summarising each year by station, which also includes
-vapour pressure and relative humidity variables calculated from existing
-data in GSOD.
+units are converted to International System of Units (SI), e.g., inches
+to millimetres and Fahrenheit to Celsius. Output is saved as a Comma
+Separated Value (CSV) file or in a spatial GeoPackage (GPKG) file,
+implemented by most major GIS softwares, summarising each year by
+station, which also includes vapour pressure and relative humidity
+variables calculated from existing data in GSOD.
 
 This package was largely based on Tomislav Hengl's work in "[A Practical
 Guide to Geostatistical
@@ -73,14 +73,14 @@ library(GSODR)
 # Download weather station for Toowoomba, Queensland for 2010, save resulting
 # file, GSOD-955510-99999-2010.csv, in the user's home directory.
 
-get_GSOD(years = 2010, station = "955510-99999", path = "~/")
+get_GSOD(years = 2010, station = "955510-99999", dsn = "~/")
 
 
 # Download GSOD data and generate agroclimatology files for years 2010 and 2011,
 # GSOD-agroclimatology-2010.csv and GSOD-agroclimatology-2011.csv, in the user's
 # home directory with a maximum of five missing days per weather station allowed.
 
-get_GSOD(years = 2010:2011, path = "~/", agroclimatology = TRUE, max_missing = 5)
+get_GSOD(years = 2010:2011, dsn = "~/", agroclimatology = TRUE, max_missing = 5)
 
 
 # Download data for Philippines for year 2010 and generate a spatial, year
