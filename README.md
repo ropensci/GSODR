@@ -109,11 +109,10 @@ or &gt;90 degrees or Lat = 0 and Lon = 0*;
 or &gt;180 degrees or Lat = 0 and Lon = 0*;  
 **ELEV\_M** - Elevation converted to metres.  
 **ELEV\_M\_SRTM\_90m** - Elevation in metres corrected for possible
-errors, see Notes for more;  
-**YEARMODA** - Date in YYYY-MM-DD format;  
+errors, see Notes section for more;  
+**YEARMODA** - Date in YYYY-mm-dd format;  
 **YEAR** - The year (YYYY);  
-**MONTH** - The month (mm);  
-**DAY** - The day (dd);  
+**MONTH** - The month (mm); **DAY** - The day (dd);  
 **YDAY** - Sequential day of year (not in original GSOD);  
 **TEMP** - Mean daily temperature converted to degrees C to tenths.
 Missing = -9999;  
