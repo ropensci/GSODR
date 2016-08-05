@@ -148,7 +148,7 @@ so this will sometimes not be the max for the calendar day. Missing =
 -9999;  
 **MAX\_FLAG** - Blank indicates max temp was taken from the explicit max
 temp report and not from the 'hourly' data. \* indicates max temp was
-derived from the hourly data (I\_e., highest hourly or synoptic-reported
+derived from the hourly data (i.e., highest hourly or synoptic-reported
 temperature);  
 **MIN**- Minimum temperature reported during the day converted to
 Celsius to tenths--time of min temp report varies by country and region,
@@ -156,7 +156,7 @@ so this will sometimes not be the max for the calendar day. Missing =
 -9999;  
 **MIN\_FLAG** - Blank indicates max temp was taken from the explicit max
 temp report and not from the 'hourly' data. \* indicates max temp was
-derived from the hourly data (I\_e., highest hourly or synoptic-reported
+derived from the hourly data (i.e., highest hourly or synoptic-reported
 temperature);  
 **PRCP** - Total precipitation (rain and/or melted snow) reported during
 the day converted to millimetres to hundredths; will usually not end
