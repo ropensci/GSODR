@@ -1,0 +1,198 @@
+---
+title: "Using the GSODR Package"
+author: "Adam H. Sparks"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Using the GSODR Package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Introduction
+An R package that provides a function that automates downloading and
+cleaning data from the "[Global Surface Summary of the Day
+(GSOD)](https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod)"
+data provided by the US National Climatic Data Center (NCDC). Stations
+are individually checked for number of missing days to assure data
+quality, those stations with too many missing observations as defined by the
+user are omitted. All units are converted to International System of Units (SI),
+e.g., inches to millimetres and Fahrenheit to Celsius. Output is saved as a
+Comma Separated Value (CSV) file or in a spatial GeoPackage (GPKG) file,
+implemented by most major GIS softwares, summarising each year by station, which
+also includes vapour pressure and relative humidity variables calculated from
+existing data in GSOD.
+
+This package was largely based on Tomislav Hengl's work in "[A Practical
+Guide to Geostatistical Mapping](http://spatial-analyst.net/book/getGSOD.R)",
+with updates for speed, cross-platform functionality, and more options for data
+retrieval and error correction.
+
+For more information see the description of the data provided by NCDC,
+<http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
+
+# Using the package
+
+
+## Load GSODR
+
+```{r}
+library(GSODR)
+```
+
+## Plot Global Station Locations
+
+GSODR provides a cleaned list of station locations with the package. Stations
+are omitted if they do not provide a valid longitude or latitude value. See [fetch_isd-history.md](https://github.com/adamhsparks/GSODR/blob/master/data-raw/fetch_isd-history.md)
+for details on the criteria and how this list is generated and last updated.
+
+Using this data we can plot the station locations that are included in GSOD that
+provide valid geo-locations.
+
+Using ggplot2 and the ggalt package it is possible to plot the station locations
+using alpha transparency to see the densist part of the network and use the 
+Robinson projection for the map.
+
+```{r plot_stations, fig.width=7, fig.height=7, fig.cap="GSOD Station Locations"}
+library(ggplot2)
+library(ggalt)
+
+ggplot(stations, aes(x = LON, y = LAT)) +
+  geom_point(alpha = 0.1) +
+  coord_proj("+proj=robin +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs") +
+  theme_bw()
+
+```
+
+## Find Stations in Australia
+
+GSODR provides lists of weather station locations and elevation values. Using
+dplyr, we can find all the stations in Australia.
+```{r, message=FALSE, warning=FALSE}
+library(dplyr)
+
+# convert factor columns to character
+i <- sapply(stations, is.factor)
+stations[i] <- lapply(stations[i], as.character)
+
+# now it's possible to left_join the data
+station_locations <- left_join(stations, country_list, by = c("CTRY" = "FIPS"))
+
+# create data.frame for Australia only
+Oz <- filter(station_locations, COUNTRY_NAME == "AUSTRALIA")
+head(Oz)
+
+# find a station in Toowoomba, Queensland
+filter(Oz, STN_NAME == "TOOWOOMBA")
+
+```
+
+## Using the `get_GSOD()` Function in GSODR
+
+Download weather data from Toowoomba, Queensland, Australia for 2010 and save
+it in the user's home directory using the STNID in the `station` parameter of
+`get_GSOD()`.
+
+```{r}
+get_GSOD(years = 2010, station = "955510-99999", dsn = "~/")
+```
+
+## Plot Maximum and Miniumum Temperature Values
+```{r, fig.width=7, fig.height=7, message=FALSE, fig.cap="Toowoomba 2010 Temperatures"}
+library(lubridate)
+library(readr)
+library(tidyr)
+
+tbar <- read_csv("~/GSOD-955510-99999-2010.csv", na = "-9999")
+
+tbar_temps <- tbar[, c(14, 19, 33, 35)]
+tbar_temps <- gather(tbar_temps, Measurement, gather_cols = TEMP:MIN)
+
+ggplot(data = tbar_temps, aes(x = ymd(YEARMODA), y = value,
+                              colour = Measurement)) +
+  geom_line() +
+  scale_color_brewer(type = "qual", na.value = "black") +
+  scale_y_continuous(name = "Temperature") +
+  scale_x_date(name = "Date") +
+  theme_bw()
+
+```
+
+## Creating spatial files
+Because the stations provide geospatial location information, it is possible
+to create a spatial file. [GeoPackage files](http://www.geopackage.org) are a
+open, standards-based, platform-independent, portable, self-describing compact
+format for transferring geospatial information, which handle vector files much
+like shapefiles do, but eliminate many of the issues that shapefiles have with
+field names and the number of files. The `get_GSOD()` function can create a
+GeoPackage file, which can be used with a GIS for further analysis and mapping
+with other spatial objects.
+
+After getting weather stations for Australia and creating a GeoPackage file,
+the rgdal package can import the data into R and the raster package can download
+an outline of Australia useful for plotting the station locations in this
+country.
+
+```{r spatial_files, message=FALSE}
+
+get_GSOD(years = 2015, country = "Australia", dsn = "~/", CSV = FALSE,
+         GPKG = TRUE)
+```
+
+Importing the GeoPackage file can be a bit tricky. The dsn will be the full path
+along with the file name. The layer to be specified is "GSOD", this is specified
+in the `get_GSOD()` function and will not change. The file name, specified in the
+dsn will, but the layer name will not.
+
+```{r import_spatial_files, message=FALSE}
+library(rgdal)
+AUS_stations <- readOGR(dsn = path.expand("~/GSOD-AS-2015.gpkg"), layer = "GSOD")
+
+class(AUS_stations)
+
+print(unique(AUS_stations$STN_NAME))
+
+```
+
+Since GeoPackage files are formatted as SQLite databases you can use the
+existing R tools for SQLite files [(J. Stachelek 2016)](https://jsta.github.io/2016/07/14/geopackage-r.html).
+One easy way is using dplyr, which we've already used to filter the stations.
+
+This option is much faster to load since it does not load the geometry.
+
+```{r as_database}
+AUS_sqlite <- tbl(src_sqlite(path.expand("~/GSOD-AS-2015.gpkg")), "GSOD")
+class(AUS_stations)
+print(AUS_sqlite, n = 5)
+
+```
+# Notes
+
+## Elevation Values
+
+90 metre (90m) hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was used
+to identify and correct/remove elevation errors in data for station
+locations between -60˚ and 60˚ latitude. This applies to cases here
+where elevation was missing in the reported values as well. In case the
+station reported an elevation and the DEM does not, the station reported
+is taken. For stations beyond -60˚ and 60˚ latitude, the values are
+station reported values in every instance. See
+<https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md>
+for more detail on the correction methods.
+
+## WMO Resolution 40. NOAA Policy
+
+*Users of these data should take into account the following (from the
+[NCDC website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):*
+
+> "The following data and products may have conditions placed on their 
+international commercial use. They can be used within the U.S. or for
+non-commercial international activities without restriction. The
+non-U.S. data cannot be redistributed for commercial purposes.
+Re-distribution of these data by others must provide this same
+notification." [WMO Resolution 40. NOAA
+Policy](http://www.wmo.int/pages/about/Resolution40.html)
+
+# References
+Stachelek, J. 2016. Using the Geopackage Format with R. 
+URL: https://jsta.github.io/2016/07/14/geopackage-r.html

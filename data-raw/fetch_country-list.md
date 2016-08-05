@@ -1,6 +1,6 @@
 Fetch GSOD Country List and Merge with ISO Country Codes
 ================
-Adam H. Sparks - Center for Crop Health, University of Southern Queensland
+Adam H. Sparks
 2016-08-05
 
 Introduction
@@ -73,7 +73,7 @@ country_list <- data.frame(country_list)
 devtools::use_data(country_list, overwrite = TRUE, compress = "bzip2")
 ```
 
-    ## Saving country_list as country_list.rda to /Users/U8004755/Development/GSODR/data
+    ## Saving country_list as country_list.rda to /Users/asparks/Development/GSODR/data
 
 Notes
 =====
@@ -89,7 +89,7 @@ R System Information
 --------------------
 
     ## R version 3.3.1 (2016-06-21)
-    ## Platform: x86_64-apple-darwin15.5.0 (64-bit)
+    ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
     ## Running under: OS X 10.11.6 (El Capitan)
     ## 
     ## locale:
@@ -103,5 +103,5 @@ R System Information
     ##  [5] dplyr_0.5.0      assertthat_0.1   R6_2.1.2         DBI_0.4-1       
     ##  [9] formatR_1.4      magrittr_1.5     evaluate_0.9     stringi_1.1.1   
     ## [13] curl_1.1         rmarkdown_1.0    devtools_1.12.0  tools_3.3.1     
-    ## [17] stringr_1.0.0    readr_1.0.0      yaml_2.1.13      memoise_1.0.0   
+    ## [17] stringr_1.0.0    readr_0.2.2      yaml_2.1.13      memoise_1.0.0   
     ## [21] htmltools_0.3.5  knitr_1.13       tibble_1.1
