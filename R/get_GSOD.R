@@ -232,9 +232,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
   options(timeout = 300)
 
   utils::data("stations", package = "GSODR", envir = environment())
-  i <- sapply(stations, is.factor)
-  stations[i] <- lapply(stations[i], as.character)
-  stations <- data.table::setDT(get("stations", envir = environment()))
+  country_list <- get("country_list", envir = environment())
 
   utils::data("country_list", package = "GSODR", envir = environment())
   country_list <- get("country_list", envir = environment())
@@ -326,17 +324,19 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
 
     # If a single station is selected---------------------- --------------------
     if (!is.null(station)) {
-      tmp <- tryCatch(
-        .read_gz(paste0(ftp_site, yr, "/", station, "-", yr, ".op.gz")),
-        error = function(x) message(paste0("\nThe download stoped at year ", yr,
-                                           ".\nPlease restart the 'get_GSOD()' function starting at this point.\n")))
-      if (merge_station_years == TRUE) {
-        GSOD_objects[[yr]] <- .reformat(tmp, stations)
-      } else {
-        GSOD_XY <- .reformat(tmp, stations)
-      }
-      if (merge_station_years == FALSE) {
-        GSOD_XY <- GSOD_XY
+      for (s in station) {
+        tmp <- tryCatch(
+          .read_gz(paste0(ftp_site, yr, "/", s, "-", yr, ".op.gz")),
+          error = function(x) message(paste0("\nThe download stoped at year ", yr,
+                                             ".\nPlease restart the 'get_GSOD()' function starting at this point.\n")))
+        if (merge_station_years == TRUE) {
+          GSOD_objects[[yr]] <- .reformat(tmp, stations)
+        } else {
+          GSOD_XY <- .reformat(tmp, stations)
+        }
+        if (merge_station_years == FALSE) {
+          GSOD_XY <- GSOD_XY
+        }
       }
     } else {
       cl <- parallel::makeCluster(parallel::detectCores() - 2)
@@ -421,7 +421,11 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
 
 #' @noRd
 # Reformat and generate new variables
+
 .reformat <- function(tmp, stations) {
+
+  stations <- data.table::setDT(get("stations", envir = environment()))
+
   YEARMODA <- "YEARMODA"
   MONTH <- "MONTH"
   DAY <- "DAY"
@@ -546,29 +550,29 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
 }
 
 #' @noRd
-.get_data_path <- function(dsn) {
-  path <- trimws(dsn)
-  if (dsn == "") {
+.get_data_path <- function(path) {
+  path <- trimws(path)
+  if (path == "") {
     stop("\nYou must supply a valid file path for storing the resulting file(s).\n")
   } else {
-    if (substr(dsn, nchar(dsn) - 1, nchar(dsn)) == "//") {
-      p <- substr(dsn, 1, nchar(dsn) - 2)
-    } else if (substr(dsn, nchar(dsn), nchar(dsn)) == "/" |
-               substr(dsn, nchar(dsn), nchar(dsn)) == "\\") {
-      p <- substr(dsn, 1, nchar(dsn) - 1)
+    if (substr(path, nchar(path) - 1, nchar(path)) == "//") {
+      p <- substr(path, 1, nchar(path) - 2)
+    } else if (substr(path, nchar(path), nchar(path)) == "/" |
+               substr(path, nchar(path), nchar(path)) == "\\") {
+      p <- substr(path, 1, nchar(path) - 1)
     } else {
-      p <- dsn
+      p <- path
     }
-    if (!file.exists(p) & !file.exists(dsn)) {
-      stop("\nFile dsn does not exist: ", dsn, ".\n")
+    if (!file.exists(p) & !file.exists(path)) {
+      stop("\nFile path does not exist: ", path, ".\n")
       return(0)
     }
   }
-  if (substr(dsn, nchar(dsn), nchar(dsn)) != "/" &
-      substr(dsn, nchar(dsn), nchar(dsn)) != "\\") {
-    dsn <- paste0(dsn, "/")
+  if (substr(path, nchar(path), nchar(path)) != "/" &
+      substr(path, nchar(path), nchar(path)) != "\\") {
+    path <- paste0(path, "/")
   }
-  return(dsn)
+  return(path)
 }
 
 #' @noRd

@@ -48,7 +48,6 @@ print(country_list)
 Convert to regular `data.frame` object and write .rda file to disk.
 
 ```{r write, echo=TRUE, messages=FALSE}
-country_list <- data.frame(country_list)
 devtools::use_data(country_list, overwrite = TRUE, compress = "bzip2")
 ```
 # Notes

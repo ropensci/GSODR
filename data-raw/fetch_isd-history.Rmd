@@ -70,9 +70,6 @@ stations[stations == -999] <- NA
 countries <- readr::read_table(
   "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/country-list.txt")[-1, c(1, 3)]
 
-# join with countrycode data (do we need this?)
-countries <- dplyr::left_join(countries, countrycode::countrycode_data,
-                              by = c(FIPS = "fips104"))
 ```
 
 ## Reformat and clean station data file from NCDC
@@ -86,6 +83,10 @@ stations <- stations[stations$LON > -180 & stations$LON < 180, ]
 stations$STNID <- as.character(paste(stations$USAF, stations$WBAN, sep = "-"))
 
 xy <- dplyr::left_join(stations, countries, by = c("CTRY" = "FIPS"))
+
+# join with countrycode data
+countries <- dplyr::left_join(countries, countrycode::countrycode_data,
+                              by = c(FIPS = "fips104"))
 ```
 
 ## Check data for inconsistencies
@@ -174,14 +175,14 @@ corrected_elev <- as.data.frame(data.table::rbindlist(foreach(i = dem_tiles) %do
 # stop cluster
 parallel::stopCluster(cl)
 
-# Perform left join to join corrected elevation with original station data,
-# this will include stations below/above -60/60
-stations <- left_join(stations, corrected_elev)
-
 # Some stations occur in areas where DEM has no data
 # use original station elevation in these cells
+corrected_elev[, 13] <- ifelse(is.na(corrected_elev[, 13]), corrected_elev[, 9], corrected_elev[, 13])
 
-stations[, 13] <- ifelse(is.na(stations[, 13]), stations[, 9], stations[, 13])
+# Perform left join to join corrected elevation with original station data,
+# this will include stations below/above -60/60
+test <- dplyr::left_join(stations, corrected_elev)
+
 
 summary(stations)
 ```
