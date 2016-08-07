@@ -1,7 +1,7 @@
 Fetch, clean and correct altitude in GSOD isd\_history.csv Data
 ================
-Adam H. Sparks - Center for Crop Health, University of Southern Queensland
-2016-08-05
+Adam H. Sparks
+2016-08-08
 
 Introduction
 ============
@@ -59,10 +59,6 @@ stations[stations == -999] <- NA
 
 countries <- readr::read_table(
   "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/country-list.txt")[-1, c(1, 3)]
-
-# join with countrycode data (do we need this?)
-countries <- dplyr::left_join(countries, countrycode::countrycode_data,
-                              by = c(FIPS = "fips104"))
 ```
 
 Reformat and clean station data file from NCDC
@@ -77,6 +73,10 @@ stations <- stations[stations$LON > -180 & stations$LON < 180, ]
 stations$STNID <- as.character(paste(stations$USAF, stations$WBAN, sep = "-"))
 
 xy <- dplyr::left_join(stations, countries, by = c("CTRY" = "FIPS"))
+
+# join with countrycode data
+countries <- dplyr::left_join(countries, countrycode::countrycode_data,
+                              by = c(FIPS = "fips104"))
 ```
 
 Check data for inconsistencies
@@ -121,76 +121,100 @@ library(foreach)
 cl <- parallel::makeCluster(parallel::detectCores() - 2)
 doParallel::registerDoParallel(cl)
 
-stations <- as.data.frame(data.table::rbindlist(foreach(i = dem_tiles) %dopar% {
+corrected_elev <- tibble::as_tibble(data.table::rbindlist(foreach(i = dem_tiles) %dopar% {
   
-  # Load the DEM tile
+ # Load the DEM tile
   dem <- raster::raster(i)
   sub_stations <- raster::crop(stations, dem)
-  
+
   # in some cases the DEM represents areas where there is no station
   # check for that here and if no stations, go on to next iteration
   if (!is.null(sub_stations)) {
-    
+
     # use a 200m buffer to extract elevation from the DEM
     SRTM_buffered <- raster::extract(dem, sub_stations, buffer = 200, fun = mean)
 
     # convert spatial object back to normal data frame and add new fields
     sub_stations <- as.data.frame(sub_stations)
-    sub_stations$ELEV_M_SRTM_90m_BUFFER <- SRTM_buffered
+    sub_stations$ELEV_M_SRTM_90m <- SRTM_buffered
     return(sub_stations)
   }
 }
 )
 )
-
 # stop cluster
 parallel::stopCluster(cl)
+```
 
-# some stations occur in areas where DEM has no data
-# use original station elevation in these cells
-stations[, 13] <- ifelse(is.na(stations[, 13]), stations[, 9], stations[, 13])
+Some stations occur in areas where DEM has no data, in this case, use original station elevation for these stations.
 
+``` r
+corrected_elev <- dplyr::mutate(corrected_elev,
+                                ELEV_M_SRTM_90m = ifelse(is.na(ELEV_M_SRTM_90m),
+                                                ELEV_M, ELEV_M_SRTM_90m))
+# round SRTM_90m_Buffer field to whole number in cases where station reported
+# data was used and rename column
+corrected_elev[, 13] <- round(corrected_elev[, 13], 0)
+```
+
+Tidy up the `corrected_elev` object by converting any factors to character prior to performing a left-join with the `stations` object. For stations above/below 60/-60 latitude, `ELEV_M_SRTM_90m` will be `NA` as there is no SRTM data for these latitudes.
+
+``` r
+c <- sapply(corrected_elev, is.factor)
+corrected_elev[c] <- lapply(corrected_elev[c], as.character)
+
+# convert stations from a spatial object to a tibble for joining
+stations <- tibble::as_tibble(stations)
+
+# Perform left join to join corrected elevation with original station data,
+# this will include stations below/above -60/60
+stations <- dplyr::left_join(stations, corrected_elev)
+```
+
+    ## Joining, by = c("USAF", "WBAN", "STN_NAME", "CTRY", "STATE", "CALL", "LAT", "LON", "ELEV_M", "BEGIN", "END", "STNID")
+
+``` r
 summary(stations)
 ```
 
-    ##       USAF            WBAN                     STN_NAME    
-    ##  999999 : 1227   99999  :20983   APPROXIMATE LOCALE:   36  
-    ##  949999 :  373   23176  :    5   MOORED BUOY       :   20  
-    ##  722250 :    4   03849  :    5   ...               :   15  
-    ##  746929 :    4   24255  :    4   BOGUS CHINESE     :   13  
-    ##  992390 :    4   24135  :    4   PACIFIC BUOY      :    8  
-    ##  997225 :    4   24027  :    4   (Other)           :24790  
-    ##  (Other):23267   (Other): 3878   NA's              :    1  
-    ##       CTRY           STATE            CALL            LAT        
-    ##  US     : 6744   CA     :  505   KMLF   :    6   Min.   :-56.50  
-    ##  CA     : 1609   TX     :  488   KLSF   :    6   1st Qu.: 21.80  
-    ##  RS     : 1471   FL     :  320   PAMD   :    5   Median : 37.73  
-    ##  AS     : 1411   MI     :  231   KONT   :    5   Mean   : 29.35  
-    ##  CH     : 1042   NC     :  212   KLRD   :    5   3rd Qu.: 47.17  
-    ##  (Other):12495   (Other): 4543   (Other): 9906   Max.   : 60.00  
-    ##  NA's   :  111   NA's   :18584   NA's   :14950                   
-    ##       LON               ELEV_M         BEGIN               END          
-    ##  Min.   :-179.983   Min.   :-350   Min.   :19010101   Min.   :19301231  
-    ##  1st Qu.: -83.743   1st Qu.:  25   1st Qu.:19570601   1st Qu.:20020210  
-    ##  Median :   7.267   Median : 152   Median :19750618   Median :20150630  
-    ##  Mean   :  -1.669   Mean   : 376   Mean   :19774356   Mean   :20040421  
-    ##  3rd Qu.:  69.195   3rd Qu.: 454   3rd Qu.:20010818   3rd Qu.:20160801  
-    ##  Max.   : 179.750   Max.   :5304   Max.   :20160728   Max.   :20160803  
-    ##                     NA's   :194                                         
-    ##           STNID       ELEV_M_SRTM_90m_BUFFER
-    ##  992390-99999:    4   Min.   :-360.9        
-    ##  997225-99999:    4   1st Qu.:  24.5        
-    ##  992570-99999:    2   Median : 153.1        
-    ##  997242-99999:    2   Mean   : 379.2        
-    ##  919450-99999:    2   3rd Qu.: 455.9        
-    ##  719584-99999:    2   Max.   :5273.4        
-    ##  (Other)     :24867   NA's   :52
+    ##      USAF               WBAN             STN_NAME        
+    ##  Length:27840       Length:27840       Length:27840      
+    ##  Class :character   Class :character   Class :character  
+    ##  Mode  :character   Mode  :character   Mode  :character  
+    ##                                                          
+    ##                                                          
+    ##                                                          
+    ##                                                          
+    ##      CTRY              STATE               CALL                LAT        
+    ##  Length:27840       Length:27840       Length:27840       Min.   :-89.00  
+    ##  Class :character   Class :character   Class :character   1st Qu.: 24.07  
+    ##  Mode  :character   Mode  :character   Mode  :character   Median : 39.67  
+    ##                                                           Mean   : 31.86  
+    ##                                                           3rd Qu.: 50.02  
+    ##                                                           Max.   : 89.37  
+    ##                                                                           
+    ##       LON               ELEV_M           BEGIN               END          
+    ##  Min.   :-179.983   Min.   :-350.0   Min.   :19010101   Min.   :19051231  
+    ##  1st Qu.: -83.820   1st Qu.:  22.3   1st Qu.:19570630   1st Qu.:20020207  
+    ##  Median :   7.850   Median : 137.0   Median :19750716   Median :20150602  
+    ##  Mean   :  -2.696   Mean   : 359.6   Mean   :19775700   Mean   :20040586  
+    ##  3rd Qu.:  64.617   3rd Qu.: 428.0   3rd Qu.:20010915   3rd Qu.:20160804  
+    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20160804   Max.   :20160806  
+    ##                     NA's   :217                                           
+    ##     STNID           ELEV_M_SRTM_90m 
+    ##  Length:27840       Min.   :-361.0  
+    ##  Class :character   1st Qu.:  24.0  
+    ##  Mode  :character   Median : 153.0  
+    ##                     Mean   : 379.2  
+    ##                     3rd Qu.: 456.0  
+    ##                     Max.   :5273.0  
+    ##                     NA's   :3007
 
 Figures
 =======
 
 ``` r
-ggplot(data = stations, aes(x = ELEV_M, y = ELEV_M_SRTM_90m_BUFFER)) +
+ggplot(data = stations, aes(x = ELEV_M, y = ELEV_M_SRTM_90m)) +
   geom_point(alpha = 0.4, size = 0.5)
 ```
 
@@ -199,16 +223,7 @@ ggplot(data = stations, aes(x = ELEV_M, y = ELEV_M_SRTM_90m_BUFFER)) +
 Buffered versus unbuffered elevation values were previously checked and found not to be different while also not showing any discernable geographic patterns. However, The buffered elevation data are higher than the unbuffered data. To help avoid within cell and between cell variation the buffered values are the values that are included in the final data for distribution with the GSODR package following the approach of Hijmans *et al.* (2005).
 
 ``` r
-# round SRTM_90m_Buffer field to whole number in cases where station reported
-# data was used and rename column
-stations[, 13] <- round(stations[, 13], 0)
-names(stations)[13] <- "ELEV_M_SRTM_90m"
-
-# Set STNID column to character
-stations[, 12] <- as.character(stations[, 12])
-
-# convert to regular data.frame object and write rda file to disk
-stations <- data.frame(stations)
+# write rda file to disk for use with GSODR package
 devtools::use_data(stations, overwrite = TRUE, compress = "bzip2")
 
 # clean up Natural Earth data files before we leave
@@ -233,11 +248,11 @@ R System Information
 --------------------
 
     ## R version 3.3.1 (2016-06-21)
-    ## Platform: x86_64-apple-darwin15.5.0 (64-bit)
+    ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
     ## Running under: OS X 10.11.6 (El Capitan)
     ## 
     ## locale:
-    ## [1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8
+    ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
     ## 
     ## attached base packages:
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
@@ -260,8 +275,8 @@ R System Information
     ## [34] scales_0.4.0       codetools_0.2-14   htmltools_0.3.5   
     ## [37] proj4_1.0-8        assertthat_0.1     countrycode_0.18  
     ## [40] colorspace_1.2-6   labeling_0.3       ash_1.0-15        
-    ## [43] KernSmooth_2.23-15 stringi_1.1.1      doParallel_1.0.10 
-    ## [46] munsell_0.4.3      chron_2.3-47
+    ## [43] KernSmooth_2.23-15 stringi_1.1.1      lazyeval_0.2.0    
+    ## [46] doParallel_1.0.10  munsell_0.4.3      chron_2.3-47
 
 References
 ==========

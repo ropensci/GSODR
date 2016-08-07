@@ -147,48 +147,61 @@ sp::proj4string(stations) <- sp::CRS(crs)
 
 # set up cluster for parallel processing
 library(foreach)
-library(parallel)
-library(doParallel)
-cl <- makeCluster(detectCores() - 2)
-registerDoParallel(cl)
+cl <- parallel::makeCluster(parallel::detectCores() - 2)
+doParallel::registerDoParallel(cl)
 
 corrected_elev <- tibble::as_tibble(data.table::rbindlist(foreach(i = dem_tiles) %dopar% {
   
-  # Load the DEM tile
+ # Load the DEM tile
   dem <- raster::raster(i)
-  cropped_stations <- raster::crop(stations, dem)
-  
+  sub_stations <- raster::crop(stations, dem)
+
   # in some cases the DEM represents areas where there is no station
   # check for that here and if no stations, go on to next iteration
-  if (!is.null(cropped_stations)) {
-    
+  if (!is.null(sub_stations)) {
+
     # use a 200m buffer to extract elevation from the DEM
-    ELEV_M_SRTM_90m <- raster::extract(dem, cropped_stations, buffer = 200, fun = mean)
+    SRTM_buffered <- raster::extract(dem, sub_stations, buffer = 200, fun = mean)
 
     # convert spatial object back to normal data frame and add new fields
-    corrected_elev <- tibble::as_tibble(cropped_stations)
-    return(corrected_elev)
+    sub_stations <- as.data.frame(sub_stations)
+    sub_stations$ELEV_M_SRTM_90m <- SRTM_buffered
+    return(sub_stations)
   }
 }
 )
 )
-
 # stop cluster
-stopCluster(cl)
+parallel::stopCluster(cl)
 ```
 Some stations occur in areas where DEM has no data, in this case, use original
-station elevation for these stations
+station elevation for these stations.
 
 ```{r}
-# convert stations from a spatial object to a tible for joining
 
+corrected_elev <- dplyr::mutate(corrected_elev,
+                                ELEV_M_SRTM_90m = ifelse(is.na(ELEV_M_SRTM_90m),
+                                                ELEV_M, ELEV_M_SRTM_90m))
+# round SRTM_90m_Buffer field to whole number in cases where station reported
+# data was used and rename column
+corrected_elev[, 13] <- round(corrected_elev[, 13], 0)
+
+```
+
+Tidy up the `corrected_elev` object by converting any factors to character prior
+to performing a left-join with the `stations` object. For stations above/below
+60/-60 latitude, `ELEV_M_SRTM_90m` will be `NA` as there is no SRTM data for these
+latitudes.
+```{r}
+c <- sapply(corrected_elev, is.factor)
+corrected_elev[c] <- lapply(corrected_elev[c], as.character)
+
+# convert stations from a spatial object to a tibble for joining
 stations <- tibble::as_tibble(stations)
-corrected_elev[, 13] <- ifelse(is.na(corrected_elev[, 13]),
-                               corrected_elev[, 9], corrected_elev[, 13])
 
 # Perform left join to join corrected elevation with original station data,
 # this will include stations below/above -60/60
-test <- dplyr::left_join(stations, corrected_elev)
+stations <- dplyr::left_join(stations, corrected_elev)
 
 summary(stations)
 ```
@@ -214,16 +227,8 @@ package following the approach of Hijmans *et al.* (2005).
 
 ```{r cleanup and .rda file creation, message=FALSE, echo=TRUE, warning=FALSE, error=FALSE}
 
-# round SRTM_90m_Buffer field to whole number in cases where station reported
-# data was used and rename column
-stations[, 13] <- round(stations[, 13], 0)
-names(stations)[13] <- "ELEV_M_SRTM_90m"
 
-# Set STNID column to character
-stations[, 12] <- as.character(stations[, 12])
-
-# convert to regular data.frame object and write rda file to disk
-stations <- data.frame(stations)
+# write rda file to disk for use with GSODR package
 devtools::use_data(stations, overwrite = TRUE, compress = "bzip2")
 
 # clean up Natural Earth data files before we leave
