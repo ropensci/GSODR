@@ -217,14 +217,14 @@ this same notification.}
 # file, GSOD-955510-99999-2010.csv, in the user's home directory.
 
 get_GSOD(years = 2010, station = "955510-99999", dsn = "~/",
-file = "955510-99999.csv")
+filename = "955510-99999.csv")
 
 # Download data for Philippines for year 2010 and generate a yearly
 # summary GeoPackage file, GSOD-RP-2010.gpkg, file in the user's home
 directory with a maximum of five missing days per station allowed.
 
 get_GSOD(years = 2010, country = "Philippines", dsn = "~/",
-file = "Philippines_GSOD.gpkg", GPKG = TRUE, CSV = FALSE)
+filename = "Philippines_GSOD.gpkg", GPKG = TRUE, CSV = FALSE)
 
 # Download global GSOD data for agroclimatology work for years 2009 and 2010
 # and generate yearly summary files, GSOD-agroclimatology-2010.csv and
@@ -232,7 +232,7 @@ file = "Philippines_GSOD.gpkg", GPKG = TRUE, CSV = FALSE)
 # of five missing days per weather station allowed.
 
 get_GSOD(years = 2010:2011, dsn = "~/",
-file = "GSOD_agroclimatology_2010-2011", agroclimatology = TRUE)
+filename = "GSOD_agroclimatology_2010-2011", agroclimatology = TRUE)
 }
 
 

@@ -173,8 +173,8 @@ country.
 
 ```{r spatial_files, message=FALSE}
 
-get_GSOD(years = 2015, country = "Australia", dsn = "~/", CSV = FALSE,
-         GPKG = TRUE)
+get_GSOD(years = 2015, country = "Australia", dsn = "~/",
+         filename = "AUS_2015.gpkg", CSV = FALSE, GPKG = TRUE)
 ```
 
 Importing the GeoPackage file can be a bit tricky. The dsn will be the full path
