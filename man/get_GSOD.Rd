@@ -5,14 +5,20 @@
 \title{Download, Clean, Reformat and Generate New Variables From GSOD Weather Data}
 \usage{
 get_GSOD(years = NULL, station = NULL, country = NULL, dsn = "",
-  max_missing = 5, agroclimatology = FALSE, CSV = TRUE, GPKG = FALSE,
-  merge_station_years = FALSE)
+  filename = "", max_missing = 5, agroclimatology = FALSE, CSV = TRUE,
+  GPKG = FALSE, merge_station_years = FALSE)
 }
 \arguments{
 \item{years}{Year(s) of weather data to download.}
 
-\item{station}{Specify single station for which to retrieve, check and clean
-weather data.}
+\item{station}{Specify a station or multiple stations for which to retrieve,
+check and clean weather data. The NCDC reports years for which the data are
+available. This function checks against these years. However, not all cases
+are properly documented and in some cases files may not exist on the ftp
+server even though it is indicated that data was recorded for the station for
+a particular year. If a station is specified that does not have an
+existing file on the server, this function will silently fail and move on
+to existing files for download and cleaning from the ftp server.}
 
 \item{country}{Specify a country of interest for which to retrieve weather
 data; full name. For stations located in locales
@@ -20,8 +26,7 @@ having an ISO code 2 or 3 letter ISO code can also be used if known. See
 \code{\link{country_list}} for a full list of country names and ISO codes
 available.}
 
-\item{dsn}{File path entered by user indicating where to store resulting
-output file.}
+\item{dsn}{Path to file write to.}
 
 \item{max_missing}{The maximum number of days allowed to be missing from a
 station's data before it is excluded from final file output. Defaults to five
@@ -34,16 +39,13 @@ TRUE to include only stations within the confines of these
 latitudes.}
 
 \item{CSV}{Logical. If set to TRUE, create a comma separated value (CSV)
-file of data, defaults to TRUE, a CSV file is created. Existing files of the
-same name will be overwritten!}
+file of data, defaults to TRUE, a CSV file is created.}
 
 \item{GPKG}{Logical. If set to TRUE, create a GeoPackage file, if
 set to FALSE, no GPKG file is created. Defaults to FALSE, no GPKG file is
-created. Existing files of the same name will be overwritten!}
+created}
 
-\item{merge_station_years}{Logical. If set to TRUE, merge output files into
-one output file for all years when selecting a single station, defaults to
-FALSE.}
+\item{file}{The filename for resulting file to be written.}
 }
 \description{
 This function automates downloading, cleaning, reformatting of data from
@@ -66,7 +68,7 @@ repository here: \url{https://github.com/adamhsparks/GSODR/blob/master/data-raw/
 }
 \details{
 Due to the size of the resulting data, output is saved as a comma-separated,
-CSV file (default), or GeoPackage in a directory specified by the user or
+csv, file (default) or GeoPackage in a directory specified by the user or
 defaults to the current working directory. The files summarize each year by
 station, which includes vapour pressure and relative humidity variables
 calculated from existing data in GSOD. Optionally, because the file sizes are
@@ -200,34 +202,37 @@ the occurrence during the day}
 }
 }
 \note{
-Users of these data should take into account the following (from the
-NCDC website): \dQuote{The following data and products may have conditions
-placed on their international commercial use. They can be used within the
-U.S. or for non-commercial international activities without restriction. The
-non-U.S. data cannot be redistributed for commercial purposes.
-Re-distribution of these data by others must provide this same
-notification.}
+Some of these data are redistributed with this R package. Originally
+from these data come from the US NCDC which states that users of these data
+should take into account the following: \dQuote{The following data and
+products may have conditions placed on their international commercial use.
+They can be used within the U.S. or for non-commercial international
+activities without restriction. The non-U.S. data cannot be redistributed for
+commercial purposes. Re-distribution of these data by others must provide
+this same notification.}
 }
 \examples{
 \dontrun{
 # Download weather station for Toowoomba, Queensland for 2010, save resulting
 # file, GSOD-955510-99999-2010.csv, in the user's home directory.
 
-get_GSOD(years = 2010, station = "955510-99999", dsn = "~/")
+get_GSOD(years = 2010, station = "955510-99999", dsn = "~/",
+file = "955510-99999.csv")
 
 # Download data for Philippines for year 2010 and generate a yearly
 # summary GeoPackage file, GSOD-RP-2010.gpkg, file in the user's home
 directory with a maximum of five missing days per station allowed.
 
-get_GSOD(years = 2010, country = "Philippines", dsn = "~/", GPKG = TRUE,
-CSV = FALSE)
+get_GSOD(years = 2010, country = "Philippines", dsn = "~/",
+file = "Philippines_GSOD.gpkg", GPKG = TRUE, CSV = FALSE)
 
 # Download global GSOD data for agroclimatology work for years 2009 and 2010
 # and generate yearly summary files, GSOD-agroclimatology-2010.csv and
 # GSOD-agroclimatology-2011.csv in the user's home directory with a maximum
 # of five missing days per weather station allowed.
 
-get_GSOD(years = 2010:2011, dsn = "~/", agroclimatology = TRUE)
+get_GSOD(years = 2010:2011, dsn = "~/",
+file = "GSOD_agroclimatology_2010-2011", agroclimatology = TRUE)
 }
 
 

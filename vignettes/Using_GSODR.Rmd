@@ -87,59 +87,58 @@ filter(Oz, STN_NAME == "TOOWOOMBA")
 
 ```
 
-## Find stations near a particular latitude and longitudinal coordinate
+## Using the `get_GSOD()` Function in GSODR to Download a Single Station and
+Year
 
-The `stations` data that is included with the GSODR package can be converted into
-a spatial object and spatial queries can be performed. For instance.
-
-```{r spatial_query}
-library(rgeos)
-library(sp)
-
-stations_df <- as.data.frame(stations)
-
-sp_stations <- stations
-coordinates(sp_stations) <- ~LON + LAT
-class(sp_stations)
-
-
-sp_stations <- stations
-coordinates(sp_stations) <- c("LON", "LAT")
-proj4string(sp_stations) <- CRS("+init=epsg:4326")
-class(sp_stations)
-
-x <- 37.359031
-y <- -3.065053
-pt <- data.frame(x, y)
-coordinates(pt) <- c("x", "y")
-proj4string(pt) <- CRS("+init=epsg:4326")
-
-nearby <- apply(spDists(sp_stations, pt), 2, 
-                  function(x) paste(which(x < 500 & x != 0), sep = ", "))
-
-stations_df[nearby, ]
-
-
-```
-
-## Using the `get_GSOD()` Function in GSODR
-
-Download weather data from Toowoomba, Queensland, Australia for 2010 and save
-it in the user's home directory using the STNID in the `station` parameter of
-`get_GSOD()`.
+Download weather data from the station Toowoomba, Queensland, Australia for 2010
+and save it in the user's home directory using the STNID in the `station`
+parameter of `get_GSOD()`.
 
 ```{r}
-get_GSOD(years = 2010, station = "955510-99999", dsn = "~/")
+get_GSOD(years = 2010, station = "955510-99999", dsn = "~/",
+         file = "Toowoomba_Airport_2010.csv")
+```
+
+## Find Stations Within a Specified Distance of a Point
+
+Using the `nearest_stations()` function, you can find stations closest to a
+given point specified by latitude and longitude in decimal degrees. This can be
+used to generate a vector to pass along to `get_GSOD()` and download the
+stations of interest.
+
+There are missing stations in this query. Not all that are listed and queried
+actually have files on the server.
+
+```{r spatial_query, message}
+tbar_stations <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 50)
+tbar_stations <- tbar_stations$STNID
+
+get_GSOD(years = 2010, station = tbar_stations, dsn = "~/",
+         filename = "Toowoomba_50km_2010.csv")
+```
+If you wished to drop the stations, 949999-00170 and 949999-00183 from the query,
+you could do this.
+
+```{r, eval=FALSE}
+remove <- c("949999-00170","949999-00183")
+tbar_stations <- tbar_stations[!tbar_stations %in% remove]
+
+get_GSOD(years = 2010, station = tbar_stations, dsn = "~/",
+         filename = "Toowoomba_50km_2010.csv")
 ```
 
 ## Plot Maximum and Miniumum Temperature Values
+Using the first data downloaded for a single station, plot the temperature for
+2010, setting the "-9999" value to NA on import using `read_csv` from Hadley's
+`readr` package.
+
 ```{r, fig.width=7, fig.height=7, message=FALSE, fig.cap="Toowoomba 2010 Temperatures"}
 library(lubridate)
 library(readr)
 library(tidyr)
 
 # Import the data for Toowoomba previously downloaded and cleaned
-tbar <- read_csv("~/GSOD-955510-99999-2010.csv", na = "-9999")
+tbar <- read_csv("~/Toowoomba_Airport_2010.csv", na = "-9999")
 
 # Create a dataframe of just the date and temperature values that we want to plot
 tbar_temps <- tbar[, c(14, 19, 33, 35)]

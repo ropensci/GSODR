@@ -54,6 +54,7 @@ Imports:
     lubridate,
     iterators,
     parallel,
+    RCurl,
     readr,
     rgdal,
     rgeos,

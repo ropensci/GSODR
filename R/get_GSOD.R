@@ -19,15 +19,21 @@
 #'repository here: \url{https://github.com/adamhsparks/GSODR/blob/master/data-raw/fetch_isd-history.md}
 #'
 #' @param years Year(s) of weather data to download.
-#' @param station Specify single station for which to retrieve, check and clean
-#' weather data.
+#' @param station Specify a station or multiple stations for which to retrieve,
+#' check and clean weather data. The NCDC reports years for which the data are
+#' available. This function checks against these years. However, not all cases
+#' are properly documented and in some cases files may not exist on the ftp
+#' server even though it is indicated that data was recorded for the station for
+#' a particular year. If a station is specified that does not have an
+#' existing file on the server, this function will silently fail and move on
+#' to existing files for download and cleaning from the ftp server.
 #' @param country Specify a country of interest for which to retrieve weather
 #' data; full name. For stations located in locales
 #' having an ISO code 2 or 3 letter ISO code can also be used if known. See
 #' \code{\link{country_list}} for a full list of country names and ISO codes
 #' available.
-#' @param dsn File path entered by user indicating where to store resulting
-#' output file.
+#' @param dsn Path to file write to.
+#' @param file The filename for resulting file to be written.
 #' @param max_missing The maximum number of days allowed to be missing from a
 #' station's data before it is excluded from final file output. Defaults to five
 #' days. If a single station is specified, this option is ignored and any data
@@ -41,9 +47,6 @@
 #' @param GPKG Logical. If set to TRUE, create a GeoPackage file, if
 #' set to FALSE, no GPKG file is created. Defaults to FALSE, no GPKG file is
 #' created
-#' @param merge_station_years Logical. If set to TRUE, merge output files into
-#' one output file for all years when selecting a single station, defaults to
-#' FALSE.
 #'
 #'
 #' @details
@@ -181,34 +184,37 @@
 #' \item{RH}{Mean daily relative humidity}
 #'}
 #'
-#'@note Users of these data should take into account the following (from the
-#' NCDC website): \dQuote{The following data and products may have conditions
-#' placed on their international commercial use. They can be used within the
-#' U.S. or for non-commercial international activities without restriction. The
-#' non-U.S. data cannot be redistributed for commercial purposes.
-#' Re-distribution of these data by others must provide this same
-#' notification.}
+#' @note Some of these data are redistributed with this R package. Originally
+#' from these data come from the US NCDC which states that users of these data
+#' should take into account the following: \dQuote{The following data and
+#' products may have conditions placed on their international commercial use.
+#' They can be used within the U.S. or for non-commercial international
+#' activities without restriction. The non-U.S. data cannot be redistributed for
+#' commercial purposes. Re-distribution of these data by others must provide
+#' this same notification.}
 #'
 #' @examples
 #' \dontrun{
 #' # Download weather station for Toowoomba, Queensland for 2010, save resulting
 #' # file, GSOD-955510-99999-2010.csv, in the user's home directory.
 #'
-#' get_GSOD(years = 2010, station = "955510-99999", dsn = "~/")
+#' get_GSOD(years = 2010, station = "955510-99999", dsn = "~/",
+#' file = "955510-99999.csv")
 #'
 #' # Download data for Philippines for year 2010 and generate a yearly
 #' # summary GeoPackage file, GSOD-RP-2010.gpkg, file in the user's home
 #' directory with a maximum of five missing days per station allowed.
 #'
-#' get_GSOD(years = 2010, country = "Philippines", dsn = "~/", GPKG = TRUE,
-#' CSV = FALSE)
+#' get_GSOD(years = 2010, country = "Philippines", dsn = "~/",
+#' file = "Philippines_GSOD.gpkg", GPKG = TRUE, CSV = FALSE)
 #'
 #' # Download global GSOD data for agroclimatology work for years 2009 and 2010
 #' # and generate yearly summary files, GSOD-agroclimatology-2010.csv and
 #' # GSOD-agroclimatology-2011.csv in the user's home directory with a maximum
 #' # of five missing days per weather station allowed.
 #'
-#' get_GSOD(years = 2010:2011, dsn = "~/", agroclimatology = TRUE)
+#' get_GSOD(years = 2010:2011, dsn = "~/",
+#' file = "GSOD_agroclimatology_2010-2011", agroclimatology = TRUE)
 #' }
 #'
 #'
@@ -222,9 +228,8 @@
 #'
 #' @export
 get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
-                     max_missing = 5, agroclimatology = FALSE,
-                     CSV = TRUE, GPKG = FALSE,
-                     merge_station_years = FALSE) {
+                     filename = "", max_missing = 5, agroclimatology = FALSE,
+                     CSV = TRUE, GPKG = FALSE, merge_station_years = FALSE) {
 
   # Set up options, creating objects, check variables entered by user-----------
   options(warn = 2)
@@ -244,7 +249,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
   GSOD_objects <- list(NULL)
   GSOD_df <- data.table::data.table()
 
-  j <- YEARMODA <- yr <- NULL
+  s <- i <- j <- YEARMODA <- yr <- NULL
 
   # Check data path given by user, does it exist? Is it properly formatted?
   path <- .validate_dsn(dsn)
@@ -252,20 +257,17 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
   # Check years given by the user, are they valid?
   .validate_years(years)
 
-  # Check station given by user, is it valid?
+  # Check station given by user, is it valid, are the years for this station valid?
   if (!is.null(station)) {
     .validate_station(station, data.frame(stations))
+    .validate_station_years(station, years)
   }
 
   # Check that at least one output file format is selected
   if (CSV == FALSE && GPKG == FALSE) {
-    stop("\nYou must select for one file format to save the data to your local disk. The options are CSV or GPKG. Please set the desired file format(s) to TRUE.\n")
-  }
-
-  # Check if user set merge to TRUE,
-  # is there more than one year selected for the station?
-  if (merge_station_years == TRUE) {
-    .validate_merge(years, station)
+    stop("\nYou must select for one file format to save the data to your local
+         disk. The options are CSV or GPKG. Please set the desired file
+         format(s) to TRUE.\n")
   }
 
   # Check country given by user and format for use in function
@@ -290,7 +292,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
                                                 ".tar"),
                                    destfile = tf, quiet = FALSE, mode = "wb"),
                error = function(x) message(paste0("\nThe download stoped at year ", yr,
-                                                  ".\nPlease restart the 'get_GSOD()' function starting at this point.\n")))
+ ".\nPlease restart the 'get_GSOD()' function starting at this point.\n")))
       utils::untar(tarfile = tf, exdir  = paste0(td, "/", yr, "/"))
 
       GSOD_list <- list.files(paste0(td, "/", yr, "/"),
@@ -321,27 +323,34 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
       }
     }
 
-    # If stations are specified--------------------- ---------------------------
+    # Stations specified --------------------------- ---------------------------
     if (!is.null(station)) {
+      filenames <- RCurl::getURL(paste0(ftp_site, yr, "/"),
+                                 ftp.use.epsv = FALSE, ftplistonly = TRUE,
+                                 crlf = TRUE)
+      filenames <- paste0(ftp_site, yr, "/",
+                          strsplit(filenames, "\r*\n")[[1]])[-c(1:2)]
       itw <- (iterators::iter(station))
+      
       GSOD_XY <- as.data.frame(
         data.table::rbindlist(
           foreach::foreach(s = itw) %do% {
-            tmp <- tryCatch(
-              .read_gz(paste0(ftp_site, yr, "/", s, "-", yr, ".op.gz")),
-              error = function(x) message(paste0("\nThe download stoped at year ", yr,
-                                                 ".\nPlease restart the 'get_GSOD()' function starting at this point.\n")))
-            .reformat(tmp, stations)
+            s <- paste0(ftp_site, yr, "/", s, "-", yr, ".op.gz")
+            if (s %in% filenames) {
+              tmp <- try(.read_gz(s))
+              .reformat(tmp, stations)
+            } else {
+              message("A file correpsonding to station,", s, "was not found on
+                      the server. Any others requested will be processed.")
+            }
           }
         )
       )
-      # Stations are not specified ---------------------------------------------
     } else {
+      # Stations not specified ------------------------------------------------
       cl <- parallel::makeCluster(parallel::detectCores() - 2)
       doParallel::registerDoParallel(cl)
-
       itx <- iterators::iter(GSOD_list)
-      # For a country, the entire set or agroclimatology -----------------------
       GSOD_XY <- as.data.frame(
         data.table::rbindlist(
           foreach::foreach(j = itx) %dopar% {
@@ -356,31 +365,17 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
     }
 
     #### Write to disk ---------------------------------------------------------
-    if (!is.null(station)) {
-      if (length(years) == 1) {
-        outfile <- paste0("GSOD-", station, "-", yr)
-      } else {
-        outfile <- paste0("GSOD-", station, "-", min(years), "-to-",
-                          max(years))
-      }
-    } else if (!is.null(country)) {
-      outfile <- paste0("GSOD-", country, "-", yr)
-    } else if (agroclimatology == TRUE) {
-      outfile <- paste0("GSOD-agroclimatology-", yr)
-    } else {
-      outfile <- paste0("GSOD-", yr)
-    }
+      outfile <- paste0(dsn, filename)
 
     #### CSV file---------------------------------------------------------------
     if (CSV == TRUE) {
-      readr::write_csv(GSOD_XY, path = paste0(path.expand(path), outfile,
-                                              ".csv"))
+      readr::write_csv(GSOD_XY, path = paste0(outfile))
     }
 
     #### GPKG file -------------------------------------------------------------
     if (GPKG == TRUE) {
       GSOD_XY <- as.data.frame(GSOD_XY)
-      sp::coordinates(GSOD_XY) <- ~LON + LAT
+      sp::coordinates(GSOD_XY) <- c("LAT",)
       sp::proj4string(GSOD_XY) <- sp::CRS("+proj=longlat +datum=WGS84")
       rgdal::writeOGR(GSOD_XY, dsn = paste0(path.expand(path),
                                             outfile, ".gpkg"), layer = "GSOD",
@@ -571,22 +566,29 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
   nc <- nchar(country)
   if (nc == 3) {
     if (country %in% country_list$iso3c) {
-      return(country_list[i, 1])
+      c <- which(country == country_list$iso3c)
+      return(country_list[[c, 1]])
     } else {
-      stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you can view the entire list of valid countries in this data by typing, 'country_list'.\n")
+      stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you
+can view the entire list of valid countries in this data by typing, 
+           'country_list'.\n")
     }
   } else if (nc == 2) {
     if (country %in% country_list$iso2c) {
-      i <- which(country == country_list$iso2c)
-      return(country_list[i, 1])
+      c <- which(country == country_list$iso2c)
+      return(country_list[[c, 1]])
     } else {
-      stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you can view the entire list of valid countries in this data by typing, 'country_list'.\n")
+      stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you
+can view the entire list of valid countries in this data by typing, 
+           'country_list'.\n")
     }
   } else if (country %in% country_list$COUNTRY_NAME) {
-    i <- which(country == country_list$COUNTRY_NAME)
-    return(country_list[i, 1])
+    c <- which(country == country_list$COUNTRY_NAME)
+    return(country_list[[c, 1]])
   } else {
-    stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you can view the entire list of valid countries in this data by typing, 'country_list'.\n")
+    stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you
+can view the entire list of valid countries in this data by typing, 
+'country_list'.\n")
     return(0)
   }
 }
@@ -595,14 +597,16 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
 .validate_years <- function(years) {
   this_year <- 1900 + as.POSIXlt(Sys.Date())$year
   if (is.null(years) | is.character(years)) {
-    stop("\nYou must provide at least one year of data to download in a numeric format.\n")
+    stop("\nYou must provide at least one year of data to download in a numeric
+ format.\n")
   } else {
     for (i in years) {
       if (i <= 0) {
         stop("\nThis is not a valid year.\n")
         return(0)
       } else if (i < 1929) {
-        stop("\nThe GSOD data files start at 1929, you have entered a year prior to 1929.\n")
+        stop("\nThe GSOD data files start at 1929, you have entered a year prior
+ to 1929.\n")
         return(0)
       } else if (i > this_year) {
         stop("\nThe year cannot be greater than current year.\n")
@@ -615,22 +619,26 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
 
 #' @noRd
 .validate_station <- function(station, stations) {
-  for (i in 1:length(station)) {
-    if (station[i] %in% stations$STNID == FALSE) {
-      stop("\nThis is not a valid station ID number, please check your entry.\n
-         Station IDs are provided as a part of the GSODR package in the 'stations' data frame in the STNID column.\n")
+  for (vs in 1:length(station)) {
+    if (station[vs] %in% stations$STNID == FALSE) {
+      stop("\nThis is not a valid station ID number, please check your entry. 
+Station IDs are provided as a part of the GSODR package in the 'stations' data 
+in the STNID column.\n")
       return(0)
     }
   }
 }
 
 #' @noRd
-.validate_merge <- function(years, station) {
-  if (is.null(station)) {
-    stop("\nThe option to merge multiple years into one file is only possible when selecting a single station.\n")
-    return(0)
+.validate_station_years <- function(station, year) {
+  for (vsy in station) {
+    BEGIN <- as.numeric(substr(subset(stations, STNID == vsy)$BEGIN, 1, 4))
+    END <- as.numeric(substr(subset(stations, STNID == vsy)$END, 1, 4))
+    if (min(year) < BEGIN | max(year) > END)
+      message("This station, ", vsy, ", only provides data for years ", BEGIN, 
+" to ", END, ".\nPlease choose years within these boundaries. See the BEGIN and
+END columns of the 'stations' data provided with this package for start and stop
+dates of available data. However, I will go on ignoring these stations.\n")
   }
-  if (length(years) == 1)
-    stop("\nYou have set 'merge = TRUE'' but have only one year to fetch and clean. Did you intend to query more than one year?\n")
-  return(0)
 }
+

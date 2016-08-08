@@ -72,11 +72,12 @@ stations <- stations[stations$LAT > -90 & stations$LAT < 90, ]
 stations <- stations[stations$LON > -180 & stations$LON < 180, ]
 stations$STNID <- as.character(paste(stations$USAF, stations$WBAN, sep = "-"))
 
-xy <- dplyr::left_join(stations, countries, by = c("CTRY" = "FIPS"))
-
-# join with countrycode data
+# join countries with countrycode data
 countries <- dplyr::left_join(countries, countrycode::countrycode_data,
                               by = c(FIPS = "fips104"))
+
+# create xy object to check for geographic location agreement with reported
+xy <- dplyr::left_join(stations, countries, by = c("CTRY" = "FIPS"))
 ```
 
 Check data for inconsistencies
@@ -102,8 +103,8 @@ sp::proj4string(xy) <- sp::CRS(crs)
 # check for location in country
 point_check <- sp::over(xy, NE)
 point_check <- as.data.frame(point_check)
-stn_discard <- point_check[point_check$FIPS %in% point_check$FIPS_10_ == FALSE, ]
-nrow(stn_discard)
+stations_discard <- point_check[point_check$FIPS %in% point_check$FIPS_10_ == FALSE, ]
+nrow(stations_discard)
 ```
 
     ## [1] 0
@@ -121,7 +122,8 @@ library(foreach)
 cl <- parallel::makeCluster(parallel::detectCores() - 2)
 doParallel::registerDoParallel(cl)
 
-corrected_elev <- tibble::as_tibble(data.table::rbindlist(foreach(i = dem_tiles) %dopar% {
+corrected_elev <- tibble::as_tibble(
+  data.table::rbindlist(foreach(i = dem_tiles) %dopar% {
   
  # Load the DEM tile
   dem <- raster::raster(i)
@@ -132,11 +134,10 @@ corrected_elev <- tibble::as_tibble(data.table::rbindlist(foreach(i = dem_tiles)
   if (!is.null(sub_stations)) {
 
     # use a 200m buffer to extract elevation from the DEM
-    SRTM_buffered <- raster::extract(dem, sub_stations, buffer = 200, fun = mean)
+    sub_stations$ELEV_M_SRTM_90m <- raster::extract(dem, sub_stations, buffer = 200, fun = mean)
 
     # convert spatial object back to normal data frame and add new fields
     sub_stations <- as.data.frame(sub_stations)
-    sub_stations$ELEV_M_SRTM_90m <- SRTM_buffered
     return(sub_stations)
   }
 }
@@ -223,10 +224,8 @@ ggplot(data = stations, aes(x = ELEV_M, y = ELEV_M_SRTM_90m)) +
 Buffered versus unbuffered elevation values were previously checked and found not to be different while also not showing any discernable geographic patterns. However, The buffered elevation data are higher than the unbuffered data. To help avoid within cell and between cell variation the buffered values are the values that are included in the final data for distribution with the GSODR package following the approach of Hijmans *et al.* (2005).
 
 ``` r
-# convert to data.table and set key
-data.table::setDT(stations)
-
 # write rda file to disk for use with GSODR package
+data.table::setDT(stations)
 devtools::use_data(stations, overwrite = TRUE, compress = "bzip2")
 
 # clean up Natural Earth data files before we leave
@@ -251,11 +250,11 @@ R System Information
 --------------------
 
     ## R version 3.3.1 (2016-06-21)
-    ## Platform: x86_64-apple-darwin15.5.0 (64-bit)
+    ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
     ## Running under: OS X 10.11.6 (El Capitan)
     ## 
     ## locale:
-    ## [1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8
+    ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
     ## 
     ## attached base packages:
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
