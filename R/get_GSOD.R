@@ -375,10 +375,10 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
     #### GPKG file -------------------------------------------------------------
     if (GPKG == TRUE) {
       GSOD_XY <- as.data.frame(GSOD_XY)
-      sp::coordinates(GSOD_XY) <- c("LAT",)
+      sp::coordinates(GSOD_XY) <- ~LON + LAT
       sp::proj4string(GSOD_XY) <- sp::CRS("+proj=longlat +datum=WGS84")
       rgdal::writeOGR(GSOD_XY, dsn = paste0(path.expand(path),
-                                            outfile, ".gpkg"), layer = "GSOD",
+                                            outfile), layer = "GSOD",
                       driver = "GPKG", overwrite_layer = TRUE)
     }
   }
