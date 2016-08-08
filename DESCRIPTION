@@ -49,7 +49,6 @@ Depends:
 License: GPL (>= 3)
 Imports:
     curl,
-    data.table,
     doParallel,
     foreach,
     lubridate,
@@ -57,15 +56,19 @@ Imports:
     parallel,
     readr,
     rgdal,
+    rgeos,
     sp,
     stats,
+    tibble,
     utils
 Suggests:
     dplyr,
     ggalt,
     ggplot2,
     knitr,
+    rgeos,
     rmarkdown,
+    sp,
     testthat,
     tidyr
 RoxygenNote: 5.0.1

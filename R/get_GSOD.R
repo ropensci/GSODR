@@ -37,11 +37,10 @@
 #' TRUE to include only stations within the confines of these
 #' latitudes.
 #' @param CSV Logical. If set to TRUE, create a comma separated value (CSV)
-#' file of data, defaults to TRUE, a CSV file is created. Existing files of the
-#' same name will be overwritten!
+#' file of data, defaults to TRUE, a CSV file is created.
 #' @param GPKG Logical. If set to TRUE, create a GeoPackage file, if
 #' set to FALSE, no GPKG file is created. Defaults to FALSE, no GPKG file is
-#' created. Existing files of the same name will be overwritten!
+#' created
 #' @param merge_station_years Logical. If set to TRUE, merge output files into
 #' one output file for all years when selecting a single station, defaults to
 #' FALSE.
@@ -49,7 +48,7 @@
 #'
 #' @details
 #'Due to the size of the resulting data, output is saved as a comma-separated,
-#'CSV file (default), or GeoPackage in a directory specified by the user or
+#'csv, file (default) or GeoPackage in a directory specified by the user or
 #'defaults to the current working directory. The files summarize each year by
 #'station, which includes vapour pressure and relative humidity variables
 #'calculated from existing data in GSOD. Optionally, because the file sizes are
@@ -232,7 +231,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
   options(timeout = 300)
 
   utils::data("stations", package = "GSODR", envir = environment())
-  country_list <- get("country_list", envir = environment())
+  stations <- get("stations", envir = environment())
 
   utils::data("country_list", package = "GSODR", envir = environment())
   country_list <- get("country_list", envir = environment())
@@ -248,7 +247,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
   j <- YEARMODA <- yr <- NULL
 
   # Check data path given by user, does it exist? Is it properly formatted?
-  path <- .get_data_path(dsn)
+  path <- .validate_dsn(dsn)
 
   # Check years given by the user, are they valid?
   .validate_years(years)
@@ -282,7 +281,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
 
   ftp_site <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
 
-  # Loop if there are more than one year being queried ---------------------
+  # Year loop ------------------------------------------------------------------
   ity <- iterators::iter(years)
   foreach::foreach(yr = ity) %do% {
     if (is.null(station)) {
@@ -298,7 +297,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
                               pattern = utils::glob2rx("*.gz"),
                               full.names = FALSE)
 
-      # If agroclimatology == TRUE, subset list of stations to clean
+      # If agroclimatology == TRUE, subset list of stations to clean -----------
       if (agroclimatology == TRUE) {
         station_list <- stations[stations$LAT >= -60 &
                                    stations$LAT <= 60, ]$STNID
@@ -309,7 +308,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
         rm(station_list)
       }
 
-      # If country is set, subset list of stations to clean
+      # If country is set, subset list of stations to clean --------------------
       if (!is.null(country)) {
         country_FIPS <- unlist(as.character(stats::na.omit(
           country_list[country_list$FIPS == country, ][1]),
@@ -322,22 +321,21 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
       }
     }
 
-    # If a single station is selected---------------------- --------------------
+    # If stations are specified--------------------- ---------------------------
     if (!is.null(station)) {
-      for (s in station) {
-        tmp <- tryCatch(
-          .read_gz(paste0(ftp_site, yr, "/", s, "-", yr, ".op.gz")),
-          error = function(x) message(paste0("\nThe download stoped at year ", yr,
-                                             ".\nPlease restart the 'get_GSOD()' function starting at this point.\n")))
-        if (merge_station_years == TRUE) {
-          GSOD_objects[[yr]] <- .reformat(tmp, stations)
-        } else {
-          GSOD_XY <- .reformat(tmp, stations)
-        }
-        if (merge_station_years == FALSE) {
-          GSOD_XY <- GSOD_XY
-        }
-      }
+      itw <- (iterators::iter(station))
+      GSOD_XY <- as.data.frame(
+        data.table::rbindlist(
+          foreach::foreach(s = itw) %do% {
+            tmp <- tryCatch(
+              .read_gz(paste0(ftp_site, yr, "/", s, "-", yr, ".op.gz")),
+              error = function(x) message(paste0("\nThe download stoped at year ", yr,
+                                                 ".\nPlease restart the 'get_GSOD()' function starting at this point.\n")))
+            .reformat(tmp, stations)
+          }
+        )
+      )
+      # Stations are not specified ---------------------------------------------
     } else {
       cl <- parallel::makeCluster(parallel::detectCores() - 2)
       doParallel::registerDoParallel(cl)
@@ -379,18 +377,14 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
                                               ".csv"))
     }
 
-    #### GPKG-------------------------------------------------------------------
+    #### GPKG file -------------------------------------------------------------
     if (GPKG == TRUE) {
-      if(file.exists(paste0(path.expand(path), outfile, ".gpkg"))) {
-        file.remove(paste0(path.expand(path), outfile, ".gpkg"))
-      }
       GSOD_XY <- as.data.frame(GSOD_XY)
       sp::coordinates(GSOD_XY) <- ~LON + LAT
       sp::proj4string(GSOD_XY) <- sp::CRS("+proj=longlat +datum=WGS84")
-
       rgdal::writeOGR(GSOD_XY, dsn = paste0(path.expand(path),
                                             outfile, ".gpkg"), layer = "GSOD",
-                      driver = "GPKG", overwrite_layer = TRUE, delete_dsn = TRUE)
+                      driver = "GPKG", overwrite_layer = TRUE)
     }
   }
 
@@ -421,11 +415,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
 
 #' @noRd
 # Reformat and generate new variables
-
 .reformat <- function(tmp, stations) {
-
-  stations <- data.table::setDT(get("stations", envir = environment()))
-
   YEARMODA <- "YEARMODA"
   MONTH <- "MONTH"
   DAY <- "DAY"
@@ -550,29 +540,29 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
 }
 
 #' @noRd
-.get_data_path <- function(path) {
-  path <- trimws(path)
-  if (path == "") {
+.validate_dsn <- function(dsn) {
+  path <- trimws(dsn)
+  if (dsn == "") {
     stop("\nYou must supply a valid file path for storing the resulting file(s).\n")
   } else {
-    if (substr(path, nchar(path) - 1, nchar(path)) == "//") {
-      p <- substr(path, 1, nchar(path) - 2)
-    } else if (substr(path, nchar(path), nchar(path)) == "/" |
-               substr(path, nchar(path), nchar(path)) == "\\") {
-      p <- substr(path, 1, nchar(path) - 1)
+    if (substr(dsn, nchar(dsn) - 1, nchar(dsn)) == "//") {
+      p <- substr(dsn, 1, nchar(dsn) - 2)
+    } else if (substr(dsn, nchar(dsn), nchar(dsn)) == "/" |
+               substr(dsn, nchar(dsn), nchar(dsn)) == "\\") {
+      p <- substr(dsn, 1, nchar(dsn) - 1)
     } else {
-      p <- path
+      p <- dsn
     }
-    if (!file.exists(p) & !file.exists(path)) {
-      stop("\nFile path does not exist: ", path, ".\n")
+    if (!file.exists(p) & !file.exists(dsn)) {
+      stop("\nFile dsn does not exist: ", dsn, ".\n")
       return(0)
     }
   }
-  if (substr(path, nchar(path), nchar(path)) != "/" &
-      substr(path, nchar(path), nchar(path)) != "\\") {
-    path <- paste0(path, "/")
+  if (substr(dsn, nchar(dsn), nchar(dsn)) != "/" &
+      substr(dsn, nchar(dsn), nchar(dsn)) != "\\") {
+    dsn <- paste0(dsn, "/")
   }
-  return(path)
+  return(dsn)
 }
 
 #' @noRd
@@ -580,20 +570,20 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
   country <- toupper(trimws(country[1]))
   nc <- nchar(country)
   if (nc == 3) {
-    if (country %in% country_list[, 4]) {
+    if (country %in% country_list$iso3c) {
       return(country_list[i, 1])
     } else {
       stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you can view the entire list of valid countries in this data by typing, 'country_list'.\n")
     }
   } else if (nc == 2) {
-    if (country %in% country_list[, 3]) {
-      i <- which(country == country_list[, 3])
+    if (country %in% country_list$iso2c) {
+      i <- which(country == country_list$iso2c)
       return(country_list[i, 1])
     } else {
       stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you can view the entire list of valid countries in this data by typing, 'country_list'.\n")
     }
-  } else if (country %in% country_list[, 2]) {
-    i <- which(country == country_list[, 2])
+  } else if (country %in% country_list$COUNTRY_NAME) {
+    i <- which(country == country_list$COUNTRY_NAME)
     return(country_list[i, 1])
   } else {
     stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you can view the entire list of valid countries in this data by typing, 'country_list'.\n")
@@ -625,10 +615,12 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
 
 #' @noRd
 .validate_station <- function(station, stations) {
-  if (station %in% stations[, 12] == FALSE) {
-    stop("\nThis is not a valid station ID number, please check your entry.\n
+  for (i in 1:length(station)) {
+    if (station[i] %in% stations$STNID == FALSE) {
+      stop("\nThis is not a valid station ID number, please check your entry.\n
          Station IDs are provided as a part of the GSODR package in the 'stations' data frame in the STNID column.\n")
-    return(0)
+      return(0)
+    }
   }
 }
 

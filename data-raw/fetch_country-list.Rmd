@@ -31,7 +31,8 @@ countries <- readr::read_table(
 names(countries)[2] <- "COUNTRY_NAME"
 
 country_list <- dplyr::left_join(countries, countrycode::countrycode_data,
-                              by = c(FIPS = "fips104"))
+                   by = c(FIPS = "fips104"))
+country_list <- data.table::setDT(country_list)
 
 print(country_list)
 ```
@@ -40,12 +41,13 @@ There are unecessary data in several columns. `GSODR` only requires FIPS, name,
 and ISO codes to function.
 
 ```{r remove_uncessesary, echo=TRUE, messages=FALSE}
-country_list <- country_list[, -c(3, 4:8, 11:16)]
+
+country_list[, c(3, 4:8, 11:16) := NULL]
 
 print(country_list)
 ```
 
-Convert to regular `data.frame` object and write .rda file to disk.
+Write .rda file to disk.
 
 ```{r write, echo=TRUE, messages=FALSE}
 devtools::use_data(country_list, overwrite = TRUE, compress = "bzip2")

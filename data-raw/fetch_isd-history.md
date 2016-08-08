@@ -197,9 +197,9 @@ summary(stations)
     ##  Min.   :-179.983   Min.   :-350.0   Min.   :19010101   Min.   :19051231  
     ##  1st Qu.: -83.820   1st Qu.:  22.3   1st Qu.:19570630   1st Qu.:20020207  
     ##  Median :   7.850   Median : 137.0   Median :19750716   Median :20150602  
-    ##  Mean   :  -2.696   Mean   : 359.6   Mean   :19775700   Mean   :20040586  
-    ##  3rd Qu.:  64.617   3rd Qu.: 428.0   3rd Qu.:20010915   3rd Qu.:20160804  
-    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20160804   Max.   :20160806  
+    ##  Mean   :  -2.696   Mean   : 359.6   Mean   :19775700   Mean   :20040591  
+    ##  3rd Qu.:  64.617   3rd Qu.: 428.0   3rd Qu.:20010915   3rd Qu.:20160805  
+    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20160804   Max.   :20160807  
     ##                     NA's   :217                                           
     ##     STNID           ELEV_M_SRTM_90m 
     ##  Length:27840       Min.   :-361.0  
@@ -223,6 +223,9 @@ ggplot(data = stations, aes(x = ELEV_M, y = ELEV_M_SRTM_90m)) +
 Buffered versus unbuffered elevation values were previously checked and found not to be different while also not showing any discernable geographic patterns. However, The buffered elevation data are higher than the unbuffered data. To help avoid within cell and between cell variation the buffered values are the values that are included in the final data for distribution with the GSODR package following the approach of Hijmans *et al.* (2005).
 
 ``` r
+# convert to data.table and set key
+data.table::setDT(stations)
+
 # write rda file to disk for use with GSODR package
 devtools::use_data(stations, overwrite = TRUE, compress = "bzip2")
 
@@ -248,11 +251,11 @@ R System Information
 --------------------
 
     ## R version 3.3.1 (2016-06-21)
-    ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+    ## Platform: x86_64-apple-darwin15.5.0 (64-bit)
     ## Running under: OS X 10.11.6 (El Capitan)
     ## 
     ## locale:
-    ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+    ## [1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8
     ## 
     ## attached base packages:
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     

@@ -87,6 +87,41 @@ filter(Oz, STN_NAME == "TOOWOOMBA")
 
 ```
 
+## Find stations near a particular latitude and longitudinal coordinate
+
+The `stations` data that is included with the GSODR package can be converted into
+a spatial object and spatial queries can be performed. For instance.
+
+```{r spatial_query}
+library(rgeos)
+library(sp)
+
+stations_df <- as.data.frame(stations)
+
+sp_stations <- stations
+coordinates(sp_stations) <- ~LON + LAT
+class(sp_stations)
+
+
+sp_stations <- stations
+coordinates(sp_stations) <- c("LON", "LAT")
+proj4string(sp_stations) <- CRS("+init=epsg:4326")
+class(sp_stations)
+
+x <- 37.359031
+y <- -3.065053
+pt <- data.frame(x, y)
+coordinates(pt) <- c("x", "y")
+proj4string(pt) <- CRS("+init=epsg:4326")
+
+nearby <- apply(spDists(sp_stations, pt), 2, 
+                  function(x) paste(which(x < 500 & x != 0), sep = ", "))
+
+stations_df[nearby, ]
+
+
+```
+
 ## Using the `get_GSOD()` Function in GSODR
 
 Download weather data from Toowoomba, Queensland, Australia for 2010 and save
@@ -103,9 +138,13 @@ library(lubridate)
 library(readr)
 library(tidyr)
 
+# Import the data for Toowoomba previously downloaded and cleaned
 tbar <- read_csv("~/GSOD-955510-99999-2010.csv", na = "-9999")
 
+# Create a dataframe of just the date and temperature values that we want to plot
 tbar_temps <- tbar[, c(14, 19, 33, 35)]
+
+# Gather the data from wide to long
 tbar_temps <- gather(tbar_temps, Measurement, gather_cols = TEMP:MIN)
 
 ggplot(data = tbar_temps, aes(x = ymd(YEARMODA), y = value,
