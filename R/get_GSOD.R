@@ -230,8 +230,8 @@
 #'
 #' @export
 get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
-                     filename = "GSOD", max_missing = 5, agroclimatology = FALSE,
-                     CSV = TRUE, GPKG = FALSE) {
+                     filename = "GSOD", max_missing = 5,
+                     agroclimatology = FALSE, CSV = TRUE, GPKG = FALSE) {
 
   # Set up options, creating objects, check variables entered by user-----------
   options(warn = 2)
@@ -242,18 +242,16 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
   td <- tempdir()
 
   # Create objects for use later
-  GSOD_objects <- list(NULL)
-  GSOD_df <- data.table::data.table()
-
-  s <- j <- YEARMODA <- yr <- LON <- LAT <-  NULL
+  s <- j <- yr <- LON <- LAT <-  NULL
 
   # Check data path given by user, does it exist? Is it properly formatted?
-  path <- .validate_dsn(dsn)
+  dsn <- .validate_dsn(dsn)
 
   # Check years given by the user, are they valid?
   .validate_years(years)
 
-  # Check station given by user, is it valid, are the years for this station valid?
+  # Check station given by user, is it valid, are the years for this station
+  # valid?
   if (!is.null(station)) {
     .validate_station(station)
     .validate_station_years(station, years)
@@ -283,7 +281,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
   ity <- iterators::iter(years)
   foreach::foreach(yr = ity) %do% {
     if (is.null(station)) {
-      tryCatch(utils::download.file(url = paste0(ftp_site, yr, "/gsod_", yr, ".tar"),
+      tryCatch(utils::download.file(url = paste0(ftp_site, yr, "/gsod_", yr,
+                                                 ".tar"),
                                     destfile = tf, mode = "wb"),
                error = function(x) message(paste0("\nThe download stoped at year ", yr,
 ".\nPlease restart the 'get_GSOD()' function starting at this point.\n")))
@@ -413,6 +412,9 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
 #' @noRd
 # Reformat and generate new variables
 .reformat <- function(tmp, GSOD_stations) {
+
+  GSOD_df <- data.table::data.table()
+
   YEARMODA <- "YEARMODA"
   MONTH <- "MONTH"
   DAY <- "DAY"
@@ -538,7 +540,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
 
 #' @noRd
 .validate_dsn <- function(dsn) {
-  path <- trimws(dsn)
+  dsn <- trimws(dsn)
   if (dsn == "") {
     stop("\nYou must supply a valid file path for storing the resulting file(s).\n")
   } else {
