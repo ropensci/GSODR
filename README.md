@@ -66,6 +66,11 @@ devtools::install_github("adamhsparks/GSODR")
 Using GSODR
 -----------
 
+### Query the NCDC ftp server for GSOD data
+
+GSODR's main function, `get_GSOD()` downloads and cleans GSOD data from
+the NCDC server. Following are a few examples of it's capabilities.
+
 ``` r
 
 library(GSODR)
@@ -73,22 +78,50 @@ library(GSODR)
 # Download weather station for Toowoomba, Queensland for 2010, save resulting
 # file, GSOD-955510-99999-2010.csv, in the user's home directory.
 
-get_GSOD(years = 2010, station = "955510-99999", dsn = "~/")
-
+get_GSOD(years = 2010, station = "955510-99999", dsn = "~/",
+         filename = "955510-99999")
 
 # Download GSOD data and generate agroclimatology files for years 2010 and 2011,
 # GSOD-agroclimatology-2010.csv and GSOD-agroclimatology-2011.csv, in the user's
 # home directory with a maximum of five missing days per weather station allowed.
 
-get_GSOD(years = 2010:2011, dsn = "~/", agroclimatology = TRUE, max_missing = 5)
-
+get_GSOD(years = 2010:2011, dsn = "~/", filename = "2010-2011_GSOD_agro",
+         agroclimatology = TRUE, max_missing = 5)
 
 # Download data for Philippines for year 2010 and generate a spatial, year
 # summary file, GSOD-RP-2010.gpkg, in the user's home directory with a
 # maximum of five missing days per station allowed and no CSV file creation.
 
-get_GSOD(years = 2010, country = "Philippines", dsn = "~/", GPKG = TRUE,
-         CSV = FALSE)
+get_GSOD(years = 2010, country = "Philippines", dsn = "~/", filename = "PHL_2010"
+         GPKG = TRUE, CSV = FALSE)
+```
+
+### Finding stations
+
+GSODR provides a function, `nearest_stations()`, which will return a
+data frame object of stations in the GSOD data set that are within a
+specified radius of a given point expresssed as latitude and longitude
+in decimal degrees.
+
+``` r
+library(GSODR)
+
+# Find stations within 50km of Toowoomba, QLD.
+nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 50)
+#>         USAF  WBAN                        STN_NAME CTRY STATE CALL     LAT
+#> 23746 945510 99999                       TOOWOOMBA   AS  <NA> <NA> -27.583
+#> 23747 945520 99999                           OAKEY   AS  <NA> YBOK -27.411
+#> 23753 945620 99999 UNIVERSITY OF QUEENSLAND GATTON   AS  <NA> <NA> -27.550
+#> 24338 949999 00170                  GATTON (LAWES)   AS  <NA> <NA> -27.550
+#> 24351 949999 00183      GATTONDPI RESEARCH STATION   AS  <NA> <NA> -27.530
+#> 24609 955510 99999               TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.550
+#>           LON ELEV_M    BEGIN      END        STNID ELEV_M_SRTM_90m
+#> 23746 151.933  676.0 19561231 20120503 945510-99999             670
+#> 23747 151.735  406.9 19730430 20160805 945520-99999             404
+#> 23753 152.333   94.0 20030330 20160805 945620-99999              90
+#> 24338 152.330   29.0 19711231 19840429 949999-00170              92
+#> 24351 152.330   95.0 19831130 19840629 949999-00183              88
+#> 24609 151.917  642.0 19980301 20160805 955510-99999             635
 ```
 
 Output

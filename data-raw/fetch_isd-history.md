@@ -1,7 +1,7 @@
 Fetch, clean and correct altitude in GSOD isd\_history.csv Data
 ================
 Adam H. Sparks
-2016-08-08
+2016-08-09
 
 Introduction
 ============
@@ -198,9 +198,9 @@ summary(stations)
     ##  Min.   :-179.983   Min.   :-350.0   Min.   :19010101   Min.   :19051231  
     ##  1st Qu.: -83.820   1st Qu.:  22.3   1st Qu.:19570630   1st Qu.:20020207  
     ##  Median :   7.850   Median : 137.0   Median :19750716   Median :20150602  
-    ##  Mean   :  -2.696   Mean   : 359.6   Mean   :19775700   Mean   :20040591  
-    ##  3rd Qu.:  64.617   3rd Qu.: 428.0   3rd Qu.:20010915   3rd Qu.:20160805  
-    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20160804   Max.   :20160807  
+    ##  Mean   :  -2.696   Mean   : 359.6   Mean   :19775700   Mean   :20040594  
+    ##  3rd Qu.:  64.617   3rd Qu.: 428.0   3rd Qu.:20010915   3rd Qu.:20160806  
+    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20160804   Max.   :20160808  
     ##                     NA's   :217                                           
     ##     STNID           ELEV_M_SRTM_90m 
     ##  Length:27840       Min.   :-361.0  
@@ -250,11 +250,11 @@ R System Information
 --------------------
 
     ## R version 3.3.1 (2016-06-21)
-    ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+    ## Platform: x86_64-apple-darwin15.5.0 (64-bit)
     ## Running under: OS X 10.11.6 (El Capitan)
     ## 
     ## locale:
-    ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+    ## [1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8
     ## 
     ## attached base packages:
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     

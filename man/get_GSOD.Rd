@@ -5,8 +5,8 @@
 \title{Download, Clean, Reformat and Generate New Variables From GSOD Weather Data}
 \usage{
 get_GSOD(years = NULL, station = NULL, country = NULL, dsn = "",
-  filename = "", max_missing = 5, agroclimatology = FALSE, CSV = TRUE,
-  GPKG = FALSE, merge_station_years = FALSE)
+  filename = "GSOD", max_missing = 5, agroclimatology = FALSE,
+  CSV = TRUE, GPKG = FALSE)
 }
 \arguments{
 \item{years}{Year(s) of weather data to download.}
@@ -28,6 +28,10 @@ available.}
 
 \item{dsn}{Path to file write to.}
 
+\item{filename}{The filename for resulting file(s) to be written with no
+file extension. Year and file extension will be automatically appended to
+file outputs. Defaults to "GSOD-year".}
+
 \item{max_missing}{The maximum number of days allowed to be missing from a
 station's data before it is excluded from final file output. Defaults to five
 days. If a single station is specified, this option is ignored and any data
@@ -44,8 +48,6 @@ file of data, defaults to TRUE, a CSV file is created.}
 \item{GPKG}{Logical. If set to TRUE, create a GeoPackage file, if
 set to FALSE, no GPKG file is created. Defaults to FALSE, no GPKG file is
 created}
-
-\item{file}{The filename for resulting file to be written.}
 }
 \description{
 This function automates downloading, cleaning, reformatting of data from
@@ -71,10 +73,10 @@ Due to the size of the resulting data, output is saved as a comma-separated,
 csv, file (default) or GeoPackage in a directory specified by the user or
 defaults to the current working directory. The files summarize each year by
 station, which includes vapour pressure and relative humidity variables
-calculated from existing data in GSOD. Optionally, because the file sizes are
-much smaller, when selecting a single station, all years queried may be
-merged into one final ouptut file (CSV or GeoPackage) using the \code{
-merge_station_years} option.
+calculated from existing data in GSOD.
+Because the file sizes are much smaller when selecting stations or a group of
+stations, all years queried and stations queried will be merged into one final
+ouptut file (CSV or GeoPackage).
 
 All missing values in resulting files are represented as -9999
 regardless of which field they occur in.
@@ -217,14 +219,14 @@ this same notification.}
 # file, GSOD-955510-99999-2010.csv, in the user's home directory.
 
 get_GSOD(years = 2010, station = "955510-99999", dsn = "~/",
-filename = "955510-99999.csv")
+filename = "955510-99999")
 
 # Download data for Philippines for year 2010 and generate a yearly
 # summary GeoPackage file, GSOD-RP-2010.gpkg, file in the user's home
 directory with a maximum of five missing days per station allowed.
 
 get_GSOD(years = 2010, country = "Philippines", dsn = "~/",
-filename = "Philippines_GSOD.gpkg", GPKG = TRUE, CSV = FALSE)
+filename = "Philippines_GSOD", GPKG = TRUE, CSV = FALSE)
 
 # Download global GSOD data for agroclimatology work for years 2009 and 2010
 # and generate yearly summary files, GSOD-agroclimatology-2010.csv and

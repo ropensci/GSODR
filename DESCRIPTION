@@ -2,7 +2,7 @@ Package: GSODR
 Type: Package
 Title: Download, Clean and Generate New Variables from GSOD Data
 Version: 0.2
-Date: 2016-07-19
+Date: 2016-08-09
 Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     email = "adamhsparks@gmail.com"),
     person("Tomislav", "Hengl", role = "aut",
@@ -48,7 +48,7 @@ Depends:
     R (>= 3.2.0)
 License: GPL (>= 3)
 Imports:
-    curl,
+    data.table,
     doParallel,
     foreach,
     lubridate,
@@ -57,7 +57,6 @@ Imports:
     RCurl,
     readr,
     rgdal,
-    rgeos,
     sp,
     stats,
     tibble,
@@ -69,7 +68,6 @@ Suggests:
     knitr,
     rgeos,
     rmarkdown,
-    sp,
     testthat,
     tidyr
 RoxygenNote: 5.0.1

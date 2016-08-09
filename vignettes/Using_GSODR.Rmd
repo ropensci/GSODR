@@ -33,10 +33,9 @@ For more information see the description of the data provided by NCDC,
 
 # Using the package
 
-
 ## Load GSODR
 
-```{r}
+```{r load_library}
 library(GSODR)
 ```
 
@@ -68,7 +67,7 @@ ggplot(stations, aes(x = LON, y = LAT)) +
 
 GSODR provides lists of weather station locations and elevation values. Using
 dplyr, we can find all the stations in Australia.
-```{r, message=FALSE, warning=FALSE}
+```{r australia_stations, message=FALSE, warning=FALSE}
 library(dplyr)
 
 # convert factor columns to character
@@ -114,17 +113,17 @@ tbar_stations <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 50)
 tbar_stations <- tbar_stations$STNID
 
 get_GSOD(years = 2010, station = tbar_stations, dsn = "~/",
-         filename = "Toowoomba_50km_2010.csv")
+         filename = "Toowoomba_50km_2010")
 ```
 If you wished to drop the stations, 949999-00170 and 949999-00183 from the query,
 you could do this.
 
-```{r, eval=FALSE}
+```{r use_nearest_stations, eval=FALSE}
 remove <- c("949999-00170","949999-00183")
 tbar_stations <- tbar_stations[!tbar_stations %in% remove]
 
 get_GSOD(years = 2010, station = tbar_stations, dsn = "~/",
-         filename = "Toowoomba_50km_2010.csv")
+         filename = "Toowoomba_50km_2010")
 ```
 
 ## Plot Maximum and Miniumum Temperature Values
@@ -132,7 +131,7 @@ Using the first data downloaded for a single station, plot the temperature for
 2010, setting the "-9999" value to NA on import using `read_csv` from Hadley's
 `readr` package.
 
-```{r, fig.width=7, fig.height=7, message=FALSE, fig.cap="Toowoomba 2010 Temperatures"}
+```{r plot_temps, fig.width=7, fig.height=7, message=FALSE, fig.cap="Toowoomba 2010 Temperatures"}
 library(lubridate)
 library(readr)
 library(tidyr)
@@ -174,7 +173,7 @@ country.
 ```{r spatial_files, message=FALSE}
 
 get_GSOD(years = 2015, country = "Australia", dsn = "~/",
-         filename = "AUS_2015.gpkg", CSV = FALSE, GPKG = TRUE)
+         filename = "AUS_2015", CSV = FALSE, GPKG = TRUE)
 ```
 
 Importing the GeoPackage file can be a bit tricky. The dsn will be the full path
@@ -184,7 +183,7 @@ dsn will, but the layer name will not.
 
 ```{r import_spatial_files, message=FALSE}
 library(rgdal)
-AUS_stations <- readOGR(dsn = path.expand("~/GSOD-AS-2015.gpkg"), layer = "GSOD")
+AUS_stations <- readOGR(dsn = path.expand("~/AUS_2015.gpkg"), layer = "GSOD")
 
 class(AUS_stations)
 
@@ -199,7 +198,7 @@ One easy way is using dplyr, which we've already used to filter the stations.
 This option is much faster to load since it does not load the geometry.
 
 ```{r as_database}
-AUS_sqlite <- tbl(src_sqlite(path.expand("~/GSOD-AS-2015.gpkg")), "GSOD")
+AUS_sqlite <- tbl(src_sqlite(path.expand("~/AUS_2015.gpkg")), "GSOD")
 class(AUS_stations)
 print(AUS_sqlite, n = 5)
 
