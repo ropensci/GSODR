@@ -198,8 +198,8 @@ One easy way is using dplyr, which we've already used to filter the stations.
 This option is much faster to load since it does not load the geometry.
 
 ```{r as_database}
-AUS_sqlite <- tbl(src_sqlite(path.expand("~/AUS_2015.gpkg")), "GSOD")
-class(AUS_stations)
+AUS_sqlite <- tbl(src_sqlite(path.expand("~/AUS-2015.gpkg")), "GSOD")
+class(AUS_sqlite)
 print(AUS_sqlite, n = 5)
 
 ```
