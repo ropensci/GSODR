@@ -95,7 +95,7 @@ parameter of `get_GSOD()`.
 
 ```{r}
 get_GSOD(years = 2010, station = "955510-99999", dsn = "~/",
-         filename = "Toowoomba_Airport_2010.csv")
+         filename = "Toowoomba_Airport")
 ```
 
 ## Find Stations Within a Specified Distance of a Point
@@ -123,7 +123,7 @@ remove <- c("949999-00170","949999-00183")
 tbar_stations <- tbar_stations[!tbar_stations %in% remove]
 
 get_GSOD(years = 2010, station = tbar_stations, dsn = "~/",
-         filename = "Toowoomba_50km_2010")
+         filename = "Toowoomba_50km")
 ```
 
 ## Plot Maximum and Miniumum Temperature Values
@@ -137,7 +137,7 @@ library(readr)
 library(tidyr)
 
 # Import the data for Toowoomba previously downloaded and cleaned
-tbar <- read_csv("~/Toowoomba_Airport_2010.csv", na = "-9999")
+tbar <- read_csv("~/Toowoomba_Airport-2010.csv", na = "-9999")
 
 # Create a dataframe of just the date and temperature values that we want to plot
 tbar_temps <- tbar[, c(14, 19, 33, 35)]
@@ -173,7 +173,7 @@ country.
 ```{r spatial_files, message=FALSE}
 
 get_GSOD(years = 2015, country = "Australia", dsn = "~/",
-         filename = "AUS_2015", CSV = FALSE, GPKG = TRUE)
+         filename = "AUS", CSV = FALSE, GPKG = TRUE)
 ```
 
 Importing the GeoPackage file can be a bit tricky. The dsn will be the full path
@@ -183,7 +183,7 @@ dsn will, but the layer name will not.
 
 ```{r import_spatial_files, message=FALSE}
 library(rgdal)
-AUS_stations <- readOGR(dsn = path.expand("~/AUS_2015.gpkg"), layer = "GSOD")
+AUS_stations <- readOGR(dsn = path.expand("~/AUS-2015.gpkg"), layer = "GSOD")
 
 class(AUS_stations)
 
