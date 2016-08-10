@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
   fig.path = "README-"
 )
 ```
-GSODR
+GSODR: Global Surface Summary Daily Weather Data in R
 ================
 
 [![Travis-CI Build Status](https://travis-ci.org/adamhsparks/GSODR.svg?branch=master)](https://travis-ci.org/adamhsparks/GSODR)
@@ -21,8 +21,8 @@ GSODR
 [![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/GSODR?color=blue)](https://github.com/metacran/cranlogs.app)
 [![cran version](http://www.r-pkg.org/badges/version/GSODR)](https://cran.r-project.org/package=GSODR)
 
-An R package that provides a function that automates downloading and
-cleaning data from the "[Global Surface Summary of the Day
+The GSODR package is an R package that provides a function that automates
+downloading and cleaning data from the "[Global Surface Summary of the Day
 (GSOD)](https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod)"
 data provided by the US National Climatic Data Center (NCDC). Stations
 are individually checked for number of missing days to assure data
@@ -37,22 +37,23 @@ GSOD.
 This package was largely based on Tomislav Hengl's work in "[A Practical Guide to Geostatistical Mapping](http://spatial-analyst.net/book/getGSOD.R)", with updates for speed, cross-platform functionality, and more options for data
 retrieval and error correction.
 
-Be sure to have disk space free and allocate the proper time for this to
-run. This is a time, RAM and disk space intensive process. For any query
-of GSOD data other than a single station, the process runs in parallel
-to clean and reformat the data.
+It is recommended that you have a good Internet connection to download the data
+files as they can be quite large and slow to download.
 
-For more information see the description of the data provided by NCDC,
-<http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
+For more information on GSOD data see the description of the data provided by
+NCDC, <http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
 
 # Quick Start
 ## Install
 
-A stable version of GSODR is available from CRAN.
+### Stable version
+A stable version of GSODR is available from [CRAN](https://cran.r-project.org/package=GSODR).
 
 ```{r, eval=FALSE}
-install.packages("GSODR", dependencies = TRUE)
+install.packages("GSODR")
 ```
+
+### Development version
 
 A development version is available from from GitHub. If you wish to install the
 development version that may have new features (but also may not work properly),
@@ -61,12 +62,12 @@ branch on GitHub functional and working properly this may not always happen.
 If you find bugs, please file a report as an issue.
 
 ```{r, eval=FALSE}
-install.packages("devtools", dependencies = TRUE)
+install.packages("devtools")
 devtools::install_github("adamhsparks/GSODR")
 ```
 
 ## Using GSODR
-### Query the NCDC ftp server for GSOD data
+### Query the NCDC FTP server for GSOD data
 
 GSODR's main function, `get_GSOD()` downloads and cleans GSOD data from the NCDC
 server. Following are a few examples of it's capabilities.
@@ -106,6 +107,7 @@ given point expresssed as latitude and longitude in decimal degrees.
 library(GSODR)
 
 # Find stations within 50km of Toowoomba, QLD.
+
 nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 50)
 
 ```

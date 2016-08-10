@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-GSODR
-=====
+GSODR: Global Surface Summary Daily Weather Data in R
+=====================================================
 
 [![Travis-CI Build
 Status](https://travis-ci.org/adamhsparks/GSODR.svg?branch=master)](https://travis-ci.org/adamhsparks/GSODR)
@@ -12,8 +12,9 @@ downloads](http://cranlogs.r-pkg.org/badges/GSODR?color=blue)](https://github.co
 [![cran
 version](http://www.r-pkg.org/badges/version/GSODR)](https://cran.r-project.org/package=GSODR)
 
-An R package that provides a function that automates downloading and
-cleaning data from the "[Global Surface Summary of the Day
+The GSODR package is an R package that provides a function that
+automates downloading and cleaning data from the "[Global Surface
+Summary of the Day
 (GSOD)](https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod)"
 data provided by the US National Climatic Data Center (NCDC). Stations
 are individually checked for number of missing days to assure data
@@ -31,13 +32,11 @@ Mapping](http://spatial-analyst.net/book/getGSOD.R)", with updates for
 speed, cross-platform functionality, and more options for data retrieval
 and error correction.
 
-Be sure to have disk space free and allocate the proper time for this to
-run. This is a time, RAM and disk space intensive process. For any query
-of GSOD data other than a single station, the process runs in parallel
-to clean and reformat the data.
+It is recommended that you have a good Internet connection to download
+the data files as they can be quite large and slow to download.
 
-For more information see the description of the data provided by NCDC,
-<http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
+For more information on GSOD data see the description of the data
+provided by NCDC, <http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
 
 Quick Start
 ===========
@@ -45,11 +44,16 @@ Quick Start
 Install
 -------
 
-A stable version of GSODR is available from CRAN.
+### Stable version
+
+A stable version of GSODR is available from
+[CRAN](https://cran.r-project.org/package=GSODR).
 
 ``` r
-install.packages("GSODR", dependencies = TRUE)
+install.packages("GSODR")
 ```
+
+### Development version
 
 A development version is available from from GitHub. If you wish to
 install the development version that may have new features (but also may
@@ -59,14 +63,14 @@ properly this may not always happen. If you find bugs, please file a
 report as an issue.
 
 ``` r
-install.packages("devtools", dependencies = TRUE)
+install.packages("devtools")
 devtools::install_github("adamhsparks/GSODR")
 ```
 
 Using GSODR
 -----------
 
-### Query the NCDC ftp server for GSOD data
+### Query the NCDC FTP server for GSOD data
 
 GSODR's main function, `get_GSOD()` downloads and cleans GSOD data from
 the NCDC server. Following are a few examples of it's capabilities.
@@ -107,6 +111,7 @@ in decimal degrees.
 library(GSODR)
 
 # Find stations within 50km of Toowoomba, QLD.
+
 nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 50)
 #>         USAF  WBAN                        STN_NAME CTRY STATE CALL     LAT
 #> 23746 945510 99999                       TOOWOOMBA   AS  <NA> <NA> -27.583
@@ -117,11 +122,11 @@ nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 50)
 #> 24609 955510 99999               TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.550
 #>           LON ELEV_M    BEGIN      END        STNID ELEV_M_SRTM_90m
 #> 23746 151.933  676.0 19561231 20120503 945510-99999             670
-#> 23747 151.735  406.9 19730430 20160805 945520-99999             404
-#> 23753 152.333   94.0 20030330 20160805 945620-99999              90
+#> 23747 151.735  406.9 19730430 20160806 945520-99999             404
+#> 23753 152.333   94.0 20030330 20160806 945620-99999              90
 #> 24338 152.330   29.0 19711231 19840429 949999-00170              92
 #> 24351 152.330   95.0 19831130 19840629 949999-00183              88
-#> 24609 151.917  642.0 19980301 20160805 955510-99999             635
+#> 24609 151.917  642.0 19980301 20160806 955510-99999             635
 ```
 
 Output

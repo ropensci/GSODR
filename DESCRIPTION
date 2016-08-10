@@ -1,6 +1,6 @@
 Package: GSODR
 Type: Package
-Title: Download, Clean and Generate New Variables from GSOD Data
+Title: Global Summary Daily Weather Data in R
 Version: 0.2
 Date: 2016-08-09
 Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
@@ -12,7 +12,7 @@ Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     person("Kay", "Sumfleth", role = "aut",
     email = "kay@sumfleth.de"))
 Maintainer: Adam Sparks <adamhsparks@gmail.com>
-URL: https://github.com/adamhsparks/GSODR
+URL: https://CRAN.R-project.org/package=GSODR
 BugReports: https://github.com/adamhsparks/GSODR/issues
 Description: Download, clean, reformat and create new variables from the
     USA National Climatic Data Center (NCDC) Global Surface Summary of the Day
