@@ -95,7 +95,7 @@ parameter of `get_GSOD()`.
 
 ```{r}
 get_GSOD(years = 2010, station = "955510-99999", dsn = "~/",
-         file = "Toowoomba_Airport_2010.csv")
+         filename = "Toowoomba_Airport_2010.csv")
 ```
 
 ## Find Stations Within a Specified Distance of a Point
