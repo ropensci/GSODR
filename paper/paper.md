@@ -33,19 +33,20 @@ Geopackage (GPKG) [@geopackage] files. An earlier R script, getGSOD.R, published
 in the freely available book, "A Practical Guide to Geostatistical Mapping", 
 [@Hengl2009] provides basic functionality on Windows based computers, but lacks
 cross-platform support and does not take advantage of modern techniques in R
-which improve the time used to complete the process. The rnoaa [@rnoaa]
-package offers an excellent suite of tools for interacting with and downloading
-weather data from the United States National Oceanic and Atmospheric
+which improve the computing resources used to complete the process. The rnoaa
+[@rnoaa] package offers an excellent suite of tools for interacting with and
+downloading weather data from the United States National Oceanic and Atmospheric
 Administration but lacks GSOD data retrieval. Several other APIs and R packages
 exist to access weather data, but most are region or continent specific, rather
-than global like the GSOD data set. We developed this package to provide a
-function to simplify downloading GSOD data and formatting it to easily be used
-in research and a function to help identify stations within a given radius of a
-point of interest. A list of stations based on the station list provided by the
-NCDC, which only includes stations with valid latitude and longitide values, is
-provided with the package. Further, 200 metre buffered elevation data, derived
-from the CGIAR-CSI SRTM hole-filled 90 metre data set [@Jarvis2008] are included
-for stations between -60˚ and 60˚ latitude in this list.
+than a global set of data as the GSOD data is. We developed this package to
+provide a function to simplify downloading GSOD data and formatting it to easily
+be used in research and a function to help identify stations within a given
+radius of a point of interest. A list of stations based on the station list
+provided by the NCDC, which only includes stations with valid latitude and
+longitide values, is provided with the package. Further, 200 metre buffered
+elevation data, derived from the CGIAR-CSI SRTM hole-filled 90 metre data set
+[@Jarvis2008] are included for stations between -60˚ and 60˚ latitude in this
+list.
 
 Upon download, stations are individually checked for a user-specified number of
 missing days. Stations with too many missing observations are omitted from the
