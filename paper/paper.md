@@ -43,9 +43,11 @@ provide a function that simplifies downloading GSOD data and formatting it to
 easily be used in research and a function to help identify stations within a
 given radius of a point of interest. To help facilitate speed and provided extra
 data, a list which only includes stations with valid latitude and longitude
-values is provided with the package. This station list includes a data set of
-200 metre buffered elevation values, derived from the CGIAR-CSI SRTM hole-filled
-90 metre data set [@Jarvis2008] as well.
+values is provided with the package, with users having the option of retrieving
+and using the latest information from NOAA if this list is out of date. Extra
+data included is a set of 200 metre buffered elevation values, derived from the
+CGIAR-CSI SRTM hole-filled 90 metre data set [@Jarvis2008] to help address
+discrepancies in reported elevation for the stations.
 
 Upon download, stations are individually checked for a user-specified number of
 missing days. Stations files with too many missing observations are omitted from
