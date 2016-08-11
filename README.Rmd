@@ -30,7 +30,7 @@ quality, stations with too many missing observations are omitted. All
 units are converted to International System of Units (SI), e.g., inches to
 millimetres and Fahrenheit to Celsius. Output is saved as a Comma Separated
 Value (CSV) file or in a spatial GeoPackage (GPKG) file, implemented by most
-major GIS softwares, summarising each year by station, which also includes
+major GIS software, summarising each year by station, which also includes
 vapour pressure and relative humidity variables calculated from existing data in
 GSOD.
 
@@ -101,7 +101,7 @@ get_GSOD(years = 2010, country = "Philippines", dsn = "~/", filename = "PHL_2010
 
 GSODR provides a function, `nearest_stations()`, which will return a data frame
 object of stations in the GSOD data set that are within a specified radius of a 
-given point expresssed as latitude and longitude in decimal degrees.
+given point expressed as latitude and longitude in decimal degrees.
 
 ```{r toowoomba_stations}
 library(GSODR)
@@ -151,14 +151,14 @@ pressure;
 Missing = -9999;  
 **STP_CNT** - Number of observations used in calculating mean station
 pressure;  
-**VISIB** - Mean visibility for the day converted to kilometers to
+**VISIB** - Mean visibility for the day converted to kilometres to
 tenths Missing = -9999;  
 **VISIB_CNT** - Number of observations used in calculating mean daily
 visibility;  
 **WDSP** - Mean daily wind speed value converted to metres/second to
 tenths Missing = -9999;  
 **WDSP_CNT** - Number of observations used in calculating mean daily
-windspeed;  
+wind speed;  
 **MXSPD** - Maximum sustained wind speed reported for the day converted
 to metres/second to tenths. Missing = -9999;  
 **GUST** - Maximum wind gust reported for the day converted to

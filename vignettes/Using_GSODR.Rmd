@@ -19,7 +19,7 @@ quality, those stations with too many missing observations as defined by the
 user are omitted. All units are converted to International System of Units (SI),
 e.g., inches to millimetres and Fahrenheit to Celsius. Output is saved as a
 Comma Separated Value (CSV) file or in a spatial GeoPackage (GPKG) file,
-implemented by most major GIS softwares, summarising each year by station, which
+implemented by most major GIS software, summarising each year by station, which
 also includes vapour pressure and relative humidity variables calculated from
 existing data in GSOD.
 
@@ -49,7 +49,7 @@ Using this data we can plot the station locations that are included in GSOD that
 provide valid geo-locations.
 
 Using ggplot2 and the ggalt package it is possible to plot the station locations
-using alpha transparency to see the densist part of the network and use the 
+using alpha transparency to see the densest part of the network and use the 
 Robinson projection for the map.
 
 ```{r plot_stations, fig.width=7, fig.height=7, fig.cap="GSOD Station Locations"}
@@ -151,8 +151,8 @@ ggplot(data = tbar_temps, aes(x = ymd(YEARMODA), y = value,
 ```
 
 ### Fetching the latest station list from NCDC
-A list of stations is provided with the GSODR package for convience and speed.
-However, this list is updated somewhat reguarly. If you would like to use the
+A list of stations is provided with the GSODR package for convince and speed.
+However, this list is updated somewhat regularly. If you would like to use the
 very latest station list, you may do so by using the `refresh` option in
 `get_GSOD()`. This list will only be available for the R session in which you
 have specified the option to refresh the station list and downloaded data, it

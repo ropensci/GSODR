@@ -30,18 +30,18 @@ Description:  The GSODR package offers automated downloading, parsing, cleaning
     latitude and longitude values. File output is returned as a comma-separated
     values (CSV) or GeoPackage (GPKG) file written to a local disk in a location
     selected by the user, which summarises each year by station. Additional
-    useful variables, saturation vapor pressure (es), actual vapor pressure (ea)
+    useful variables, saturation vapour pressure (es), actual vapour pressure (ea)
     and relative humidity are calculated from the original data and included in
     the final data set. The resulting files can be as larger than 500mb
     depending on the user's stringency for missing data and geographic area of
     interest. Be sure to have sufficient RAM and disk space as well as a
-    reasonably fast internet connection to use this package to perform this
+    reasonably fast Internet connection to use this package to perform this
     operation for a global data set over many years. However, for much smaller
     and more manageable data sets, an individual country of interest may be
     selected as well as only stations falling between -60 and 60 degrees
     latitude for agroclimatology work or individual stations if the station ID
     is known. The resulting files include station data (e.g., station name,
-    country, latitude, longitude, elevation) or use in a geographic
+    country, latitude, longitude, elevation) for use in a geographic
     information system (GIS). The function was largely based on T. Hengl's
     'getGSOD.R' script, available from
     <http://spatial-analyst.net/book/system/files/getGSOD.R> with enhancements

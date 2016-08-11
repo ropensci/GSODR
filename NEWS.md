@@ -10,7 +10,7 @@
   * A vignette is now included  
   * Output files now include fields for State (US only) and Call (International
   Civil Aviation Organization (ICAO) Airport Code)  
-  * Use FIPS codes in place of ISO3c for filename and in output files because
+  * Use FIPS codes in place of ISO3c for file name and in output files because
   some stations do not have an ISO country code  
   * Spatial file output is now in GeoPackage format (GPKG). This results in a
   single file output unlike shapefile and allows for long field names  
@@ -32,13 +32,13 @@
   that are located above 60 latitude and below -60 latitude  
   * Field names in output files use "\_" in place of "."  
   * Long field names now used in file outputs  
-  * Country is specified using FIPS codes in filename and output file contents
+  * Country is specified using FIPS codes in file name and output file contents
   due to stations occurring in some locales that lack ISO 3166 3 letter country
   codes  
   * The `get_GSOD()` function now checks stations to see if the years being
   queried are provided and returns a message alerting user if the station and
   years requested are not available  
-  * When stations are specified for retreival using the `station = ""`
+  * When stations are specified for retrieval using the `station = ""`
   parameter, the `get_GSOD()` function now checks to see if the file exists on
   the server, if it does not, a message is returned and all other stations that
   have files are processed and returned in output  
@@ -146,7 +146,7 @@
 ## Bug fixes
   * Fixed bug where YDAY not correctly calculated and reported in CSV file
   * CSV files for station only queries now are names with the Station Identifier. Previously named same as global data
-  * Likesise, CSV files for agroclimatology now are names with the Station Identifier. Previously named same as global data
+  * Likewise, CSV files for agroclimatology now are names with the Station Identifier. Previously named same as global data
 
 ## Changes
   * Set values where MIN > MAX to NA

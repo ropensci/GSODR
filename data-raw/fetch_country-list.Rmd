@@ -34,7 +34,7 @@ GSOD_country_list <- data.table::setDT(GSOD_country_list)
 print(GSOD_country_list)
 ```
 
-There are unecessary data in several columns. `GSODR` only requires FIPS, name,
+There are unnecessary data in several columns. `GSODR` only requires FIPS, name,
 and ISO codes to function.
 
 ```{r remove_uncessesary, echo=TRUE, messages=FALSE}

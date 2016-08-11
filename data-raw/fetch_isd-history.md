@@ -221,7 +221,7 @@ ggplot(data = GSOD_stations, aes(x = ELEV_M, y = ELEV_M_SRTM_90m)) +
 
 ![GSOD Reported Elevation versus CGIAR-CSI SRTM Buffered Elevation](fetch_isd-history_files/figure-markdown_github/Buffered%20SRTM%2090m%20vs%20Reported%20Elevation-1.png)
 
-Buffered versus unbuffered elevation values were previously checked and found not to be different while also not showing any discernable geographic patterns. However, The buffered elevation data are higher than the unbuffered data. To help avoid within cell and between cell variation the buffered values are the values that are included in the final data for distribution with the GSODR package following the approach of Hijmans *et al.* (2005).
+Buffered versus non-buffered elevation values were previously checked and found not to be different while also not showing any discernible geographic patterns. However, The buffered elevation data are higher than the non-buffered data. To help avoid within cell and between cell variation the buffered values are the values that are included in the final data for distribution with the GSODR package following the approach of Hijmans *et al.* (2005).
 
 ``` r
 # write rda file to disk for use with GSODR package

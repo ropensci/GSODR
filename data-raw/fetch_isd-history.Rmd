@@ -220,9 +220,9 @@ ggplot(data = GSOD_stations, aes(x = ELEV_M, y = ELEV_M_SRTM_90m)) +
   geom_point(alpha = 0.4, size = 0.5)
 ```
 
-Buffered versus unbuffered elevation values were previously checked and found
-not to be different while also not showing any discernable geographic patterns.
-However, The buffered elevation data are higher than the unbuffered data. To
+Buffered versus non-buffered elevation values were previously checked and found
+not to be different while also not showing any discernible geographic patterns.
+However, The buffered elevation data are higher than the non-buffered data. To
 help avoid within cell and between cell variation the buffered values are the
 values that are included in the final data for distribution with the GSODR
 package following the approach of Hijmans *et al.* (2005).

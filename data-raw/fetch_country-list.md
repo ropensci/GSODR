@@ -8,8 +8,6 @@ Introduction
 
 This script will fetch the country list provided by the NCDC for the GSOD stations from the ftp server and merge it with ISO codes from the [`countrycode`](https://cran.r-project.org/package=countrycode) package for inclusion in the GSODR package in /data/country-list.rda. These codes are used when a user selects a single country for a data query.
 
-This inclusion decreases the time necessary to query the server when specifying a country for weather data downloading.
-
 R Data Processing
 =================
 
@@ -64,7 +62,7 @@ print(GSOD_country_list)
     ## 292:                                 NA        NA              NA
     ## 293:                                 NA        NA              NA
 
-There are unecessary data in several columns. `GSODR` only requires FIPS, name, and ISO codes to function.
+There are unnecessary data in several columns. `GSODR` only requires FIPS, name, and ISO codes to function.
 
 ``` r
 GSOD_country_list[, c(3, 4:8, 11:16) := NULL]
@@ -91,7 +89,7 @@ Write .rda file to disk.
 devtools::use_data(GSOD_country_list, overwrite = TRUE, compress = "bzip2")
 ```
 
-    ## Saving GSOD_country_list as GSOD_country_list.rda to /Users/U8004755/Development/GSODR/data
+    ## Saving GSOD_country_list as GSOD_country_list.rda to /Users/asparks/Development/GSODR/data
 
 Notes
 =====
@@ -107,11 +105,11 @@ R System Information
 --------------------
 
     ## R version 3.3.1 (2016-06-21)
-    ## Platform: x86_64-apple-darwin15.5.0 (64-bit)
+    ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
     ## Running under: OS X 10.11.6 (El Capitan)
     ## 
     ## locale:
-    ## [1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8
+    ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
     ## 
     ## attached base packages:
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     

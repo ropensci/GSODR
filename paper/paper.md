@@ -42,7 +42,7 @@ than a global set of data as the GSOD data is. This package was developed to
 provide a function that simplifies downloading GSOD data and formatting it to
 easily be used in research and a function to help identify stations within a
 given radius of a point of interest. To help facilitate speed and provided extra
-data, a list which only includes stations with valid latitude and longitide
+data, a list which only includes stations with valid latitude and longitude
 values is provided with the package. This station list includes a data set of
 200 metre buffered elevation values, derived from the CGIAR-CSI SRTM hole-filled
 90 metre data set [@Jarvis2008] as well.
@@ -53,7 +53,7 @@ the final output to help ensure data quality. All units are converted from
 United States Customary System (USCS) to International System of Units (SI),
 e.g., inches to millimetres and Fahrenheit to Celsius. Wind speed is also
 converted from knots to metres per second. Additional useful variables,
-saturation vapor pressure (es), actual vapor pressure (ea) and relative humidity
+saturation vapour pressure (es), actual vapour pressure (ea) and relative humidity
 are calculated from the original data and included in the final data set. Final
 output are saved in a user-defined location on a local disk for use in R or
 Geographic Information System (GIS) software.
