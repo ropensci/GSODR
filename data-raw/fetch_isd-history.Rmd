@@ -203,9 +203,9 @@ stations <- tibble::as_tibble(stations)
 
 # Perform left join to join corrected elevation with original station data,
 # this will include stations below/above -60/60
-stations <- dplyr::left_join(stations, corrected_elev)
+GSOD_stations <- dplyr::left_join(stations, corrected_elev)
 
-summary(stations)
+summary(GSOD_stations)
 ```
 
 # Figures
@@ -216,7 +216,7 @@ library(ggalt)
 ```
 
 ```{r Buffered SRTM 90m vs Reported Elevation, echo=TRUE, fig.cap="GSOD Reported Elevation versus CGIAR-CSI SRTM Buffered Elevation", warning=FALSE}
-ggplot(data = stations, aes(x = ELEV_M, y = ELEV_M_SRTM_90m)) +
+ggplot(data = GSOD_stations, aes(x = ELEV_M, y = ELEV_M_SRTM_90m)) +
   geom_point(alpha = 0.4, size = 0.5)
 ```
 
@@ -231,8 +231,8 @@ package following the approach of Hijmans *et al.* (2005).
 
 
 # write rda file to disk for use with GSODR package
-data.table::setDT(stations)
-devtools::use_data(stations, overwrite = TRUE, compress = "bzip2")
+data.table::setDT(GSOD_stations)
+devtools::use_data(GSOD_stations, overwrite = TRUE, compress = "bzip2")
 
 # clean up Natural Earth data files before we leave
 file.remove(list.files(pattern = glob2rx("ne_10m_admin_0_countries*")))

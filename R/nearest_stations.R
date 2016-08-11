@@ -19,22 +19,20 @@
 #' this same notification.}
 #'
 #' @examples
+#' \dontrun{
 #' # Find stations within a 100km radius of Toowoomba, QLD, AUS
 #'
 #' nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 100)
-#'
+#'}
 #' @export
 nearest_stations <- function(LAT, LON, distance) {
   options(warn = 2)
   options(timeout = 300)
 
-  utils::data("stations", package = "GSODR", envir = environment())
-  
-  # this data frame serves to return the list of stations at the end
-  stations <- as.data.frame(get("stations", envir = environment()))
-  
+  stations <- GSODR::GSOD_stations
+
   # this is a spatial object dataframe for calculating the nearest
-  sp_stations <- as.data.frame(get("stations", envir = environment()))
+  sp_stations <- stations
   sp::coordinates(sp_stations) <- c("LON", "LAT")
   sp::proj4string(sp_stations) <- sp::CRS("+init=epsg:4326")
 
@@ -46,5 +44,5 @@ nearest_stations <- function(LAT, LON, distance) {
                   function(x) paste(which(x < as.numeric(paste(distance))
                                           & x != 0), sep = ", "))
 
-  print(as.data.frame(stations[nearby, ]))
+  print(stations[as.numeric(nearby), ])
 }

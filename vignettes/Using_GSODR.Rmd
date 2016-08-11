@@ -23,8 +23,7 @@ implemented by most major GIS softwares, summarising each year by station, which
 also includes vapour pressure and relative humidity variables calculated from
 existing data in GSOD.
 
-This package was largely based on Tomislav Hengl's work in "[A Practical
-Guide to Geostatistical Mapping](http://spatial-analyst.net/book/getGSOD.R)",
+This package was largely based on Tomislav Hengl's work in "[A Practical Guide to Geostatistical Mapping](http://spatial-analyst.net/book/getGSOD.R)",
 with updates for speed, cross-platform functionality, and more options for data
 retrieval and error correction.
 
@@ -37,6 +36,7 @@ For more information see the description of the data provided by NCDC,
 
 ```{r load_library}
 library(GSODR)
+stations <- GSODR::GSOD_stations
 ```
 
 ## Plot Global Station Locations
@@ -69,13 +69,8 @@ GSODR provides lists of weather station locations and elevation values. Using
 dplyr, we can find all the stations in Australia.
 ```{r australia_stations, message=FALSE, warning=FALSE}
 library(dplyr)
-
-# convert factor columns to character
-i <- sapply(stations, is.factor)
-stations[i] <- lapply(stations[i], as.character)
-
-# now it's possible to left_join the data
-station_locations <- left_join(stations, country_list, by = c("CTRY" = "FIPS"))
+# left_join the the station data with the country list
+station_locations <- left_join(stations, GSODR::GSOD_country_list, by = c("CTRY" = "FIPS"))
 
 # create data.frame for Australia only
 Oz <- filter(station_locations, COUNTRY_NAME == "AUSTRALIA")
@@ -152,6 +147,21 @@ ggplot(data = tbar_temps, aes(x = ymd(YEARMODA), y = value,
   scale_y_continuous(name = "Temperature") +
   scale_x_date(name = "Date") +
   theme_bw()
+
+```
+
+### Fetching the latest station list from NCDC
+A list of stations is provided with the GSODR package for convience and speed.
+However, this list is updated somewhat reguarly. If you would like to use the
+very latest station list, you may do so by using the `refresh` option in
+`get_GSOD()`. This list will only be available for the R session in which you
+have specified the option to refresh the station list and downloaded data, it
+will not overwrite the default list available with the package.
+
+```{r refresh_stations}
+
+get_GSOD(years = 2016, dsn = "~/", filename = "newest_stations", refresh = TRUE)
+
 
 ```
 

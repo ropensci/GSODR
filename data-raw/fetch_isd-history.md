@@ -1,7 +1,7 @@
 Fetch, clean and correct altitude in GSOD isd\_history.csv Data
 ================
 Adam H. Sparks
-2016-08-09
+2016-08-11
 
 Introduction
 ============
@@ -169,17 +169,17 @@ stations <- tibble::as_tibble(stations)
 
 # Perform left join to join corrected elevation with original station data,
 # this will include stations below/above -60/60
-stations <- dplyr::left_join(stations, corrected_elev)
+GSOD_stations <- dplyr::left_join(stations, corrected_elev)
 ```
 
     ## Joining, by = c("USAF", "WBAN", "STN_NAME", "CTRY", "STATE", "CALL", "LAT", "LON", "ELEV_M", "BEGIN", "END", "STNID")
 
 ``` r
-summary(stations)
+summary(GSOD_stations)
 ```
 
     ##      USAF               WBAN             STN_NAME        
-    ##  Length:27840       Length:27840       Length:27840      
+    ##  Length:27841       Length:27841       Length:27841      
     ##  Class :character   Class :character   Class :character  
     ##  Mode  :character   Mode  :character   Mode  :character  
     ##                                                          
@@ -187,7 +187,7 @@ summary(stations)
     ##                                                          
     ##                                                          
     ##      CTRY              STATE               CALL                LAT        
-    ##  Length:27840       Length:27840       Length:27840       Min.   :-89.00  
+    ##  Length:27841       Length:27841       Length:27841       Min.   :-89.00  
     ##  Class :character   Class :character   Class :character   1st Qu.: 24.07  
     ##  Mode  :character   Mode  :character   Mode  :character   Median : 39.67  
     ##                                                           Mean   : 31.86  
@@ -196,14 +196,14 @@ summary(stations)
     ##                                                                           
     ##       LON               ELEV_M           BEGIN               END          
     ##  Min.   :-179.983   Min.   :-350.0   Min.   :19010101   Min.   :19051231  
-    ##  1st Qu.: -83.820   1st Qu.:  22.3   1st Qu.:19570630   1st Qu.:20020207  
+    ##  1st Qu.: -83.819   1st Qu.:  22.3   1st Qu.:19570630   1st Qu.:20020207  
     ##  Median :   7.850   Median : 137.0   Median :19750716   Median :20150602  
-    ##  Mean   :  -2.696   Mean   : 359.6   Mean   :19775700   Mean   :20040594  
-    ##  3rd Qu.:  64.617   3rd Qu.: 428.0   3rd Qu.:20010915   3rd Qu.:20160806  
-    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20160804   Max.   :20160808  
+    ##  Mean   :  -2.692   Mean   : 359.5   Mean   :19775714   Mean   :20040604  
+    ##  3rd Qu.:  64.617   3rd Qu.: 428.0   3rd Qu.:20010915   3rd Qu.:20160807  
+    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20160807   Max.   :20160809  
     ##                     NA's   :217                                           
     ##     STNID           ELEV_M_SRTM_90m 
-    ##  Length:27840       Min.   :-361.0  
+    ##  Length:27841       Min.   :-361.0  
     ##  Class :character   1st Qu.:  24.0  
     ##  Mode  :character   Median : 153.0  
     ##                     Mean   : 379.2  
@@ -215,7 +215,7 @@ Figures
 =======
 
 ``` r
-ggplot(data = stations, aes(x = ELEV_M, y = ELEV_M_SRTM_90m)) +
+ggplot(data = GSOD_stations, aes(x = ELEV_M, y = ELEV_M_SRTM_90m)) +
   geom_point(alpha = 0.4, size = 0.5)
 ```
 
@@ -225,8 +225,8 @@ Buffered versus unbuffered elevation values were previously checked and found no
 
 ``` r
 # write rda file to disk for use with GSODR package
-data.table::setDT(stations)
-devtools::use_data(stations, overwrite = TRUE, compress = "bzip2")
+data.table::setDT(GSOD_stations)
+devtools::use_data(GSOD_stations, overwrite = TRUE, compress = "bzip2")
 
 # clean up Natural Earth data files before we leave
 file.remove(list.files(pattern = glob2rx("ne_10m_admin_0_countries*")))

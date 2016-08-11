@@ -1,12 +1,12 @@
 Fetch GSOD Country List and Merge with ISO Country Codes
 ================
 Adam H. Sparks
-2016-08-08
+2016-08-11
 
 Introduction
 ============
 
-This script will fetch the country list provided by the NCDC for the GSOD stations from the ftp server and merge it with ISO codes from the [`countrycode`](https://github.com/vincentarelbundock/countrycode) package for inclusion in the GSODR package in /data/country-list.rda. These codes are used when a user selects a single country for a data query.
+This script will fetch the country list provided by the NCDC for the GSOD stations from the ftp server and merge it with ISO codes from the [`countrycode`](https://cran.r-project.org/package=countrycode) package for inclusion in the GSODR package in /data/country-list.rda. These codes are used when a user selects a single country for a data query.
 
 This inclusion decreases the time necessary to query the server when specifying a country for weather data downloading.
 
@@ -20,11 +20,11 @@ countries <- readr::read_table(
   "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/country-list.txt")[-1, c(1, 3)]
 names(countries)[2] <- "COUNTRY_NAME"
 
-country_list <- dplyr::left_join(countries, countrycode::countrycode_data,
+GSOD_country_list <- dplyr::left_join(countries, countrycode::countrycode_data,
                    by = c(FIPS = "fips104"))
-country_list <- data.table::setDT(country_list)
+GSOD_country_list <- data.table::setDT(GSOD_country_list)
 
-print(country_list)
+print(GSOD_country_list)
 ```
 
     ##      FIPS                         COUNTRY_NAME        country.name cowc
@@ -67,9 +67,9 @@ print(country_list)
 There are unecessary data in several columns. `GSODR` only requires FIPS, name, and ISO codes to function.
 
 ``` r
-country_list[, c(3, 4:8, 11:16) := NULL]
+GSOD_country_list[, c(3, 4:8, 11:16) := NULL]
 
-print(country_list)
+print(GSOD_country_list)
 ```
 
     ##      FIPS                         COUNTRY_NAME iso2c iso3c
@@ -88,10 +88,10 @@ print(country_list)
 Write .rda file to disk.
 
 ``` r
-devtools::use_data(country_list, overwrite = TRUE, compress = "bzip2")
+devtools::use_data(GSOD_country_list, overwrite = TRUE, compress = "bzip2")
 ```
 
-    ## Saving country_list as country_list.rda to /Users/U8004755/Development/GSODR/data
+    ## Saving GSOD_country_list as GSOD_country_list.rda to /Users/U8004755/Development/GSODR/data
 
 Notes
 =====

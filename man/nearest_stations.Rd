@@ -30,9 +30,10 @@ commercial purposes. Re-distribution of these data by others must provide
 this same notification.}
 }
 \examples{
+\dontrun{
 # Find stations within a 100km radius of Toowoomba, QLD, AUS
 
 nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 100)
-
+}
 }
 

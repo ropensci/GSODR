@@ -15,6 +15,8 @@
   * Spatial file output is now in GeoPackage format (GPKG). This results in a
   single file output unlike shapefile and allows for long field names  
   * Users can specify file name of output  
+  * Users can ask for the most recent list of GSOD stations from the NCDC
+  FTP server to use in place of the list provided with GSODR  
   * All files are written to same output folder, specified by user in the `dsn`
   parameter. For multiple year queries, the year is appended to the file name
   that is specified by the user  
@@ -24,7 +26,7 @@
 
   * `get_GSOD` function optimised for speed as best possible after FTPing files
   from NCDC server  
-  * Updated `stations` list with latest version from NCDC published 28-07-2016  
+  * Updated `stations` list with latest version from NCDC published 10-08-2016  
   * Reduced package dependencies  
   * The stations data frame distributed with the package now includes stations
   that are located above 60 latitude and below -60 latitude  
@@ -46,6 +48,7 @@
   * Remove redundant code in `get_GSOD()` function  
   
 ## DEPRECATED AND DEFUNCT
+## 
   * The `path` parameter is now instead called `dsn` to be more inline with
   other tools like `readOGR()` and `writeOGR`  
   * Shapefile file out is no longer supported. Use GeoPackage (GPKG) instead  

@@ -6,7 +6,7 @@
 \usage{
 get_GSOD(years = NULL, station = NULL, country = NULL, dsn = "",
   filename = "GSOD", max_missing = 5, agroclimatology = FALSE,
-  CSV = TRUE, GPKG = FALSE)
+  CSV = TRUE, GPKG = FALSE, refresh = FALSE)
 }
 \arguments{
 \item{years}{Year(s) of weather data to download.}
@@ -23,7 +23,7 @@ to existing files for download and cleaning from the ftp server.}
 \item{country}{Specify a country of interest for which to retrieve weather
 data; full name. For stations located in locales
 having an ISO code 2 or 3 letter ISO code can also be used if known. See
-\code{\link{country_list}} for a full list of country names and ISO codes
+\code{\link{GSOD_country_list}} for a full list of country names and ISO codes
 available.}
 
 \item{dsn}{Path to file write to.}
@@ -47,7 +47,11 @@ file of data, defaults to TRUE, a CSV file is created.}
 
 \item{GPKG}{Logical. If set to TRUE, create a GeoPackage file, if
 set to FALSE, no GPKG file is created. Defaults to FALSE, no GPKG file is
-created}
+created.}
+
+\item{refresh}{Logical. If set to true, the most recent version of
+isd-history.csv will be fetched and used in place of the GSOD_stations list
+provided with the package. Defaults to FALSE, use package version.}
 }
 \description{
 This function automates downloading, cleaning, reformatting of data from
@@ -235,6 +239,11 @@ filename = "Philippines_GSOD", GPKG = TRUE, CSV = FALSE)
 
 get_GSOD(years = 2010:2011, dsn = "~/",
 filename = "GSOD_agroclimatology_2010-2011", agroclimatology = TRUE)
+
+# Fetch the lastest list of weather stations from the NCDC FTP server and
+# use that data rather than bundled data
+
+get_GSOD(years = 2016, dsn = "~/", filename = "GSOD_newest", refresh = TRUE)
 }
 
 
