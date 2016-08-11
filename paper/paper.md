@@ -48,7 +48,7 @@ from the CGIAR-CSI SRTM hole-filled 90 metre data set [@Jarvis2008] are included
 for stations between -60˚ and 60˚ latitude in this list.
 
 Upon download, stations are individually checked for a user-specified number of
-missing days, stations with too many missing observations are omitted from the
+missing days. Stations with too many missing observations are omitted from the
 final output to help ensure data quality. All units are converted to
 International System of Units (SI), e.g., inches to millimetres, knots to metres
 per second and Fahrenheit to Celsius. Additional useful variables, saturation
