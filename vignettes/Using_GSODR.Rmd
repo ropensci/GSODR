@@ -23,7 +23,8 @@ implemented by most major GIS software, summarising each year by station, which
 also includes vapour pressure and relative humidity variables calculated from
 existing data in GSOD.
 
-This package was largely based on Tomislav Hengl's work in "[A Practical Guide to Geostatistical Mapping](http://spatial-analyst.net/book/getGSOD.R)",
+This package was largely based on Tomislav Hengl's work, [getGSOD.R](http://spatial-analyst.net/book/getGSOD.R)
+in "[A Practical Guide to Geostatistical Mapping](http://spatial-analyst.net)",
 with updates for speed, cross-platform functionality, and more options for data
 retrieval and error correction.
 
@@ -88,7 +89,7 @@ Download weather data from the station Toowoomba, Queensland, Australia for 2010
 and save it in the user's home directory using the STNID in the `station`
 parameter of `get_GSOD()`.
 
-```{r}
+```{r Toowoomba_Airport, eval=FALSE}
 get_GSOD(years = 2010, station = "955510-99999", dsn = "~/",
          filename = "Toowoomba_Airport")
 ```
@@ -152,13 +153,14 @@ ggplot(data = tbar_temps, aes(x = ymd(YEARMODA), y = value,
 
 ### Fetching the latest station list from NCDC
 A list of stations is provided with the GSODR package for convince and speed.
-However, this list is updated somewhat regularly. If you would like to use the
-very latest station list, you may do so by using the `refresh` option in
-`get_GSOD()`. This list will only be available for the R session in which you
-have specified the option to refresh the station list and downloaded data, it
-will not overwrite the default list available with the package.
+However, the original list is updated somewhat regularly by the NCDC. If you
+would like to use the very latest station list, you may do so by using the
+`refresh` parameter in `get_GSOD()`. This list will only be available for the R
+session in which you have specified the option to refresh the station list and
+downloaded data, it will not overwrite the default list available with the
+package.
 
-```{r refresh_stations}
+```{r refresh_stations, eval=FALSE}
 
 get_GSOD(years = 2016, dsn = "~/", filename = "newest_stations", refresh = TRUE)
 
@@ -182,8 +184,8 @@ country.
 
 ```{r spatial_files, message=FALSE}
 
-get_GSOD(years = 2015, country = "Australia", dsn = "~/",
-         filename = "AUS", CSV = FALSE, GPKG = TRUE)
+get_GSOD(years = 2015, country = "Australia", dsn = "~/", filename = "AUS",
+         CSV = FALSE, GPKG = TRUE)
 ```
 
 Importing the GeoPackage file can be a bit tricky. The dsn will be the full path
@@ -192,6 +194,7 @@ in the `get_GSOD()` function and will not change. The file name, specified in th
 dsn will, but the layer name will not.
 
 ```{r import_spatial_files, message=FALSE}
+
 library(rgdal)
 AUS_stations <- readOGR(dsn = path.expand("~/AUS-2015.gpkg"), layer = "GSOD")
 
@@ -207,7 +210,8 @@ One easy way is using dplyr, which we've already used to filter the stations.
 
 This option is much faster to load since it does not load the geometry.
 
-```{r as_database}
+```{r as_gpkg_database}
+
 AUS_sqlite <- tbl(src_sqlite(path.expand("~/AUS-2015.gpkg")), "GSOD")
 class(AUS_sqlite)
 print(AUS_sqlite, n = 5)

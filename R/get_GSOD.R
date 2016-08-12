@@ -245,7 +245,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
   options(warn = 2)
   options(timeout = 300)
 
-    # Set up tempfile and directory for downloading data from server
+  # Set up tempfile and directory for downloading data from server
   tf <- tempfile()
   td <- tempdir()
 
@@ -298,9 +298,10 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
                                                  ".tar"),
                                     destfile = tf, mode = "wb"),
                error = function(x) message(paste0("\nThe download stoped at year ", yr,
-".\nPlease restart the 'get_GSOD()' function starting at this point.\n")))
+                                                  ".\nPlease restart the 'get_GSOD()' function starting at this point.\n")))
       utils::untar(tarfile = tf, exdir  = paste0(td, "/", yr, "/"))
 
+      message("\nFinished downloading, parsing the files now.\n")
       GSOD_list <- list.files(paste0(td, "/", yr, "/"),
                               pattern = utils::glob2rx("*.gz"),
                               full.names = FALSE)
@@ -308,7 +309,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
       # If agroclimatology == TRUE, subset list of stations to clean -----------
       if (agroclimatology == TRUE) {
         station_list <- stations[stations$LAT >= -60 &
-                                          stations$LAT <= 60, ]$STNID
+                                   stations$LAT <= 60, ]$STNID
         station_list <- vapply(station_list,
                                function(x) rep(paste0(x, "-", yr, ".op.gz")),
                                "")
@@ -331,13 +332,14 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
 
     # Stations specified --------------------------- ---------------------------
     if (!is.null(station)) {
+      message("\nDownloading the station file(s) now.")
       filenames <- RCurl::getURL(paste0(ftp_site, yr, "/"),
                                  ftp.use.epsv = FALSE, ftplistonly = TRUE,
                                  crlf = TRUE)
       filenames <- paste0(ftp_site, yr, "/",
                           strsplit(filenames, "\r*\n")[[1]])[-c(1:2)]
       itw <- (iterators::iter(station))
-
+      message("\nFinished downloading, parsing the files now.\n")
       GSOD_XY <- as.data.frame(
         data.table::rbindlist(
           foreach::foreach(s = itw) %do% {
@@ -371,7 +373,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
     }
 
     #### Write to disk ---------------------------------------------------------
-      outfile <- paste0(dsn, filename)
+    message("\nFinished parsing files. Writing files to disk now.\n")
+    outfile <- paste0(dsn, filename)
 
     #### CSV file---------------------------------------------------------------
     if (CSV == TRUE) {
@@ -648,7 +651,7 @@ can view the entire list of valid countries in this data by typing, 'GSODR::GSOD
     END <- as.numeric(substr(stations[stations[[12]] == vsy]$END, 1, 4))
     if (min(years) < BEGIN | max(years) > END)
       message("This station, ", vsy, ", only provides data for years ", BEGIN,
-" to ", END, ".\n")
+              " to ", END, ".\n")
   }
 }
 
