@@ -17,9 +17,6 @@ authors:
   - name: Andy Nelson
     orcid: 
     affiliation: 
-  - name: Kay Sumfleth
-    orcid: 
-    affiliation: 
 date: 11/08/2012
 bibliography: paper.bib
 ---

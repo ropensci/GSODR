@@ -8,11 +8,9 @@ Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     person("Tomislav", "Hengl", role = "aut",
     email = "tom.hengl@wur.nl"),
     person("Andy", "Nelson", role = "aut",
-    email = "dr.andy.nelson@gmail.com"),
-    person("Kay", "Sumfleth", role = "aut",
-    email = "kay@sumfleth.de"))
+    email = "dr.andy.nelson@gmail.com"))
 Maintainer: Adam Sparks <adamhsparks@gmail.com>
-URL: https://CRAN.R-project.org/package=GSODR
+URL: https://github.com/adamhsparks/GSODR
 BugReports: https://github.com/adamhsparks/GSODR/issues
 Description:  The GSODR package offers automated downloading, parsing, cleaning
     and converting of Global Surface Summary of the Day (GSOD) weather data from
