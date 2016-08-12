@@ -97,7 +97,7 @@ get_GSOD(years = 2010, station = "955510-99999", dsn = "~/",
 # GSOD-agroclimatology-2010.csv and GSOD-agroclimatology-2011.csv, in the user's
 # home directory with a maximum of five missing days per weather station allowed.
 
-get_GSOD(years = 2010:2011, dsn = "~/", filename = "2010-2011_GSOD_agro",
+get_GSOD(years = 2010:2011, dsn = "~/", filename = "GSOD-agroclimatology",
          agroclimatology = TRUE, max_missing = 5)
 
 # Download data for Philippines for year 2010 and generate a spatial, year
