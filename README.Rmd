@@ -34,8 +34,19 @@ major GIS software, summarising each year by station, which also includes
 vapour pressure and relative humidity variables calculated from existing data in
 GSOD.
 
-This package was largely based on Tomislav Hengl's work in "[A Practical Guide to Geostatistical Mapping](http://spatial-analyst.net/book/getGSOD.R)", with updates for speed, cross-platform functionality, and more options for data
-retrieval and error correction.
+There are several other sources of weather data and ways of retrieving them
+through R. In particular, the excellent 
+[rnoaa](https://cran.r-project.org/web/packages/rnoaa/index.html) package from
+[ROpenSci](https://ropensci.org) offers tools for interacting with and
+downloading weather data from the United States National Oceanic and
+Atmospheric Administration but lacks support GSOD data.
+
+This package was largely based on Tomislav Hengl's work
+"[getGSOD.R](http://spatial-analyst.net/book/getGSOD.R)", 
+which can be found in his book,
+"[A Practical Guide to Geostatistical Mapping](http://spatial-analyst.net/book)", 
+with updates to take advantage of modern R capabilities, cross-platform
+functionality, and more options for data retrieval and error correction.
 
 It is recommended that you have a good Internet connection to download the data
 files as they can be quite large and slow to download.

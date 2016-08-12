@@ -16,21 +16,30 @@ The GSODR package is an R package that provides a function that
 automates downloading and cleaning data from the "[Global Surface
 Summary of the Day
 (GSOD)](https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod)"
-data provided by the US National Climatic Data Center (NCDC). Stations
-are individually checked for number of missing days to assure data
-quality, stations with too many missing observations are omitted. All
-units are converted to International System of Units (SI), e.g., inches
-to millimetres and Fahrenheit to Celsius. Output is saved as a Comma
-Separated Value (CSV) file or in a spatial GeoPackage (GPKG) file,
-implemented by most major GIS softwares, summarising each year by
-station, which also includes vapour pressure and relative humidity
-variables calculated from existing data in GSOD.
+weather station data provided by the US National Climatic Data Center
+(NCDC). Station files are individually checked for number of missing
+days to assure data quality, stations with too many missing observations
+are omitted. All units are converted to International System of Units
+(SI), e.g., inches to millimetres and Fahrenheit to Celsius. Output is
+saved as a Comma Separated Value (CSV) file or in a spatial GeoPackage
+(GPKG) file, implemented by most major GIS software, summarising each
+year by station, which also includes vapour pressure and relative
+humidity variables calculated from existing data in GSOD.
 
-This package was largely based on Tomislav Hengl's work in "[A Practical
-Guide to Geostatistical
-Mapping](http://spatial-analyst.net/book/getGSOD.R)", with updates for
-speed, cross-platform functionality, and more options for data retrieval
-and error correction.
+There are several other sources of weather data and ways of retrieving
+them through R. In particular, the excellent
+[rnoaa](https://cran.r-project.org/web/packages/rnoaa/index.html)
+package from [ROpenSci](https://ropensci.org) offers tools for
+interacting with and downloading weather data from the United States
+National Oceanic and Atmospheric Administration but lacks support GSOD
+data.
+
+This package was largely based on Tomislav Hengl's work
+"[getGSOD.R](http://spatial-analyst.net/book/getGSOD.R)", which can be
+found in his book, "[A Practical Guide to Geostatistical
+Mapping](http://spatial-analyst.net/book)", with updates to take
+advantage of modern R capabilities, cross-platform functionality, and
+more options for data retrieval and error correction.
 
 It is recommended that you have a good Internet connection to download
 the data files as they can be quite large and slow to download.
@@ -104,8 +113,8 @@ get_GSOD(years = 2010, country = "Philippines", dsn = "~/", filename = "PHL_2010
 
 GSODR provides a function, `nearest_stations()`, which will return a
 data frame object of stations in the GSOD data set that are within a
-specified radius of a given point expresssed as latitude and longitude
-in decimal degrees.
+specified radius of a given point expressed as latitude and longitude in
+decimal degrees.
 
 ``` r
 library(GSODR)
@@ -113,20 +122,20 @@ library(GSODR)
 # Find stations within 50km of Toowoomba, QLD.
 
 nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 50)
-#>         USAF  WBAN                        STN_NAME CTRY STATE CALL     LAT
-#> 23746 945510 99999                       TOOWOOMBA   AS  <NA> <NA> -27.583
-#> 23747 945520 99999                           OAKEY   AS  <NA> YBOK -27.411
-#> 23753 945620 99999 UNIVERSITY OF QUEENSLAND GATTON   AS  <NA> <NA> -27.550
-#> 24338 949999 00170                  GATTON (LAWES)   AS  <NA> <NA> -27.550
-#> 24351 949999 00183      GATTONDPI RESEARCH STATION   AS  <NA> <NA> -27.530
-#> 24609 955510 99999               TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.550
-#>           LON ELEV_M    BEGIN      END        STNID ELEV_M_SRTM_90m
-#> 23746 151.933  676.0 19561231 20120503 945510-99999             670
-#> 23747 151.735  406.9 19730430 20160806 945520-99999             404
-#> 23753 152.333   94.0 20030330 20160806 945620-99999              90
-#> 24338 152.330   29.0 19711231 19840429 949999-00170              92
-#> 24351 152.330   95.0 19831130 19840629 949999-00183              88
-#> 24609 151.917  642.0 19980301 20160806 955510-99999             635
+#>      USAF  WBAN                        STN_NAME CTRY STATE CALL     LAT
+#> 1: 945510 99999                       TOOWOOMBA   AS    NA   NA -27.583
+#> 2: 945520 99999                           OAKEY   AS    NA YBOK -27.411
+#> 3: 945620 99999 UNIVERSITY OF QUEENSLAND GATTON   AS    NA   NA -27.550
+#> 4: 949999 00170                  GATTON (LAWES)   AS    NA   NA -27.550
+#> 5: 949999 00183      GATTONDPI RESEARCH STATION   AS    NA   NA -27.530
+#> 6: 955510 99999               TOOWOOMBA AIRPORT   AS    NA   NA -27.550
+#>        LON ELEV_M    BEGIN      END        STNID ELEV_M_SRTM_90m
+#> 1: 151.933  676.0 19561231 20120503 945510-99999             670
+#> 2: 151.735  406.9 19730430 20160807 945520-99999             404
+#> 3: 152.333   94.0 20030330 20160807 945620-99999              90
+#> 4: 152.330   29.0 19711231 19840429 949999-00170              92
+#> 5: 152.330   95.0 19831130 19840629 949999-00183              88
+#> 6: 151.917  642.0 19980301 20160807 955510-99999             635
 ```
 
 Output
@@ -169,14 +178,14 @@ pressure;
 Missing = -9999;  
 **STP\_CNT** - Number of observations used in calculating mean station
 pressure;  
-**VISIB** - Mean visibility for the day converted to kilometers to
+**VISIB** - Mean visibility for the day converted to kilometres to
 tenths Missing = -9999;  
 **VISIB\_CNT** - Number of observations used in calculating mean daily
 visibility;  
 **WDSP** - Mean daily wind speed value converted to metres/second to
 tenths Missing = -9999;  
 **WDSP\_CNT** - Number of observations used in calculating mean daily
-windspeed;  
+wind speed;  
 **MXSPD** - Maximum sustained wind speed reported for the day converted
 to metres/second to tenths. Missing = -9999;  
 **GUST** - Maximum wind gust reported for the day converted to
