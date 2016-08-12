@@ -301,7 +301,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
                                                   ".\nPlease restart the 'get_GSOD()' function starting at this point.\n")))
       utils::untar(tarfile = tf, exdir  = paste0(td, "/", yr, "/"))
 
-      message("\nFinished downloading, parsing the files now.\n")
+      message("\nFinished downloading file. Parsing the indivdual station files now.\n")
       GSOD_list <- list.files(paste0(td, "/", yr, "/"),
                               pattern = utils::glob2rx("*.gz"),
                               full.names = FALSE)
