@@ -339,7 +339,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
       filenames <- paste0(ftp_site, yr, "/",
                           strsplit(filenames, "\r*\n")[[1]])[-c(1:2)]
       itw <- (iterators::iter(station))
-      message("\nFinished downloading, parsing the files now.\n")
+      message("\nFinished downloading file. Parsing the station file(s) now.\n")
       GSOD_XY <- as.data.frame(
         data.table::rbindlist(
           foreach::foreach(s = itw) %do% {

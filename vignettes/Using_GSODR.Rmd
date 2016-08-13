@@ -217,6 +217,35 @@ class(AUS_sqlite)
 print(AUS_sqlite, n = 5)
 
 ```
+# Generating hourly temperature data from daily using the `chillR` package
+
+The `chillR` package from [Eike Luedeling](http://eikeluedeling.com/index.html)
+has a function, `make_hourly_temps()` that can be used to temporally downscale
+daily weather data to hourly using the station's latitude. Here's how that's
+possible using the Toowoomba-Airport data.
+
+To use this function it is necessary to rename the MAX, MIN, YEAR and YDAY
+columns and convert the `tibble` to a standard `data.frame` object so that
+`make_hourly_temps()` will recognize the columns and can operate on the
+data.
+
+```{r temporal_downscaling}
+library(chillR)
+
+# rename columns and convert the object to a standard data.frame
+colnames(tbar)[colnames(tbar) == "MAX"] <- "Tmax"
+colnames(tbar)[colnames(tbar) == "MIN"] <- "Tmin"
+colnames(tbar)[colnames(tbar) == "YEAR"] <- "Year"
+colnames(tbar)[colnames(tbar) == "YDAY"] <- "JDay"
+tbar <- as.data.frame(tbar)
+
+# generate hourly temperature values
+tbar <- make_hourly_temps(tbar[, 8], tbar)
+
+head(tbar)
+
+```
+
 # Notes
 
 ## Elevation Values

@@ -65,6 +65,7 @@ Imports:
     tibble,
     utils
 Suggests:
+    chillR,
     dplyr,
     ggalt,
     ggplot2,
