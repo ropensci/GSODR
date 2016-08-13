@@ -10,7 +10,7 @@ tags:
 authors:
   - name: Adam H Sparks
     orcid: 0000-0002-0061-8359
-    affiliation: Centre for Crop Health, University of Southern Queensland, Toowoomba, Queensland, Australia
+    affiliation: Centre for Crop Health, University of Southern Queensland, Toowoomba Queensland 4350, Australia
   - name: Tomislav Hengl
     orcid: 
     affiliation: 
