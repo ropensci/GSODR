@@ -7,7 +7,7 @@ Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     email = "adamhsparks@gmail.com"),
     person("Tomislav", "Hengl", role = "aut",
     email = "tom.hengl@wur.nl"),
-    person("Andy", "Nelson", role = "aut",
+    person("Andrew", "Nelson", role = "aut",
     email = "dr.andy.nelson@gmail.com"))
 Maintainer: Adam Sparks <adamhsparks@gmail.com>
 URL: https://github.com/adamhsparks/GSODR

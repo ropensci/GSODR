@@ -14,9 +14,9 @@ authors:
   - name: Tomislav Hengl
     orcid: 
     affiliation: 
-  - name: Andy Nelson
-    orcid: 
-    affiliation: 
+  - name: Andrew Nelson
+    orcid: 0000-0002-7249-3778
+    affiliation: Faculty of Geo-Information and Earth Observation (ITC), University of Twente, Enschede 7500 AE, The Netherlands
 date: 11/08/2012
 bibliography: paper.bib
 ---
