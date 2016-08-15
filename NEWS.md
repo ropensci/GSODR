@@ -1,4 +1,4 @@
-# GSODR v0.2
+# GSODR v0.2 [unreleased]
 
 ## NEW FEATURES
 
@@ -20,7 +20,12 @@
   * All files are written to same output folder, specified by user in the `dsn`
   parameter. For multiple year queries, the year is appended to the file name
   that is specified by the user  
-  * R >= 3.2.0 now required   
+  * R >= 3.2.0 now required  
+  * Field names in output files use "\_" in place of "."  
+  * Long field names now used in file outputs  
+  * Country is specified using FIPS codes in file name and output file contents
+  due to stations occurring in some locales that lack ISO 3166 3 letter country
+  codes  
   
 ## MINOR IMPROVEMENTS
 
@@ -28,13 +33,6 @@
   from NCDC server  
   * Updated `stations` list with latest version from NCDC published 10-08-2016  
   * Reduced package dependencies  
-  * The stations data frame distributed with the package now includes stations
-  that are located above 60 latitude and below -60 latitude  
-  * Field names in output files use "\_" in place of "."  
-  * Long field names now used in file outputs  
-  * Country is specified using FIPS codes in file name and output file contents
-  due to stations occurring in some locales that lack ISO 3166 3 letter country
-  codes  
   * The `get_GSOD()` function now checks stations to see if the years being
   queried are provided and returns a message alerting user if the station and
   years requested are not available  
@@ -45,10 +43,12 @@
   
 ## BUG FIXES
 
-  * Remove redundant code in `get_GSOD()` function  
+  * Fixed: Remove redundant code in `get_GSOD()` function  
+  * Fixed: The stations data frame distributed with the package now includes stations
+  that are located above 60 latitude and below -60 latitude  
   
 ## DEPRECATED AND DEFUNCT
-## 
+ 
   * The `path` parameter is now instead called `dsn` to be more inline with
   other tools like `readOGR()` and `writeOGR`  
   * Shapefile file out is no longer supported. Use GeoPackage (GPKG) instead  

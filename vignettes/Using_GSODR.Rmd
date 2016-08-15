@@ -89,7 +89,7 @@ Download weather data from the station Toowoomba, Queensland, Australia for 2010
 and save it in the user's home directory using the STNID in the `station`
 parameter of `get_GSOD()`.
 
-```{r Toowoomba_Airport, eval=FALSE}
+```{r Toowoomba_Airport, eval=TRUE}
 get_GSOD(years = 2010, station = "955510-99999", dsn = "~/",
          filename = "Toowoomba_Airport")
 ```
