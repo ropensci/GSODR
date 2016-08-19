@@ -54,7 +54,6 @@ Imports:
     data.table,
     doParallel,
     foreach,
-    lubridate,
     iterators,
     parallel,
     RCurl,
@@ -62,7 +61,6 @@ Imports:
     rgdal,
     sp,
     stats,
-    tibble,
     utils
 Suggests:
     chillR,
@@ -73,6 +71,7 @@ Suggests:
     rgeos,
     rmarkdown,
     testthat,
+    tibble,
     tidyr
 RoxygenNote: 5.0.1
 Encoding: UTF-8

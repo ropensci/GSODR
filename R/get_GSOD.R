@@ -412,12 +412,12 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
 #' @noRd
 .check_missing <- function(tmp, yr, max_missing) {
   records <- nrow(tmp)
-  if (lubridate::leap_year(yr) == FALSE) {
+  if (.is_leapyear(yr) == FALSE) {
     allow <- 365 - max_missing
     !is.null(records) && length(records) == 1 && !is.na(records) &&
       records < allow
   } else {
-    if (lubridate::leap_year(yr) == TRUE) {
+    if (.is_leapyear(yr) == TRUE) {
       allow <- 366 - max_missing
       !is.null(records) && length(records) == 1 && !is.na(records) &&
         records < allow
@@ -470,8 +470,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
   tmp[, (MONTH) := substr(tmp$YEARMODA, 5, 6)]
   tmp[, (DAY) := substr(tmp$YEARMODA, 7, 8)]
   tmp[, (MODA) := NULL]
-  tmp[, (YDAY) := lubridate::yday(as.Date(paste(tmp$YEAR, tmp$MONTH,
-                                                tmp$DAY, sep = "-")))]
+  tmp[, (YDAY) := as.numeric(strftime(as.Date(paste(tmp$YEAR, tmp$MONTH, tmp$DAY,
+                                                    sep = "-")), format = "%j"))]
   tmp[, (TEMP)  := round( ( (5 / 9) * ((tmp$TEMP) - 32)), 1)]
   tmp[, (DEWP)  := round( ( (5 / 9) * ((tmp$DEWP) - 32)), 1)]
   tmp[, (WDSP)  := round((tmp$WDSP) * 0.514444444, 1)]
@@ -678,4 +678,12 @@ can view the entire list of valid countries in this data by typing, 'GSODR::GSOD
   GSOD_stations <- GSODR::GSOD_stations[stations_new]
   return(GSOD_stations)
 
+}
+
+#' @noRd
+# is.leapyear function originally from Quantitative Ecology blog,
+# http://quantitative-ecology.blogspot.com.au/2009/10/leap-years.html
+.is_leapyear <- function(year){
+  #http://en.wikipedia.org/wiki/Leap_year
+  return(((year %% 4 == 0) & (year %% 100 != 0)) | (year %% 400 == 0))
 }
