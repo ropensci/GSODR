@@ -68,6 +68,7 @@ Suggests:
     ggalt,
     ggplot2,
     knitr,
+    lubridate,
     rgeos,
     rmarkdown,
     testthat,
