@@ -297,7 +297,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
       tryCatch(utils::download.file(url = paste0(ftp_site, yr, "/gsod_", yr,
                                                  ".tar"),
                                     destfile = tf, mode = "wb"),
-               error = function(x) message(paste0("\nThe download stoped at year ", yr,
+               error = function(x) message(paste0("\nThe download stoped at year: ", yr,
                                                   ".\nPlease restart the 'get_GSOD()' function starting at this point.\n")))
       utils::untar(tarfile = tf, exdir  = paste0(td, "/", yr, "/"))
 
