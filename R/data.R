@@ -1,6 +1,6 @@
 #'Stations
 #'
-#' @format A data frame with 27840 observations of 13 variables:
+#' @format A data frame with 27841 observations of 13 variables:
 #' \describe{
 #'   \item{USAF}{Air Force Datsav3 station number}
 #'   \item{WBAN}{Weather Bureau Army Navy (5 digit identifier)}

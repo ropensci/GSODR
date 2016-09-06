@@ -1,7 +1,7 @@
 Fetch GSOD Country List and Merge with ISO Country Codes
 ================
 Adam H. Sparks
-2016-08-11
+2016-09-06
 
 Introduction
 ============
@@ -12,6 +12,15 @@ R Data Processing
 =================
 
 Read "country-list.txt" file from NCDC FTP server and merge with `countrycode` data.
+
+``` r
+if (!require("countrycode"))
+{
+  install.packages("countrycode")
+}
+```
+
+    ## Loading required package: countrycode
 
 ``` r
 countries <- readr::read_table(
@@ -89,7 +98,7 @@ Write .rda file to disk.
 devtools::use_data(GSOD_country_list, overwrite = TRUE, compress = "bzip2")
 ```
 
-    ## Saving GSOD_country_list as GSOD_country_list.rda to /Users/asparks/Development/GSODR/data
+    ## Saving GSOD_country_list as GSOD_country_list.rda to /Users/U8004755/Development/GSODR/data
 
 Notes
 =====
@@ -109,16 +118,18 @@ R System Information
     ## Running under: OS X 10.11.6 (El Capitan)
     ## 
     ## locale:
-    ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+    ## [1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8
     ## 
     ## attached base packages:
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
+    ## other attached packages:
+    ## [1] countrycode_0.18
+    ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] Rcpp_0.12.6      countrycode_0.18 withr_1.0.2      digest_0.6.10   
-    ##  [5] dplyr_0.5.0      assertthat_0.1   chron_2.3-47     R6_2.1.2        
-    ##  [9] DBI_0.4-1        formatR_1.4      magrittr_1.5     evaluate_0.9    
-    ## [13] stringi_1.1.1    curl_1.1         data.table_1.9.6 rmarkdown_1.0   
-    ## [17] devtools_1.12.0  tools_3.3.1      stringr_1.0.0    readr_1.0.0     
-    ## [21] yaml_2.1.13      memoise_1.0.0    htmltools_0.3.5  knitr_1.13      
-    ## [25] tibble_1.1
+    ##  [1] Rcpp_0.12.7      withr_1.0.2      digest_0.6.10    dplyr_0.5.0     
+    ##  [5] assertthat_0.1   chron_2.3-47     R6_2.1.3         DBI_0.5         
+    ##  [9] formatR_1.4      magrittr_1.5     evaluate_0.9     stringi_1.1.1   
+    ## [13] curl_1.2         data.table_1.9.6 rmarkdown_1.0    devtools_1.12.0 
+    ## [17] tools_3.3.1      stringr_1.1.0    readr_1.0.0      yaml_2.1.13     
+    ## [21] memoise_1.0.0    htmltools_0.3.5  knitr_1.14       tibble_1.2

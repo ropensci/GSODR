@@ -216,6 +216,11 @@ library(ggalt)
 ```
 
 ```{r Buffered SRTM 90m vs Reported Elevation, echo=TRUE, fig.cap="GSOD Reported Elevation versus CGIAR-CSI SRTM Buffered Elevation", warning=FALSE}
+if (!require("ggalt"))
+{
+  install.packages("ggalt")
+}
+
 ggplot(data = GSOD_stations, aes(x = ELEV_M, y = ELEV_M_SRTM_90m)) +
   geom_point(alpha = 0.4, size = 0.5)
 ```

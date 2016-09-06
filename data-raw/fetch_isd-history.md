@@ -1,7 +1,7 @@
 Fetch, clean and correct altitude in GSOD isd\_history.csv Data
 ================
 Adam H. Sparks
-2016-08-11
+2016-09-06
 
 Introduction
 ============
@@ -197,10 +197,10 @@ summary(GSOD_stations)
     ##       LON               ELEV_M           BEGIN               END          
     ##  Min.   :-179.983   Min.   :-350.0   Min.   :19010101   Min.   :19051231  
     ##  1st Qu.: -83.819   1st Qu.:  22.3   1st Qu.:19570630   1st Qu.:20020207  
-    ##  Median :   7.850   Median : 137.0   Median :19750716   Median :20150602  
-    ##  Mean   :  -2.692   Mean   : 359.5   Mean   :19775714   Mean   :20040604  
-    ##  3rd Qu.:  64.617   3rd Qu.: 428.0   3rd Qu.:20010915   3rd Qu.:20160807  
-    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20160807   Max.   :20160809  
+    ##  Median :   7.850   Median : 137.0   Median :19750716   Median :20150612  
+    ##  Mean   :  -2.692   Mean   : 359.5   Mean   :19775714   Mean   :20040665  
+    ##  3rd Qu.:  64.617   3rd Qu.: 428.0   3rd Qu.:20010915   3rd Qu.:20160903  
+    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20160807   Max.   :20160905  
     ##                     NA's   :217                                           
     ##     STNID           ELEV_M_SRTM_90m 
     ##  Length:27841       Min.   :-361.0  
@@ -215,6 +215,11 @@ Figures
 =======
 
 ``` r
+if (!require("ggalt"))
+{
+  install.packages("ggalt")
+}
+
 ggplot(data = GSOD_stations, aes(x = ELEV_M, y = ELEV_M_SRTM_90m)) +
   geom_point(alpha = 0.4, size = 0.5)
 ```
@@ -250,7 +255,7 @@ R System Information
 --------------------
 
     ## R version 3.3.1 (2016-06-21)
-    ## Platform: x86_64-apple-darwin15.5.0 (64-bit)
+    ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
     ## Running under: OS X 10.11.6 (El Capitan)
     ## 
     ## locale:
@@ -263,16 +268,16 @@ R System Information
     ## [1] ggalt_0.1.1   ggplot2_2.1.0 foreach_1.4.3
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] Rcpp_0.12.6        RColorBrewer_1.1-2 compiler_3.3.1    
+    ##  [1] Rcpp_0.12.7        RColorBrewer_1.1-2 compiler_3.3.1    
     ##  [4] formatR_1.4        plyr_1.8.4         iterators_1.0.8   
     ##  [7] tools_3.3.1        digest_0.6.10      memoise_1.0.0     
-    ## [10] evaluate_0.9       tibble_1.1         gtable_0.2.0      
-    ## [13] lattice_0.20-33    DBI_0.4-1          curl_1.1          
+    ## [10] evaluate_0.9       tibble_1.2         gtable_0.2.0      
+    ## [13] lattice_0.20-33    DBI_0.5            curl_1.2          
     ## [16] yaml_2.1.13        rgdal_1.1-10       parallel_3.3.1    
-    ## [19] withr_1.0.2        dplyr_0.5.0        stringr_1.0.0     
-    ## [22] raster_2.5-8       knitr_1.13         devtools_1.12.0   
+    ## [19] withr_1.0.2        dplyr_0.5.0        stringr_1.1.0     
+    ## [22] raster_2.5-8       knitr_1.14         devtools_1.12.0   
     ## [25] maps_3.1.1         grid_3.3.1         data.table_1.9.6  
-    ## [28] R6_2.1.2           rmarkdown_1.0      sp_1.2-3          
+    ## [28] R6_2.1.3           rmarkdown_1.0      sp_1.2-3          
     ## [31] readr_1.0.0        magrittr_1.5       MASS_7.3-45       
     ## [34] scales_0.4.0       codetools_0.2-14   htmltools_0.3.5   
     ## [37] proj4_1.0-8        assertthat_0.1     countrycode_0.18  
