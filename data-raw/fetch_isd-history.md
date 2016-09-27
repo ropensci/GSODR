@@ -1,7 +1,7 @@
 Fetch, clean and correct altitude in GSOD isd\_history.csv Data
 ================
 Adam H. Sparks
-2016-09-06
+2016-09-28
 
 Introduction
 ============
@@ -179,7 +179,7 @@ summary(GSOD_stations)
 ```
 
     ##      USAF               WBAN             STN_NAME        
-    ##  Length:27841       Length:27841       Length:27841      
+    ##  Length:27845       Length:27845       Length:27845      
     ##  Class :character   Class :character   Class :character  
     ##  Mode  :character   Mode  :character   Mode  :character  
     ##                                                          
@@ -187,7 +187,7 @@ summary(GSOD_stations)
     ##                                                          
     ##                                                          
     ##      CTRY              STATE               CALL                LAT        
-    ##  Length:27841       Length:27841       Length:27841       Min.   :-89.00  
+    ##  Length:27845       Length:27845       Length:27845       Min.   :-89.00  
     ##  Class :character   Class :character   Class :character   1st Qu.: 24.07  
     ##  Mode  :character   Mode  :character   Mode  :character   Median : 39.67  
     ##                                                           Mean   : 31.86  
@@ -196,20 +196,20 @@ summary(GSOD_stations)
     ##                                                                           
     ##       LON               ELEV_M           BEGIN               END          
     ##  Min.   :-179.983   Min.   :-350.0   Min.   :19010101   Min.   :19051231  
-    ##  1st Qu.: -83.819   1st Qu.:  22.3   1st Qu.:19570630   1st Qu.:20020207  
-    ##  Median :   7.850   Median : 137.0   Median :19750716   Median :20150612  
-    ##  Mean   :  -2.692   Mean   : 359.5   Mean   :19775714   Mean   :20040665  
-    ##  3rd Qu.:  64.617   3rd Qu.: 428.0   3rd Qu.:20010915   3rd Qu.:20160903  
-    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20160807   Max.   :20160905  
-    ##                     NA's   :217                                           
+    ##  1st Qu.: -83.830   1st Qu.:  22.3   1st Qu.:19570630   1st Qu.:20020207  
+    ##  Median :   7.850   Median : 137.0   Median :19750716   Median :20150630  
+    ##  Mean   :  -2.708   Mean   : 359.5   Mean   :19775758   Mean   :20040755  
+    ##  3rd Qu.:  64.617   3rd Qu.: 428.0   3rd Qu.:20010915   3rd Qu.:20160919  
+    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20160909   Max.   :20160921  
+    ##                     NA's   :218                                           
     ##     STNID           ELEV_M_SRTM_90m 
-    ##  Length:27841       Min.   :-361.0  
+    ##  Length:27845       Min.   :-361.0  
     ##  Class :character   1st Qu.:  24.0  
     ##  Mode  :character   Median : 153.0  
     ##                     Mean   : 379.2  
     ##                     3rd Qu.: 456.0  
     ##                     Max.   :5273.0  
-    ##                     NA's   :3007
+    ##                     NA's   :3010
 
 Figures
 =======
@@ -272,7 +272,7 @@ R System Information
     ##  [4] formatR_1.4        plyr_1.8.4         iterators_1.0.8   
     ##  [7] tools_3.3.1        digest_0.6.10      memoise_1.0.0     
     ## [10] evaluate_0.9       tibble_1.2         gtable_0.2.0      
-    ## [13] lattice_0.20-33    DBI_0.5            curl_1.2          
+    ## [13] lattice_0.20-34    DBI_0.5-1          curl_2.1          
     ## [16] yaml_2.1.13        rgdal_1.1-10       parallel_3.3.1    
     ## [19] withr_1.0.2        dplyr_0.5.0        stringr_1.1.0     
     ## [22] raster_2.5-8       knitr_1.14         devtools_1.12.0   
