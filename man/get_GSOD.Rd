@@ -116,7 +116,7 @@ Air Force Navy" number - with WBAN being the acronym}
 Missing = -9999}
 \item{TEMP_CNT}{Number of observations used in calculating mean daily
 temperature}
-\item{DEWP**- Mean daily dew point converted to degrees C to tenths. Missing
+\item{DEWP}{Mean daily dew point converted to degrees C to tenths. Missing
 = -9999}
 \item{DEWP_CNT}{Number of observations used in calculating mean daily dew
 point}
@@ -147,7 +147,7 @@ so this will sometimes not be the max for the calendar day. Missing =
 temp report and not from the 'hourly' data. \* indicates max temp was
 derived from the hourly data (i.e., highest hourly or synoptic-reported
 temperature)}
-\item{MIN**- Minimum temperature reported during the day converted to
+\item{MIN}{Minimum temperature reported during the day converted to
 Celsius to tenths--time of min temp report varies by country and region,
 so this will sometimes not be the max for the calendar day. Missing =
 -9999}
@@ -165,18 +165,18 @@ example, a station may only report a 6-hour amount for the period during
 which rain fell.* See FLAGS_PRCP column for source of data}
 \item{PRCP_FLAG}{
   \describe{
-   \item{A = 1 report of 6-hour precipitation amount}
-   \item{B = Summation of 2 reports of 6-hour precipitation amount}
-   \item{C = Summation of 3 reports of 6-hour precipitation amount}
-   \item{D = Summation of 4 reports of 6-hour precipitation amount}
-   \item{E = 1 report of 12-hour precipitation amount}
-   \item{F = Summation of 2 reports of 12-hour precipitation amount}
-   \item{G = 1 report of 24-hour precipitation amount}
-   \item{H = Station reported '0' as the amount for the day (e.g., from
+   \item{A}{1 report of 6-hour precipitation amount}
+   \item{B}{Summation of 2 reports of 6-hour precipitation amount}
+   \item{C}{Summation of 3 reports of 6-hour precipitation amount}
+   \item{D}{Summation of 4 reports of 6-hour precipitation amount}
+   \item{E}{1 report of 12-hour precipitation amount}
+   \item{F}{Summation of 2 reports of 12-hour precipitation amount}
+   \item{G}{1 report of 24-hour precipitation amount}
+   \item{H}{Station reported '0' as the amount for the day (e.g., from
    6-hour reports), but also reported at least one occurrence of
    precipitation in hourly observations--this could indicate a trace
    occurred, but should be considered as incomplete data for the day}
-   \item{I = Station did not report any precip data for the day and did not
+   \item{I}{Station did not report any precip data for the day and did not
    report any occurrences of precipitation in its hourly observations--it's
    still possible that precipitation occurred but was not reported}
   }
