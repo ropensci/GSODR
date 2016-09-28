@@ -17,7 +17,7 @@ authors:
   - name: Andrew Nelson
     orcid: 0000-0002-7249-3778
     affiliation: Faculty of Geo-Information and Earth Observation (ITC), University of Twente, Enschede 7500 AE, The Netherlands
-date: 11/08/2012
+date: 28/09/2016
 bibliography: paper.bib
 ---
 
@@ -26,18 +26,20 @@ bibliography: paper.bib
 The GSODR package [@GSODR] is an R package [@R-base] for automated
 downloading, parsing, cleaning and converting of Global Surface Summary of the
 Day (GSOD) [@NCDC] weather data into Comma Separated Values (CSV) or
-Geopackage (GPKG) [@geopackage] files. . It builds on or complements several
+Geopackage (GPKG) [@geopackage] files. It builds on or complements several
 other scripts and packages. An earlier R script, getGSOD.R, published
 in the freely available book, "A Practical Guide to Geostatistical Mapping", 
 [@Hengl2009] provides basic functionality on Windows platforms, but lacks
-cross-platform support and does not take advantage of modern techniques in R
+cross-platform support and does not take advantage of modern techniques in
 R to make more efficient use of available computing resources used to complete
-the process. The rnoaa [@rnoaa] package offers an excellent suite of tools for
-interacting with and downloading weather data from the United States National
-Oceanic and Atmospheric Administration, but lacks options for GSOD data
-retrieval. Several other APIs and R packages exist to access weather data, but
-most are region or continent specific, whereas GSOD is global. This package
-was developed to provide:
+the process, e.g., data.table [@data.table], readr [@readr] and foreach 
+[@foreach], which allow the data cleaning, conversions and disk input/output
+processes to take advantage of modern computer hardware. The rnoaa [@rnoaa]
+package offers an excellent suite of tools for interacting with and downloading
+weather data from the United States National Oceanic and Atmospheric
+Administration, but lacks options for GSOD data retrieval. Several other APIs
+and R packages exist to access weather data, but most are region or continent
+specific, whereas GSOD is global. This package was developed to provide:
 
   * a function that simplifies downloading GSOD data and formatting it to easily
 be used in research; and
@@ -45,21 +47,25 @@ be used in research; and
   * a function to help identify stations within a given radius of a point of
 interest.
 
-To help
-facilitate speed and provided extra data, a list which only those GSOD stations
-with valid latitude and longitude values is provided with the package, with
-users having the option of retrieving and using the latest information from NOAA
-if this list is out of date. Extra data included is a set of 200 metre buffered
-elevation values, derived from the CGIAR-CSI SRTM 90m Database 
-[@Jarvis2008] to help address discrepancies in reported elevation for the
-stations.
+A list, which only includes those GSOD stations with valid latitude and
+longitude values is provided with the package. This station data also includes
+an alternative set of elevation data, which is included included is a set of 200
+meter buffered elevation values, derived from the CGIAR-CSI SRTM 90m Database
+[@Jarvis2008] to help address possible inaccuracies and in many cases, missing
+values, in the reported station elevations. Users have the option of retrieving
+and using the latest data for stations provided by NOAA.
+
+The package makes use of 
 
 Upon download, stations are individually checked for a user-specified number of
 missing days. Stations files with too many missing observations are omitted from
 the final output to help ensure data quality. All units are converted from the
 United States Customary System (USCS) to the International System of Units (SI),
-e.g., inches to millimetres and Fahrenheit to Celsius. Wind speed is also
-converted from knots to metres per second. Values that are reported include:  
+e.g., inches to millimeters and Fahrenheit to Celsius. Wind speed is also
+converted from knots to meters per second. Additional useful values, actual vapour
+pressure, saturated water vapour pressure, and relative humidity are
+calculated and included in the final output. Station data are merged with weather
+data for the final file which include the following fields:
 
 * **STNID** - Station number (WMO/DATSAV3 number) for the location;  
 
@@ -68,7 +74,7 @@ Bureau Air Force Navy" number - with WBAN being the acronym;
 
 * **STN_NAME** - Unique text identifier;  
 
-* **CTRY** - Country;  
+* **CTRY** - Country in which the station is located;  
 
 * **LAT** - Latitude. *Station dropped in cases where values are &lt;-90
 or &gt;90 degrees or Lat = 0 and Lon = 0*;  
@@ -76,10 +82,9 @@ or &gt;90 degrees or Lat = 0 and Lon = 0*;
 * **LON** - Longitude. *Station dropped in cases where values are &lt;-180
 or &gt;180 degrees or Lat = 0 and Lon = 0*;  
 
-* **ELEV_M** - Elevation in metres;  
+* **ELEV_M** - Elevation in meters;  
 
-* **ELEV_M_SRTM_90m** - Elevation in metres corrected for possible errors,
-see Notes section for more;  
+* **ELEV_M_SRTM_90m** - Elevation in meters corrected for possible errors [@Jarvis2008];
 
 * **YEARMODA** - Date in YYYY-mm-dd format;  
 
@@ -97,7 +102,7 @@ Missing = -9999;
 * **TEMP_CNT** - Number of observations used in calculating mean daily
 temperature;  
 
-* **DEWP**- Mean daily dewpoint converted to degrees C to tenths. Missing
+* **DEWP**- Mean daily dew point converted to degrees C to tenths. Missing
 = -9999;  
 
 * **DEWP_CNT** - Number of observations used in calculating mean daily dew
@@ -115,23 +120,23 @@ Missing = -9999;
 * **STP_CNT** - Number of observations used in calculating mean station
 pressure;  
 
-* **VISIB** - Mean visibility for the day converted to kilometres to
+* **VISIB** - Mean visibility for the day converted to kilometers to
 tenths Missing = -9999;  
 
 * **VISIB_CNT** - Number of observations used in calculating mean daily
 visibility;  
 
-* **WDSP** - Mean daily wind speed value converted to metres/second to
+* **WDSP** - Mean daily wind speed value converted to meters/second to
 tenths Missing = -9999;  
 
 * **WDSP_CNT** - Number of observations used in calculating mean daily
 wind speed;  
 
 * **MXSPD** - Maximum sustained wind speed reported for the day converted
-to metres/second to tenths. Missing = -9999;  
+to meters/second to tenths. Missing = -9999;  
 
 * **GUST** - Maximum wind gust reported for the day converted to
-metres/second to tenths. Missing = -9999;  
+meters/second to tenths. Missing = -9999;  
 
 * **MAX** - Maximum temperature reported during the day converted to
 Celsius to tenths--time of max temp report varies by country and region,
@@ -154,7 +159,7 @@ derived from the hourly data (i.e., highest hourly or synoptic-reported
 temperature);  
 
 * **PRCP** - Total precipitation (rain and/or melted snow) reported during
-the day converted to millimetres to hundredths; will usually not end
+the day converted to millimeters to hundredths; will usually not end
 with the midnight observation, i.e., may include latter part of previous
 day. .00 indicates no measurable precipitation (includes a trace).
 Missing = -9999; *Note: Many stations do not report '0' on days with no
@@ -185,9 +190,9 @@ considered as incomplete data for the day;
 
     * I = Station did not report any precip data for the day and did not
 report any occurrences of precipitation in its hourly observations--it's
-still possible that precip occurred but was not reported;  
+still possible that precipitation occurred but was not reported;  
 
-* **SNDP** - Snow depth in millimetres to tenths. Missing = -9999;  
+* **SNDP** - Snow depth in millimeters to tenths. Missing = -9999;  
 
 * **I_FOG** - Indicator for fog, (1 = yes, 0 = no/not reported) for the
 occurrence during the day;  
@@ -207,14 +212,11 @@ for the occurrence during the day;
 * **I_TORNADO_FUNNEL** - Indicator for tornado or funnel cloud, (1 = yes, 0 =
 no/not reported) for the occurrence during the day;
 
-## Values calculated by this package and included in final output:
-
 * **ea** - Mean daily actual vapour pressure;  
 
 * **es** - Mean daily saturation vapour pressure;  
 
-* **RH** - Mean daily relative humidity;
-
+* **RH** - Mean daily relative humidity.
 
 # References
 
