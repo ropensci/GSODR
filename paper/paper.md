@@ -61,8 +61,8 @@ Upon download, stations are individually checked for a user-specified number of
 missing days. Stations files with too many missing observations are omitted from
 the final output to help ensure data quality. All units are converted from the
 United States Customary System (USCS) to the International System of Units (SI),
-e.g., inches to millimeters and Fahrenheit to Celsius. Wind speed is also
-converted from knots to meters per second. Additional useful values, actual vapour
+e.g., inches to millimetres and Fahrenheit to Celsius. Wind speed is also
+converted from knots to metres per second. Additional useful values, actual vapour
 pressure, saturated water vapour pressure, and relative humidity are
 calculated and included in the final output. Station data are merged with weather
 data for the final file which includes the following fields:
@@ -82,9 +82,9 @@ or &gt;90 degrees or Lat = 0 and Lon = 0*;
 * **LON** - Longitude. *Station dropped in cases where values are &lt;-180
 or &gt;180 degrees or Lat = 0 and Lon = 0*;  
 
-* **ELEV_M** - Elevation in meters;  
+* **ELEV_M** - Elevation in metres;  
 
-* **ELEV_M_SRTM_90m** - Elevation in meters corrected for possible errors [@Jarvis2008];
+* **ELEV_M_SRTM_90m** - Elevation in metres corrected for possible errors [@Jarvis2008];
 
 * **YEARMODA** - Date in YYYY-mm-dd format;  
 
@@ -120,23 +120,23 @@ Missing = -9999;
 * **STP_CNT** - Number of observations used in calculating mean station
 pressure;  
 
-* **VISIB** - Mean visibility for the day converted to kilometers to
+* **VISIB** - Mean visibility for the day converted to kilometres to
 tenths Missing = -9999;  
 
 * **VISIB_CNT** - Number of observations used in calculating mean daily
 visibility;  
 
-* **WDSP** - Mean daily wind speed value converted to meters/second to
+* **WDSP** - Mean daily wind speed value converted to metres/second to
 tenths Missing = -9999;  
 
 * **WDSP_CNT** - Number of observations used in calculating mean daily
 wind speed;  
 
 * **MXSPD** - Maximum sustained wind speed reported for the day converted
-to meters/second to tenths. Missing = -9999;  
+to metres/second to tenths. Missing = -9999;  
 
 * **GUST** - Maximum wind gust reported for the day converted to
-meters/second to tenths. Missing = -9999;  
+metres/second to tenths. Missing = -9999;  
 
 * **MAX** - Maximum temperature reported during the day converted to
 Celsius to tenths--time of max temp report varies by country and region,
@@ -159,7 +159,7 @@ derived from the hourly data (i.e., highest hourly or synoptic-reported
 temperature);  
 
 * **PRCP** - Total precipitation (rain and/or melted snow) reported during
-the day converted to millimeters to hundredths; will usually not end
+the day converted to millimetres to hundredths; will usually not end
 with the midnight observation, i.e., may include latter part of previous
 day. .00 indicates no measurable precipitation (includes a trace).
 Missing = -9999; *Note: Many stations do not report '0' on days with no
@@ -192,7 +192,7 @@ considered as incomplete data for the day;
 report any occurrences of precipitation in its hourly observations--it's
 still possible that precipitation occurred but was not reported;  
 
-* **SNDP** - Snow depth in millimeters to tenths. Missing = -9999;  
+* **SNDP** - Snow depth in millimetres to tenths. Missing = -9999;  
 
 * **I_FOG** - Indicator for fog, (1 = yes, 0 = no/not reported) for the
 occurrence during the day;  

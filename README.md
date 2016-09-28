@@ -131,11 +131,11 @@ nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 50)
 #> 6: 955510 99999               TOOWOOMBA AIRPORT   AS    NA   NA -27.550
 #>        LON ELEV_M    BEGIN      END        STNID ELEV_M_SRTM_90m
 #> 1: 151.933  676.0 19561231 20120503 945510-99999             670
-#> 2: 151.735  406.9 19730430 20160807 945520-99999             404
-#> 3: 152.333   94.0 20030330 20160807 945620-99999              90
+#> 2: 151.735  406.9 19730430 20160919 945520-99999             404
+#> 3: 152.333   94.0 20030330 20160919 945620-99999              90
 #> 4: 152.330   29.0 19711231 19840429 949999-00170              92
 #> 5: 152.330   95.0 19831130 19840629 949999-00183              88
-#> 6: 151.917  642.0 19980301 20160807 955510-99999             635
+#> 6: 151.917  642.0 19980301 20160919 955510-99999             635
 ```
 
 Output
@@ -160,9 +160,9 @@ the final file which includes the following fields:
 -   **LON** - Longitude. *Station dropped in cases where values are
     &lt;-180 or &gt;180 degrees or Lat = 0 and Lon = 0*;
 
--   **ELEV\_M** - Elevation in meters;
+-   **ELEV\_M** - Elevation in metres;
 
--   **ELEV\_M\_SRTM\_90m** - Elevation in meters corrected for possible
+-   **ELEV\_M\_SRTM\_90m** - Elevation in metres corrected for possible
     errors \[@Jarvis2008\];
 
 -   **YEARMODA** - Date in YYYY-mm-dd format;
@@ -199,23 +199,23 @@ the final file which includes the following fields:
 -   **STP\_CNT** - Number of observations used in calculating mean
     station pressure;
 
--   **VISIB** - Mean visibility for the day converted to kilometers to
+-   **VISIB** - Mean visibility for the day converted to kilometres to
     tenths Missing = -9999;
 
 -   **VISIB\_CNT** - Number of observations used in calculating mean
     daily visibility;
 
--   **WDSP** - Mean daily wind speed value converted to meters/second to
+-   **WDSP** - Mean daily wind speed value converted to metres/second to
     tenths Missing = -9999;
 
 -   **WDSP\_CNT** - Number of observations used in calculating mean
     daily wind speed;
 
 -   **MXSPD** - Maximum sustained wind speed reported for the day
-    converted to meters/second to tenths. Missing = -9999;
+    converted to metres/second to tenths. Missing = -9999;
 
 -   **GUST** - Maximum wind gust reported for the day converted to
-    meters/second to tenths. Missing = -9999;
+    metres/second to tenths. Missing = -9999;
 
 -   **MAX** - Maximum temperature reported during the day converted to
     Celsius to tenths--time of max temp report varies by country and
@@ -238,7 +238,7 @@ the final file which includes the following fields:
     synoptic-reported temperature);
 
 -   **PRCP** - Total precipitation (rain and/or melted snow) reported
-    during the day converted to millimeters to hundredths; will usually
+    during the day converted to millimetres to hundredths; will usually
     not end with the midnight observation, i.e., may include latter part
     of previous day. .00 indicates no measurable precipitation (includes
     a trace). Missing = -9999; *Note: Many stations do not report '0' on
@@ -274,7 +274,7 @@ the final file which includes the following fields:
         observations--it's still possible that precipitation occurred
         but was not reported;
 
--   **SNDP** - Snow depth in millimeters to tenths. Missing = -9999;
+-   **SNDP** - Snow depth in millimetres to tenths. Missing = -9999;
 
 -   **I\_FOG** - Indicator for fog, (1 = yes, 0 = no/not reported) for
     the occurrence during the day;

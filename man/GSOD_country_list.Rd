@@ -3,7 +3,7 @@
 \docType{data}
 \name{GSOD_country_list}
 \alias{GSOD_country_list}
-\title{country_list}
+\title{GSOD_country_list}
 \format{A data frame with 293 observations of 4 variables:
 \describe{
 \item{FIPS}{Federal Information Processing Standards (FIPS) code}
@@ -18,7 +18,7 @@
 GSOD_country_list
 }
 \description{
-country_list
+GSOD_country_list
 }
 \note{
 Users of these data should take into account the following (from the
