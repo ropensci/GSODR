@@ -65,7 +65,7 @@ e.g., inches to millimeters and Fahrenheit to Celsius. Wind speed is also
 converted from knots to meters per second. Additional useful values, actual vapour
 pressure, saturated water vapour pressure, and relative humidity are
 calculated and included in the final output. Station data are merged with weather
-data for the final file which include the following fields:
+data for the final file which includes the following fields:
 
 * **STNID** - Station number (WMO/DATSAV3 number) for the location;  
 
