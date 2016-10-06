@@ -1,7 +1,7 @@
 Fetch GSOD Country List and Merge with ISO Country Codes
 ================
 Adam H. Sparks
-2016-09-28
+2016-10-06
 
 Introduction
 ============
@@ -128,8 +128,8 @@ R System Information
     ## 
     ## loaded via a namespace (and not attached):
     ##  [1] Rcpp_0.12.7      withr_1.0.2      digest_0.6.10    dplyr_0.5.0     
-    ##  [5] assertthat_0.1   chron_2.3-47     R6_2.1.3         DBI_0.5-1       
-    ##  [9] formatR_1.4      magrittr_1.5     evaluate_0.9     stringi_1.1.1   
+    ##  [5] assertthat_0.1   chron_2.3-47     R6_2.2.0         DBI_0.5-1       
+    ##  [9] formatR_1.4      magrittr_1.5     evaluate_0.9     stringi_1.1.2   
     ## [13] curl_2.1         data.table_1.9.6 rmarkdown_1.0    devtools_1.12.0 
     ## [17] tools_3.3.1      stringr_1.1.0    readr_1.0.0      yaml_2.1.13     
     ## [21] memoise_1.0.0    htmltools_0.3.5  knitr_1.14       tibble_1.2

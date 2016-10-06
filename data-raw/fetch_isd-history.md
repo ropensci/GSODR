@@ -1,7 +1,7 @@
 Fetch, clean and correct altitude in GSOD isd\_history.csv Data
 ================
 Adam H. Sparks
-2016-09-28
+2016-10-06
 
 Introduction
 ============
@@ -179,7 +179,7 @@ summary(GSOD_stations)
 ```
 
     ##      USAF               WBAN             STN_NAME        
-    ##  Length:27845       Length:27845       Length:27845      
+    ##  Length:27855       Length:27855       Length:27855      
     ##  Class :character   Class :character   Class :character  
     ##  Mode  :character   Mode  :character   Mode  :character  
     ##                                                          
@@ -187,8 +187,8 @@ summary(GSOD_stations)
     ##                                                          
     ##                                                          
     ##      CTRY              STATE               CALL                LAT        
-    ##  Length:27845       Length:27845       Length:27845       Min.   :-89.00  
-    ##  Class :character   Class :character   Class :character   1st Qu.: 24.07  
+    ##  Length:27855       Length:27855       Length:27855       Min.   :-89.00  
+    ##  Class :character   Class :character   Class :character   1st Qu.: 24.09  
     ##  Mode  :character   Mode  :character   Mode  :character   Median : 39.67  
     ##                                                           Mean   : 31.86  
     ##                                                           3rd Qu.: 50.02  
@@ -196,20 +196,20 @@ summary(GSOD_stations)
     ##                                                                           
     ##       LON               ELEV_M           BEGIN               END          
     ##  Min.   :-179.983   Min.   :-350.0   Min.   :19010101   Min.   :19051231  
-    ##  1st Qu.: -83.830   1st Qu.:  22.3   1st Qu.:19570630   1st Qu.:20020207  
-    ##  Median :   7.850   Median : 137.0   Median :19750716   Median :20150630  
-    ##  Mean   :  -2.708   Mean   : 359.5   Mean   :19775758   Mean   :20040755  
-    ##  3rd Qu.:  64.617   3rd Qu.: 428.0   3rd Qu.:20010915   3rd Qu.:20160919  
-    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20160909   Max.   :20160921  
+    ##  1st Qu.: -83.845   1st Qu.:  22.3   1st Qu.:19570630   1st Qu.:20020207  
+    ##  Median :   7.828   Median : 137.0   Median :19750729   Median :20150808  
+    ##  Mean   :  -2.743   Mean   : 359.6   Mean   :19775921   Mean   :20040884  
+    ##  3rd Qu.:  64.585   3rd Qu.: 428.0   3rd Qu.:20010915   3rd Qu.:20161002  
+    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20160927   Max.   :20161004  
     ##                     NA's   :218                                           
-    ##     STNID           ELEV_M_SRTM_90m 
-    ##  Length:27845       Min.   :-361.0  
-    ##  Class :character   1st Qu.:  24.0  
-    ##  Mode  :character   Median : 153.0  
-    ##                     Mean   : 379.2  
-    ##                     3rd Qu.: 456.0  
-    ##                     Max.   :5273.0  
-    ##                     NA's   :3010
+    ##     STNID           ELEV_M_SRTM_90m  
+    ##  Length:27855       Min.   :-361.00  
+    ##  Class :character   1st Qu.:  24.75  
+    ##  Mode  :character   Median : 153.00  
+    ##                     Mean   : 379.32  
+    ##                     3rd Qu.: 456.00  
+    ##                     Max.   :5273.00  
+    ##                     NA's   :3011
 
 Figures
 =======
@@ -277,12 +277,12 @@ R System Information
     ## [19] withr_1.0.2        dplyr_0.5.0        stringr_1.1.0     
     ## [22] raster_2.5-8       knitr_1.14         devtools_1.12.0   
     ## [25] maps_3.1.1         grid_3.3.1         data.table_1.9.6  
-    ## [28] R6_2.1.3           rmarkdown_1.0      sp_1.2-3          
+    ## [28] R6_2.2.0           rmarkdown_1.0      sp_1.2-3          
     ## [31] readr_1.0.0        magrittr_1.5       MASS_7.3-45       
-    ## [34] scales_0.4.0       codetools_0.2-14   htmltools_0.3.5   
+    ## [34] scales_0.4.0       codetools_0.2-15   htmltools_0.3.5   
     ## [37] proj4_1.0-8        assertthat_0.1     countrycode_0.18  
     ## [40] colorspace_1.2-6   labeling_0.3       ash_1.0-15        
-    ## [43] KernSmooth_2.23-15 stringi_1.1.1      lazyeval_0.2.0    
+    ## [43] KernSmooth_2.23-15 stringi_1.1.2      lazyeval_0.2.0    
     ## [46] doParallel_1.0.10  munsell_0.4.3      chron_2.3-47
 
 References
