@@ -1,34 +1,57 @@
-# GSODR v0.2
+# GSODR v0.2 [unreleased]
 
 ## NEW FEATURES
+
+  * Multiple stations can be specified for download rather than just downloading
+  a single station or all stations  
+  * A new function, `nearest_stations()` is now included to find stations within
+  a user specified radius (in kilometres) of a point given as latitude and
+  longitude in decimal degrees  
+  * A vignette is now included  
   * Output files now include fields for State (US only) and Call (International
   Civil Aviation Organization (ICAO) Airport Code)  
-  * Country is specified using FIPS codes in filename and output file contents
-  due to stations occurring in some locales that lack ISO 3166 3 letter country
-  codes
-  * R >= 3.2.0 now required   
-  * Use FIPS codes in place of ISO3c for filename and in output files because
+  * Use FIPS codes in place of ISO3c for file name and in output files because
   some stations do not have an ISO country code  
-  * Spatial file output is now in GeoPackage format (GPKG). This results in a single
-  file and allows for long field names  
-  * Long field names now used in file outputs  
+  * Spatial file output is now in GeoPackage format (GPKG). This results in a
+  single file output unlike shapefile and allows for long field names  
+  * Users can specify file name of output  
+  * Users can ask for the most recent list of GSOD stations from the NCDC
+  FTP server to use in place of the list provided with GSODR  
+  * All files are written to same output folder, specified by user in the `dsn`
+  parameter. For multiple year queries, the year is appended to the file name
+  that is specified by the user  
+  * R >= 3.2.0 now required  
   * Field names in output files use "\_" in place of "."  
+  * Long field names now used in file outputs  
+  * Country is specified using FIPS codes in file name and output file contents
+  due to stations occurring in some locales that lack ISO 3166 3 letter country
+  codes  
   
 ## MINOR IMPROVEMENTS
 
   * `get_GSOD` function optimised for speed as best possible after FTPing files
   from NCDC server  
-  * Updated `stations` list with latest version from NCDC published 28-07-2016  
-  * Reduce package dependencies, remove `dplyr`, `iotools`, `raster`,
-  `settings`, and `stringr`  
-
+  * Updated `stations` list with latest version from NCDC published 10-08-2016  
+  * Reduced package dependencies  
+  * The `get_GSOD()` function now checks stations to see if the years being
+  queried are provided and returns a message alerting user if the station and
+  years requested are not available  
+  * When stations are specified for retrieval using the `station = ""`
+  parameter, the `get_GSOD()` function now checks to see if the file exists on
+  the server, if it does not, a message is returned and all other stations that
+  have files are processed and returned in output  
+  
 ## BUG FIXES
 
+  * Fixed: Remove redundant code in `get_GSOD()` function  
+  * Fixed: The stations data frame distributed with the package now includes stations
+  that are located above 60 latitude and below -60 latitude  
+  
 ## DEPRECATED AND DEFUNCT
+ 
   * The `path` parameter is now instead called `dsn` to be more inline with
-  other tools like `readOGR()` and the possibility of writing directly to a
-  database from `get_GSOD()`  
-  * Shapefile file out is no longer supported. Use GeoPackage (GPKG)  instead  
+  other tools like `readOGR()` and `writeOGR`  
+  * Shapefile file out is no longer supported. Use GeoPackage (GPKG) instead  
 
 ******
 
@@ -123,7 +146,7 @@
 ## Bug fixes
   * Fixed bug where YDAY not correctly calculated and reported in CSV file
   * CSV files for station only queries now are names with the Station Identifier. Previously named same as global data
-  * Likesise, CSV files for agroclimatology now are names with the Station Identifier. Previously named same as global data
+  * Likewise, CSV files for agroclimatology now are names with the Station Identifier. Previously named same as global data
 
 ## Changes
   * Set values where MIN > MAX to NA

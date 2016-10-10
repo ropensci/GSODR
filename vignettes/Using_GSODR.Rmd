@@ -19,12 +19,12 @@ quality, those stations with too many missing observations as defined by the
 user are omitted. All units are converted to International System of Units (SI),
 e.g., inches to millimetres and Fahrenheit to Celsius. Output is saved as a
 Comma Separated Value (CSV) file or in a spatial GeoPackage (GPKG) file,
-implemented by most major GIS softwares, summarising each year by station, which
+implemented by most major GIS software, summarising each year by station, which
 also includes vapour pressure and relative humidity variables calculated from
 existing data in GSOD.
 
-This package was largely based on Tomislav Hengl's work in "[A Practical
-Guide to Geostatistical Mapping](http://spatial-analyst.net/book/getGSOD.R)",
+This package was largely based on Tomislav Hengl's work, [getGSOD.R](http://spatial-analyst.net/book/getGSOD.R)
+in "[A Practical Guide to Geostatistical Mapping](http://spatial-analyst.net)",
 with updates for speed, cross-platform functionality, and more options for data
 retrieval and error correction.
 
@@ -33,11 +33,11 @@ For more information see the description of the data provided by NCDC,
 
 # Using the package
 
-
 ## Load GSODR
 
-```{r}
+```{r load_library}
 library(GSODR)
+stations <- GSODR::GSOD_stations
 ```
 
 ## Plot Global Station Locations
@@ -50,7 +50,7 @@ Using this data we can plot the station locations that are included in GSOD that
 provide valid geo-locations.
 
 Using ggplot2 and the ggalt package it is possible to plot the station locations
-using alpha transparency to see the densist part of the network and use the 
+using alpha transparency to see the densest part of the network and use the 
 Robinson projection for the map.
 
 ```{r plot_stations, fig.width=7, fig.height=7, fig.cap="GSOD Station Locations"}
@@ -68,15 +68,10 @@ ggplot(stations, aes(x = LON, y = LAT)) +
 
 GSODR provides lists of weather station locations and elevation values. Using
 dplyr, we can find all the stations in Australia.
-```{r, message=FALSE, warning=FALSE}
+```{r australia_stations, message=FALSE, warning=FALSE}
 library(dplyr)
-
-# convert factor columns to character
-i <- sapply(stations, is.factor)
-stations[i] <- lapply(stations[i], as.character)
-
-# now it's possible to left_join the data
-station_locations <- left_join(stations, country_list, by = c("CTRY" = "FIPS"))
+# left_join the the station data with the country list
+station_locations <- left_join(stations, GSODR::GSOD_country_list, by = c("CTRY" = "FIPS"))
 
 # create data.frame for Australia only
 Oz <- filter(station_locations, COUNTRY_NAME == "AUSTRALIA")
@@ -87,25 +82,63 @@ filter(Oz, STN_NAME == "TOOWOOMBA")
 
 ```
 
-## Using the `get_GSOD()` Function in GSODR
+## Using the `get_GSOD()` Function in GSODR to Download a Single Station and
+Year
 
-Download weather data from Toowoomba, Queensland, Australia for 2010 and save
-it in the user's home directory using the STNID in the `station` parameter of
-`get_GSOD()`.
+Download weather data from the station Toowoomba, Queensland, Australia for 2010
+and save it in the user's home directory using the STNID in the `station`
+parameter of `get_GSOD()`.
 
-```{r}
-get_GSOD(years = 2010, station = "955510-99999", dsn = "~/")
+```{r Toowoomba_Airport, eval=TRUE}
+get_GSOD(years = 2010, station = "955510-99999", dsn = "~/",
+         filename = "Toowoomba_Airport")
+```
+
+## Find Stations Within a Specified Distance of a Point
+
+Using the `nearest_stations()` function, you can find stations closest to a
+given point specified by latitude and longitude in decimal degrees. This can be
+used to generate a vector to pass along to `get_GSOD()` and download the
+stations of interest.
+
+There are missing stations in this query. Not all that are listed and queried
+actually have files on the server.
+
+```{r spatial_query, message}
+tbar_stations <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 50)
+tbar_stations <- tbar_stations$STNID
+
+get_GSOD(years = 2010, station = tbar_stations, dsn = "~/",
+         filename = "Toowoomba_50km_2010")
+```
+If you wished to drop the stations, 949999-00170 and 949999-00183 from the query,
+you could do this.
+
+```{r use_nearest_stations, eval=FALSE}
+remove <- c("949999-00170","949999-00183")
+tbar_stations <- tbar_stations[!tbar_stations %in% remove]
+
+get_GSOD(years = 2010, station = tbar_stations, dsn = "~/",
+         filename = "Toowoomba_50km")
 ```
 
 ## Plot Maximum and Miniumum Temperature Values
-```{r, fig.width=7, fig.height=7, message=FALSE, fig.cap="Toowoomba 2010 Temperatures"}
+Using the first data downloaded for a single station, plot the temperature for
+2010, setting the "-9999" value to NA on import using `read_csv` from Hadley's
+`readr` package.
+
+```{r plot_temps, fig.width=7, fig.height=7, message=FALSE, fig.cap="Toowoomba 2010 Temperatures"}
 library(lubridate)
 library(readr)
 library(tidyr)
 
-tbar <- read_csv("~/GSOD-955510-99999-2010.csv", na = "-9999")
+# Import the data for Toowoomba previously downloaded and cleaned
+tbar <- read_csv("~/Toowoomba_Airport-2010.csv", na = "-9999")
 
+# Create a dataframe of just the date and temperature values that we want to plot
 tbar_temps <- tbar[, c(14, 19, 33, 35)]
+
+# Gather the data from wide to long
 tbar_temps <- gather(tbar_temps, Measurement, gather_cols = TEMP:MIN)
 
 ggplot(data = tbar_temps, aes(x = ymd(YEARMODA), y = value,
@@ -115,6 +148,22 @@ ggplot(data = tbar_temps, aes(x = ymd(YEARMODA), y = value,
   scale_y_continuous(name = "Temperature") +
   scale_x_date(name = "Date") +
   theme_bw()
+
+```
+
+### Fetching the latest station list from NCDC
+A list of stations is provided with the GSODR package for convince and speed.
+However, the original list is updated somewhat regularly by the NCDC. If you
+would like to use the very latest station list, you may do so by using the
+`refresh` parameter in `get_GSOD()`. This list will only be available for the R
+session in which you have specified the option to refresh the station list and
+downloaded data, it will not overwrite the default list available with the
+package.
+
+```{r refresh_stations, eval=FALSE}
+
+get_GSOD(years = 2016, dsn = "~/", filename = "newest_stations", refresh = TRUE)
+
 
 ```
 
@@ -135,8 +184,8 @@ country.
 
 ```{r spatial_files, message=FALSE}
 
-get_GSOD(years = 2015, country = "Australia", dsn = "~/", CSV = FALSE,
-         GPKG = TRUE)
+get_GSOD(years = 2015, country = "Australia", dsn = "~/", filename = "AUS",
+         CSV = FALSE, GPKG = TRUE)
 ```
 
 Importing the GeoPackage file can be a bit tricky. The dsn will be the full path
@@ -145,8 +194,9 @@ in the `get_GSOD()` function and will not change. The file name, specified in th
 dsn will, but the layer name will not.
 
 ```{r import_spatial_files, message=FALSE}
+
 library(rgdal)
-AUS_stations <- readOGR(dsn = path.expand("~/GSOD-AS-2015.gpkg"), layer = "GSOD")
+AUS_stations <- readOGR(dsn = path.expand("~/AUS-2015.gpkg"), layer = "GSOD")
 
 class(AUS_stations)
 
@@ -160,12 +210,42 @@ One easy way is using dplyr, which we've already used to filter the stations.
 
 This option is much faster to load since it does not load the geometry.
 
-```{r as_database}
-AUS_sqlite <- tbl(src_sqlite(path.expand("~/GSOD-AS-2015.gpkg")), "GSOD")
-class(AUS_stations)
+```{r as_gpkg_database}
+
+AUS_sqlite <- tbl(src_sqlite(path.expand("~/AUS-2015.gpkg")), "GSOD")
+class(AUS_sqlite)
 print(AUS_sqlite, n = 5)
 
 ```
+# Generating hourly temperature data from daily using the `chillR` package
+
+The `chillR` package from [Eike Luedeling](http://eikeluedeling.com/index.html)
+has a function, `make_hourly_temps()` that can be used to temporally downscale
+daily weather data to hourly using the station's latitude. Here's how that's
+possible using the Toowoomba-Airport data.
+
+To use this function it is necessary to rename the MAX, MIN, YEAR and YDAY
+columns and convert the `tibble` to a standard `data.frame` object so that
+`make_hourly_temps()` will recognize the columns and can operate on the
+data.
+
+```{r temporal_downscaling}
+library(chillR)
+
+# rename columns and convert the object to a standard data.frame
+colnames(tbar)[colnames(tbar) == "MAX"] <- "Tmax"
+colnames(tbar)[colnames(tbar) == "MIN"] <- "Tmin"
+colnames(tbar)[colnames(tbar) == "YEAR"] <- "Year"
+colnames(tbar)[colnames(tbar) == "YDAY"] <- "JDay"
+tbar <- as.data.frame(tbar)
+
+# generate hourly temperature values
+tbar <- make_hourly_temps(tbar[, 8], tbar)
+
+head(tbar)
+
+```
+
 # Notes
 
 ## Elevation Values

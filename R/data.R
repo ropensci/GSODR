@@ -1,6 +1,6 @@
 #'Stations
 #'
-#' @format A data frame with 24881 observations of 13 variables:
+#' @format A data frame with 27845 observations of 13 variables:
 #' \describe{
 #'   \item{USAF}{Air Force Datsav3 station number}
 #'   \item{WBAN}{Weather Bureau Army Navy (5 digit identifier)}
@@ -54,9 +54,9 @@
 #' @references {Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled
 #' SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
 #' \url{http://srtm.csi.cgiar.org}}
-"stations"
+"GSOD_stations"
 
-#' country_list
+#' GSOD_country_list
 #' @format A data frame with 293 observations of 4 variables:
 #' \describe{
 #' \item{FIPS}{Federal Information Processing Standards (FIPS) code}
@@ -78,4 +78,4 @@
 #'
 #' @source \url{ftp://ftp.ncdc.noaa.gov/pub/data/noaa/country-list.txt}
 #'
-"country_list"
+"GSOD_country_list"

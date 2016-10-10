@@ -6,3 +6,5 @@
 .Rproj.user
 fetch_isd-history_cache
 inst/doc
+
+.Rbuildignore~
