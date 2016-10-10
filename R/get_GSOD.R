@@ -348,7 +348,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
       )
     } else {
       # Stations not specified ------------------------------------------------
-      cl <- parallel::makeCluster(parallel::detectCores() - 2)
+      cl <- parallel::makeCluster(parallel::detectCores())
       doParallel::registerDoParallel(cl)
       itx <- iterators::iter(GSOD_list)
       GSOD_XY <- as.data.frame(
