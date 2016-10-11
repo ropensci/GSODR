@@ -29,7 +29,7 @@ nearest_stations <- function(LAT, LON, distance) {
   options(warn = 2)
   options(timeout = 300)
 
-  stations <- GSODR::GSOD_stations
+  stations <- .fetch_stations()
 
   # this is a spatial object dataframe for calculating the nearest
   sp_stations <- stations

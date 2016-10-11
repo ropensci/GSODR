@@ -37,27 +37,41 @@ For more information see the description of the data provided by NCDC,
 
 ```{r load_library}
 library(GSODR)
-stations <- GSODR::GSOD_stations
 ```
 
 ## Plot Global Station Locations
 
-GSODR provides a cleaned list of station locations with the package. Stations
-are omitted if they do not provide a valid longitude or latitude value. See [fetch_isd-history.md](https://github.com/adamhsparks/GSODR/blob/master/data-raw/fetch_isd-history.md)
-for details on the criteria and how this list is generated and last updated.
-
+The `get_GSOD()` function automatically fetches the most recent station data from
+the NCDC website and removes stations that are missing data (as shown below).
 Using this data we can plot the station locations that are included in GSOD that
-provide valid geo-locations.
+provide valid geo-locations after cleaning.
 
-Using ggplot2 and the ggalt package it is possible to plot the station locations
-using alpha transparency to see the densest part of the network and use the 
-Robinson projection for the map.
+```{r fetch_stations}
+  GSOD_stations <- readr::read_csv(
+    "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
+    col_types = "ccccccddddd",
+    col_names = c("USAF", "WBAN", "STN_NAME", "CTRY", "STATE", "CALL",
+                  "LAT", "LON", "ELEV_M", "BEGIN", "END"), skip = 1)
+
+  GSOD_stations[GSOD_stations == -999.9] <- NA
+  GSOD_stations[GSOD_stations == -999] <- NA
+
+  GSOD_stations <- GSOD_stations[!is.na(GSOD_stations$LAT) & !is.na(GSOD_stations$LON), ]
+  GSOD_stations <- GSOD_stations[GSOD_stations$LAT != 0 & GSOD_stations$LON != 0, ]
+  GSOD_stations <- GSOD_stations[GSOD_stations$LAT > -90 & GSOD_stations$LAT < 90, ]
+  GSOD_stations <- GSOD_stations[GSOD_stations$LON > -180 & GSOD_stations$LON < 180, ]
+  GSOD_stations$STNID <- as.character(paste(GSOD_stations$USAF, GSOD_stations$WBAN, sep = "-"))
+```
+
+Using [ggplot2](https://cran.r-project.org/web/packages/ggplot2/index.html) and the [ggalt](https://cran.r-project.org/web/packages/ggalt/index.html) package it is
+possible to plot the station locations using alpha transparency to see the
+densest part of the network and use the Robinson projection for the map.
 
 ```{r plot_stations, fig.width=7, fig.height=7, fig.cap="GSOD Station Locations"}
 library(ggplot2)
 library(ggalt)
 
-ggplot(stations, aes(x = LON, y = LAT)) +
+ggplot(GSOD_stations, aes(x = LON, y = LAT)) +
   geom_point(alpha = 0.1) +
   coord_proj("+proj=robin +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs") +
   theme_bw()
@@ -71,7 +85,7 @@ dplyr, we can find all the stations in Australia.
 ```{r australia_stations, message=FALSE, warning=FALSE}
 library(dplyr)
 # left_join the the station data with the country list
-station_locations <- left_join(stations, GSODR::GSOD_country_list, by = c("CTRY" = "FIPS"))
+station_locations <- left_join(GSOD_stations, GSODR::GSOD_country_list, by = c("CTRY" = "FIPS"))
 
 # create data.frame for Australia only
 Oz <- filter(station_locations, COUNTRY_NAME == "AUSTRALIA")
@@ -148,22 +162,6 @@ ggplot(data = tbar_temps, aes(x = ymd(YEARMODA), y = value,
   scale_y_continuous(name = "Temperature") +
   scale_x_date(name = "Date") +
   theme_bw()
-
-```
-
-### Fetching the latest station list from NCDC
-A list of stations is provided with the GSODR package for convince and speed.
-However, the original list is updated somewhat regularly by the NCDC. If you
-would like to use the very latest station list, you may do so by using the
-`refresh` parameter in `get_GSOD()`. This list will only be available for the R
-session in which you have specified the option to refresh the station list and
-downloaded data, it will not overwrite the default list available with the
-package.
-
-```{r refresh_stations, eval=FALSE}
-
-get_GSOD(years = 2016, dsn = "~/", filename = "newest_stations", refresh = TRUE)
-
 
 ```
 
