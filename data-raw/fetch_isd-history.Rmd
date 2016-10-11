@@ -11,23 +11,27 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introduction
 
-This script will fetch station data from the ftp server and clean up for
-inclusion in package in /data/stations.rda for the GSODR package.
+This document details how the GSOD station history data file, ["isd-history.csv"](ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv),
+is fetched from the NCDC ftp server, error checked and new elevation values
+generated. The new elevation values are then saved for inclusion in package as
+/data/SRTM_GSOD_elevation.rda. The resulting values are merged with the most
+recent station history data file from the NCDC when the user runs the
+`get_GSOD()` function. The resulting data frame of station information, based on
+the merging of the `SRTM_GSOD_elevation` data frame with the most recently
+available "isd-history.csv" file will result in the following changes to the data:
 
-The following changes are made:
+* Stations where latitude or longitude are NA or both 0 are removed
 
-* Stations where latitude or longitude are NA or both 0 were removed
+* Stations where latitude is < -90˚ or > 90˚ are removed
 
-* Stations where latitude is < -90˚ or > 90˚ were removed
+* Stations where longitude is < -180˚ or > 180˚ are removed
 
-* Stations where longitude is < -180˚ or > 180˚ were removed
+* A new field, STNID, a concatenation of the USAF and WBAN fields, is added
 
-* A new field, STNID, a concatenation of the USAF and WBAN fields, was added
+* Stations are checked against Natural Earth 1:10 ADM0 Cultural data, stations
+not mapping in the isd-history reported country are dropped
 
-* Stations were checked against Natural Earth 1:10 ADM0 Cultural data, stations
-not mapping in the isd-history reported country were dropped
-
-* 90m hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was used to
+* 90m hole-filled SRTM digital elevation (Jarvis *et al.* 2008) is used to
 identify and correct/remove elevation errors in data for station locations
 between -60˚ and 60˚ latitude. This applies to cases here where elevation was
 missing in the reported values as well. In case the station reported an
@@ -149,7 +153,7 @@ sp::proj4string(stations) <- sp::CRS(crs)
 
 # set up cluster for parallel processing
 library(foreach)
-cl <- parallel::makeCluster(parallel::detectCores() - 2)
+cl <- parallel::makeCluster(parallel::detectCores())
 doParallel::registerDoParallel(cl)
 
 corrected_elev <- tibble::as_tibble(
@@ -203,9 +207,9 @@ stations <- tibble::as_tibble(stations)
 
 # Perform left join to join corrected elevation with original station data,
 # this will include stations below/above -60/60
-GSOD_stations <- dplyr::left_join(stations, corrected_elev)
+SRTM_GSOD_elevation <- dplyr::left_join(stations, corrected_elev)
 
-summary(GSOD_stations)
+summary(SRTM_GSOD_elevation)
 ```
 
 # Figures
@@ -221,7 +225,7 @@ if (!require("ggalt"))
   install.packages("ggalt")
 }
 
-ggplot(data = GSOD_stations, aes(x = ELEV_M, y = ELEV_M_SRTM_90m)) +
+ggplot(data = SRTM_GSOD_elevation, aes(x = ELEV_M, y = ELEV_M_SRTM_90m)) +
   geom_point(alpha = 0.4, size = 0.5)
 ```
 
@@ -232,19 +236,23 @@ help avoid within cell and between cell variation the buffered values are the
 values that are included in the final data for distribution with the GSODR
 package following the approach of Hijmans *et al.* (2005).
 
+Only values for elevation derived from the SRTM data and the STNID, used to
+join this with the original "isd-history.csv" file data when running `get_GSOD()`
+are included in the final data frame for distribution with the GSODR package.
+
 ```{r cleanup and .rda file creation, message=FALSE, echo=TRUE, warning=FALSE, error=FALSE}
 
-
 # write rda file to disk for use with GSODR package
-data.table::setDT(GSOD_stations)
-devtools::use_data(GSOD_stations, overwrite = TRUE, compress = "bzip2")
+data.table::setDT(SRTM_GSOD_elevation)
+SRTM_GSOD_elevation[, c(1:11) := NULL]
+devtools::use_data(SRTM_GSOD_elevation, overwrite = TRUE, compress = "bzip2")
 
 # clean up Natural Earth data files before we leave
 file.remove(list.files(pattern = glob2rx("ne_10m_admin_0_countries*")))
 
 ```
 
-The stations.rda file included in the GSODR package includes
+The SRTM_GSOD_elevation.rda file included in the GSODR package includes
 the new elevation data as the field; ELEV\_M\_SRTM\_90m.
 
 # Notes

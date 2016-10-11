@@ -1,26 +1,24 @@
 Fetch, clean and correct altitude in GSOD isd\_history.csv Data
 ================
 Adam H. Sparks
-2016-10-06
+2016-10-11
 
 Introduction
 ============
 
-This script will fetch station data from the ftp server and clean up for inclusion in package in /data/stations.rda for the GSODR package.
+This document details how the GSOD station history data file, ["isd-history.csv"](ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv), is fetched from the NCDC ftp server, error checked and new elevation values generated. The new elevation values are then saved for inclusion in package as /data/SRTM\_GSOD\_elevation.rda. The resulting values are merged with the most recent station history data file from the NCDC when the user runs the `get_GSOD()` function. The resulting data frame of station information, based on the merging of the `SRTM_GSOD_elevation` data frame with the most recently available "isd-history.csv" file will result in the following changes to the data:
 
-The following changes are made:
+-   Stations where latitude or longitude are NA or both 0 are removed
 
--   Stations where latitude or longitude are NA or both 0 were removed
+-   Stations where latitude is &lt; -90˚ or &gt; 90˚ are removed
 
--   Stations where latitude is &lt; -90˚ or &gt; 90˚ were removed
+-   Stations where longitude is &lt; -180˚ or &gt; 180˚ are removed
 
--   Stations where longitude is &lt; -180˚ or &gt; 180˚ were removed
+-   A new field, STNID, a concatenation of the USAF and WBAN fields, is added
 
--   A new field, STNID, a concatenation of the USAF and WBAN fields, was added
+-   Stations are checked against Natural Earth 1:10 ADM0 Cultural data, stations not mapping in the isd-history reported country are dropped
 
--   Stations were checked against Natural Earth 1:10 ADM0 Cultural data, stations not mapping in the isd-history reported country were dropped
-
--   90m hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was used to identify and correct/remove elevation errors in data for station locations between -60˚ and 60˚ latitude. This applies to cases here where elevation was missing in the reported values as well. In case the station reported an elevation and the DEM does not, the station reported value is taken. For stations beyond -60˚ and 60˚ latitude, the values are station reported values in every instance for the 90m column.
+-   90m hole-filled SRTM digital elevation (Jarvis *et al.* 2008) is used to identify and correct/remove elevation errors in data for station locations between -60˚ and 60˚ latitude. This applies to cases here where elevation was missing in the reported values as well. In case the station reported an elevation and the DEM does not, the station reported value is taken. For stations beyond -60˚ and 60˚ latitude, the values are station reported values in every instance for the 90m column.
 
 Data Processing
 ===============
@@ -119,7 +117,7 @@ sp::proj4string(stations) <- sp::CRS(crs)
 
 # set up cluster for parallel processing
 library(foreach)
-cl <- parallel::makeCluster(parallel::detectCores() - 2)
+cl <- parallel::makeCluster(parallel::detectCores())
 doParallel::registerDoParallel(cl)
 
 corrected_elev <- tibble::as_tibble(
@@ -169,13 +167,13 @@ stations <- tibble::as_tibble(stations)
 
 # Perform left join to join corrected elevation with original station data,
 # this will include stations below/above -60/60
-GSOD_stations <- dplyr::left_join(stations, corrected_elev)
+SRTM_GSOD_elevation <- dplyr::left_join(stations, corrected_elev)
 ```
 
     ## Joining, by = c("USAF", "WBAN", "STN_NAME", "CTRY", "STATE", "CALL", "LAT", "LON", "ELEV_M", "BEGIN", "END", "STNID")
 
 ``` r
-summary(GSOD_stations)
+summary(SRTM_GSOD_elevation)
 ```
 
     ##      USAF               WBAN             STN_NAME        
@@ -198,9 +196,9 @@ summary(GSOD_stations)
     ##  Min.   :-179.983   Min.   :-350.0   Min.   :19010101   Min.   :19051231  
     ##  1st Qu.: -83.845   1st Qu.:  22.3   1st Qu.:19570630   1st Qu.:20020207  
     ##  Median :   7.828   Median : 137.0   Median :19750729   Median :20150808  
-    ##  Mean   :  -2.743   Mean   : 359.6   Mean   :19775921   Mean   :20040884  
-    ##  3rd Qu.:  64.585   3rd Qu.: 428.0   3rd Qu.:20010915   3rd Qu.:20161002  
-    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20160927   Max.   :20161004  
+    ##  Mean   :  -2.743   Mean   : 359.6   Mean   :19775921   Mean   :20040896  
+    ##  3rd Qu.:  64.585   3rd Qu.: 428.0   3rd Qu.:20010915   3rd Qu.:20161007  
+    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20160927   Max.   :20161009  
     ##                     NA's   :218                                           
     ##     STNID           ELEV_M_SRTM_90m  
     ##  Length:27855       Min.   :-361.00  
@@ -220,7 +218,7 @@ if (!require("ggalt"))
   install.packages("ggalt")
 }
 
-ggplot(data = GSOD_stations, aes(x = ELEV_M, y = ELEV_M_SRTM_90m)) +
+ggplot(data = SRTM_GSOD_elevation, aes(x = ELEV_M, y = ELEV_M_SRTM_90m)) +
   geom_point(alpha = 0.4, size = 0.5)
 ```
 
@@ -228,10 +226,13 @@ ggplot(data = GSOD_stations, aes(x = ELEV_M, y = ELEV_M_SRTM_90m)) +
 
 Buffered versus non-buffered elevation values were previously checked and found not to be different while also not showing any discernible geographic patterns. However, The buffered elevation data are higher than the non-buffered data. To help avoid within cell and between cell variation the buffered values are the values that are included in the final data for distribution with the GSODR package following the approach of Hijmans *et al.* (2005).
 
+Only values for elevation derived from the SRTM data and the STNID, used to join this with the original "isd-history.csv" file data when running `get_GSOD()` are included in the final data frame for distribution with the GSODR package.
+
 ``` r
 # write rda file to disk for use with GSODR package
-data.table::setDT(GSOD_stations)
-devtools::use_data(GSOD_stations, overwrite = TRUE, compress = "bzip2")
+data.table::setDT(SRTM_GSOD_elevation)
+SRTM_GSOD_elevation[, c(1:11) := NULL]
+devtools::use_data(SRTM_GSOD_elevation, overwrite = TRUE, compress = "bzip2")
 
 # clean up Natural Earth data files before we leave
 file.remove(list.files(pattern = glob2rx("ne_10m_admin_0_countries*")))
@@ -239,7 +240,7 @@ file.remove(list.files(pattern = glob2rx("ne_10m_admin_0_countries*")))
 
     ## [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE
 
-The stations.rda file included in the GSODR package includes the new elevation data as the field; ELEV\_M\_SRTM\_90m.
+The SRTM\_GSOD\_elevation.rda file included in the GSODR package includes the new elevation data as the field; ELEV\_M\_SRTM\_90m.
 
 Notes
 =====

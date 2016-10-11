@@ -49,9 +49,6 @@
 #' @param GPKG Logical. If set to TRUE, create a GeoPackage file, if
 #' set to FALSE, no GPKG file is created. Defaults to FALSE, no GPKG file is
 #' created.
-#' @param refresh Logical. If set to true, the most recent version of
-#' isd-history.csv will be fetched and used in place of the GSOD_stations list
-#' provided with the package. Defaults to FALSE, use package version.
 #'
 #' @details
 #'Due to the size of the resulting data, output is saved as a comma-separated,
@@ -212,10 +209,6 @@
 #' get_GSOD(years = 2010:2011, dsn = "~/",
 #' filename = "GSOD_agroclimatology_2010-2011", agroclimatology = TRUE)
 #'
-#' # Fetch the lastest list of weather stations from the NCDC FTP server and
-#' # use that data rather than bundled data
-#'
-#' get_GSOD(years = 2016, dsn = "~/", filename = "GSOD_newest", refresh = TRUE)
 #' }
 #'
 #'
@@ -230,8 +223,7 @@
 #' @export
 get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
                      filename = "GSOD", max_missing = 5,
-                     agroclimatology = FALSE, CSV = TRUE, GPKG = FALSE,
-                     refresh = FALSE) {
+                     agroclimatology = FALSE, CSV = TRUE, GPKG = FALSE) {
 
   # Set up options, creating objects, check variables entered by user-----------
   options(warn = 2)
@@ -244,10 +236,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
   # Create objects for use later
   s <- j <- yr <- LON <- LAT <-  NULL
 
-  if (refresh == FALSE) {
-    stations <- GSODR::GSOD_stations
-  } else
-    stations <- .refresh_stations()
+  # fetch most recent station history file
+  stations <- .fetch_stations()
 
   # Check data path given by user, does it exist? Is it properly formatted?
   dsn <- .validate_dsn(dsn)
@@ -647,7 +637,7 @@ can view the entire list of valid countries in this data by typing, 'GSODR::GSOD
   }
 }
 
-.refresh_stations <- function(){
+.fetch_stations <- function(){
   STNID <- NULL
   stations_new <- readr::read_csv(
     "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
@@ -655,19 +645,20 @@ can view the entire list of valid countries in this data by typing, 'GSODR::GSOD
     col_names = c("USAF", "WBAN", "STN_NAME", "CTRY", "STATE", "CALL",
                   "LAT", "LON", "ELEV_M", "BEGIN", "END"), skip = 1)
 
-  stations_new[stations_new == -999.9] <- NA
-  stations_new[stations_new == -999] <- NA
+  stations[stations == -999.9] <- NA
+  stations[stations == -999] <- NA
 
-  stations_new <- stations_new[!is.na(stations_new$LAT) & !is.na(stations_new$LON), ]
-  stations_new <- stations_new[stations_new$LAT != 0 & stations_new$LON != 0, ]
-  stations_new <- stations_new[stations_new$LAT > -90 & stations_new$LAT < 90, ]
-  stations_new <- stations_new[stations_new$LON > -180 & stations_new$LON < 180, ]
-  stations_new$STNID <- as.character(paste(stations_new$USAF, stations_new$WBAN, sep = "-"))
+  stations <- stations[!is.na(stations$LAT) & !is.na(stations$LON), ]
+  stations <- stations[stations$LAT != 0 & stations$LON != 0, ]
+  stations <- stations[stations$LAT > -90 & stations$LAT < 90, ]
+  stations <- stations[stations$LON > -180 & stations$LON < 180, ]
+  stations$STNID <- as.character(paste(stations$USAF, stations$WBAN, sep = "-"))
 
-  data.table::setkey(GSODR::GSOD_stations, STNID)
-  data.table::setDT(stations_new)
+  data.table::setkey(GSODR::SRTM_GSOD_elevation, STNID)
+  data.table::setDT(stations)
+  data.table::setkey(stations, STNID)
 
-  GSOD_stations <- GSODR::GSOD_stations[stations_new]
+  GSOD_stations <- stations[GSODR::SRTM_GSOD_elevation]
   return(GSOD_stations)
 
 }
