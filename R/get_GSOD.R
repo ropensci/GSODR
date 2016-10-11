@@ -639,7 +639,7 @@ can view the entire list of valid countries in this data by typing, 'GSODR::GSOD
 
 .fetch_stations <- function(){
   STNID <- NULL
-  stations_new <- readr::read_csv(
+  stations <- readr::read_csv(
     "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
     col_types = "ccccccddddd",
     col_names = c("USAF", "WBAN", "STN_NAME", "CTRY", "STATE", "CALL",

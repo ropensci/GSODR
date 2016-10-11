@@ -37,21 +37,36 @@ For more information see the description of the data provided by NCDC,
 
 ```{r load_library}
 library(GSODR)
-stations <- GSODR::GSOD_stations
 ```
 
 ## Plot Global Station Locations
 
-GSODR provides a cleaned list of station locations with the package. Stations
-are omitted if they do not provide a valid longitude or latitude value. See [fetch_isd-history.md](https://github.com/adamhsparks/GSODR/blob/master/data-raw/fetch_isd-history.md)
-for details on the criteria and how this list is generated and last updated.
+The `get_GSOD()` function automatically fetches the most recent station data from
+the NCDC website and removes stations that are missing data, like this.
 
 Using this data we can plot the station locations that are included in GSOD that
-provide valid geo-locations.
+provide valid geo-locations after cleaning as shown below.
 
-Using ggplot2 and the ggalt package it is possible to plot the station locations
-using alpha transparency to see the densest part of the network and use the 
-Robinson projection for the map.
+```{r fetch_stations}
+  GSOD_stations <- readr::read_csv(
+    "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
+    col_types = "ccccccddddd",
+    col_names = c("USAF", "WBAN", "STN_NAME", "CTRY", "STATE", "CALL",
+                  "LAT", "LON", "ELEV_M", "BEGIN", "END"), skip = 1)
+
+  GSOD_stations[GSOD_stations == -999.9] <- NA
+  GSOD_stations[GSOD_stations == -999] <- NA
+
+  GSOD_stations <- GSOD_stations[!is.na(GSOD_stations$LAT) & !is.na(GSOD_stations$LON), ]
+  GSOD_stations <- GSOD_stations[GSOD_stations$LAT != 0 & GSOD_stations$LON != 0, ]
+  GSOD_stations <- GSOD_stations[GSOD_stations$LAT > -90 & GSOD_stations$LAT < 90, ]
+  GSOD_stations <- GSOD_stations[GSOD_stations$LON > -180 & GSOD_stations$LON < 180, ]
+  GSOD_stations$STNID <- as.character(paste(GSOD_stations$USAF, GSOD_stations$WBAN, sep = "-"))
+```
+
+Using [ggplot2](https://cran.r-project.org/web/packages/ggplot2/index.html) and the [ggalt](https://cran.r-project.org/web/packages/ggalt/index.html) package it is
+possible to plot the station locations using alpha transparency to see the
+densest part of the network and use the Robinson projection for the map.
 
 ```{r plot_stations, fig.width=7, fig.height=7, fig.cap="GSOD Station Locations"}
 library(ggplot2)
