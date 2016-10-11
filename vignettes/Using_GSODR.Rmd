@@ -42,10 +42,9 @@ library(GSODR)
 ## Plot Global Station Locations
 
 The `get_GSOD()` function automatically fetches the most recent station data from
-the NCDC website and removes stations that are missing data, like this.
-
+the NCDC website and removes stations that are missing data (as shown below).
 Using this data we can plot the station locations that are included in GSOD that
-provide valid geo-locations after cleaning as shown below.
+provide valid geo-locations after cleaning.
 
 ```{r fetch_stations}
   GSOD_stations <- readr::read_csv(
@@ -72,7 +71,7 @@ densest part of the network and use the Robinson projection for the map.
 library(ggplot2)
 library(ggalt)
 
-ggplot(stations, aes(x = LON, y = LAT)) +
+ggplot(GSOD_stations, aes(x = LON, y = LAT)) +
   geom_point(alpha = 0.1) +
   coord_proj("+proj=robin +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs") +
   theme_bw()
@@ -86,7 +85,7 @@ dplyr, we can find all the stations in Australia.
 ```{r australia_stations, message=FALSE, warning=FALSE}
 library(dplyr)
 # left_join the the station data with the country list
-station_locations <- left_join(stations, GSODR::GSOD_country_list, by = c("CTRY" = "FIPS"))
+station_locations <- left_join(GSOD_stations, GSODR::GSOD_country_list, by = c("CTRY" = "FIPS"))
 
 # create data.frame for Australia only
 Oz <- filter(station_locations, COUNTRY_NAME == "AUSTRALIA")
@@ -163,22 +162,6 @@ ggplot(data = tbar_temps, aes(x = ymd(YEARMODA), y = value,
   scale_y_continuous(name = "Temperature") +
   scale_x_date(name = "Date") +
   theme_bw()
-
-```
-
-### Fetching the latest station list from NCDC
-A list of stations is provided with the GSODR package for convince and speed.
-However, the original list is updated somewhat regularly by the NCDC. If you
-would like to use the very latest station list, you may do so by using the
-`refresh` parameter in `get_GSOD()`. This list will only be available for the R
-session in which you have specified the option to refresh the station list and
-downloaded data, it will not overwrite the default list available with the
-package.
-
-```{r refresh_stations, eval=FALSE}
-
-get_GSOD(years = 2016, dsn = "~/", filename = "newest_stations", refresh = TRUE)
-
 
 ```
 
