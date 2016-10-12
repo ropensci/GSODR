@@ -20,14 +20,13 @@ this function will return a dataframe of stations within the specified number
 of kilometres.
 }
 \note{
-Some of these data are redistributed with this R package. Originally
-from these data come from the US NCDC which states that users of these data
-should take into account the following: \dQuote{The following data and
-products may have conditions placed on their international commercial use.
-They can be used within the U.S. or for non-commercial international
-activities without restriction. The non-U.S. data cannot be redistributed for
-commercial purposes. Re-distribution of these data by others must provide
-this same notification.}
+The GSOD data, which are downloaded and manipulated by this R package,
+stipulate that the following notice should be given. \dQuote{The following
+data and products may have conditions placed on their international
+commercial use. They can be used within the U.S. or for non-commercial
+international activities without restriction. The non-U.S. data cannot be
+redistributed for commercial purposes. Re-distribution of these data by
+others must provide this same notification.}
 }
 \examples{
 \dontrun{
