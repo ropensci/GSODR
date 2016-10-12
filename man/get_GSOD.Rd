@@ -70,7 +70,7 @@ repository here: \url{https://github.com/adamhsparks/GSODR/blob/master/data-raw/
 }
 \details{
 Due to the size of the resulting data, output is saved as a comma-separated,
-csv, file (default) or GeoPackage in a directory specified by the user or
+CSV, file (default) or GeoPackage in a directory specified by the user or
 defaults to the current working directory. The files summarize each year by
 station, which includes vapour pressure and relative humidity variables
 calculated from existing data in GSOD.
