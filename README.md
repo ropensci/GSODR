@@ -66,10 +66,12 @@ install.packages("GSODR")
 
 A development version is available from from GitHub. If you wish to
 install the development version that may have new features (but also may
-not work properly), install the devtools package, available from CRAN. I
-strive to keep the master branch on GitHub functional and working
-properly this may not always happen. If you find bugs, please file a
-report as an issue.
+not work properly), install the [devtools
+package](https://cran.r-project.org/web/packages/devtools/index.html),
+available from CRAN. I strive to keep the master branch on GitHub
+functional and working properly this may not always happen.
+
+If you find bugs, please file a report as an issue.
 
 ``` r
 install.packages("devtools")
