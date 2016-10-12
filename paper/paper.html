@@ -122,23 +122,22 @@ $(document).ready(function () {
 
 <div id="summary" class="section level1">
 <h1>Summary</h1>
-<p>The GSODR package <span class="citation">(Sparks, Hengl, and Nelson 2016)</span> is an R package <span class="citation">(R Core Team 2016)</span> for automated downloading, parsing, cleaning and converting of Global Surface Summary of the Day (GSOD) <span class="citation">(United States National Oceanic and Atmospheric Administration National Climatic Data Center 2016)</span> weather data into Comma Separated Values (CSV) or Geopackage (GPKG) <span class="citation">(Open Geospatial Consortium 2014)</span> files. It builds on or complements several other scripts and packages. An earlier R script, getGSOD.R, published in the freely available book, “A Practical Guide to Geostatistical Mapping”, <span class="citation">(Hengl 2009)</span> provides basic functionality on Windows platforms, but lacks cross-platform support and does not take advantage of modern techniques in R to make more efficient use of available computing resources used to complete the process, e.g., data.table <span class="citation">(Dowle et al. 2015)</span>, readr <span class="citation">(Wickham, Hester, and Francois 2016)</span> and foreach <span class="citation">(Analytics and Weston 2015)</span>, which allow the data cleaning, conversions and disk input/output processes to take advantage of modern computer hardware. The rnoaa <span class="citation">(Chamberlain 2016)</span> package offers an excellent suite of tools for interacting with and downloading weather data from the United States National Oceanic and Atmospheric Administration, but lacks options for GSOD data retrieval. Several other APIs and R packages exist to access weather data, but most are region or continent specific, whereas GSOD is global. This package was developed to provide:</p>
+<p>The GSODR package <span class="citation">(Sparks, Hengl, and Nelson 2016)</span> is an R package <span class="citation">(R Core Team 2016)</span> for automated downloading, parsing, cleaning and converting of Global Surface Summary of the Day (GSOD) <span class="citation">(United States National Oceanic and Atmospheric Administration National Climatic Data Center 2016)</span> weather data into Comma Separated Values (CSV) or Geopackage (GPKG) <span class="citation">(Open Geospatial Consortium 2014)</span> files. It builds on or complements several other scripts and packages. An earlier R script, getGSOD.R, published in the freely available book, “A Practical Guide to Geostatistical Mapping” <span class="citation">(Hengl 2009)</span>, provides basic functionality on Windows platforms, but lacks cross-platform support and does not take advantage of modern techniques in R to make more efficient use of available computing resources used to complete the process, e.g., data.table <span class="citation">(Dowle et al. 2015)</span>, readr <span class="citation">(Wickham, Hester, and Francois 2016)</span> and foreach <span class="citation">(Revolution Analytics and Weston 2015)</span>, which allow the data cleaning, conversions and disk input/output processes to take advantage of modern computer hardware. The rnoaa <span class="citation">(Chamberlain 2016)</span> package offers an excellent suite of tools for interacting with and downloading weather data from the United States National Oceanic and Atmospheric Administration, but lacks options for GSOD data retrieval. Several other APIs and R packages exist to access weather data, but most are region or continent specific, whereas GSOD is global. This package was developed to provide:</p>
 <ul>
 <li><p>a function that simplifies downloading GSOD data and formatting it to easily be used in research; and</p></li>
 <li><p>a function to help identify stations within a given radius of a point of interest.</p></li>
 </ul>
-<p>A list, which only includes those GSOD stations with valid latitude and longitude values is provided with the package. This station data also includes an alternative set of elevation data, which is included included is a set of 200 meter buffered elevation values, derived from the CGIAR-CSI SRTM 90m Database <span class="citation">(Jarvis et al. 2008)</span> to help address possible inaccuracies and in many cases, missing values, in the reported station elevations. Users have the option of retrieving and using the latest data for stations provided by NOAA.</p>
-<p>The package makes use of</p>
-<p>Upon download, stations are individually checked for a user-specified number of missing days. Stations files with too many missing observations are omitted from the final output to help ensure data quality. All units are converted from the United States Customary System (USCS) to the International System of Units (SI), e.g., inches to millimeters and Fahrenheit to Celsius. Wind speed is also converted from knots to meters per second. Additional useful values, actual vapour pressure, saturated water vapour pressure, and relative humidity are calculated and included in the final output. Station data are merged with weather data for the final file which include the following fields:</p>
+<p>A data set of alternative elevation data based on 200 meter buffered elevation values, derived from the CGIAR-CSI SRTM 90m Database <span class="citation">(Jarvis et al. 2008)</span> is included. These data are useful to help address possible inaccuracies and in many cases, missing elevation values, in the reported station elevations.</p>
+<p>Upon download, stations are individually checked for a user-specified number of missing days and missing or inaccurate longitude and latitude values, any values that are missing or incorrect are omitted. Stations files with too many missing observations are omitted from the final output to help ensure data quality. All units are converted from the United States Customary System (USCS) to the International System of Units (SI), e.g., inches to millimetres and Fahrenheit to Celsius. Wind speed is also converted from knots to metres per second. Additional useful values, actual vapour pressure, saturated water vapour pressure, and relative humidity are calculated and included in the final output. Station data are merged with weather data for the final file which includes the following fields:</p>
 <ul>
 <li><p><strong>STNID</strong> - Station number (WMO/DATSAV3 number) for the location;</p></li>
 <li><p><strong>WBAN</strong> - number where applicable–this is the historical “Weather Bureau Air Force Navy” number - with WBAN being the acronym;</p></li>
 <li><p><strong>STN_NAME</strong> - Unique text identifier;</p></li>
 <li><p><strong>CTRY</strong> - Country in which the station is located;</p></li>
-<li><p><strong>LAT</strong> - Latitude. <em>Station dropped in cases where values are &lt;-90 or &gt;90 degrees or Lat = 0 and Lon = 0</em>;</p></li>
-<li><p><strong>LON</strong> - Longitude. <em>Station dropped in cases where values are &lt;-180 or &gt;180 degrees or Lat = 0 and Lon = 0</em>;</p></li>
-<li><p><strong>ELEV_M</strong> - Elevation in meters;</p></li>
-<li><p><strong>ELEV_M_SRTM_90m</strong> - Elevation in meters corrected for possible errors <span class="citation">(Jarvis et al. 2008)</span>;</p></li>
+<li><p><strong>LAT</strong> - Latitude. <em>Station omitted in cases where values are &lt;-90 or &gt;90 degrees or Lat = 0 and Lon = 0</em>;</p></li>
+<li><p><strong>LON</strong> - Longitude. <em>Station omitted in cases where values are &lt;-180 or &gt;180 degrees or Lat = 0 and Lon = 0</em>;</p></li>
+<li><p><strong>ELEV_M</strong> - Elevation in metres;</p></li>
+<li><p><strong>ELEV_M_SRTM_90m</strong> - Elevation in metres corrected for possible errors, derived from the CGIAR-CSI SRTM 90m database <span class="citation">(Jarvis et al. 2008)</span>;</p></li>
 <li><p><strong>YEARMODA</strong> - Date in YYYY-mm-dd format;</p></li>
 <li><p><strong>YEAR</strong> - The year (YYYY);</p></li>
 <li><p><strong>MONTH</strong> - The month (mm);</p></li>
@@ -146,23 +145,23 @@ $(document).ready(function () {
 <li><p><strong>YDAY</strong> - Sequential day of year (not in original GSOD);</p></li>
 <li><p><strong>TEMP</strong> - Mean daily temperature converted to degrees C to tenths. Missing = -9999;</p></li>
 <li><p><strong>TEMP_CNT</strong> - Number of observations used in calculating mean daily temperature;</p></li>
-<li><p><strong>DEWP</strong>- Mean daily dew point converted to degrees C to tenths. Missing = -9999;</p></li>
+<li><p><strong>DEWP</strong> - Mean daily dew point converted to degrees C to tenths. Missing = -9999;</p></li>
 <li><p><strong>DEWP_CNT</strong> - Number of observations used in calculating mean daily dew point;</p></li>
 <li><p><strong>SLP</strong> - Mean sea level pressure in millibars to tenths. Missing = -9999;</p></li>
 <li><p><strong>SLP_CNT</strong> - Number of observations used in calculating mean sea level pressure;</p></li>
 <li><p><strong>STP</strong> - Mean station pressure for the day in millibars to tenths. Missing = -9999;</p></li>
 <li><p><strong>STP_CNT</strong> - Number of observations used in calculating mean station pressure;</p></li>
-<li><p><strong>VISIB</strong> - Mean visibility for the day converted to kilometers to tenths Missing = -9999;</p></li>
+<li><p><strong>VISIB</strong> - Mean visibility for the day converted to kilometres to tenths Missing = -9999;</p></li>
 <li><p><strong>VISIB_CNT</strong> - Number of observations used in calculating mean daily visibility;</p></li>
-<li><p><strong>WDSP</strong> - Mean daily wind speed value converted to meters/second to tenths Missing = -9999;</p></li>
+<li><p><strong>WDSP</strong> - Mean daily wind speed value converted to metres/second to tenths Missing = -9999;</p></li>
 <li><p><strong>WDSP_CNT</strong> - Number of observations used in calculating mean daily wind speed;</p></li>
-<li><p><strong>MXSPD</strong> - Maximum sustained wind speed reported for the day converted to meters/second to tenths. Missing = -9999;</p></li>
-<li><p><strong>GUST</strong> - Maximum wind gust reported for the day converted to meters/second to tenths. Missing = -9999;</p></li>
+<li><p><strong>MXSPD</strong> - Maximum sustained wind speed reported for the day converted to metres/second to tenths. Missing = -9999;</p></li>
+<li><p><strong>GUST</strong> - Maximum wind gust reported for the day converted to metres/second to tenths. Missing = -9999;</p></li>
 <li><p><strong>MAX</strong> - Maximum temperature reported during the day converted to Celsius to tenths–time of max temp report varies by country and region, so this will sometimes not be the max for the calendar day. Missing = -9999;</p></li>
-<li><p><strong>MAX_FLAG</strong> - Blank indicates max temp was taken from the explicit max temp report and not from the ‘hourly’ data. * indicates max temp was derived from the hourly data (i.e., highest hourly or synoptic-reported temperature);</p></li>
+<li><p><strong>MAX_FLAG</strong> - Blank indicates max temp was taken from the explicit max temp report and not from the ‘hourly’ data. An “*” indicates max temp was derived from the hourly data (i.e., highest hourly or synoptic-reported temperature);</p></li>
 <li><p><strong>MIN</strong>- Minimum temperature reported during the day converted to Celsius to tenths–time of min temp report varies by country and region, so this will sometimes not be the max for the calendar day. Missing = -9999;</p></li>
-<li><p><strong>MIN_FLAG</strong> - Blank indicates max temp was taken from the explicit max temp report and not from the ‘hourly’ data. * indicates max temp was derived from the hourly data (i.e., highest hourly or synoptic-reported temperature);</p></li>
-<li><p><strong>PRCP</strong> - Total precipitation (rain and/or melted snow) reported during the day converted to millimeters to hundredths; will usually not end with the midnight observation, i.e., may include latter part of previous day. .00 indicates no measurable precipitation (includes a trace). Missing = -9999; <em>Note: Many stations do not report ‘0’ on days with no precipitation– therefore, ‘-9999’ will often appear on these days. For example, a station may only report a 6-hour amount for the period during which rain fell.</em> See FLAGS_PRCP column for source of data;</p></li>
+<li><p><strong>MIN_FLAG</strong> - Blank indicates max temp was taken from the explicit max temp report and not from the ‘hourly’ data. An “*” indicates min temp was derived from the hourly data (i.e., highest hourly or synoptic-reported temperature);</p></li>
+<li><p><strong>PRCP</strong> - Total precipitation (rain and/or melted snow) reported during the day converted to millimetres to hundredths; will usually not end with the midnight observation, i.e., may include latter part of previous day. A value of “.00”&quot; indicates no measurable precipitation (includes a trace). Missing = -9999; <em>Note: Many stations do not report ‘0’ on days with no precipitation– therefore, ‘-9999’ will often appear on these days. For example, a station may only report a 6-hour amount for the period during which rain fell.</em> See FLAGS_PRCP column for source of data;</p></li>
 <li><p><strong>PRCP_FLAG</strong> -</p>
 <ul>
 <li><p>A = 1 report of 6-hour precipitation amount;</p></li>
@@ -175,7 +174,7 @@ $(document).ready(function () {
 <li><p>H = Station reported ‘0’ as the amount for the day (e.g., from 6-hour reports), but also reported at least one occurrence of precipitation in hourly observations–this could indicate a trace occurred, but should be considered as incomplete data for the day;</p></li>
 <li><p>I = Station did not report any precip data for the day and did not report any occurrences of precipitation in its hourly observations–it’s still possible that precipitation occurred but was not reported;</p></li>
 </ul></li>
-<li><p><strong>SNDP</strong> - Snow depth in millimeters to tenths. Missing = -9999;</p></li>
+<li><p><strong>SNDP</strong> - Snow depth in millimetres to tenths. Missing = -9999;</p></li>
 <li><p><strong>I_FOG</strong> - Indicator for fog, (1 = yes, 0 = no/not reported) for the occurrence during the day;</p></li>
 <li><p><strong>I_RAIN_DRIZZLE</strong> - Indicator for rain or drizzle, (1 = yes, 0 = no/not reported) for the occurrence during the day;</p></li>
 <li><p><strong>I_SNOW_ICE</strong> - Indicator for snow or ice pellets, (1 = yes, 0 = no/not reported) for the occurrence during the day;</p></li>
@@ -190,9 +189,6 @@ $(document).ready(function () {
 <div id="references" class="section level1 unnumbered">
 <h1>References</h1>
 <div id="refs" class="references">
-<div id="ref-foreach">
-<p>Analytics, Revolution, and Steve Weston. 2015. <em>Foreach: Provides Foreach Looping Construct for R</em>. <a href="https://CRAN.R-project.org/package=foreach" class="uri">https://CRAN.R-project.org/package=foreach</a>.</p>
-</div>
 <div id="ref-rnoaa">
 <p>Chamberlain, Scott. 2016. <em>Rnoaa: ’NOAA’ Weather Data from R</em>. <a href="https://CRAN.R-project.org/package=rnoaa" class="uri">https://CRAN.R-project.org/package=rnoaa</a>.</p>
 </div>
@@ -210,6 +206,9 @@ $(document).ready(function () {
 </div>
 <div id="ref-R-base">
 <p>R Core Team. 2016. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/" class="uri">https://www.R-project.org/</a>.</p>
+</div>
+<div id="ref-foreach">
+<p>Revolution Analytics, and Steve Weston. 2015. <em>Foreach: Provides Foreach Looping Construct for R</em>. <a href="https://CRAN.R-project.org/package=foreach" class="uri">https://CRAN.R-project.org/package=foreach</a>.</p>
 </div>
 <div id="ref-GSODR">
 <p>Sparks, Adam, Tomislav Hengl, and Andrew Nelson. 2016. <em>GSODR: Global Summary Daily Weather Data in R</em>. <a href="https://github.com/adamhsparks/GSODR" class="uri">https://github.com/adamhsparks/GSODR</a>.</p>

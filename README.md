@@ -131,11 +131,11 @@ nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 50)
 #> 6: 955510 99999               TOOWOOMBA AIRPORT   AS    NA   NA -27.550
 #>        LON ELEV_M    BEGIN      END        STNID ELEV_M_SRTM_90m
 #> 1: 151.933  676.0 19561231 20120503 945510-99999             670
-#> 2: 151.735  406.9 19730430 20160919 945520-99999             404
-#> 3: 152.333   94.0 20030330 20160919 945620-99999              90
+#> 2: 151.735  406.9 19730430 20161002 945520-99999             404
+#> 3: 152.333   94.0 20030330 20161002 945620-99999              90
 #> 4: 152.330   29.0 19711231 19840429 949999-00170              92
 #> 5: 152.330   95.0 19831130 19840629 949999-00183              88
-#> 6: 151.917  642.0 19980301 20160919 955510-99999             635
+#> 6: 151.917  642.0 19980301 20161002 955510-99999             635
 ```
 
 Output
@@ -163,7 +163,8 @@ the final file which includes the following fields:
 -   **ELEV\_M** - Elevation in metres;
 
 -   **ELEV\_M\_SRTM\_90m** - Elevation in metres corrected for possible
-    errors \[@Jarvis2008\];
+    errors, derived from the CGIAR-CSI SRTM 90m database (Jarvis et al.
+    2008);
 
 -   **YEARMODA** - Date in YYYY-mm-dd format;
 
@@ -181,7 +182,7 @@ the final file which includes the following fields:
 -   **TEMP\_CNT** - Number of observations used in calculating mean
     daily temperature;
 
--   **DEWP**- Mean daily dew point converted to degrees C to tenths.
+-   **DEWP** - Mean daily dew point converted to degrees C to tenths.
     Missing = -9999;
 
 -   **DEWP\_CNT** - Number of observations used in calculating mean
@@ -223,8 +224,8 @@ the final file which includes the following fields:
     Missing = -9999;
 
 -   **MAX\_FLAG** - Blank indicates max temp was taken from the explicit
-    max temp report and not from the 'hourly' data. \* indicates max
-    temp was derived from the hourly data (i.e., highest hourly or
+    max temp report and not from the 'hourly' data. An "\*"" indicates
+    max temp was derived from the hourly data (i.e., highest hourly or
     synoptic-reported temperature);
 
 -   **MIN**- Minimum temperature reported during the day converted to
@@ -233,19 +234,19 @@ the final file which includes the following fields:
     Missing = -9999;
 
 -   **MIN\_FLAG** - Blank indicates max temp was taken from the explicit
-    max temp report and not from the 'hourly' data. \* indicates max
-    temp was derived from the hourly data (i.e., highest hourly or
+    max temp report and not from the 'hourly' data. An "\*"" indicates
+    min temp was derived from the hourly data (i.e., highest hourly or
     synoptic-reported temperature);
 
 -   **PRCP** - Total precipitation (rain and/or melted snow) reported
     during the day converted to millimetres to hundredths; will usually
     not end with the midnight observation, i.e., may include latter part
-    of previous day. .00 indicates no measurable precipitation (includes
-    a trace). Missing = -9999; *Note: Many stations do not report '0' on
-    days with no precipitation-- therefore, '-9999' will often appear on
-    these days. For example, a station may only report a 6-hour amount
-    for the period during which rain fell.* See FLAGS\_PRCP column for
-    source of data;
+    of previous day. A value of ".00"" indicates no measurable
+    precipitation (includes a trace). Missing = -9999; *Note: Many
+    stations do not report '0' on days with no precipitation--
+    therefore, '-9999' will often appear on these days. For example, a
+    station may only report a 6-hour amount for the period during which
+    rain fell.* See FLAGS\_PRCP column for source of data;
 
 -   **PRCP\_FLAG** -
 

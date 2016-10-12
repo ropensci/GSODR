@@ -28,8 +28,8 @@ downloading, parsing, cleaning and converting of Global Surface Summary of the
 Day (GSOD) [@NCDC] weather data into Comma Separated Values (CSV) or
 Geopackage (GPKG) [@geopackage] files. It builds on or complements several
 other scripts and packages. An earlier R script, getGSOD.R, published
-in the freely available book, "A Practical Guide to Geostatistical Mapping", 
-[@Hengl2009] provides basic functionality on Windows platforms, but lacks
+in the freely available book, "A Practical Guide to Geostatistical Mapping" 
+[@Hengl2009], provides basic functionality on Windows platforms, but lacks
 cross-platform support and does not take advantage of modern techniques in
 R to make more efficient use of available computing resources used to complete
 the process, e.g., data.table [@data.table], readr [@readr] and foreach 
@@ -47,25 +47,22 @@ be used in research; and
   * a function to help identify stations within a given radius of a point of
 interest.
 
-A list, which only includes those GSOD stations with valid latitude and
-longitude values is provided with the package. This station data also includes
-an alternative set of elevation data, which is included included is a set of 200
-meter buffered elevation values, derived from the CGIAR-CSI SRTM 90m Database
-[@Jarvis2008] to help address possible inaccuracies and in many cases, missing
-values, in the reported station elevations. Users have the option of retrieving
-and using the latest data for stations provided by NOAA.
-
-The package makes use of 
+A data set of alternative elevation data based on 200 meter buffered elevation
+values, derived from the CGIAR-CSI SRTM 90m Database [@Jarvis2008] is included.
+These data are useful to help address possible inaccuracies and in many cases,
+missing elevation values, in the reported station elevations.
 
 Upon download, stations are individually checked for a user-specified number of
-missing days. Stations files with too many missing observations are omitted from
-the final output to help ensure data quality. All units are converted from the
-United States Customary System (USCS) to the International System of Units (SI),
-e.g., inches to millimetres and Fahrenheit to Celsius. Wind speed is also
-converted from knots to metres per second. Additional useful values, actual vapour
-pressure, saturated water vapour pressure, and relative humidity are
-calculated and included in the final output. Station data are merged with weather
-data for the final file which includes the following fields:
+missing days and missing or inaccurate longitude and latitude values, any values
+that are missing or incorrect are omitted. Stations files with too many missing
+observations are omitted from the final output to help ensure data quality. All
+units are converted from the United States Customary System (USCS) to the
+International System of Units (SI), e.g., inches to millimetres and Fahrenheit
+to Celsius. Wind speed is also converted from knots to metres per second.
+Additional useful values, actual vapour pressure, saturated water vapour
+pressure, and relative humidity are calculated and included in the final output.
+Station data are merged with weather data for the final file which includes the
+following fields:
 
 * **STNID** - Station number (WMO/DATSAV3 number) for the location;  
 
@@ -76,15 +73,16 @@ Bureau Air Force Navy" number - with WBAN being the acronym;
 
 * **CTRY** - Country in which the station is located;  
 
-* **LAT** - Latitude. *Station dropped in cases where values are &lt;-90
+* **LAT** - Latitude. *Station omitted in cases where values are &lt;-90
 or &gt;90 degrees or Lat = 0 and Lon = 0*;  
 
-* **LON** - Longitude. *Station dropped in cases where values are &lt;-180
+* **LON** - Longitude. *Station omitted in cases where values are &lt;-180
 or &gt;180 degrees or Lat = 0 and Lon = 0*;  
 
 * **ELEV_M** - Elevation in metres;  
 
-* **ELEV_M_SRTM_90m** - Elevation in metres corrected for possible errors [@Jarvis2008];
+* **ELEV_M_SRTM_90m** - Elevation in metres corrected for possible errors,
+derived from the CGIAR-CSI SRTM 90m database [@Jarvis2008];
 
 * **YEARMODA** - Date in YYYY-mm-dd format;  
 
@@ -102,7 +100,7 @@ Missing = -9999;
 * **TEMP_CNT** - Number of observations used in calculating mean daily
 temperature;  
 
-* **DEWP**- Mean daily dew point converted to degrees C to tenths. Missing
+* **DEWP** - Mean daily dew point converted to degrees C to tenths. Missing
 = -9999;  
 
 * **DEWP_CNT** - Number of observations used in calculating mean daily dew
@@ -144,7 +142,7 @@ so this will sometimes not be the max for the calendar day. Missing =
 -9999;  
 
 * **MAX_FLAG** - Blank indicates max temp was taken from the explicit max
-temp report and not from the 'hourly' data. \* indicates max temp was
+temp report and not from the 'hourly' data. An "\*" indicates max temp was
 derived from the hourly data (i.e., highest hourly or synoptic-reported
 temperature);  
 
@@ -154,14 +152,14 @@ so this will sometimes not be the max for the calendar day. Missing =
 -9999;  
 
 * **MIN_FLAG** - Blank indicates max temp was taken from the explicit max
-temp report and not from the 'hourly' data. \* indicates max temp was
+temp report and not from the 'hourly' data. An "\*" indicates min temp was
 derived from the hourly data (i.e., highest hourly or synoptic-reported
 temperature);  
 
 * **PRCP** - Total precipitation (rain and/or melted snow) reported during
 the day converted to millimetres to hundredths; will usually not end
 with the midnight observation, i.e., may include latter part of previous
-day. .00 indicates no measurable precipitation (includes a trace).
+day. A value of ".00"" indicates no measurable precipitation (includes a trace).
 Missing = -9999; *Note: Many stations do not report '0' on days with no
 precipitation-- therefore, '-9999' will often appear on these days. For
 example, a station may only report a 6-hour amount for the period during
