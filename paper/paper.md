@@ -159,7 +159,7 @@ temperature);
 * **PRCP** - Total precipitation (rain and/or melted snow) reported during
 the day converted to millimetres to hundredths; will usually not end
 with the midnight observation, i.e., may include latter part of previous
-day. A value of ".00"" indicates no measurable precipitation (includes a trace).
+day. A value of ".00" indicates no measurable precipitation (includes a trace).
 Missing = -9999; *Note: Many stations do not report '0' on days with no
 precipitation-- therefore, '-9999' will often appear on these days. For
 example, a station may only report a 6-hour amount for the period during

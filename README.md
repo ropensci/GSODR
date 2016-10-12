@@ -224,7 +224,7 @@ the final file which includes the following fields:
     Missing = -9999;
 
 -   **MAX\_FLAG** - Blank indicates max temp was taken from the explicit
-    max temp report and not from the 'hourly' data. An "\*"" indicates
+    max temp report and not from the 'hourly' data. An "\*" indicates
     max temp was derived from the hourly data (i.e., highest hourly or
     synoptic-reported temperature);
 
@@ -234,14 +234,14 @@ the final file which includes the following fields:
     Missing = -9999;
 
 -   **MIN\_FLAG** - Blank indicates max temp was taken from the explicit
-    max temp report and not from the 'hourly' data. An "\*"" indicates
+    max temp report and not from the 'hourly' data. An "\*" indicates
     min temp was derived from the hourly data (i.e., highest hourly or
     synoptic-reported temperature);
 
 -   **PRCP** - Total precipitation (rain and/or melted snow) reported
     during the day converted to millimetres to hundredths; will usually
     not end with the midnight observation, i.e., may include latter part
-    of previous day. A value of ".00"" indicates no measurable
+    of previous day. A value of ".00" indicates no measurable
     precipitation (includes a trace). Missing = -9999; *Note: Many
     stations do not report '0' on days with no precipitation--
     therefore, '-9999' will often appear on these days. For example, a
