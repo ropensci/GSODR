@@ -26,12 +26,15 @@
   * Country is specified using FIPS codes in file name and output file contents
   due to stations occurring in some locales that lack ISO 3166 3 letter country
   codes  
-  
+  * The `get_GSOD()` function will retrieve the latest station data from NCDC and
+  automatically merge it with the CGIAR-CSI SRTM elevation values provided by
+  this package. Previously, the package provided it's own list of station information,
+  which was difficult to keep up-to-date  
+
 ## MINOR IMPROVEMENTS
 
   * `get_GSOD` function optimised for speed as best possible after FTPing files
   from NCDC server  
-  * Updated `stations` list with latest version from NCDC published 10-08-2016  
   * Reduced package dependencies  
   * The `get_GSOD()` function now checks stations to see if the years being
   queried are provided and returns a message alerting user if the station and
@@ -40,12 +43,14 @@
   parameter, the `get_GSOD()` function now checks to see if the file exists on
   the server, if it does not, a message is returned and all other stations that
   have files are processed and returned in output  
+  * Documentation has been improved throughout package
   
 ## BUG FIXES
 
   * Fixed: Remove redundant code in `get_GSOD()` function  
   * Fixed: The stations data frame distributed with the package now includes stations
   that are located above 60 latitude and below -60 latitude  
+  * Fixed: `get_GSOD()` function would not operate on computer systems with two cores  
   
 ## DEPRECATED AND DEFUNCT
  
