@@ -11,8 +11,7 @@ vignette: >
 
 # Introduction
 An R package that provides a function that automates downloading and
-cleaning data from the "[Global Surface Summary of the Day
-(GSOD)](https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod)"
+cleaning data from the [Global Surface Summary of the Day (GSOD)](https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod)
 data provided by the US National Climatic Data Center (NCDC). Stations
 are individually checked for number of missing days to assure data
 quality, those stations with too many missing observations as defined by the
@@ -81,7 +80,7 @@ ggplot(GSOD_stations, aes(x = LON, y = LAT)) +
 ## Find Stations in Australia
 
 GSODR provides lists of weather station locations and elevation values. Using
-dplyr, we can find all the stations in Australia.
+[dplyr](https://cran.r-project.org/web/packages/dplyr/index.html), we can find all the stations in Australia.
 ```{r australia_stations, message=FALSE, warning=FALSE}
 library(dplyr)
 # left_join the the station data with the country list
@@ -137,9 +136,10 @@ get_GSOD(years = 2010, station = tbar_stations, dsn = "~/",
 ```
 
 ## Plot Maximum and Miniumum Temperature Values
+
 Using the first data downloaded for a single station, plot the temperature for
-2010, setting the "-9999" value to NA on import using `read_csv` from Hadley's
-`readr` package.
+2010, setting the "-9999" value to NA on import using `read_csv()` from Hadley's
+[readr](https://cran.r-project.org/web/packages/readr/index.html) package.
 
 ```{r plot_temps, fig.width=7, fig.height=7, message=FALSE, fig.cap="Toowoomba 2010 Temperatures"}
 library(lubridate)
@@ -166,6 +166,7 @@ ggplot(data = tbar_temps, aes(x = ymd(YEARMODA), y = value,
 ```
 
 ## Creating spatial files
+
 Because the stations provide geospatial location information, it is possible
 to create a spatial file. [GeoPackage files](http://www.geopackage.org) are a
 open, standards-based, platform-independent, portable, self-describing compact
@@ -217,7 +218,7 @@ print(AUS_sqlite, n = 5)
 ```
 # Generating hourly temperature data from daily using the `chillR` package
 
-The `chillR` package from [Eike Luedeling](http://eikeluedeling.com/index.html)
+The [chillR](https://cran.rstudio.com/web/packages/chillR/index.html) package from [Eike Luedeling](http://eikeluedeling.com/index.html)
 has a function, `make_hourly_temps()` that can be used to temporally downscale
 daily weather data to hourly using the station's latitude. Here's how that's
 possible using the Toowoomba-Airport data.
