@@ -102,7 +102,8 @@ Air Force Navy" number - with WBAN being the acronym}
 \item{LON}{Longitude. *Station dropped in cases where values are &lt;-180 or
 &gt;180 degrees or Lat = 0 and Lon = 0*}
 \item{ELEV_M}{Elevation in metres}
-\item{ELEV_M_SRTM_90m}{Elevation in metres corrected for possible errors}
+\item{ELEV_M_SRTM_90m}{Elevation in metres corrected for possible errors,
+derived from the CGIAR-CSI SRTM 90m database (Jarvis et al. 2008)}
 \item{YEARMODA}{Date in YYYY-mm-dd format}
 \item{YEAR}{The year (YYYY)}
 \item{MONTH}{The month (mm)}
@@ -140,7 +141,7 @@ Celsius to tenths--time of max temp report varies by country and region,
 so this will sometimes not be the max for the calendar day. Missing =
 -9999}
 \item{MAX_FLAG}{Blank indicates max temp was taken from the explicit max
-temp report and not from the 'hourly' data. \* indicates max temp was
+temp report and not from the 'hourly' data. An "\*" indicates max temp was
 derived from the hourly data (i.e., highest hourly or synoptic-reported
 temperature)}
 \item{MIN}{Minimum temperature reported during the day converted to
@@ -148,13 +149,13 @@ Celsius to tenths--time of min temp report varies by country and region,
 so this will sometimes not be the max for the calendar day. Missing =
 -9999}
 \item{MIN_FLAG}{Blank indicates max temp was taken from the explicit max
-temp report and not from the 'hourly' data. \* indicates max temp was
+temp report and not from the 'hourly' data. An "\*" indicates min temp was
 derived from the hourly data (i.e., highest hourly or synoptic-reported
 temperature)}
 \item{PRCP}{Total precipitation (rain and/or melted snow) reported during
 the day converted to millimetres to hundredths; will usually not end
 with the midnight observation, i.e., may include latter part of previous
-day. .00 indicates no measurable precipitation (includes a trace).
+day. A ".00" value indicates no measurable precipitation (includes a trace).
 Missing = -9999; *Note: Many stations do not report '0' on days with no
 precipitation-- therefore, '-9999' will often appear on these days. For
 example, a station may only report a 6-hour amount for the period during
