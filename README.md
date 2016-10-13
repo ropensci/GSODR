@@ -28,11 +28,10 @@ humidity variables calculated from existing data in GSOD.
 
 There are several other sources of weather data and ways of retrieving
 them through R. In particular, the excellent
-[rnoaa](https://cran.r-project.org/web/packages/rnoaa/index.html)
-package from [ROpenSci](https://ropensci.org) offers tools for
-interacting with and downloading weather data from the United States
-National Oceanic and Atmospheric Administration but lacks support GSOD
-data.
+[rnoaa](https://CRAN.R-project.org/package=rnoaa) package from
+[ROpenSci](https://ropensci.org) offers tools for interacting with and
+downloading weather data from the United States National Oceanic and
+Atmospheric Administration but lacks support GSOD data.
 
 This package was largely based on Tomislav Hengl's work
 "[getGSOD.R](http://spatial-analyst.net/book/getGSOD.R)", which can be
@@ -67,9 +66,9 @@ install.packages("GSODR")
 A development version is available from from GitHub. If you wish to
 install the development version that may have new features (but also may
 not work properly), install the [devtools
-package](https://cran.r-project.org/web/packages/devtools/index.html),
-available from CRAN. I strive to keep the master branch on GitHub
-functional and working properly this may not always happen.
+package](https://CRAN.R-project.org/package=devtools), available from
+CRAN. I strive to keep the master branch on GitHub functional and
+working properly this may not always happen.
 
 If you find bugs, please file a report as an issue.
 
