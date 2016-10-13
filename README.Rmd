@@ -36,7 +36,7 @@ GSOD.
 
 There are several other sources of weather data and ways of retrieving them
 through R. In particular, the excellent 
-[rnoaa](https://cran.r-project.org/web/packages/rnoaa/index.html) package from
+[rnoaa](https://CRAN.R-project.org/package=rnoaa) package from
 [ROpenSci](https://ropensci.org) offers tools for interacting with and
 downloading weather data from the United States National Oceanic and
 Atmospheric Administration but lacks support GSOD data.
@@ -68,7 +68,7 @@ install.packages("GSODR")
 
 A development version is available from from GitHub. If you wish to install the
 development version that may have new features (but also may not work properly),
-install the [devtools package](https://cran.r-project.org/web/packages/devtools/index.html),
+install the [devtools package](https://CRAN.R-project.org/package=devtools),
 available from CRAN. I strive to keep the master branch on GitHub functional and
 working properly this may not always happen.
 
