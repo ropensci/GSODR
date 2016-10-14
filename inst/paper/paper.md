@@ -11,13 +11,10 @@ authors:
   - name: Adam H Sparks
     orcid: 0000-0002-0061-8359
     affiliation: Centre for Crop Health, University of Southern Queensland, Toowoomba Queensland 4350, Australia
-  - name: Tomislav Hengl
-    orcid: 
-    affiliation: 
   - name: Andrew Nelson
     orcid: 0000-0002-7249-3778
     affiliation: Faculty of Geo-Information and Earth Observation (ITC), University of Twente, Enschede 7500 AE, The Netherlands
-date: 28/09/2016
+date: 14/10/2016
 bibliography: paper.bib
 ---
 
