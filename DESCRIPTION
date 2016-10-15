@@ -2,7 +2,6 @@ Package: GSODR
 Type: Package
 Title: Global Summary Daily Weather Data in R
 Version: 0.2
-Date: 2016-10-14
 Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     email = "adamhsparks@gmail.com"),
     person("Andrew", "Nelson", role = "aut",
