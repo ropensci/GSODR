@@ -60,6 +60,14 @@ provide valid geo-locations after cleaning.
   GSOD_stations <- GSOD_stations[GSOD_stations$LAT > -90 & GSOD_stations$LAT < 90, ]
   GSOD_stations <- GSOD_stations[GSOD_stations$LON > -180 & GSOD_stations$LON < 180, ]
   GSOD_stations$STNID <- as.character(paste(GSOD_stations$USAF, GSOD_stations$WBAN, sep = "-"))
+  
+  SRTM_GSOD_elevation <- data.table::setkey(GSODR::SRTM_GSOD_elevation, STNID)
+  data.table::setDT(GSOD_stations)
+  data.table::setkey(GSOD_stations, STNID)
+  GSOD_stations <- GSOD_stations[SRTM_GSOD_elevation, on = "STNID"]
+  
+  GSOD_stations <- GSOD_stations[!is.na(GSOD_stations$LAT), ]
+  GSOD_stations <- GSOD_stations[!is.na(GSOD_stations$LON), ]
 ```
 
 Using [ggplot2](https://CRAN.R-project.org/package=ggplot2) and the 
