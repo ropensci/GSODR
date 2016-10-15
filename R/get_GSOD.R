@@ -649,19 +649,19 @@ can view the entire list of valid countries in this data by typing, 'GSODR::GSOD
   stations[stations == -999.9] <- NA
   stations[stations == -999] <- NA
 
-  stations <- stations[!is.na(stations$LAT) & !is.na(stations$LON), ]
   stations <- stations[stations$LAT != 0 & stations$LON != 0, ]
   stations <- stations[stations$LAT > -90 & stations$LAT < 90, ]
   stations <- stations[stations$LON > -180 & stations$LON < 180, ]
   stations$STNID <- as.character(paste(stations$USAF, stations$WBAN, sep = "-"))
 
-  data.table::setkey(GSODR::SRTM_GSOD_elevation, STNID)
+  SRTM_GSOD_elevation <- data.table::setkey(GSODR::SRTM_GSOD_elevation, STNID)
   data.table::setDT(stations)
   data.table::setkey(stations, STNID)
-
-  GSOD_stations <- stations[GSODR::SRTM_GSOD_elevation]
-  return(GSOD_stations)
-
+  stations <- stations[SRTM_GSOD_elevation, on = "STNID"]
+  
+  stations <- stations[!is.na(stations$LAT), ]
+  stations <- stations[!is.na(stations$LON), ]
+  return(stations)
 }
 
 #' @noRd
