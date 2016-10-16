@@ -1,12 +1,12 @@
 Package: GSODR
 Type: Package
 Title: Global Summary Daily Weather Data in R
-Version: 0.2
-Date: 2016-08-09
+Version: 0.3
+Date: 2016-10-16
 Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     email = "adamhsparks@gmail.com"),
     person("Tomislav", "Hengl", role = "aut",
-    email = "tom.hengl@wur.nl"),
+    email = "tom.hengl@isric.org"),
     person("Andrew", "Nelson", role = "aut",
     email = "dr.andy.nelson@gmail.com"))
 Maintainer: Adam Sparks <adamhsparks@gmail.com>
@@ -40,11 +40,7 @@ Description:  The GSODR package offers automated downloading, parsing, cleaning
     latitude for agroclimatology work or individual stations if the station ID
     is known. The resulting files include station data (e.g., station name,
     country, latitude, longitude, elevation) for use in a geographic
-    information system (GIS). The function was largely based on T. Hengl's
-    'getGSOD.R' script, available from
-    <http://spatial-analyst.net/book/system/files/getGSOD.R> with enhancements
-    to be cross-platform, more efficient with computing resources and more
-    flexible. For information on the original data from NCDC, please see the
+    information system (GIS). For information on the original data from NCDC, please see the
     GSOD readme.txt file available from,
     <http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt>.
 Depends:
@@ -65,6 +61,8 @@ Imports:
 Suggests:
     chillR,
     dplyr,
+    plotKML,
+    spacetime,
     ggalt,
     ggplot2,
     knitr,
