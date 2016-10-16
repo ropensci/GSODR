@@ -23,8 +23,8 @@ to existing files for download and cleaning from the ftp server.}
 \item{country}{Specify a country of interest for which to retrieve weather
 data; full name. For stations located in locales
 having an ISO code 2 or 3 letter ISO code can also be used if known. See
-\code{\link{GSOD_country_list}} for a full list of country names and ISO codes
-available.}
+\code{\link{GSOD_country_list}} for a full list of country names and ISO
+codes available.}
 
 \item{dsn}{Path to file write to.}
 
@@ -66,7 +66,8 @@ for International Agricultural Research's Consortium for Spatial Information
 group's (CGIAR-CSI) Shuttle Radar Topography Mission 90 metre (SRTM 90m)
 digital elevation data based on NASA's original SRTM 90m data. Further
 information on these data and methods can be found on GSODR's GitHub
-repository here: \url{https://github.com/adamhsparks/GSODR/blob/master/data-raw/fetch_isd-history.md}
+repository here:
+\url{https://github.com/adamhsparks/GSODR/blob/master/data-raw/fetch_isd-history.md}
 }
 \details{
 Due to the size of the resulting data, output is saved as a comma-separated,

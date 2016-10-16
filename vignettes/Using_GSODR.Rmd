@@ -22,7 +22,8 @@ implemented by most major GIS software, summarising each year by station, which
 also includes vapour pressure and relative humidity variables calculated from
 existing data in GSOD.
 
-This package was largely based on Tomislav Hengl's work, [getGSOD.R](http://spatial-analyst.net/book/getGSOD.R)
+This package was largely based on Tomislav Hengl's work,
+[getGSOD.R](http://spatial-analyst.net/book/getGSOD.R)
 in "[A Practical Guide to Geostatistical Mapping](http://spatial-analyst.net)",
 with updates for speed, cross-platform functionality, and more options for data
 retrieval and error correction.
@@ -40,10 +41,10 @@ library(GSODR)
 
 ## Plot Global Station Locations
 
-The `get_GSOD()` function automatically fetches the most recent station data from
-the NCDC website and removes stations that are missing data (as shown below).
-Using this data we can plot the station locations that are included in GSOD that
-provide valid geo-locations after cleaning.
+The `get_GSOD()` function automatically fetches the most recent station data
+from the NCDC website and removes stations that are missing data (as shown
+below). Using this data we can plot the station locations that are included in
+GSOD that provide valid geo-locations after cleaning.
 
 ```{r fetch_stations}
   GSOD_stations <- readr::read_csv(
@@ -55,11 +56,16 @@ provide valid geo-locations after cleaning.
   GSOD_stations[GSOD_stations == -999.9] <- NA
   GSOD_stations[GSOD_stations == -999] <- NA
 
-  GSOD_stations <- GSOD_stations[!is.na(GSOD_stations$LAT) & !is.na(GSOD_stations$LON), ]
-  GSOD_stations <- GSOD_stations[GSOD_stations$LAT != 0 & GSOD_stations$LON != 0, ]
-  GSOD_stations <- GSOD_stations[GSOD_stations$LAT > -90 & GSOD_stations$LAT < 90, ]
-  GSOD_stations <- GSOD_stations[GSOD_stations$LON > -180 & GSOD_stations$LON < 180, ]
-  GSOD_stations$STNID <- as.character(paste(GSOD_stations$USAF, GSOD_stations$WBAN, sep = "-"))
+  GSOD_stations <- GSOD_stations[!is.na(GSOD_stations$LAT) &
+                                   !is.na(GSOD_stations$LON), ]
+  GSOD_stations <- GSOD_stations[GSOD_stations$LAT != 0 &
+                                   GSOD_stations$LON != 0, ]
+  GSOD_stations <- GSOD_stations[GSOD_stations$LAT > -90 &
+                                   GSOD_stations$LAT < 90, ]
+  GSOD_stations <- GSOD_stations[GSOD_stations$LON > -180 &
+                                   GSOD_stations$LON < 180, ]
+  GSOD_stations$STNID <- as.character(paste(GSOD_stations$USAF,
+                                            GSOD_stations$WBAN, sep = "-"))
   
   SRTM_GSOD_elevation <- data.table::setkey(GSODR::SRTM_GSOD_elevation, STNID)
   data.table::setDT(GSOD_stations)
@@ -75,7 +81,7 @@ Using [ggplot2](https://CRAN.R-project.org/package=ggplot2) and the
 the station locations using alpha transparency to see the densest part of the
 network and use the Robinson projection for the map.
 
-```{r plot_stations, fig.width=7, fig.height=7, fig.cap="GSOD Station Locations"}
+```{r plot_stations, fig.width=7, fig.height=7,fig.cap="GSOD Station Locations"}
 library(ggplot2)
 library(ggalt)
 
@@ -94,7 +100,8 @@ in Australia.
 ```{r australia_stations, message=FALSE, warning=FALSE}
 library(dplyr)
 # left_join the the station data with the country list
-station_locations <- left_join(GSOD_stations, GSODR::GSOD_country_list, by = c("CTRY" = "FIPS"))
+station_locations <- left_join(GSOD_stations, GSODR::GSOD_country_list,
+                               by = c("CTRY" = "FIPS"))
 
 # create data.frame for Australia only
 Oz <- filter(station_locations, COUNTRY_NAME == "AUSTRALIA")
@@ -134,8 +141,8 @@ tbar_stations <- tbar_stations$STNID
 get_GSOD(years = 2010, station = tbar_stations, dsn = "~/",
          filename = "Toowoomba_50km_2010")
 ```
-If you wished to drop the stations, 949999-00170 and 949999-00183 from the query,
-you could do this.
+If you wished to drop the stations, 949999-00170 and 949999-00183 from the
+query, you could do this.
 
 ```{r use_nearest_stations, eval=FALSE}
 remove <- c("949999-00170", "949999-00183")
@@ -159,7 +166,8 @@ library(tidyr)
 # Import the data for Toowoomba previously downloaded and cleaned
 tbar <- read_csv("~/Toowoomba_Airport-2010.csv", na = "-9999")
 
-# Create a dataframe of just the date and temperature values that we want to plot
+# Create a dataframe of just the date and temperature values that we want to
+# plot
 tbar_temps <- tbar[, c(14, 19, 33, 35)]
 
 # Gather the data from wide to long
@@ -199,8 +207,8 @@ get_GSOD(years = 2015, country = "Australia", dsn = "~/", filename = "AUS",
 
 Importing the GeoPackage file can be a bit tricky. The dsn will be the full path
 along with the file name. The layer to be specified is "GSOD", this is specified
-in the `get_GSOD()` function and will not change. The file name, specified in the
-dsn will, but the layer name will not.
+in the `get_GSOD()` function and will not change. The file name, specified in
+the dsn will, but the layer name will not.
 
 ```{r import_spatial_files, message=FALSE}
 
@@ -214,7 +222,8 @@ print(unique(AUS_stations$STN_NAME))
 ```
 
 Since GeoPackage files are formatted as SQLite databases you can use the
-existing R tools for SQLite files [(J. Stachelek 2016)](https://jsta.github.io/2016/07/14/geopackage-r.html).
+existing R tools for SQLite files
+[(J. Stachelek 2016)](https://jsta.github.io/2016/07/14/geopackage-r.html).
 One easy way is using dplyr, which we've already used to filter the stations.
 
 This option is much faster to load since it does not load the geometry.
@@ -260,8 +269,8 @@ head(tbar)
 
 ## Elevation Values
 
-90 metre (90m) hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was used
-to identify and correct/remove elevation errors in data for station
+90 metre (90m) hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was
+used to identify and correct/remove elevation errors in data for station
 locations between -60˚ and 60˚ latitude. This applies to cases here
 where elevation was missing in the reported values as well. In case the
 station reported an elevation and the DEM does not, the station reported

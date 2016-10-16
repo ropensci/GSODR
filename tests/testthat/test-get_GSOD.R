@@ -6,12 +6,14 @@ test_that("get_GSOD handles invalid years", {
   expect_error(get_GSOD(years = NULL, station = "955510-99999", country = NULL,
                         dsn = "~/", filename = "test", max_missing = 5,
                         agroclimatology = FALSE, CSV = TRUE, GPKG = FALSE),
-               "\nYou must provide at least one year of data to download in a numeric format.\n")
+               "\nYou must provide at least one year of data to download in a
+               numeric format.\n")
 
   expect_error(get_GSOD(years = 1923, station = "955510-99999", country = NULL,
                         dsn = "~/", filename = "test", max_missing = 5,
                         agroclimatology = FALSE, CSV = TRUE, GPKG = FALSE),
-               "\nThe GSOD data files start at 1929, you have entered a year prior to 1929.\n")
+               "\nThe GSOD data files start at 1929, you have entered a year
+               prior to 1929.\n")
 
   expect_error(get_GSOD(years = 1901 + as.POSIXlt(Sys.Date())$year,
                         station = "955510-99999", country = NULL, dsn = "~/",
@@ -28,7 +30,9 @@ test_that("invalid stations are handled", {
                         station = "999990-9999", country = NULL, dsn = "~/",
                         filename = "test", max_missing = 5,
                         agroclimatology = FALSE, CSV = TRUE, GPKG = FALSE),
-               "\nThis is not a valid station ID number, please check your entry.\nStation IDs are provided as a part of the GSODR package in the 'stations' data\nin the STNID column.\n")
+               "\nThis is not a valid station ID number, please check your
+               entry.\nStation IDs are provided as a part of the GSODR package
+               in the 'stations' data\nin the STNID column.\n")
 
 })
 
