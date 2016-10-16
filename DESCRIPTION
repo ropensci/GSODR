@@ -1,34 +1,51 @@
 Package: GSODR
 Type: Package
 Title: Global Summary Daily Weather Data in R
-Version: 0.2
+Version: 0.3
+Date: 2016-10-16
 Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     email = "adamhsparks@gmail.com"),
+    person("Tomislav", "Hengl", role = "aut",
+    email = "tom.hengl@isric.org"),
     person("Andrew", "Nelson", role = "aut",
-    email = "dr.andy.nelson@gmail.com",),
-    person("Tomislav", "Hengl", role = "ctb",
-    email = "tom.hengl@isric.org"))
+    email = "dr.andy.nelson@gmail.com"))
 Maintainer: Adam Sparks <adamhsparks@gmail.com>
 URL: https://github.com/adamhsparks/GSODR
 BugReports: https://github.com/adamhsparks/GSODR/issues
-Description: The GSODR package offers automated downloading, parsing, cleaning,
-    unit conversion and reformatting of Global Surface Summary of the Day (GSOD)
-    weather data from the from the USA National Climatic Data Center (NCDC).
-    All units are converted from from United States Customary System (USCS)
-    units to International System of Units (SI). Stations are individually
-    checked for number of missing days defined by the user, where stations
-    with too many missing observations are omitted. Only stations with valid
-    reported latitude and longitude values are permitted in the final file.
-    Additional useful variables, saturation vapour pressure (es), actual vapour
-    pressure (ea) and relative humidity are calculated from the original data
-    and included in the final data set. A list of values for 200 metre buffered
-    elevation data, derived from the CGIAR-CSI SRTM hole-filled 90 metre data
-    set (Jarvis et al. 2008), are included for stations between -60 and 60
-    degrees latitude. The resulting file includes station data (e.g., station
-    name, country, latitude, longitude, elevation) and weather observations and
-    associated flags. File output is returned as a comma-separated values (CSV)
-    or GeoPackage (GPKG) file written to a local disk. For information on the
-    original data from NCDC, please see the GSOD readme.txt file available from,
+Description:  The GSODR package offers automated downloading, parsing, cleaning
+    and converting of Global Surface Summary of the Day (GSOD) weather data from
+    the from the USA National Climatic Data Center (NCDC) into Comma Separated
+    Values (CSV) or Geopackage (GPKG) files. The get_GSOD() function retrieves
+    data from the NCDC's public FTP site and reformats it from United States
+    Customary System (USCS) units to International System of Units (SI).
+    Stations are individually checked for number of missing days as defined by
+    the user to help ensure data quality. Stations files with too many missing
+    observations are omitted from the final file. Only stations with valid
+    reported latitude and longitude values are permitted in the final derived
+    data set. A list of values for 200 metre buffered elevation data, derived
+    from the CGIAR-CSI SRTM hole-filled 90 metre data set (Jarvis et al. 2008)
+    are included for stations between -60 and 60 degrees latitude with valid
+    latitude and longitude values. File output is returned as a comma-separated
+    values (CSV) or GeoPackage (GPKG) file written to a local disk in a location
+    selected by the user, which summarises each year by station. Additional
+    useful variables, saturation vapour pressure (es), actual vapour pressure (ea)
+    and relative humidity are calculated from the original data and included in
+    the final data set. The resulting files can be as larger than 500mb
+    depending on the user's stringency for missing data and geographic area of
+    interest. Be sure to have sufficient RAM and disk space as well as a
+    reasonably fast Internet connection to use this package to perform this
+    operation for a global data set over many years. However, for much smaller
+    and more manageable data sets, an individual country of interest may be
+    selected as well as only stations falling between -60 and 60 degrees
+    latitude for agroclimatology work or individual stations if the station ID
+    is known. The resulting files include station data (e.g., station name,
+    country, latitude, longitude, elevation) for use in a geographic
+    information system (GIS). The function was largely based on T. Hengl's
+    'getGSOD.R' script, available from
+    <http://spatial-analyst.net/book/system/files/getGSOD.R> with enhancements
+    to be cross-platform, more efficient with computing resources and more
+    flexible. For information on the original data from NCDC, please see the
+    GSOD readme.txt file available from,
     <http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt>.
 Depends:
     R (>= 3.2.0)
@@ -48,6 +65,8 @@ Imports:
 Suggests:
     chillR,
     dplyr,
+    plotKML,
+    spacetime,
     ggalt,
     ggplot2,
     knitr,
