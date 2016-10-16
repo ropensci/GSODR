@@ -40,7 +40,11 @@ Description:  The GSODR package offers automated downloading, parsing, cleaning
     latitude for agroclimatology work or individual stations if the station ID
     is known. The resulting files include station data (e.g., station name,
     country, latitude, longitude, elevation) for use in a geographic
-    information system (GIS). For information on the original data from NCDC, please see the
+    information system (GIS). The function was largely based on T. Hengl's
+    'getGSOD.R' script, available from
+    <http://spatial-analyst.net/book/system/files/getGSOD.R> with enhancements
+    to be cross-platform, more efficient with computing resources and more
+    flexible. For information on the original data from NCDC, please see the
     GSOD readme.txt file available from,
     <http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt>.
 Depends:

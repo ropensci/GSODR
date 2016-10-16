@@ -1,4 +1,4 @@
-# GSODR v0.2 [unreleased]
+# GSODR v0.2
 
 ## NEW FEATURES
 

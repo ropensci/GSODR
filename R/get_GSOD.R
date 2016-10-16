@@ -16,7 +16,8 @@
 #'group's (CGIAR-CSI) Shuttle Radar Topography Mission 90 metre (SRTM 90m)
 #'digital elevation data based on NASA's original SRTM 90m data. Further
 #'information on these data and methods can be found on GSODR's GitHub
-#'repository here: \url{https://github.com/adamhsparks/GSODR/blob/master/data-raw/fetch_isd-history.md}
+#'repository here:
+#'\url{https://github.com/adamhsparks/GSODR/blob/master/data-raw/fetch_isd-history.md}
 #'
 #' @param years Year(s) of weather data to download.
 #' @param station Specify a station or multiple stations for which to retrieve,
@@ -30,8 +31,8 @@
 #' @param country Specify a country of interest for which to retrieve weather
 #' data; full name. For stations located in locales
 #' having an ISO code 2 or 3 letter ISO code can also be used if known. See
-#' \code{\link{GSOD_country_list}} for a full list of country names and ISO codes
-#' available.
+#' \code{\link{country_list}} for a full list of country names and ISO
+#' codes available.
 #' @param dsn Path to file write to.
 #' @param filename The filename for resulting file(s) to be written with no
 #' file extension. Year and file extension will be automatically appended to
@@ -280,11 +281,13 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
       tryCatch(utils::download.file(url = paste0(ftp_site, yr, "/gsod_", yr,
                                                  ".tar"),
                                     destfile = tf, mode = "wb"),
-               error = function(x) message(paste0("\nThe download stoped at year: ", yr,
-                                                  ".\nPlease restart the 'get_GSOD()' function starting at this point.\n")))
+               error = function(x) message(paste0(
+                "\nThe download stopped at year: ", yr, ".
+                \nPlease restart the 'get_GSOD()' function starting here.\n")))
       utils::untar(tarfile = tf, exdir  = paste0(td, "/", yr, "/"))
 
-      message("\nFinished downloading file. Parsing the indivdual station files now.\n")
+      message("\nFinished downloading file.
+              \nParsing the indivdual station files now.\n")
       GSOD_list <- list.files(paste0(td, "/", yr, "/"),
                               pattern = utils::glob2rx("*.gz"),
                               full.names = FALSE)
@@ -303,7 +306,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
       # If country is set, subset list of stations to clean --------------------
       if (!is.null(country)) {
         country_FIPS <- unlist(as.character(stats::na.omit(
-          GSODR::GSOD_country_list[GSODR::GSOD_country_list$FIPS == country, ][1]),
+          GSODR::country_list[GSODR::country_list$FIPS == country, ][[1]]),
           use.names = FALSE))
         station_list <- stations[stations$CTRY == country_FIPS, ]$STNID
         station_list <- vapply(station_list,
@@ -453,19 +456,20 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
   tmp[, (MONTH) := substr(tmp$YEARMODA, 5, 6)]
   tmp[, (DAY) := substr(tmp$YEARMODA, 7, 8)]
   tmp[, (MODA) := NULL]
-  tmp[, (YDAY) := as.numeric(strftime(as.Date(paste(tmp$YEAR, tmp$MONTH, tmp$DAY,
-                                                    sep = "-")), format = "%j"))]
-  tmp[, (TEMP)  := round( ( (5 / 9) * ((tmp$TEMP) - 32)), 1)]
-  tmp[, (DEWP)  := round( ( (5 / 9) * ((tmp$DEWP) - 32)), 1)]
-  tmp[, (WDSP)  := round((tmp$WDSP) * 0.514444444, 1)]
-  tmp[, (MXSPD) := round((tmp$MXSPD) * 0.514444444, 1)]
-  tmp[, (VISIB) := round((tmp$VISIB) * 1.60934, 1)]
-  tmp[, (WDSP)  := round((tmp$WDSP) * 0.514444444, 1)]
-  tmp[, (GUST)  := round((tmp$GUST) * 0.514444444, 1)]
-  tmp[, (MAX)   := round( ((tmp$MAX) - 32) * (5 / 9), 2)]
-  tmp[, (MIN)   := round( ((tmp$MIN) - 32) * (5 / 9), 2)]
-  tmp[, (PRCP)  := round( ((tmp$PRCP) * 25.4), 1)]
-  tmp[, (SNDP)  := round( ((tmp$SNDP) * 25.4), 1)]
+  tmp[, (YDAY) := as.numeric(strftime(as.Date(paste(tmp$YEAR, tmp$MONTH,
+                                                    tmp$DAY, sep = "-")),
+                                      format = "%j"))]
+  tmp[, (TEMP)  := round( ( (5 / 9) * ( (tmp$TEMP) - 32)), 1)]
+  tmp[, (DEWP)  := round( ( (5 / 9) * ( (tmp$DEWP) - 32)), 1)]
+  tmp[, (WDSP)  := round( (tmp$WDSP) * 0.514444444, 1)]
+  tmp[, (MXSPD) := round( (tmp$MXSPD) * 0.514444444, 1)]
+  tmp[, (VISIB) := round( (tmp$VISIB) * 1.60934, 1)]
+  tmp[, (WDSP)  := round( (tmp$WDSP) * 0.514444444, 1)]
+  tmp[, (GUST)  := round( (tmp$GUST) * 0.514444444, 1)]
+  tmp[, (MAX)   := round( ( (tmp$MAX) - 32) * (5 / 9), 2)]
+  tmp[, (MIN)   := round( ( (tmp$MIN) - 32) * (5 / 9), 2)]
+  tmp[, (PRCP)  := round( ( (tmp$PRCP) * 25.4), 1)]
+  tmp[, (SNDP)  := round( ( (tmp$SNDP) * 25.4), 1)]
 
   # Compute other weather vars--------------------------------------------------
   # Mean actual (EA) and mean saturation vapour pressure (ES)
@@ -473,11 +477,11 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
   #   Edward Arnold, London
 
   # EA derived from dew point
-  tmp[, (EA) := round(0.61078 * exp((17.2694 * (tmp$DEWP)) /
-                                      ((tmp$DEWP) + 237.3)), 1)]
+  tmp[, (EA) := round(0.61078 * exp( (17.2694 * (tmp$DEWP)) /
+                                      ( (tmp$DEWP) + 237.3)), 1)]
   # ES derived from average temperature
-  tmp[, (ES) := round(0.61078 * exp((17.2694 * (tmp$TEMP)) /
-                                      ((tmp$TEMP) + 237.3)), 1)]
+  tmp[, (ES) := round(0.61078 * exp( (17.2694 * (tmp$TEMP)) /
+                                      ( (tmp$TEMP) + 237.3)), 1)]
   # Calculate relative humidity
   tmp[, (RH) := round(tmp$EA / tmp$ES * 100, 1)]
 
@@ -541,7 +545,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
 .validate_dsn <- function(dsn) {
   dsn <- trimws(dsn)
   if (dsn == "") {
-    stop("\nYou must supply a valid file path for storing the resulting file(s).\n")
+    stop("\nYou must supply a valid file path for storing the resulting
+         file(s).\n")
   } else {
     if (substr(dsn, nchar(dsn) - 1, nchar(dsn)) == "//") {
       p <- substr(dsn, 1, nchar(dsn) - 2)
@@ -568,29 +573,30 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
   country <- toupper(trimws(country[1]))
   nc <- nchar(country)
   if (nc == 3) {
-    if (country %in% GSODR::GSOD_country_list$iso3c) {
-      c <- which(GSODR::GSOD_country_list == GSODR::GSOD_country_list$iso3c)
-      return(GSODR::GSOD_country_list[[c, 1]])
+    if (country %in% GSODR::country_list$iso3c) {
+      c <- which(GSODR::country_list == GSODR::country_list$iso3c)
+      return(GSODR::country_list[[c, 1]])
     } else {
       stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you
 can view the entire list of valid countries in this data by typing,
-           'GSODR::GSOD_country_list'.\n")
+           'GSODR::country_list'.\n")
     }
   } else if (nc == 2) {
-    if (country %in% GSODR::GSOD_country_list$iso2c) {
-      c <- which(GSODR::GSOD_country_list == GSODR::GSOD_country_list$iso2c)
-      return(GSODR::GSOD_country_list[[c, 1]])
+    if (country %in% GSODR::country_list$iso2c) {
+      c <- which(GSODR::country_list == GSODR::country_list$iso2c)
+      return(GSODR::country_list[[c, 1]])
     } else {
       stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you
 can view the entire list of valid countries in this data by typing,
-           'GSODR::GSOD_country_list'.\n")
+           'GSODR::country_list'.\n")
     }
-  } else if (country %in% GSODR::GSOD_country_list$COUNTRY_NAME) {
-    c <- which(country == GSODR::GSOD_country_list$COUNTRY_NAME)
-    return(GSODR::GSOD_country_list[[c, 1]])
+  } else if (country %in% GSODR::country_list$COUNTRY_NAME) {
+    c <- which(country == GSODR::country_list$COUNTRY_NAME)
+    return(GSODR::country_list[[c, 1]])
   } else {
     stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you
-can view the entire list of valid countries in this data by typing, 'GSODR::GSOD_country_list'.\n")
+can view the entire list of valid countries in this data by typing,
+         'GSODR::country_list'.\n")
     return(0)
   }
 }
@@ -599,14 +605,16 @@ can view the entire list of valid countries in this data by typing, 'GSODR::GSOD
 .validate_years <- function(years) {
   this_year <- 1900 + as.POSIXlt(Sys.Date())$year
   if (is.null(years) | is.character(years)) {
-    stop("\nYou must provide at least one year of data to download in a numeric format.\n")
+    stop("\nYou must provide at least one year of data to download in a numeric
+         format.\n")
   } else {
     for (i in years) {
       if (i <= 0) {
         stop("\nThis is not a valid year.\n")
         return(0)
       } else if (i < 1929) {
-        stop("\nThe GSOD data files start at 1929, you have entered a year prior to 1929.\n")
+        stop("\nThe GSOD data files start at 1929, you have entered a year prior
+             to 1929.\n")
         return(0)
       } else if (i > this_year) {
         stop("\nThe year cannot be greater than current year.\n")
@@ -621,7 +629,9 @@ can view the entire list of valid countries in this data by typing, 'GSODR::GSOD
 .validate_station <- function(station, stations) {
   for (vs in station) {
     if (vs %in% stations[[12]] == FALSE) {
-      stop("\nThis is not a valid station ID number, please check your entry.\nStation IDs are provided as a part of the GSODR package in the 'stations' data\nin the STNID column.\n")
+      stop("\nThis is not a valid station ID number, please check your entry.
+           \nStation IDs are provided as a part of the GSODR package in the
+           'stations' data\nin the STNID column.\n")
       return(0)
     }
   }
@@ -649,19 +659,19 @@ can view the entire list of valid countries in this data by typing, 'GSODR::GSOD
   stations[stations == -999.9] <- NA
   stations[stations == -999] <- NA
 
-  stations <- stations[!is.na(stations$LAT) & !is.na(stations$LON), ]
   stations <- stations[stations$LAT != 0 & stations$LON != 0, ]
   stations <- stations[stations$LAT > -90 & stations$LAT < 90, ]
   stations <- stations[stations$LON > -180 & stations$LON < 180, ]
   stations$STNID <- as.character(paste(stations$USAF, stations$WBAN, sep = "-"))
 
-  data.table::setkey(GSODR::SRTM_GSOD_elevation, STNID)
+  SRTM_GSOD_elevation <- data.table::setkey(GSODR::SRTM_GSOD_elevation, STNID)
   data.table::setDT(stations)
   data.table::setkey(stations, STNID)
+  stations <- stations[SRTM_GSOD_elevation, on = "STNID"]
 
-  GSOD_stations <- stations[GSODR::SRTM_GSOD_elevation]
-  return(GSOD_stations)
-
+  stations <- stations[!is.na(stations$LAT), ]
+  stations <- stations[!is.na(stations$LON), ]
+  return(stations)
 }
 
 #' @noRd
@@ -669,5 +679,5 @@ can view the entire list of valid countries in this data by typing, 'GSODR::GSOD
 # http://quantitative-ecology.blogspot.com.au/2009/10/leap-years.html
 .is_leapyear <- function(year){
   #http://en.wikipedia.org/wiki/Leap_year
-  return(((year %% 4 == 0) & (year %% 100 != 0)) | (year %% 400 == 0))
+  return( ( (year %% 4 == 0) & (year %% 100 != 0)) | (year %% 400 == 0))
 }

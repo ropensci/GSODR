@@ -11,6 +11,7 @@ status](https://ci.appveyor.com/api/projects/status/8daqtllo2sg6me07/branch/mast
 downloads](http://cranlogs.r-pkg.org/badges/GSODR?color=blue)](https://github.com/metacran/cranlogs.app)
 [![cran
 version](http://www.r-pkg.org/badges/version/GSODR)](https://cran.r-project.org/package=GSODR)
+[![DOI](https://zenodo.org/badge/32764550.svg)](https://zenodo.org/badge/latestdoi/32764550)
 
 The GSODR package is an R package that provides a function that
 automates downloading and cleaning data from the "[Global Surface
