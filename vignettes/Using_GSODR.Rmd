@@ -1,13 +1,8 @@
----
-title: "Using the GSODR Package"
-author: "Adam H. Sparks"
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Using the GSODR Package}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
----
+<!--
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{Sea ice vignette}
+%\VignetteEncoding{UTF-8}
+-->
 
 # Introduction
 An R package that provides a function that automates downloading and
