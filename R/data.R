@@ -45,7 +45,7 @@
 #' \url{http://srtm.csi.cgiar.org}}
 "SRTM_GSOD_elevation"
 
-#' GSOD_country_list
+#' country_list
 #' @format A data frame with 293 observations of 4 variables:
 #' \describe{
 #' \item{FIPS}{Federal Information Processing Standards (FIPS) code}
@@ -67,4 +67,4 @@
 #'
 #' @source \url{ftp://ftp.ncdc.noaa.gov/pub/data/noaa/country-list.txt}
 #'
-"GSOD_country_list"
+"country_list"

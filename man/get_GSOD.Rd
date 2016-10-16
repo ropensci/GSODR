@@ -23,7 +23,7 @@ to existing files for download and cleaning from the ftp server.}
 \item{country}{Specify a country of interest for which to retrieve weather
 data; full name. For stations located in locales
 having an ISO code 2 or 3 letter ISO code can also be used if known. See
-\code{\link{GSOD_country_list}} for a full list of country names and ISO
+\code{\link{country_list}} for a full list of country names and ISO
 codes available.}
 
 \item{dsn}{Path to file write to.}

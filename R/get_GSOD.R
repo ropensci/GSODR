@@ -31,7 +31,7 @@
 #' @param country Specify a country of interest for which to retrieve weather
 #' data; full name. For stations located in locales
 #' having an ISO code 2 or 3 letter ISO code can also be used if known. See
-#' \code{\link{GSOD_country_list}} for a full list of country names and ISO
+#' \code{\link{country_list}} for a full list of country names and ISO
 #' codes available.
 #' @param dsn Path to file write to.
 #' @param filename The filename for resulting file(s) to be written with no
@@ -281,13 +281,13 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
       tryCatch(utils::download.file(url = paste0(ftp_site, yr, "/gsod_", yr,
                                                  ".tar"),
                                     destfile = tf, mode = "wb"),
-               error = function(x) message(paste0("\nThe download stoped at
-      year: ", yr, ".\nPlease restart the 'get_GSOD()' function starting at this
-                                                  point.\n")))
+               error = function(x) message(paste0(
+                "\nThe download stopped at year: ", yr, ".
+                \nPlease restart the 'get_GSOD()' function starting here.\n")))
       utils::untar(tarfile = tf, exdir  = paste0(td, "/", yr, "/"))
 
-      message("\nFinished downloading file. Parsing the indivdual station files
-              now.\n")
+      message("\nFinished downloading file.
+              \nParsing the indivdual station files now.\n")
       GSOD_list <- list.files(paste0(td, "/", yr, "/"),
                               pattern = utils::glob2rx("*.gz"),
                               full.names = FALSE)
@@ -306,8 +306,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
       # If country is set, subset list of stations to clean --------------------
       if (!is.null(country)) {
         country_FIPS <- unlist(as.character(stats::na.omit(
-          GSODR::GSOD_country_list[GSODR::GSOD_country_list$FIPS == country, ]
-          [1]),
+          GSODR::country_list[GSODR::country_list$FIPS == country, ][[1]]),
           use.names = FALSE))
         station_list <- stations[stations$CTRY == country_FIPS, ]$STNID
         station_list <- vapply(station_list,
@@ -574,30 +573,30 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
   country <- toupper(trimws(country[1]))
   nc <- nchar(country)
   if (nc == 3) {
-    if (country %in% GSODR::GSOD_country_list$iso3c) {
-      c <- which(GSODR::GSOD_country_list == GSODR::GSOD_country_list$iso3c)
-      return(GSODR::GSOD_country_list[[c, 1]])
+    if (country %in% GSODR::country_list$iso3c) {
+      c <- which(GSODR::country_list == GSODR::country_list$iso3c)
+      return(GSODR::country_list[[c, 1]])
     } else {
       stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you
 can view the entire list of valid countries in this data by typing,
-           'GSODR::GSOD_country_list'.\n")
+           'GSODR::country_list'.\n")
     }
   } else if (nc == 2) {
-    if (country %in% GSODR::GSOD_country_list$iso2c) {
-      c <- which(GSODR::GSOD_country_list == GSODR::GSOD_country_list$iso2c)
-      return(GSODR::GSOD_country_list[[c, 1]])
+    if (country %in% GSODR::country_list$iso2c) {
+      c <- which(GSODR::country_list == GSODR::country_list$iso2c)
+      return(GSODR::country_list[[c, 1]])
     } else {
       stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you
 can view the entire list of valid countries in this data by typing,
-           'GSODR::GSOD_country_list'.\n")
+           'GSODR::country_list'.\n")
     }
-  } else if (country %in% GSODR::GSOD_country_list$COUNTRY_NAME) {
-    c <- which(country == GSODR::GSOD_country_list$COUNTRY_NAME)
-    return(GSODR::GSOD_country_list[[c, 1]])
+  } else if (country %in% GSODR::country_list$COUNTRY_NAME) {
+    c <- which(country == GSODR::country_list$COUNTRY_NAME)
+    return(GSODR::country_list[[c, 1]])
   } else {
     stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you
 can view the entire list of valid countries in this data by typing,
-         'GSODR::GSOD_country_list'.\n")
+         'GSODR::country_list'.\n")
     return(0)
   }
 }

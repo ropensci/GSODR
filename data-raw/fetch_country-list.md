@@ -1,7 +1,7 @@
 Fetch GSOD Country List and Merge with ISO Country Codes
 ================
 Adam H. Sparks
-2016-10-06
+2016-10-16
 
 Introduction
 ============
@@ -27,11 +27,11 @@ countries <- readr::read_table(
   "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/country-list.txt")[-1, c(1, 3)]
 names(countries)[2] <- "COUNTRY_NAME"
 
-GSOD_country_list <- dplyr::left_join(countries, countrycode::countrycode_data,
+country_list <- dplyr::left_join(countries, countrycode::countrycode_data,
                    by = c(FIPS = "fips104"))
-GSOD_country_list <- data.table::setDT(GSOD_country_list)
+country_list <- data.table::setDT(country_list)
 
-print(GSOD_country_list)
+print(country_list)
 ```
 
     ##      FIPS                         COUNTRY_NAME        country.name cowc
@@ -74,9 +74,9 @@ print(GSOD_country_list)
 There are unnecessary data in several columns. `GSODR` only requires FIPS, name, and ISO codes to function.
 
 ``` r
-GSOD_country_list[, c(3, 4:8, 11:16) := NULL]
+country_list[, c(3, 4:8, 11:16) := NULL]
 
-print(GSOD_country_list)
+print(country_list)
 ```
 
     ##      FIPS                         COUNTRY_NAME iso2c iso3c
@@ -95,10 +95,10 @@ print(GSOD_country_list)
 Write .rda file to disk.
 
 ``` r
-devtools::use_data(GSOD_country_list, overwrite = TRUE, compress = "bzip2")
+devtools::use_data(country_list, overwrite = TRUE, compress = "bzip2")
 ```
 
-    ## Saving GSOD_country_list as GSOD_country_list.rda to /Users/U8004755/Development/GSODR/data
+    ## Saving country_list as country_list.rda to /Users/asparks/Development/GSODR/data
 
 Notes
 =====
@@ -114,8 +114,8 @@ R System Information
 --------------------
 
     ## R version 3.3.1 (2016-06-21)
-    ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-    ## Running under: OS X 10.11.6 (El Capitan)
+    ## Platform: x86_64-apple-darwin16.0.0 (64-bit)
+    ## Running under: OS X 10.12 (Sierra)
     ## 
     ## locale:
     ## [1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8
@@ -129,7 +129,7 @@ R System Information
     ## loaded via a namespace (and not attached):
     ##  [1] Rcpp_0.12.7      withr_1.0.2      digest_0.6.10    dplyr_0.5.0     
     ##  [5] assertthat_0.1   chron_2.3-47     R6_2.2.0         DBI_0.5-1       
-    ##  [9] formatR_1.4      magrittr_1.5     evaluate_0.9     stringi_1.1.2   
+    ##  [9] formatR_1.4      magrittr_1.5     evaluate_0.10    stringi_1.1.2   
     ## [13] curl_2.1         data.table_1.9.6 rmarkdown_1.0    devtools_1.12.0 
     ## [17] tools_3.3.1      stringr_1.1.0    readr_1.0.0      yaml_2.1.13     
     ## [21] memoise_1.0.0    htmltools_0.3.5  knitr_1.14       tibble_1.2
