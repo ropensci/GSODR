@@ -144,6 +144,7 @@ gg = ggplot(df_melt, aes(x=DATE, y=value))
 gg1 = gg + geom_point(aes(color=variable))
 gg1 + facet_wrap( ~ STNID)
 ```
+![Comparison between observed temperature and CHELSA-based temperature estimates](https://github.com/adamhsparks/GSODR/blob/devel/paper/Rplot_GSOD_vs_climate_PHL.png)
 
 ### Finding stations
 
