@@ -574,7 +574,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
   nc <- nchar(country)
   if (nc == 3) {
     if (country %in% GSODR::country_list$iso3c) {
-      c <- which(GSODR::country_list == GSODR::country_list$iso3c)
+      c <- which(country == GSODR::country_list$iso3c)
       return(GSODR::country_list[[c, 1]])
     } else {
       stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you
@@ -583,7 +583,7 @@ can view the entire list of valid countries in this data by typing,
     }
   } else if (nc == 2) {
     if (country %in% GSODR::country_list$iso2c) {
-      c <- which(GSODR::country_list == GSODR::country_list$iso2c)
+      c <- which(country == GSODR::country_list$iso2c)
       return(GSODR::country_list[[c, 1]])
     } else {
       stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you
