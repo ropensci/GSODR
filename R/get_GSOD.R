@@ -11,7 +11,7 @@
 #'90 or longitude of < -180 or > 180 are removed. All units are converted to
 #'International System of Units (SI), e.g., Fahrenheit to Celsius and inches to
 #'millimetres. Alternative elevation measurements are supplied for missing
-#'values or values found to be questionable based on the Consulatative Group
+#'values or values found to be questionable based on the Consultative Group
 #'for International Agricultural Research's Consortium for Spatial Information
 #'group's (CGIAR-CSI) Shuttle Radar Topography Mission 90 metre (SRTM 90m)
 #'digital elevation data based on NASA's original SRTM 90m data. Further
