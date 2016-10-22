@@ -98,10 +98,10 @@ following fields/values:
 Air Force Navy" number - with WBAN being the acronym}
 \item{STN_NAME}{Unique text identifier}
 \item{CTRY}{Country in which the station is located}
-\item{LAT}{Latitude. *Station dropped in cases where values are &lt;-90 or
-&gt;90 degrees or Lat = 0 and Lon = 0*}
-\item{LON}{Longitude. *Station dropped in cases where values are &lt;-180 or
-&gt;180 degrees or Lat = 0 and Lon = 0*}
+\item{LAT}{Latitude. *Station dropped in cases where values are < -90 or
+> 90 degrees or Lat = 0 and Lon = 0*}
+\item{LON}{Longitude. *Station dropped in cases where values are < -180 or
+> 180 degrees or Lat = 0 and Lon = 0*}
 \item{ELEV_M}{Elevation in metres}
 \item{ELEV_M_SRTM_90m}{Elevation in metres corrected for possible errors,
 derived from the CGIAR-CSI SRTM 90m database (Jarvis et al. 2008)}
