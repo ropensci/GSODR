@@ -289,7 +289,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
       message("\nFinished downloading file.
               \nParsing the indivdual station files now.\n")
       GSOD_list <- list.files(paste0(td, "/", yr, "/"),
-                              pattern = utils::glob2rx("*.gz"),
+                              pattern = "^.*\\.gz$",
                               full.names = FALSE)
 
       # If agroclimatology == TRUE, subset list of stations to clean -----------
