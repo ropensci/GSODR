@@ -50,6 +50,8 @@
 #' @param GPKG Logical. If set to TRUE, create a GeoPackage file, if
 #' set to FALSE, no GPKG file is created. Defaults to FALSE, no GPKG file is
 #' created.
+#' @param threads The number of computing threads to use for parallel processing
+#' data. Defaults to 1.
 #'
 #' @details
 #'Due to the size of the resulting data, output is saved as a comma-separated,
@@ -223,9 +225,10 @@
 #' @importFrom data.table :=
 #'
 #' @export
-get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
-                     filename = "GSOD", max_missing = 5,
-                     agroclimatology = FALSE, CSV = TRUE, GPKG = FALSE) {
+get_GSOD <- function(years = NULL, station = NULL, country = NULL,
+                     dsn = "", filename = "GSOD", max_missing = 5,
+                     agroclimatology = FALSE, CSV = TRUE, GPKG = FALSE,
+                     threads = 1) {
 
   # Set up options, creating objects, check variables entered by user-----------
   options(warn = 2)
@@ -342,7 +345,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
       )
     } else {
       # Stations not specified ------------------------------------------------
-      cl <- parallel::makeCluster(2)
+      cl <- parallel::makeCluster(threads)
       doParallel::registerDoParallel(cl)
       itx <- iterators::iter(GSOD_list)
       GSOD_XY <- as.data.frame(
