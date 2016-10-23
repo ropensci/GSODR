@@ -13,7 +13,7 @@ authors:
     affiliation: Centre for Crop Health, University of Southern Queensland, Toowoomba Queensland 4350, Australia
   - name: Tomislav Hengl
     orcid: 0000-0002-9921-5129
-    affiliation: ISRIC - World Soil Information, ISRIC - World Soil Information P.O. Box 353, 6700 AJ Wageningen, The Netherlands
+    affiliation: ISRIC - World Soil Information, P.O. Box 353, 6700 AJ Wageningen, The Netherlands
   - name: Andrew Nelson
     orcid: 0000-0002-7249-3778
     affiliation: Faculty of Geo-Information and Earth Observation (ITC), University of Twente, Enschede 7500 AE, The Netherlands
@@ -27,10 +27,7 @@ The GSODR package [@GSODR] is an R package [@R-base] for automated
 downloading, parsing, cleaning and converting of Global Surface Summary of the
 Day (GSOD) [@NCDC] weather data into Comma Separated Values (CSV) or
 Geopackage (GPKG) [@geopackage] files. It builds on or complements several
-other scripts and packages. An earlier R script, getGSOD.R, published
-in the freely available book, "A Practical Guide to Geostatistical Mapping" 
-[@Hengl2009], provides basic functionality on Windows platforms, but lacks
-cross-platform support and does not take advantage of modern techniques in
+other scripts and packages. We take advantage of modern techniques in
 R to make more efficient use of available computing resources used to complete
 the process, e.g., data.table [@data.table], readr [@readr] and foreach 
 [@foreach], which allow the data cleaning, conversions and disk input/output
@@ -218,3 +215,4 @@ no/not reported) for the occurrence during the day;
 
 # References
 
+* Kilibarda, M., Hengl, T., Heuvelink, G., Gräler, B., Pebesma, E., Perčec Tadić, M., & Bajat, B. (2014). **Spatio‐temporal interpolation of daily temperatures for global land areas at 1 km resolution**. Journal of Geophysical Research: Atmospheres, 119(5), 2294-2313.
