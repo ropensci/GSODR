@@ -51,7 +51,7 @@
 \item{CHELSA_temp_2_1979-2013}{Mean February temperature}
 \item{CHELSA_temp_3_1979-2013}{Mean March temperature}
 \item{CHELSA_temp_4_1979-2013}{Mean April temperature}
-\item{CHELSA_temp_4_1979-2013}{Mean May temperature}
+\item{CHELSA_temp_5_1979-2013}{Mean May temperature}
 \item{CHELSA_temp_6_1979-2013}{Mean June temperature}
 \item{CHELSA_temp_7_1979-2013}{Mean July temperature}
 \item{CHELSA_temp_8_1979-2013}{Mean August temperature}
