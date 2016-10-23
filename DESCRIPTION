@@ -4,10 +4,10 @@ Title: Global Summary Daily Weather Data in R
 Version: 0.3
 Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     email = "adamhsparks@gmail.com"),
-    person("Tomislav", "Hengl", role = "aut",
-    email = "tom.hengl@isric.org"),
     person("Andrew", "Nelson", role = "aut",
-    email = "dr.andy.nelson@gmail.com"))
+    email = "dr.andy.nelson@gmail.com",),
+    person("Tomislav", "Hengl", role = "ctb",
+    email = "tom.hengl@isric.org"))
 Maintainer: Adam Sparks <adamhsparks@gmail.com>
 URL: https://github.com/adamhsparks/GSODR
 BugReports: https://github.com/adamhsparks/GSODR/issues
@@ -48,8 +48,6 @@ Imports:
 Suggests:
     chillR,
     dplyr,
-    plotKML,
-    spacetime,
     ggalt,
     ggplot2,
     knitr,

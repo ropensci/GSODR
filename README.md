@@ -34,6 +34,13 @@ them through R. In particular, the excellent
 downloading weather data from the United States National Oceanic and
 Atmospheric Administration but lacks support GSOD data.
 
+This package was largely based on Tomislav Hengl's work
+"[getGSOD.R](http://spatial-analyst.net/book/getGSOD.R)", which can be
+found in his book, "[A Practical Guide to Geostatistical
+Mapping](http://spatial-analyst.net/book)", with updates to take
+advantage of modern R capabilities, cross-platform functionality, and
+more options for data retrieval and error correction.
+
 It is recommended that you have a good Internet connection to download
 the data files as they can be quite large and slow to download.
 
@@ -100,49 +107,8 @@ get_GSOD(years = 2010:2011, dsn = "~/", filename = "GSOD-agroclimatology",
 # summary file, GSOD-RP-2010.gpkg, in the user's home directory with a
 # maximum of five missing days per station allowed and no CSV file creation.
 
-get_GSOD(years = 2010, country = "Philippines", dsn = "~/", filename = "PHL_2010",
+get_GSOD(years = 2010, country = "Philippines", dsn = "~/", filename = "PHL_2010"
          GPKG = TRUE, CSV = FALSE)
-# Finished downloading file.
-# Parsing the indivdual station files now.
-# Finished parsing files. Writing files to disk now.
-
-library(rgdal)
-library(spacetime)
-library(plotKML)
-
-layers <- ogrListLayers("PHL_2010-2010.gpkg")
-pnts <- readOGR("PHL_2010-2010.gpkg", layers[1])
-# OGR data source with driver: GPKG 
-# Source: "PHL_2010-2010.gpkg", layer: "GSOD"
-# with 2190 features
-# It has 46 fields
-
-# Plot results in Google Earth as a spacetime object:
-pnts$DATE = as.Date(paste(pnts$YEAR, pnts$MONTH, pnts$DAY, sep="-"))
-tmp_ST <- STIDF(sp=as(pnts, "SpatialPoints"), time=pnts$DATE-0.5, data=pnts@data[,c("TEMP","STNID")], endTime=pnts$DATE+0.5)
-shape = "http://maps.google.com/mapfiles/kml/pal2/icon18.png"
-kml(tmp_ST, dtime = 24*3600, colour = TEMP, shape = shape, labels = TEMP, file.name="Temperatures_PHL_2010-2010.kml", folder.name="TEMP")
-system("zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml")
-
-# Compare daily measurements with climatic data:
-library(plyr)
-library(ggplot2)
-library(reshape2)
-
-data(GSOD_clim)
-cnames = paste0("CHELSA_temp_", 1:12, "_1979-2013")
-clim.temp = GSOD_clim[GSOD_clim$STNID %in% pnts$STNID, paste(c("STNID", cnames))]
-clim.temp.df = data.frame(STNID=rep(clim.temp$STNID, 12),
-   MONTHC=as.vector(sapply(1:12, rep, times=nrow(clim.temp))), 
-   TEMPC=as.vector(unlist(clim.temp[,cnames])))
-clim.temp.df$YEAR = 2010
-pnts$MONTHC = as.numeric(paste(pnts$MONTH))
-temp <- plyr::join(pnts@data, clim.temp.df, type="left")
-df_melt <- melt(temp[, c("STNID", "DATE", "TEMPC", "TEMP")],
-   id=c("DATE","STNID"))
-gg = ggplot(df_melt, aes(x=DATE, y=value))
-gg1 = gg + geom_point(aes(color=variable))
-gg1 + facet_wrap( ~ STNID)
 ```
 ![Comparison between observed temperature and CHELSA-based temperature estimates](https://github.com/adamhsparks/GSODR/blob/devel/paper/Rplot_GSOD_vs_climate_PHL.png)
 
