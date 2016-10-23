@@ -631,7 +631,7 @@ can view the entire list of valid countries in this data by typing,
 #' @noRd
 .validate_station <- function(station, stations) {
   for (vs in station) {
-    if (vs %in% stations[[12]] == FALSE) {
+    if (!vs %in% stations[[12]]) {
       stop("\nThis is not a valid station ID number, please check your entry.
            \nStation IDs are provided as a part of the GSODR package in the
            'stations' data\nin the STNID column.\n")
