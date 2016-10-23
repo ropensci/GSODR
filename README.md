@@ -110,6 +110,7 @@ get_GSOD(years = 2010:2011, dsn = "~/", filename = "GSOD-agroclimatology",
 get_GSOD(years = 2010, country = "Philippines", dsn = "~/", filename = "PHL_2010"
          GPKG = TRUE, CSV = FALSE)
 ```
+![Comparison between observed temperature and CHELSA-based temperature estimates](https://github.com/adamhsparks/GSODR/blob/devel/paper/Rplot_GSOD_vs_climate_PHL.png)
 
 ### Finding stations
 

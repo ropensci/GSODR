@@ -6,7 +6,7 @@
 \usage{
 get_GSOD(years = NULL, station = NULL, country = NULL, dsn = "",
   filename = "GSOD", max_missing = 5, agroclimatology = FALSE,
-  CSV = TRUE, GPKG = FALSE)
+  CSV = TRUE, GPKG = FALSE, threads = 1)
 }
 \arguments{
 \item{years}{Year(s) of weather data to download.}
@@ -48,6 +48,9 @@ file of data, defaults to TRUE, a CSV file is created.}
 \item{GPKG}{Logical. If set to TRUE, create a GeoPackage file, if
 set to FALSE, no GPKG file is created. Defaults to FALSE, no GPKG file is
 created.}
+
+\item{threads}{The number of computing threads to use for parallel processing
+data. Defaults to 1.}
 }
 \description{
 This function automates downloading, cleaning, reformatting of data from
@@ -61,7 +64,7 @@ many missing observations are omitted, stations with a latitude of < -90 or >
 90 or longitude of < -180 or > 180 are removed. All units are converted to
 International System of Units (SI), e.g., Fahrenheit to Celsius and inches to
 millimetres. Alternative elevation measurements are supplied for missing
-values or values found to be questionable based on the Consulatative Group
+values or values found to be questionable based on the Consultative Group
 for International Agricultural Research's Consortium for Spatial Information
 group's (CGIAR-CSI) Shuttle Radar Topography Mission 90 metre (SRTM 90m)
 digital elevation data based on NASA's original SRTM 90m data. Further
@@ -98,10 +101,10 @@ following fields/values:
 Air Force Navy" number - with WBAN being the acronym}
 \item{STN_NAME}{Unique text identifier}
 \item{CTRY}{Country in which the station is located}
-\item{LAT}{Latitude. *Station dropped in cases where values are &lt;-90 or
-&gt;90 degrees or Lat = 0 and Lon = 0*}
-\item{LON}{Longitude. *Station dropped in cases where values are &lt;-180 or
-&gt;180 degrees or Lat = 0 and Lon = 0*}
+\item{LAT}{Latitude. *Station dropped in cases where values are < -90 or
+> 90 degrees or Lat = 0 and Lon = 0*}
+\item{LON}{Longitude. *Station dropped in cases where values are < -180 or
+> 180 degrees or Lat = 0 and Lon = 0*}
 \item{ELEV_M}{Elevation in metres}
 \item{ELEV_M_SRTM_90m}{Elevation in metres corrected for possible errors,
 derived from the CGIAR-CSI SRTM 90m database (Jarvis et al. 2008)}

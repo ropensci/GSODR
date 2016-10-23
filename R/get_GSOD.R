@@ -11,7 +11,7 @@
 #'90 or longitude of < -180 or > 180 are removed. All units are converted to
 #'International System of Units (SI), e.g., Fahrenheit to Celsius and inches to
 #'millimetres. Alternative elevation measurements are supplied for missing
-#'values or values found to be questionable based on the Consulatative Group
+#'values or values found to be questionable based on the Consultative Group
 #'for International Agricultural Research's Consortium for Spatial Information
 #'group's (CGIAR-CSI) Shuttle Radar Topography Mission 90 metre (SRTM 90m)
 #'digital elevation data based on NASA's original SRTM 90m data. Further
@@ -50,6 +50,8 @@
 #' @param GPKG Logical. If set to TRUE, create a GeoPackage file, if
 #' set to FALSE, no GPKG file is created. Defaults to FALSE, no GPKG file is
 #' created.
+#' @param threads The number of computing threads to use for parallel processing
+#' data. Defaults to 1.
 #'
 #' @details
 #'Due to the size of the resulting data, output is saved as a comma-separated,
@@ -80,10 +82,10 @@
 #' Air Force Navy" number - with WBAN being the acronym}
 #' \item{STN_NAME}{Unique text identifier}
 #' \item{CTRY}{Country in which the station is located}
-#' \item{LAT}{Latitude. *Station dropped in cases where values are &lt;-90 or
-#' &gt;90 degrees or Lat = 0 and Lon = 0*}
-#' \item{LON}{Longitude. *Station dropped in cases where values are &lt;-180 or
-#'&gt;180 degrees or Lat = 0 and Lon = 0*}
+#' \item{LAT}{Latitude. *Station dropped in cases where values are < -90 or
+#'> 90 degrees or Lat = 0 and Lon = 0*}
+#' \item{LON}{Longitude. *Station dropped in cases where values are < -180 or
+#'> 180 degrees or Lat = 0 and Lon = 0*}
 #' \item{ELEV_M}{Elevation in metres}
 #' \item{ELEV_M_SRTM_90m}{Elevation in metres corrected for possible errors,
 #' derived from the CGIAR-CSI SRTM 90m database (Jarvis et al. 2008)}
@@ -223,13 +225,16 @@
 #' @importFrom data.table :=
 #'
 #' @export
-get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
-                     filename = "GSOD", max_missing = 5,
-                     agroclimatology = FALSE, CSV = TRUE, GPKG = FALSE) {
+get_GSOD <- function(years = NULL, station = NULL, country = NULL,
+                     dsn = "", filename = "GSOD", max_missing = 5,
+                     agroclimatology = FALSE, CSV = TRUE, GPKG = FALSE,
+                     threads = 1) {
 
   # Set up options, creating objects, check variables entered by user-----------
+  orginal_options <- options()
   options(warn = 2)
   options(timeout = 300)
+  
 
   # Set up tempfile and directory for downloading data from server
   tf <- tempfile()
@@ -289,7 +294,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
       message("\nFinished downloading file.
               \nParsing the indivdual station files now.\n")
       GSOD_list <- list.files(paste0(td, "/", yr, "/"),
-                              pattern = utils::glob2rx("*.gz"),
+                              pattern = "^.*\\.gz$",
                               full.names = FALSE)
 
       # If agroclimatology == TRUE, subset list of stations to clean -----------
@@ -342,7 +347,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
       )
     } else {
       # Stations not specified ------------------------------------------------
-      cl <- parallel::makeCluster(2)
+      cl <- parallel::makeCluster(threads)
       doParallel::registerDoParallel(cl)
       itx <- iterators::iter(GSOD_list)
       GSOD_XY <- as.data.frame(
@@ -389,8 +394,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
   # cleanup and reset to default state
   unlink(tf)
   unlink(td)
-  options(warn = 0)
-  options(timeout = 60)
+  options(original_options)
 }
 
 # Functions used within this package -------------------------------------------
@@ -574,7 +578,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, dsn = "",
   nc <- nchar(country)
   if (nc == 3) {
     if (country %in% GSODR::country_list$iso3c) {
-      c <- which(GSODR::country_list == GSODR::country_list$iso3c)
+      c <- which(country == GSODR::country_list$iso3c)
       return(GSODR::country_list[[c, 1]])
     } else {
       stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you
@@ -583,7 +587,7 @@ can view the entire list of valid countries in this data by typing,
     }
   } else if (nc == 2) {
     if (country %in% GSODR::country_list$iso2c) {
-      c <- which(GSODR::country_list == GSODR::country_list$iso2c)
+      c <- which(country == GSODR::country_list$iso2c)
       return(GSODR::country_list[[c, 1]])
     } else {
       stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you
@@ -628,7 +632,7 @@ can view the entire list of valid countries in this data by typing,
 #' @noRd
 .validate_station <- function(station, stations) {
   for (vs in station) {
-    if (vs %in% stations[[12]] == FALSE) {
+    if (!vs %in% stations[[12]]) {
       stop("\nThis is not a valid station ID number, please check your entry.
            \nStation IDs are provided as a part of the GSODR package in the
            'stations' data\nin the STNID column.\n")
