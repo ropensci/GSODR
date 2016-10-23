@@ -231,8 +231,10 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
                      threads = 1) {
 
   # Set up options, creating objects, check variables entered by user-----------
+  orginal_options <- options()
   options(warn = 2)
   options(timeout = 300)
+  
 
   # Set up tempfile and directory for downloading data from server
   tf <- tempfile()
@@ -392,8 +394,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
   # cleanup and reset to default state
   unlink(tf)
   unlink(td)
-  options(warn = 0)
-  options(timeout = 60)
+  options(original_options)
 }
 
 # Functions used within this package -------------------------------------------
