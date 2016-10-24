@@ -22,8 +22,6 @@ before_install:
   - ./configure --prefix=/usr
   - make
   - sudo make install
-  - install_aptget libgeos-dev
-  - install_aptget rgeos
   - cd /home/travis/build/adamhsparks/GSODR
 
 install:
