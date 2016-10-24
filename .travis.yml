@@ -6,8 +6,8 @@ sudo: required
 
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get install libgeos-c1
   - sudo apt-get install libgeos-dev
+  - sudo apt-get install rgeos
   - cd /home/travis/build/adamhsparks/GSODR
   - curl -OL https://raw.githubusercontent.com/metacran/r-builder/master/pkg-build.sh
   - chmod 755 pkg-build.sh
