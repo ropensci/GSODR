@@ -48,14 +48,14 @@ Imports:
 Suggests:
     chillR,
     dplyr,
-    plotKML,
-    spacetime,
     ggalt,
     ggplot2,
     knitr,
     lubridate,
+    plotKML,
     rgeos,
     rmarkdown,
+    spacetime,
     testthat,
     tibble,
     tidyr

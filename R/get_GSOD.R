@@ -231,10 +231,10 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
                      threads = 1) {
 
   # Set up options, creating objects, check variables entered by user-----------
-  orginal_options <- options()
+  original_options <- options()
   options(warn = 2)
   options(timeout = 300)
-  
+
 
   # Set up tempfile and directory for downloading data from server
   tf <- tempfile()
