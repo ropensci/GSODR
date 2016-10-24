@@ -100,7 +100,7 @@ get_GSOD(years = 2010:2011, dsn = "~/", filename = "GSOD-agroclimatology",
 # summary file, GSOD-RP-2010.gpkg, in the user's home directory with a
 # maximum of five missing days per station allowed and no CSV file creation.
 
-get_GSOD(years = 2010, country = "Philippines", dsn = "~/", filename = "PHL_2010",
+get_GSOD(years = 2010, country = "Philippines", dsn = "~/", filename = "PHL",
          GPKG = TRUE, CSV = FALSE)
 # Finished downloading file.
 # Parsing the indivdual station files now.
@@ -110,8 +110,9 @@ library(rgdal)
 library(spacetime)
 library(plotKML)
 
-layers <- ogrListLayers("PHL_2010-2010.gpkg")
-pnts <- readOGR("PHL_2010-2010.gpkg", layers[1])
+
+layers <- ogrListLayers(dsn = path.expand("~/PHL-2010.gpkg"))
+pnts <- readOGR(dsn = path.expand("~/PHL-2010.gpkg"), layers[1])
 # OGR data source with driver: GPKG 
 # Source: "PHL_2010-2010.gpkg", layer: "GSOD"
 # with 2190 features
@@ -123,7 +124,7 @@ tmp_ST <- STIDF(sp = as(pnts, "SpatialPoints"), time = pnts$DATE - 0.5,
                 data = pnts@data[, c("TEMP", "STNID")],
                 endTime = pnts$DATE + 0.5)
 shape = "http://maps.google.com/mapfiles/kml/pal2/icon18.png"
-kml(tmp_ST, dtime = 24*3600, colour = TEMP, shape = shape, labels = TEMP,
+kml(tmp_ST, dtime = 24 * 3600, colour = TEMP, shape = shape, labels = TEMP,
     file.name = "Temperatures_PHL_2010-2010.kml", folder.name = "TEMP")
 system("zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml")
 
@@ -142,7 +143,7 @@ clim.temp.df$YEAR = 2010
 pnts$MONTHC = as.numeric(paste(pnts$MONTH))
 temp <- plyr::join(pnts@data, clim.temp.df, type = "left")
 df_melt <- melt(temp[, c("STNID", "DATE", "TEMPC", "TEMP")],
-   id = c("DATE","STNID"))
+   id = c("DATE", "STNID"))
 gg = ggplot(df_melt, aes(x = DATE, y = value))
 gg1 = gg + geom_point(aes(color = variable))
 gg1 + facet_wrap( ~ STNID)
@@ -270,13 +271,13 @@ the final file which includes the following fields:
     max temp was derived from the hourly data (i.e., highest hourly or
     synoptic-reported temperature);
 
--   **MIN**- Minimum temperature reported during the day converted to
+-   **MIN** - Minimum temperature reported during the day converted to
     Celsius to tenths--time of min temp report varies by country and
     region, so this will sometimes not be the max for the calendar day.
     Missing = -9999;
 
 -   **MIN\_FLAG** - Blank indicates max temp was taken from the explicit
-    max temp report and not from the 'hourly' data. An "\*" indicates
+    min temp report and not from the 'hourly' data. An "\*" indicates
     min temp was derived from the hourly data (i.e., highest hourly or
     synoptic-reported temperature);
 
