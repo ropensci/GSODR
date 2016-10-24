@@ -83,11 +83,50 @@ the NCDC server. Following are a few examples of its capabilities.
 
 library(GSODR)
 
-# Download weather station for Toowoomba, Queensland for 2010, save resulting
-# file, GSOD-955510-99999-2010.csv, in the user's home directory.
+# Download weather station for Toowoomba, Queensland for 2010
 
-get_GSOD(years = 2010, station = "955510-99999", dsn = "~/",
-         filename = "955510-99999")
+Tbar <- get_GSOD(years = 2010, station = "955510-99999")
+
+#> Downloading the station file(s) now.
+
+#> Finished downloading file. Parsing the station file(s) now.
+
+head(Tbar)
+#>    USAF  WBAN        STNID          STN_NAME CTRY STATE CALL    LAT     LON
+#>1 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
+#>2 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
+#>3 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
+#>4 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
+#>5 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
+#>6 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
+#>  ELEV_M ELEV_M_SRTM_90m    BEGIN      END YEARMODA YEAR MONTH DAY YDAY TEMP
+#>1    642             635 19980301 20161020 20100101 2010    01  01    1 21.2
+#>2    642             635 19980301 20161020 20100102 2010    01  02    2 23.2
+#>3    642             635 19980301 20161020 20100103 2010    01  03    3 21.4
+#>4    642             635 19980301 20161020 20100104 2010    01  04    4 18.9
+#>5    642             635 19980301 20161020 20100105 2010    01  05    5 20.5
+#>6    642             635 19980301 20161020 20100106 2010    01  06    6 21.9
+#>  TEMP_CNT DEWP DEWP_CNT    SLP SLP_CNT   STP STP_CNT VISIB VISIB_CNT WDSP
+#>1        8 17.9        8 1013.4       8 942.0       8    NA         0  2.2
+#>2        8 19.4        8 1010.5       8 939.3       8    NA         0  1.9
+#>3        8 18.9        8 1012.3       8 940.9       8  14.3         6  3.9
+#>4        8 16.4        8 1015.7       8 944.1       8  23.3         4  4.5
+#>5        8 16.4        8 1015.5       8 944.0       8    NA         0  3.9
+#>6        8 18.7        8 1013.7       8 942.3       8    NA         0  3.2
+#>  WDSP_CNT MXSPD GUST   MAX MAX_FLAG   MIN MIN_FLAG PRCP PRCP_FLAG SNDP I_FOG
+#>1        8   6.7   NA 25.78          17.78           1.5         G   NA     0
+#>2        8   5.1   NA 26.50          19.11           0.3         G   NA     0
+#>3        8  10.3   NA 28.72          19.28        * 19.8         G   NA     1
+#>4        8  10.3   NA 24.11          16.89        *  1.0         G   NA     0
+#>5        8  10.8   NA 24.61          16.72           0.3         G   NA     0
+#>6        8   7.7   NA 26.78          17.50           0.0         G   NA     1
+#>  I_RAIN_DRIZZLE I_SNOW_ICE I_HAIL I_THUNDER I_TORNADO_FUNNEL  EA  ES   RH
+#>1              0          0      0         0                0 2.1 2.5 84.0
+#>2              0          0      0         0                0 2.3 2.8 82.1
+#>3              1          0      0         0                0 2.2 2.5 88.0
+#>4              0          0      0         0                0 1.9 2.2 86.4
+#>5              0          0      0         0                0 1.9 2.4 79.2
+#>6              0          0      0         0                0 2.2 2.6 84.6
 
 # Download GSOD data and generate agroclimatology files for years 2010 and 2011,
 # GSOD-agroclimatology-2010.csv and GSOD-agroclimatology-2011.csv, in the user's
