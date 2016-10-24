@@ -25,6 +25,7 @@ before_install:
   - cd /home/travis/build/adamhsparks/GSODR
 
 install:
+  - Rscript -e 'install.packages("rgeos", repos = "http://cran.rstudio.com")'
   - ./pkg-build.sh install_deps
 
 script:
