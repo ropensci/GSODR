@@ -76,7 +76,7 @@ Using GSODR
 
 ### Query the NCDC FTP server for GSOD data
 
-GSODR's main function, `get_GSOD` downloads and cleans GSOD data from
+GSODR's main function, `get_GSOD`, downloads and cleans GSOD data from
 the NCDC server. Following are a few examples of its capabilities.
 
 ``` r
@@ -220,51 +220,51 @@ the final file which includes the following fields:
 -   **YDAY** - Sequential day of year (not in original GSOD);
 
 -   **TEMP** - Mean daily temperature converted to degrees C to tenths.
-    Missing = -9999;
+    Missing = NA;
 
 -   **TEMP\_CNT** - Number of observations used in calculating mean
     daily temperature;
 
 -   **DEWP** - Mean daily dew point converted to degrees C to tenths.
-    Missing = -9999;
+    Missing = NA;
 
 -   **DEWP\_CNT** - Number of observations used in calculating mean
     daily dew point;
 
 -   **SLP** - Mean sea level pressure in millibars to tenths. Missing =
-    -9999;
+    NA;
 
 -   **SLP\_CNT** - Number of observations used in calculating mean sea
     level pressure;
 
 -   **STP** - Mean station pressure for the day in millibars to tenths.
-    Missing = -9999;
+    Missing = NA;
 
 -   **STP\_CNT** - Number of observations used in calculating mean
     station pressure;
 
 -   **VISIB** - Mean visibility for the day converted to kilometres to
-    tenths Missing = -9999;
+    tenths Missing = NA;
 
 -   **VISIB\_CNT** - Number of observations used in calculating mean
     daily visibility;
 
 -   **WDSP** - Mean daily wind speed value converted to metres/second to
-    tenths Missing = -9999;
+    tenths Missing = NA;
 
 -   **WDSP\_CNT** - Number of observations used in calculating mean
     daily wind speed;
 
 -   **MXSPD** - Maximum sustained wind speed reported for the day
-    converted to metres/second to tenths. Missing = -9999;
+    converted to metres/second to tenths. Missing = NA;
 
 -   **GUST** - Maximum wind gust reported for the day converted to
-    metres/second to tenths. Missing = -9999;
+    metres/second to tenths. Missing = NA;
 
 -   **MAX** - Maximum temperature reported during the day converted to
     Celsius to tenths--time of max temp report varies by country and
     region, so this will sometimes not be the max for the calendar day.
-    Missing = -9999;
+    Missing = NA;
 
 -   **MAX\_FLAG** - Blank indicates max temp was taken from the explicit
     max temp report and not from the 'hourly' data. An "\*" indicates
@@ -274,7 +274,7 @@ the final file which includes the following fields:
 -   **MIN** - Minimum temperature reported during the day converted to
     Celsius to tenths--time of min temp report varies by country and
     region, so this will sometimes not be the max for the calendar day.
-    Missing = -9999;
+    Missing = NA;
 
 -   **MIN\_FLAG** - Blank indicates max temp was taken from the explicit
     min temp report and not from the 'hourly' data. An "\*" indicates
@@ -285,11 +285,11 @@ the final file which includes the following fields:
     during the day converted to millimetres to hundredths; will usually
     not end with the midnight observation, i.e., may include latter part
     of previous day. A value of ".00" indicates no measurable
-    precipitation (includes a trace). Missing = -9999; *Note: Many
-    stations do not report '0' on days with no precipitation--
-    therefore, '-9999' will often appear on these days. For example, a
-    station may only report a 6-hour amount for the period during which
-    rain fell.* See FLAGS\_PRCP column for source of data;
+    precipitation (includes a trace). Missing = NA; *Note: Many stations
+    do not report '0' on days with no precipitation-- therefore, 'NA'
+    will often appear on these days. For example, a station may only
+    report a 6-hour amount for the period during which rain fell.* See
+    FLAGS\_PRCP column for source of data;
 
 -   **PRCP\_FLAG** -
 
@@ -318,7 +318,7 @@ the final file which includes the following fields:
         observations--it's still possible that precipitation occurred
         but was not reported;
 
--   **SNDP** - Snow depth in millimetres to tenths. Missing = -9999;
+-   **SNDP** - Snow depth in millimetres to tenths. Missing = NA;
 
 -   **I\_FOG** - Indicator for fog, (1 = yes, 0 = no/not reported) for
     the occurrence during the day;

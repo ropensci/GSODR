@@ -4,7 +4,7 @@
 \name{GSOD_clim}
 \alias{GSOD_clim}
 \title{GSOD_clim}
-\format{A data frame with 23927 observations of  73 variables:
+\format{A data frame with 23927 observations of 73 variables:
 \describe{
 \item{STNID}{Unique station ID}
 \item{LON}{Longitude in WGS84 system}
