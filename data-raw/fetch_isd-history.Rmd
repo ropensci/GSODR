@@ -16,7 +16,7 @@ is fetched from the NCDC ftp server, error checked and new elevation values
 generated. The new elevation values are then saved for inclusion in package as
 /data/SRTM_GSOD_elevation.rda. The resulting values are merged with the most
 recent station history data file from the NCDC when the user runs the
-`get_GSOD()` function. The resulting data frame of station information, based on
+`get_GSOD` function. The resulting data frame of station information, based on
 the merging of the `SRTM_GSOD_elevation` data frame with the most recently
 available "isd-history.csv" file will result in the following changes to the data:
 
@@ -237,7 +237,7 @@ values that are included in the final data for distribution with the GSODR
 package following the approach of Hijmans *et al.* (2005).
 
 Only values for elevation derived from the SRTM data and the STNID, used to
-join this with the original "isd-history.csv" file data when running `get_GSOD()`
+join this with the original "isd-history.csv" file data when running `get_GSOD`
 are included in the final data frame for distribution with the GSODR package.
 
 ```{r cleanup and .rda file creation, message=FALSE, echo=TRUE, warning=FALSE, error=FALSE}

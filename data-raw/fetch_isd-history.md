@@ -1,12 +1,12 @@
 Fetch, clean and correct altitude in GSOD isd\_history.csv Data
 ================
 Adam H. Sparks
-2016-10-11
+2016-10-24
 
 Introduction
 ============
 
-This document details how the GSOD station history data file, ["isd-history.csv"](ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv), is fetched from the NCDC ftp server, error checked and new elevation values generated. The new elevation values are then saved for inclusion in package as /data/SRTM\_GSOD\_elevation.rda. The resulting values are merged with the most recent station history data file from the NCDC when the user runs the `get_GSOD()` function. The resulting data frame of station information, based on the merging of the `SRTM_GSOD_elevation` data frame with the most recently available "isd-history.csv" file will result in the following changes to the data:
+This document details how the GSOD station history data file, ["isd-history.csv"](ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv), is fetched from the NCDC ftp server, error checked and new elevation values generated. The new elevation values are then saved for inclusion in package as /data/SRTM\_GSOD\_elevation.rda. The resulting values are merged with the most recent station history data file from the NCDC when the user runs the `get_GSOD` function. The resulting data frame of station information, based on the merging of the `SRTM_GSOD_elevation` data frame with the most recently available "isd-history.csv" file will result in the following changes to the data:
 
 -   Stations where latitude or longitude are NA or both 0 are removed
 
@@ -177,7 +177,7 @@ summary(SRTM_GSOD_elevation)
 ```
 
     ##      USAF               WBAN             STN_NAME        
-    ##  Length:27855       Length:27855       Length:27855      
+    ##  Length:27861       Length:27861       Length:27861      
     ##  Class :character   Class :character   Class :character  
     ##  Mode  :character   Mode  :character   Mode  :character  
     ##                                                          
@@ -185,8 +185,8 @@ summary(SRTM_GSOD_elevation)
     ##                                                          
     ##                                                          
     ##      CTRY              STATE               CALL                LAT        
-    ##  Length:27855       Length:27855       Length:27855       Min.   :-89.00  
-    ##  Class :character   Class :character   Class :character   1st Qu.: 24.09  
+    ##  Length:27861       Length:27861       Length:27861       Min.   :-89.00  
+    ##  Class :character   Class :character   Class :character   1st Qu.: 24.08  
     ##  Mode  :character   Mode  :character   Mode  :character   Median : 39.67  
     ##                                                           Mean   : 31.86  
     ##                                                           3rd Qu.: 50.02  
@@ -194,20 +194,20 @@ summary(SRTM_GSOD_elevation)
     ##                                                                           
     ##       LON               ELEV_M           BEGIN               END          
     ##  Min.   :-179.983   Min.   :-350.0   Min.   :19010101   Min.   :19051231  
-    ##  1st Qu.: -83.845   1st Qu.:  22.3   1st Qu.:19570630   1st Qu.:20020207  
-    ##  Median :   7.828   Median : 137.0   Median :19750729   Median :20150808  
-    ##  Mean   :  -2.743   Mean   : 359.6   Mean   :19775921   Mean   :20040896  
-    ##  3rd Qu.:  64.585   3rd Qu.: 428.0   3rd Qu.:20010915   3rd Qu.:20161007  
-    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20160927   Max.   :20161009  
+    ##  1st Qu.: -83.840   1st Qu.:  22.3   1st Qu.:19570630   1st Qu.:20020207  
+    ##  Median :   7.833   Median : 137.0   Median :19750803   Median :20150808  
+    ##  Mean   :  -2.744   Mean   : 359.7   Mean   :19776028   Mean   :20040953  
+    ##  3rd Qu.:  64.588   3rd Qu.: 428.0   3rd Qu.:20010915   3rd Qu.:20161020  
+    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20161018   Max.   :20161021  
     ##                     NA's   :218                                           
-    ##     STNID           ELEV_M_SRTM_90m  
-    ##  Length:27855       Min.   :-361.00  
-    ##  Class :character   1st Qu.:  24.75  
-    ##  Mode  :character   Median : 153.00  
-    ##                     Mean   : 379.32  
-    ##                     3rd Qu.: 456.00  
-    ##                     Max.   :5273.00  
-    ##                     NA's   :3011
+    ##     STNID           ELEV_M_SRTM_90m 
+    ##  Length:27861       Min.   :-361.0  
+    ##  Class :character   1st Qu.:  24.0  
+    ##  Mode  :character   Median : 153.0  
+    ##                     Mean   : 379.4  
+    ##                     3rd Qu.: 456.0  
+    ##                     Max.   :5273.0  
+    ##                     NA's   :3012
 
 Figures
 =======
@@ -226,12 +226,28 @@ ggplot(data = SRTM_GSOD_elevation, aes(x = ELEV_M, y = ELEV_M_SRTM_90m)) +
 
 Buffered versus non-buffered elevation values were previously checked and found not to be different while also not showing any discernible geographic patterns. However, The buffered elevation data are higher than the non-buffered data. To help avoid within cell and between cell variation the buffered values are the values that are included in the final data for distribution with the GSODR package following the approach of Hijmans *et al.* (2005).
 
-Only values for elevation derived from the SRTM data and the STNID, used to join this with the original "isd-history.csv" file data when running `get_GSOD()` are included in the final data frame for distribution with the GSODR package.
+Only values for elevation derived from the SRTM data and the STNID, used to join this with the original "isd-history.csv" file data when running `get_GSOD` are included in the final data frame for distribution with the GSODR package.
 
 ``` r
 # write rda file to disk for use with GSODR package
 data.table::setDT(SRTM_GSOD_elevation)
 SRTM_GSOD_elevation[, c(1:11) := NULL]
+```
+
+    ##               STNID ELEV_M_SRTM_90m
+    ##     1: 008268-99999            1160
+    ##     2: 010010-99999              NA
+    ##     3: 010014-99999              48
+    ##     4: 010015-99999              NA
+    ##     5: 010016-99999              NA
+    ##    ---                             
+    ## 27857: 999999-94996             416
+    ## 27858: 999999-96404              NA
+    ## 27859: 999999-96406              NA
+    ## 27860: 999999-96407              NA
+    ## 27861: 999999-96408              NA
+
+``` r
 devtools::use_data(SRTM_GSOD_elevation, overwrite = TRUE, compress = "bzip2")
 
 # clean up Natural Earth data files before we leave
@@ -272,17 +288,17 @@ R System Information
     ##  [1] Rcpp_0.12.7        RColorBrewer_1.1-2 compiler_3.3.1    
     ##  [4] formatR_1.4        plyr_1.8.4         iterators_1.0.8   
     ##  [7] tools_3.3.1        digest_0.6.10      memoise_1.0.0     
-    ## [10] evaluate_0.9       tibble_1.2         gtable_0.2.0      
+    ## [10] evaluate_0.10      tibble_1.2         gtable_0.2.0      
     ## [13] lattice_0.20-34    DBI_0.5-1          curl_2.1          
     ## [16] yaml_2.1.13        rgdal_1.1-10       parallel_3.3.1    
     ## [19] withr_1.0.2        dplyr_0.5.0        stringr_1.1.0     
     ## [22] raster_2.5-8       knitr_1.14         devtools_1.12.0   
     ## [25] maps_3.1.1         grid_3.3.1         data.table_1.9.6  
-    ## [28] R6_2.2.0           rmarkdown_1.0      sp_1.2-3          
+    ## [28] R6_2.2.0           rmarkdown_1.1      sp_1.2-3          
     ## [31] readr_1.0.0        magrittr_1.5       MASS_7.3-45       
     ## [34] scales_0.4.0       codetools_0.2-15   htmltools_0.3.5   
     ## [37] proj4_1.0-8        assertthat_0.1     countrycode_0.18  
-    ## [40] colorspace_1.2-6   labeling_0.3       ash_1.0-15        
+    ## [40] colorspace_1.2-7   labeling_0.3       ash_1.0-15        
     ## [43] KernSmooth_2.23-15 stringi_1.1.2      lazyeval_0.2.0    
     ## [46] doParallel_1.0.10  munsell_0.4.3      chron_2.3-47
 
