@@ -1,6 +1,6 @@
 <!--
 %\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{Sea ice vignette}
+%\VignetteIndexEntry{GSODR}
 %\VignetteEncoding{UTF-8}
 -->
 
