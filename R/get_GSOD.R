@@ -562,7 +562,6 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
     }
     if (!file.exists(p) & !file.exists(dsn)) {
       stop("\nFile dsn does not exist: ", dsn, ".\n")
-      return(0)
     }
   }
   if (substr(dsn, nchar(dsn), nchar(dsn)) != "/" &
@@ -601,7 +600,6 @@ can view the entire list of valid countries in this data by typing,
     stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you
 can view the entire list of valid countries in this data by typing,
          'GSODR::country_list'.\n")
-    return(0)
   }
 }
 
@@ -615,14 +613,11 @@ can view the entire list of valid countries in this data by typing,
     for (i in years) {
       if (i <= 0) {
         stop("\nThis is not a valid year.\n")
-        return(0)
       } else if (i < 1929) {
         stop("\nThe GSOD data files start at 1929, you have entered a year prior
              to 1929.\n")
-        return(0)
       } else if (i > this_year) {
         stop("\nThe year cannot be greater than current year.\n")
-        return(0)
       } else
         return(1)
     }
@@ -636,7 +631,6 @@ can view the entire list of valid countries in this data by typing,
       stop("\nThis is not a valid station ID number, please check your entry.
            \nStation IDs are provided as a part of the GSODR package in the
            'stations' data\nin the STNID column.\n")
-      return(0)
     }
   }
 }
