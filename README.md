@@ -76,8 +76,8 @@ Using GSODR
 
 ### Query the NCDC FTP server for GSOD data
 
-GSODR's main function, `get_GSOD()` downloads and cleans GSOD data from
-the NCDC server. Following are a few examples of it's capabilities.
+GSODR's main function, `get_GSOD` downloads and cleans GSOD data from
+the NCDC server. Following are a few examples of its capabilities.
 
 ``` r
 
@@ -100,7 +100,7 @@ get_GSOD(years = 2010:2011, dsn = "~/", filename = "GSOD-agroclimatology",
 # summary file, GSOD-RP-2010.gpkg, in the user's home directory with a
 # maximum of five missing days per station allowed and no CSV file creation.
 
-get_GSOD(years = 2010, country = "Philippines", dsn = "~/", filename = "PHL_2010",
+get_GSOD(years = 2010, country = "Philippines", dsn = "~/", filename = "PHL",
          GPKG = TRUE, CSV = FALSE)
 # Finished downloading file.
 # Parsing the indivdual station files now.
@@ -110,18 +110,22 @@ library(rgdal)
 library(spacetime)
 library(plotKML)
 
-layers <- ogrListLayers("PHL_2010-2010.gpkg")
-pnts <- readOGR("PHL_2010-2010.gpkg", layers[1])
+
+layers <- ogrListLayers(dsn = path.expand("~/PHL-2010.gpkg"))
+pnts <- readOGR(dsn = path.expand("~/PHL-2010.gpkg"), layers[1])
 # OGR data source with driver: GPKG 
 # Source: "PHL_2010-2010.gpkg", layer: "GSOD"
 # with 2190 features
 # It has 46 fields
 
 # Plot results in Google Earth as a spacetime object:
-pnts$DATE = as.Date(paste(pnts$YEAR, pnts$MONTH, pnts$DAY, sep="-"))
-tmp_ST <- STIDF(sp=as(pnts, "SpatialPoints"), time=pnts$DATE-0.5, data=pnts@data[,c("TEMP","STNID")], endTime=pnts$DATE+0.5)
+pnts$DATE = as.Date(paste(pnts$YEAR, pnts$MONTH, pnts$DAY, sep = "-"))
+tmp_ST <- STIDF(sp = as(pnts, "SpatialPoints"), time = pnts$DATE - 0.5,
+                data = pnts@data[, c("TEMP", "STNID")],
+                endTime = pnts$DATE + 0.5)
 shape = "http://maps.google.com/mapfiles/kml/pal2/icon18.png"
-kml(tmp_ST, dtime = 24*3600, colour = TEMP, shape = shape, labels = TEMP, file.name="Temperatures_PHL_2010-2010.kml", folder.name="TEMP")
+kml(tmp_ST, dtime = 24 * 3600, colour = TEMP, shape = shape, labels = TEMP,
+    file.name = "Temperatures_PHL_2010-2010.kml", folder.name = "TEMP")
 system("zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml")
 
 # Compare daily measurements with climatic data:
@@ -132,24 +136,26 @@ library(reshape2)
 data(GSOD_clim)
 cnames = paste0("CHELSA_temp_", 1:12, "_1979-2013")
 clim.temp = GSOD_clim[GSOD_clim$STNID %in% pnts$STNID, paste(c("STNID", cnames))]
-clim.temp.df = data.frame(STNID=rep(clim.temp$STNID, 12),
-   MONTHC=as.vector(sapply(1:12, rep, times=nrow(clim.temp))), 
-   TEMPC=as.vector(unlist(clim.temp[,cnames])))
+clim.temp.df = data.frame(STNID = rep(clim.temp$STNID, 12),
+   MONTHC = as.vector(sapply(1:12, rep, times = nrow(clim.temp))), 
+   TEMPC = as.vector(unlist(clim.temp[,cnames])))
 clim.temp.df$YEAR = 2010
 pnts$MONTHC = as.numeric(paste(pnts$MONTH))
-temp <- plyr::join(pnts@data, clim.temp.df, type="left")
+temp <- plyr::join(pnts@data, clim.temp.df, type = "left")
 df_melt <- melt(temp[, c("STNID", "DATE", "TEMPC", "TEMP")],
-   id=c("DATE","STNID"))
-gg = ggplot(df_melt, aes(x=DATE, y=value))
-gg1 = gg + geom_point(aes(color=variable))
+   id = c("DATE", "STNID"))
+gg = ggplot(df_melt, aes(x = DATE, y = value))
+gg1 = gg + geom_point(aes(color = variable))
 gg1 + facet_wrap( ~ STNID)
 ```
-![Comparison between observed temperature and CHELSA-based temperature estimates](https://github.com/adamhsparks/GSODR/blob/devel/paper/Rplot_GSOD_vs_climate_PHL.png)
+
+![Comparison between observed temperature and CHELSA-based temperature
+estimates](https://github.com/adamhsparks/GSODR/blob/devel/paper/Rplot_GSOD_vs_climate_PHL.png)
 
 ### Finding stations
 
-GSODR provides a function, `nearest_stations()`, which will return a
-data frame object of stations in the GSOD data set that are within a
+GSODR provides a function, `nearest_stations`, which will return a data
+frame object of stations in the GSOD data set that are within a
 specified radius of a given point expressed as latitude and longitude in
 decimal degrees.
 
@@ -168,17 +174,17 @@ nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 50)
 #> 6: 955510 99999               TOOWOOMBA AIRPORT   AS    NA   NA -27.550
 #>        LON ELEV_M    BEGIN      END        STNID ELEV_M_SRTM_90m
 #> 1: 151.933  676.0 19561231 20120503 945510-99999             670
-#> 2: 151.735  406.9 19730430 20161002 945520-99999             404
-#> 3: 152.333   94.0 20030330 20161002 945620-99999              90
+#> 2: 151.735  406.9 19730430 20161020 945520-99999             404
+#> 3: 152.333   94.0 20030330 20161020 945620-99999              90
 #> 4: 152.330   29.0 19711231 19840429 949999-00170              92
 #> 5: 152.330   95.0 19831130 19840629 949999-00183              88
-#> 6: 151.917  642.0 19980301 20161002 955510-99999             635
+#> 6: 151.917  642.0 19980301 20161020 955510-99999             635
 ```
 
 Output
 ======
 
-The function, `get_GSOD()`, generates a Comma Separated Value (CSV) file
+The function, `get_GSOD`, generates a Comma Separated Value (CSV) file
 or GeoPackage (GPKG) file Station data are merged with weather data for
 the final file which includes the following fields:
 
@@ -265,13 +271,13 @@ the final file which includes the following fields:
     max temp was derived from the hourly data (i.e., highest hourly or
     synoptic-reported temperature);
 
--   **MIN**- Minimum temperature reported during the day converted to
+-   **MIN** - Minimum temperature reported during the day converted to
     Celsius to tenths--time of min temp report varies by country and
     region, so this will sometimes not be the max for the calendar day.
     Missing = -9999;
 
 -   **MIN\_FLAG** - Blank indicates max temp was taken from the explicit
-    max temp report and not from the 'hourly' data. An "\*" indicates
+    min temp report and not from the 'hourly' data. An "\*" indicates
     min temp was derived from the hourly data (i.e., highest hourly or
     synoptic-reported temperature);
 
