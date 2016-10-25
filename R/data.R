@@ -1,6 +1,6 @@
 #'SRTM_GSOD_elevation
 #'
-#' @format A data frame with 27855 observations of 2 variables:
+#' @format A data frame with 27861 observations of 2 variables:
 #' \describe{
 #'   \item{STNID}{Unique station ID, a concatenation of USAF and WBAN number,
 #'   used for merging with station data weather files}
@@ -70,7 +70,7 @@
 "country_list"
 
 #' GSOD_clim
-#' @format A data frame with 23927 observations of  73 variables:
+#' @format A data frame with 23927 observations of 73 variables:
 #' \describe{
 #' \item{STNID}{Unique station ID}
 #' \item{LON}{Longitude in WGS84 system}

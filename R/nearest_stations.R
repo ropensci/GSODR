@@ -25,6 +25,7 @@
 #'}
 #' @export
 nearest_stations <- function(LAT, LON, distance) {
+  original_options <- options()
   options(warn = 2)
   options(timeout = 300)
 
@@ -44,4 +45,5 @@ nearest_stations <- function(LAT, LON, distance) {
                                           & x != 0), sep = ", "))
 
   print(stations[as.numeric(nearby), ])
+  options(original_options)
 }
