@@ -4,16 +4,9 @@
 language: c
 sudo: required
 
-env:
- global:
-   - CRAN: http://cran.rstudio.com
-
-before_install:
 before_install:
   - curl -OL https://raw.githubusercontent.com/metacran/r-builder/master/pkg-build.sh
   - chmod 755 pkg-build.sh
-  - cp pkg-build.sh rbuildertest
-  - cd rbuildertest
   - ./pkg-build.sh bootstrap
   - cd
   - sudo apt-get install libgeos-dev
@@ -35,7 +28,7 @@ before_install:
 install:
   - ./pkg-build.sh install_deps
 
-  script:
+script:
   - ./pkg-build.sh run_tests
 
 after_failure:
@@ -50,4 +43,4 @@ env:
   matrix:
     - RVERSION=oldrel
     - RVERSION=release
-    - RVERSION=devel
+- RVERSION=devel
