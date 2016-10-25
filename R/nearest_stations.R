@@ -1,11 +1,12 @@
 #' Select Nearest Stations to Specified Latitude and Longitude
 #'
 #'Given a latitude and longitiude value entered as decimal degrees (DD),
-#'this function will return a dataframe of stations within the specified number
-#'of kilometres.
+#'this function returns a list of STNID values, which can be used in the
+#'\code{get_GSOD} function to query for specific stations as an argument in the
+#'\code{station} parameter of that function.
 #'
-#' @param LAT Latitude expressed as decimal degrees (DD)
-#' @param LON Longitude expressed as decimal degrees (DD)
+#' @param LAT Latitude expressed as decimal degrees (DD) [WGS84]
+#' @param LON Longitude expressed as decimal degrees (DD) [WGS84]
 #' @param distance Distance in kilometres from point for which stations are to
 #' be returned.
 #'
@@ -21,7 +22,7 @@
 #' \dontrun{
 #' # Find stations within a 100km radius of Toowoomba, QLD, AUS
 #'
-#' nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 100)
+#' n <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 100)
 #'}
 #' @export
 nearest_stations <- function(LAT, LON, distance) {
@@ -29,21 +30,13 @@ nearest_stations <- function(LAT, LON, distance) {
   options(warn = 2)
   options(timeout = 300)
 
-  stations <- .fetch_stations()
+  stations <- as.data.frame(.fetch_stations())
 
-  # this is a spatial object dataframe for calculating the nearest
-  sp_stations <- stations
-  sp::coordinates(sp_stations) <- c("LON", "LAT")
-  sp::proj4string(sp_stations) <- sp::CRS("+init=epsg:4326")
+  dists <- fields::rdist.earth(as.matrix(stations[c("LAT", "LON")]),
+                               matrix(c(LAT, LON), ncol = 2), miles = FALSE)
+  nearby <- which(dists[, 1] < distance)
 
-  pt <- data.frame(LON, LAT)
-  sp::coordinates(pt) <- c("LON", "LAT")
-  sp::proj4string(pt) <- sp::CRS("+init=epsg:4326")
+  return(stations[as.numeric(nearby), ]$STNID)
 
-  nearby <- apply(sp::spDists(sp_stations, pt), 2,
-                  function(x) paste(which(x < as.numeric(paste(distance))
-                                          & x != 0), sep = ", "))
-
-  print(stations[as.numeric(nearby), ])
   options(original_options)
 }
