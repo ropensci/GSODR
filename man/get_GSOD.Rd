@@ -26,11 +26,11 @@ having an ISO code 2 or 3 letter ISO code can also be used if known. See
 \code{\link{country_list}} for a full list of country names and ISO
 codes available.}
 
-\item{dsn}{Path to file write to.}
+\item{dsn}{Path to file write to. (Optional)}
 
 \item{filename}{The filename for resulting file(s) to be written with no
 file extension. Year and file extension will be automatically appended to
-file outputs. Defaults to "GSOD-year".}
+file outputs. Defaults to "GSOD-year". (Optional)}
 
 \item{max_missing}{The maximum number of days allowed to be missing from a
 station's data before it is excluded from final file output. Defaults to five
@@ -43,11 +43,11 @@ TRUE to include only stations within the confines of these
 latitudes.}
 
 \item{CSV}{Logical. If set to TRUE, create a comma separated value (CSV)
-file of data, defaults to TRUE, a CSV file is created.}
+file ile and save it locally in a user specified location. Depends on
+\code{dsn} being specified.}
 
-\item{GPKG}{Logical. If set to TRUE, create a GeoPackage file, if
-set to FALSE, no GPKG file is created. Defaults to FALSE, no GPKG file is
-created.}
+\item{GPKG}{Logical. If set to TRUE, create a GeoPackage file and save it
+locally in a user specified location. Depends on \code{dsn} being specified.}
 
 \item{threads}{The number of computing threads to use for parallel processing
 data. Defaults to 1.}
@@ -60,36 +60,32 @@ Climatic Data Center (NCDC),
 and calculates three new variables; Saturation Vapor Pressure (ES) – Actual
 Vapor Pressure (EA) and relative humidity (RH). Stations are individually
 checked for number of missing days to assure data quality, stations with too
-many missing observations are omitted, stations with a latitude of < -90 or >
-90 or longitude of < -180 or > 180 are removed. All units are converted to
-International System of Units (SI), e.g., Fahrenheit to Celsius and inches to
-millimetres. Alternative elevation measurements are supplied for missing
-values or values found to be questionable based on the Consultative Group
-for International Agricultural Research's Consortium for Spatial Information
-group's (CGIAR-CSI) Shuttle Radar Topography Mission 90 metre (SRTM 90m)
-digital elevation data based on NASA's original SRTM 90m data. Further
-information on these data and methods can be found on GSODR's GitHub
-repository here:
+many missing observations are omitted. Additionally, stations reporting a
+latitude of < -90 or > 90 or longitude of < -180 or > 180 are removed. All
+units are converted to International System of Units (SI), e.g., Fahrenheit to
+Celsius and inches to millimetres. Alternative elevation measurements are
+supplied for missing values or values found to be questionable based on the
+Consultative Group for International Agricultural Research's Consortium for
+Spatial Information group's (CGIAR-CSI) Shuttle Radar Topography Mission 90
+metre (SRTM 90m) digital elevation data based on NASA's original SRTM 90m
+data. Further information on these data and methods can be found on GSODR's
+GitHub repository here:
 \url{https://github.com/adamhsparks/GSODR/blob/master/data-raw/fetch_isd-history.md}
 }
 \details{
-Due to the size of the resulting data, output is saved as a comma-separated,
-CSV, file (default) or GeoPackage in a directory specified by the user or
-defaults to the current working directory. The files summarize each year by
-station, which includes vapour pressure and relative humidity variables
-calculated from existing data in GSOD.
-Because the file sizes are much smaller when selecting stations or a group of
-stations, all years queried and stations queried will be merged into one final
-ouptut file (CSV or GeoPackage).
+Data summarize each year by station, which include vapour pressure and
+relative humidity variables calculated from existing data in GSOD.
 
-All missing values in resulting files are represented as NA
-regardless of which field they occur in.
+If the option to save locally is selected. Output may be saved as comma-
+separated, CSV, files or GeoPackage files in a directory specified by the
+user, defaulting to the current working directory.
 
-Be sure to have disk space free and allocate the proper time for this to run.
-This is a time, processor and disk input/output/space intensive process.
-This function was largely based on T. Hengl's "getGSOD.R" script, available
-from \url{http://spatial-analyst.net/book/system/files/getGSOD.R} with
-enhancements to be cross-platform, faster and more flexible.
+When querying selected stations and electing to write files to disk, all
+years queried and stations queried will be merged into one final ouptut file.
+
+All missing values in resulting files are represented as NA regardless of
+which field they occur in.
+
 For more information see the description of the data provided by NCDC,
 \url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
 
@@ -102,9 +98,9 @@ Air Force Navy" number - with WBAN being the acronym}
 \item{STN_NAME}{Unique text identifier}
 \item{CTRY}{Country in which the station is located}
 \item{LAT}{Latitude. *Station dropped in cases where values are < -90 or
-> 90 degrees or Lat = 0 and Lon = 0*}
+> 90 degrees or Lat = 0 and Lon = 0* (WGS84)}
 \item{LON}{Longitude. *Station dropped in cases where values are < -180 or
-> 180 degrees or Lat = 0 and Lon = 0*}
+> 180 degrees or Lat = 0 and Lon = 0* (WGS84)}
 \item{ELEV_M}{Elevation in metres}
 \item{ELEV_M_SRTM_90m}{Elevation in metres corrected for possible errors,
 derived from the CGIAR-CSI SRTM 90m database (Jarvis et al. 2008)}
@@ -212,11 +208,8 @@ this same notification.}
 }
 \examples{
 \dontrun{
-# Download weather station for Toowoomba, Queensland for 2010, save resulting
-# file, GSOD-955510NA9-2010.csv, in the user's home directory.
-
-get_GSOD(years = 2010, station = "955510-99999", dsn = "~/",
-filename = "955510-99999")
+# Download weather station for Toowoomba, Queensland for 2010
+t <- get_GSOD(years = 2010, station = "955510-99999")
 
 # Download data for Philippines for year 2010 and generate a yearly
 # summary GeoPackage file, GSOD-RP-2010.gpkg, file in the user's home
