@@ -354,13 +354,13 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
     if (!is.null(dsn)) {
       outfile <- paste0(dsn, filename)
 
-      #### CSV file---------------------------------------------------------------
+      #### CSV file-------------------------------------------------------------
       if (CSV == TRUE) {
         outfile <- paste0(outfile, "-", yr, ".csv")
         readr::write_csv(GSOD_XY, path = paste0(outfile))
       }
 
-      #### GPKG file -------------------------------------------------------------
+      #### GPKG file -----------------------------------------------------------
       if (GPKG == TRUE) {
         outfile <- paste0(outfile, "-", yr, ".gpkg")
         # Convert object to standard df and then spatial object
@@ -368,7 +368,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
         sp::coordinates(GSOD_XY) <- ~LON + LAT
         sp::proj4string(GSOD_XY) <- sp::CRS("+proj=longlat +datum=WGS84")
 
-        # If the filename specified exists, remove it and write a new file to disk
+        # If the filename specified exists, remove it and create new
         if (file.exists(path.expand(outfile))) {
           file.remove(outfile)
         }
