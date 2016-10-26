@@ -13,19 +13,27 @@ downloads](http://cranlogs.r-pkg.org/badges/GSODR?color=blue)](https://github.co
 version](http://www.r-pkg.org/badges/version/GSODR)](https://cran.r-project.org/package=GSODR)
 [![DOI](https://zenodo.org/badge/32764550.svg)](https://zenodo.org/badge/latestdoi/32764550)
 
+Introduction to GSODR
+=====================
+
 The GSODR package is an R package that provides a function that
-automates downloading and cleaning data from the "[Global Surface
+automates downloading and cleaning of data from the "[Global Surface
 Summary of the Day
 (GSOD)](https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod)"
 weather station data provided by the US National Climatic Data Center
-(NCDC). Station files are individually checked for number of missing
-days to assure data quality, stations with too many missing observations
-are omitted. All units are converted to International System of Units
-(SI), e.g., inches to millimetres and Fahrenheit to Celsius. Output is
-saved as a Comma Separated Value (CSV) file or in a spatial GeoPackage
-(GPKG) file, implemented by most major GIS software, summarising each
-year by station, which also includes vapour pressure and relative
-humidity variables calculated from existing data in GSOD.
+(NCDC). Data are formatted for easy use in R, returned as a `data.frame`
+object in R summarising each year by station, with options to save as a
+Comma Separated Value (CSV) file or as a spatial GeoPackage (GPKG) file,
+implemented by most major GIS softwares.
+
+Station files are individually checked for number of missing days to
+assure data quality, stations with too many missing observations are
+omitted. All units are converted to International System of Units (SI),
+e.g., inches to millimetres and Fahrenheit to Celsius.
+
+Additional data are calculated by this R package using the original data
+and included in the final data. These include vapour pressure (ea and
+es) and relative humidity.
 
 There are several other sources of weather data and ways of retrieving
 them through R. In particular, the excellent
@@ -61,8 +69,8 @@ A development version is available from from GitHub. If you wish to
 install the development version that may have new features (but also may
 not work properly), install the [devtools
 package](https://CRAN.R-project.org/package=devtools), available from
-CRAN. I strive to keep the master branch on GitHub functional and
-working properly this may not always happen.
+CRAN. We strive to keep the master branch on GitHub functional and
+working properly, although this may not always happen.
 
 If you find bugs, please file a report as an issue.
 
@@ -79,11 +87,11 @@ Using GSODR
 GSODR's main function, `get_GSOD`, downloads and cleans GSOD data from
 the NCDC server. Following are a few examples of its capabilities.
 
+#### Example 1 - Download weather station for Toowoomba, Queensland for 2010
+
 ``` r
 
 library(GSODR)
-
-# Download weather station for Toowoomba, Queensland for 2010
 
 Tbar <- get_GSOD(years = 2010, station = "955510-99999")
 #> 
@@ -136,39 +144,40 @@ head(Tbar)
 #> 6                0 2.2 2.6 84.6
 ```
 
+#### Example 2 - Download GSOD data and generate agroclimatology files
+
+For years 2010 and 2011, download data and create the files,
+GSOD-agroclimatology-2010.csv and GSOD-agroclimatology-2011.csv, in the
+user's home directory with a maximum of five missing days per weather
+station allowed. Use parallel processing to run the process more
+quickly.
+
 ``` r
-# Download GSOD data and generate agroclimatology files for years 2010 and 2011,
-# GSOD-agroclimatology-2010.csv and GSOD-agroclimatology-2011.csv, in the user's
-# home directory with a maximum of five missing days per weather station allowed.
-# Use parallel processing to run the process more quickly.
 
 get_GSOD(years = 2010:2011, dsn = "~/", filename = "GSOD-agroclimatology",
          agroclimatology = TRUE, max_missing = 5, threads = 3)
+```
 
-# Download data for Philippines for year 2010 and generate a spatial, year
-# summary file, GSOD-RP-2010.gpkg, in the user's home directory with a
-# maximum of five missing days per station allowed and no CSV file creation.
+#### Example 3 - Download data for a single country and plot it
+
+Download data for Philippines for year 2010 and generate a spatial, year
+summary file, PHL-2010.gpkg, in the user's home directory with a maximum
+of five missing days per station allowed and no CSV file.
+
+``` r
+get_GSOD(years = 2010, country = "Philippines", dsn = "~/", filename = "PHL",
+         GPKG = TRUE, CSV = FALSE, threads = 2)
 ```
 
 ``` r
-PHL <- get_GSOD(years = 2010, country = "Philippines", dsn = "~/",
-                filename = "PHL", GPKG = TRUE, CSV = FALSE)
-#> 
-#> Finished downloading file.
-#>               
-#> Parsing the indivdual station files now.
-# Finished downloading file.
-# Parsing the indivdual station files now.
-# Finished parsing files. Writing files to disk now.
-
 library(rgdal)
 #> Loading required package: sp
 #> rgdal: version: 1.1-10, (SVN revision 622)
 #>  Geospatial Data Abstraction Library extensions to R successfully loaded
-#>  Loaded GDAL runtime: GDAL 1.11.4, released 2016/01/25
-#>  Path to GDAL shared files: /Users/U8004755/Library/R/3.3/library/rgdal/gdal
-#>  Loaded PROJ.4 runtime: Rel. 4.9.1, 04 March 2015, [PJ_VERSION: 491]
-#>  Path to PROJ.4 shared files: /Users/U8004755/Library/R/3.3/library/rgdal/proj
+#>  Loaded GDAL runtime: GDAL 1.11.5, released 2016/07/01
+#>  Path to GDAL shared files: /usr/local/Cellar/gdal/1.11.5_1/share/gdal
+#>  Loaded PROJ.4 runtime: Rel. 4.9.3, 15 August 2016, [PJ_VERSION: 493]
+#>  Path to PROJ.4 shared files: (autodetected)
 #>  Linking to sp version: 1.2-3
 library(spacetime)
 library(plotKML)
@@ -178,14 +187,16 @@ library(plotKML)
 layers <- ogrListLayers(dsn = path.expand("~/PHL-2010.gpkg"))
 pnts <- readOGR(dsn = path.expand("~/PHL-2010.gpkg"), layers[1])
 #> OGR data source with driver: GPKG 
-#> Source: "/Users/U8004755/PHL-2010.gpkg", layer: "GSOD"
+#> Source: "/Users/asparks/PHL-2010.gpkg", layer: "GSOD"
 #> with 2190 features
 #> It has 46 fields
 
 # Plot results in Google Earth as a spacetime object:
 pnts$DATE = as.Date(paste(pnts$YEAR, pnts$MONTH, pnts$DAY, sep = "-"))
+row.names(pnts) <- paste("point", 1:nrow(pnts), sep = "")
 
-tmp_ST <- STIDF(sp = as(pnts, "SpatialPoints"), time = pnts$DATE - 0.5,
+tmp_ST <- STIDF(sp = as(pnts, "SpatialPoints"),
+                time = pnts$DATE - 0.5,
                 data = pnts@data[, c("TEMP", "STNID")],
                 endTime = pnts$DATE + 0.5)
 
@@ -194,42 +205,63 @@ shape = "http://maps.google.com/mapfiles/kml/pal2/icon18.png"
 kml(tmp_ST, dtime = 24 * 3600, colour = TEMP, shape = shape, labels = TEMP,
     file.name = "Temperatures_PHL_2010-2010.kml", folder.name = "TEMP")
 #> KML file opened for writing...
-#> Warning in SpatialPointsDataFrame(obj@sp, obj@data): forming a
-#> SpatialPointsDataFrame based on maching IDs, not on record order. Use
-#> match.ID = FALSE to match on record order
 #> Writing to KML...
 #> Closing  Temperatures_PHL_2010-2010.kml
 
 system("zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml")
 ```
 
+Compare the GSOD weather data from the Philippines with climatic data
+provided by the GSODR package in the `GSOD_clim` data set.
+
 ``` r
-# Compare daily measurements with climatic data:
-library(plyr)
+library(dplyr)
+#> 
+#> Attaching package: 'dplyr'
+#> The following objects are masked from 'package:stats':
+#> 
+#>     filter, lag
+#> The following objects are masked from 'package:base':
+#> 
+#>     intersect, setdiff, setequal, union
 library(ggplot2)
 library(reshape2)
 
 data(GSOD_clim)
-cnames = paste0("CHELSA_temp_", 1:12, "_1979-2013")
-clim.temp = GSOD_clim[GSOD_clim$STNID %in% pnts$STNID, paste(c("STNID", cnames))]
-clim.temp.df = data.frame(STNID = rep(clim.temp$STNID, 12),
-   MONTHC = as.vector(sapply(1:12, rep, times = nrow(clim.temp))), 
-   TEMPC = as.vector(unlist(clim.temp[, cnames])))
-clim.temp.df$YEAR = 2010
-pnts$MONTHC = as.numeric(paste(pnts$MONTH))
-temp <- plyr::join(pnts@data, clim.temp.df, type = "left")
-#> Joining by: STNID, YEAR, MONTHC
-df_melt <- melt(temp[, c("STNID", "DATE", "TEMPC", "TEMP")],
-   id = c("DATE", "STNID"))
-gg = ggplot(df_melt, aes(x = DATE, y = value))
-gg1 = gg + geom_point(aes(color = variable))
-gg1 + facet_wrap( ~ STNID)
-#> Warning: Removed 365 rows containing missing values (geom_point).
+cnames <- paste0("CHELSA_temp_", 1:12, "_1979-2013")
+clim_temp <- GSOD_clim[GSOD_clim$STNID %in% pnts$STNID,
+                       paste(c("STNID", cnames))]
+clim_temp_df <- data.frame(STNID = rep(clim_temp$STNID, 12),
+                           MONTHC = as.vector(sapply(1:12, rep,
+                                                    times = nrow(clim_temp))), 
+                           CHELSA_TEMP = as.vector(unlist(clim_temp[, cnames])))
+
+pnts$MONTHC <- as.numeric(paste(pnts$MONTH))
+temp <- left_join(pnts@data, clim_temp_df, by = c("STNID", "MONTHC"))
+#> Warning in left_join_impl(x, y, by$x, by$y, suffix$x, suffix$y): joining
+#> factors with different levels, coercing to character vector
+
+temp <- temp %>% 
+  group_by(MONTH) %>% 
+  mutate(AVG_DAILY_TEMP = round(mean(TEMP), 1))
+
+df_melt <- na.omit(melt(temp[, c("STNID", "DATE", "CHELSA_TEMP", "TEMP", "AVG_DAILY_TEMP")],
+                        id = c("DATE", "STNID")))
+
+ggplot(df_melt, aes(x = DATE, y = value)) +
+  geom_point(aes(color = variable), alpha = 0.5) +
+  scale_x_date(date_labels = "%b") +
+  ylab("Temperature (C)") +
+  xlab("Month") +
+  labs(colour = "") +
+  scale_color_brewer(palette = "Dark2") +
+  facet_wrap( ~ STNID)
 ```
 
-![](README-unnamed-chunk-7-1.png)
+![Comparison of GSOD daily values and average monthly values with CHELSA
+climate monthly values](README-example_3.2-1.png)
 
-### Finding stations
+### Example 4 - Finding stations within a given radius and download them
 
 GSODR provides a function, `nearest_stations`, which will return a list
 of stations in the GSOD data set that are within a specified radius
@@ -237,8 +269,6 @@ of stations in the GSOD data set that are within a specified radius
 decimal degrees.
 
 ``` r
-library(GSODR)
-
 # Find stations within 50km of Toowoomba, QLD.
 
 n <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 50)
@@ -261,15 +291,66 @@ toowoomba <- get_GSOD(years = 2015, station = n, threads = 3)
 #>                       the server. Any others requested will be processed.
 #> A file corresponding to station,ftp://ftp.ncdc.noaa.gov/pub/data/gsod/2015/949999-00183-2015.op.gzwas not found on
 #>                       the server. Any others requested will be processed.
+
+str(toowoomba)
+#> 'data.frame':    1094 obs. of  48 variables:
+#>  $ USAF            : chr  "945520" "945520" "945520" "945520" ...
+#>  $ WBAN            : chr  "99999" "99999" "99999" "99999" ...
+#>  $ STNID           : chr  "945520-99999" "945520-99999" "945520-99999" "945520-99999" ...
+#>  $ STN_NAME        : chr  "OAKEY" "OAKEY" "OAKEY" "OAKEY" ...
+#>  $ CTRY            : chr  "AS" "AS" "AS" "AS" ...
+#>  $ STATE           : chr  NA NA NA NA ...
+#>  $ CALL            : chr  "YBOK" "YBOK" "YBOK" "YBOK" ...
+#>  $ LAT             : num  -27.4 -27.4 -27.4 -27.4 -27.4 ...
+#>  $ LON             : num  152 152 152 152 152 ...
+#>  $ ELEV_M          : num  407 407 407 407 407 ...
+#>  $ ELEV_M_SRTM_90m : num  404 404 404 404 404 404 404 404 404 404 ...
+#>  $ BEGIN           : num  19730430 19730430 19730430 19730430 19730430 ...
+#>  $ END             : num  20161021 20161021 20161021 20161021 20161021 ...
+#>  $ YEARMODA        : chr  "20150101" "20150102" "20150103" "20150104" ...
+#>  $ YEAR            : chr  "2015" "2015" "2015" "2015" ...
+#>  $ MONTH           : chr  "01" "01" "01" "01" ...
+#>  $ DAY             : chr  "01" "02" "03" "04" ...
+#>  $ YDAY            : num  1 2 3 4 5 6 7 8 9 10 ...
+#>  $ TEMP            : num  24.9 24.3 22.3 23 22.5 22.6 21.8 22.6 24.6 24.9 ...
+#>  $ TEMP_CNT        : int  24 24 24 24 24 24 24 24 24 24 ...
+#>  $ DEWP            : num  18.4 18.2 17.4 16.3 17.7 14.3 15.7 16.4 16.4 16.4 ...
+#>  $ DEWP_CNT        : int  24 24 24 24 24 24 24 24 24 24 ...
+#>  $ SLP             : num  1014 1017 1017 1014 1015 ...
+#>  $ SLP_CNT         : int  16 16 16 16 16 16 16 16 16 16 ...
+#>  $ STP             : num  968 971 971 969 969 ...
+#>  $ STP_CNT         : int  16 16 16 16 16 16 16 16 16 16 ...
+#>  $ VISIB           : num  10 10 10 10 10 10 NA NA 10 NA ...
+#>  $ VISIB_CNT       : int  8 8 4 5 7 4 0 0 4 0 ...
+#>  $ WDSP            : num  2.3 2.8 2.8 2.3 3 3.5 3.1 2.5 2.9 2.7 ...
+#>  $ WDSP_CNT        : int  24 24 24 24 24 24 24 24 24 24 ...
+#>  $ MXSPD           : num  8.2 9.8 10.3 7.2 9.8 9.8 9.8 8.8 8.2 8.2 ...
+#>  $ GUST            : num  NA NA NA NA NA NA NA NA NA 12.4 ...
+#>  $ MAX             : num  31.8 31 27.3 29.3 27.6 ...
+#>  $ MAX_FLAG        : chr  "" "" "" "" ...
+#>  $ MIN             : num  18.9 18.2 17.7 16.8 16.4 ...
+#>  $ MIN_FLAG        : chr  "*" "" "*" "*" ...
+#>  $ PRCP            : num  0 0 0 0 0 0 0 0 0 0 ...
+#>  $ PRCP_FLAG       : chr  "G" "G" "G" "G" ...
+#>  $ SNDP            : num  NA NA NA NA NA NA NA NA NA NA ...
+#>  $ I_FOG           : int  0 0 0 0 0 0 0 0 0 0 ...
+#>  $ I_RAIN_DRIZZLE  : int  0 0 0 0 0 0 0 0 0 0 ...
+#>  $ I_SNOW_ICE      : int  0 0 0 0 0 0 0 0 0 0 ...
+#>  $ I_HAIL          : int  0 0 0 0 0 0 0 0 0 0 ...
+#>  $ I_THUNDER       : int  0 0 0 0 0 0 0 0 0 0 ...
+#>  $ I_TORNADO_FUNNEL: int  0 0 0 0 0 0 0 0 0 0 ...
+#>  $ EA              : num  2.1 2.1 2 1.9 2 1.6 1.8 1.9 1.9 1.9 ...
+#>  $ ES              : num  3.1 3 2.7 2.8 2.7 2.7 2.6 2.7 3.1 3.1 ...
+#>  $ RH              : num  67.7 70 74.1 67.9 74.1 59.3 69.2 70.4 61.3 61.3 ...
 ```
 
-Output
-======
+Final data format and contents
+------------------------------
 
 The function, `get_GSOD`, returns a `data.frame` object in R and can
-also save a Comma Separated Value (CSV) file or GeoPackage (GPKG) file.
-Station data are merged with weather data for the final file which
-includes the following fields:
+also save a Comma Separated Value (CSV) file or GeoPackage (GPKG) file
+for use in a GIS. Station data are merged with weather data for the
+final file which includes the following fields:
 
 -   **STNID** - Station number (WMO/DATSAV3 number) for the location;
 
@@ -376,30 +457,29 @@ includes the following fields:
 
 -   **PRCP\_FLAG** -
 
-    -   A = 1 report of 6-hour precipitation amount;
+-   A = 1 report of 6-hour precipitation amount;
 
-    -   B = Summation of 2 reports of 6-hour precipitation amount;
+-   B = Summation of 2 reports of 6-hour precipitation amount;
 
-    -   C = Summation of 3 reports of 6-hour precipitation amount;
+-   C = Summation of 3 reports of 6-hour precipitation amount;
 
-    -   D = Summation of 4 reports of 6-hour precipitation amount;
+-   D = Summation of 4 reports of 6-hour precipitation amount;
 
-    -   E = 1 report of 12-hour precipitation amount;
+-   E = 1 report of 12-hour precipitation amount;
 
-    -   F = Summation of 2 reports of 12-hour precipitation amount;
+-   F = Summation of 2 reports of 12-hour precipitation amount;
 
-    -   G = 1 report of 24-hour precipitation amount;
+-   G = 1 report of 24-hour precipitation amount;
 
-    -   H = Station reported '0' as the amount for the day (e.g., from
-        6-hour reports), but also reported at least one occurrence of
-        precipitation in hourly observations--this could indicate a
-        trace occurred, but should be considered as incomplete data for
-        the day;
+-   H = Station reported '0' as the amount for the day (e.g., from
+    6-hour reports), but also reported at least one occurrence of
+    precipitation in hourly observations--this could indicate a trace
+    occurred, but should be considered as incomplete data for the day;
 
-    -   I = Station did not report any precip data for the day and did
-        not report any occurrences of precipitation in its hourly
-        observations--it's still possible that precipitation occurred
-        but was not reported;
+-   I = Station did not report any precipitation data for the day and
+    did not report any occurrences of precipitation in its hourly
+    observations--it's still possible that precipitation occurred but
+    was not reported;
 
 -   **SNDP** - Snow depth in millimetres to tenths. Missing = NA;
 

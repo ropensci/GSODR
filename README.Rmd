@@ -1,7 +1,7 @@
 ---
 output:
-github_document:
-hard_line_breaks: false
+  github_document:
+    hard_line_breaks: false
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -22,18 +22,25 @@ GSODR: Global Surface Summary Daily Weather Data in R
 [![cran version](http://www.r-pkg.org/badges/version/GSODR)](https://cran.r-project.org/package=GSODR)
 [![DOI](https://zenodo.org/badge/32764550.svg)](https://zenodo.org/badge/latestdoi/32764550)
 
+# Introduction to GSODR
+
 The GSODR package is an R package that provides a function that automates
-downloading and cleaning data from the "[Global Surface Summary of the Day
+downloading and cleaning of data from the "[Global Surface Summary of the Day
 (GSOD)](https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod)"
 weather station data provided by the US National Climatic Data Center (NCDC).
+Data are formatted for easy use in R, returned as a `data.frame` object in R
+summarising each year by station, with options to save as a Comma Separated
+Value (CSV) file or as a spatial GeoPackage (GPKG) file, implemented by most
+major GIS softwares.
+
 Station files are individually checked for number of missing days to assure data
 quality, stations with too many missing observations are omitted. All
 units are converted to International System of Units (SI), e.g., inches to
-millimetres and Fahrenheit to Celsius. Output is saved as a Comma Separated
-Value (CSV) file or in a spatial GeoPackage (GPKG) file, implemented by most
-major GIS software, summarising each year by station, which also includes
-vapour pressure and relative humidity variables calculated from existing data in
-GSOD.
+millimetres and Fahrenheit to Celsius.
+
+Additional data are calculated by this R package using the original data and
+included in the final data. These include vapour pressure (ea and es) and
+relative humidity.
 
 There are several other sources of weather data and ways of retrieving them
 through R. In particular, the excellent 
@@ -64,7 +71,7 @@ A development version is available from from GitHub. If you wish to install the
 development version that may have new features (but also may not work properly),
 install the [devtools package](https://CRAN.R-project.org/package=devtools),
 available from CRAN. We strive to keep the master branch on GitHub functional
-and working properly this may not always happen.
+and working properly, although this may not always happen.
 
 If you find bugs, please file a report as an issue.
 
@@ -90,7 +97,7 @@ Tbar <- get_GSOD(years = 2010, station = "955510-99999")
 head(Tbar)
 ```
 
-## Example 2 - Download GSOD data and generate agroclimatology files
+#### Example 2 - Download GSOD data and generate agroclimatology files
 For years 2010 and 2011, download data and create the files, 
 GSOD-agroclimatology-2010.csv and GSOD-agroclimatology-2011.csv, in the user's
 home directory with a maximum of five missing days per weather station allowed.
@@ -107,7 +114,7 @@ Download data for Philippines for year 2010 and generate a spatial, year summary
 file, PHL-2010.gpkg, in the user's home directory with a maximum of five missing
 days per station allowed and no CSV file.
 
-```{r example_3, eval=TRUE, echo=FALSE}
+```{r example_3, eval=TRUE, message=FALSE, results='hide'}
 get_GSOD(years = 2010, country = "Philippines", dsn = "~/", filename = "PHL",
          GPKG = TRUE, CSV = FALSE, threads = 2)
 ```
@@ -140,28 +147,29 @@ system("zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml")
 Compare the GSOD weather data from the Philippines with climatic data provided
 by the GSODR package in the `GSOD_clim` data set.
 
-```{r example_3.2, eval=TRUE, fig.cap="Comparison of GSOD daily values and average monthly values with CHELSA climate monthly values"}
-library(plyr)
+```{r example_3.2, eval=TRUE, fig.cap="Comparison of GSOD daily values and average monthly values with CHELSA climate monthly values", fig.width=8}
 library(dplyr)
 library(ggplot2)
 library(reshape2)
 
 data(GSOD_clim)
-cnames = paste0("CHELSA_temp_", 1:12, "_1979-2013")
-clim_temp = GSOD_clim[GSOD_clim$STNID %in% pnts$STNID, paste(c("STNID", cnames))]
-clim_temp_df = data.frame(STNID = rep(clim_temp$STNID, 12),
-                          MONTHC = as.vector(sapply(1:12, rep,
+cnames <- paste0("CHELSA_temp_", 1:12, "_1979-2013")
+clim_temp <- GSOD_clim[GSOD_clim$STNID %in% pnts$STNID,
+                       paste(c("STNID", cnames))]
+clim_temp_df <- data.frame(STNID = rep(clim_temp$STNID, 12),
+                           MONTHC = as.vector(sapply(1:12, rep,
                                                     times = nrow(clim_temp))), 
-                          CHELSA_TEMP = as.vector(unlist(clim_temp[, cnames])))
+                           CHELSA_TEMP = as.vector(unlist(clim_temp[, cnames])))
 
-temp <- join(pnts@data, clim_temp_df, type = "left")
+pnts$MONTHC <- as.numeric(paste(pnts$MONTH))
+temp <- left_join(pnts@data, clim_temp_df, by = c("STNID", "MONTHC"))
+
 temp <- temp %>% 
   group_by(MONTH) %>% 
   mutate(AVG_DAILY_TEMP = round(mean(TEMP), 1))
 
-df_melt <- na.omit(melt(temp[, c("STNID", "DATE", "CHELSA_TEMP", "TEMP",
-                                 "AVG_DAILY_TEMP")],
-                id = c("DATE", "STNID")))
+df_melt <- na.omit(melt(temp[, c("STNID", "DATE", "CHELSA_TEMP", "TEMP", "AVG_DAILY_TEMP")],
+                        id = c("DATE", "STNID")))
 
 ggplot(df_melt, aes(x = DATE, y = value)) +
   geom_point(aes(color = variable), alpha = 0.5) +
@@ -189,15 +197,15 @@ n
 
 toowoomba <- get_GSOD(years = 2015, station = n, threads = 3)
 
-head(toowoomba)
+str(toowoomba)
 ```
 
-## Final Data Format and Contents
+## Final data format and contents
 
-The function, `get_GSOD`, returns a `data.frame` object in R and 
-can also save a Comma Separated Value (CSV) file or
-GeoPackage (GPKG) file for use in a GIS. Station data are merged with weather
-data for the final file which includes the following fields:
+The function, `get_GSOD`, returns a `data.frame` object in R and can also save
+a Comma Separated Value (CSV) file or GeoPackage (GPKG) file for use in a GIS.
+Station data are merged with weather data for the final file which includes the
+following fields:
 
 * **STNID** - Station number (WMO/DATSAV3 number) for the location;  
 
@@ -321,7 +329,7 @@ reports), but also reported at least one occurrence of precipitation in
 hourly observations--this could indicate a trace occurred, but should be
 considered as incomplete data for the day;  
 
-* I = Station did not report any precip data for the day and did not
+* I = Station did not report any precipitation data for the day and did not
 report any occurrences of precipitation in its hourly observations--it's
 still possible that precipitation occurred but was not reported;  
 
