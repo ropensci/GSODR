@@ -7,17 +7,18 @@
 nearest_stations(LAT, LON, distance)
 }
 \arguments{
-\item{LAT}{Latitude expressed as decimal degrees (DD)}
+\item{LAT}{Latitude expressed as decimal degrees (DD) [WGS84]}
 
-\item{LON}{Longitude expressed as decimal degrees (DD)}
+\item{LON}{Longitude expressed as decimal degrees (DD) [WGS84]}
 
 \item{distance}{Distance in kilometres from point for which stations are to
 be returned.}
 }
 \description{
 Given a latitude and longitiude value entered as decimal degrees (DD),
-this function will return a dataframe of stations within the specified number
-of kilometres.
+this function returns a list of STNID values, which can be used in the
+\code{get_GSOD} function to query for specific stations as an argument in the
+\code{station} parameter of that function.
 }
 \note{
 The GSOD data, which are downloaded and manipulated by this R package,
@@ -32,7 +33,7 @@ others must provide this same notification.}
 \dontrun{
 # Find stations within a 100km radius of Toowoomba, QLD, AUS
 
-nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 100)
+n <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 100)
 }
 }
 

@@ -17,12 +17,6 @@ implemented by most major GIS software, summarising each year by station, which
 also includes vapour pressure and relative humidity variables calculated from
 existing data in GSOD.
 
-This package was largely based on Tomislav Hengl's work,
-[getGSOD.R](http://spatial-analyst.net/book/getGSOD.R)
-in "[A Practical Guide to Geostatistical Mapping](http://spatial-analyst.net)",
-with updates for speed, cross-platform functionality, and more options for data
-retrieval and error correction.
-
 For more information see the description of the data provided by NCDC,
 <http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
 
@@ -36,7 +30,7 @@ library(GSODR)
 
 ## Plot Global Station Locations
 
-The `get_GSOD()` function automatically fetches the most recent station data
+The `get_GSOD` function automatically fetches the most recent station data
 from the NCDC website and removes stations that are missing data (as shown
 below). Using this data we can plot the station locations that are included in
 GSOD that provide valid geo-locations after cleaning.
@@ -131,23 +125,62 @@ filter(Oz, STN_NAME == "TOOWOOMBA")
 #> 1 20120503 945510-99999             670    AUSTRALIA    AU   AUS
 ```
 
-## Using the `get_GSOD()` Function in GSODR to Download a Single Station and
+## Using the `get_GSOD` Function in GSODR to Download a Single Station and
 Year
 
 Download weather data from the station Toowoomba, Queensland, Australia for 2010
-and save it in the user's home directory using the STNID in the `station`
-parameter of `get_GSOD()`.
+by using the STNID in the `station` parameter of `get_GSOD`.
 
 ```r
-get_GSOD(years = 2010, station = "955510-99999", dsn = "~/",
-         filename = "Toowoomba_Airport")
+Tbar <- get_GSOD(years = 2010, station = "955510-99999")
+
+#> Downloading the station file(s) now.
+
+#> Finished downloading file. Parsing the station file(s) now.
+
+head(Tbar)
+#>    USAF  WBAN        STNID          STN_NAME CTRY STATE CALL    LAT     LON
+#>1 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
+#>2 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
+#>3 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
+#>4 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
+#>5 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
+#>6 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
+#>  ELEV_M ELEV_M_SRTM_90m    BEGIN      END YEARMODA YEAR MONTH DAY YDAY TEMP
+#>1    642             635 19980301 20161020 20100101 2010    01  01    1 21.2
+#>2    642             635 19980301 20161020 20100102 2010    01  02    2 23.2
+#>3    642             635 19980301 20161020 20100103 2010    01  03    3 21.4
+#>4    642             635 19980301 20161020 20100104 2010    01  04    4 18.9
+#>5    642             635 19980301 20161020 20100105 2010    01  05    5 20.5
+#>6    642             635 19980301 20161020 20100106 2010    01  06    6 21.9
+#>  TEMP_CNT DEWP DEWP_CNT    SLP SLP_CNT   STP STP_CNT VISIB VISIB_CNT WDSP
+#>1        8 17.9        8 1013.4       8 942.0       8    NA         0  2.2
+#>2        8 19.4        8 1010.5       8 939.3       8    NA         0  1.9
+#>3        8 18.9        8 1012.3       8 940.9       8  14.3         6  3.9
+#>4        8 16.4        8 1015.7       8 944.1       8  23.3         4  4.5
+#>5        8 16.4        8 1015.5       8 944.0       8    NA         0  3.9
+#>6        8 18.7        8 1013.7       8 942.3       8    NA         0  3.2
+#>  WDSP_CNT MXSPD GUST   MAX MAX_FLAG   MIN MIN_FLAG PRCP PRCP_FLAG SNDP I_FOG
+#>1        8   6.7   NA 25.78          17.78           1.5         G   NA     0
+#>2        8   5.1   NA 26.50          19.11           0.3         G   NA     0
+#>3        8  10.3   NA 28.72          19.28        * 19.8         G   NA     1
+#>4        8  10.3   NA 24.11          16.89        *  1.0         G   NA     0
+#>5        8  10.8   NA 24.61          16.72           0.3         G   NA     0
+#>6        8   7.7   NA 26.78          17.50           0.0         G   NA     1
+#>  I_RAIN_DRIZZLE I_SNOW_ICE I_HAIL I_THUNDER I_TORNADO_FUNNEL  EA  ES   RH
+#>1              0          0      0         0                0 2.1 2.5 84.0
+#>2              0          0      0         0                0 2.3 2.8 82.1
+#>3              1          0      0         0                0 2.2 2.5 88.0
+#>4              0          0      0         0                0 1.9 2.2 86.4
+#>5              0          0      0         0                0 1.9 2.4 79.2
+#>6              0          0      0         0                0 2.2 2.6 84.6
 ```
 
 ## Find Stations Within a Specified Distance of a Point
 
-Using the `nearest_stations()` function, you can find stations closest to a
+Using the `nearest_stations` function, you can find stations closest to a
 given point specified by latitude and longitude in decimal degrees. This can be
-used to generate a vector to pass along to `get_GSOD()` and download the
+used to generate a vector to pass along to `get_GSOD` and download the
 stations of interest.
 
 There are missing stations in this query. Not all that are listed and queried
@@ -174,9 +207,8 @@ get_GSOD(years = 2010, station = tbar_stations, dsn = "~/",
 ## Plot Maximum and Miniumum Temperature Values
 
 Using the first data downloaded for a single station, 955510-99999, plot the
-temperature for 2010, setting the "-9999" value to NA on import using 
-`read_csv()` from Hadley's [readr](https://CRAN.R-project.org/package=readr)
-package.
+temperature for 2010 using `read_csv` from Hadley's
+[readr](https://CRAN.R-project.org/package=readr) package.
 
 ```r
 library(lubridate)
@@ -184,7 +216,7 @@ library(readr)
 library(tidyr)
 
 # Import the data for Toowoomba previously downloaded and cleaned
-tbar <- read_csv("~/Toowoomba_Airport-2010.csv", na = "-9999")
+tbar <- read_csv("~/Toowoomba_Airport-2010.csv")
 
 #> Parsed with column specification:
 #> cols(
@@ -237,7 +269,7 @@ to create a spatial file. [GeoPackage files](http://www.geopackage.org) are a
 open, standards-based, platform-independent, portable, self-describing compact
 format for transferring geospatial information, which handle vector files much
 like shapefiles do, but eliminate many of the issues that shapefiles have with
-field names and the number of files. The `get_GSOD()` function can create a
+field names and the number of files. The `get_GSOD` function can create a
 GeoPackage file, which can be used with a GIS for further analysis and mapping
 with other spatial objects.
 
@@ -265,7 +297,7 @@ get_GSOD(years = 2015, country = "Australia", dsn = "~/", filename = "AUS",
 
 Importing the GeoPackage file can be a bit tricky. The dsn will be the full path
 along with the file name. The layer to be specified is "GSOD", this is specified
-in the `get_GSOD()` function and will not change. The file name, specified in
+in the `get_GSOD` function and will not change. The file name, specified in
 the dsn will, but the layer name will not.
 
 ```r
@@ -329,13 +361,13 @@ print(AUS_sqlite, n = 5)
 
 The [chillR](https://CRAN.R-project.org/package=chillR) package from
 [Eike Luedeling](http://eikeluedeling.com/index.html)
-has a function, `make_hourly_temps()` that can be used to temporally downscale
+has a function, `make_hourly_temps` that can be used to temporally downscale
 daily weather data to hourly using the station's latitude. Here's how that's
 possible using the Toowoomba-Airport data.
 
 To use this function it is necessary to rename the MAX, MIN, YEAR and YDAY
 columns and convert the `tibble` to a standard `data.frame` object so that
-`make_hourly_temps()` will recognize the columns and can operate on the
+`make_hourly_temps` will recognize the columns and can operate on the
 data.
 
 ```r

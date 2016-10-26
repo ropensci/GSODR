@@ -8,3 +8,7 @@ fetch_isd-history_cache
 inst/doc
 
 .Rbuildignore~
+
+*.kml
+
+*.kmz
