@@ -10,30 +10,37 @@ tags:
 authors:
   - name: Adam H Sparks
     orcid: 0000-0002-0061-8359
-    affiliation: Centre for Crop Health, University of Southern Queensland, Toowoomba Queensland 4350, Australia
+    affiliation: 1
   - name: Tomislav Hengl
     orcid: 0000-0002-9921-5129
-    affiliation: ISRIC - World Soil Information, P.O. Box 353, 6700 AJ Wageningen, The Netherlands
+    affiliation: 2
   - name: Andrew Nelson
     orcid: 0000-0002-7249-3778
-    affiliation: Faculty of Geo-Information and Earth Observation (ITC), University of Twente, Enschede 7500 AE, The Netherlands
-date: 14/10/2016
+    affiliation: 3
+affiliations:
+  - name: Centre for Crop Health, University of Southern Queensland, Toowoomba Queensland 4350, Australia
+    index: 1
+  - name: ISRIC - World Soil Information, P.O. Box 353, 6700 AJ Wageningen, The Netherlands
+    index: 2
+  - name: Faculty of Geo-Information and Earth Observation (ITC), University of Twente, Enschede 7500 AE, The Netherlands
+    index: 3
+date: "25 October 2016"
 bibliography: paper.bib
 ---
 
 # Summary
 
 The GSODR package [@GSODR] is an R package [@R-base] for automated
-downloading, parsing, cleaning and converting of Global Surface Summary of the
-Day (GSOD) [@NCDC] weather data into Comma Separated Values (CSV) or
-Geopackage (GPKG) [@geopackage] files. It builds on or complements several
-other scripts and packages. We take advantage of modern techniques in
-R to make more efficient use of available computing resources used to complete
-the process, e.g., data.table [@data.table], readr [@readr] and foreach 
-[@foreach], which allow the data cleaning, conversions and disk input/output
-processes to take advantage of modern computer hardware. The rnoaa [@rnoaa]
-package offers an excellent suite of tools for interacting with and downloading
-weather data from the United States National Oceanic and Atmospheric
+downloading, parsing, cleaning and of Global Surface Summary of the
+Day (GSOD) [@NCDC] weather data for use in R or saving into Comma Separated
+Values (CSV) or Geopackage (GPKG) [@geopackage] files. It builds on or
+complements several other scripts and packages. We take advantage of modern
+techniques in R to make more efficient use of available computing resources used
+to complete the process, e.g., data.table [@data.table], readr [@readr] and
+foreach [@foreach], which allow the data cleaning, conversions and disk input/
+output processes to take advantage of modern computer hardware. The rnoaa
+[@rnoaa] package offers an excellent suite of tools for interacting with and
+downloading weather data from the United States National Oceanic and Atmospheric
 Administration, but lacks options for GSOD data retrieval. Several other APIs
 and R packages exist to access weather data, but most are region or continent
 specific, whereas GSOD is global. This package was developed to provide:
@@ -215,4 +222,3 @@ no/not reported) for the occurrence during the day;
 
 # References
 
-* Kilibarda, M., Hengl, T., Heuvelink, G., Gräler, B., Pebesma, E., Perčec Tadić, M., & Bajat, B. (2014). **Spatio‐temporal interpolation of daily temperatures for global land areas at 1 km resolution**. Journal of Geophysical Research: Atmospheres, 119(5), 2294-2313.

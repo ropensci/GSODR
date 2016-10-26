@@ -1,7 +1,7 @@
 ---
 output:
-  github_document:
-    hard_line_breaks: false
+github_document:
+hard_line_breaks: false
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -54,7 +54,7 @@ NCDC, <http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
 ### Stable version
 A stable version of GSODR is available from [CRAN](https://cran.r-project.org/package=GSODR).
 
-```{r, eval=FALSE}
+```{r install_gsodr, eval=FALSE}
 install.packages("GSODR")
 ```
 
@@ -63,12 +63,12 @@ install.packages("GSODR")
 A development version is available from from GitHub. If you wish to install the
 development version that may have new features (but also may not work properly),
 install the [devtools package](https://CRAN.R-project.org/package=devtools),
-available from CRAN. I strive to keep the master branch on GitHub functional and
-working properly this may not always happen.
+available from CRAN. We strive to keep the master branch on GitHub functional
+and working properly this may not always happen.
 
 If you find bugs, please file a report as an issue.
 
-```{r, eval=FALSE}
+```{r install_devtools, eval=FALSE}
 install.packages("devtools")
 devtools::install_github("adamhsparks/GSODR")
 ```
@@ -79,137 +79,124 @@ devtools::install_github("adamhsparks/GSODR")
 GSODR's main function, `get_GSOD`, downloads and cleans GSOD data from the NCDC
 server. Following are a few examples of its capabilities.
 
+#### Example 1 - Download weather station for Toowoomba, Queensland for 2010
 
-```{r, eval=FALSE}
+```{r example_1, eval=TRUE}
 
 library(GSODR)
 
-# Download weather station for Toowoomba, Queensland for 2010
-
 Tbar <- get_GSOD(years = 2010, station = "955510-99999")
 
-#> Downloading the station file(s) now.
-
-#> Finished downloading file. Parsing the station file(s) now.
-
 head(Tbar)
-#>    USAF  WBAN        STNID          STN_NAME CTRY STATE CALL    LAT     LON
-#>1 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
-#>2 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
-#>3 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
-#>4 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
-#>5 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
-#>6 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
-#>  ELEV_M ELEV_M_SRTM_90m    BEGIN      END YEARMODA YEAR MONTH DAY YDAY TEMP
-#>1    642             635 19980301 20161020 20100101 2010    01  01    1 21.2
-#>2    642             635 19980301 20161020 20100102 2010    01  02    2 23.2
-#>3    642             635 19980301 20161020 20100103 2010    01  03    3 21.4
-#>4    642             635 19980301 20161020 20100104 2010    01  04    4 18.9
-#>5    642             635 19980301 20161020 20100105 2010    01  05    5 20.5
-#>6    642             635 19980301 20161020 20100106 2010    01  06    6 21.9
-#>  TEMP_CNT DEWP DEWP_CNT    SLP SLP_CNT   STP STP_CNT VISIB VISIB_CNT WDSP
-#>1        8 17.9        8 1013.4       8 942.0       8    NA         0  2.2
-#>2        8 19.4        8 1010.5       8 939.3       8    NA         0  1.9
-#>3        8 18.9        8 1012.3       8 940.9       8  14.3         6  3.9
-#>4        8 16.4        8 1015.7       8 944.1       8  23.3         4  4.5
-#>5        8 16.4        8 1015.5       8 944.0       8    NA         0  3.9
-#>6        8 18.7        8 1013.7       8 942.3       8    NA         0  3.2
-#>  WDSP_CNT MXSPD GUST   MAX MAX_FLAG   MIN MIN_FLAG PRCP PRCP_FLAG SNDP I_FOG
-#>1        8   6.7   NA 25.78          17.78           1.5         G   NA     0
-#>2        8   5.1   NA 26.50          19.11           0.3         G   NA     0
-#>3        8  10.3   NA 28.72          19.28        * 19.8         G   NA     1
-#>4        8  10.3   NA 24.11          16.89        *  1.0         G   NA     0
-#>5        8  10.8   NA 24.61          16.72           0.3         G   NA     0
-#>6        8   7.7   NA 26.78          17.50           0.0         G   NA     1
-#>  I_RAIN_DRIZZLE I_SNOW_ICE I_HAIL I_THUNDER I_TORNADO_FUNNEL  EA  ES   RH
-#>1              0          0      0         0                0 2.1 2.5 84.0
-#>2              0          0      0         0                0 2.3 2.8 82.1
-#>3              1          0      0         0                0 2.2 2.5 88.0
-#>4              0          0      0         0                0 1.9 2.2 86.4
-#>5              0          0      0         0                0 1.9 2.4 79.2
-#>6              0          0      0         0                0 2.2 2.6 84.6
+```
 
-# Download GSOD data and generate agroclimatology files for years 2010 and 2011,
-# GSOD-agroclimatology-2010.csv and GSOD-agroclimatology-2011.csv, in the user's
-# home directory with a maximum of five missing days per weather station allowed.
+## Example 2 - Download GSOD data and generate agroclimatology files
+For years 2010 and 2011, download data and create the files, 
+GSOD-agroclimatology-2010.csv and GSOD-agroclimatology-2011.csv, in the user's
+home directory with a maximum of five missing days per weather station allowed.
+Use parallel processing to run the process more quickly.
+
+```{r example_2, eval=FALSE}
 
 get_GSOD(years = 2010:2011, dsn = "~/", filename = "GSOD-agroclimatology",
-         agroclimatology = TRUE, max_missing = 5)
+         agroclimatology = TRUE, max_missing = 5, threads = 3)
 
-# Download data for Philippines for year 2010 and generate a spatial, year
-# summary file, GSOD-RP-2010.gpkg, in the user's home directory with a
-# maximum of five missing days per station allowed and no CSV file creation.
+```
+#### Example 3 - Download data for a single country and plot it
+Download data for Philippines for year 2010 and generate a spatial, year summary
+file, PHL-2010.gpkg, in the user's home directory with a maximum of five missing
+days per station allowed and no CSV file.
 
+```{r example_3, eval=TRUE, echo=FALSE}
 get_GSOD(years = 2010, country = "Philippines", dsn = "~/", filename = "PHL",
-         GPKG = TRUE, CSV = FALSE)
-# Finished downloading file.
-# Parsing the indivdual station files now.
-# Finished parsing files. Writing files to disk now.
+         GPKG = TRUE, CSV = FALSE, threads = 2)
+```
 
+```{r example_3.1, eval=TRUE, echo=TRUE}
 library(rgdal)
 library(spacetime)
 library(plotKML)
 
-
 layers <- ogrListLayers(dsn = path.expand("~/PHL-2010.gpkg"))
 pnts <- readOGR(dsn = path.expand("~/PHL-2010.gpkg"), layers[1])
-# OGR data source with driver: GPKG 
-# Source: "PHL_2010-2010.gpkg", layer: "GSOD"
-# with 2190 features
-# It has 46 fields
 
 # Plot results in Google Earth as a spacetime object:
 pnts$DATE = as.Date(paste(pnts$YEAR, pnts$MONTH, pnts$DAY, sep = "-"))
-tmp_ST <- STIDF(sp = as(pnts, "SpatialPoints"), time = pnts$DATE - 0.5,
+row.names(pnts) <- paste("point", 1:nrow(pnts), sep = "")
+
+tmp_ST <- STIDF(sp = as(pnts, "SpatialPoints"),
+                time = pnts$DATE - 0.5,
                 data = pnts@data[, c("TEMP", "STNID")],
                 endTime = pnts$DATE + 0.5)
+
 shape = "http://maps.google.com/mapfiles/kml/pal2/icon18.png"
+
 kml(tmp_ST, dtime = 24 * 3600, colour = TEMP, shape = shape, labels = TEMP,
     file.name = "Temperatures_PHL_2010-2010.kml", folder.name = "TEMP")
-system("zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml")
 
-# Compare daily measurements with climatic data:
+system("zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml")
+```
+
+Compare the GSOD weather data from the Philippines with climatic data provided
+by the GSODR package in the `GSOD_clim` data set.
+
+```{r example_3.2, eval=TRUE, fig.cap="Comparison of GSOD daily values and average monthly values with CHELSA climate monthly values"}
 library(plyr)
+library(dplyr)
 library(ggplot2)
 library(reshape2)
 
 data(GSOD_clim)
 cnames = paste0("CHELSA_temp_", 1:12, "_1979-2013")
-clim.temp = GSOD_clim[GSOD_clim$STNID %in% pnts$STNID, paste(c("STNID", cnames))]
-clim.temp.df = data.frame(STNID = rep(clim.temp$STNID, 12),
-   MONTHC = as.vector(sapply(1:12, rep, times = nrow(clim.temp))), 
-   TEMPC = as.vector(unlist(clim.temp[,cnames])))
-clim.temp.df$YEAR = 2010
-pnts$MONTHC = as.numeric(paste(pnts$MONTH))
-temp <- plyr::join(pnts@data, clim.temp.df, type = "left")
-df_melt <- melt(temp[, c("STNID", "DATE", "TEMPC", "TEMP")],
-   id = c("DATE", "STNID"))
-gg = ggplot(df_melt, aes(x = DATE, y = value))
-gg1 = gg + geom_point(aes(color = variable))
-gg1 + facet_wrap( ~ STNID)
+clim_temp = GSOD_clim[GSOD_clim$STNID %in% pnts$STNID, paste(c("STNID", cnames))]
+clim_temp_df = data.frame(STNID = rep(clim_temp$STNID, 12),
+                          MONTHC = as.vector(sapply(1:12, rep,
+                                                    times = nrow(clim_temp))), 
+                          CHELSA_TEMP = as.vector(unlist(clim_temp[, cnames])))
+
+temp <- join(pnts@data, clim_temp_df, type = "left")
+temp <- temp %>% 
+  group_by(MONTH) %>% 
+  mutate(AVG_DAILY_TEMP = round(mean(TEMP), 1))
+
+df_melt <- na.omit(melt(temp[, c("STNID", "DATE", "CHELSA_TEMP", "TEMP",
+                                 "AVG_DAILY_TEMP")],
+                id = c("DATE", "STNID")))
+
+ggplot(df_melt, aes(x = DATE, y = value)) +
+  geom_point(aes(color = variable), alpha = 0.5) +
+  scale_x_date(date_labels = "%b") +
+  ylab("Temperature (C)") +
+  xlab("Month") +
+  labs(colour = "") +
+  scale_color_brewer(palette = "Dark2") +
+  facet_wrap( ~ STNID)
 
 ```
-![Comparison between observed temperature and CHELSA-based temperature estimates](https://github.com/adamhsparks/GSODR/blob/devel/paper/Rplot_GSOD_vs_climate_PHL.png)
 
-### Finding stations
+### Example 4 - Finding stations within a given radius and download them
 
-GSODR provides a function, `nearest_stations`, which will return a data frame
-object of stations in the GSOD data set that are within a specified radius of a 
-given point expressed as latitude and longitude in decimal degrees.
+GSODR provides a function, `nearest_stations`, which will return a list of
+stations in the GSOD data set that are within a specified radius (kilometres) of
+a given point expressed as latitude and longitude in decimal degrees.
 
-```{r toowoomba_stations}
-library(GSODR)
-
+```{r example_4}
 # Find stations within 50km of Toowoomba, QLD.
 
-nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 50)
+n <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 50)
 
+n
+
+toowoomba <- get_GSOD(years = 2015, station = n, threads = 3)
+
+head(toowoomba)
 ```
 
-# Output
+## Final Data Format and Contents
 
-The function, `get_GSOD`, generates a Comma Separated Value (CSV) file or
-GeoPackage (GPKG) file Station data are merged with weather
+The function, `get_GSOD`, returns a `data.frame` object in R and 
+can also save a Comma Separated Value (CSV) file or
+GeoPackage (GPKG) file for use in a GIS. Station data are merged with weather
 data for the final file which includes the following fields:
 
 * **STNID** - Station number (WMO/DATSAV3 number) for the location;  
@@ -315,26 +302,26 @@ which rain fell.* See FLAGS_PRCP column for source of data;
 
 * **PRCP_FLAG** -  
 
-    * A = 1 report of 6-hour precipitation amount;  
+* A = 1 report of 6-hour precipitation amount;  
 
-    * B = Summation of 2 reports of 6-hour precipitation amount;  
+* B = Summation of 2 reports of 6-hour precipitation amount;  
 
-    * C = Summation of 3 reports of 6-hour precipitation amount;  
+* C = Summation of 3 reports of 6-hour precipitation amount;  
 
-    * D = Summation of 4 reports of 6-hour precipitation amount;  
+* D = Summation of 4 reports of 6-hour precipitation amount;  
 
-    * E = 1 report of 12-hour precipitation amount;  
+* E = 1 report of 12-hour precipitation amount;  
 
-    * F = Summation of 2 reports of 12-hour precipitation amount;  
+* F = Summation of 2 reports of 12-hour precipitation amount;  
 
-    * G = 1 report of 24-hour precipitation amount;  
+* G = 1 report of 24-hour precipitation amount;  
 
-    * H = Station reported '0' as the amount for the day (e.g., from 6-hour
+* H = Station reported '0' as the amount for the day (e.g., from 6-hour
 reports), but also reported at least one occurrence of precipitation in
 hourly observations--this could indicate a trace occurred, but should be
 considered as incomplete data for the day;  
 
-    * I = Station did not report any precip data for the day and did not
+* I = Station did not report any precip data for the day and did not
 report any occurrences of precipitation in its hourly observations--it's
 still possible that precipitation occurred but was not reported;  
 
