@@ -457,29 +457,30 @@ final file which includes the following fields:
 
 -   **PRCP\_FLAG** -
 
--   A = 1 report of 6-hour precipitation amount;
+    -   A = 1 report of 6-hour precipitation amount;
 
--   B = Summation of 2 reports of 6-hour precipitation amount;
+    -   B = Summation of 2 reports of 6-hour precipitation amount;
 
--   C = Summation of 3 reports of 6-hour precipitation amount;
+    -   C = Summation of 3 reports of 6-hour precipitation amount;
 
--   D = Summation of 4 reports of 6-hour precipitation amount;
+    -   D = Summation of 4 reports of 6-hour precipitation amount;
 
--   E = 1 report of 12-hour precipitation amount;
+    -   E = 1 report of 12-hour precipitation amount;
 
--   F = Summation of 2 reports of 12-hour precipitation amount;
+    -   F = Summation of 2 reports of 12-hour precipitation amount;
 
--   G = 1 report of 24-hour precipitation amount;
+    -   G = 1 report of 24-hour precipitation amount;
 
--   H = Station reported '0' as the amount for the day (e.g., from
-    6-hour reports), but also reported at least one occurrence of
-    precipitation in hourly observations--this could indicate a trace
-    occurred, but should be considered as incomplete data for the day;
+    -   H = Station reported '0' as the amount for the day (e.g., from
+        6-hour reports), but also reported at least one occurrence of
+        precipitation in hourly observations--this could indicate a
+        trace occurred, but should be considered as incomplete data for
+        the day;
 
--   I = Station did not report any precipitation data for the day and
-    did not report any occurrences of precipitation in its hourly
-    observations--it's still possible that precipitation occurred but
-    was not reported;
+    -   I = Station did not report any precipitation data for the day
+        and did not report any occurrences of precipitation in its
+        hourly observations--it's still possible that precipitation
+        occurred but was not reported;
 
 -   **SNDP** - Snow depth in millimetres to tenths. Missing = NA;
 
@@ -510,8 +511,26 @@ final file which includes the following fields:
 Notes
 =====
 
-Elevation Values
-----------------
+Sources
+-------
+
+#### CHELSA climate layers
+
+CHELSA (climatic surfaces at 1 km resolution) is based on a
+quasi-mechanistical statistical downscaling of the ERA interim global
+circulation model (Karger et al. 2016). ESA's CCI-LC cloud probability
+monthly averages are based on the MODIS snow products (MOD10A2).
+<http://chelsa-climate.org/>
+
+#### EarthEnv MODIS cloud fraction
+
+<http://www.earthenv.org/cloud>
+
+#### ESA's CCI-LC cloud probability
+
+<http://maps.elie.ucl.ac.be/CCI/viewer/index.php>
+
+#### Elevation Values
 
 90m hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was used
 to identify and correct/remove elevation errors in data for station
@@ -551,3 +570,12 @@ References
 Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled SRTM for
 the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
 (<http://srtm.csI_cgiar.org>)
+
+Karger, D. N., Conrad, O., Bohner, J., Kawohl, T., Kreft, H.,
+Soria-Auza, R. W., et al. (2016). Climatologies at high resolution for
+the Earth land surface areas. arXiv preprint arXiv:1607.00217.
+(<http://chelsa-climate.org/>)
+
+Wilson AM, Jetz W (2016). Remotely Sensed High-Resolution Global Cloud
+Dynamics for Predicting Ecosystem and Biodiversity Distributions. PLoS
+Biol 14(3): e1002415.

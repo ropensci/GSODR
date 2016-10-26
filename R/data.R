@@ -165,7 +165,7 @@
 #' D. N., Conrad, O., Bohner, J., Kawohl, T., Kreft, H., Soria-Auza, R. W., et
 #' al. (2016). Climatologies at high resolution for the Earth land surface
 #' areas. arXiv preprint arXiv:1607.00217.
-#' @source EarthEnv MODIS Cloud fraction (\url{http://www.earthenv.org/cloud}) /
+#' @source EarthEnv MODIS cloud fraction (\url{http://www.earthenv.org/cloud}) /
 #' Wilson AM, Jetz W (2016). Remotely Sensed High-Resolution Global Cloud
 #' Dynamics for Predicting Ecosystem and Biodiversity Distributions. PLoS Biol
 #' 14(3): e1002415.
