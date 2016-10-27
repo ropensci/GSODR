@@ -270,69 +270,21 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
   ity <- iterators::iter(years)
   foreach::foreach(yr = ity) %do% {
     if (is.null(station)) {
-      tryCatch(utils::download.file(url = paste0(ftp_site, yr, "/gsod_", yr,
-                                                 ".tar"),
-                                    destfile = tf, mode = "wb"),
-               error = function(x) message(paste0(
-                 "\nThe download stopped at year: ", yr, ".
-                \nPlease restart the 'get_GSOD()' function starting here.\n")))
-      utils::untar(tarfile = tf, exdir  = paste0(td, "/", yr, "/"))
 
-      message("\nFinished downloading file.
-              \nParsing the indivdual station files now.\n")
-      GSOD_list <- list.files(paste0(td, "/", yr, "/"),
-                              pattern = "^.*\\.gz$",
-                              full.names = FALSE)
 
-      # If agroclimatology == TRUE, subset list of stations to clean -----------
-      if (agroclimatology == TRUE) {
-        station_list <- stations[stations$LAT >= -60 &
-                                   stations$LAT <= 60, ]$STNID
-        station_list <- vapply(station_list,
-                               function(x) rep(paste0(x, "-", yr, ".op.gz")),
-                               "")
-        GSOD_list <- GSOD_list[GSOD_list %in% station_list == TRUE]
-        rm(station_list)
-      }
-
-      # If country is set, subset list of stations to clean --------------------
-      if (!is.null(country)) {
-        country_FIPS <- unlist(as.character(stats::na.omit(
-          GSODR::country_list[GSODR::country_list$FIPS == country, ][[1]]),
-          use.names = FALSE))
-        station_list <- stations[stations$CTRY == country_FIPS, ]$STNID
-        station_list <- vapply(station_list,
-                               function(x) rep(paste0(x, "-", yr, ".op.gz")),
-                               "")
-        GSOD_list <- GSOD_list[GSOD_list %in% station_list == TRUE]
-      }
-    }
-
-    # Stations specified --------------------------- ---------------------------
+    # THIS WORKS NEED TO MODIFY ALL OTHER INSTANCES/REMOVE YEAR LOOP------------
     if (!is.null(station)) {
       message("\nDownloading the station file(s) now.")
-      filenames <- RCurl::getURL(paste0(ftp_site, yr, "/"),
-                                 ftp.use.epsv = FALSE, ftplistonly = TRUE,
-                                 crlf = TRUE)
-      filenames <- paste0(ftp_site, yr, "/",
-                          strsplit(filenames, "\r*\n")[[1]])[-c(1:2)]
-      itw <- (iterators::iter(station))
-      message("\nFinished downloading file. Parsing the station file(s) now.\n")
-      GSOD_XY <- as.data.frame(
-        data.table::rbindlist(
-          foreach::foreach(s = itw) %do% {
-            s <- paste0(ftp_site, yr, "/", s, "-", yr, ".op.gz")
-            if (s %in% filenames) {
-              tmp <- try(.read_gz(s))
-              .reformat(tmp, stations)
-            } else {
-              message("A file corresponding to station,", s, "was not found on
-                      the server. Any others requested will be processed.")
-            }
-          }
-        )
-      )
+
+      s <- paste0(ftp_site, years, "/")
+      s <- do.call(paste0, c(expand.grid(s, stations)))
+      s <- paste0(s, "-", years, ".op.gz")
+
+      GSOD_XY <- plyr::ldply(.data = s, .fun = .stations_specified)
+
     } else {
+    # THIS WORKS NEED TO MODIFY ALL OTHER INSTANCES/REMOVE YEAR LOOP------------
+
       # Stations not specified ------------------------------------------------
       cl <- parallel::makeCluster(threads)
       doParallel::registerDoParallel(cl)
@@ -668,3 +620,18 @@ can view the entire list of valid countries in this data by typing,
   #http://en.wikipedia.org/wiki/Leap_year
   return( ( (year %% 4 == 0) & (year %% 100 != 0)) | (year %% 400 == 0))
 }
+
+#' @noRd
+.stations_specified <- function(s) {
+  filenames <- RCurl::getURL(substr(s, 1, 43), ftp.use.epsv = FALSE,
+                             ftplistonly = TRUE, crlf = TRUE)
+  filenames <- paste0(substr(s, 1, 43),
+                      strsplit(filenames, "\r*\n")[[1]])[-c(1:2)]
+  if (s %in% filenames) {
+    tmp <- try(.read_gz(s))
+    GSOD_XY <- .reformat(tmp, stations)
+  } else {
+    message("A file corresponding to station,", s, "was not found on
+            the server. Any others requested will be processed.")
+  }
+  }
