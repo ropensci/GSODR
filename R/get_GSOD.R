@@ -274,10 +274,9 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
     # Individual stations
     message("\nDownloading the station file(s) now.")
     s <- paste0(ftp_site, years, "/")
-    s <- do.call(paste0, c(expand.grid(s, stations)))
+    s <- do.call(paste0, c(expand.grid(s, station)))
     s <- paste0(s, "-", years, ".op.gz")
     plyr::ldply(.data = s, .fun = .dl_specified_stations)
-
   }
 
   #### Write to disk ---------------------------------------------------------

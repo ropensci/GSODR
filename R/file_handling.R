@@ -55,6 +55,7 @@
                                              ftp.use.epsv = FALSE,
                                              ftplistonly = TRUE, crlf = TRUE),
                                "\r*\n")[[1]])[-c(1:2)]
+
   s <- filenames[which(s %in% filenames)]
   tryCatch(Map(function(ftp, dest)
     utils::download.file(url = ftp, destfile = dest, mode = "wb"),
