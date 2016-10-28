@@ -55,14 +55,16 @@
                                              ftp.use.epsv = FALSE,
                                              ftplistonly = TRUE, crlf = TRUE),
                                "\r*\n")[[1]])[-c(1:2)]
-
   s <- filenames[which(s %in% filenames)]
+
   tryCatch(Map(function(ftp, dest)
-    utils::download.file(url = ftp, destfile = dest, mode = "wb"),
-    s, paste0(file.path(td, basename(s)))),
+    utils::download.file(url = ftp, destfile = dest),
+    s, file.path(td, basename(s))),
     error = function(x) message(paste0(
       "\nThe file downloads have failed. Please restart.\n")))
-  GSOD_list <- list.files(td, pattern = "^.*\\.op.gz$", full.names = TRUE)
+
+  GSOD_list <- list.files(path = file.path(td),
+                          pattern = "^.*\\.op.gz$", full.names = TRUE)
   GSOD_XY <- plyr::ldply(.data = GSOD_list, .fun = .process_gz)
   return(GSOD_XY)
 }
