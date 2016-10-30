@@ -267,20 +267,20 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
 
   # Global or Agroclimatology
   if (is.null(station)) {
-    cl <- makeCluster(threads)
-    registerDoParallel(cl)
+    cl <- parallel::makeCluster(threads)
+    doParallel::registerDoParallel(cl)
     message("\nDownloading the data file(s) now.")
     s <- paste0(ftp, years, "/", "gsod_", years, ".tar")
     GSOD_XY <- plyr::ldply(.data = s, .fun = .dl_global_files,
                            agroclimatology = agroclimatology, country = country,
                            max_missing = max_missing, stations = stations,
                            td = td, threads = threads, .parallel = TRUE)
-    stopCluster(cl)
+    parallel::stopCluster(cl)
 
   } else {
     # Individual stations
-    cl <- makeCluster(threads)
-    registerDoParallel(cl)
+    cl <- parallel::makeCluster(threads)
+    doParallel::registerDoParallel(cl)
     message("\nDownloading the station file(s) now.")
     s <- paste0(ftp, years, "/")
     s <- do.call(paste0, c(expand.grid(s, station)))
@@ -288,7 +288,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
     GSOD_XY <- plyr::ldply(.data = s, .fun = .dl_specified_stations,
                            stations = stations, td = td, threads = threads,
                            .parallel = TRUE)
-    stopCluster(cl)
+    parallel::stopCluster(cl)
   }
 
   #### Write to disk ---------------------------------------------------------
@@ -322,7 +322,6 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
   return(GSOD_XY)
 
   # cleanup and reset to default state
-  unlink(tf)
   unlink(td)
   options(original_options)
 }

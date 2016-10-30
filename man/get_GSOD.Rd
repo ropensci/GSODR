@@ -228,7 +228,6 @@ filename = "GSOD_agroclimatology_2010-2011", agroclimatology = TRUE)
 
 }
 
-
 }
 \references{
 {Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled

@@ -2,7 +2,7 @@
 
 #'@noRd
 .dl_global_files <- function(agroclimatology, country, max_missing, s, stations,
-                             td, threads) {
+                             td, threads, years) {
 
   tryCatch(Map(function(ftp, dest)
     utils::download.file(url = ftp, destfile = dest),
@@ -38,8 +38,6 @@
   GSOD_XY <- plyr::ldply(.data = GSOD_list, .fun = .process_gz,
                          stations = stations)
   return(GSOD_XY)
-  unlink(tf)
-  unlink(td)
 }
 
 
@@ -64,7 +62,6 @@
   GSOD_XY <- plyr::ldply(.data = GSOD_list, .fun = .process_gz,
                          stations = stations)
   return(GSOD_XY)
-  unlink(td)
 }
 
 #' @noRd
