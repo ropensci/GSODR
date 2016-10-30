@@ -1,32 +1,27 @@
 # Functions used in GSODR for handling files -----------------------------------
 
 #'@noRd
-.dl_global_files <- function(agroclimatology, country, s, stations, td, tf) {
+.dl_global_files <- function(agroclimatology, country, max_missing, s, stations,
+                             td, threads) {
 
   tryCatch(Map(function(ftp, dest)
-    utils::download.file(url = ftp, destfile = dest, mode = "wb"),
-    s, tf), error = function(x) message(paste0(
+    utils::download.file(url = ftp, destfile = dest),
+    s, file.path(td, basename(s))), error = function(x) message(paste0(
       "\nThe file downloads have failed. Please restart.\n")))
 
-  message("\nFinished downloading file.
-          \nParsing the indivdual station files now.\n")
-  filelist <- list.files(td, pattern = "^.*\\.gz$", full.names = TRUE)
+  tar_files <- list.files(td, pattern = "^gsod.*\\.tar$", full.names = TRUE)
 
-  Map(function(file, dest) utils::untar(tarfile = filelist, exdir  = dest),
-      file , paste0(file.path(td, substr(filelist, 6, 10))))
+  plyr::ldply(.data = tar_files, .fun = utils::untar, exdir = td)
 
-  GSOD_list <- list.files(paste0(td, "/", substr(filelist, 6, 10), "/"),
-                          pattern = "^.*\\.op.gz$", full.names = FALSE)
+  GSOD_list <- list.files(td, pattern = "^.*\\.op.gz$", full.names = FALSE)
+
   # If agroclimatology == TRUE, subset list of stations to process--------------
   if (agroclimatology == TRUE) {
     station_list <- stations[stations$LAT >= -60 &
                                stations$LAT <= 60, ]$STNID
-    station_list <- vapply(station_list,
-                           function(x) rep(paste0(x, "-",
-                                                  substr(filelist, 6, 10),
-                                                  ".op.gz")),
-                           "")
-    GSOD_list <- GSOD_list[GSOD_list %in% station_list == TRUE]
+    station_list <- do.call(paste0,
+                            c(expand.grid(station_list, "-", years, ".op.gz")))
+    GSOD_list <- paste0(td, "/", GSOD_list[GSOD_list %in% station_list == TRUE])
     rm(station_list)
   }
 
@@ -36,20 +31,21 @@
       GSODR::country_list[GSODR::country_list$FIPS == country, ][[1]]),
       use.names = FALSE))
     station_list <- stations[stations$CTRY == country_FIPS, ]$STNID
-    station_list <- vapply(station_list,
-                           function(x) rep(paste0(x, "-",
-                                                  substr(filelist, 6, 10),
-                                                  ".op.gz")),
-                           "")
-    GSOD_list <- GSOD_list[GSOD_list %in% station_list == TRUE]
+    station_list <- do.call(paste0,
+                            c(expand.grid(station_list, "-", years, ".op.gz")))
+    GSOD_list <- paste0(td, "/", GSOD_list[GSOD_list %in% station_list == TRUE])
   }
-  GSOD_XY <- plyr::ldply(.data = GSOD_list, .fun = .process_gz)
+  GSOD_XY <- plyr::ldply(.data = GSOD_list, .fun = .process_gz,
+                         stations = stations)
   return(GSOD_XY)
+  unlink(tf)
+  unlink(td)
 }
 
 
 #' @noRd
-.dl_specified_stations <- function(s, stations, td, years) {
+.dl_specified_stations <- function(s, stations, td, threads, years) {
+
   filenames <- paste0(substr(s, 1, 43),
                       strsplit(RCurl::getURL(substr(s, 1, 43),
                                              ftp.use.epsv = FALSE,
@@ -63,10 +59,12 @@
     error = function(x) message(paste0(
       "\nThe file downloads have failed. Please restart.\n")))
 
-  GSOD_list <- list.files(path = file.path(td),
-                          pattern = "^.*\\.op.gz$", full.names = TRUE)
-  GSOD_XY <- plyr::ldply(.data = GSOD_list, .fun = .process_gz)
+  GSOD_list <- list.files(path = td, pattern = "^.*\\.op.gz$",
+                          full.names = TRUE)
+  GSOD_XY <- plyr::ldply(.data = GSOD_list, .fun = .process_gz,
+                         stations = stations)
   return(GSOD_XY)
+  unlink(td)
 }
 
 #' @noRd

@@ -208,7 +208,6 @@
 #'
 #' }
 #'
-#'
 #' @references {Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled
 #' SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
 #' \url{http://srtm.csi.cgiar.org}}
@@ -227,21 +226,23 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
   options(warn = 2)
   options(timeout = 300)
 
-  s <- yr <- LON <- LAT <- NULL
-
-  tf <- tempfile()
   td <- tempdir()
 
-  ftp_site <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
+  s <- yr <- LON <- LAT <- NULL
 
-  # fetch most recent station history file
-  stations <- .fetch_station_list()
+  ftp <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
 
   # Validate -------------------------------------------------------------------
   # Check data path given by user, does it exist? Is it properly formatted?
   if (!is.null(dsn)) {
     dsn <- .validate_dsn(dsn)
   }
+
+  # fetch most recent station history file
+  if (!exists("stations")) {
+    stations <- .fetch_station_list()
+  }
+
   # Check years given by the user, are they valid?
   .validate_years(years)
 
@@ -266,17 +267,28 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
 
   # Global or Agroclimatology
   if (is.null(station)) {
+    cl <- makeCluster(threads)
+    registerDoParallel(cl)
     message("\nDownloading the data file(s) now.")
-    s <- paste0(ftp_site, years, "/")
-    GSOD_XY <- plyr::ldply(.data = s, .fun = .dl_global_files)
+    s <- paste0(ftp, years, "/", "gsod_", years, ".tar")
+    GSOD_XY <- plyr::ldply(.data = s, .fun = .dl_global_files,
+                           agroclimatology = agroclimatology, country = country,
+                           max_missing = max_missing, stations = stations,
+                           td = td, threads = threads, .parallel = TRUE)
+    stopCluster(cl)
 
   } else {
     # Individual stations
+    cl <- makeCluster(threads)
+    registerDoParallel(cl)
     message("\nDownloading the station file(s) now.")
-    s <- paste0(ftp_site, years, "/")
+    s <- paste0(ftp, years, "/")
     s <- do.call(paste0, c(expand.grid(s, station)))
     s <- paste0(s, "-", years, ".op.gz")
-    plyr::ldply(.data = s, .fun = .dl_specified_stations)
+    GSOD_XY <- plyr::ldply(.data = s, .fun = .dl_specified_stations,
+                           stations = stations, td = td, threads = threads,
+                           .parallel = TRUE)
+    stopCluster(cl)
   }
 
   #### Write to disk ---------------------------------------------------------
