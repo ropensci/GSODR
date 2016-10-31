@@ -10,7 +10,7 @@
 
   tar_files <- list.files(td, pattern = "^gsod.*\\.tar$", full.names = TRUE)
 
-  lapply(.data = tar_files, .fun = utils::untar, exdir = td)
+  plyr::ldply(.data = tar_files, .fun = utils::untar, exdir = td)
 
   GSOD_list <- list.files(td, pattern = "^.*\\.op.gz$", full.names = FALSE)
 
@@ -39,7 +39,7 @@
 
 
 #' @noRd
-.dl_specified_stations <- function(s, stations, td, years) {
+.dl_specified_stations <- function(s, stations, td) {
 
   filenames <- paste0(substr(s, 1, 43),
                       strsplit(RCurl::getURL(substr(s, 1, 43),
@@ -56,7 +56,7 @@
 
   GSOD_list <- list.files(path = td, pattern = "^.*\\.op.gz$",
                           full.names = TRUE)
-  data.table::data.table[, .process_gz(GSOD_list, stations)]
+  plyr::ldply(.data = GSOD_list, .fun = .process_gz, stations = stations)
 }
 
 #' @noRd

@@ -224,8 +224,6 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
 
   td <- tempdir()
 
-  s <- LON <- LAT <- NULL
-
   ftp <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
 
   # Validate -------------------------------------------------------------------
@@ -263,18 +261,19 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
   # Agroclimatology, Country or Global
   if (is.null(station)) {
     message("\nDownloading the data file(s) now.")
-    s <- paste0(ftp, years, "/", "gsod_", years, ".tar")
-    GSOD_XY <- data.table::data.table[,.dl_global_files(agroclimatology,
-                                                        country, s, stations,
-                                                        td, years)]
+    file_list <- paste0(ftp, years, "/", "gsod_", years, ".tar")
+    GSOD_XY <- plyr::ldply(.data = file_list, .fun = .dl_global_files,
+                            agroclimatology = agroclimatology,
+                            country = country, stations = stations,
+                            td = td, years = years)
   } else {
     # Individual stations
     message("\nDownloading the station file(s) now.")
-    s <- paste0(ftp, years, "/")
-    s <- do.call(paste0, c(expand.grid(s, station)))
-    s <- paste0(s, "-", years, ".op.gz")
-    GSOD_XY <- data.table::data.table[, .dl_specified_stations(s, stations, td,
-                                                               years)]
+    file_list <- paste0(ftp, years, "/")
+    file_list <- do.call(paste0, c(expand.grid(file_list, station)))
+    file_list <- paste0(file_list, "-", years, ".op.gz")
+    GSOD_XY <- plyr::ldply(.data = file_list, .fun = .dl_specified_stations,
+                           stations = stations, td = td)
   }
 
   #### Write to disk ---------------------------------------------------------
