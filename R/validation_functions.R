@@ -2,16 +2,17 @@
 
 #' @noRd
 .check_missing <- function(max_missing, tmp, year) {
-  records <- nrow(tmp)
+  records <- R.utils::countLines(tmp)
   if (.is_leapyear(year) == FALSE) {
     allow <- 365 - max_missing
-    !is.null(records) && length(records) == 1 && !is.na(records) &&
-      records < allow
+    !is.null(records) && records == 1 && !is.na(records) && 
+      ifelse(records >= allow, paste0(tmp), "")
   } else {
     if (.is_leapyear(year) == TRUE) {
       allow <- 366 - max_missing
-      !is.null(records) && length(records) == 1 && !is.na(records) &&
-        records < allow
+      !is.null(records) && records == 1 && !is.na(records) &&
+        ifelse(records >= allow, paste0(tmp), "")
+      return(tmp)
     }
   }
 }

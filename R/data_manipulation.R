@@ -1,8 +1,9 @@
 # Main function used by GSODR to process data files ----- ----------------------
 
 #' @noRd
-.process_gz <- function(gz_file, stations) {
+.process_gz <- function(gz_file, stations, dsn, years, GPKG, CSV, filename) {
 
+  LAT <- LON <- NULL
   GSOD_XY <- data.table::data.table()
 
   YEARMODA <- "YEARMODA"
@@ -125,4 +126,32 @@
                                      "I_THUNDER", "I_TORNADO_FUNNEL", "EA",
                                      "ES", "RH"))
   return(GSOD_XY)
+  
+  #### Write to disk ---------------------------------------------------------
+  if (!is.null(dsn)) {
+    outfile <- paste0(dsn, filename)
+    
+    #### CSV file
+    if (CSV == TRUE) {
+      outfile <- paste0(outfile, "-", years, ".csv")
+      readr::write_csv(GSOD_XY, path = paste0(outfile))
+    }
+    
+    #### GPKG file
+    if (GPKG == TRUE) {
+      outfile <- paste0(outfile, "-", years, ".gpkg")
+      # Convert object to standard df and then spatial object
+      GSOD_XY <- as.data.frame(GSOD_XY)
+      sp::coordinates(GSOD_XY) <- ~LON + LAT
+      sp::proj4string(GSOD_XY) <- sp::CRS("+proj=longlat +datum=WGS84")
+      
+      # If the filename specified exists, remove it and create new
+      if (file.exists(path.expand(outfile))) {
+        file.remove(outfile)
+      }
+      # Create new .gpkg file
+      rgdal::writeOGR(GSOD_XY, dsn = path.expand(outfile), layer = "GSOD",
+                      driver = "GPKG")
+    }
+  }
 }

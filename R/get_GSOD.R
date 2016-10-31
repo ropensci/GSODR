@@ -265,7 +265,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
     GSOD_XY <- plyr::ldply(.data = file_list, .fun = .dl_global_files,
                             agroclimatology = agroclimatology,
                             country = country, stations = stations,
-                            td = td, years = years)
+                            td = td, years = years, .progress = "text")
   } else {
     # Individual stations
     message("\nDownloading the station file(s) now.")
@@ -273,35 +273,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
     file_list <- do.call(paste0, c(expand.grid(file_list, station)))
     file_list <- paste0(file_list, "-", years, ".op.gz")
     GSOD_XY <- plyr::ldply(.data = file_list, .fun = .dl_specified_stations,
-                           stations = stations, td = td)
-  }
-
-  #### Write to disk ---------------------------------------------------------
-  if (!is.null(dsn)) {
-    outfile <- paste0(dsn, filename)
-
-    #### CSV file
-    if (CSV == TRUE) {
-      outfile <- paste0(outfile, "-", years, ".csv")
-      readr::write_csv(GSOD_XY, path = paste0(outfile))
-    }
-
-    #### GPKG file
-    if (GPKG == TRUE) {
-      outfile <- paste0(outfile, "-", years, ".gpkg")
-      # Convert object to standard df and then spatial object
-      GSOD_XY <- as.data.frame(GSOD_XY)
-      sp::coordinates(GSOD_XY) <- ~LON + LAT
-      sp::proj4string(GSOD_XY) <- sp::CRS("+proj=longlat +datum=WGS84")
-
-      # If the filename specified exists, remove it and create new
-      if (file.exists(path.expand(outfile))) {
-        file.remove(outfile)
-      }
-      # Create new .gpkg file
-      rgdal::writeOGR(GSOD_XY, dsn = path.expand(outfile), layer = "GSOD",
-                      driver = "GPKG")
-    }
+                           stations = stations, td = td, .progress = "text")
   }
 
   return(GSOD_XY)

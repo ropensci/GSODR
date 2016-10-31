@@ -38,6 +38,7 @@ Imports:
     fields,
     iterators,
     plyr,
+    R.utils,
     RCurl,
     readr,
     rgdal,
