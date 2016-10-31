@@ -31,7 +31,7 @@ nearest_stations <- function(LAT, LON, distance) {
   options(warn = 2)
   options(timeout = 300)
 
-  if (missing(stations)) {
+  if (!exists("stations")) {
     stations <- as.data.frame(.fetch_station_list())
   }
 
