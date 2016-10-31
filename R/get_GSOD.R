@@ -50,8 +50,6 @@
 #' \code{dsn} being specified.
 #' @param GPKG Logical. If set to TRUE, create a GeoPackage file and save it
 #' locally in a user specified location. Depends on \code{dsn} being specified.
-#' @param threads The number of computing threads to use for parallel processing
-#' data. Defaults to 1.
 #'
 #' @details
 #' Data summarize each year by station, which include vapour pressure and
@@ -212,14 +210,12 @@
 #' SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
 #' \url{http://srtm.csi.cgiar.org}}
 #'
-#' @importFrom foreach %dopar%
 #' @importFrom data.table :=
 #'
 #' @export
 get_GSOD <- function(years = NULL, station = NULL, country = NULL,
                      dsn = NULL, filename = "GSOD", max_missing = 5,
-                     agroclimatology = FALSE, CSV = FALSE, GPKG = FALSE,
-                     threads = 1) {
+                     agroclimatology = FALSE, CSV = FALSE, GPKG = FALSE) {
 
   # Set up options, create objects, fetch most recent station metadata ---------
   original_options <- options()
@@ -228,7 +224,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
 
   td <- tempdir()
 
-  s <- yr <- LON <- LAT <- NULL
+  s <- LON <- LAT <- NULL
 
   ftp <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
 
@@ -263,47 +259,37 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
     max_missing <- 366
   }
 
-  # Download data --------------------------------------------------------------
-
-  # Global or Agroclimatology
+  # Download and process data --------------------------------------------------
+  # Agroclimatology, Country or Global
   if (is.null(station)) {
-    cl <- parallel::makeCluster(threads)
-    doParallel::registerDoParallel(cl)
     message("\nDownloading the data file(s) now.")
     s <- paste0(ftp, years, "/", "gsod_", years, ".tar")
-    GSOD_XY <- plyr::ldply(.data = s, .fun = .dl_global_files,
-                           agroclimatology = agroclimatology, country = country,
-                           max_missing = max_missing, stations = stations,
-                           td = td, threads = threads, .parallel = TRUE)
-    parallel::stopCluster(cl)
-
+    GSOD_XY <- data.table::data.table[,.dl_global_files(agroclimatology,
+                                                        country, s, stations,
+                                                        td, years)]
   } else {
     # Individual stations
-    cl <- parallel::makeCluster(threads)
-    doParallel::registerDoParallel(cl)
     message("\nDownloading the station file(s) now.")
     s <- paste0(ftp, years, "/")
     s <- do.call(paste0, c(expand.grid(s, station)))
     s <- paste0(s, "-", years, ".op.gz")
-    GSOD_XY <- plyr::ldply(.data = s, .fun = .dl_specified_stations,
-                           stations = stations, td = td, threads = threads,
-                           .parallel = TRUE)
-    parallel::stopCluster(cl)
+    GSOD_XY <- data.table::data.table[, .dl_specified_stations(s, stations, td,
+                                                               years)]
   }
 
   #### Write to disk ---------------------------------------------------------
   if (!is.null(dsn)) {
     outfile <- paste0(dsn, filename)
 
-    #### CSV file-------------------------------------------------------------
+    #### CSV file
     if (CSV == TRUE) {
-      outfile <- paste0(outfile, "-", yr, ".csv")
+      outfile <- paste0(outfile, "-", years, ".csv")
       readr::write_csv(GSOD_XY, path = paste0(outfile))
     }
 
-    #### GPKG file -----------------------------------------------------------
+    #### GPKG file
     if (GPKG == TRUE) {
-      outfile <- paste0(outfile, "-", yr, ".gpkg")
+      outfile <- paste0(outfile, "-", years, ".gpkg")
       # Convert object to standard df and then spatial object
       GSOD_XY <- as.data.frame(GSOD_XY)
       sp::coordinates(GSOD_XY) <- ~LON + LAT

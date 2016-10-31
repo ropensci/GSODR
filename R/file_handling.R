@@ -1,17 +1,16 @@
 # Functions used in GSODR for handling files -----------------------------------
 
 #'@noRd
-.dl_global_files <- function(agroclimatology, country, max_missing, s, stations,
-                             td, threads, years) {
+.dl_global_files <- function(agroclimatology, country, s, stations, td, years) {
 
   tryCatch(Map(function(ftp, dest)
     utils::download.file(url = ftp, destfile = dest),
-    s, file.path(td, basename(s))), error = function(x) message(paste0(
-      "\nThe file downloads have failed. Please restart.\n")))
+    s, file.path(td, basename(s))), error = function(x) stop(
+      "\nThe file downloads have failed. Please restart.\n"))
 
   tar_files <- list.files(td, pattern = "^gsod.*\\.tar$", full.names = TRUE)
 
-  plyr::ldply(.data = tar_files, .fun = utils::untar, exdir = td)
+  lapply(.data = tar_files, .fun = utils::untar, exdir = td)
 
   GSOD_list <- list.files(td, pattern = "^.*\\.op.gz$", full.names = FALSE)
 
@@ -35,14 +34,12 @@
                             c(expand.grid(station_list, "-", years, ".op.gz")))
     GSOD_list <- paste0(td, "/", GSOD_list[GSOD_list %in% station_list == TRUE])
   }
-  GSOD_XY <- plyr::ldply(.data = GSOD_list, .fun = .process_gz,
-                         stations = stations)
-  return(GSOD_XY)
+  data.table::data.table(.fun = .process_gz(GSOD_list, stations = stations))
 }
 
 
 #' @noRd
-.dl_specified_stations <- function(s, stations, td, threads, years) {
+.dl_specified_stations <- function(s, stations, td, years) {
 
   filenames <- paste0(substr(s, 1, 43),
                       strsplit(RCurl::getURL(substr(s, 1, 43),
@@ -59,9 +56,7 @@
 
   GSOD_list <- list.files(path = td, pattern = "^.*\\.op.gz$",
                           full.names = TRUE)
-  GSOD_XY <- plyr::ldply(.data = GSOD_list, .fun = .process_gz,
-                         stations = stations)
-  return(GSOD_XY)
+  data.table::data.table[, .process_gz(GSOD_list, stations)]
 }
 
 #' @noRd
