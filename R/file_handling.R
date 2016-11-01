@@ -37,15 +37,16 @@
                             c(expand.grid(station_list, "-", years, ".op.gz")))
     GSOD_list <- paste0(td, "/", GSOD_list[GSOD_list %in% station_list == TRUE])
   }
-  .process_files(GSOD_list, dsn, filename, years, GPKG, CSV, threads, years)
+  
+  # Process files
+  .process_files(GSOD_list, dsn. = dsn, filename. = filename, GPKG. = GPKG,
+                 CSV. = CSV, threads. = threads, years. = years)
 }
 
 
 #' @noRd
-.dl_specified_stations <- function(CSV = CSV, dsn = dsn, filename = filename,
-                                   file_list = file_list, GPKG = GPKG,
-                                   stations = stations, td = td,
-                                   threads = threads, years = years) {
+.dl_specified_stations <- function(file_list, filename, CSV, dsn, GPKG,
+                                   stations, td, threads, years) {
 
   filenames <- paste0(substr(file_list, 1, 43),
                       strsplit(RCurl::getURL(substr(file_list, 1, 43),
@@ -62,7 +63,9 @@
 
   GSOD_list <- list.files(path = td, pattern = "^.*\\.op.gz$",
                           full.names = TRUE)
-  .process_files(GSOD_list, dsn, filename, GPKG, CSV, stations, threads, years)
+  .process_files(GSOD_list, dsn. = dsn, GPKG. = GPKG, CSV. = CSV,
+                 filename. = filename, stations. = stations,
+                 threads. = threads, years. = years)
 }
 
 #' @noRd
@@ -95,15 +98,14 @@
 
 #' @noRd
 #' @importFrom foreach %dopar%
-.process_files <- function(GSOD_list, dsn, filename, GPKG, CSV, stations,
-                           threads, years) {
+.process_files <- function(GSOD_list, dsn., filename., GPKG., CSV.,
+                           stations., threads., years.) {
 
   j <- NULL
   itx <- iterators::iter(GSOD_list)
   GSOD_XY <- data.table::rbindlist(
     foreach::foreach(j = itx) %dopar% {
-      .process_gz(j, dsn = dsn, years = years, GPKG = GPKG, CSV = CSV,
-                  filename = filename, stations = stations)
+      .process_gz(j, dsn., years., GPKG., CSV., filename., stations.)
     }
   )
   return(GSOD_XY)

@@ -39,6 +39,7 @@ Imports:
     fields,
     foreach,
     iterators,
+    parallel,
     plyr,
     R.utils,
     RCurl,

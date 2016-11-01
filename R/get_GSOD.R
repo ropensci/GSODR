@@ -218,17 +218,15 @@
 get_GSOD <- function(years = NULL, station = NULL, country = NULL,
                      dsn = NULL, filename = "GSOD", max_missing = 5,
                      agroclimatology = FALSE, CSV = FALSE, GPKG = FALSE,
-                     threads = NULL) {
+                     threads = 1) {
 
   # Set up options, create objects, fetch most recent station metadata ---------
   original_options <- options()
   options(warn = 2)
   options(timeout = 300)
 
-  if (!is.null(threads)) {
     cl <- parallel::makeCluster(threads)
     doParallel::registerDoParallel(cl)
-  }
 
   td <- tempdir()
 
@@ -272,8 +270,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
     file_list <- paste0(ftp, years, "/", "gsod_", years, ".tar")
     GSOD_XY <- plyr::ldply(.data = file_list, .fun = .dl_global_files,
                            agroclimatology = agroclimatology,
-                           country = country, stations = stations,
-                           td = td, years = years, .progress = "text")
+                           country = country, stations = stations, td = td, 
+                           threads = threads, years = years, .progress = "text")
   } else {
     # Individual stations
     message("\nDownloading the station file(s) now.")
@@ -281,15 +279,16 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
     file_list <- do.call(paste0, c(expand.grid(file_list, station)))
     file_list <- paste0(file_list, "-", years, ".op.gz")
     GSOD_XY <- plyr::ldply(.data = file_list, .fun = .dl_specified_stations,
-                           stations = stations, td = td, .progress = "text")
+                           CSV = CSV, dsn = dsn, filename = filename,
+                           GPKG = GPKG, stations = stations, td = td,
+                           threads = threads, years = years, .progress = "text")
   }
 
   return(GSOD_XY)
 
   # cleanup and reset to default state
-  if (!is.null(threads)) {
-    parallel::stopCluster(cl)
-  }
+  parallel::stopCluster(cl)
+
   unlink(td)
   options(original_options)
 }
