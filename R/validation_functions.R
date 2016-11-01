@@ -1,20 +1,22 @@
 # Functions used in GSODR for validating data and formatting user entries ------
 
 #' @noRd
-.check_missing <- function(max_missing, tmp, year) {
-  records <- R.utils::countLines(tmp)
+.check_missing <- function(GSOD_list, max_missing, td) {
+  records <- plyr::llply(.fun = R.utils::countLines,
+                         .data = paste0(td, "/", GSOD_list),
+                         .parallel = TRUE)
+  names(records) <- GSOD_list
+  year <- as.numeric(stringi::stri_extract_last(GSOD_list[1], regex = "\\d{4}"))
   if (.is_leapyear(year) == FALSE) {
     allow <- 365 - max_missing
-    !is.null(records) && records == 1 && !is.na(records) && 
-      ifelse(records >= allow, paste0(tmp), "")
+    GSOD_list <- stats::na.omit(ifelse(records >= allow, paste0(GSOD_list), NA))
   } else {
     if (.is_leapyear(year) == TRUE) {
       allow <- 366 - max_missing
-      !is.null(records) && records == 1 && !is.na(records) &&
-        ifelse(records >= allow, paste0(tmp), "")
-      return(tmp)
+      GSOD_list <- stats::na.omit(ifelse(records >= allow, paste0(GSOD_list), NA))
     }
   }
+  return(GSOD_list)
 }
 
 

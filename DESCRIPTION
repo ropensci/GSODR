@@ -35,7 +35,9 @@ Depends:
 License: GPL (>= 3)
 Imports:
     data.table,
+    doParallel,
     fields,
+    foreach,
     iterators,
     plyr,
     R.utils,
@@ -44,6 +46,7 @@ Imports:
     rgdal,
     sp,
     stats,
+    stringi,
     utils
 Suggests:
     chillR,

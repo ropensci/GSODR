@@ -50,6 +50,8 @@
 #' \code{dsn} being specified.
 #' @param GPKG Logical. If set to TRUE, create a GeoPackage file and save it
 #' locally in a user specified location. Depends on \code{dsn} being specified.
+#' @param threads Optional. A numeric value for the desired number of threads to
+#' launch for parallel processing.
 #'
 #' @details
 #' Data summarize each year by station, which include vapour pressure and
@@ -215,12 +217,18 @@
 #' @export
 get_GSOD <- function(years = NULL, station = NULL, country = NULL,
                      dsn = NULL, filename = "GSOD", max_missing = 5,
-                     agroclimatology = FALSE, CSV = FALSE, GPKG = FALSE) {
+                     agroclimatology = FALSE, CSV = FALSE, GPKG = FALSE,
+                     threads = NULL) {
 
   # Set up options, create objects, fetch most recent station metadata ---------
   original_options <- options()
   options(warn = 2)
   options(timeout = 300)
+
+  if (!is.null(threads)) {
+    cl <- parallel::makeCluster(threads)
+    doParallel::registerDoParallel(cl)
+  }
 
   td <- tempdir()
 
@@ -263,9 +271,9 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
     message("\nDownloading the data file(s) now.")
     file_list <- paste0(ftp, years, "/", "gsod_", years, ".tar")
     GSOD_XY <- plyr::ldply(.data = file_list, .fun = .dl_global_files,
-                            agroclimatology = agroclimatology,
-                            country = country, stations = stations,
-                            td = td, years = years, .progress = "text")
+                           agroclimatology = agroclimatology,
+                           country = country, stations = stations,
+                           td = td, years = years, .progress = "text")
   } else {
     # Individual stations
     message("\nDownloading the station file(s) now.")
@@ -279,6 +287,9 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
   return(GSOD_XY)
 
   # cleanup and reset to default state
+  if (!is.null(threads)) {
+    parallel::stopCluster(cl)
+  }
   unlink(td)
   options(original_options)
 }

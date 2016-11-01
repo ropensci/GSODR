@@ -1,8 +1,8 @@
 # Functions used in GSODR for handling files -----------------------------------
 
 #'@noRd
-.dl_global_files <- function(agroclimatology, country, file_list, stations, td,
-                             years) {
+.dl_global_files <- function(agroclimatology, country, CSV, dsn, file_list,
+                             filename, GPKG, stations, td, threads, years) {
 
   tryCatch(Map(function(ftp, dest)
     utils::download.file(url = ftp, destfile = dest),
@@ -13,9 +13,9 @@
 
   plyr::ldply(.data = tar_files, .fun = utils::untar, exdir = td)
 
-  GSOD_list <- list.files(td, pattern = "^.*\\.op.gz$", full.names = FALSE)
-  
-  GSOD_list <- plyr::llply(.data = GSOD_list, .function = .check_missing)
+  GSOD_list <- list.files(td, pattern = "^.*\\.op.gz$", full.names = TRUE)
+
+  GSOD_list <- .check_missing(GSOD_list, years)
 
   # If agroclimatology == TRUE, subset list of stations to process--------------
   if (agroclimatology == TRUE) {
@@ -37,12 +37,15 @@
                             c(expand.grid(station_list, "-", years, ".op.gz")))
     GSOD_list <- paste0(td, "/", GSOD_list[GSOD_list %in% station_list == TRUE])
   }
-  plyr::ldply(.data = GSOD_list, .fun = .process_gz, stations = stations)
+  .process_files(GSOD_list, dsn, filename, years, GPKG, CSV, threads, years)
 }
 
 
 #' @noRd
-.dl_specified_stations <- function(file_list, stations, td) {
+.dl_specified_stations <- function(CSV = CSV, dsn = dsn, filename = filename,
+                                   file_list = file_list, GPKG = GPKG,
+                                   stations = stations, td = td,
+                                   threads = threads, years = years) {
 
   filenames <- paste0(substr(file_list, 1, 43),
                       strsplit(RCurl::getURL(substr(file_list, 1, 43),
@@ -59,7 +62,7 @@
 
   GSOD_list <- list.files(path = td, pattern = "^.*\\.op.gz$",
                           full.names = TRUE)
-  plyr::ldply(.data = GSOD_list, .fun = .process_gz, stations = stations)
+  .process_files(GSOD_list, dsn, filename, GPKG, CSV, stations, threads, years)
 }
 
 #' @noRd
@@ -87,4 +90,21 @@
   stations <- stations[!is.na(stations$LAT), ]
   stations <- stations[!is.na(stations$LON), ]
   return(stations)
+}
+
+
+#' @noRd
+#' @importFrom foreach %dopar%
+.process_files <- function(GSOD_list, dsn, filename, GPKG, CSV, stations,
+                           threads, years) {
+
+  j <- NULL
+  itx <- iterators::iter(GSOD_list)
+  GSOD_XY <- data.table::rbindlist(
+    foreach::foreach(j = itx) %dopar% {
+      .process_gz(j, dsn = dsn, years = years, GPKG = GPKG, CSV = CSV,
+                  filename = filename, stations = stations)
+    }
+  )
+  return(GSOD_XY)
 }
