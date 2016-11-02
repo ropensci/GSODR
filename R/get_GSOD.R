@@ -218,17 +218,16 @@
 get_GSOD <- function(years = NULL, station = NULL, country = NULL,
                      dsn = NULL, filename = "GSOD", max_missing = 5,
                      agroclimatology = FALSE, CSV = FALSE, GPKG = FALSE,
-                     threads = NULL) {
+                     threads = 1) {
 
   # Set up options, create objects, fetch most recent station metadata ---------
   original_options <- options()
   options(warn = 2)
   options(timeout = 300)
 
-  if (!is.null(threads)) {
-    cl <- parallel::makeCluster(threads)
-    doParallel::registerDoParallel(cl)
-  }
+  cl <- parallel::makeCluster(threads)
+  doParallel::registerDoParallel(cl)
+
 
   td <- tempdir()
 
@@ -287,9 +286,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
   return(GSOD_XY)
 
   # cleanup and reset to default state
-  if (!is.null(threads)) {
-    parallel::stopCluster(cl)
-  }
+
+  parallel::stopCluster(cl)
   unlink(td)
   options(original_options)
 }
