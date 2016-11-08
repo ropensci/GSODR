@@ -25,7 +25,6 @@
 #' n <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 100)
 #'}
 #' @export
-#'
 nearest_stations <- function(LAT, LON, distance) {
   original_options <- options()
   options(warn = 2)
