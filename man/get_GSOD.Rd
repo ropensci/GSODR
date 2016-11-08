@@ -12,40 +12,38 @@ get_GSOD(years = NULL, station = NULL, country = NULL, dsn = NULL,
 \item{years}{Year(s) of weather data to download.}
 
 \item{station}{Optional. Specify a station or multiple stations for which to
-retrieve, check and clean weather data. The NCDC reports years for which the
+retrieve, check and clean weather data. The NCDC reports years for which the]
 data are available. This function checks against these years. However, not
 all cases are properly documented and in some cases files may not exist on
-the ftp server even though it is indicated that data was recorded for the
+the FTP server even though it is indicated that data was recorded for the
 station for a particular year. If a station is specified that does not have
 an existing file on the server, this function will silently fail and move on
-to existing files for download and cleaning from the ftp server.}
+to existing files for download and cleaning from the FTP server.}
 
 \item{country}{Optional. Specify a country of interest for which to retrieve
-weather data; full name. For stations located in locales having an ISO code 2
-or 3 letter ISO code can also be used if known. See
-\code{\link{country_list}} for a full list of country names and ISO codes
-available.}
+weather data; full name. For stations located in locales having an ISO code,
+the 2 or 3 letter ISO code can also be used if known.}
 
-\item{dsn}{Optional. Path to file write to if saving a local file is desired.}
+\item{dsn}{Optional. Path to file write to.}
 
 \item{filename}{Optional. The filename for resulting file(s) to be written
 with no file extension. Year and file extension will be automatically
 appended to file outputs. Defaults to "GSOD-year".}
 
 \item{max_missing}{Optional. The maximum number of days allowed to be missing
-from a station's data before it is excluded from final file output.}
+from a station's data before it is excluded from final data.}
 
-\item{agroclimatology}{Optional. Logical. Only clean data for stations
-between latitudes 60 and -60 for agroclimatology work, defaults to FALSE. Set
-to TRUE to include only stations within the confines of these latitudes.}
+\item{agroclimatology}{Optional. Logical. Only clean data for stations between
+latitudes 60 and -60 for agroclimatology work, defaults to FALSE. Set to
+TRUE to include only stations within the confines of these
+latitudes.}
 
-\item{CSV}{Optional. Logical. If set to TRUE, create a comma separated value
-(CSV) file and save it locally in a user specified location. Requires
+\item{CSV}{Optional. Logical. If set to TRUE, create a comma separated value (CSV)
+file ile and save it locally in a user specified location. Depends on
 \code{dsn} being specified.}
 
-\item{GPKG}{Optional. Logical. If set to TRUE, create a GeoPackage file and
-save it locally in a user specified location. Depends on \code{dsn} being
-specified.}
+\item{GPKG}{Optional. Logical. If set to TRUE, create a GeoPackage file and save it
+locally in a user specified location. Depends on \code{dsn} being specified.}
 }
 \description{
 This function automates downloading, cleaning, reformatting of data from
