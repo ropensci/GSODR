@@ -5,18 +5,18 @@
 #'Climatic Data Center (NCDC),
 #'\url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod},
 #'and calculates three new variables; Saturation Vapor Pressure (ES) – Actual
-#'Vapor Pressure (EA) and relative humidity (RH). Stations are individually
-#'checked for number of missing days to assure data quality, stations with too
-#'many missing observations are omitted. Additionally, stations reporting a
-#'latitude of < -90 or > 90 or longitude of < -180 or > 180 are removed. All
-#'units are converted to International System of Units (SI), e.g., Fahrenheit to
-#'Celsius and inches to millimetres. Alternative elevation measurements are
-#'supplied for missing values or values found to be questionable based on the
-#'Consultative Group for International Agricultural Research's Consortium for
-#'Spatial Information group's (CGIAR-CSI) Shuttle Radar Topography Mission 90
-#'metre (SRTM 90m) digital elevation data based on NASA's original SRTM 90m
-#'data. Further information on these data and methods can be found on GSODR's
-#'GitHub repository here:
+#'Vapor Pressure (EA) and relative humidity (RH). Stations reporting a latitude
+#'of < -90 or > 90 or longitude of < -180 or > 180 are removed. Stations may be
+#'individually checked for number of missing days to assure data quality and
+#'omitting stations with too many missing observations. All units are converted
+#'to International System of Units (SI), e.g., Fahrenheit to Celsius and inches
+#'to millimetres. Alternative elevation measurements are supplied for missing
+#'values or values found to be questionable based on the Consultative Group for
+#'International Agricultural Research's Consortium for Spatial Information
+#'group's (CGIAR-CSI) Shuttle Radar Topography Mission 90 metre (SRTM 90m)
+#'digital elevation data based on NASA's original SRTM 90m data. Further
+#'information on these data and methods can be found on GSODR's GitHub
+#'repository here:
 #'\url{https://github.com/adamhsparks/GSODR/blob/master/data-raw/fetch_isd-history.md}
 #'
 #' @param years Year(s) of weather data to download.
@@ -29,9 +29,9 @@
 #' an existing file on the server, this function will silently fail and move on
 #' to existing files for download and cleaning from the FTP server.
 #' @param country Optional. Specify a country of interest for which to retrieve
-#' weather data; full name. For stations located in locales having an ISO code,
+#' weather data; full name. For stations located in locales having an ISO code
 #' the 2 or 3 letter ISO code can also be used if known.
-#' @param dsn Optional. Path to file write to.
+#' @param dsn Optional. Local file path to file write to.
 #' @param filename Optional. The filename for resulting file(s) to be written
 #' with no file extension. Year and file extension will be automatically
 #' appended to file outputs. Defaults to "GSOD-year".
@@ -41,17 +41,18 @@
 #' latitudes 60 and -60 for agroclimatology work, defaults to FALSE. Set to
 #' TRUE to include only stations within the confines of these
 #' latitudes.
-#' @param CSV Optional. Logical. If set to TRUE, create a comma separated value (CSV)
-#' file ile and save it locally in a user specified location. Depends on
+#' @param CSV Optional. Logical. If set to TRUE, create a comma separated value
+#' (CSV) file and save it locally in a user specified location. Depends on
 #' \code{dsn} being specified.
-#' @param GPKG Optional. Logical. If set to TRUE, create a GeoPackage file and save it
-#' locally in a user specified location. Depends on \code{dsn} being specified.
+#' @param GPKG Optional. Logical. If set to TRUE, create a GeoPackage file and
+#' save it locally in a user specified location. Depends on \code{dsn} being
+#' specified.
 #'
 #' @details
-#' Data summarize each year by station, which include vapour pressure and
+#' Data are summarised each year by station, which include vapour pressure and
 #' relative humidity variables calculated from existing data in GSOD.
 #'
-#' If the option to save locally is selected. Output may be saved as comma-
+#' If the option to save locally is selected, output may be saved as comma-
 #' separated, CSV, files or GeoPackage files in a directory specified by the
 #' user, defaulting to the current working directory.
 #'
@@ -64,11 +65,11 @@
 #'For more information see the description of the data provided by NCDC,
 #'\url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
 #'
-#' The CSV or GeoPackage in the respective year-directory will contain the
-#' following fields/values:
+#' The data returned either in a data.frame object or a file written to local
+#' disk include the followig fields:
 #' \describe{
 #' \item{STNID}{Station number (WMO/DATSAV3 number) for the location}
-#' \item{WBAN}{number where applicable--this is the historical "Weather Bureau
+#' \item{WBAN}{Number where applicable--this is the historical "Weather Bureau
 #' Air Force Navy" number - with WBAN being the acronym}
 #' \item{STN_NAME}{Unique text identifier}
 #' \item{CTRY}{Country in which the station is located}
@@ -92,7 +93,7 @@
 #' = NA}
 #' \item{DEWP_CNT}{Number of observations used in calculating mean daily dew
 #' point}
-#' \item{SLP}{Mean sea level pressure in millibars to tenths. Missing =   NA}
+#' \item{SLP}{Mean sea level pressure in millibars to tenths. Missing = NA}
 #' \item{SLP_CNT}{Number of observations used in calculating mean sea level
 #' pressure}
 #' \item{STP}{Mean station pressure for the day in millibars to tenths.
@@ -186,8 +187,8 @@
 #' t <- get_GSOD(years = 2010, station = "955510-99999")
 #'
 #' # Download data for Philippines for year 2010 and generate a yearly
-#' # summary GeoPackage file, GSOD-RP-2010.gpkg, file in the user's home
-#' directory with a maximum of five missing days per station allowed.
+#' # summary GeoPackage file, Philippines_GSOD-2010.gpkg, file in the user's
+#' home directory with a maximum of five missing days per station allowed.
 #'
 #' get_GSOD(years = 2010, country = "Philippines", dsn = "~/",
 #' filename = "Philippines_GSOD", GPKG = TRUE, CSV = FALSE)
@@ -217,12 +218,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
   original_options <- options()
   options(warn = 2)
   options(timeout = 300)
-
-    cl <- parallel::makeCluster(threads)
-    doParallel::registerDoParallel(cl)
-
   td <- tempdir()
-
   ftp <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
 
   # Validate -------------------------------------------------------------------
@@ -280,7 +276,6 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
   return(GSOD_XY)
 
   # cleanup and reset to default state
-  parallel::stopCluster(cl)
 
   unlink(td)
   options(original_options)
