@@ -20,38 +20,34 @@
 #'\url{https://github.com/adamhsparks/GSODR/blob/master/data-raw/fetch_isd-history.md}
 #'
 #' @param years Year(s) of weather data to download.
-#' @param station Specify a station or multiple stations for which to retrieve,
-#' check and clean weather data. The NCDC reports years for which the data are
-#' available. This function checks against these years. However, not all cases
-#' are properly documented and in some cases files may not exist on the ftp
-#' server even though it is indicated that data was recorded for the station for
-#' a particular year. If a station is specified that does not have an
-#' existing file on the server, this function will silently fail and move on
+#' @param station Optional. Specify a station or multiple stations for which to
+#' retrieve, check and clean weather data. The NCDC reports years for which the
+#' data are available. This function checks against these years. However, not
+#' all cases are properly documented and in some cases files may not exist on
+#' the ftp server even though it is indicated that data was recorded for the
+#' station for a particular year. If a station is specified that does not have
+#' an existing file on the server, this function will silently fail and move on
 #' to existing files for download and cleaning from the ftp server.
-#' @param country Specify a country of interest for which to retrieve weather
-#' data; full name. For stations located in locales
-#' having an ISO code 2 or 3 letter ISO code can also be used if known. See
-#' \code{\link{country_list}} for a full list of country names and ISO
-#' codes available.
-#' @param dsn Path to file write to. (Optional)
-#' @param filename The filename for resulting file(s) to be written with no
-#' file extension. Year and file extension will be automatically appended to
-#' file outputs. Defaults to "GSOD-year". (Optional)
-#' @param max_missing The maximum number of days allowed to be missing from a
-#' station's data before it is excluded from final file output. Defaults to five
-#' days. If a single station is specified, this option is ignored and any data
-#' available, even an empty file, from NCDC will be returned.
-#' @param agroclimatology Logical. Only clean data for stations between
-#' latitudes 60 and -60 for agroclimatology work, defaults to FALSE. Set to
-#' TRUE to include only stations within the confines of these
-#' latitudes.
-#' @param CSV Logical. If set to TRUE, create a comma separated value (CSV)
-#' file ile and save it locally in a user specified location. Depends on
+#' @param country Optional. Specify a country of interest for which to retrieve
+#' weather data; full name. For stations located in locales having an ISO code 2
+#' or 3 letter ISO code can also be used if known. See
+#' \code{\link{country_list}} for a full list of country names and ISO codes
+#' available.
+#' @param dsn Optional. Path to file write to if saving a local file is desired.
+#' @param filename Optional. The filename for resulting file(s) to be written
+#' with no file extension. Year and file extension will be automatically
+#' appended to file outputs. Defaults to "GSOD-year".
+#' @param max_missing Optional. The maximum number of days allowed to be missing
+#' from a station's data before it is excluded from final file output.
+#' @param agroclimatology Optional. Logical. Only clean data for stations
+#' between latitudes 60 and -60 for agroclimatology work, defaults to FALSE. Set
+#' to TRUE to include only stations within the confines of these latitudes.
+#' @param CSV Optional. Logical. If set to TRUE, create a comma separated value
+#' (CSV) file and save it locally in a user specified location. Requires
 #' \code{dsn} being specified.
-#' @param GPKG Logical. If set to TRUE, create a GeoPackage file and save it
-#' locally in a user specified location. Depends on \code{dsn} being specified.
-#' @param threads Optional. A numeric value for the desired number of threads to
-#' launch for parallel processing.
+#' @param GPKG Optional. Logical. If set to TRUE, create a GeoPackage file and
+#' save it locally in a user specified location. Depends on \code{dsn} being
+#' specified.
 #'
 #' @details
 #' Data summarize each year by station, which include vapour pressure and
@@ -216,22 +212,16 @@
 #'
 #' @export
 get_GSOD <- function(years = NULL, station = NULL, country = NULL,
-                     dsn = NULL, filename = "GSOD", max_missing = 5,
-                     agroclimatology = FALSE, CSV = FALSE, GPKG = FALSE,
-                     threads = 1) {
+                     dsn = NULL, filename = "GSOD", max_missing = NULL,
+                     agroclimatology = FALSE, CSV = FALSE, GPKG = FALSE) {
 
   # Set up options, create objects, fetch most recent station metadata ---------
   original_options <- options()
   options(warn = 2)
   options(timeout = 300)
-
-  cl <- parallel::makeCluster(threads)
-  doParallel::registerDoParallel(cl)
-
-
   td <- tempdir()
-
   ftp <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
+
 
   # Validate -------------------------------------------------------------------
   # Check data path given by user, does it exist? Is it properly formatted?
@@ -258,10 +248,9 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
     country <- .get_country(country)
   }
 
-  # By default, if a single station is selected, then we will report even just
-  # one day of data if that's all that is recorded
-  if (!is.null(station)) {
-    max_missing <- 366
+  # Let user decide whether or not to filter station files with missing values
+  if (!is.null(max_missing)) {
+    max_missing <- max_missing
   }
 
   # Download and process data --------------------------------------------------
@@ -281,25 +270,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
     file_list <- paste0(file_list, "-", years, ".op.gz")
     GSOD_XY <- plyr::ldply(.data = file_list, .fun = .dl_specified_stations,
                            stations = stations, td = td, .progress = "text")
-  ftp_site <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
-
-  # Year loop ------------------------------------------------------------------
-  ity <- iterators::iter(years)
-  foreach::foreach(yr = ity) %do% {
-    if (is.null(station)) {
-      tryCatch(utils::download.file(url = paste0(ftp_site, yr, "/gsod_", yr,
-                                                 ".tar"),
-                                    destfile = tf, mode = "wb"),
-               error = function(x) message(paste0(
-                 "\nThe download stopped at year: ", yr, ".
-                \nPlease restart the 'get_GSOD()' function starting here.\n")))
-      utils::untar(tarfile = tf, exdir  = paste0(td, "/", yr, "/"))
-
-      message("\nFinished downloading file.
-              \nParsing the indivdual station files now.\n")
-      GSOD_list <- list.files(paste0(td, "/", yr, "/"),
-                              pattern = "^.*\\.gz$",
-                              full.names = FALSE)
+  }
 
       # If agroclimatology == TRUE, subset list of stations to clean -----------
       if (agroclimatology == TRUE) {
@@ -351,8 +322,6 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
       )
     } else {
       # Stations not specified ------------------------------------------------
-      cl <- parallel::makeCluster(threads)
-      doParallel::registerDoParallel(cl)
       itx <- iterators::iter(GSOD_list)
       GSOD_XY <- as.data.frame(
         data.table::rbindlist(
@@ -364,7 +333,6 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
           }
         )
       )
-      parallel::stopCluster(cl)
     }
 
     #### Write to disk ---------------------------------------------------------
@@ -400,10 +368,10 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
 
   # cleanup and reset to default state
 
-  parallel::stopCluster(cl)
   unlink(td)
   options(original_options)
 }
+
 
 # Functions used within this package -------------------------------------------
 # Check against maximum permissible missing days
@@ -471,17 +439,17 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
   tmp[, (YDAY) := as.numeric(strftime(as.Date(paste(tmp$YEAR, tmp$MONTH,
                                                     tmp$DAY, sep = "-")),
                                       format = "%j"))]
-  tmp[, (TEMP)  := round( ( (5 / 9) * ( (tmp$TEMP) - 32)), 1)]
-  tmp[, (DEWP)  := round( ( (5 / 9) * ( (tmp$DEWP) - 32)), 1)]
+  tmp[, (TEMP)  := round( ((5 / 9) * ((tmp$TEMP) - 32)), 1)]
+  tmp[, (DEWP)  := round( ((5 / 9) * ((tmp$DEWP) - 32)), 1)]
   tmp[, (WDSP)  := round( (tmp$WDSP) * 0.514444444, 1)]
   tmp[, (MXSPD) := round( (tmp$MXSPD) * 0.514444444, 1)]
   tmp[, (VISIB) := round( (tmp$VISIB) * 1.60934, 1)]
   tmp[, (WDSP)  := round( (tmp$WDSP) * 0.514444444, 1)]
   tmp[, (GUST)  := round( (tmp$GUST) * 0.514444444, 1)]
-  tmp[, (MAX)   := round( ( (tmp$MAX) - 32) * (5 / 9), 2)]
-  tmp[, (MIN)   := round( ( (tmp$MIN) - 32) * (5 / 9), 2)]
-  tmp[, (PRCP)  := round( ( (tmp$PRCP) * 25.4), 1)]
-  tmp[, (SNDP)  := round( ( (tmp$SNDP) * 25.4), 1)]
+  tmp[, (MAX)   := round( ((tmp$MAX) - 32) * (5 / 9), 2)]
+  tmp[, (MIN)   := round( ((tmp$MIN) - 32) * (5 / 9), 2)]
+  tmp[, (PRCP)  := round( ((tmp$PRCP) * 25.4), 1)]
+  tmp[, (SNDP)  := round( ((tmp$SNDP) * 25.4), 1)]
 
   # Compute other weather vars--------------------------------------------------
   # Mean actual (EA) and mean saturation vapour pressure (ES)
@@ -490,10 +458,10 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
 
   # EA derived from dew point
   tmp[, (EA) := round(0.61078 * exp( (17.2694 * (tmp$DEWP)) /
-                                       ( (tmp$DEWP) + 237.3)), 1)]
+                                       ((tmp$DEWP) + 237.3)), 1)]
   # ES derived from average temperature
   tmp[, (ES) := round(0.61078 * exp( (17.2694 * (tmp$TEMP)) /
-                                       ( (tmp$TEMP) + 237.3)), 1)]
+                                       ((tmp$TEMP) + 237.3)), 1)]
   # Calculate relative humidity
   tmp[, (RH) := round(tmp$EA / tmp$ES * 100, 1)]
 
@@ -653,7 +621,7 @@ can view the entire list of valid countries in this data by typing,
   }
 }
 
-.fetch_stations <- function(){
+.fetch_station_list <- function(){
   STNID <- NULL
   stations <- readr::read_csv(
     "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
@@ -684,5 +652,5 @@ can view the entire list of valid countries in this data by typing,
 # http://quantitative-ecology.blogspot.com.au/2009/10/leap-years.html
 .is_leapyear <- function(year){
   #http://en.wikipedia.org/wiki/Leap_year
-  return( ( (year %% 4 == 0) & (year %% 100 != 0)) | (year %% 400 == 0))
+  return( ((year %% 4 == 0) & (year %% 100 != 0)) | (year %% 400 == 0))
 }
