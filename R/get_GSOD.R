@@ -5,9 +5,9 @@
 #'Climatic Data Center (NCDC),
 #'\url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod},
 #'and calculates three new variables; Saturation Vapor Pressure (ES) – Actual
-#'Vapor Pressure (EA) and relative humidity (RH). Stations are individually
-#'checked for number of missing days to assure data quality, stations with too
-#'many missing observations are omitted. Additionally, stations reporting a
+#'Vapor Pressure (EA) and relative humidity (RH). Stations may be individually
+#'checked for number of missing days to assure data quality, with stations
+#'having too many missing observations being omitted. Any stations reporting a
 #'latitude of < -90 or > 90 or longitude of < -180 or > 180 are removed. All
 #'units are converted to International System of Units (SI), e.g., Fahrenheit to
 #'Celsius and inches to millimetres. Alternative elevation measurements are
@@ -20,46 +20,43 @@
 #'\url{https://github.com/adamhsparks/GSODR/blob/master/data-raw/fetch_isd-history.md}
 #'
 #' @param years Year(s) of weather data to download.
-#' @param station Specify a station or multiple stations for which to retrieve,
-#' check and clean weather data. The NCDC reports years for which the data are
-#' available. This function checks against these years. However, not all cases
-#' are properly documented and in some cases files may not exist on the ftp
-#' server even though it is indicated that data was recorded for the station for
-#' a particular year. If a station is specified that does not have an
-#' existing file on the server, this function will silently fail and move on
+#' @param station Optional. Specify a station or multiple stations for which to
+#' retrieve, check and clean weather data. The NCDC reports years for which the
+#' data are available. This function checks against these years. However, not
+#' all cases are properly documented and in some cases files may not exist on
+#' the ftp server even though it is indicated that data was recorded for the
+#' station for a particular year. If a station is specified that does not have
+#' an existing file on the server, this function will silently fail and move on
 #' to existing files for download and cleaning from the ftp server.
-#' @param country Specify a country of interest for which to retrieve weather
-#' data; full name. For stations located in locales
-#' having an ISO code 2 or 3 letter ISO code can also be used if known. See
+#' @param country Optional. Specify a country for which to retrieve weather
+#' data; full name or ISO codes can be used. See
 #' \code{\link{country_list}} for a full list of country names and ISO
 #' codes available.
-#' @param dsn Path to file write to. (Optional)
-#' @param filename The filename for resulting file(s) to be written with no
-#' file extension. Year and file extension will be automatically appended to
-#' file outputs. Defaults to "GSOD-year". (Optional)
-#' @param max_missing The maximum number of days allowed to be missing from a
-#' station's data before it is excluded from final file output. Defaults to five
-#' days. If a single station is specified, this option is ignored and any data
-#' available, even an empty file, from NCDC will be returned.
-#' @param agroclimatology Logical. Only clean data for stations between
-#' latitudes 60 and -60 for agroclimatology work, defaults to FALSE. Set to
-#' TRUE to include only stations within the confines of these
-#' latitudes.
-#' @param CSV Logical. If set to TRUE, create a comma separated value (CSV)
-#' file ile and save it locally in a user specified location. Depends on
+#' @param CSV Optional. Logical. If set to TRUE, create a comma separated value
+#' (CSV) file ile and save it locally in a user specified location. Depends on
 #' \code{dsn} being specified.
-#' @param GPKG Logical. If set to TRUE, create a GeoPackage file and save it
-#' locally in a user specified location. Depends on \code{dsn} being specified.
-#' @param threads The number of computing threads to use for parallel processing
-#' data. Defaults to 1.
+#' @param GPKG Optional. Logical. If set to TRUE, create a GeoPackage file and
+#' save it locally in a user specified location. Depends on \code{dsn} being
+#' specified.
+#' @param dsn Optional. Local file path to write file out to. Must be specified
+#' if CSV or GPKG parameters are selected.
+#' @param filename Optional. The filename for resulting file(s) to be written
+#' with no file extension. Year and file extension will be automatically
+#' appended to file outputs. Defaults to "GSOD-year". (Optional)
+#' @param max_missing Optional. The maximum number of days allowed to be missing
+#' from a station's data before it is excluded from final file output.
+#' @param agroclimatology Optional. Logical. Only clean data for stations
+#' between latitudes 60 and -60 for agroclimatology work, defaults to FALSE.
+#' Set to TRUE to include only stations within the confines of these
+#' latitudes.
 #'
 #' @details
-#' Data summarize each year by station, which include vapour pressure and
+#' Data summarise each year by station, which include vapour pressure and
 #' relative humidity variables calculated from existing data in GSOD.
 #'
 #' If the option to save locally is selected. Output may be saved as comma-
-#' separated, CSV, files or GeoPackage files in a directory specified by the
-#' user, defaulting to the current working directory.
+#' separated, CSV, files or GeoPackage, GPKC, files in a directory specified by
+#' the user, defaulting to the current working directory.
 #'
 #' When querying selected stations and electing to write files to disk, all
 #' years queried and stations queried will be merged into one final ouptut file.
@@ -192,8 +189,8 @@
 #' t <- get_GSOD(years = 2010, station = "955510-99999")
 #'
 #' # Download data for Philippines for year 2010 and generate a yearly
-#' # summary GeoPackage file, GSOD-RP-2010.gpkg, file in the user's home
-#' directory with a maximum of five missing days per station allowed.
+#' # summary GeoPackage file, Philippines_GSOD-2010.gpkg, file in the user's
+#' home directory with a maximum of five missing days per station allowed.
 #'
 #' get_GSOD(years = 2010, country = "Philippines", dsn = "~/",
 #' filename = "Philippines_GSOD", GPKG = TRUE, CSV = FALSE)
@@ -212,22 +209,18 @@
 #' SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
 #' \url{http://srtm.csi.cgiar.org}}
 #'
-#' @importFrom foreach %dopar%
 #' @importFrom data.table :=
 #'
 #' @export
 get_GSOD <- function(years = NULL, station = NULL, country = NULL,
-                     dsn = NULL, filename = "GSOD", max_missing = 5,
-                     agroclimatology = FALSE, CSV = FALSE, GPKG = FALSE,
-                     threads = 1) {
+                     dsn = NULL, filename = "GSOD", max_missing = NULL,
+                     agroclimatology = FALSE, CSV = FALSE, GPKG = FALSE) {
 
   # Set up options, create objects, fetch most recent station metadata ---------
   original_options <- options()
   options(warn = 2)
   options(timeout = 300)
-
   td <- tempdir()
-
   s <- yr <- LON <- LAT <- NULL
 
   ftp <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
@@ -259,36 +252,29 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
 
   # By default, if a single station is selected, then we will report even just
   # one day of data if that's all that is recorded
-  if (!is.null(station)) {
-    max_missing <- 366
+  if (!is.null(max_missing)) {
+    max_missing <- max_missing
   }
 
   # Download data --------------------------------------------------------------
 
   # Global or Agroclimatology
   if (is.null(station)) {
-    cl <- makeCluster(threads)
-    registerDoParallel(cl)
     message("\nDownloading the data file(s) now.")
     s <- paste0(ftp, years, "/", "gsod_", years, ".tar")
     GSOD_XY <- plyr::ldply(.data = s, .fun = .dl_global_files,
                            agroclimatology = agroclimatology, country = country,
                            max_missing = max_missing, stations = stations,
-                           td = td, threads = threads, .parallel = TRUE)
-    stopCluster(cl)
+                           td = td, years = years)
 
   } else {
     # Individual stations
-    cl <- makeCluster(threads)
-    registerDoParallel(cl)
     message("\nDownloading the station file(s) now.")
     s <- paste0(ftp, years, "/")
     s <- do.call(paste0, c(expand.grid(s, station)))
     s <- paste0(s, "-", years, ".op.gz")
     GSOD_XY <- plyr::ldply(.data = s, .fun = .dl_specified_stations,
-                           stations = stations, td = td, threads = threads,
-                           .parallel = TRUE)
-    stopCluster(cl)
+                           stations = stations, td = td, years = years)
   }
 
   #### Write to disk ---------------------------------------------------------
@@ -322,7 +308,6 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
   return(GSOD_XY)
 
   # cleanup and reset to default state
-  unlink(tf)
   unlink(td)
   options(original_options)
 }

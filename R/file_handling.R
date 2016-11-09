@@ -2,7 +2,7 @@
 
 #'@noRd
 .dl_global_files <- function(agroclimatology, country, max_missing, s, stations,
-                             td, threads) {
+                             td, years) {
 
   tryCatch(Map(function(ftp, dest)
     utils::download.file(url = ftp, destfile = dest),
