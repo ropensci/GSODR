@@ -13,7 +13,8 @@
   } else {
     if (.is_leapyear(year) == TRUE) {
       allow <- 366 - max_missing
-      GSOD_list <- stats::na.omit(ifelse(records >= allow, paste0(GSOD_list), NA))
+      GSOD_list <- stats::na.omit(ifelse(records >= allow, paste0(GSOD_list),
+                                         NA))
     }
   }
   return(GSOD_list)
@@ -57,7 +58,6 @@
 # is.leapyear function originally from Quantitative Ecology blog,
 # http://quantitative-ecology.blogspot.com.au/2009/10/leap-years.html
 .is_leapyear <- function(year){
-  #http://en.wikipedia.org/wiki/Leap_year
   return( ((year %% 4 == 0) & (year %% 100 != 0)) | (year %% 400 == 0))
 }
 
