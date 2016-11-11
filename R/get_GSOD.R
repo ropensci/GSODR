@@ -49,6 +49,10 @@
 #' between latitudes 60 and -60 for agroclimatology work, defaults to FALSE.
 #' Set to TRUE to include only stations within the confines of these
 #' latitudes.
+#' @param threads Optional. Use parallel processing to reduce the time needed
+#' for cleaning and formatting the data files. Defaults to one. User may
+#' specifiy any number of cores to be used so long as the processor can support
+#' it.
 #'
 #' @details
 #' Data summarise each year by station, which include vapour pressure and
@@ -214,7 +218,8 @@
 #' @export
 get_GSOD <- function(years = NULL, station = NULL, country = NULL,
                      dsn = NULL, filename = "GSOD", max_missing = NULL,
-                     agroclimatology = FALSE, CSV = FALSE, GPKG = FALSE) {
+                     agroclimatology = FALSE, CSV = FALSE, GPKG = FALSE,
+                     threads = 1) {
 
   # Set up options, create objects, fetch most recent station metadata ---------
   original_options <- options()
@@ -222,7 +227,6 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
   options(timeout = 300)
   td <- tempdir()
   s <- yr <- LON <- LAT <- NULL
-
   ftp <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
 
   # Validate -------------------------------------------------------------------

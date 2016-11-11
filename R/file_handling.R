@@ -1,8 +1,10 @@
 # Functions used in GSODR for handling files -----------------------------------
 
 #'@noRd
+#'@importFrom foreach %dopar%
+
 .dl_global_files <- function(agroclimatology, country, max_missing, s, stations,
-                             td, years) {
+                             td, threads, years) {
 
   tryCatch(Map(function(ftp, dest)
     utils::download.file(url = ftp, destfile = dest),
@@ -35,13 +37,20 @@
                             c(expand.grid(station_list, "-", years, ".op.gz")))
     GSOD_list <- paste0(td, "/", GSOD_list[GSOD_list %in% station_list == TRUE])
   }
-  GSOD_XY <- plyr::ldply(.data = GSOD_list, .fun = .process_gz,
-                         stations = stations)
+
+  cl <- parallel::makeCluster(threads)
+  parallell::registerDoParallel(cl)
+
+  ity <- iterators::iter(GSOD_list)
+  GSODY_XY <- foreach::foreach(i = ity) %dopar% {
+    .process_gz(i, stations = stations)
+  }
+
+  parallel::stopCluster(cl)
+
   return(GSOD_XY)
-  unlink(tf)
   unlink(td)
 }
-
 
 #' @noRd
 .dl_specified_stations <- function(s, stations, td, threads, years) {
@@ -68,7 +77,7 @@
 }
 
 #' @noRd
-.fetch_station_list <- function(){
+.fetch_station_list <- function() {
   STNID <- NULL
   stations <- readr::read_csv(
     "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",

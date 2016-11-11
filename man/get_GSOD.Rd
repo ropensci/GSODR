@@ -6,7 +6,7 @@
 \usage{
 get_GSOD(years = NULL, station = NULL, country = NULL, dsn = NULL,
   filename = "GSOD", max_missing = NULL, agroclimatology = FALSE,
-  CSV = FALSE, GPKG = FALSE)
+  CSV = FALSE, GPKG = FALSE, threads = 1)
 }
 \arguments{
 \item{years}{Year(s) of weather data to download.}
@@ -47,6 +47,11 @@ latitudes.}
 \item{GPKG}{Optional. Logical. If set to TRUE, create a GeoPackage file and
 save it locally in a user specified location. Depends on \code{dsn} being
 specified.}
+
+\item{threads}{Optional. Use parallel processing to reduce the time needed
+for cleaning and formatting the data files. Defaults to one. User may
+specifiy any number of cores to be used so long as the processor can support
+it.}
 }
 \description{
 This function automates downloading, cleaning, reformatting of data from
