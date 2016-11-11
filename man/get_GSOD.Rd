@@ -12,34 +12,36 @@ get_GSOD(years = NULL, station = NULL, country = NULL, dsn = NULL,
 \item{years}{Year(s) of weather data to download.}
 
 \item{station}{Optional. Specify a station or multiple stations for which to
-retrieve, check and clean weather data. The NCDC reports years for which the]
+retrieve, check and clean weather data. The NCDC reports years for which the
 data are available. This function checks against these years. However, not
 all cases are properly documented and in some cases files may not exist on
-the FTP server even though it is indicated that data was recorded for the
+the ftp server even though it is indicated that data was recorded for the
 station for a particular year. If a station is specified that does not have
 an existing file on the server, this function will silently fail and move on
-to existing files for download and cleaning from the FTP server.}
+to existing files for download and cleaning from the ftp server.}
 
-\item{country}{Optional. Specify a country of interest for which to retrieve
-weather data; full name. For stations located in locales having an ISO code
-the 2 or 3 letter ISO code can also be used if known.}
+\item{country}{Optional. Specify a country for which to retrieve weather
+data; full name or ISO codes can be used. See
+\code{\link{country_list}} for a full list of country names and ISO
+codes available.}
 
-\item{dsn}{Optional. Local file path to file write to.}
+\item{dsn}{Optional. Local file path to write file out to. Must be specified
+if CSV or GPKG parameters are selected.}
 
 \item{filename}{Optional. The filename for resulting file(s) to be written
 with no file extension. Year and file extension will be automatically
-appended to file outputs. Defaults to "GSOD-year".}
+appended to file outputs. Defaults to "GSOD-year". (Optional)}
 
 \item{max_missing}{Optional. The maximum number of days allowed to be missing
-from a station's data before it is excluded from final data.}
+from a station's data before it is excluded from final file output.}
 
-\item{agroclimatology}{Optional. Logical. Only clean data for stations between
-latitudes 60 and -60 for agroclimatology work, defaults to FALSE. Set to
-TRUE to include only stations within the confines of these
+\item{agroclimatology}{Optional. Logical. Only clean data for stations
+between latitudes 60 and -60 for agroclimatology work, defaults to FALSE.
+Set to TRUE to include only stations within the confines of these
 latitudes.}
 
 \item{CSV}{Optional. Logical. If set to TRUE, create a comma separated value
-(CSV) file and save it locally in a user specified location. Depends on
+(CSV) file ile and save it locally in a user specified location. Depends on
 \code{dsn} being specified.}
 
 \item{GPKG}{Optional. Logical. If set to TRUE, create a GeoPackage file and
@@ -67,12 +69,12 @@ repository here:
 \url{https://github.com/adamhsparks/GSODR/blob/master/data-raw/fetch_isd-history.md}
 }
 \details{
-Data are summarised each year by station, which include vapour pressure and
+Data summarise each year by station, which include vapour pressure and
 relative humidity variables calculated from existing data in GSOD.
 
-If the option to save locally is selected, output may be saved as comma-
-separated, CSV, files or GeoPackage files in a directory specified by the
-user, defaulting to the current working directory.
+If the option to save locally is selected. Output may be saved as comma-
+separated, CSV, files or GeoPackage, GPKC, files in a directory specified by
+the user, defaulting to the current working directory.
 
 When querying selected stations and electing to write files to disk, all
 years queried and stations queried will be merged into one final ouptut file.

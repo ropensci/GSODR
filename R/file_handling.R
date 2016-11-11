@@ -1,8 +1,9 @@
 # Functions used in GSODR for handling files -----------------------------------
 
 #'@noRd
-.dl_global_files <- function(agroclimatology, country, CSV, dsn, file_list,
-                             filename, GPKG, stations, td, threads, years) {
+
+.dl_global_files <- function(agroclimatology, country, max_missing, s, stations,
+                             td, years) {
 
   tryCatch(Map(function(ftp, dest)
     utils::download.file(url = ftp, destfile = dest),
@@ -37,7 +38,7 @@
                             c(expand.grid(station_list, "-", years, ".op.gz")))
     GSOD_list <- paste0(td, "/", GSOD_list[GSOD_list %in% station_list == TRUE])
   }
-  
+
   # Process files
   .process_files(GSOD_list, dsn. = dsn, filename. = filename, GPKG. = GPKG,
                  CSV. = CSV, threads. = threads, years. = years)
