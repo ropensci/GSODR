@@ -5,18 +5,18 @@
 #'Climatic Data Center (NCDC),
 #'\url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod},
 #'and calculates three new variables; Saturation Vapor Pressure (ES) – Actual
-#'Vapor Pressure (EA) and relative humidity (RH). Stations may be individually
-#'checked for number of missing days to assure data quality, with stations
-#'having too many missing observations being omitted. Any stations reporting a
-#'latitude of < -90 or > 90 or longitude of < -180 or > 180 are removed. All
-#'units are converted to International System of Units (SI), e.g., Fahrenheit to
-#'Celsius and inches to millimetres. Alternative elevation measurements are
-#'supplied for missing values or values found to be questionable based on the
-#'Consultative Group for International Agricultural Research's Consortium for
-#'Spatial Information group's (CGIAR-CSI) Shuttle Radar Topography Mission 90
-#'metre (SRTM 90m) digital elevation data based on NASA's original SRTM 90m
-#'data. Further information on these data and methods can be found on GSODR's
-#'GitHub repository here:
+#'Vapor Pressure (EA) and relative humidity (RH). Stations reporting a latitude
+#'of < -90 or > 90 or longitude of < -180 or > 180 are removed. Stations may be
+#'individually checked for number of missing days to assure data quality and
+#'omitting stations with too many missing observations. All units are converted
+#'to International System of Units (SI), e.g., Fahrenheit to Celsius and inches
+#'to millimetres. Alternative elevation measurements are supplied for missing
+#'values or values found to be questionable based on the Consultative Group for
+#'International Agricultural Research's Consortium for Spatial Information
+#'group's (CGIAR-CSI) Shuttle Radar Topography Mission 90 metre (SRTM 90m)
+#'digital elevation data based on NASA's original SRTM 90m data. Further
+#'information on these data and methods can be found on GSODR's GitHub
+#'repository here:
 #'\url{https://github.com/adamhsparks/GSODR/blob/master/data-raw/fetch_isd-history.md}
 #'
 #' @param years Year(s) of weather data to download.
@@ -71,11 +71,11 @@
 #'For more information see the description of the data provided by NCDC,
 #'\url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
 #'
-#' The CSV or GeoPackage in the respective year-directory will contain the
-#' following fields/values:
+#' The data returned either in a data.frame object or a file written to local
+#' disk include the followig fields:
 #' \describe{
 #' \item{STNID}{Station number (WMO/DATSAV3 number) for the location}
-#' \item{WBAN}{number where applicable--this is the historical "Weather Bureau
+#' \item{WBAN}{Number where applicable--this is the historical "Weather Bureau
 #' Air Force Navy" number - with WBAN being the acronym}
 #' \item{STN_NAME}{Unique text identifier}
 #' \item{CTRY}{Country in which the station is located}
@@ -99,7 +99,7 @@
 #' = NA}
 #' \item{DEWP_CNT}{Number of observations used in calculating mean daily dew
 #' point}
-#' \item{SLP}{Mean sea level pressure in millibars to tenths. Missing =   NA}
+#' \item{SLP}{Mean sea level pressure in millibars to tenths. Missing = NA}
 #' \item{SLP_CNT}{Number of observations used in calculating mean sea level
 #' pressure}
 #' \item{STP}{Mean station pressure for the day in millibars to tenths.
@@ -226,6 +226,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
   options(warn = 2)
   options(timeout = 300)
   td <- tempdir()
+
   s <- yr <- LON <- LAT <- NULL
   ftp <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
 
@@ -260,11 +261,11 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
     max_missing <- max_missing
   }
 
-  # Download data --------------------------------------------------------------
-
-  # Global or Agroclimatology
+  # Download and process data --------------------------------------------------
+  # Agroclimatology, Country or Global
   if (is.null(station)) {
     message("\nDownloading the data file(s) now.")
+
     s <- paste0(ftp, years, "/", "gsod_", years, ".tar")
     GSOD_XY <- plyr::ldply(.data = s, .fun = .dl_global_files,
                            agroclimatology = agroclimatology, country = country,
@@ -312,6 +313,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
   return(GSOD_XY)
 
   # cleanup and reset to default state
+
   unlink(td)
   options(original_options)
 }

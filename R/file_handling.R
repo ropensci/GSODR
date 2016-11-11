@@ -8,14 +8,16 @@
 
   tryCatch(Map(function(ftp, dest)
     utils::download.file(url = ftp, destfile = dest),
-    s, file.path(td, basename(s))), error = function(x) message(paste0(
-      "\nThe file downloads have failed. Please restart.\n")))
+    file_list, file.path(td, basename(file_list))), error = function(x) stop(
+      "\nThe file downloads have failed. Please restart.\n"))
 
   tar_files <- list.files(td, pattern = "^gsod.*\\.tar$", full.names = TRUE)
 
   plyr::ldply(.data = tar_files, .fun = utils::untar, exdir = td)
 
-  GSOD_list <- list.files(td, pattern = "^.*\\.op.gz$", full.names = FALSE)
+  GSOD_list <- list.files(td, pattern = "^.*\\.op.gz$", full.names = TRUE)
+
+  GSOD_list <- .check_missing(GSOD_list, years)
 
   # If agroclimatology == TRUE, subset list of stations to process--------------
   if (agroclimatology == TRUE) {
@@ -53,27 +55,27 @@
 }
 
 #' @noRd
-.dl_specified_stations <- function(s, stations, td, threads, years) {
+.dl_specified_stations <- function(file_list, filename, CSV, dsn, GPKG,
+                                   stations, td, threads, years) {
 
-  filenames <- paste0(substr(s, 1, 43),
-                      strsplit(RCurl::getURL(substr(s, 1, 43),
+  filenames <- paste0(substr(file_list, 1, 43),
+                      strsplit(RCurl::getURL(substr(file_list, 1, 43),
                                              ftp.use.epsv = FALSE,
                                              ftplistonly = TRUE, crlf = TRUE),
                                "\r*\n")[[1]])[-c(1:2)]
-  s <- filenames[which(s %in% filenames)]
+  file_list <- filenames[which(file_list %in% filenames)]
 
   tryCatch(Map(function(ftp, dest)
     utils::download.file(url = ftp, destfile = dest),
-    s, file.path(td, basename(s))),
+    file_list, file.path(td, basename(file_list))),
     error = function(x) message(paste0(
       "\nThe file downloads have failed. Please restart.\n")))
 
   GSOD_list <- list.files(path = td, pattern = "^.*\\.op.gz$",
                           full.names = TRUE)
-  GSOD_XY <- plyr::ldply(.data = GSOD_list, .fun = .process_gz,
-                         stations = stations)
-  return(GSOD_XY)
-  unlink(td)
+  .process_files(GSOD_list, dsn. = dsn, GPKG. = GPKG, CSV. = CSV,
+                 filename. = filename, stations. = stations,
+                 threads. = threads, years. = years)
 }
 
 #' @noRd
@@ -101,4 +103,20 @@
   stations <- stations[!is.na(stations$LAT), ]
   stations <- stations[!is.na(stations$LON), ]
   return(stations)
+}
+
+
+#' @noRd
+#' @importFrom foreach %dopar%
+.process_files <- function(GSOD_list, dsn., filename., GPKG., CSV.,
+                           stations., threads., years.) {
+
+  j <- NULL
+  itx <- iterators::iter(GSOD_list)
+  GSOD_XY <- data.table::rbindlist(
+    foreach::foreach(j = itx) %dopar% {
+      .process_gz(j, dsn., years., GPKG., CSV., filename., stations.)
+    }
+  )
+  return(GSOD_XY)
 }

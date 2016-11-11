@@ -1,8 +1,10 @@
 # Main function used by GSODR to process data files ----- ----------------------
 
 #' @noRd
-.process_gz <- function(gz_file, stations) {
+#' @importFrom data.table :=
+.process_gz <- function(gz_file, stations, dsn, years, GPKG, CSV, filename) {
 
+  LAT <- LON <- NULL
   GSOD_XY <- data.table::data.table()
 
   YEARMODA <- "YEARMODA"
@@ -79,17 +81,17 @@
                                                         tmp$DAY,
                                                         sep = "-")),
                                           format = "%j"))]
-  tmp[, (TEMP)  := round( ((5 / 9) * ((tmp$TEMP) - 32)), 1)]
-  tmp[, (DEWP)  := round( ((5 / 9) * ((tmp$DEWP) - 32)), 1)]
-  tmp[, (WDSP)  := round( (tmp$WDSP) * 0.514444444, 1)]
-  tmp[, (MXSPD) := round( (tmp$MXSPD) * 0.514444444, 1)]
-  tmp[, (VISIB) := round( (tmp$VISIB) * 1.60934, 1)]
-  tmp[, (WDSP)  := round( (tmp$WDSP) * 0.514444444, 1)]
-  tmp[, (GUST)  := round( (tmp$GUST) * 0.514444444, 1)]
-  tmp[, (MAX)   := round( ((tmp$MAX) - 32) * (5 / 9), 2)]
-  tmp[, (MIN)   := round( ((tmp$MIN) - 32) * (5 / 9), 2)]
-  tmp[, (PRCP)  := round( ((tmp$PRCP) * 25.4), 1)]
-  tmp[, (SNDP)  := round( ((tmp$SNDP) * 25.4), 1)]
+  tmp[, (TEMP)  := round(((5 / 9) * ((tmp$TEMP) - 32)), 1)]
+  tmp[, (DEWP)  := round(((5 / 9) * ((tmp$DEWP) - 32)), 1)]
+  tmp[, (WDSP)  := round((tmp$WDSP) * 0.514444444, 1)]
+  tmp[, (MXSPD) := round((tmp$MXSPD) * 0.514444444, 1)]
+  tmp[, (VISIB) := round((tmp$VISIB) * 1.60934, 1)]
+  tmp[, (WDSP)  := round((tmp$WDSP) * 0.514444444, 1)]
+  tmp[, (GUST)  := round((tmp$GUST) * 0.514444444, 1)]
+  tmp[, (MAX)   := round(((tmp$MAX) - 32) * (5 / 9), 2)]
+  tmp[, (MIN)   := round(((tmp$MIN) - 32) * (5 / 9), 2)]
+  tmp[, (PRCP)  := round(((tmp$PRCP) * 25.4), 1)]
+  tmp[, (SNDP)  := round(((tmp$SNDP) * 25.4), 1)]
 
   # Compute other weather vars--------------------------------------------------
 
@@ -98,10 +100,10 @@
   #   Edward Arnold, London
 
   # EA derived from dew point
-  tmp[, (EA) := round(0.61078 * exp( (17.2694 * (tmp$DEWP)) /
+  tmp[, (EA) := round(0.61078 * exp((17.2694 * (tmp$DEWP)) /
                                        ((tmp$DEWP) + 237.3)), 1)]
   # ES derived from average temperature
-  tmp[, (ES) := round(0.61078 * exp( (17.2694 * (tmp$TEMP)) /
+  tmp[, (ES) := round(0.61078 * exp((17.2694 * (tmp$TEMP)) /
                                        ((tmp$TEMP) + 237.3)), 1)]
   # Calculate relative humidity
   tmp[, (RH) := round(tmp$EA / tmp$ES * 100, 1)]
@@ -125,4 +127,32 @@
                                      "I_THUNDER", "I_TORNADO_FUNNEL", "EA",
                                      "ES", "RH"))
   return(GSOD_XY)
+
+  #### Write to disk ---------------------------------------------------------
+  if (!is.null(dsn)) {
+    outfile <- paste0(dsn, filename)
+
+    #### CSV file
+    if (CSV == TRUE) {
+      outfile <- paste0(outfile, "-", years, ".csv")
+      readr::write_csv(GSOD_XY, path = paste0(outfile))
+    }
+
+    #### GPKG file
+    if (GPKG == TRUE) {
+      outfile <- paste0(outfile, "-", years, ".gpkg")
+      # Convert object to standard df and then spatial object
+      GSOD_XY <- as.data.frame(GSOD_XY)
+      sp::coordinates(GSOD_XY) <- ~LON + LAT
+      sp::proj4string(GSOD_XY) <- sp::CRS("+proj=longlat +datum=WGS84")
+
+      # If the filename specified exists, remove it and create new
+      if (file.exists(path.expand(outfile))) {
+        file.remove(outfile)
+      }
+      # Create new .gpkg file
+      rgdal::writeOGR(GSOD_XY, dsn = path.expand(outfile), layer = "GSOD",
+                      driver = "GPKG")
+    }
+  }
 }

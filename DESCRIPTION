@@ -41,11 +41,13 @@ Imports:
     iterators,
     parallel,
     plyr,
+    R.utils,
     RCurl,
     readr,
     rgdal,
     sp,
     stats,
+    stringi,
     utils
 Suggests:
     chillR,

@@ -25,13 +25,12 @@
 #' n <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 100)
 #'}
 #' @export
-#'
 nearest_stations <- function(LAT, LON, distance) {
   original_options <- options()
   options(warn = 2)
   options(timeout = 300)
 
-  if (missing(stations)) {
+  if (!exists("stations")) {
     stations <- as.data.frame(.fetch_station_list())
   }
 
