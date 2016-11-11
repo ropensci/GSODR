@@ -231,7 +231,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
   ftp <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
 
   cl <- parallel::makeCluster(threads)
-  parallell::registerDoParallel(cl)
+  doParallel::registerDoParallel(cl)
 
   # Validate -------------------------------------------------------------------
   # Check data path given by user, does it exist? Is it properly formatted?

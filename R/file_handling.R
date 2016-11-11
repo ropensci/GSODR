@@ -45,9 +45,9 @@
   }
 
   ity <- iterators::iter(GSOD_list)
-  GSODY_XY <- as.data.frame(
+  GSOD_XY <- as.data.frame(
     data.table::rbindlist(
-      foreach::foreach(i = ity) %dopar% { process_gz(i, stations = stations)
+      foreach::foreach(i = ity) %dopar% {.process_gz(i, stations = stations)
       }
     )
   )
