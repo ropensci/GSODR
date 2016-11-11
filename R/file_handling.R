@@ -6,6 +6,8 @@
 .dl_global_files <- function(agroclimatology, country, max_missing, s, stations,
                              td, threads, years) {
 
+  i <- NULL
+
   tryCatch(Map(function(ftp, dest)
     utils::download.file(url = ftp, destfile = dest),
     s, file.path(td, basename(s))), error = function(x) stop(
@@ -43,9 +45,12 @@
   }
 
   ity <- iterators::iter(GSOD_list)
-  GSODY_XY <- foreach::foreach(i = ity) %dopar% {
-    .process_gz(i, stations = stations)
-  }
+  GSODY_XY <- as.data.frame(
+    data.table::rbindlist(
+      foreach::foreach(i = ity) %dopar% { process_gz(i, stations = stations)
+      }
+    )
+  )
 
   return(GSOD_XY)
   unlink(td)
