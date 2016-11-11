@@ -8,7 +8,7 @@
 
   tryCatch(Map(function(ftp, dest)
     utils::download.file(url = ftp, destfile = dest),
-    file_list, file.path(td, basename(file_list))), error = function(x) stop(
+    s, file.path(td, basename(s))), error = function(x) stop(
       "\nThe file downloads have failed. Please restart.\n"))
 
   tar_files <- list.files(td, pattern = "^gsod.*\\.tar$", full.names = TRUE)
@@ -17,7 +17,9 @@
 
   GSOD_list <- list.files(td, pattern = "^.*\\.op.gz$", full.names = TRUE)
 
-  GSOD_list <- .check_missing(GSOD_list, years)
+  if (!is.null(max_missing)) {
+    GSOD_list <- .check_missing(GSOD_list, years)
+  }
 
   # If agroclimatology == TRUE, subset list of stations to process--------------
   if (agroclimatology == TRUE) {
@@ -40,15 +42,10 @@
     GSOD_list <- paste0(td, "/", GSOD_list[GSOD_list %in% station_list == TRUE])
   }
 
-  cl <- parallel::makeCluster(threads)
-  parallell::registerDoParallel(cl)
-
   ity <- iterators::iter(GSOD_list)
   GSODY_XY <- foreach::foreach(i = ity) %dopar% {
     .process_gz(i, stations = stations)
   }
-
-  parallel::stopCluster(cl)
 
   return(GSOD_XY)
   unlink(td)

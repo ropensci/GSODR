@@ -230,6 +230,9 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
   s <- yr <- LON <- LAT <- NULL
   ftp <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
 
+  cl <- parallel::makeCluster(threads)
+  parallell::registerDoParallel(cl)
+
   # Validate -------------------------------------------------------------------
   # Check data path given by user, does it exist? Is it properly formatted?
   if (!is.null(dsn)) {
@@ -314,6 +317,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
 
   # cleanup and reset to default state
 
+  parallel::stopCluster(cl)
   unlink(td)
   options(original_options)
 }
