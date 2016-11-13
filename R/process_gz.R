@@ -3,9 +3,7 @@
 #' @noRd
 #' @importFrom data.table :=
 .process_gz <- function(gz_file, stations) {
-  
   GSOD_XY <- data.table::data.table()
-  
   YEARMODA <- "YEARMODA"
   MONTH <- "MONTH"
   DAY <- "DAY"
@@ -27,7 +25,6 @@
   VISIB <- "VISIB"
   WBAN <- "WBAN"
   WDSP <- "WDSP"
-  
   tmp <- data.table::setDT(
     readr::read_fwf(
       file = gz_file, skip = 1,
@@ -58,7 +55,6 @@
                                          "I_TORNADO_FUNNEL")),
       col_types = c("ccccdididididididddcdcdcdiiiiii"),
       na = c("9999.9", "999.9", "99.99")))
-  
   # add names to columns in data table
   data.table::setnames(tmp, c("STN", "WBAN", "YEAR", "MODA", "TEMP",
                               "TEMP_CNT", "DEWP", "DEWP_CNT", "SLP",
@@ -68,7 +64,6 @@
                               "PRCP", "PRCP_FLAG", "SNDP", "I_FOG",
                               "I_RAIN_DRIZZLE", "I_SNOW_ICE", "I_HAIL",
                               "I_THUNDER", "I_TORNADO_FUNNEL"))
-  
   # Clean up and convert the station and weather data to metric ----------------
   tmp[, (STNID) := paste(tmp$STN, tmp$WBAN, sep = "-")]
   tmp[, (WBAN) := NULL]
@@ -82,24 +77,21 @@
                                                     tmp$DAY,
                                                     sep = "-")),
                                       format = "%j"))]
-  tmp[, (TEMP)  := round(((5 / 9) * ((tmp$TEMP) - 32)), 1)]
-  tmp[, (DEWP)  := round(((5 / 9) * ((tmp$DEWP) - 32)), 1)]
-  tmp[, (WDSP)  := round((tmp$WDSP) * 0.514444444, 1)]
-  tmp[, (MXSPD) := round((tmp$MXSPD) * 0.514444444, 1)]
-  tmp[, (VISIB) := round((tmp$VISIB) * 1.60934, 1)]
-  tmp[, (WDSP)  := round((tmp$WDSP) * 0.514444444, 1)]
-  tmp[, (GUST)  := round((tmp$GUST) * 0.514444444, 1)]
-  tmp[, (MAX)   := round(((tmp$MAX) - 32) * (5 / 9), 2)]
-  tmp[, (MIN)   := round(((tmp$MIN) - 32) * (5 / 9), 2)]
-  tmp[, (PRCP)  := round(((tmp$PRCP) * 25.4), 1)]
-  tmp[, (SNDP)  := round(((tmp$SNDP) * 25.4), 1)]
-  
+  tmp[, (TEMP)  := round((5 / 9) * (tmp$TEMP - 32), 1)]
+  tmp[, (DEWP)  := round((5 / 9) * (tmp$DEWP - 32), 1)]
+  tmp[, (WDSP)  := round(tmp$WDSP * 0.514444444, 1)]
+  tmp[, (MXSPD) := round(tmp$MXSPD * 0.514444444, 1)]
+  tmp[, (VISIB) := round(tmp$VISIB * 1.60934, 1)]
+  tmp[, (WDSP)  := round(tmp$WDSP * 0.514444444, 1)]
+  tmp[, (GUST)  := round(tmp$GUST * 0.514444444, 1)]
+  tmp[, (MAX)   := round((tmp$MAX - 32) * (5 / 9), 2)]
+  tmp[, (MIN)   := round((tmp$MIN - 32) * (5 / 9), 2)]
+  tmp[, (PRCP)  := round(tmp$PRCP * 25.4, 1)]
+  tmp[, (SNDP)  := round(tmp$SNDP * 25.4, 1)]
   # Compute other weather vars--------------------------------------------------
-  
   # Mean actual (EA) and mean saturation vapour pressure (ES)
   # Monteith JL (1973) Principles of environmental physics.
   #   Edward Arnold, London
-  
   # EA derived from dew point
   tmp[, (EA) := round(0.61078 * exp((17.2694 * (tmp$DEWP)) /
                                       ((tmp$DEWP) + 237.3)), 1)]
@@ -108,12 +100,10 @@
                                       ((tmp$TEMP) + 237.3)), 1)]
   # Calculate relative humidity
   tmp[, (RH) := round(tmp$EA / tmp$ES * 100, 1)]
-  
   # Join to the station and SRTM data-------------------------------------------
   data.table::setkey(tmp, STNID)
   data.table::setkey(stations, STNID)
   GSOD_XY <- stations[tmp]
-  
   data.table::setcolorder(GSOD_XY, c("USAF", "WBAN", "STNID", "STN_NAME",
                                      "CTRY", "STATE", "CALL", "LAT", "LON",
                                      "ELEV_M", "ELEV_M_SRTM_90m", "BEGIN",

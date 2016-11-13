@@ -309,9 +309,9 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
         c <- which(country == GSODR::country_list$iso3c)
         country <- GSODR::country_list[[c, 1]]
       } else {
-        stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you
-           can view the entire list of valid countries in this data by typing,
-           'country_list'.\n")
+        stop("\nPlease provide a valid name or 2 or 3 letter ISO country code;
+              you can view the entire list of valid countries in this data by
+              typing, 'country_list'.\n")
       }
     } else if (nc == 2) {
       if (country %in% GSODR::country_list$iso2c) {
@@ -379,7 +379,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
                                        NA))
   }
 
-  # If agroclimatology is set TRUE, subset list of stations to process--------------
+  # If agroclimatology is set TRUE, subset list of stations to process----------
   if (agroclimatology == TRUE) {
     station_list <- stations[stations$LAT >= -60 &
                                stations$LAT <= 60, ]$STNID
@@ -416,13 +416,13 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
 
   # Write files to disk --------------------------------------------------------
 
-  # CSV file------------------------------------------------------------------
+  # CSV file--------------------------------------------------------------------
   if (CSV == TRUE) {
     outfile <- paste0(outfile, ".csv")
     readr::write_csv(GSOD_XY, path = paste0(outfile))
   }
 
-  # GPKG file ----------------------------------------------------------------
+  # GPKG file ------------------------------------------------------------------
   if (GPKG == TRUE) {
     outfile <- paste0(outfile, ".gpkg")
     # Convert object to standard df and then spatial object
