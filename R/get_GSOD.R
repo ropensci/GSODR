@@ -279,7 +279,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
 
   # Fetch latest station metadata from NCDC server -----------------------------
   if (!exists("stations")) {
-    stations <- .fetch_stations()
+    stations <- .fetch_station_list()
   }
 
   # Check station integrity ----------------------------------------------------
