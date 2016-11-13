@@ -35,11 +35,7 @@ Depends:
 License: GPL (>= 3)
 Imports:
     data.table,
-    doParallel,
     fields,
-    foreach,
-    iterators,
-    parallel,
     plyr,
     R.utils,
     RCurl,

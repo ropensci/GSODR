@@ -33,33 +33,31 @@
 #' \code{\link{country_list}} for a full list of country names and ISO
 #' codes available.
 #' @param CSV Optional. Logical. If set to TRUE, create a comma separated value
-#' (CSV) file ile and save it locally in a user specified location. Depends on
-#' \code{dsn} being specified.
+#' (CSV) file and save it locally in a user specified location. Depends on
+#' \code{dsn} and \code{filename} being specified.
 #' @param GPKG Optional. Logical. If set to TRUE, create a GeoPackage file and
-#' save it locally in a user specified location. Depends on \code{dsn} being
-#' specified.
+#' save it locally in a user specified location. Depends on
+#' \code{dsn} and \code{filename} being specified.
 #' @param dsn Optional. Local file path to write file out to. Must be specified
-#' if CSV or GPKG parameters are selected.
+#' if CSV or GPKG parameters are selected. Depends on \code{CSV} and/or
+#' \code{GPKG} being set to TRUE and \code{filename} being specified.
 #' @param filename Optional. The filename for resulting file(s) to be written
-#' with no file extension. Year and file extension will be automatically
-#' appended to file outputs. Defaults to "GSOD-year". (Optional)
+#' with no file extension. File extension will be automatically appended to file
+#' outputs. Depends on \code{CSV} and/or \code{GPKG} set to TRUE and
+#' \code{filename} being specified.
 #' @param max_missing Optional. The maximum number of days allowed to be missing
 #' from a station's data before it is excluded from final file output.
 #' @param agroclimatology Optional. Logical. Only clean data for stations
 #' between latitudes 60 and -60 for agroclimatology work, defaults to FALSE.
 #' Set to TRUE to include only stations within the confines of these
 #' latitudes.
-#' @param threads Optional. Use parallel processing to reduce the time needed
-#' for cleaning and formatting the data files. Defaults to one. User may
-#' specifiy any number of cores to be used so long as the processor can support
-#' it.
 #'
 #' @details
 #' Data summarise each year by station, which include vapour pressure and
 #' relative humidity variables calculated from existing data in GSOD.
 #'
 #' If the option to save locally is selected. Output may be saved as comma-
-#' separated, CSV, files or GeoPackage, GPKC, files in a directory specified by
+#' separated, CSV, files or GeoPackage, GPKG, files in a directory specified by
 #' the user, defaulting to the current working directory.
 #'
 #' When querying selected stations and electing to write files to disk, all
@@ -213,111 +211,237 @@
 #' SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
 #' \url{http://srtm.csi.cgiar.org}}
 #'
-#' @importFrom data.table :=
-#'
 #' @export
 get_GSOD <- function(years = NULL, station = NULL, country = NULL,
-                     dsn = NULL, filename = "GSOD", max_missing = NULL,
-                     agroclimatology = FALSE, CSV = FALSE, GPKG = FALSE,
-                     threads = 1) {
+                     dsn = NULL, filename = NULL, max_missing = NULL,
+                     agroclimatology = FALSE, CSV = FALSE, GPKG = FALSE) {
 
   # Set up options, create objects, fetch most recent station metadata ---------
   original_options <- options()
   options(warn = 2)
   options(timeout = 300)
   td <- tempdir()
-
-  s <- yr <- LON <- LAT <- NULL
+  LON <- LAT <- NULL
   ftp <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
 
-  cl <- parallel::makeCluster(threads)
-  doParallel::registerDoParallel(cl)
-
-  # Validate -------------------------------------------------------------------
-  # Check data path given by user, does it exist? Is it properly formatted?
-  if (!is.null(dsn)) {
-    dsn <- .validate_dsn(dsn)
-  }
-
-  # fetch most recent station history file
-  if (!exists("stations")) {
-    stations <- .fetch_station_list()
-  }
-
-  # Check years given by the user, are they valid?
-  .validate_years(years)
-
-  # Check station given by user and check that years for this station are valid
-  if (!is.null(station)) {
-    .validate_station(station, stations)
-    .validate_station_years(station, stations, years)
-  }
-
-  # Check country given by user and format for use in function
-  if (!is.null(country)) {
-    country <- .get_country(country)
-  }
-
-  # By default, if a single station is selected, then we will report even just
-  # one day of data if that's all that is recorded
-  if (!is.null(max_missing)) {
-    max_missing <- max_missing
-  }
-
-  # Download and process data --------------------------------------------------
-  # Agroclimatology, Country or Global
-  if (is.null(station)) {
-    message("\nDownloading the data file(s) now.")
-
-    s <- paste0(ftp, years, "/", "gsod_", years, ".tar")
-    GSOD_XY <- plyr::ldply(.data = s, .fun = .dl_global_files,
-                           agroclimatology = agroclimatology, country = country,
-                           max_missing = max_missing, stations = stations,
-                           td = td, years = years)
-
+  # Validate years -------------------------------------------------------------
+  this_year <- 1900 + as.POSIXlt(Sys.Date())$year
+  if (is.null(years) | is.character(years)) {
+    stop("\nYou must provide at least one year of data to download in a numeric
+         format.\n")
   } else {
-    # Individual stations
-    message("\nDownloading the station file(s) now.")
-    s <- paste0(ftp, years, "/")
-    s <- do.call(paste0, c(expand.grid(s, station)))
-    s <- paste0(s, "-", years, ".op.gz")
-    GSOD_XY <- plyr::ldply(.data = s, .fun = .dl_specified_stations,
-                           stations = stations, td = td, years = years)
+    for (i in years) {
+      if (i <= 0) {
+        stop("\nThis is not a valid year.\n")
+      } else if (i < 1929) {
+        stop("\nThe GSOD data files start at 1929, you have entered a year prior
+             to 1929.\n")
+      } else if (i > this_year) {
+        stop("\nThe year cannot be greater than current year.\n")
+      }
+    }
   }
 
-  #### Write to disk ---------------------------------------------------------
-  if (!is.null(dsn)) {
-    outfile <- paste0(dsn, filename)
-
-    #### CSV file-------------------------------------------------------------
-    if (CSV == TRUE) {
-      outfile <- paste0(outfile, "-", yr, ".csv")
-      readr::write_csv(GSOD_XY, path = paste0(outfile))
+  # If file outs are specified, check that everything is in place --------------
+  if (isTRUE(CSV) | isTRUE(GPKG)) {
+    if (is.null(dsn)) {
+      stop("\nYou must supply a valid file path (dsn) for storing the resulting
+           file(s).\n")
+    } else {
+        dsn <- trimws(dsn)
     }
+  }
 
-    #### GPKG file -----------------------------------------------------------
-    if (GPKG == TRUE) {
-      outfile <- paste0(outfile, "-", yr, ".gpkg")
-      # Convert object to standard df and then spatial object
-      GSOD_XY <- as.data.frame(GSOD_XY)
-      sp::coordinates(GSOD_XY) <- ~LON + LAT
-      sp::proj4string(GSOD_XY) <- sp::CRS("+proj=longlat +datum=WGS84")
+  if (!isTRUE(CSV) | !isTRUE(GPKG)) {
+    stop("\nYou must supply a valid file format (CSV or GPKG) for storing the
+           resulting file(s).\n")
+  } else {
+    if (substr(dsn, nchar(dsn) - 1, nchar(dsn)) == "//") {
+      p <- substr(dsn, 1, nchar(dsn) - 2)
+    } else if (substr(dsn, nchar(dsn), nchar(dsn)) == "/" |
+               substr(dsn, nchar(dsn), nchar(dsn)) == "\\") {
+      p <- substr(dsn, 1, nchar(dsn) - 1)
+    } else {
+      p <- dsn
+    }
+    if (!file.exists(p) & !file.exists(dsn)) {
+      stop("\nFile path does not exist: ", dsn, ".\n")
+    }
+  }
+  if (substr(dsn, nchar(dsn), nchar(dsn)) != "/" &
+      substr(dsn, nchar(dsn), nchar(dsn)) != "\\") {
+    dsn <- paste0(dsn, "/")
+  }
+  if (is.null(filename)) {
+    filename <- "GSOD"
+  }
+  outfile <- paste0(dsn, filename)
 
-      # If the filename specified exists, remove it and create new
-      if (file.exists(path.expand(outfile))) {
-        file.remove(outfile)
+  # Fetch latest station metadata from NCDC server -----------------------------
+  if (!exists("stations")) {
+    stations <- .fetch_stations()
+  }
+
+  # Check station integrity ----------------------------------------------------
+  if (!is.null(station)) {
+    if (!station %in% stations[[12]]) {
+      stop("\nThis is not a valid station ID number, please check your entry.
+         \nStation IDs are provided as a part of the GSODR package in the
+         'stations' data\nin the STNID column.\n")
+    }
+    # check station years in station listing
+    for (vsy in station) {
+      BEGIN <- as.numeric(substr(stations[stations[[12]] == vsy]$BEGIN, 1, 4))
+      END <- as.numeric(substr(stations[stations[[12]] == vsy]$END, 1, 4))
+      if (min(years) < BEGIN | max(years) > END)
+        message("This station, ", vsy, ", only provides data for years ", BEGIN,
+                " to ", END, ".\n")
+    }
+  }
+
+
+  # If country supplied, check and return letter code for filtering data ------
+  if (!is.null(country)) {
+    country <- toupper(trimws(country[1]))
+    nc <- nchar(country)
+    if (nc == 3) {
+      if (country %in% GSODR::country_list$iso3c) {
+        c <- which(country == GSODR::country_list$iso3c)
+        country <- GSODR::country_list[[c, 1]]
+      } else {
+        stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you
+           can view the entire list of valid countries in this data by typing,
+           'country_list'.\n")
       }
-      # Create new .gpkg file
-      rgdal::writeOGR(GSOD_XY, dsn = path.expand(outfile), layer = "GSOD",
-                      driver = "GPKG")
+    } else if (nc == 2) {
+      if (country %in% GSODR::country_list$iso2c) {
+        c <- which(country == GSODR::country_list$iso2c)
+        country <- GSODR::country_list[[c, 1]]
+      } else {
+        stop("\nPlease provide a valid name or 2 or 3 letter ISO country code;
+              you can view the entire list of valid countries in this data by
+              typing, 'country_list'.\n")
+      }
+    } else if (country %in% GSODR::country_list$COUNTRY_NAME) {
+      c <- which(country == GSODR::country_list$COUNTRY_NAME)
+      country <- GSODR::country_list[[c, 1]]
+    } else {
+      stop("\nPlease provide a valid name or 2 or 3 letter ISO country code;
+              you can view the entire list of valid countries in this data by
+              typing, 'country_list'.\n")
     }
+  }
+
+
+  # Download complete tar files ------------------------------------------------
+  if (is.null(station)) {
+    file_list <- paste0(ftp, years, "/", "gsod_", years, ".tar")
+    tryCatch(Map(function(ftp, dest)
+      utils::download.file(url = ftp, destfile = dest),
+      file_list, file.path(td, basename(file_list))), error = function(x) stop(
+        "\nThe file downloads have failed. Please restart.\n"))
+
+    tar_files <- list.files(td, pattern = "^gsod.*\\.tar$", full.names = TRUE)
+
+    plyr::ldply(.data = tar_files, .fun = utils::untar, exdir = td)
+
+    GSOD_list <- list.files(td, pattern = "^.*\\.op.gz$", full.names = TRUE)
+  }
+
+  # Download specific station files --------------------------------------------
+  if (!is.null(station)) {
+    message("\nDownloading the station file(s) now.")
+    file_list <- paste0(ftp, years, "/")
+    file_list <- do.call(paste0, c(expand.grid(file_list, station)))
+    file_list <- paste0(file_list, "-", years, ".op.gz")
+
+    tryCatch(Map(function(ftp, dest)
+      utils::download.file(url = ftp, destfile = dest),
+      file_list, file.path(td, basename(file_list))),
+      error = function(x) message(paste0(
+        "\nThe file downloads have failed. Please restart.\n")))
+
+    GSOD_list <- list.files(path = td, pattern = "^.*\\.op.gz$",
+                            full.names = TRUE)
+  }
+
+  # Check for max_missing ------------------------------------------------------
+  if (!is.null(max_missing)) {
+    records <- lapply(data = paste0(td, "/", GSOD_list), R.utils::countLines)
+    names(records) <- GSOD_list
+    year <- as.numeric(gsub("[^0-9]", "", GSOD_list[1]))
+
+    ifelse(format(as.POSIXct(paste0(year, "-03-01")) - 1, "%d") != "29",
+           allow <- 365 - max_missing,
+           allow <- 366 - max_missing)
+
+    GSOD_list <- stats::na.omit(ifelse(records >= allow, paste0(GSOD_list),
+                                       NA))
+  }
+
+  # If agroclimatology is set TRUE, subset list of stations to process--------------
+  if (agroclimatology == TRUE) {
+    station_list <- stations[stations$LAT >= -60 &
+                               stations$LAT <= 60, ]$STNID
+    station_list <- do.call(paste0,
+                            c(expand.grid(td, "/", station_list, "-", years,
+                                          ".op.gz")))
+    GSOD_list <- GSOD_list[GSOD_list %in% station_list == TRUE]
+    rm(station_list)
+  }
+
+  # If country is set, subset list of stations to process ----------------------
+  if (!is.null(country)) {
+    country_FIPS <- unlist(as.character(stats::na.omit(
+      GSODR::country_list[GSODR::country_list$FIPS == country, ][[1]]),
+      use.names = FALSE))
+    station_list <- stations[stations$CTRY == country_FIPS, ]$STNID
+    station_list <- do.call(paste0,
+                            c(expand.grid(td, "/", station_list, "-", years,
+                                          ".op.gz")))
+    GSOD_list <- GSOD_list[GSOD_list %in% station_list == TRUE]
+    rm(station_list)
+  }
+
+  # Clean and reformat list of station files from local disk in tempdir --------
+
+  message("Starting data file processing")
+  GSOD_XY <- as.data.frame(
+        try(
+          plyr::ldply(.data = GSOD_list, .fun = .process_gz,
+                      stations = stations, .progress = "text")
+        )
+    )
+
+
+  # Write files to disk --------------------------------------------------------
+
+  # CSV file------------------------------------------------------------------
+  if (CSV == TRUE) {
+    outfile <- paste0(outfile, ".csv")
+    readr::write_csv(GSOD_XY, path = paste0(outfile))
+  }
+
+  # GPKG file ----------------------------------------------------------------
+  if (GPKG == TRUE) {
+    outfile <- paste0(outfile, ".gpkg")
+    # Convert object to standard df and then spatial object
+    GSOD_XY <- as.data.frame(GSOD_XY)
+    sp::coordinates(GSOD_XY) <- ~LON + LAT
+    sp::proj4string(GSOD_XY) <- sp::CRS("+proj=longlat +datum=WGS84")
+
+    # If the filename specified exists, remove it and create new
+    if (file.exists(path.expand(outfile))) {
+      file.remove(outfile)
+    }
+    # Create new .gpkg file
+    rgdal::writeOGR(GSOD_XY, dsn = path.expand(outfile), layer = "GSOD",
+                    driver = "GPKG")
   }
 
   return(GSOD_XY)
 
-  # cleanup and reset to default state
-
-  parallel::stopCluster(cl)
+  # cleanup and reset to default state -----------------------------------------
   unlink(td)
   options(original_options)
 }

@@ -5,8 +5,8 @@
 \title{Download, Clean, Reformat and Generate New Variables From GSOD Weather Data}
 \usage{
 get_GSOD(years = NULL, station = NULL, country = NULL, dsn = NULL,
-  filename = "GSOD", max_missing = NULL, agroclimatology = FALSE,
-  CSV = FALSE, GPKG = FALSE, threads = 1)
+  filename = NULL, max_missing = NULL, agroclimatology = FALSE,
+  CSV = FALSE, GPKG = FALSE)
 }
 \arguments{
 \item{years}{Year(s) of weather data to download.}
@@ -26,11 +26,13 @@ data; full name or ISO codes can be used. See
 codes available.}
 
 \item{dsn}{Optional. Local file path to write file out to. Must be specified
-if CSV or GPKG parameters are selected.}
+if CSV or GPKG parameters are selected. Depends on \code{CSV} and/or
+\code{GPKG} being set to TRUE and \code{filename} being specified.}
 
 \item{filename}{Optional. The filename for resulting file(s) to be written
-with no file extension. Year and file extension will be automatically
-appended to file outputs. Defaults to "GSOD-year". (Optional)}
+with no file extension. File extension will be automatically appended to file
+outputs. Depends on \code{CSV} and/or \code{GPKG} set to TRUE and
+\code{filename} being specified.}
 
 \item{max_missing}{Optional. The maximum number of days allowed to be missing
 from a station's data before it is excluded from final file output.}
@@ -41,17 +43,12 @@ Set to TRUE to include only stations within the confines of these
 latitudes.}
 
 \item{CSV}{Optional. Logical. If set to TRUE, create a comma separated value
-(CSV) file ile and save it locally in a user specified location. Depends on
-\code{dsn} being specified.}
+(CSV) file and save it locally in a user specified location. Depends on
+\code{dsn} and \code{filename} being specified.}
 
 \item{GPKG}{Optional. Logical. If set to TRUE, create a GeoPackage file and
-save it locally in a user specified location. Depends on \code{dsn} being
-specified.}
-
-\item{threads}{Optional. Use parallel processing to reduce the time needed
-for cleaning and formatting the data files. Defaults to one. User may
-specifiy any number of cores to be used so long as the processor can support
-it.}
+save it locally in a user specified location. Depends on
+\code{dsn} and \code{filename} being specified.}
 }
 \description{
 This function automates downloading, cleaning, reformatting of data from
@@ -78,7 +75,7 @@ Data summarise each year by station, which include vapour pressure and
 relative humidity variables calculated from existing data in GSOD.
 
 If the option to save locally is selected. Output may be saved as comma-
-separated, CSV, files or GeoPackage, GPKC, files in a directory specified by
+separated, CSV, files or GeoPackage, GPKG, files in a directory specified by
 the user, defaulting to the current working directory.
 
 When querying selected stations and electing to write files to disk, all
