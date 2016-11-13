@@ -5,52 +5,50 @@
 \title{Download, Clean, Reformat and Generate New Variables From GSOD Weather Data}
 \usage{
 get_GSOD(years = NULL, station = NULL, country = NULL, dsn = NULL,
-  filename = "GSOD", max_missing = 5, agroclimatology = FALSE,
-  CSV = FALSE, GPKG = FALSE, threads = 1)
+  filename = NULL, max_missing = NULL, agroclimatology = FALSE,
+  CSV = FALSE, GPKG = FALSE)
 }
 \arguments{
 \item{years}{Year(s) of weather data to download.}
 
-\item{station}{Specify a station or multiple stations for which to retrieve,
-check and clean weather data. The NCDC reports years for which the data are
-available. This function checks against these years. However, not all cases
-are properly documented and in some cases files may not exist on the ftp
-server even though it is indicated that data was recorded for the station for
-a particular year. If a station is specified that does not have an
-existing file on the server, this function will silently fail and move on
+\item{station}{Optional. Specify a station or multiple stations for which to
+retrieve, check and clean weather data. The NCDC reports years for which the
+data are available. This function checks against these years. However, not
+all cases are properly documented and in some cases files may not exist on
+the ftp server even though it is indicated that data was recorded for the
+station for a particular year. If a station is specified that does not have
+an existing file on the server, this function will silently fail and move on
 to existing files for download and cleaning from the ftp server.}
 
-\item{country}{Specify a country of interest for which to retrieve weather
-data; full name. For stations located in locales
-having an ISO code 2 or 3 letter ISO code can also be used if known. See
+\item{country}{Optional. Specify a country for which to retrieve weather
+data; full name or ISO codes can be used. See
 \code{\link{country_list}} for a full list of country names and ISO
 codes available.}
 
-\item{dsn}{Path to file write to. (Optional)}
+\item{dsn}{Optional. Local file path to write file out to. Must be specified
+if CSV or GPKG parameters are selected. Depends on \code{CSV} and/or
+\code{GPKG} being set to TRUE and \code{filename} being specified.}
 
-\item{filename}{The filename for resulting file(s) to be written with no
-file extension. Year and file extension will be automatically appended to
-file outputs. Defaults to "GSOD-year". (Optional)}
+\item{filename}{Optional. The filename for resulting file(s) to be written
+with no file extension. File extension will be automatically appended to file
+outputs. Depends on \code{CSV} and/or \code{GPKG} set to TRUE and
+\code{filename} being specified.}
 
-\item{max_missing}{The maximum number of days allowed to be missing from a
-station's data before it is excluded from final file output. Defaults to five
-days. If a single station is specified, this option is ignored and any data
-available, even an empty file, from NCDC will be returned.}
+\item{max_missing}{Optional. The maximum number of days allowed to be missing
+from a station's data before it is excluded from final file output.}
 
-\item{agroclimatology}{Logical. Only clean data for stations between
-latitudes 60 and -60 for agroclimatology work, defaults to FALSE. Set to
-TRUE to include only stations within the confines of these
+\item{agroclimatology}{Optional. Logical. Only clean data for stations
+between latitudes 60 and -60 for agroclimatology work, defaults to FALSE.
+Set to TRUE to include only stations within the confines of these
 latitudes.}
 
-\item{CSV}{Logical. If set to TRUE, create a comma separated value (CSV)
-file ile and save it locally in a user specified location. Depends on
-\code{dsn} being specified.}
+\item{CSV}{Optional. Logical. If set to TRUE, create a comma separated value
+(CSV) file and save it locally in a user specified location. Depends on
+\code{dsn} and \code{filename} being specified.}
 
-\item{GPKG}{Logical. If set to TRUE, create a GeoPackage file and save it
-locally in a user specified location. Depends on \code{dsn} being specified.}
-
-\item{threads}{The number of computing threads to use for parallel processing
-data. Defaults to 1.}
+\item{GPKG}{Optional. Logical. If set to TRUE, create a GeoPackage file and
+save it locally in a user specified location. Depends on
+\code{dsn} and \code{filename} being specified.}
 }
 \description{
 This function automates downloading, cleaning, reformatting of data from
@@ -58,27 +56,27 @@ the Global Surface Summary of the Day (GSOD) data provided by the US National
 Climatic Data Center (NCDC),
 \url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod},
 and calculates three new variables; Saturation Vapor Pressure (ES) – Actual
-Vapor Pressure (EA) and relative humidity (RH). Stations are individually
-checked for number of missing days to assure data quality, stations with too
-many missing observations are omitted. Additionally, stations reporting a
-latitude of < -90 or > 90 or longitude of < -180 or > 180 are removed. All
-units are converted to International System of Units (SI), e.g., Fahrenheit to
-Celsius and inches to millimetres. Alternative elevation measurements are
-supplied for missing values or values found to be questionable based on the
-Consultative Group for International Agricultural Research's Consortium for
-Spatial Information group's (CGIAR-CSI) Shuttle Radar Topography Mission 90
-metre (SRTM 90m) digital elevation data based on NASA's original SRTM 90m
-data. Further information on these data and methods can be found on GSODR's
-GitHub repository here:
+Vapor Pressure (EA) and relative humidity (RH). Stations reporting a latitude
+of < -90 or > 90 or longitude of < -180 or > 180 are removed. Stations may be
+individually checked for number of missing days to assure data quality and
+omitting stations with too many missing observations. All units are converted
+to International System of Units (SI), e.g., Fahrenheit to Celsius and inches
+to millimetres. Alternative elevation measurements are supplied for missing
+values or values found to be questionable based on the Consultative Group for
+International Agricultural Research's Consortium for Spatial Information
+group's (CGIAR-CSI) Shuttle Radar Topography Mission 90 metre (SRTM 90m)
+digital elevation data based on NASA's original SRTM 90m data. Further
+information on these data and methods can be found on GSODR's GitHub
+repository here:
 \url{https://github.com/adamhsparks/GSODR/blob/master/data-raw/fetch_isd-history.md}
 }
 \details{
-Data summarize each year by station, which include vapour pressure and
+Data summarise each year by station, which include vapour pressure and
 relative humidity variables calculated from existing data in GSOD.
 
 If the option to save locally is selected. Output may be saved as comma-
-separated, CSV, files or GeoPackage files in a directory specified by the
-user, defaulting to the current working directory.
+separated, CSV, files or GeoPackage, GPKG, files in a directory specified by
+the user, defaulting to the current working directory.
 
 When querying selected stations and electing to write files to disk, all
 years queried and stations queried will be merged into one final ouptut file.
@@ -89,11 +87,11 @@ which field they occur in.
 For more information see the description of the data provided by NCDC,
 \url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
 
-The CSV or GeoPackage in the respective year-directory will contain the
-following fields/values:
+The data returned either in a data.frame object or a file written to local
+disk include the followig fields:
 \describe{
 \item{STNID}{Station number (WMO/DATSAV3 number) for the location}
-\item{WBAN}{number where applicable--this is the historical "Weather Bureau
+\item{WBAN}{Number where applicable--this is the historical "Weather Bureau
 Air Force Navy" number - with WBAN being the acronym}
 \item{STN_NAME}{Unique text identifier}
 \item{CTRY}{Country in which the station is located}
@@ -117,7 +115,7 @@ temperature}
 = NA}
 \item{DEWP_CNT}{Number of observations used in calculating mean daily dew
 point}
-\item{SLP}{Mean sea level pressure in millibars to tenths. Missing =   NA}
+\item{SLP}{Mean sea level pressure in millibars to tenths. Missing = NA}
 \item{SLP_CNT}{Number of observations used in calculating mean sea level
 pressure}
 \item{STP}{Mean station pressure for the day in millibars to tenths.
@@ -212,8 +210,8 @@ this same notification.}
 t <- get_GSOD(years = 2010, station = "955510-99999")
 
 # Download data for Philippines for year 2010 and generate a yearly
-# summary GeoPackage file, GSOD-RP-2010.gpkg, file in the user's home
-directory with a maximum of five missing days per station allowed.
+# summary GeoPackage file, Philippines_GSOD-2010.gpkg, file in the user's
+home directory with a maximum of five missing days per station allowed.
 
 get_GSOD(years = 2010, country = "Philippines", dsn = "~/",
 filename = "Philippines_GSOD", GPKG = TRUE, CSV = FALSE)
@@ -227,7 +225,6 @@ get_GSOD(years = 2010:2011, dsn = "~/",
 filename = "GSOD_agroclimatology_2010-2011", agroclimatology = TRUE)
 
 }
-
 
 }
 \references{

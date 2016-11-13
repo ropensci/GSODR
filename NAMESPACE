@@ -3,5 +3,3 @@
 export(get_GSOD)
 export(nearest_stations)
 importFrom(data.table,":=")
-importFrom(foreach,"%do%")
-importFrom(foreach,"%dopar%")
