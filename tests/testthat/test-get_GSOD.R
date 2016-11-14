@@ -8,8 +8,7 @@ test_that(".validate_years handles invalid years", {
   expect_error( .validate_years(years = "nineteen ninety two"),
     "\nYou must provide at least one year of data to download in a numeric\n         format.\n")
   expect_error(.validate_years(years = 1923),
-    "\nThe GSOD data files start at 1929, you have entered a year prior
-             to 1929.\n")
+    "\nThe GSOD data files start at 1929, you have entered a year prior\n             to 1929.\n")
   expect_error(.validate_years(years = 1901 + as.POSIXlt(Sys.Date())$year),
     "\nThe year cannot be greater than current year.\n")
   
@@ -25,6 +24,7 @@ expect_error(.validate_years(years = 2016), regexp = NA)
 
 test_that("invalid stations are handled", {
   skip_on_cran()
+  stations <- .fetch_station_list()
   expect_error(.check_stations(years = 2015, station = "aaa-bbbbbb", stations),
                "\nThis is not a valid station ID number, please check your entry.\n           \nStation IDs are provided as a part of the GSODR package in the\n           'stations' data in the STNID column.\n")
 })
@@ -34,7 +34,7 @@ test_that("invalid dsn is handled", {
 
   expect_error(.validate_fileout(CSV = FALSE, dsn = "~/R", filename = NULL,
                                  GPKG = FALSE),
-               "\nFile path does not exist: ~/R.")
+               "\nFile dsn does not exist: ~/R.\n")
   expect_error(.validate_fileout(CSV = FALSE, dsn = NULL, filename = "test",
                                  GPKG = FALSE),
                "\nYou need to specify a filetype, CSV or GPKG.")
