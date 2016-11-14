@@ -7,15 +7,13 @@ test_that("get_GSOD handles invalid years", {
     get_GSOD(years = NULL, station = "955510-99999", country = NULL,
              dsn = NULL, filename = NULL, max_missing = NULL,
              agroclimatology = FALSE, CSV = FALSE, GPKG = FALSE),
-    "\nYou must provide at least one year of data to download in a numeric
-               format.\n")
+    "\nYou must provide at least one year of data to download in a numeric\n         format.\n")
 
   expect_error(
     get_GSOD(years = "nineteen ninety two", station = "955510-99999",
              country = NULL, dsn = NULL, filename = NULL, max_missing = NULL,
              agroclimatology = FALSE, CSV = NULL, GPKG = FALSE),
-    "\nYou must provide at least one year of data to download in a numeric
-         format.\n")
+    "\nYou must provide at least one year of data to download in a numeric\n         format.\n")
 
   expect_error(
     get_GSOD(years = 1923, station = "955510-99999", country = NULL,

@@ -305,7 +305,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
 #' @noRd
 .validate_years <- function(years) {
   this_year <- 1900 + as.POSIXlt(Sys.Date())$year
-  if (is.null(years) & is.character(years)) {
+  if (is.null(years) | is.character(years)) {
     stop("\nYou must provide at least one year of data to download in a numeric
          format.\n")
   } else {
