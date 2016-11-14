@@ -252,7 +252,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
     }
   }
 
-  if (!isTRUE(CSV) | !isTRUE(GPKG)) {
+  if (!isTRUE(CSV) & !isTRUE(GPKG)) {
     stop("\nYou must supply a valid file format (CSV or GPKG) for storing the
            resulting file(s).\n")
   } else {
