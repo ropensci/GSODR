@@ -292,6 +292,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
                     driver = "GPKG")
   }
 
+  return(GSOD_XY)
+
   # Cleanup and reset to default state -----------------------------------------
   unlink(td)
   options(original_options)
