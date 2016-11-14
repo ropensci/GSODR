@@ -238,6 +238,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
   .check_stations(station, stations, years)
   .check_country(country)
 
+  # Download files from server -------------------------------------------------
   GSOD_list <- .download_files(ftp, station, years, td)
 
   # Check stations for missing days --------------------------------------------
