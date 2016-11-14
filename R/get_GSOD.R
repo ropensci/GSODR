@@ -218,7 +218,7 @@
 get_GSOD <- function(years = NULL, station = NULL, country = NULL,
                      dsn = NULL, filename = NULL, max_missing = NULL,
                      agroclimatology = FALSE, CSV = FALSE, GPKG = FALSE) {
-
+  
   # Set up options, create objects, fetch most recent station metadata ---------
   original_options <- options()
   options(warn = 2)
@@ -226,39 +226,39 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
   td <- tempdir()
   LON <- LAT <- NULL
   ftp <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
-
+  
   # Validate user inputs -------------------------------------------------------
   .validate_years(years)
   outfile <- .validate_fileout(CSV, dsn, filename, GPKG)
-
+  
   # Fetch latest station metadata from NCDC server
   if (!exists("stations")) {
     stations <- .fetch_station_list()
   }
   .check_stations(station, stations, years)
   .check_country(country)
-
+  
   # Download files from server -------------------------------------------------
   GSOD_list <- .download_files(ftp, station, years, td)
-
+  
   # Check stations for missing days --------------------------------------------
   if (!is.null(max_missing)) {
     GSOD_list <- .check_missing_days(max_missing, GSOD_list, td)
   }
-
+  
   # Subset GSOD_list for agroclimatology only stations -------------------------
   if (isTRUE(agroclimatology)) {
     GSOD_list <- .agroclimatology_list(agroclimatology, GSOD_list, stations, td,
                                        years)
   }
-
+  
   # Subset GSOD_list for specified country -------------------------------------
   if (!is.null(country)) {
     GSOD_list <- .country_list(country, GSOD_list, stations, td, years)
   }
-
+  
   # Clean and reformat list of station files from local disk in tempdir --------
-
+  
   message("Starting data file processing")
   GSOD_XY <- as.data.frame(
     try(
@@ -266,16 +266,16 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
                   stations = stations, .progress = "text")
     )
   )
-
-
+  
+  
   # Write files to disk --------------------------------------------------------
-
+  
   if (isTRUE(CSV)) {
     message("\nWriting CSV file to disk.\n")
     outfile <- paste0(outfile, ".csv")
     readr::write_csv(GSOD_XY, path = paste0(outfile))
   }
-
+  
   if (isTRUE(GPKG)) {
     message("\nWriting GeoPackage File to Disk.\n")
     outfile <- paste0(outfile, ".gpkg")
@@ -283,7 +283,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
     GSOD_XY <- as.data.frame(GSOD_XY)
     sp::coordinates(GSOD_XY) <- ~LON + LAT
     sp::proj4string(GSOD_XY) <- sp::CRS("+proj=longlat +datum=WGS84")
-
+    
     # If the filename specified exists, remove it and create new
     if (file.exists(path.expand(outfile))) {
       file.remove(outfile)
@@ -292,9 +292,9 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
     rgdal::writeOGR(GSOD_XY, dsn = path.expand(outfile), layer = "GSOD",
                     driver = "GPKG")
   }
-
+  
   return(GSOD_XY)
-
+  
   # Cleanup and reset to default state -----------------------------------------
   unlink(td)
   options(original_options)
@@ -328,39 +328,42 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
   if (!is.null(filename) & !isTRUE(CSV) & !isTRUE(GPKG)) {
     stop("\nYou need to specify a filetype, CSV or GPKG.\n")
   }
-
   if (isTRUE(CSV) | isTRUE(GPKG)) {
     if (is.null(dsn)) {
       dsn <- getwd()
-    } else {
-
-      dsn <- trimws(dsn)
-      if (substr(dsn, nchar(dsn) - 1, nchar(dsn)) == "//") {
-        p <- substr(dsn, 1, nchar(dsn) - 2)
-      } else if (substr(dsn, nchar(dsn), nchar(dsn)) == "/" |
-                 substr(dsn, nchar(dsn), nchar(dsn)) == "\\") {
-        p <- substr(dsn, 1, nchar(dsn) - 1)
-      } else {
-        p <- dsn
-      }
-      if (!file.exists(p) & !file.exists(dsn)) {
-        stop("\nFile path does not exist: ", dsn, ".\n")
-      }
-      if (substr(dsn, nchar(dsn), nchar(dsn)) != "/" &
-          substr(dsn, nchar(dsn), nchar(dsn)) != "\\") {
-        dsn <- paste0(dsn)
-      }
     }
-
-    if (is.null(filename)) {
-      filename_out <- "GSOD"
-    } else {
-      filename_out <- filename
-    }
-    outfile <- paste0(dsn, "/", filename_out)
-    return(outfile)
   }
+  dsn <- trimws(dsn)
+  if (dsn == "") {
+    stop("\nYou must supply a valid file path for storing the resulting
+         file(s).\n")
+  } else {
+    if (substr(dsn, nchar(dsn) - 1, nchar(dsn)) == "//") {
+      p <- substr(dsn, 1, nchar(dsn) - 2)
+    } else if (substr(dsn, nchar(dsn), nchar(dsn)) == "/" |
+               substr(dsn, nchar(dsn), nchar(dsn)) == "\\") {
+      p <- substr(dsn, 1, nchar(dsn) - 1)
+    } else {
+      p <- dsn
+    }
+    if (!file.exists(p) & !file.exists(dsn)) {
+      stop("\nFile dsn does not exist: ", dsn, ".\n")
+    }
+  }
+  if (substr(dsn, nchar(dsn), nchar(dsn)) != "/" &
+      substr(dsn, nchar(dsn), nchar(dsn)) != "\\") {
+    dsn <- paste0(dsn, "/")
+  }
+  
+  if (is.null(filename)) {
+    filename_out <- "GSOD"
+  } else {
+    filename_out <- filename
+  }
+  outfile <- paste0(dsn, "/", filename_out)
+  return(outfile)
 }
+
 
 #' @noRd
 .check_stations <- function(station, stations, years) {
@@ -368,7 +371,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
     if (!station %in% stations[[12]]) {
       stop("\nThis is not a valid station ID number, please check your entry.
            \nStation IDs are provided as a part of the GSODR package in the
-           'stations' data\nin the STNID column.\n")
+           'stations' data in the STNID column.\n")
     }
     # check station years in station listing
     for (vsy in station) {
@@ -421,11 +424,11 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
   records <- lapply(data = paste0(td, "/", GSOD_list), R.utils::countLines)
   names(records) <- GSOD_list
   year <- as.numeric(gsub("[^0-9]", "", GSOD_list[1]))
-
+  
   ifelse(format(as.POSIXct(paste0(year, "-03-01")) - 1, "%d") != "29",
          allow <- 365 - max_missing,
          allow <- 366 - max_missing)
-
+  
   GSOD_list <- stats::na.omit(ifelse(records >= allow, paste0(GSOD_list),
                                      NA))
 }
@@ -439,27 +442,27 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
       utils::download.file(url = ftp, destfile = dest),
       file_list, file.path(td, basename(file_list))), error = function(x) stop(
         "\nThe file downloads have failed. Please restart.\n"))
-
+    
     tar_files <- list.files(td, pattern = "^gsod.*\\.tar$", full.names = TRUE)
-
+    
     plyr::ldply(.data = tar_files, .fun = utils::untar, exdir = td)
-
+    
     GSOD_list <- list.files(td, pattern = "^.*\\.op.gz$", full.names = TRUE)
   }
-
-
+  
+  
   if (!is.null(station)) {
     message("\nDownloading the station file(s) now.")
     file_list <- paste0(ftp, years, "/")
     file_list <- do.call(paste0, c(expand.grid(file_list, station)))
     file_list <- paste0(file_list, "-", years, ".op.gz")
-
+    
     tryCatch(Map(function(ftp, dest)
       utils::download.file(url = ftp, destfile = dest),
       file_list, file.path(td, basename(file_list))),
       error = function(x) message(paste0(
         "\nThe file downloads have failed. Please restart.\n")))
-
+    
     GSOD_list <- list.files(path = td, pattern = "^.*\\.op.gz$",
                             full.names = TRUE)
   }

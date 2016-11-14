@@ -1,55 +1,64 @@
 context("get_GSOD")
 
-test_that("get_GSOD handles invalid years", {
+test_that(".validate_years handles invalid years", {
   skip_on_cran()
 
-  expect_error(
-    get_GSOD(years = NULL, station = "955510-99999", country = NULL,
-             dsn = NULL, filename = NULL, max_missing = NULL,
-             agroclimatology = FALSE, CSV = FALSE, GPKG = FALSE),
+  expect_error(.validate_years(years = NULL),
     "\nYou must provide at least one year of data to download in a numeric\n         format.\n")
-
-  expect_error(
-    get_GSOD(years = "nineteen ninety two", station = "955510-99999",
-             country = NULL, dsn = NULL, filename = NULL, max_missing = NULL,
-             agroclimatology = FALSE, CSV = NULL, GPKG = FALSE),
+  expect_error( .validate_years(years = "nineteen ninety two"),
     "\nYou must provide at least one year of data to download in a numeric\n         format.\n")
-
-  expect_error(
-    get_GSOD(years = 1923, station = "955510-99999", country = NULL,
-             dsn = NULL, filename = NULL, max_missing = NULL,
-             agroclimatology = FALSE, CSV = NULL, GPKG = FALSE),
+  expect_error(.validate_years(years = 1923),
     "\nThe GSOD data files start at 1929, you have entered a year prior
              to 1929.\n")
-
-  expect_error(
-    get_GSOD(years = 1901 + as.POSIXlt(Sys.Date())$year,
-             station = "955510-99999", country = NULL, dsn = NULL,
-             filename = NULL, max_missing = NULL, agroclimatology = FALSE,
-             CSV = NULL, GPKG = FALSE),
+  expect_error(.validate_years(years = 1901 + as.POSIXlt(Sys.Date())$year),
     "\nThe year cannot be greater than current year.\n")
+  
 })
 
+test_that(".validate_years handles valid years", {
+  skip_on_cran()
+expect_error(.validate_years(years = 1929:2016), regexp = NA)
+
+expect_error(.validate_years(years = 2016), regexp = NA)
+
+})
 
 test_that("invalid stations are handled", {
   skip_on_cran()
-
-  expect_error(get_GSOD(years = 1900 + as.POSIXlt(Sys.Date())$year,
-                        station = "999990-9999", country = NULL, dsn = "~/",
-                        filename = "test", max_missing = 5,
-                        agroclimatology = FALSE, CSV = TRUE, GPKG = FALSE),
-               "\nThis is not a valid station ID number, please check your entry.\n           \nStation IDs are provided as a part of the GSODR package in the\n           'stations' data\nin the STNID column.\n")
-
+  expect_error(.check_stations(years = 2015, station = "aaa-bbbbbb", stations),
+               "\nThis is not a valid station ID number, please check your entry.\n           \nStation IDs are provided as a part of the GSODR package in the\n           'stations' data in the STNID column.\n")
 })
 
 test_that("invalid dsn is handled", {
   skip_on_cran()
 
-  expect_error(get_GSOD(years = 1900 + as.POSIXlt(Sys.Date())$year,
-                        station = "999990-9999", country = NULL,
-                        dsn = "~/dev/NULL", filename = "test",
-                        max_missing = 5, agroclimatology = FALSE,
-                        CSV = TRUE, GPKG = FALSE),
-               "\nFile path does not exist: ~/dev/NULL.\n")
+  expect_error(.validate_fileout(CSV = FALSE, dsn = "~/R", filename = NULL,
+                                 GPKG = FALSE),
+               "\nFile path does not exist: ~/R.")
+  expect_error(.validate_fileout(CSV = FALSE, dsn = NULL, filename = "test",
+                                 GPKG = FALSE),
+               "\nYou need to specify a filetype, CSV or GPKG.")
+})
 
+test_that("stations list and associated metatdata", {
+  skip_on_cran()
+  
+  stations <- .fetch_station_list()
+  
+  expect_equal(ncol(stations), 13)
+  expect_is(stations, "data.table")
+  expect_is(stations$USAF, "character")
+  expect_is(stations$WBAN , "character")
+  expect_is(stations$STN_NAME, "character")
+  expect_is(stations$CTRY, "character")
+  expect_is(stations$STATE, "character")
+  expect_is(stations$CALL, "character")
+  expect_is(stations$LAT, "numeric")
+  expect_is(stations$LON, "numeric")
+  expect_is(stations$ELEV_M, "numeric")
+  expect_is(stations$BEGIN, "numeric")
+  expect_is(stations$END, "numeric")
+  expect_is(stations$STNID, "character")
+  expect_is(stations$ELEV_M_SRTM_90m, "numeric")
+  expect_gt(nrow(stations), 2300)
 })
