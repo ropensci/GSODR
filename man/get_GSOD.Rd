@@ -26,13 +26,14 @@ data; full name or ISO codes can be used. See
 codes available.}
 
 \item{dsn}{Optional. Local file path to write file out to. Must be specified
-if CSV or GPKG parameters are selected. Depends on \code{CSV} and/or
-\code{GPKG} being set to TRUE and \code{filename} being specified.}
+if CSV or GPKG parameters are selected. If unspecified and \code{CSV} or
+\code{GPKG} are set to TRUE, \code{dsn} will default to the current working
+directory.}
 
 \item{filename}{Optional. The filename for resulting file(s) to be written
 with no file extension. File extension will be automatically appended to file
-outputs. Depends on \code{CSV} and/or \code{GPKG} set to TRUE and
-\code{filename} being specified.}
+outputs. If unspecified by the user it will default to "GSOD" followed by
+the file extension(s) set using \code{CSV} or \code{GPKG}.}
 
 \item{max_missing}{Optional. The maximum number of days allowed to be missing
 from a station's data before it is excluded from final file output.}
@@ -43,12 +44,12 @@ Set to TRUE to include only stations within the confines of these
 latitudes.}
 
 \item{CSV}{Optional. Logical. If set to TRUE, create a comma separated value
-(CSV) file and save it locally in a user specified location. Depends on
-\code{dsn} and \code{filename} being specified.}
+(CSV) file and save it locally in a user specified location, if \code{dsn} is
+not specified by the user, defaults to the current working directory.}
 
 \item{GPKG}{Optional. Logical. If set to TRUE, create a GeoPackage file and
-save it locally in a user specified location. Depends on
-\code{dsn} and \code{filename} being specified.}
+save it locally in a user specified location, if \code{dsn} is not specified
+by the user, defaults to the current working directory.}
 }
 \description{
 This function automates downloading, cleaning, reformatting of data from

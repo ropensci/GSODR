@@ -33,18 +33,19 @@
 #' \code{\link{country_list}} for a full list of country names and ISO
 #' codes available.
 #' @param CSV Optional. Logical. If set to TRUE, create a comma separated value
-#' (CSV) file and save it locally in a user specified location. Depends on
-#' \code{dsn} and \code{filename} being specified.
+#' (CSV) file and save it locally in a user specified location, if \code{dsn} is
+#' not specified by the user, defaults to the current working directory.
 #' @param GPKG Optional. Logical. If set to TRUE, create a GeoPackage file and
-#' save it locally in a user specified location. Depends on
-#' \code{dsn} and \code{filename} being specified.
+#' save it locally in a user specified location, if \code{dsn} is not specified
+#' by the user, defaults to the current working directory.
 #' @param dsn Optional. Local file path to write file out to. Must be specified
-#' if CSV or GPKG parameters are selected. Depends on \code{CSV} and/or
-#' \code{GPKG} being set to TRUE and \code{filename} being specified.
+#' if CSV or GPKG parameters are selected. If unspecified and \code{CSV} or
+#' \code{GPKG} are set to TRUE, \code{dsn} will default to the current working
+#' directory.
 #' @param filename Optional. The filename for resulting file(s) to be written
 #' with no file extension. File extension will be automatically appended to file
-#' outputs. Depends on \code{CSV} and/or \code{GPKG} set to TRUE and
-#' \code{filename} being specified.
+#' outputs. If unspecified by the user it will default to "GSOD" followed by
+#' the file extension(s) set using \code{CSV} or \code{GPKG}.
 #' @param max_missing Optional. The maximum number of days allowed to be missing
 #' from a station's data before it is excluded from final file output.
 #' @param agroclimatology Optional. Logical. Only clean data for stations
@@ -224,58 +225,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
   LON <- LAT <- NULL
   ftp <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
 
-  # Validate years -------------------------------------------------------------
-  this_year <- 1900 + as.POSIXlt(Sys.Date())$year
-  if (is.null(years) | is.character(years)) {
-    stop("\nYou must provide at least one year of data to download in a numeric
-         format.\n")
-  } else {
-    for (i in years) {
-      if (i <= 0) {
-        stop("\nThis is not a valid year.\n")
-      } else if (i < 1929) {
-        stop("\nThe GSOD data files start at 1929, you have entered a year prior
-             to 1929.\n")
-      } else if (i > this_year) {
-        stop("\nThe year cannot be greater than current year.\n")
-      }
-    }
-  }
-
-  # If file outs are specified, check that everything is in place --------------
-  if (isTRUE(CSV) | isTRUE(GPKG)) {
-    if (is.null(dsn)) {
-      stop("\nYou must supply a valid file path (dsn) for storing the resulting
-           file(s).\n")
-    } else {
-        dsn <- trimws(dsn)
-    }
-  }
-
-  if (!isTRUE(CSV) & !isTRUE(GPKG)) {
-    stop("\nYou must supply a valid file format (CSV or GPKG) for storing the
-           resulting file(s).\n")
-  } else {
-    if (substr(dsn, nchar(dsn) - 1, nchar(dsn)) == "//") {
-      p <- substr(dsn, 1, nchar(dsn) - 2)
-    } else if (substr(dsn, nchar(dsn), nchar(dsn)) == "/" |
-               substr(dsn, nchar(dsn), nchar(dsn)) == "\\") {
-      p <- substr(dsn, 1, nchar(dsn) - 1)
-    } else {
-      p <- dsn
-    }
-    if (!file.exists(p) & !file.exists(dsn)) {
-      stop("\nFile path does not exist: ", dsn, ".\n")
-    }
-  }
-  if (substr(dsn, nchar(dsn), nchar(dsn)) != "/" &
-      substr(dsn, nchar(dsn), nchar(dsn)) != "\\") {
-    dsn <- paste0(dsn, "/")
-  }
-  if (is.null(filename)) {
-    filename <- "GSOD"
-  }
-  outfile <- paste0(dsn, filename)
+  .validate_years(years)
+  outfile <- .validate_fileout(CSV, dsn, filename, GPKG)
 
   # Fetch latest station metadata from NCDC server -----------------------------
   if (!exists("stations")) {
@@ -425,7 +376,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
 
   # GPKG file ------------------------------------------------------------------
   if (GPKG == TRUE) {
-    message("\Writing GeoPackage File to Disk.\n")
+    message("\nWriting GeoPackage File to Disk.\n")
     outfile <- paste0(outfile, ".gpkg")
     # Convert object to standard df and then spatial object
     GSOD_XY <- as.data.frame(GSOD_XY)
@@ -440,8 +391,6 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
     rgdal::writeOGR(GSOD_XY, dsn = path.expand(outfile), layer = "GSOD",
                     driver = "GPKG")
   }
-
-  return(GSOD_XY)
 
   # cleanup and reset to default state -----------------------------------------
   unlink(td)
