@@ -344,14 +344,14 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
       }
       if (substr(dsn, nchar(dsn), nchar(dsn)) != "/" &
           substr(dsn, nchar(dsn), nchar(dsn)) != "\\") {
-        dsn <- paste0(dsn, "/")
+        dsn <- paste0(dsn)
       }
       if (is.null(filename)) {
         filename <- "GSOD"
       }
     }
-
-    outfile <- paste0(dsn, filename)
+    outfile <- paste0(dsn, "/", filename)
+    return(outfile)
   }
 }
 
