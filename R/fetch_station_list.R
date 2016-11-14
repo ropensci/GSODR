@@ -1,5 +1,6 @@
 #' @noRd
 # fetch most recent station history file -------------------------------------
+# This function is shared between both get_GSOD and nearest_stations functions
 .fetch_station_list <- function() {
   STNID <- NULL
   stations <- readr::read_csv(
