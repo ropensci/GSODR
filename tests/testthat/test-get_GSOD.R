@@ -62,3 +62,12 @@ test_that("stations list and associated metatdata", {
   expect_is(stations$ELEV_M_SRTM_90m, "numeric")
   expect_gt(nrow(stations), 2300)
 })
+
+test_that("missing days check allows stations with permissible days missing", {
+  skip_on_cran()
+  max_missing <- 5
+  GSOD_list <- 
+  .check_missing_days(max_missing, GSOD_list)
+  
+})
+
