@@ -418,12 +418,14 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
 
   # CSV file--------------------------------------------------------------------
   if (CSV == TRUE) {
+    message("\nWriting CSV file to disk.\n")
     outfile <- paste0(outfile, ".csv")
     readr::write_csv(GSOD_XY, path = paste0(outfile))
   }
 
   # GPKG file ------------------------------------------------------------------
   if (GPKG == TRUE) {
+    message("\Writing GeoPackage File to Disk.\n")
     outfile <- paste0(outfile, ".gpkg")
     # Convert object to standard df and then spatial object
     GSOD_XY <- as.data.frame(GSOD_XY)
