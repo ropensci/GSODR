@@ -1,7 +1,7 @@
 Fetch, clean and correct altitude in GSOD isd\_history.csv Data
 ================
 Adam H. Sparks
-2016-10-24
+2016-11-14
 
 Introduction
 ============
@@ -122,24 +122,26 @@ doParallel::registerDoParallel(cl)
 
 corrected_elev <- tibble::as_tibble(
   data.table::rbindlist(foreach(i = dem_tiles) %dopar% {
-  
- # Load the DEM tile
-  dem <- raster::raster(i)
-  sub_stations <- raster::crop(stations, dem)
-
-  # in some cases the DEM represents areas where there is no station
-  # check for that here and if no stations, go on to next iteration
-  if (!is.null(sub_stations)) {
-
-    # use a 200m buffer to extract elevation from the DEM
-    sub_stations$ELEV_M_SRTM_90m <- raster::extract(dem, sub_stations, buffer = 200, fun = mean)
-
-    # convert spatial object back to normal data frame and add new fields
-    sub_stations <- as.data.frame(sub_stations)
-    return(sub_stations)
+    
+    # Load the DEM tile
+    dem <- raster::raster(i)
+    sub_stations <- raster::crop(stations, dem)
+    
+    # in some cases the DEM represents areas where there is no station
+    # check for that here and if no stations, go on to next iteration
+    if (!is.null(sub_stations)) {
+      
+      # use a 200m buffer to extract elevation from the DEM
+      sub_stations$ELEV_M_SRTM_90m <- raster::extract(dem, sub_stations,
+                                                      buffer = 200,
+                                                      fun = mean)
+      
+      # convert spatial object back to normal data frame and add new fields
+      sub_stations <- as.data.frame(sub_stations)
+      return(sub_stations)
+    }
   }
-}
-)
+  )
 )
 # stop cluster
 parallel::stopCluster(cl)
@@ -177,7 +179,7 @@ summary(SRTM_GSOD_elevation)
 ```
 
     ##      USAF               WBAN             STN_NAME        
-    ##  Length:27861       Length:27861       Length:27861      
+    ##  Length:28310       Length:28310       Length:28310      
     ##  Class :character   Class :character   Class :character  
     ##  Mode  :character   Mode  :character   Mode  :character  
     ##                                                          
@@ -185,27 +187,27 @@ summary(SRTM_GSOD_elevation)
     ##                                                          
     ##                                                          
     ##      CTRY              STATE               CALL                LAT        
-    ##  Length:27861       Length:27861       Length:27861       Min.   :-89.00  
-    ##  Class :character   Class :character   Class :character   1st Qu.: 24.08  
-    ##  Mode  :character   Mode  :character   Mode  :character   Median : 39.67  
-    ##                                                           Mean   : 31.86  
-    ##                                                           3rd Qu.: 50.02  
+    ##  Length:28310       Length:28310       Length:28310       Min.   :-89.00  
+    ##  Class :character   Class :character   Class :character   1st Qu.: 22.47  
+    ##  Mode  :character   Mode  :character   Mode  :character   Median : 39.25  
+    ##                                                           Mean   : 31.13  
+    ##                                                           3rd Qu.: 49.85  
     ##                                                           Max.   : 89.37  
     ##                                                                           
     ##       LON               ELEV_M           BEGIN               END          
     ##  Min.   :-179.983   Min.   :-350.0   Min.   :19010101   Min.   :19051231  
-    ##  1st Qu.: -83.840   1st Qu.:  22.3   1st Qu.:19570630   1st Qu.:20020207  
-    ##  Median :   7.833   Median : 137.0   Median :19750803   Median :20150808  
-    ##  Mean   :  -2.744   Mean   : 359.7   Mean   :19776028   Mean   :20040953  
-    ##  3rd Qu.:  64.588   3rd Qu.: 428.0   3rd Qu.:20010915   3rd Qu.:20161020  
-    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20161018   Max.   :20161021  
+    ##  1st Qu.: -83.272   1st Qu.:  23.0   1st Qu.:19570701   1st Qu.:20020412  
+    ##  Median :   6.683   Median : 140.0   Median :19760212   Median :20160113  
+    ##  Mean   :  -3.451   Mean   : 360.8   Mean   :19782143   Mean   :20042940  
+    ##  3rd Qu.:  61.929   3rd Qu.: 435.0   3rd Qu.:20020316   3rd Qu.:20161110  
+    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20161110   Max.   :20161112  
     ##                     NA's   :218                                           
     ##     STNID           ELEV_M_SRTM_90m 
-    ##  Length:27861       Min.   :-361.0  
-    ##  Class :character   1st Qu.:  24.0  
-    ##  Mode  :character   Median : 153.0  
-    ##                     Mean   : 379.4  
-    ##                     3rd Qu.: 456.0  
+    ##  Length:28310       Min.   :-361.0  
+    ##  Class :character   1st Qu.:  25.0  
+    ##  Mode  :character   Median : 156.0  
+    ##                     Mean   : 380.2  
+    ##                     3rd Qu.: 463.0  
     ##                     Max.   :5273.0  
     ##                     NA's   :3012
 
@@ -226,7 +228,7 @@ ggplot(data = SRTM_GSOD_elevation, aes(x = ELEV_M, y = ELEV_M_SRTM_90m)) +
 
 Buffered versus non-buffered elevation values were previously checked and found not to be different while also not showing any discernible geographic patterns. However, The buffered elevation data are higher than the non-buffered data. To help avoid within cell and between cell variation the buffered values are the values that are included in the final data for distribution with the GSODR package following the approach of Hijmans *et al.* (2005).
 
-Only values for elevation derived from the SRTM data and the STNID, used to join this with the original "isd-history.csv" file data when running `get_GSOD()` are included in the final data frame for distribution with the GSODR package.
+Only values for elevation derived from the SRTM data and the STNID, used to join this with the original "isd-history.csv" file data when running `get_GSOD` are included in the final data frame for distribution with the GSODR package.
 
 ``` r
 # write rda file to disk for use with GSODR package
@@ -241,11 +243,11 @@ SRTM_GSOD_elevation[, c(1:11) := NULL]
     ##     4: 010015-99999              NA
     ##     5: 010016-99999              NA
     ##    ---                             
-    ## 27857: 999999-94996             416
-    ## 27858: 999999-96404              NA
-    ## 27859: 999999-96406              NA
-    ## 27860: 999999-96407              NA
-    ## 27861: 999999-96408              NA
+    ## 28306: 999999-94996             416
+    ## 28307: 999999-96404              NA
+    ## 28308: 999999-96406              NA
+    ## 28309: 999999-96407              NA
+    ## 28310: 999999-96408              NA
 
 ``` r
 devtools::use_data(SRTM_GSOD_elevation, overwrite = TRUE, compress = "bzip2")
@@ -271,9 +273,9 @@ Users of these data should take into account the following (from the [NCDC websi
 R System Information
 --------------------
 
-    ## R version 3.3.1 (2016-06-21)
+    ## R version 3.3.2 (2016-10-31)
     ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-    ## Running under: OS X 10.11.6 (El Capitan)
+    ## Running under: OS X El Capitan 10.11.6
     ## 
     ## locale:
     ## [1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8
@@ -285,20 +287,20 @@ R System Information
     ## [1] ggalt_0.1.1   ggplot2_2.1.0 foreach_1.4.3
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] Rcpp_0.12.7        RColorBrewer_1.1-2 compiler_3.3.1    
-    ##  [4] formatR_1.4        plyr_1.8.4         iterators_1.0.8   
-    ##  [7] tools_3.3.1        digest_0.6.10      memoise_1.0.0     
+    ##  [1] Rcpp_0.12.7        highr_0.6          RColorBrewer_1.1-2
+    ##  [4] compiler_3.3.2     plyr_1.8.4         iterators_1.0.8   
+    ##  [7] tools_3.3.2        digest_0.6.10      memoise_1.0.0     
     ## [10] evaluate_0.10      tibble_1.2         gtable_0.2.0      
-    ## [13] lattice_0.20-34    DBI_0.5-1          curl_2.1          
-    ## [16] yaml_2.1.13        rgdal_1.1-10       parallel_3.3.1    
+    ## [13] lattice_0.20-34    DBI_0.5-1          curl_2.2          
+    ## [16] yaml_2.1.13        rgdal_1.2-3        parallel_3.3.2    
     ## [19] withr_1.0.2        dplyr_0.5.0        stringr_1.1.0     
-    ## [22] raster_2.5-8       knitr_1.14         devtools_1.12.0   
-    ## [25] maps_3.1.1         grid_3.3.1         data.table_1.9.6  
+    ## [22] raster_2.5-8       knitr_1.15         devtools_1.12.0   
+    ## [25] maps_3.1.1         grid_3.3.2         data.table_1.9.6  
     ## [28] R6_2.2.0           rmarkdown_1.1      sp_1.2-3          
-    ## [31] readr_1.0.0        magrittr_1.5       MASS_7.3-45       
-    ## [34] scales_0.4.0       codetools_0.2-15   htmltools_0.3.5   
+    ## [31] readr_1.0.0        magrittr_1.5       scales_0.4.1      
+    ## [34] codetools_0.2-15   htmltools_0.3.5    MASS_7.3-45       
     ## [37] proj4_1.0-8        assertthat_0.1     countrycode_0.18  
-    ## [40] colorspace_1.2-7   labeling_0.3       ash_1.0-15        
+    ## [40] colorspace_1.3-0   labeling_0.3       ash_1.0-15        
     ## [43] KernSmooth_2.23-15 stringi_1.1.2      lazyeval_0.2.0    
     ## [46] doParallel_1.0.10  munsell_0.4.3      chron_2.3-47
 

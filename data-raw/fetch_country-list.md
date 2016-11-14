@@ -1,7 +1,7 @@
 Fetch GSOD Country List and Merge with ISO Country Codes
 ================
 Adam H. Sparks
-2016-10-16
+2016-11-14
 
 Introduction
 ============
@@ -75,7 +75,22 @@ There are unnecessary data in several columns. `GSODR` only requires FIPS, name,
 
 ``` r
 country_list[, c(3, 4:8, 11:16) := NULL]
+```
 
+    ##      FIPS                         COUNTRY_NAME iso2c iso3c
+    ##   1:   AA                                ARUBA    AW   ABW
+    ##   2:   AC                  ANTIGUA AND BARBUDA    AG   ATG
+    ##   3:   AF                          AFGHANISTAN    AF   AFG
+    ##   4:   AG                              ALGERIA    DZ   DZA
+    ##   5:   AI                     ASCENSION ISLAND    NA    NA
+    ##  ---                                                      
+    ## 289:   YY ST. MARTEEN, ST. EUSTATIUS, AND SABA    NA    NA
+    ## 290:   ZA                               ZAMBIA    ZM   ZMB
+    ## 291:   ZI                             ZIMBABWE    ZW   ZWE
+    ## 292:   ZM                                SAMOA    NA    NA
+    ## 293:   ZZ       ST. MARTIN AND ST. BARTHOLOMEW    NA    NA
+
+``` r
 print(country_list)
 ```
 
@@ -98,7 +113,7 @@ Write .rda file to disk.
 devtools::use_data(country_list, overwrite = TRUE, compress = "bzip2")
 ```
 
-    ## Saving country_list as country_list.rda to /Users/asparks/Development/GSODR/data
+    ## Saving country_list as country_list.rda to /Users/U8004755/Development/GSODR/data
 
 Notes
 =====
@@ -113,9 +128,9 @@ Users of these data should take into account the following (from the [NCDC websi
 R System Information
 --------------------
 
-    ## R version 3.3.1 (2016-06-21)
-    ## Platform: x86_64-apple-darwin16.0.0 (64-bit)
-    ## Running under: OS X 10.12 (Sierra)
+    ## R version 3.3.2 (2016-10-31)
+    ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+    ## Running under: OS X El Capitan 10.11.6
     ## 
     ## locale:
     ## [1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8
@@ -129,7 +144,7 @@ R System Information
     ## loaded via a namespace (and not attached):
     ##  [1] Rcpp_0.12.7      withr_1.0.2      digest_0.6.10    dplyr_0.5.0     
     ##  [5] assertthat_0.1   chron_2.3-47     R6_2.2.0         DBI_0.5-1       
-    ##  [9] formatR_1.4      magrittr_1.5     evaluate_0.10    stringi_1.1.2   
-    ## [13] curl_2.1         data.table_1.9.6 rmarkdown_1.0    devtools_1.12.0 
-    ## [17] tools_3.3.1      stringr_1.1.0    readr_1.0.0      yaml_2.1.13     
-    ## [21] memoise_1.0.0    htmltools_0.3.5  knitr_1.14       tibble_1.2
+    ##  [9] magrittr_1.5     evaluate_0.10    stringi_1.1.2    curl_2.2        
+    ## [13] data.table_1.9.6 rmarkdown_1.1    devtools_1.12.0  tools_3.3.2     
+    ## [17] stringr_1.1.0    readr_1.0.0      yaml_2.1.13      memoise_1.0.0   
+    ## [21] htmltools_0.3.5  knitr_1.15       tibble_1.2

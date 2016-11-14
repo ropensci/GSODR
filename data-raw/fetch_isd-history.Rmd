@@ -18,7 +18,8 @@ generated. The new elevation values are then saved for inclusion in package as
 recent station history data file from the NCDC when the user runs the
 `get_GSOD()` function. The resulting data frame of station information, based on
 the merging of the `SRTM_GSOD_elevation` data frame with the most recently
-available "isd-history.csv" file will result in the following changes to the data:
+available "isd-history.csv" file will result in the following changes to the
+data:
 
 * Stations where latitude or longitude are NA or both 0 are removed
 
@@ -100,12 +101,14 @@ xy <- dplyr::left_join(stations, countries, by = c("CTRY" = "FIPS"))
 GSOD data have some inconsistencies in them, some of this has been removed
 above with filtering. Further filtering is used remove stations reporting
 locations in countries that do not match the physical coordinates reported.
-Using [Natural Earth Data 1:10 Cultural Data](http://www.naturalearthdata.com/downloads/10m-cultural-vectors/),
+Using
+[Natural Earth Data 1:10 Cultural Data](http://www.naturalearthdata.com/downloads/10m-cultural-vectors/),
 the stations reported countries are checked against the country in which the
 coordinates map.
 
 Also, reported elevation may differ from actual. Hijmans *et al.* (2005) created
-their own digital elevation model using Jarvis *et al.* (2004) and [GTOPO30 data](https://lta.cr.usgs.gov/GTOPO30)
+their own digital elevation model using Jarvis *et al.* (2004) and 
+[GTOPO30 data](https://lta.cr.usgs.gov/GTOPO30)
 for areas where there was no SRTM data available (>+/-60˚ latitude). Here only
 the hole-filled SRTM data, V4 (Jarvis *et al.* 2008) was used for correction of
 agroclimatology data (-60˚ to 60˚ latitude). Any incorrect station elevations
@@ -158,24 +161,26 @@ doParallel::registerDoParallel(cl)
 
 corrected_elev <- tibble::as_tibble(
   data.table::rbindlist(foreach(i = dem_tiles) %dopar% {
-  
- # Load the DEM tile
-  dem <- raster::raster(i)
-  sub_stations <- raster::crop(stations, dem)
-
-  # in some cases the DEM represents areas where there is no station
-  # check for that here and if no stations, go on to next iteration
-  if (!is.null(sub_stations)) {
-
-    # use a 200m buffer to extract elevation from the DEM
-    sub_stations$ELEV_M_SRTM_90m <- raster::extract(dem, sub_stations, buffer = 200, fun = mean)
-
-    # convert spatial object back to normal data frame and add new fields
-    sub_stations <- as.data.frame(sub_stations)
-    return(sub_stations)
+    
+    # Load the DEM tile
+    dem <- raster::raster(i)
+    sub_stations <- raster::crop(stations, dem)
+    
+    # in some cases the DEM represents areas where there is no station
+    # check for that here and if no stations, go on to next iteration
+    if (!is.null(sub_stations)) {
+      
+      # use a 200m buffer to extract elevation from the DEM
+      sub_stations$ELEV_M_SRTM_90m <- raster::extract(dem, sub_stations,
+                                                      buffer = 200,
+                                                      fun = mean)
+      
+      # convert spatial object back to normal data frame and add new fields
+      sub_stations <- as.data.frame(sub_stations)
+      return(sub_stations)
+    }
   }
-}
-)
+  )
 )
 # stop cluster
 parallel::stopCluster(cl)
@@ -196,8 +201,8 @@ corrected_elev[, 13] <- round(corrected_elev[, 13], 0)
 
 Tidy up the `corrected_elev` object by converting any factors to character prior
 to performing a left-join with the `stations` object. For stations above/below
-60/-60 latitude, `ELEV_M_SRTM_90m` will be `NA` as there is no SRTM data for these
-latitudes.
+60/-60 latitude, `ELEV_M_SRTM_90m` will be `NA` as there is no SRTM data for
+these latitudes.
 ```{r}
 c <- sapply(corrected_elev, is.factor)
 corrected_elev[c] <- lapply(corrected_elev[c], as.character)
@@ -237,7 +242,7 @@ values that are included in the final data for distribution with the GSODR
 package following the approach of Hijmans *et al.* (2005).
 
 Only values for elevation derived from the SRTM data and the STNID, used to
-join this with the original "isd-history.csv" file data when running `get_GSOD()`
+join this with the original "isd-history.csv" file data when running `get_GSOD`
 are included in the final data frame for distribution with the GSODR package.
 
 ```{r cleanup and .rda file creation, message=FALSE, echo=TRUE, warning=FALSE, error=FALSE}
