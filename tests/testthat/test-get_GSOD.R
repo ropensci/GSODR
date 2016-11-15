@@ -11,7 +11,7 @@ test_that(".validate_years handles invalid years", {
     "\nThe GSOD data files start at 1929, you have entered a year prior\n             to 1929.\n")
   expect_error(.validate_years(years = 1901 + as.POSIXlt(Sys.Date())$year),
     "\nThe year cannot be greater than current year.\n")
-  
+
 })
 
 test_that(".validate_years handles valid years", {
@@ -25,7 +25,7 @@ expect_error(.validate_years(years = 2016), regexp = NA)
 test_that("invalid stations are handled", {
   skip_on_cran()
   stations <- .fetch_station_list()
-  expect_error(.check_stations(years = 2015, station = "aaa-bbbbbb", stations),
+  expect_error(.validate_stations(years = 2015, station = "aaa-bbbbbb", stations),
                "\nThis is not a valid station ID number, please check your entry.\n           \nStation IDs are provided as a part of the GSODR package in the\n           'stations' data in the STNID column.\n")
 })
 
@@ -42,9 +42,9 @@ test_that("invalid dsn is handled", {
 
 test_that("stations list and associated metatdata", {
   skip_on_cran()
-  
+
   stations <- .fetch_station_list()
-  
+
   expect_equal(ncol(stations), 13)
   expect_is(stations, "data.table")
   expect_is(stations$USAF, "character")
@@ -63,11 +63,51 @@ test_that("stations list and associated metatdata", {
   expect_gt(nrow(stations), 2300)
 })
 
-test_that("missing days check allows stations with permissible days missing", {
+test_that("missing days check allows stations with permissible days missing,
+          non-leap year", {
   skip_on_cran()
   max_missing <- 5
-  GSOD_list <- 
-  .check_missing_days(max_missing, GSOD_list)
-  
+  td <- tempdir()
+  just_right_2015 <- data.frame(c(rep(12, 360)), c(rep("X", 360)))
+  too_short_2015 <- data.frame(c(rep(12, 300)), c(rep("X", 300)))
+  df_list <- list(just_right_2015, too_short_2015)
+
+  filenames <- c("just_right_2015", "too_short_2015")
+  sapply(1:length(df_list),
+         function(x) write.csv(df_list[[x]],
+                               file = gzfile(
+                                 paste0(td, "/", filenames[x], ".csv.gz"))
+                               )
+  )
+  GSOD_list <- as.list(list.files(td, pattern = "2015.csv.gz$"))
+  GSOD_list_filtered <- .validate_missing_days(max_missing, GSOD_list, td)
+
+  expect_equal(length(GSOD_list), 2)
+  expect_equal(length(GSOD_list_filtered), 1)
 })
+
+test_that("missing days check allows stations with permissible days missing,
+          leap year", {
+            skip_on_cran()
+            max_missing <- 5
+            td <- tempdir()
+            just_right_2015 <- data.frame(c(rep(12, 361)), c(rep("X", 361)))
+            too_short_2015 <- data.frame(c(rep(12, 300)), c(rep("X", 300)))
+            df_list <- list(just_right_2015, too_short_2015)
+
+            filenames <- c("just_right_2016", "too_short_2016")
+            sapply(1:length(df_list),
+                   function(x) write.csv(df_list[[x]],
+                                         file = gzfile(
+                                           paste0(td, "/", filenames[x],
+                                                  ".csv.gz"))
+                   )
+            )
+            GSOD_list <- as.list(list.files(td, pattern = "2016.csv.gz$"))
+            GSOD_list_filtered <- .validate_missing_days(max_missing,GSOD_list,
+                                                         td)
+
+            expect_equal(length(GSOD_list), 2)
+            expect_equal(length(GSOD_list_filtered), 1)
+          })
 

@@ -420,8 +420,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
 
 
 #' @noRd
-.validate_missing_days <- function(max_missing, GSOD_list) {
-  records <- lapply(data = GSOD_list, R.utils::countLines)
+.validate_missing_days <- function(max_missing, GSOD_list, td) {
+  records <- lapply(X = paste0(td, "/", GSOD_list), FUN = R.utils::countLines)
   names(records) <- GSOD_list
   year <- as.numeric(gsub("[^0-9]", "", GSOD_list[1]))
 
@@ -429,7 +429,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
          allow <- 365 - max_missing,
          allow <- 366 - max_missing)
 
-  GSOD_list <- stats::na.omit(ifelse(records >= allow, paste0(GSOD_list),
+  GSOD_list <- stats::na.omit(ifelse(records >= allow,
+                                     paste0(td, "/", GSOD_list),
                                      NA))
 }
 
