@@ -1,5 +1,7 @@
+
+# Check that nearest stations functions properly -------------------------------
 context("nearest_stations")
-# Check that .validate_years handles invalid years -----------------------------
+
 test_that("nearest stations returns numeric station IDs", {
   skip_on_cran()
   
