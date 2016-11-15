@@ -134,6 +134,7 @@ test_that("Check validate country returns a two letter code", {
   
 })
 
+# "Check validate country returns an error on invalid entry---------------------
 test_that("Check validate country returns an error on invalid entry", {
   country <- "Philipines"
   expect_error(.validate_country(country), 
@@ -146,6 +147,7 @@ test_that("Check validate country returns an error on invalid entry", {
                "Please provide a valid name or 2 or 3 letter ISO country code;
                you can view the entire list of valid countries in this data by
                typing, 'country_list'.")
-
   
 })
+
+
