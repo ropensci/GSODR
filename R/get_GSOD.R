@@ -248,8 +248,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
 
   # Subset GSOD_list for agroclimatology only stations -------------------------
   if (isTRUE(agroclimatology)) {
-    GSOD_list <- .agroclimatology_list(agroclimatology, GSOD_list, stations, td,
-                                       years)
+    GSOD_list <- .agroclimatology_list(GSOD_list, stations, td, years)
   }
 
   # Subset GSOD_list for specified country -------------------------------------
