@@ -88,7 +88,7 @@ test_that("missing days check allows stations with permissible days missing,
             GSOD_list_filtered <- .validate_missing_days(max_missing, GSOD_list, td)
 
             expect_length(GSOD_list, 2)
-            expect_match(GSOD_list_filtered, "just_right_2015.csv.gz")
+            expect_match(basename(GSOD_list_filtered), "just_right_2015.csv.gz")
             unlink(td)
           })
 
@@ -116,7 +116,7 @@ test_that("missing days check allows stations with permissible days missing,
 
             expect_length(GSOD_list, 2)
 
-            expect_match(GSOD_list_filtered, "just_right_2015.csv.gz")
+            expect_match(basename(GSOD_list_filtered), "just_right_2016.csv.gz")
             unlink(td)
           })
 
