@@ -1,5 +1,5 @@
 context("get_GSOD")
-
+# Check that .validate_years handles invalid years -----------------------------
 test_that(".validate_years handles invalid years", {
   skip_on_cran()
 
@@ -14,6 +14,7 @@ test_that(".validate_years handles invalid years", {
 
 })
 
+# Check that .validate_years handles valid years -------------------------------
 test_that(".validate_years handles valid years", {
   skip_on_cran()
 expect_error(.validate_years(years = 1929:2016), regexp = NA)
@@ -22,6 +23,7 @@ expect_error(.validate_years(years = 2016), regexp = NA)
 
 })
 
+# invalid stations are handled -------------------------------------------------
 test_that("invalid stations are handled", {
   skip_on_cran()
   stations <- .fetch_station_list()
@@ -29,6 +31,7 @@ test_that("invalid stations are handled", {
                "\nThis is not a valid station ID number, please check your entry.\n           \nStation IDs are provided as a part of the GSODR package in the\n           'stations' data in the STNID column.\n")
 })
 
+# Check that invalid dsn is handled --------------------------------------------
 test_that("invalid dsn is handled", {
   skip_on_cran()
 
@@ -40,6 +43,7 @@ test_that("invalid dsn is handled", {
                "\nYou need to specify a filetype, CSV or GPKG.")
 })
 
+# Check stations list and associated metadata for validity ---------------------
 test_that("stations list and associated metatdata", {
   skip_on_cran()
 
@@ -63,6 +67,7 @@ test_that("stations list and associated metatdata", {
   expect_gt(nrow(stations), 2300)
 })
 
+# Check missing days in non-leap years -----------------------------------------
 test_that("missing days check allows stations with permissible days missing,
           non-leap year", {
   skip_on_cran()
@@ -86,6 +91,7 @@ test_that("missing days check allows stations with permissible days missing,
   expect_match(GSOD_list_filtered, "just_right_2015.csv.gz")
 })
 
+# Check missing days in leap years ---------------------------------------------
 test_that("missing days check allows stations with permissible days missing,
           leap year", {
             skip_on_cran()
@@ -112,3 +118,34 @@ test_that("missing days check allows stations with permissible days missing,
             expect_match(GSOD_list_filtered, "just_right_2015.csv.gz")
           })
 
+# Check validate country returns a two letter code -----------------------------
+test_that("Check validate country returns a two letter code", {
+  country <- "Philippines"
+  Philippines <- .validate_country(country)
+  expect_match(Philippines, "RP")
+  
+  country <- "PHL"
+  PHL <- .validate_country(country)
+  expect_match(PHL, "RP")
+  
+  country <- "PH"
+  PH <- .validate_country(country)
+  expect_match(PH, "RP")
+  
+})
+
+test_that("Check validate country returns an error on invalid entry", {
+  country <- "Philipines"
+  expect_error(.validate_country(country), 
+               "Please provide a valid name or 2 or 3 letter ISO country code;
+               you can view the entire list of valid countries in this data by
+               typing, 'country_list'.")
+  
+  country <- "RP"
+  expect_error(.validate_country(country), 
+               "Please provide a valid name or 2 or 3 letter ISO country code;
+               you can view the entire list of valid countries in this data by
+               typing, 'country_list'.")
+
+  
+})
