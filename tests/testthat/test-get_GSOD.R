@@ -4,22 +4,22 @@ test_that(".validate_years handles invalid years", {
   skip_on_cran()
 
   expect_error(.validate_years(years = NULL),
-    "\nYou must provide at least one year of data to download in a numeric\n         format.\n")
+               "\nYou must provide at least one year of data to download in a numeric\n         format.\n")
   expect_error( .validate_years(years = "nineteen ninety two"),
-    "\nYou must provide at least one year of data to download in a numeric\n         format.\n")
+                "\nYou must provide at least one year of data to download in a numeric\n         format.\n")
   expect_error(.validate_years(years = 1923),
-    "\nThe GSOD data files start at 1929, you have entered a year prior\n             to 1929.\n")
+               "\nThe GSOD data files start at 1929, you have entered a year prior\n             to 1929.\n")
   expect_error(.validate_years(years = 1901 + as.POSIXlt(Sys.Date())$year),
-    "\nThe year cannot be greater than current year.\n")
+               "\nThe year cannot be greater than current year.\n")
 
 })
 
 # Check that .validate_years handles valid years -------------------------------
 test_that(".validate_years handles valid years", {
   skip_on_cran()
-expect_error(.validate_years(years = 1929:2016), regexp = NA)
+  expect_error(.validate_years(years = 1929:2016), regexp = NA)
 
-expect_error(.validate_years(years = 2016), regexp = NA)
+  expect_error(.validate_years(years = 2016), regexp = NA)
 
 })
 
@@ -70,26 +70,27 @@ test_that("stations list and associated metatdata", {
 # Check missing days in non-leap years -----------------------------------------
 test_that("missing days check allows stations with permissible days missing,
           non-leap year", {
-  skip_on_cran()
-  max_missing <- 5
-  td <- tempdir()
-  just_right_2015 <- data.frame(c(rep(12, 360)), c(rep("X", 360)))
-  too_short_2015 <- data.frame(c(rep(12, 300)), c(rep("X", 300)))
-  df_list <- list(just_right_2015, too_short_2015)
+            skip_on_cran()
+            max_missing <- 5
+            td <- tempdir()
+            just_right_2015 <- data.frame(c(rep(12, 360)), c(rep("X", 360)))
+            too_short_2015 <- data.frame(c(rep(12, 300)), c(rep("X", 300)))
+            df_list <- list(just_right_2015, too_short_2015)
 
-  filenames <- c("just_right_2015", "too_short_2015")
-  sapply(1:length(df_list),
-         function(x) write.csv(df_list[[x]],
-                               file = gzfile(
-                                 paste0(td, "/", filenames[x], ".csv.gz"))
-                               )
-  )
-  GSOD_list <- as.list(list.files(td, pattern = "2015.csv.gz$"))
-  GSOD_list_filtered <- .validate_missing_days(max_missing, GSOD_list, td)
+            filenames <- c("just_right_2015", "too_short_2015")
+            sapply(1:length(df_list),
+                   function(x) write.csv(df_list[[x]],
+                                         file = gzfile(
+                                           paste0(td, "/", filenames[x], ".csv.gz"))
+                   )
+            )
+            GSOD_list <- as.list(list.files(td, pattern = "2015.csv.gz$"))
+            GSOD_list_filtered <- .validate_missing_days(max_missing, GSOD_list, td)
 
-  expect_length(GSOD_list, 2)
-  expect_match(GSOD_list_filtered, "just_right_2015.csv.gz")
-})
+            expect_length(GSOD_list, 2)
+            expect_match(GSOD_list_filtered, "just_right_2015.csv.gz")
+            unlink(td)
+          })
 
 # Check missing days in leap years ---------------------------------------------
 test_that("missing days check allows stations with permissible days missing,
@@ -116,6 +117,7 @@ test_that("missing days check allows stations with permissible days missing,
             expect_length(GSOD_list, 2)
 
             expect_match(GSOD_list_filtered, "just_right_2015.csv.gz")
+            unlink(td)
           })
 
 # Check validate country returns a two letter code -----------------------------
@@ -123,31 +125,55 @@ test_that("Check validate country returns a two letter code", {
   country <- "Philippines"
   Philippines <- .validate_country(country)
   expect_match(Philippines, "RP")
-  
+
   country <- "PHL"
   PHL <- .validate_country(country)
   expect_match(PHL, "RP")
-  
+
   country <- "PH"
   PH <- .validate_country(country)
   expect_match(PH, "RP")
-  
+
 })
 
-# "Check validate country returns an error on invalid entry---------------------
+# Check validate country returns an error on invalid entry----------------------
 test_that("Check validate country returns an error on invalid entry", {
   country <- "Philipines"
-  expect_error(.validate_country(country), 
+  expect_error(.validate_country(country),
                "Please provide a valid name or 2 or 3 letter ISO country code;
                you can view the entire list of valid countries in this data by
                typing, 'country_list'.")
-  
+
   country <- "RP"
-  expect_error(.validate_country(country), 
+  expect_error(.validate_country(country),
                "Please provide a valid name or 2 or 3 letter ISO country code;
                you can view the entire list of valid countries in this data by
                typing, 'country_list'.")
-  
+
 })
 
+# Check that .download_files works, and subsetting agro and ctry stations work--
+test_that(".download_files properly works, subsetting for country and
+          agroclimatology works", {
+years <- 2015
+agroclimatology = TRUE
+country <- "RP"
+station <- NULL
+options(timeout = 300)
+td <- tempdir()
+ftp <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
+
+stations <- .fetch_station_list()
+
+GSOD_list <- .download_files(ftp, station, years, td)
+
+expect_length(GSOD_list, 12976)
+
+agro_list <- .agroclimatology_list(GSOD_list, stations, td, years)
+expect_length(agro_list, 11302)
+
+RP_list <- .country_list(country, GSOD_list, stations, td, years)
+expect_length(RP_list, 53)
+
+})
 

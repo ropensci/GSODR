@@ -449,6 +449,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
     plyr::ldply(.data = tar_files, .fun = utils::untar, exdir = td)
 
     GSOD_list <- list.files(td, pattern = "^.*\\.op.gz$", full.names = TRUE)
+    return(GSOD_list)
   }
 
 
@@ -471,15 +472,15 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
 
 
 # Agroclimatology: subset list of stations to process-------------------------
-.agroclimatology_list <- function(agroclimatology, GSOD_list, stations, td,
-                                  years) {
+.agroclimatology_list <- function(GSOD_list, stations, td, years) {
   station_list <- stations[stations$LAT >= -60 &
                              stations$LAT <= 60, ]$STNID
   station_list <- do.call(paste0,
                           c(expand.grid(td, "/", station_list, "-", years,
                                         ".op.gz")))
-  GSOD_list <- GSOD_list[isTRUE(GSOD_list %in% station_list)]
+  GSOD_list <- GSOD_list[GSOD_list %in% station_list]
   rm(station_list)
+  return(GSOD_list)
 }
 
 # Specified country: subset list of stations to process ----------------------
@@ -491,7 +492,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
   station_list <- do.call(paste0,
                           c(expand.grid(td, "/", station_list, "-", years,
                                         ".op.gz")))
-  GSOD_list <- GSOD_list[isTRUE(GSOD_list %in% station_list)]
+  GSOD_list <- GSOD_list[GSOD_list %in% station_list]
+  return(GSOD_list)
   rm(station_list)
 }
 
