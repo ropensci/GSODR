@@ -6,17 +6,23 @@
 \alias{GSODR-package}
 \title{GSODR: Global Surface Summary Daily Weather Data in R.}
 \description{
-The GSODR package is an R package that provides a function that
-automates downloading and cleaning data from the "Global Surface
-Summary of the Day (GSOD)" weather station data provided by the US National
-Climatic Data Center (NCDC). Station files are individually checked for number
-of missing days to assure data quality, stations with too many missing
-observations are omitted. All units are converted to International System of
-Units (SI), e.g., inches to millimetres and Fahrenheit to Celsius. Output is
-saved as a Comma Separated Value (CSV) file or in a spatial GeoPackage
-(GPKG) file, implemented by most major GIS software, summarising each
-year by station, which also includes vapour pressure and relative
-humidity variables calculated from existing data in GSOD.
+The GSODR package offers automated downloading, parsing, cleaning,
+unit conversion and formatting of Global Surface Summary of the Day (GSOD)
+weather data from the from the USA National Climatic Data Center (NCDC).
+All units are converted from from United States Customary System (USCS)
+units to International System of Units (SI). Stations may be individually
+checked for number of missing days defined by the user, where stations
+with too many missing observations are omitted. Only stations with valid
+reported latitude and longitude values are permitted in the final data.
+Additional useful variables, saturation vapour pressure (es), actual vapour
+pressure (ea) and relative humidity are calculated from the original data
+and included in the final data set. A list of elevation values generated from
+a 200 metre buffer of 90m elevation data, CGIAR-CSI SRTM hole-filled 90
+metre data (Jarvis et al. 2008), are included for stations between -60 and
+60 degrees latitude. The resulting data include station data (e.g., station
+name, country, latitude, longitude, elevation) and weather observations and
+associated flags. Data may be automatically saved to disk. File output may
+be returned as a comma-separated values (CSV) or GeoPackage (GPKG) file.
 }
 \section{GSODR functions}{
 

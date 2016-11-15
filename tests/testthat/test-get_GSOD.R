@@ -1,46 +1,242 @@
 context("get_GSOD")
-
-test_that("get_GSOD handles invalid years", {
+# Check that .validate_years handles invalid years -----------------------------
+test_that(".validate_years handles invalid years", {
   skip_on_cran()
-
-  expect_error(get_GSOD(years = NULL, station = "955510-99999", country = NULL,
-                        dsn = "~/", filename = "test", max_missing = 5,
-                        agroclimatology = FALSE, CSV = TRUE, GPKG = FALSE),
+  
+  expect_error(.validate_years(years = NULL),
                "\nYou must provide at least one year of data to download in a numeric\n         format.\n")
-
-  expect_error(get_GSOD(years = 1923, station = "955510-99999", country = NULL,
-                        dsn = "~/", filename = "test", max_missing = 5,
-                        agroclimatology = FALSE, CSV = TRUE, GPKG = FALSE),
-             "\nThe GSOD data files start at 1929, you have entered a year prior
-             to 1929.\n")
-
-  expect_error(get_GSOD(years = 1901 + as.POSIXlt(Sys.Date())$year,
-                        station = "955510-99999", country = NULL, dsn = "~/",
-                        filename = "test", max_missing = 5,
-                        agroclimatology = FALSE,
-                        CSV = TRUE, GPKG = FALSE),
+  expect_error( .validate_years(years = "nineteen ninety two"),
+                "\nYou must provide at least one year of data to download in a numeric\n         format.\n")
+  expect_error(.validate_years(years = 1923),
+               "\nThe GSOD data files start at 1929, you have entered a year prior\n             to 1929.\n")
+  expect_error(.validate_years(years = 1901 + as.POSIXlt(Sys.Date())$year),
                "\nThe year cannot be greater than current year.\n")
+  
 })
 
+# Check that .validate_years handles valid years -------------------------------
+test_that(".validate_years handles valid years", {
+  skip_on_cran()
+  expect_error(.validate_years(years = 1929:2016), regexp = NA)
+  
+  expect_error(.validate_years(years = 2016), regexp = NA)
+  
+})
+
+# Check that invalid stations are handled --------------------------------------
 test_that("invalid stations are handled", {
   skip_on_cran()
-
-  expect_error(get_GSOD(years = 1900 + as.POSIXlt(Sys.Date())$year,
-                        station = "999990-9999", country = NULL, dsn = "~/",
-                        filename = "test", max_missing = 5,
-                        agroclimatology = FALSE, CSV = TRUE, GPKG = FALSE),
-               "\nThis is not a valid station ID number, please check your entry.\n           \nStation IDs are provided as a part of the GSODR package in the\n           'stations' data\nin the STNID column.\n")
-
+  stations <- .fetch_station_list()
+  expect_error(.validate_stations(years = 2015, station = "aaa-bbbbbb", stations),
+               "\nThis is not a valid station ID number, please check your entry.\n           \nStation IDs are provided as a part of the GSODR package in the\n           'stations' data in the STNID column.\n")
 })
 
+# Check that invalid dsn is handled --------------------------------------------
 test_that("invalid dsn is handled", {
   skip_on_cran()
-
-  expect_error(get_GSOD(years = 1900 + as.POSIXlt(Sys.Date())$year,
-                        station = "999990-9999", country = NULL,
-                        dsn = "~/dev/NULL", filename = "test",
-                        max_missing = 5, agroclimatology = FALSE,
-                        CSV = TRUE, GPKG = FALSE),
-               "\nFile dsn does not exist: ~/dev/NULL.\n")
-
+  
+  expect_error(.validate_fileout(CSV = FALSE, dsn = "~/R", filename = NULL,
+                                 GPKG = FALSE),
+               "\nFile dsn does not exist: ~/R.\n")
+  expect_error(.validate_fileout(CSV = FALSE, dsn = NULL, filename = "test",
+                                 GPKG = FALSE),
+               "\nYou need to specify a filetype, CSV or GPKG.")
 })
+
+# Check stations list and associated metadata for validity ---------------------
+test_that("stations list and associated metatdata", {
+  skip_on_cran()
+  
+  stations <- .fetch_station_list()
+  
+  expect_length(stations, 13)
+  
+  expect_is(stations, "data.table")
+  expect_is(stations$USAF, "character")
+  expect_is(stations$WBAN , "character")
+  expect_is(stations$STN_NAME, "character")
+  expect_is(stations$CTRY, "character")
+  expect_is(stations$STATE, "character")
+  expect_is(stations$CALL, "character")
+  expect_is(stations$LAT, "numeric")
+  expect_is(stations$LON, "numeric")
+  expect_is(stations$ELEV_M, "numeric")
+  expect_is(stations$BEGIN, "numeric")
+  expect_is(stations$END, "numeric")
+  expect_is(stations$STNID, "character")
+  expect_is(stations$ELEV_M_SRTM_90m, "numeric")
+  
+  expect_gt(nrow(stations), 2300)
+})
+
+# Check missing days in non-leap years -----------------------------------------
+test_that("missing days check allows stations with permissible days missing,
+          non-leap year", {
+            skip_on_cran()
+            max_missing <- 5
+            td <- tempdir()
+            just_right_2015 <- data.frame(c(rep(12, 360)), c(rep("X", 360)))
+            too_short_2015 <- data.frame(c(rep(12, 300)), c(rep("X", 300)))
+            df_list <- list(just_right_2015, too_short_2015)
+            
+            filenames <- c("just_right_2015", "too_short_2015")
+            sapply(1:length(df_list),
+                   function(x) write.csv(df_list[[x]],
+                                         file = gzfile(
+                                           paste0(td, "/", filenames[x],
+                                                  ".csv.gz"))
+                   )
+            )
+            GSOD_list <- as.list(list.files(td, pattern = "2015.csv.gz$"))
+            GSOD_list_filtered <- .validate_missing_days(max_missing, GSOD_list,
+                                                         td)
+            
+            expect_length(GSOD_list, 2)
+            expect_match(basename(GSOD_list_filtered), "just_right_2015.csv.gz")
+            unlink(td)
+          })
+
+# Check missing days in leap years ---------------------------------------------
+test_that("missing days check allows stations with permissible days missing,
+          leap year", {
+            skip_on_cran()
+            max_missing <- 5
+            td <- tempdir()
+            just_right_2015 <- data.frame(c(rep(12, 361)), c(rep("X", 361)))
+            too_short_2015 <- data.frame(c(rep(12, 300)), c(rep("X", 300)))
+            df_list <- list(just_right_2015, too_short_2015)
+            
+            filenames <- c("just_right_2016", "too_short_2016")
+            sapply(1:length(df_list),
+                   function(x) write.csv(df_list[[x]],
+                                         file = gzfile(
+                                           paste0(td, "/", filenames[x],
+                                                  ".csv.gz"))
+                   )
+            )
+            GSOD_list <- as.list(list.files(td, pattern = "2016.csv.gz$"))
+            GSOD_list_filtered <- .validate_missing_days(max_missing,GSOD_list,
+                                                         td)
+            
+            expect_length(GSOD_list, 2)
+            
+            expect_match(basename(GSOD_list_filtered), "just_right_2016.csv.gz")
+            unlink(td)
+          })
+
+# Check validate country returns a two letter code -----------------------------
+test_that("Check validate country returns a two letter code", {
+  country <- "Philippines"
+  Philippines <- .validate_country(country)
+  expect_match(Philippines, "RP")
+  
+  country <- "PHL"
+  PHL <- .validate_country(country)
+  expect_match(PHL, "RP")
+  
+  country <- "PH"
+  PH <- .validate_country(country)
+  expect_match(PH, "RP")
+  
+})
+
+# Check validate country returns an error on invalid entry----------------------
+test_that("Check validate country returns an error on invalid entry", {
+  country <- "Philipines"
+  expect_error(.validate_country(country),
+               "Please provide a valid name or 2 or 3 letter ISO country code;
+               you can view the entire list of valid countries in this data by
+               typing, 'country_list'.")
+  
+  country <- "RP"
+  expect_error(.validate_country(country),
+               "Please provide a valid name or 2 or 3 letter ISO country code;
+               you can view the entire list of valid countries in this data by
+               typing, 'country_list'.")
+  
+})
+
+# Check that .download_files,subsetting agro and ctry stations work.------------
+# Check that .process_gz works properly and returns a data table.
+test_that(".download_files properly works, subsetting for country and
+          agroclimatology works and .process_gz returns a data table", {
+            years <- 2015
+            agroclimatology = TRUE
+            country <- "RP"
+            station <- NULL
+            options(timeout = 300)
+            td <- tempdir()
+            ftp <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
+            
+            stations <- .fetch_station_list()
+            
+            GSOD_list <- .download_files(ftp, station, years, td)
+            
+            expect_length(GSOD_list, 12976)
+            
+            agro_list <- .agroclimatology_list(GSOD_list, stations, td, years)
+            expect_length(agro_list, 11302)
+            
+            RP_list <- .country_list(country, GSOD_list, stations, td, years)
+            expect_length(RP_list, 53)
+
+# Check that .process_gz returns a properly formated data table-----------------
+            gz_file <- GSOD_list[[10]]
+            gz_out <- .process_gz(gz_file, stations)
+            
+            expect_length(gz_out, 48)
+            
+            expect_is(gz_out, "data.table")
+            
+            expect_is(gz_out$USAF, "character")
+            expect_is(gz_out$WBAN , "character")
+            expect_is(gz_out$STNID, "character")
+            expect_is(gz_out$STN_NAME, "character")
+            expect_is(gz_out$CTRY, "character")
+            expect_is(gz_out$CALL, "character")
+            expect_is(gz_out$STATE, "character")
+            expect_is(gz_out$CALL, "character")
+            expect_is(gz_out$LAT, "numeric")
+            expect_is(gz_out$LON, "numeric")
+            expect_is(gz_out$ELEV_M, "numeric")
+            expect_is(gz_out$ELEV_M_SRTM_90m, "numeric")
+            expect_is(gz_out$BEGIN, "numeric")
+            expect_is(gz_out$END, "numeric")
+            expect_is(gz_out$YEARMODA, "character")
+            expect_is(gz_out$YEAR, "character")
+            expect_is(gz_out$MONTH, "character")
+            expect_is(gz_out$DAY, "character")
+            expect_is(gz_out$YDAY, "numeric")
+            expect_is(gz_out$TEMP, "numeric")
+            expect_is(gz_out$TEMP_CNT, "integer")
+            expect_is(gz_out$DEWP, "numeric")
+            expect_is(gz_out$DEWP_CNT, "integer")
+            expect_is(gz_out$SLP, "numeric")
+            expect_is(gz_out$SLP_CNT, "integer")
+            expect_is(gz_out$STP, "numeric")
+            expect_is(gz_out$STP_CNT, "integer")
+            expect_is(gz_out$VISIB, "numeric")
+            expect_is(gz_out$VISIB_CNT, "integer")
+            expect_is(gz_out$WDSP, "numeric")
+            expect_is(gz_out$WDSP_CNT, "integer")
+            expect_is(gz_out$MXSPD, "numeric")
+            expect_is(gz_out$GUST, "numeric")
+            expect_is(gz_out$MAX, "numeric")
+            expect_is(gz_out$MAX_FLAG, "character")
+            expect_is(gz_out$MIN, "numeric")
+            expect_is(gz_out$MIN_FLAG, "character")
+            expect_is(gz_out$PRCP, "numeric")
+            expect_is(gz_out$PRCP_FLAG, "character")
+            expect_is(gz_out$SNDP, "numeric")
+            expect_is(gz_out$I_FOG, "integer")
+            expect_is(gz_out$I_RAIN_DRIZZLE, "integer")
+            expect_is(gz_out$I_SNOW_ICE, "integer")
+            expect_is(gz_out$I_HAIL, "integer")
+            expect_is(gz_out$I_THUNDER, "integer")
+            expect_is(gz_out$I_TORNADO_FUNNEL, "integer")
+            expect_is(gz_out$EA, "numeric")
+            expect_is(gz_out$ES, "numeric")
+            expect_is(gz_out$RH, "numeric")
+            
+          })
+            

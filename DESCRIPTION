@@ -12,39 +12,39 @@ Maintainer: Adam Sparks <adamhsparks@gmail.com>
 URL: https://github.com/adamhsparks/GSODR
 BugReports: https://github.com/adamhsparks/GSODR/issues
 Description: The GSODR package offers automated downloading, parsing, cleaning,
-    unit conversion and reformatting of Global Surface Summary of the Day (GSOD)
+    unit conversion and formatting of Global Surface Summary of the Day (GSOD)
     weather data from the from the USA National Climatic Data Center (NCDC).
     All units are converted from from United States Customary System (USCS)
-    units to International System of Units (SI). Stations are individually
+    units to International System of Units (SI). Stations may be individually
     checked for number of missing days defined by the user, where stations
     with too many missing observations are omitted. Only stations with valid
-    reported latitude and longitude values are permitted in the final file.
+    reported latitude and longitude values are permitted in the final data.
     Additional useful variables, saturation vapour pressure (es), actual vapour
     pressure (ea) and relative humidity are calculated from the original data
-    and included in the final data set. A list of values for 200 metre buffered
-    elevation data, derived from the CGIAR-CSI SRTM hole-filled 90 metre data
-    set (Jarvis et al. 2008), are included for stations between -60 and 60
-    degrees latitude. The resulting file includes station data (e.g., station
+    and included in the final data set. A list of elevation values generated from
+    a 200 metre buffer of 90m elevation data, CGIAR-CSI SRTM hole-filled 90
+    metre data (Jarvis et al. 2008), are included for stations between -60 and
+    60 degrees latitude. The resulting data include station data (e.g., station
     name, country, latitude, longitude, elevation) and weather observations and
-    associated flags. File output is returned as a comma-separated values (CSV)
-    or GeoPackage (GPKG) file written to a local disk. For information on the
-    original data from NCDC, please see the GSOD readme.txt file available from,
+    associated flags. Data may be automatically saved to disk. File output may
+    be returned as a comma-separated values (CSV) or GeoPackage (GPKG) file.
+    For information on the original data from NCDC, please see the GSOD
+    readme.txt file available from,
     <http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt>.
 Depends:
     R (>= 3.2.0)
 License: GPL (>= 3)
 Imports:
     data.table,
-    doParallel,
     fields,
-    foreach,
-    iterators,
-    parallel,
+    plyr,
+    R.utils,
     RCurl,
     readr,
     rgdal,
     sp,
     stats,
+    stringi,
     utils
 Suggests:
     chillR,

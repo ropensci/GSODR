@@ -4,7 +4,7 @@
 \name{SRTM_GSOD_elevation}
 \alias{SRTM_GSOD_elevation}
 \title{SRTM_GSOD_elevation}
-\format{A data frame with 27861 observations of 2 variables:
+\format{A data frame with 28310 observations of 2 variables:
 \describe{
   \item{STNID}{Unique station ID, a concatenation of USAF and WBAN number,
   used for merging with station data weather files}

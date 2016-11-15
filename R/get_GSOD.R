@@ -5,61 +5,61 @@
 #'Climatic Data Center (NCDC),
 #'\url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod},
 #'and calculates three new variables; Saturation Vapor Pressure (ES) – Actual
-#'Vapor Pressure (EA) and relative humidity (RH). Stations are individually
-#'checked for number of missing days to assure data quality, stations with too
-#'many missing observations are omitted. Additionally, stations reporting a
-#'latitude of < -90 or > 90 or longitude of < -180 or > 180 are removed. All
-#'units are converted to International System of Units (SI), e.g., Fahrenheit to
-#'Celsius and inches to millimetres. Alternative elevation measurements are
-#'supplied for missing values or values found to be questionable based on the
-#'Consultative Group for International Agricultural Research's Consortium for
-#'Spatial Information group's (CGIAR-CSI) Shuttle Radar Topography Mission 90
-#'metre (SRTM 90m) digital elevation data based on NASA's original SRTM 90m
-#'data. Further information on these data and methods can be found on GSODR's
-#'GitHub repository here:
+#'Vapor Pressure (EA) and relative humidity (RH). Stations reporting a latitude
+#'of < -90 or > 90 or longitude of < -180 or > 180 are removed. Stations may be
+#'individually checked for number of missing days to assure data quality and
+#'omitting stations with too many missing observations. All units are converted
+#'to International System of Units (SI), e.g., Fahrenheit to Celsius and inches
+#'to millimetres. Alternative elevation measurements are supplied for missing
+#'values or values found to be questionable based on the Consultative Group for
+#'International Agricultural Research's Consortium for Spatial Information
+#'group's (CGIAR-CSI) Shuttle Radar Topography Mission 90 metre (SRTM 90m)
+#'digital elevation data based on NASA's original SRTM 90m data. Further
+#'information on these data and methods can be found on GSODR's GitHub
+#'repository here:
 #'\url{https://github.com/adamhsparks/GSODR/blob/master/data-raw/fetch_isd-history.md}
 #'
 #' @param years Year(s) of weather data to download.
-#' @param station Specify a station or multiple stations for which to retrieve,
-#' check and clean weather data. The NCDC reports years for which the data are
-#' available. This function checks against these years. However, not all cases
-#' are properly documented and in some cases files may not exist on the ftp
-#' server even though it is indicated that data was recorded for the station for
-#' a particular year. If a station is specified that does not have an
-#' existing file on the server, this function will silently fail and move on
-#' to existing files for download and cleaning from the ftp server.
-#' @param country Specify a country of interest for which to retrieve weather
-#' data; full name. For stations located in locales
-#' having an ISO code 2 or 3 letter ISO code can also be used if known. See
+#' @param station Optional. Specify a station or multiple stations for which to
+#' retrieve, check and clean weather data. The NCDC reports years for which the
+#' data are available. This function checks against these years. However, not
+#' all cases are properly documented and in some cases files may not exist on
+#' the ftp server even though it is indicated that data was recorded for the
+#' station for a particular year. If a station is specified that does not have
+#' an existing file on the server, this function will silently fail and move on
+#' to existing files for download and cleaning from the FTP server.
+#' @param country Optional. Specify a country for which to retrieve weather
+#' data; full name or ISO codes can be used. See
 #' \code{\link{country_list}} for a full list of country names and ISO
 #' codes available.
-#' @param dsn Path to file write to. (Optional)
-#' @param filename The filename for resulting file(s) to be written with no
-#' file extension. Year and file extension will be automatically appended to
-#' file outputs. Defaults to "GSOD-year". (Optional)
-#' @param max_missing The maximum number of days allowed to be missing from a
-#' station's data before it is excluded from final file output. Defaults to five
-#' days. If a single station is specified, this option is ignored and any data
-#' available, even an empty file, from NCDC will be returned.
-#' @param agroclimatology Logical. Only clean data for stations between
-#' latitudes 60 and -60 for agroclimatology work, defaults to FALSE. Set to
-#' TRUE to include only stations within the confines of these
+#' @param CSV Optional. Logical. If set to TRUE, create a comma separated value
+#' (CSV) file and save it locally in a user specified location, if \code{dsn} is
+#' not specified by the user, defaults to the current working directory.
+#' @param GPKG Optional. Logical. If set to TRUE, create a GeoPackage file and
+#' save it locally in a user specified location, if \code{dsn} is not specified
+#' by the user, defaults to the current working directory.
+#' @param dsn Optional. Local file path to write file out to. Must be specified
+#' if CSV or GPKG parameters are selected. If unspecified and \code{CSV} or
+#' \code{GPKG} are set to TRUE, \code{dsn} will default to the current working
+#' directory.
+#' @param filename Optional. The filename for resulting file(s) to be written
+#' with no file extension. File extension will be automatically appended to file
+#' outputs. If unspecified by the user it will default to "GSOD" followed by
+#' the file extension(s) set using \code{CSV} or \code{GPKG}.
+#' @param max_missing Optional. The maximum number of days allowed to be missing
+#' from a station's data before it is excluded from final file output.
+#' @param agroclimatology Optional. Logical. Only clean data for stations
+#' between latitudes 60 and -60 for agroclimatology work, defaults to FALSE.
+#' Set to TRUE to include only stations within the confines of these
 #' latitudes.
-#' @param CSV Logical. If set to TRUE, create a comma separated value (CSV)
-#' file ile and save it locally in a user specified location. Depends on
-#' \code{dsn} being specified.
-#' @param GPKG Logical. If set to TRUE, create a GeoPackage file and save it
-#' locally in a user specified location. Depends on \code{dsn} being specified.
-#' @param threads The number of computing threads to use for parallel processing
-#' data. Defaults to 1.
 #'
 #' @details
-#' Data summarize each year by station, which include vapour pressure and
+#' Data summarise each year by station, which include vapour pressure and
 #' relative humidity variables calculated from existing data in GSOD.
 #'
 #' If the option to save locally is selected. Output may be saved as comma-
-#' separated, CSV, files or GeoPackage files in a directory specified by the
-#' user, defaulting to the current working directory.
+#' separated, CSV, files or GeoPackage, GPKG, files in a directory specified by
+#' the user, defaulting to the current working directory.
 #'
 #' When querying selected stations and electing to write files to disk, all
 #' years queried and stations queried will be merged into one final ouptut file.
@@ -70,11 +70,11 @@
 #'For more information see the description of the data provided by NCDC,
 #'\url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
 #'
-#' The CSV or GeoPackage in the respective year-directory will contain the
-#' following fields/values:
+#' The data returned either in a data.frame object or a file written to local
+#' disk include the followig fields:
 #' \describe{
 #' \item{STNID}{Station number (WMO/DATSAV3 number) for the location}
-#' \item{WBAN}{number where applicable--this is the historical "Weather Bureau
+#' \item{WBAN}{Number where applicable--this is the historical "Weather Bureau
 #' Air Force Navy" number - with WBAN being the acronym}
 #' \item{STN_NAME}{Unique text identifier}
 #' \item{CTRY}{Country in which the station is located}
@@ -98,7 +98,7 @@
 #' = NA}
 #' \item{DEWP_CNT}{Number of observations used in calculating mean daily dew
 #' point}
-#' \item{SLP}{Mean sea level pressure in millibars to tenths. Missing =   NA}
+#' \item{SLP}{Mean sea level pressure in millibars to tenths. Missing = NA}
 #' \item{SLP_CNT}{Number of observations used in calculating mean sea level
 #' pressure}
 #' \item{STP}{Mean station pressure for the day in millibars to tenths.
@@ -177,6 +177,8 @@
 #' \item{RH}{Mean daily relative humidity}
 #' }
 #'
+#' @author Adam Sparks \email{adamhsparks@gmail.com}
+#'
 #' @note Some of these data are redistributed with this R package. Originally
 #' from these data come from the US NCDC which states that users of these data
 #' should take into account the following: \dQuote{The following data and
@@ -192,8 +194,8 @@
 #' t <- get_GSOD(years = 2010, station = "955510-99999")
 #'
 #' # Download data for Philippines for year 2010 and generate a yearly
-#' # summary GeoPackage file, GSOD-RP-2010.gpkg, file in the user's home
-#' directory with a maximum of five missing days per station allowed.
+#' # summary GeoPackage file, Philippines_GSOD-2010.gpkg, file in the user's
+#' home directory with a maximum of five missing days per station allowed.
 #'
 #' get_GSOD(years = 2010, country = "Philippines", dsn = "~/",
 #' filename = "Philippines_GSOD", GPKG = TRUE, CSV = FALSE)
@@ -208,334 +210,128 @@
 #'
 #' }
 #'
-#'
 #' @references {Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled
 #' SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
 #' \url{http://srtm.csi.cgiar.org}}
 #'
-#' @importFrom foreach %dopar%
-#' @importFrom foreach %do%
-#' @importFrom data.table :=
-#'
 #' @export
 get_GSOD <- function(years = NULL, station = NULL, country = NULL,
-                     dsn = NULL, filename = "GSOD", max_missing = 5,
-                     agroclimatology = FALSE, CSV = FALSE, GPKG = FALSE,
-                     threads = 1) {
+                     dsn = NULL, filename = NULL, max_missing = NULL,
+                     agroclimatology = FALSE, CSV = FALSE, GPKG = FALSE) {
 
-  # Set up options, creating objects, check variables entered by user-----------
+  # Set up options, create objects, fetch most recent station metadata ---------
   original_options <- options()
   options(warn = 2)
   options(timeout = 300)
-
-
-  # Set up tempfile and directory for downloading data from server
-  tf <- tempfile()
   td <- tempdir()
+  LON <- LAT <- NULL
+  ftp <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
 
-  # Create objects for use later
-  s <- j <- yr <- LON <- LAT <-  NULL
-
-  # fetch most recent station history file
-  stations <- .fetch_stations()
-
-  # Check data path given by user, does it exist? Is it properly formatted?
-  if (!is.null(dsn)) {
-    dsn <- .validate_dsn(dsn)
-  }
-  # Check years given by the user, are they valid?
+  # Validate user inputs -------------------------------------------------------
   .validate_years(years)
+  outfile <- .validate_fileout(CSV, dsn, filename, GPKG)
 
-  # Check station given by user, is it valid, are the years for this station
-  # valid?
-  if (!is.null(station)) {
-    .validate_station(station, stations)
-    .validate_station_years(station, stations, years)
+  # Fetch latest station metadata from NCDC server
+  if (!exists("stations")) {
+    stations <- .fetch_station_list()
+  }
+  .validate_stations(station, stations, years)
+  .validate_country(country)
+
+  # Download files from server -------------------------------------------------
+  GSOD_list <- .download_files(ftp, station, years, td)
+
+  # Validate stations for missing days --------------------------------------------
+  if (!is.null(max_missing)) {
+    GSOD_list <- .validate_missing_days(max_missing, GSOD_list, td)
   }
 
-  # Check country given by user and format for use in function
+  # Subset GSOD_list for agroclimatology only stations -------------------------
+  if (isTRUE(agroclimatology)) {
+    GSOD_list <- .agroclimatology_list(GSOD_list, stations, td, years)
+  }
+
+  # Subset GSOD_list for specified country -------------------------------------
   if (!is.null(country)) {
-    country <- .get_country(country)
+    GSOD_list <- .country_list(country, GSOD_list, stations, td, years)
   }
 
-  # By default, if a single station is selected, then we will report even just
-  # one day of data if that's all that is recorded
-  if (!is.null(station)) {
-    max_missing <- 366
+  # Clean and reformat list of station files from local disk in tempdir --------
+
+  message("Starting data file processing")
+  GSOD_XY <- as.data.frame(
+    try(
+      plyr::ldply(.data = GSOD_list, .fun = .process_gz,
+                  stations = stations, .progress = "text")
+    )
+  )
+
+
+  # Write files to disk --------------------------------------------------------
+
+  if (isTRUE(CSV)) {
+    message("\nWriting CSV file to disk.\n")
+    outfile <- paste0(outfile, ".csv")
+    readr::write_csv(GSOD_XY, path = paste0(outfile))
   }
 
-  ftp_site <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
+  if (isTRUE(GPKG)) {
+    message("\nWriting GeoPackage File to Disk.\n")
+    outfile <- paste0(outfile, ".gpkg")
+    # Convert object to standard df and then spatial object
+    GSOD_XY <- as.data.frame(GSOD_XY)
+    sp::coordinates(GSOD_XY) <- ~LON + LAT
+    sp::proj4string(GSOD_XY) <- sp::CRS("+proj=longlat +datum=WGS84")
 
-  # Year loop ------------------------------------------------------------------
-  ity <- iterators::iter(years)
-  foreach::foreach(yr = ity) %do% {
-    if (is.null(station)) {
-      tryCatch(utils::download.file(url = paste0(ftp_site, yr, "/gsod_", yr,
-                                                 ".tar"),
-                                    destfile = tf, mode = "wb"),
-               error = function(x) message(paste0(
-                 "\nThe download stopped at year: ", yr, ".
-                \nPlease restart the 'get_GSOD()' function starting here.\n")))
-      utils::untar(tarfile = tf, exdir  = paste0(td, "/", yr, "/"))
-
-      message("\nFinished downloading file.
-              \nParsing the indivdual station files now.\n")
-      GSOD_list <- list.files(paste0(td, "/", yr, "/"),
-                              pattern = "^.*\\.gz$",
-                              full.names = FALSE)
-
-      # If agroclimatology == TRUE, subset list of stations to clean -----------
-      if (agroclimatology == TRUE) {
-        station_list <- stations[stations$LAT >= -60 &
-                                   stations$LAT <= 60, ]$STNID
-        station_list <- vapply(station_list,
-                               function(x) rep(paste0(x, "-", yr, ".op.gz")),
-                               "")
-        GSOD_list <- GSOD_list[GSOD_list %in% station_list == TRUE]
-        rm(station_list)
-      }
-
-      # If country is set, subset list of stations to clean --------------------
-      if (!is.null(country)) {
-        country_FIPS <- unlist(as.character(stats::na.omit(
-          GSODR::country_list[GSODR::country_list$FIPS == country, ][[1]]),
-          use.names = FALSE))
-        station_list <- stations[stations$CTRY == country_FIPS, ]$STNID
-        station_list <- vapply(station_list,
-                               function(x) rep(paste0(x, "-", yr, ".op.gz")),
-                               "")
-        GSOD_list <- GSOD_list[GSOD_list %in% station_list == TRUE]
-      }
+    # If the filename specified exists, remove it and create new
+    if (file.exists(path.expand(outfile))) {
+      file.remove(outfile)
     }
-
-    # Stations specified --------------------------- ---------------------------
-    if (!is.null(station)) {
-      message("\nDownloading the station file(s) now.")
-      filenames <- RCurl::getURL(paste0(ftp_site, yr, "/"),
-                                 ftp.use.epsv = FALSE, ftplistonly = TRUE,
-                                 crlf = TRUE)
-      filenames <- paste0(ftp_site, yr, "/",
-                          strsplit(filenames, "\r*\n")[[1]])[-c(1:2)]
-      itw <- (iterators::iter(station))
-      message("\nFinished downloading file. Parsing the station file(s) now.\n")
-      GSOD_XY <- as.data.frame(
-        data.table::rbindlist(
-          foreach::foreach(s = itw) %do% {
-            s <- paste0(ftp_site, yr, "/", s, "-", yr, ".op.gz")
-            if (s %in% filenames) {
-              tmp <- try(.read_gz(s))
-              .reformat(tmp, stations)
-            } else {
-              message("A file corresponding to station,", s, "was not found on
-                      the server. Any others requested will be processed.")
-            }
-          }
-        )
-      )
-    } else {
-      # Stations not specified ------------------------------------------------
-      cl <- parallel::makeCluster(threads)
-      doParallel::registerDoParallel(cl)
-      itx <- iterators::iter(GSOD_list)
-      GSOD_XY <- as.data.frame(
-        data.table::rbindlist(
-          foreach::foreach(j = itx) %dopar% {
-            tmp <- try(.read_gz(paste0(td, "/", yr, "/", j)))
-            if (.check_missing(tmp, yr, max_missing) == FALSE) {
-              .reformat(tmp, stations)
-            }
-          }
-        )
-      )
-      parallel::stopCluster(cl)
-    }
-
-    #### Write to disk ---------------------------------------------------------
-    if (!is.null(dsn)) {
-      outfile <- paste0(dsn, filename)
-
-      #### CSV file---------------------------------------------------------------
-      if (CSV == TRUE) {
-        outfile <- paste0(outfile, "-", yr, ".csv")
-        readr::write_csv(GSOD_XY, path = paste0(outfile))
-      }
-
-      #### GPKG file -------------------------------------------------------------
-      if (GPKG == TRUE) {
-        outfile <- paste0(outfile, "-", yr, ".gpkg")
-        # Convert object to standard df and then spatial object
-        GSOD_XY <- as.data.frame(GSOD_XY)
-        sp::coordinates(GSOD_XY) <- ~LON + LAT
-        sp::proj4string(GSOD_XY) <- sp::CRS("+proj=longlat +datum=WGS84")
-
-        # If the filename specified exists, remove it and write a new file to disk
-        if (file.exists(path.expand(outfile))) {
-          file.remove(outfile)
-        }
-        # Create new .gpkg file
-        rgdal::writeOGR(GSOD_XY, dsn = path.expand(outfile), layer = "GSOD",
-                        driver = "GPKG")
-      }
-    }
+    # Create new .gpkg file
+    rgdal::writeOGR(GSOD_XY, dsn = path.expand(outfile), layer = "GSOD",
+                    driver = "GPKG")
   }
 
   return(GSOD_XY)
 
-  # cleanup and reset to default state
-  unlink(tf)
+  # Cleanup and reset to default state -----------------------------------------
   unlink(td)
   options(original_options)
 }
 
-# Functions used within this package -------------------------------------------
-# Check against maximum permissible missing days
+# Validation functions ---------------------------------------------------------
+
 #' @noRd
-.check_missing <- function(tmp, yr, max_missing) {
-  records <- nrow(tmp)
-  if (.is_leapyear(yr) == FALSE) {
-    allow <- 365 - max_missing
-    !is.null(records) && length(records) == 1 && !is.na(records) &&
-      records < allow
+.validate_years <- function(years) {
+  this_year <- 1900 + as.POSIXlt(Sys.Date())$year
+  if (is.null(years) | is.character(years)) {
+    stop("\nYou must provide at least one year of data to download in a numeric
+         format.\n")
   } else {
-    if (.is_leapyear(yr) == TRUE) {
-      allow <- 366 - max_missing
-      !is.null(records) && length(records) == 1 && !is.na(records) &&
-        records < allow
+    for (i in years) {
+      if (i <= 0) {
+        stop("\nThis is not a valid year.\n")
+      } else if (i < 1929) {
+        stop("\nThe GSOD data files start at 1929, you have entered a year prior
+             to 1929.\n")
+      } else if (i > this_year) {
+        stop("\nThe year cannot be greater than current year.\n")
+      }
     }
   }
 }
 
-#' @noRd
-# Reformat and generate new variables
-.reformat <- function(tmp, stations) {
-
-  GSOD_df <- data.table::data.table()
-
-  YEARMODA <- "YEARMODA"
-  MONTH <- "MONTH"
-  DAY <- "DAY"
-  YDAY <- "YDAY"
-  DEWP <- "DEWP"
-  EA <- "EA"
-  ES <- "ES"
-  GUST <- "GUST"
-  MAX <- "MAX"
-  MIN <- "MIN"
-  MODA <- "MODA"
-  MXSPD <- "MXSPD"
-  PRCP <- "PRCP"
-  RH <- "RH"
-  SNDP <- "SNDP"
-  STN <- "STN"
-  STNID <- "STNID"
-  TEMP <- "TEMP"
-  VISIB <- "VISIB"
-  WBAN <- "WBAN"
-  WDSP <- "WDSP"
-
-  # add names to columns in data frame
-  data.table::setnames(tmp, c("STN", "WBAN", "YEAR", "MODA", "TEMP", "TEMP_CNT",
-                              "DEWP", "DEWP_CNT", "SLP", "SLP_CNT", "STP",
-                              "STP_CNT", "VISIB", "VISIB_CNT", "WDSP",
-                              "WDSP_CNT", "MXSPD", "GUST", "MAX", "MAX_FLAG",
-                              "MIN", "MIN_FLAG", "PRCP", "PRCP_FLAG", "SNDP",
-                              "I_FOG", "I_RAIN_DRIZZLE", "I_SNOW_ICE", "I_HAIL",
-                              "I_THUNDER", "I_TORNADO_FUNNEL"))
-
-  # Clean up and convert the station and weather data to metric
-  tmp[, (STNID) := paste(tmp$STN, tmp$WBAN, sep = "-")]
-  tmp[, (WBAN) := NULL]
-  tmp[, (STN) := NULL]
-  tmp[, (YEARMODA) := paste0(tmp$YEAR, tmp$MODA)]
-  tmp[, (MONTH) := substr(tmp$YEARMODA, 5, 6)]
-  tmp[, (DAY) := substr(tmp$YEARMODA, 7, 8)]
-  tmp[, (MODA) := NULL]
-  tmp[, (YDAY) := as.numeric(strftime(as.Date(paste(tmp$YEAR, tmp$MONTH,
-                                                    tmp$DAY, sep = "-")),
-                                      format = "%j"))]
-  tmp[, (TEMP)  := round( ( (5 / 9) * ( (tmp$TEMP) - 32)), 1)]
-  tmp[, (DEWP)  := round( ( (5 / 9) * ( (tmp$DEWP) - 32)), 1)]
-  tmp[, (WDSP)  := round( (tmp$WDSP) * 0.514444444, 1)]
-  tmp[, (MXSPD) := round( (tmp$MXSPD) * 0.514444444, 1)]
-  tmp[, (VISIB) := round( (tmp$VISIB) * 1.60934, 1)]
-  tmp[, (WDSP)  := round( (tmp$WDSP) * 0.514444444, 1)]
-  tmp[, (GUST)  := round( (tmp$GUST) * 0.514444444, 1)]
-  tmp[, (MAX)   := round( ( (tmp$MAX) - 32) * (5 / 9), 2)]
-  tmp[, (MIN)   := round( ( (tmp$MIN) - 32) * (5 / 9), 2)]
-  tmp[, (PRCP)  := round( ( (tmp$PRCP) * 25.4), 1)]
-  tmp[, (SNDP)  := round( ( (tmp$SNDP) * 25.4), 1)]
-
-  # Compute other weather vars--------------------------------------------------
-  # Mean actual (EA) and mean saturation vapour pressure (ES)
-  # Monteith JL (1973) Principles of environmental physics.
-  #   Edward Arnold, London
-
-  # EA derived from dew point
-  tmp[, (EA) := round(0.61078 * exp( (17.2694 * (tmp$DEWP)) /
-                                       ( (tmp$DEWP) + 237.3)), 1)]
-  # ES derived from average temperature
-  tmp[, (ES) := round(0.61078 * exp( (17.2694 * (tmp$TEMP)) /
-                                       ( (tmp$TEMP) + 237.3)), 1)]
-  # Calculate relative humidity
-  tmp[, (RH) := round(tmp$EA / tmp$ES * 100, 1)]
-
-  # Join to the station and SRTM data-------------------------------------------
-  data.table::setkey(tmp, STNID)
-  data.table::setkey(stations, STNID)
-  GSOD_df <- stations[tmp]
-
-  data.table::setcolorder(GSOD_df, c("USAF", "WBAN", "STNID", "STN_NAME",
-                                     "CTRY", "STATE", "CALL", "LAT", "LON",
-                                     "ELEV_M", "ELEV_M_SRTM_90m", "BEGIN",
-                                     "END", "YEARMODA", "YEAR", "MONTH", "DAY",
-                                     "YDAY", "TEMP", "TEMP_CNT", "DEWP",
-                                     "DEWP_CNT", "SLP", "SLP_CNT", "STP",
-                                     "STP_CNT", "VISIB", "VISIB_CNT", "WDSP",
-                                     "WDSP_CNT", "MXSPD", "GUST", "MAX",
-                                     "MAX_FLAG", "MIN", "MIN_FLAG",
-                                     "PRCP", "PRCP_FLAG", "SNDP", "I_FOG",
-                                     "I_RAIN_DRIZZLE", "I_SNOW_ICE", "I_HAIL",
-                                     "I_THUNDER", "I_TORNADO_FUNNEL", "EA",
-                                     "ES", "RH"))
-  return(GSOD_df)
-}
 
 #' @noRd
-.read_gz <- function(gz_file) {
-  data.table::setDT(
-    readr::read_fwf(file = gz_file,
-                    skip = 1,
-                    readr::fwf_positions(c(1, 8, 15, 19, 25, 32, 36, 43, 47, 54,
-                                           58, 65, 69, 75, 79, 85, 89, 96, 103,
-                                           109, 111, 117, 119, 124, 126, 133,
-                                           134, 135, 136, 137, 138),
-                                         c(6, 12, 18, 22, 30, 33, 41, 44, 52,
-                                           55, 63, 66, 73, 76, 83, 86, 93, 100,
-                                           108, 109, 116, 117, 123, 124, 130,
-                                           133, 134, 135, 136, 137, 138),
-                                         col_names = c("STN", "WBAN", "YEAR",
-                                                       "MODA", "TEMP",
-                                                       "TEMP_CNT", "DEWP",
-                                                       "DEWP_CNT", "SLP",
-                                                       "SLP_CNT", "STP",
-                                                       "STP_CNT", "VISIB",
-                                                       "VISIB_CNT", "WDSP",
-                                                       "WDSP_CNT", "MXSPD",
-                                                       "GUST", "MAX",
-                                                       "MAX_FLAG", "MIN",
-                                                       "MIN_FLAG",
-                                                       "PRCP", "PRCP_FLAG",
-                                                       "SNDP", "I_FOG",
-                                                       "I_RAIN_DRIZZLE",
-                                                       "I_SNOW_ICE", "I_HAIL",
-                                                       "I_THUNDER",
-                                                       "I_TORNADO_FUNNEL")),
-                    col_types = c("ccccdididididididddcdcdcdiiiiii"),
-                    na = c("9999.9", "999.9", "99.99")))
-}
-
-#' @noRd
-.validate_dsn <- function(dsn) {
+.validate_fileout <- function(CSV, dsn, filename, GPKG) {
+  if (!is.null(filename) & !isTRUE(CSV) & !isTRUE(GPKG)) {
+    stop("\nYou need to specify a filetype, CSV or GPKG.\n")
+  }
+  if (isTRUE(CSV) | isTRUE(GPKG)) {
+    if (is.null(dsn)) {
+      dsn <- getwd()
+    }
+  }
   dsn <- trimws(dsn)
   if (dsn == "") {
     stop("\nYou must supply a valid file path for storing the resulting
@@ -557,114 +353,268 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
       substr(dsn, nchar(dsn), nchar(dsn)) != "\\") {
     dsn <- paste0(dsn, "/")
   }
-  return(dsn)
-}
 
-#' @noRd
-.get_country <- function(country = "") {
-  country <- toupper(trimws(country[1]))
-  nc <- nchar(country)
-  if (nc == 3) {
-    if (country %in% GSODR::country_list$iso3c) {
-      c <- which(country == GSODR::country_list$iso3c)
-      return(GSODR::country_list[[c, 1]])
-    } else {
-      stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you
-can view the entire list of valid countries in this data by typing,
-           'GSODR::country_list'.\n")
-    }
-  } else if (nc == 2) {
-    if (country %in% GSODR::country_list$iso2c) {
-      c <- which(country == GSODR::country_list$iso2c)
-      return(GSODR::country_list[[c, 1]])
-    } else {
-      stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you
-can view the entire list of valid countries in this data by typing,
-           'GSODR::country_list'.\n")
-    }
-  } else if (country %in% GSODR::country_list$COUNTRY_NAME) {
-    c <- which(country == GSODR::country_list$COUNTRY_NAME)
-    return(GSODR::country_list[[c, 1]])
+  if (is.null(filename)) {
+    filename_out <- "GSOD"
   } else {
-    stop("\nPlease provide a valid name or 2 or 3 letter ISO country code; you
-can view the entire list of valid countries in this data by typing,
-         'GSODR::country_list'.\n")
+    filename_out <- filename
   }
+  outfile <- paste0(dsn, "/", filename_out)
+  return(outfile)
 }
 
-#' @noRd
-.validate_years <- function(years) {
-  this_year <- 1900 + as.POSIXlt(Sys.Date())$year
-  if (is.null(years) | is.character(years)) {
-    stop("\nYou must provide at least one year of data to download in a numeric
-         format.\n")
-  } else {
-    for (i in years) {
-      if (i <= 0) {
-        stop("\nThis is not a valid year.\n")
-      } else if (i < 1929) {
-        stop("\nThe GSOD data files start at 1929, you have entered a year prior
-             to 1929.\n")
-      } else if (i > this_year) {
-        stop("\nThe year cannot be greater than current year.\n")
-      } else
-        return(1)
-    }
-  }
-}
 
 #' @noRd
-.validate_station <- function(station, stations) {
-  for (vs in station) {
-    if (!vs %in% stations[[12]]) {
+.validate_stations <- function(station, stations, years) {
+  if (!is.null(station)) {
+    if (!station %in% stations[[12]]) {
       stop("\nThis is not a valid station ID number, please check your entry.
            \nStation IDs are provided as a part of the GSODR package in the
-           'stations' data\nin the STNID column.\n")
+           'stations' data in the STNID column.\n")
+    }
+    # validate station years in station listing
+    for (vsy in station) {
+      BEGIN <- as.numeric(substr(stations[stations[[12]] == vsy]$BEGIN, 1, 4))
+      END <- as.numeric(substr(stations[stations[[12]] == vsy]$END, 1, 4))
+      if (min(years) < BEGIN | max(years) > END)
+        message("This station, ", vsy, ", only provides data for years ", BEGIN,
+                " to ", END, ".\n")
     }
   }
 }
 
 #' @noRd
-.validate_station_years <- function(station, stations, years) {
-  for (vsy in station) {
-    BEGIN <- as.numeric(substr(stations[stations[[12]] == vsy]$BEGIN, 1, 4))
-    END <- as.numeric(substr(stations[stations[[12]] == vsy]$END, 1, 4))
-    if (min(years) < BEGIN | max(years) > END)
-      message("This station, ", vsy, ", only provides data for years ", BEGIN,
-              " to ", END, ".\n")
+.validate_country <- function(country) {
+  if (!is.null(country)) {
+    country <- toupper(trimws(country[1]))
+    nc <- nchar(country)
+    if (nc == 3) {
+      if (country %in% GSODR::country_list$iso3c) {
+        c <- which(country == GSODR::country_list$iso3c)
+        country <- GSODR::country_list[[c, 1]]
+      } else {
+        stop("\nPlease provide a valid name or 2 or 3 letter ISO country code;
+             you can view the entire list of valid countries in this data by
+             typing, 'country_list'.\n")
+      }
+    } else if (nc == 2) {
+      if (country %in% GSODR::country_list$iso2c) {
+        c <- which(country == GSODR::country_list$iso2c)
+        country <- GSODR::country_list[[c, 1]]
+      } else {
+        stop("\nPlease provide a valid name or 2 or 3 letter ISO country code;
+               you can view the entire list of valid countries in this data by
+               typing, 'country_list'.\n")
+      }
+    } else if (country %in% GSODR::country_list$COUNTRY_NAME) {
+      c <- which(country == GSODR::country_list$COUNTRY_NAME)
+      country <- GSODR::country_list[[c, 1]]
+    } else {
+      stop("\nPlease provide a valid name or 2 or 3 letter ISO country code;
+               you can view the entire list of valid countries in this data by
+               typing, 'country_list'.\n")
+    }
   }
 }
 
-.fetch_stations <- function(){
-  STNID <- NULL
-  stations <- readr::read_csv(
-    "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
-    col_types = "ccccccddddd",
-    col_names = c("USAF", "WBAN", "STN_NAME", "CTRY", "STATE", "CALL",
-                  "LAT", "LON", "ELEV_M", "BEGIN", "END"), skip = 1)
-
-  stations[stations == -999.9] <- NA
-  stations[stations == -999] <- NA
-
-  stations <- stations[stations$LAT != 0 & stations$LON != 0, ]
-  stations <- stations[stations$LAT > -90 & stations$LAT < 90, ]
-  stations <- stations[stations$LON > -180 & stations$LON < 180, ]
-  stations$STNID <- as.character(paste(stations$USAF, stations$WBAN, sep = "-"))
-
-  SRTM_GSOD_elevation <- data.table::setkey(GSODR::SRTM_GSOD_elevation, STNID)
-  data.table::setDT(stations)
-  data.table::setkey(stations, STNID)
-  stations <- stations[SRTM_GSOD_elevation, on = "STNID"]
-
-  stations <- stations[!is.na(stations$LAT), ]
-  stations <- stations[!is.na(stations$LON), ]
-  return(stations)
-}
 
 #' @noRd
-# is.leapyear function originally from Quantitative Ecology blog,
-# http://quantitative-ecology.blogspot.com.au/2009/10/leap-years.html
-.is_leapyear <- function(year){
-  #http://en.wikipedia.org/wiki/Leap_year
-  return( ( (year %% 4 == 0) & (year %% 100 != 0)) | (year %% 400 == 0))
+.validate_missing_days <- function(max_missing, GSOD_list, td) {
+  records <- lapply(X = paste0(td, "/", GSOD_list), FUN = R.utils::countLines)
+  names(records) <- GSOD_list
+  year <- as.numeric(gsub("[^0-9]", "", GSOD_list[1]))
+
+  ifelse(format(as.POSIXct(paste0(year, "-03-01")) - 1, "%d") != "29",
+         allow <- 365 - max_missing,
+         allow <- 366 - max_missing)
+
+  GSOD_list <- stats::na.omit(ifelse(records >= allow,
+                                     paste0(td, "/", GSOD_list),
+                                     NA))
+}
+
+# Function to download files from server --------------------------------------
+#' @noRd
+.download_files <- function(ftp, station, years, td) {
+  if (is.null(station)) {
+    file_list <- paste0(ftp, years, "/", "gsod_", years, ".tar")
+    tryCatch(Map(function(ftp, dest)
+      utils::download.file(url = ftp, destfile = dest),
+      file_list, file.path(td, basename(file_list))), error = function(x) stop(
+        "\nThe file downloads have failed. Please restart.\n"))
+
+    tar_files <- list.files(td, pattern = "^gsod.*\\.tar$", full.names = TRUE)
+
+    plyr::ldply(.data = tar_files, .fun = utils::untar, exdir = td)
+
+    GSOD_list <- list.files(td, pattern = "^.*\\.op.gz$", full.names = TRUE)
+    return(GSOD_list)
+  }
+
+
+  if (!is.null(station)) {
+    message("\nDownloading the station file(s) now.")
+    file_list <- paste0(ftp, years, "/")
+    file_list <- do.call(paste0, c(expand.grid(file_list, station)))
+    file_list <- paste0(file_list, "-", years, ".op.gz")
+
+    tryCatch(Map(function(ftp, dest)
+      utils::download.file(url = ftp, destfile = dest),
+      file_list, file.path(td, basename(file_list))),
+      error = function(x) message(paste0(
+        "\nThe file downloads have failed. Please restart.\n")))
+
+    GSOD_list <- list.files(path = td, pattern = "^.*\\.op.gz$",
+                            full.names = TRUE)
+  }
+}
+
+
+# Agroclimatology: subset list of stations to process-------------------------
+.agroclimatology_list <- function(GSOD_list, stations, td, years) {
+  station_list <- stations[stations$LAT >= -60 &
+                             stations$LAT <= 60, ]$STNID
+  station_list <- do.call(paste0,
+                          c(expand.grid(td, "/", station_list, "-", years,
+                                        ".op.gz")))
+  GSOD_list <- GSOD_list[GSOD_list %in% station_list]
+  rm(station_list)
+  return(GSOD_list)
+}
+
+# Specified country: subset list of stations to process ----------------------
+.country_list <- function(country, GSOD_list, stations, td, years) {
+  country_FIPS <- unlist(as.character(stats::na.omit(
+    GSODR::country_list[GSODR::country_list$FIPS == country, ][[1]]),
+    use.names = FALSE))
+  station_list <- stations[stations$CTRY == country_FIPS, ]$STNID
+  station_list <- do.call(paste0,
+                          c(expand.grid(td, "/", station_list, "-", years,
+                                        ".op.gz")))
+  GSOD_list <- GSOD_list[GSOD_list %in% station_list]
+  return(GSOD_list)
+  rm(station_list)
+}
+
+
+# Process and format data files ----- ------------------------------------------
+
+#' @noRd
+#' @importFrom data.table :=
+.process_gz <- function(gz_file, stations) {
+  GSOD_XY <- data.table::data.table()
+  YEARMODA <- "YEARMODA"
+  MONTH <- "MONTH"
+  DAY <- "DAY"
+  YDAY <- "YDAY"
+  DEWP <- "DEWP"
+  EA <- "EA"
+  ES <- "ES"
+  GUST <- "GUST"
+  MAX <- "MAX"
+  MIN <- "MIN"
+  MODA <- "MODA"
+  MXSPD <- "MXSPD"
+  PRCP <- "PRCP"
+  RH <- "RH"
+  SNDP <- "SNDP"
+  STN <- "STN"
+  STNID <- "STNID"
+  TEMP <- "TEMP"
+  VISIB <- "VISIB"
+  WBAN <- "WBAN"
+  WDSP <- "WDSP"
+  tmp <- data.table::setDT(
+    readr::read_fwf(
+      file = gz_file, skip = 1,
+      readr::fwf_positions(c(1, 8, 15, 19, 25, 32, 36, 43, 47, 54,
+                             58, 65, 69, 75, 79, 85, 89, 96, 103,
+                             109, 111, 117, 119, 124, 126, 133,
+                             134, 135, 136, 137, 138),
+                           c(6, 12, 18, 22, 30, 33, 41, 44, 52,
+                             55, 63, 66, 73, 76, 83, 86, 93, 100,
+                             108, 109, 116, 117, 123, 124, 130,
+                             133, 134, 135, 136, 137, 138),
+                           col_names = c("STN", "WBAN", "YEAR",
+                                         "MODA", "TEMP",
+                                         "TEMP_CNT", "DEWP",
+                                         "DEWP_CNT", "SLP",
+                                         "SLP_CNT", "STP",
+                                         "STP_CNT", "VISIB",
+                                         "VISIB_CNT", "WDSP",
+                                         "WDSP_CNT", "MXSPD",
+                                         "GUST", "MAX",
+                                         "MAX_FLAG", "MIN",
+                                         "MIN_FLAG",
+                                         "PRCP", "PRCP_FLAG",
+                                         "SNDP", "I_FOG",
+                                         "I_RAIN_DRIZZLE",
+                                         "I_SNOW_ICE", "I_HAIL",
+                                         "I_THUNDER",
+                                         "I_TORNADO_FUNNEL")),
+      col_types = c("ccccdididididididddcdcdcdiiiiii"),
+      na = c("9999.9", "999.9", "99.99")))
+  # add names to columns in data table
+  data.table::setnames(tmp, c("STN", "WBAN", "YEAR", "MODA", "TEMP",
+                              "TEMP_CNT", "DEWP", "DEWP_CNT", "SLP",
+                              "SLP_CNT", "STP", "STP_CNT", "VISIB",
+                              "VISIB_CNT", "WDSP", "WDSP_CNT", "MXSPD",
+                              "GUST", "MAX", "MAX_FLAG", "MIN", "MIN_FLAG",
+                              "PRCP", "PRCP_FLAG", "SNDP", "I_FOG",
+                              "I_RAIN_DRIZZLE", "I_SNOW_ICE", "I_HAIL",
+                              "I_THUNDER", "I_TORNADO_FUNNEL"))
+  # Clean up and convert the station and weather data to metric ----------------
+  tmp[, (STNID) := paste(tmp$STN, tmp$WBAN, sep = "-")]
+  tmp[, (WBAN) := NULL]
+  tmp[, (STN) := NULL]
+  tmp[, (YEARMODA) := paste0(tmp$YEAR, tmp$MODA)]
+  tmp[, (MONTH) := substr(tmp$YEARMODA, 5, 6)]
+  tmp[, (DAY) := substr(tmp$YEARMODA, 7, 8)]
+  tmp[, (MODA) := NULL]
+  tmp[, (YDAY) := as.numeric(strftime(as.Date(paste(tmp$YEAR,
+                                                    tmp$MONTH,
+                                                    tmp$DAY,
+                                                    sep = "-")),
+                                      format = "%j"))]
+  tmp[, (TEMP)  := round((5 / 9) * (tmp$TEMP - 32), 1)]
+  tmp[, (DEWP)  := round((5 / 9) * (tmp$DEWP - 32), 1)]
+  tmp[, (WDSP)  := round(tmp$WDSP * 0.514444444, 1)]
+  tmp[, (MXSPD) := round(tmp$MXSPD * 0.514444444, 1)]
+  tmp[, (VISIB) := round(tmp$VISIB * 1.60934, 1)]
+  tmp[, (WDSP)  := round(tmp$WDSP * 0.514444444, 1)]
+  tmp[, (GUST)  := round(tmp$GUST * 0.514444444, 1)]
+  tmp[, (MAX)   := round((tmp$MAX - 32) * (5 / 9), 2)]
+  tmp[, (MIN)   := round((tmp$MIN - 32) * (5 / 9), 2)]
+  tmp[, (PRCP)  := round(tmp$PRCP * 25.4, 1)]
+  tmp[, (SNDP)  := round(tmp$SNDP * 25.4, 1)]
+  # Compute other weather vars--------------------------------------------------
+  # Mean actual (EA) and mean saturation vapour pressure (ES)
+  # Monteith JL (1973) Principles of environmental physics.
+  #   Edward Arnold, London
+  # EA derived from dew point
+  tmp[, (EA) := round(0.61078 * exp((17.2694 * (tmp$DEWP)) /
+                                      ((tmp$DEWP) + 237.3)), 1)]
+  # ES derived from average temperature
+  tmp[, (ES) := round(0.61078 * exp((17.2694 * (tmp$TEMP)) /
+                                      ((tmp$TEMP) + 237.3)), 1)]
+  # Calculate relative humidity
+  tmp[, (RH) := round(tmp$EA / tmp$ES * 100, 1)]
+  # Join to the station and SRTM data-------------------------------------------
+  data.table::setkey(tmp, STNID)
+  data.table::setkey(stations, STNID)
+  GSOD_XY <- stations[tmp]
+  data.table::setcolorder(GSOD_XY, c("USAF", "WBAN", "STNID", "STN_NAME",
+                                     "CTRY", "STATE", "CALL", "LAT", "LON",
+                                     "ELEV_M", "ELEV_M_SRTM_90m", "BEGIN",
+                                     "END", "YEARMODA", "YEAR", "MONTH", "DAY",
+                                     "YDAY", "TEMP", "TEMP_CNT", "DEWP",
+                                     "DEWP_CNT", "SLP", "SLP_CNT", "STP",
+                                     "STP_CNT", "VISIB", "VISIB_CNT", "WDSP",
+                                     "WDSP_CNT", "MXSPD", "GUST", "MAX",
+                                     "MAX_FLAG", "MIN", "MIN_FLAG",
+                                     "PRCP", "PRCP_FLAG", "SNDP", "I_FOG",
+                                     "I_RAIN_DRIZZLE", "I_SNOW_ICE", "I_HAIL",
+                                     "I_THUNDER", "I_TORNADO_FUNNEL", "EA",
+                                     "ES", "RH"))
+  return(GSOD_XY)
 }
