@@ -243,7 +243,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
 
   # Validate stations for missing days --------------------------------------------
   if (!is.null(max_missing)) {
-    GSOD_list <- .validate_missing_days(max_missing, GSOD_list)
+    GSOD_list <- .validate_missing_days(max_missing, GSOD_list, td)
   }
 
   # Subset GSOD_list for agroclimatology only stations -------------------------
