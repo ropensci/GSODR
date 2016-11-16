@@ -64,6 +64,9 @@
   * The `path` parameter is now instead called `dsn` to be more inline with
   other tools like `readOGR()` and `writeOGR`  
   * Shapefile file out is no longer supported. Use GeoPackage (GPKG) instead  
+  * The option to remove stations with too many missing days is now optional,
+  it now defaults to including all stations, the user must specify how many
+  misisng stations to check for an exclude.  
 
 ******
 
