@@ -62,7 +62,7 @@
 #' the user, defaulting to the current working directory.
 #'
 #' When querying selected stations and electing to write files to disk, all
-#' years queried and stations queried will be merged into one final ouptut file.
+#' years queried and stations queried will be merged into one final output file.
 #'
 #' All missing values in resulting files are represented as NA regardless of
 #' which field they occur in.
@@ -71,7 +71,7 @@
 #'\url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
 #'
 #' The data returned either in a data.frame object or a file written to local
-#' disk include the followig fields:
+#' disk include the following fields:
 #' \describe{
 #' \item{STNID}{Station number (WMO/DATSAV3 number) for the location}
 #' \item{WBAN}{Number where applicable--this is the historical "Weather Bureau
@@ -224,6 +224,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
   options(warn = 2)
   options(timeout = 300)
   td <- tempdir()
+  LON <- LAT <- NULL
   ftp <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
 
   # Validate user inputs -------------------------------------------------------
@@ -240,7 +241,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
   # Download files from server -------------------------------------------------
   GSOD_list <- .download_files(ftp, station, years, td)
 
-  # Validate stations for missing days -----------------------------------------
+  # Validate stations for missing days --------------------------------------------
   if (!is.null(max_missing)) {
     GSOD_list <- .validate_missing_days(max_missing, GSOD_list, td)
   }
@@ -434,7 +435,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
 
 # Function to download files from server --------------------------------------
 #' @noRd
-.download_files <- function(ftp, station, years, td) {
+ .download_files <- function(ftp, station, years, td) {
   if (is.null(station)) {
     file_list <- paste0(ftp, years, "/", "gsod_", years, ".tar")
     tryCatch(Map(function(ftp, dest)
@@ -575,15 +576,15 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
                                                     tmp$DAY,
                                                     sep = "-")),
                                       format = "%j"))]
-  tmp[, (TEMP)  := round( (5 / 9) * (tmp$TEMP - 32), 1)]
-  tmp[, (DEWP)  := round( (5 / 9) * (tmp$DEWP - 32), 1)]
+  tmp[, (TEMP)  := round((5 / 9) * (tmp$TEMP - 32), 1)]
+  tmp[, (DEWP)  := round((5 / 9) * (tmp$DEWP - 32), 1)]
   tmp[, (WDSP)  := round(tmp$WDSP * 0.514444444, 1)]
   tmp[, (MXSPD) := round(tmp$MXSPD * 0.514444444, 1)]
   tmp[, (VISIB) := round(tmp$VISIB * 1.60934, 1)]
   tmp[, (WDSP)  := round(tmp$WDSP * 0.514444444, 1)]
   tmp[, (GUST)  := round(tmp$GUST * 0.514444444, 1)]
-  tmp[, (MAX)   := round( (tmp$MAX - 32) * (5 / 9), 2)]
-  tmp[, (MIN)   := round( (tmp$MIN - 32) * (5 / 9), 2)]
+  tmp[, (MAX)   := round((tmp$MAX - 32) * (5 / 9), 2)]
+  tmp[, (MIN)   := round((tmp$MIN - 32) * (5 / 9), 2)]
   tmp[, (PRCP)  := round(tmp$PRCP * 25.4, 1)]
   tmp[, (SNDP)  := round(tmp$SNDP * 25.4, 1)]
   # Compute other weather vars--------------------------------------------------
@@ -591,11 +592,11 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
   # Monteith JL (1973) Principles of environmental physics.
   #   Edward Arnold, London
   # EA derived from dew point
-  tmp[, (EA) := round(0.61078 * exp( (17.2694 * (tmp$DEWP)) /
-                                      ( (tmp$DEWP) + 237.3)), 1)]
+  tmp[, (EA) := round(0.61078 * exp((17.2694 * (tmp$DEWP)) /
+                                      ((tmp$DEWP) + 237.3)), 1)]
   # ES derived from average temperature
-  tmp[, (ES) := round(0.61078 * exp( (17.2694 * (tmp$TEMP)) /
-                                      ( (tmp$TEMP) + 237.3)), 1)]
+  tmp[, (ES) := round(0.61078 * exp((17.2694 * (tmp$TEMP)) /
+                                      ((tmp$TEMP) + 237.3)), 1)]
   # Calculate relative humidity
   tmp[, (RH) := round(tmp$EA / tmp$ES * 100, 1)]
   # Join to the station and SRTM data-------------------------------------------

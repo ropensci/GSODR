@@ -80,7 +80,7 @@ separated, CSV, files or GeoPackage, GPKG, files in a directory specified by
 the user, defaulting to the current working directory.
 
 When querying selected stations and electing to write files to disk, all
-years queried and stations queried will be merged into one final ouptut file.
+years queried and stations queried will be merged into one final output file.
 
 All missing values in resulting files are represented as NA regardless of
 which field they occur in.
@@ -89,7 +89,7 @@ For more information see the description of the data provided by NCDC,
 \url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
 
 The data returned either in a data.frame object or a file written to local
-disk include the followig fields:
+disk include the following fields:
 \describe{
 \item{STNID}{Station number (WMO/DATSAV3 number) for the location}
 \item{WBAN}{Number where applicable--this is the historical "Weather Bureau

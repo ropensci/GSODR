@@ -110,7 +110,7 @@ GSOD_clim
 }
 \note{
 CHELSA (climatic surfaces at 1 km resolution) is based on a
-quasi-mechanistical statistical downscaling of the ERA interim global
+quasi-mechanistic statistical downscaling of the ERA interim global
 circulation model (Karger et al. 2016). ESA's CCI-LC cloud
 probability monthly averages are based on the MODIS snow products
 (MOD10A2).
