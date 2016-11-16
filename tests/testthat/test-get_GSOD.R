@@ -175,7 +175,6 @@ test_that(".download_files properly works, subsetting for country and
 
             agro_list <- .agroclimatology_list(GSOD_list, stations, td, years)
             expect_length(agro_list, 11302)
-            expect_equal(basename(agro_list,))
 
             RP_list <- .country_list(country, GSOD_list, stations, td, years)
             expect_length(RP_list, 53)
