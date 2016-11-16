@@ -7,15 +7,12 @@
 # Introduction
 An R package that provides a function that automates downloading and
 cleaning data from the [Global Surface Summary of the Day (GSOD)](https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod)
-data provided by the US National Climatic Data Center (NCDC). Stations
-are individually checked for number of missing days to assure data
-quality, those stations with too many missing observations as defined by the
-user are omitted. All units are converted to International System of Units (SI),
-e.g., inches to millimetres and Fahrenheit to Celsius. Output is saved as a
-Comma Separated Value (CSV) file or in a spatial GeoPackage (GPKG) file,
-implemented by most major GIS software, summarising each year by station, which
-also includes vapour pressure and relative humidity variables calculated from
-existing data in GSOD.
+data provided by the US National Climatic Data Center (NCDC). All units are
+converted to International System of Units (SI), e.g., inches to millimetres and
+Fahrenheit to Celsius. Output is saved as a Comma Separated Value (CSV) file or
+in a spatial GeoPackage (GPKG) file, implemented by most major GIS software,
+summarising each year by station, which also includes vapour pressure and
+relative humidity variables calculated from existing data in GSOD.
 
 For more information see the description of the data provided by NCDC,
 <http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
@@ -30,10 +27,10 @@ library(GSODR)
 
 ## Plot Global Station Locations
 
-The `get_GSOD` function automatically fetches the most recent station data
-from the NCDC website and removes stations that are missing data (as shown
-below). Using this data we can plot the station locations that are included in
-GSOD that provide valid geo-locations after cleaning.
+The GSOD data are comprised of a global set of data from weather stations. To
+visualise where these stations are located we can fetch the station metadata and
+plot it in a map. The resulting map shows only stations with valid geo-locations
+after filtering.
 
 ```r
   GSOD_stations <- readr::read_csv(
@@ -89,7 +86,7 @@ GSODR provides lists of weather station locations and elevation values. Using
 in Australia.
 ```r
 library(dplyr)
-station_locations <- left_join(GSOD_stations, GSODR::GSOD_country_list,
+station_locations <- left_join(GSOD_stations, GSODR::country_list,
                                by = c("CTRY" = "FIPS"))
 
 # create data.frame for Australia only
@@ -128,7 +125,8 @@ filter(Oz, STN_NAME == "TOOWOOMBA")
 ## Using the `get_GSOD` Function in GSODR to Download a Single Station and
 Year
 
-Download weather data from the station Toowoomba, Queensland, Australia for 2010
+Now that we've seen where the reporting stations are located, we can download
+weather data from the station Toowoomba, Queensland, Australia for 2010
 by using the STNID in the `station` parameter of `get_GSOD`.
 
 ```r
@@ -262,7 +260,7 @@ ggplot(data = tbar_temps, aes(x = ymd(YEARMODA), y = value,
 ```
 ![GSOD Station Locations](figure/Toowoomba_temperature.png)
 
-## Creating spatial files
+## Creating Spatial Files
 
 Because the stations provide geospatial location information, it is possible
 to create a spatial file. [GeoPackage files](http://www.geopackage.org) are a
@@ -357,7 +355,7 @@ print(AUS_sqlite, n = 5)
 #> #   I_THUNDER <int>, I_TORNADO_FUNNEL <int>, EA <dbl>, ES <dbl>, RH <dbl>
 
 ```
-# Generating hourly temperature data from daily using the `chillR` package
+# Generating Hourly Temperature Data From Daily Using the `chillR` Package
 
 The [chillR](https://CRAN.R-project.org/package=chillR) package from
 [Eike Luedeling](http://eikeluedeling.com/index.html)

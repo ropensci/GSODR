@@ -24,7 +24,7 @@ affiliations:
     index: 2
   - name: Faculty of Geo-Information and Earth Observation (ITC), University of Twente, Enschede 7500 AE, The Netherlands
     index: 3
-date: "25 October 2016"
+date: "16 November 2016"
 bibliography: paper.bib
 ---
 
@@ -35,15 +35,15 @@ downloading, parsing, cleaning and of Global Surface Summary of the
 Day (GSOD) [@NCDC] weather data for use in R or saving into Comma Separated
 Values (CSV) or Geopackage (GPKG) [@geopackage] files. It builds on or
 complements several other scripts and packages. We take advantage of modern
-techniques in R to make more efficient use of available computing resources used
-to complete the process, e.g., data.table [@data.table], readr [@readr] and
-foreach [@foreach], which allow the data cleaning, conversions and disk input/
-output processes to take advantage of modern computer hardware. The rnoaa
-[@rnoaa] package offers an excellent suite of tools for interacting with and
-downloading weather data from the United States National Oceanic and Atmospheric
-Administration, but lacks options for GSOD data retrieval. Several other APIs
-and R packages exist to access weather data, but most are region or continent
-specific, whereas GSOD is global. This package was developed to provide:
+techniques in R to make more efficient use of available computing resources to
+complete the process, e.g., data.table [@data.table] and readr [@readr], which
+allow the data cleaning, conversions and disk input/output processes to take
+advantage of modern computer hardware. The rnoaa [@rnoaa] package offers an
+excellent suite of tools for interacting with and downloading weather data from
+the United States National Oceanic and Atmospheric Administration, but lacks
+options for GSOD data retrieval. Several other APIs and R packages exist to
+access weather data, but most are region or continent specific, whereas GSOD is
+global. This package was developed to provide:
 
   * a function that simplifies downloading GSOD data and formatting it to easily
 be used in research; and
@@ -51,22 +51,21 @@ be used in research; and
   * a function to help identify stations within a given radius of a point of
 interest.
 
-A data set of alternative elevation data based on 200 meter buffered elevation
-values, derived from the CGIAR-CSI SRTM 90m Database [@Jarvis2008] is included.
-These data are useful to help address possible inaccuracies and in many cases,
-missing elevation values, in the reported station elevations.
+A data set of alternative elevation data based on a 200 meter buffer of
+elevation values, derived from the CGIAR-CSI SRTM 90m Database [@Jarvis2008] is
+included. These data are useful to help address possible inaccuracies and in
+many cases, missing elevation values, in the reported station elevations.
 
-Upon download, stations are individually checked for a user-specified number of
-missing days and missing or inaccurate longitude and latitude values, any values
-that are missing or incorrect are omitted. Stations files with too many missing
-observations are omitted from the final output to help ensure data quality. All
-units are converted from the United States Customary System (USCS) to the
-International System of Units (SI), e.g., inches to millimetres and Fahrenheit
-to Celsius. Wind speed is also converted from knots to metres per second.
-Additional useful values, actual vapour pressure, saturated water vapour
-pressure, and relative humidity are calculated and included in the final output.
-Station data are merged with weather data for the final file which includes the
-following fields:
+Stations are checked inaccurate longitude and latitude values and any stations
+with values that are missing or incorrect are omitted. Stations files with too
+many missing observations as defined by the user may be omitted from the final
+output to help ensure data quality. All units are converted from the United
+States Customary System (USCS) to the International System of Units (SI), e.g.,
+inches to millimetres and Fahrenheit to Celsius. Wind speed is also converted
+from knots to metres per second. Additional useful values, actual vapour
+pressure, saturated water vapour pressure, and relative humidity are calculated
+and included in the final output. Station data are merged with weather data for
+the final file which includes the following fields:
 
 * **STNID** - Station number (WMO/DATSAV3 number) for the location;  
 
