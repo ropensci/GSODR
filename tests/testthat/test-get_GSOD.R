@@ -2,7 +2,7 @@ context("get_GSOD")
 # Check that .validate_years handles invalid years -----------------------------
 test_that(".validate_years handles invalid years", {
   skip_on_cran()
-  
+
   expect_error(.validate_years(years = NULL),
                "\nYou must provide at least one year of data to download in a numeric\n         format.\n")
   expect_error( .validate_years(years = "nineteen ninety two"),
@@ -11,16 +11,16 @@ test_that(".validate_years handles invalid years", {
                "\nThe GSOD data files start at 1929, you have entered a year prior\n             to 1929.\n")
   expect_error(.validate_years(years = 1901 + as.POSIXlt(Sys.Date())$year),
                "\nThe year cannot be greater than current year.\n")
-  
+
 })
 
 # Check that .validate_years handles valid years -------------------------------
 test_that(".validate_years handles valid years", {
   skip_on_cran()
   expect_error(.validate_years(years = 1929:2016), regexp = NA)
-  
+
   expect_error(.validate_years(years = 2016), regexp = NA)
-  
+
 })
 
 # Check that invalid stations are handled --------------------------------------
@@ -34,7 +34,7 @@ test_that("invalid stations are handled", {
 # Check that invalid dsn is handled --------------------------------------------
 test_that("invalid dsn is handled", {
   skip_on_cran()
-  
+
   expect_error(.validate_fileout(CSV = FALSE, dsn = "~/R", filename = NULL,
                                  GPKG = FALSE),
                "\nFile dsn does not exist: ~/R.\n")
@@ -46,11 +46,11 @@ test_that("invalid dsn is handled", {
 # Check stations list and associated metadata for validity ---------------------
 test_that("stations list and associated metatdata", {
   skip_on_cran()
-  
+
   stations <- .fetch_station_list()
-  
+
   expect_length(stations, 13)
-  
+
   expect_is(stations, "data.table")
   expect_is(stations$USAF, "character")
   expect_is(stations$WBAN , "character")
@@ -65,7 +65,7 @@ test_that("stations list and associated metatdata", {
   expect_is(stations$END, "numeric")
   expect_is(stations$STNID, "character")
   expect_is(stations$ELEV_M_SRTM_90m, "numeric")
-  
+
   expect_gt(nrow(stations), 2300)
 })
 
@@ -78,7 +78,7 @@ test_that("missing days check allows stations with permissible days missing,
             just_right_2015 <- data.frame(c(rep(12, 360)), c(rep("X", 360)))
             too_short_2015 <- data.frame(c(rep(12, 300)), c(rep("X", 300)))
             df_list <- list(just_right_2015, too_short_2015)
-            
+
             filenames <- c("just_right_2015", "too_short_2015")
             sapply(1:length(df_list),
                    function(x) write.csv(df_list[[x]],
@@ -90,7 +90,7 @@ test_that("missing days check allows stations with permissible days missing,
             GSOD_list <- as.list(list.files(td, pattern = "2015.csv.gz$"))
             GSOD_list_filtered <- .validate_missing_days(max_missing, GSOD_list,
                                                          td)
-            
+
             expect_length(GSOD_list, 2)
             expect_match(basename(GSOD_list_filtered), "just_right_2015.csv.gz")
             unlink(td)
@@ -105,7 +105,7 @@ test_that("missing days check allows stations with permissible days missing,
             just_right_2015 <- data.frame(c(rep(12, 361)), c(rep("X", 361)))
             too_short_2015 <- data.frame(c(rep(12, 300)), c(rep("X", 300)))
             df_list <- list(just_right_2015, too_short_2015)
-            
+
             filenames <- c("just_right_2016", "too_short_2016")
             sapply(1:length(df_list),
                    function(x) write.csv(df_list[[x]],
@@ -117,9 +117,9 @@ test_that("missing days check allows stations with permissible days missing,
             GSOD_list <- as.list(list.files(td, pattern = "2016.csv.gz$"))
             GSOD_list_filtered <- .validate_missing_days(max_missing,GSOD_list,
                                                          td)
-            
+
             expect_length(GSOD_list, 2)
-            
+
             expect_match(basename(GSOD_list_filtered), "just_right_2016.csv.gz")
             unlink(td)
           })
@@ -129,15 +129,14 @@ test_that("Check validate country returns a two letter code", {
   country <- "Philippines"
   Philippines <- .validate_country(country)
   expect_match(Philippines, "RP")
-  
+
   country <- "PHL"
   PHL <- .validate_country(country)
   expect_match(PHL, "RP")
-  
+
   country <- "PH"
   PH <- .validate_country(country)
   expect_match(PH, "RP")
-  
 })
 
 # Check validate country returns an error on invalid entry----------------------
@@ -147,13 +146,13 @@ test_that("Check validate country returns an error on invalid entry", {
                "Please provide a valid name or 2 or 3 letter ISO country code;
                you can view the entire list of valid countries in this data by
                typing, 'country_list'.")
-  
+
   country <- "RP"
   expect_error(.validate_country(country),
                "Please provide a valid name or 2 or 3 letter ISO country code;
                you can view the entire list of valid countries in this data by
                typing, 'country_list'.")
-  
+
 })
 
 # Check that .download_files,subsetting agro and ctry stations work.------------
@@ -167,27 +166,28 @@ test_that(".download_files properly works, subsetting for country and
             options(timeout = 300)
             td <- tempdir()
             ftp <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
-            
+
             stations <- .fetch_station_list()
-            
+
             GSOD_list <- .download_files(ftp, station, years, td)
-            
+
             expect_length(GSOD_list, 12976)
-            
+
             agro_list <- .agroclimatology_list(GSOD_list, stations, td, years)
             expect_length(agro_list, 11302)
-            
+            expect_equal(basename(agro_list,))
+
             RP_list <- .country_list(country, GSOD_list, stations, td, years)
             expect_length(RP_list, 53)
 
 # Check that .process_gz returns a properly formated data table-----------------
             gz_file <- GSOD_list[[10]]
             gz_out <- .process_gz(gz_file, stations)
-            
+
             expect_length(gz_out, 48)
-            
+
             expect_is(gz_out, "data.table")
-            
+
             expect_is(gz_out$USAF, "character")
             expect_is(gz_out$WBAN , "character")
             expect_is(gz_out$STNID, "character")
@@ -237,6 +237,5 @@ test_that(".download_files properly works, subsetting for country and
             expect_is(gz_out$EA, "numeric")
             expect_is(gz_out$ES, "numeric")
             expect_is(gz_out$RH, "numeric")
-            
+
           })
-            
