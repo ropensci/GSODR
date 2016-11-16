@@ -23,6 +23,9 @@ metre data (Jarvis et al. 2008), are included for stations between -60 and
 name, country, latitude, longitude, elevation) and weather observations and
 associated flags. Data may be automatically saved to disk. File output may
 be returned as a comma-separated values (CSV) or GeoPackage (GPKG) file.
+For information on the original data from NCDC, please see the GSOD
+readme.txt file available from,
+<http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt>.
 }
 \section{GSODR functions}{
 

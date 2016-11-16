@@ -1,10 +1,12 @@
-# GSODR v0.2
+# GSODR v1.0
 
 ## NEW FEATURES
 
+  * `get_GSOD` returns a data.frame object in the current R session with the
+  option to save data to local disk
   * Multiple stations can be specified for download rather than just downloading
   a single station or all stations  
-  * A new function, `nearest_stations()` is now included to find stations within
+  * A new function, `nearest_stations` is now included to find stations within
   a user specified radius (in kilometres) of a point given as latitude and
   longitude in decimal degrees  
   * A vignette is now included  
@@ -26,34 +28,39 @@
   * Country is specified using FIPS codes in file name and output file contents
   due to stations occurring in some locales that lack ISO 3166 3 letter country
   codes  
-  * The `get_GSOD()` function will retrieve the latest station data from NCDC and
+  * The `get_GSOD` function will retrieve the latest station data from NCDC and
   automatically merge it with the CGIAR-CSI SRTM elevation values provided by
-  this package. Previously, the package provided it's own list of station information,
-  which was difficult to keep up-to-date  
+  this package. Previously, the package provided it's own list of station
+  information, which was difficult to keep up-to-date  
+
 
 ## MINOR IMPROVEMENTS
 
   * `get_GSOD` function optimised for speed as best possible after FTPing files
   from NCDC server  
+  * All files are downloaded from server and then locally processed, previously
+  these were sequentially downloaded by year and then processed  
+  * A progress bar is now shown when processing files locally after
+  downloading  
   * Reduced package dependencies  
-  * The `get_GSOD()` function now checks stations to see if the years being
+  * The `get_GSOD` function now checks stations to see if the years being
   queried are provided and returns a message alerting user if the station and
   years requested are not available  
   * When stations are specified for retrieval using the `station = ""`
-  parameter, the `get_GSOD()` function now checks to see if the file exists on
+  parameter, the `get_GSOD` function now checks to see if the file exists on
   the server, if it does not, a message is returned and all other stations that
   have files are processed and returned in output  
-  * Documentation has been improved throughout package
+  * Documentation has been improved throughout package  
+  * Better testing of internal functions  
   
 ## BUG FIXES
 
   * Fixed: Remove redundant code in `get_GSOD()` function  
-  * Fixed: The stations data frame distributed with the package now includes stations
-  that are located above 60 latitude and below -60 latitude  
-  * Fixed: `get_GSOD()` function would not operate on computer systems with two cores  
+  * Fixed: The stations data frame distributed with the package now include
+  stations that are located above 60 latitude and below -60 latitude  
   
 ## DEPRECATED AND DEFUNCT
- 
+  * Missing values are reported as NA for use in R, not -9999 as previously  
   * The `path` parameter is now instead called `dsn` to be more inline with
   other tools like `readOGR()` and `writeOGR`  
   * Shapefile file out is no longer supported. Use GeoPackage (GPKG) instead  
