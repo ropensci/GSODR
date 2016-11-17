@@ -235,13 +235,14 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
   if (!exists("stations")) {
     stations <- .fetch_station_list()
   }
-  plyr::ldply(.data = station, .fun = .validate_stations,
-              stations = stations, years = years)
+  plyr::l_ply(.data = station, .fun = .validate_station, stations = stations,
+              years = years)
   
   .validate_country(country)
   
   # Download files from server -------------------------------------------------
-  station <- .validate_server_files(ftp, station, years)
+  station <- plyr::llply(.data = station, .fun = .validate_server_files,
+                         ftp = ftp, years = years)
   
   GSOD_list <- .download_files(ftp, station, years, td)
   
@@ -369,23 +370,21 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
 
 
 #' @noRd
-.validate_stations <- function(station, stations, years) {
-  if (!is.null(station)) {
-    if (!station %in% stations[[12]]) {
-      stop("\nThis is not a valid station ID number, please check your entry.
-           \nStation IDs are provided as a part of the GSODR package in the
-           'stations' data in the STNID column.\n")
-    }
-    # validate station years in station listing
-    BEGIN <- as.numeric(
-      substr(stations[stations[[12]] == station, ]$BEGIN, 1, 4))
-    END <- as.numeric(
-      substr(stations[stations[[12]] == station, ]$END, 1, 4))
-    if (min(years) < BEGIN | max(years) > END)
-      message("This station, ", station, ", only provides data for years ",
-              BEGIN, " to ", END, ".\n")
+.validate_station <- function(station, stations, years) {
+  if (!station %in% stations[[12]]) {
+    stop("\n", paste0(station), " is not a valid station ID number, please check
+your entry. Station IDs are provided as a part of the GSODR package in the
+'stations' data\nin the STNID column.\n")
+  }
+
+  BEGIN <- as.numeric(substr(stations[stations[[12]] == station]$BEGIN, 1, 4))
+  END <- as.numeric(substr(stations[stations[[12]] == station]$END, 1, 4))
+  if (min(years) < BEGIN | max(years) > END) {
+    message("This station, ", station, ", only provides data for years ", BEGIN,
+            " to ", END, ".\n")
   }
 }
+
 
 #' @noRd
 .validate_country <- function(country) {
