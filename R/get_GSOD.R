@@ -224,7 +224,6 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
   options(warn = 2)
   options(timeout = 300)
   td <- tempdir()
-  LON <- LAT <- NULL
   ftp <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
 
   # Validate user inputs -------------------------------------------------------
@@ -235,13 +234,17 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
   if (!exists("stations")) {
     stations <- .fetch_station_list()
   }
-  .validate_stations(station, stations, years)
+  plyr::ldply(.data = station, .fun = .validate_stations,
+              stations = stations, years = years)
+
   .validate_country(country)
 
   # Download files from server -------------------------------------------------
+  station <- .validate_server_files(ftp, station, years)
+
   GSOD_list <- .download_files(ftp, station, years, td)
 
-  # Validate stations for missing days --------------------------------------------
+  # Validate stations for missing days -----------------------------------------
   if (!is.null(max_missing)) {
     GSOD_list <- .validate_missing_days(max_missing, GSOD_list, td)
   }
@@ -373,13 +376,13 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
            'stations' data in the STNID column.\n")
     }
     # validate station years in station listing
-    for (vsy in station) {
-      BEGIN <- as.numeric(substr(stations[stations[[12]] == vsy]$BEGIN, 1, 4))
-      END <- as.numeric(substr(stations[stations[[12]] == vsy]$END, 1, 4))
-      if (min(years) < BEGIN | max(years) > END)
-        message("This station, ", vsy, ", only provides data for years ", BEGIN,
-                " to ", END, ".\n")
-    }
+    BEGIN <- as.numeric(
+      substr(stations[stations[[12]] == station, ]$BEGIN, 1, 4))
+    END <- as.numeric(
+      substr(stations[stations[[12]] == station, ]$END, 1, 4))
+    if (min(years) < BEGIN | max(years) > END)
+      message("This station, ", station, ", only provides data for years ",
+              BEGIN, " to ", END, ".\n")
   }
 }
 
@@ -433,9 +436,22 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
                                      NA))
 }
 
+
+# Function to check server file list and trim requested files according to available
+#' @noRd
+.validate_server_files <- function(ftp, station, years) {
+  file_list <- paste0(ftp, years, "/", "gsod_", years, ".tar")
+  filenames <- paste0(substr(file_list, 1, 43),
+                      strsplit(RCurl::getURL(substr(file_list, 1, 43),
+                                             ftp.use.epsv = FALSE,
+                                             ftplistonly = TRUE, crlf = TRUE),
+                               "\r*\n")[[1]])[-c(1:2)]
+  file_list <- basename(filenames[which(file_list %in% filenames)])
+}
+
 # Function to download files from server --------------------------------------
 #' @noRd
- .download_files <- function(ftp, station, years, td) {
+.download_files <- function(ftp, station, years, td) {
   if (is.null(station)) {
     file_list <- paste0(ftp, years, "/", "gsod_", years, ".tar")
     tryCatch(Map(function(ftp, dest)

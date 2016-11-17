@@ -54,6 +54,8 @@ Suggests:
     knitr,
     lubridate,
     plotKML,
+    raster,
+    rgdal,
     rgeos,
     rmarkdown,
     spacetime,
