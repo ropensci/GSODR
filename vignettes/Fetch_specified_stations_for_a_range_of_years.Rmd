@@ -79,8 +79,6 @@ loop_stations <- station_meta[station_meta$STNID %in% loop_stations, ]
 loop_stations <- loop_stations[loop_stations$BEGIN <= 19591231 &
                                  loop_stations$END >= 20151231, ]
 
-stations_list <- c(loop_stations[, 12])
-
 ```
 
 ## Fetch GSOD Weather Data for These Stations and Save to Disk
@@ -90,7 +88,8 @@ of interest from 1960 until 2016. Then write the resulting data to a file called
 (Mac/Linux) or "My Documents" directory (Windows).
 
 ```{r, fetch_weather, message=FALSE, eval=FALSE}
-get_GSOD(station = stations_list, years = 1960:2016, CSV = TRUE,
-         dsn = "~/", filename = "Loop_Survey_Weather_1960-2016")
+get_GSOD(station = eval(parse(text = loop_stations[, 12])), years = 1960:2016,
+                              CSV = TRUE, dsn = "~/",
+                              filename = "Loop_Survey_Weather_1960-2016")
 ```
 
