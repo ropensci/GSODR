@@ -12,7 +12,7 @@
 
 <meta name="author" content="Adam H. Sparks" />
 
-<meta name="date" content="2016-11-17" />
+<meta name="date" content="2016-11-18" />
 
 <title>Fetch specified stations for a range of years</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Fetch specified stations for a range of years</h1>
 <h4 class="author"><em>Adam H. Sparks</em></h4>
-<h4 class="date"><em>2016-11-17</em></h4>
+<h4 class="date"><em>2016-11-18</em></h4>
 
 
 
@@ -99,9 +99,9 @@ RP &lt;-<span class="st"> </span>RP[RP@data$NAME_1 ==<span class="st"> &quot;Pam
 loop_area &lt;-<span class="st"> </span><span class="kw">gUnaryUnion</span>(RP)
 centroid &lt;-<span class="st"> </span><span class="kw">gCentroid</span>(loop_area)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(GSODR)
-
+<span class="kw">library</span>(readr)
 <span class="co"># Fetch station list from NCDC</span>
-station_meta &lt;-<span class="st"> </span>readr::<span class="kw">read_csv</span>(
+station_meta &lt;-<span class="st"> </span><span class="kw">read_csv</span>(
   <span class="st">&quot;ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv&quot;</span>,
   <span class="dt">col_types =</span> <span class="st">&quot;ccccccddddd&quot;</span>,
   <span class="dt">col_names =</span> <span class="kw">c</span>(<span class="st">&quot;USAF&quot;</span>, <span class="st">&quot;WBAN&quot;</span>, <span class="st">&quot;STN_NAME&quot;</span>, <span class="st">&quot;CTRY&quot;</span>, <span class="st">&quot;STATE&quot;</span>, <span class="st">&quot;CALL&quot;</span>, <span class="st">&quot;LAT&quot;</span>,
@@ -117,14 +117,14 @@ loop_stations &lt;-<span class="st"> </span><span class="kw">nearest_stations</s
 loop_stations &lt;-<span class="st"> </span>station_meta[station_meta$STNID %in%<span class="st"> </span>loop_stations, ]
 
 loop_stations &lt;-<span class="st"> </span>loop_stations[loop_stations$BEGIN &lt;=<span class="st"> </span><span class="dv">19591231</span> &amp;
-<span class="st">                                 </span>loop_stations$END &gt;=<span class="st"> </span><span class="dv">20151231</span>, ]
-loop_stations</code></pre></div>
+<span class="st">                                 </span>loop_stations$END &gt;=<span class="st"> </span><span class="dv">20151231</span>, ]</code></pre></div>
 </div>
 <div id="fetch-gsod-weather-data-for-these-stations-and-save-to-disk" class="section level2">
 <h2>Fetch GSOD Weather Data for These Stations and Save to Disk</h2>
 <p>Using the <code>get_GSOD</code> function we can now fetch the weather data for our area of interest from 1960 until 2016. Then write the resulting data to a file called “Loop_Survey_Weather_1960-2016.csv” and put it in the “Home”&quot; directory (Mac/Linux) or “My Documents” directory (Windows).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_GSOD</span>(<span class="dt">station =</span> <span class="kw">unlist</span>(loop_stations[, <span class="dv">12</span>]), <span class="dt">years =</span> <span class="dv">1960</span>:<span class="dv">2016</span>, <span class="dt">CSV =</span> <span class="ot">TRUE</span>,
-         <span class="dt">dsn =</span> <span class="st">&quot;~/&quot;</span>, <span class="dt">filename =</span> <span class="st">&quot;Loop_Survey_Weather_1960-2016&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_GSOD</span>(<span class="dt">station =</span> <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text =</span> loop_stations[, <span class="dv">12</span>])), <span class="dt">years =</span> <span class="dv">1960</span>:<span class="dv">2016</span>,
+                              <span class="dt">CSV =</span> <span class="ot">TRUE</span>, <span class="dt">dsn =</span> <span class="st">&quot;~/&quot;</span>,
+                              <span class="dt">filename =</span> <span class="st">&quot;Loop_Survey_Weather_1960-2016&quot;</span>)</code></pre></div>
 </div>
 </div>
 

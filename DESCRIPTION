@@ -36,6 +36,7 @@ Depends:
 License: GPL (>= 3)
 Imports:
     data.table,
+    curl,
     fields,
     plyr,
     R.utils,

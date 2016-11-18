@@ -17,9 +17,9 @@
 
 ## ---- nearest_stations, message=FALSE, eval=FALSE------------------------
 #  library(GSODR)
-#  
+#  library(readr)
 #  # Fetch station list from NCDC
-#  station_meta <- readr::read_csv(
+#  station_meta <- read_csv(
 #    "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
 #    col_types = "ccccccddddd",
 #    col_names = c("USAF", "WBAN", "STN_NAME", "CTRY", "STATE", "CALL", "LAT",
@@ -36,10 +36,10 @@
 #  
 #  loop_stations <- loop_stations[loop_stations$BEGIN <= 19591231 &
 #                                   loop_stations$END >= 20151231, ]
-#  loop_stations
 #  
 
 ## ---- fetch_weather, message=FALSE, eval=FALSE---------------------------
-#  get_GSOD(station = unlist(loop_stations[, 12]), years = 1960:2016, CSV = TRUE,
-#           dsn = "~/", filename = "Loop_Survey_Weather_1960-2016")
+#  get_GSOD(station = eval(parse(text = loop_stations[, 12])), years = 1960:2016,
+#                                CSV = TRUE, dsn = "~/",
+#                                filename = "Loop_Survey_Weather_1960-2016")
 
