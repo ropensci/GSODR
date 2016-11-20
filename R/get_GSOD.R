@@ -469,12 +469,11 @@ your entry. Station IDs are provided as a part of the GSODR package in the
       file_list <- paste0(ftp, i, "/", file_list)
 
       tryCatch(Map(function(ftp, dest)
-        curl::curl_download(url = ftp,
-                            destfile = paste0(dest, "/", basename(ftp)),
-                            quiet = FALSE),
+       utils::download.file(url = ftp, destfile = dest, mode = "wb"),
         file_list, file.path(td, basename(file_list))),
         error = function(x) stop(
           "\nThe file downloads have failed. Please restart.\n"))
+      Sys.sleep(15) # slow requests to FTP server, otherwise error
     }
   }
 
