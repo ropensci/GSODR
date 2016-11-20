@@ -34,7 +34,7 @@ include:
 First we retrieve data from GADM.org that will provide the provincial spatial
 data for the survey area. We will then use this to find the centroid, which will
 be used to find the nearest stations.
-```{r, RP Data, message=FALSE, eval=FALSE}
+```{r, RP Data, message=FALSE, eval=TRUE}
 library(raster)
 library(rgdal)
 
@@ -51,13 +51,13 @@ RP <- RP[RP@data$NAME_1 == "Pampanga" |
 Now that we have the provincial data imported, we will dissolve the polygons and
 find the centroid.
 
-```{r, dissolve, message=FALSE, eval=FALSE}
+```{r, dissolve, message=FALSE, eval=TRUE}
 library(rgeos)
 loop_area <- gUnaryUnion(RP)
 centroid <- gCentroid(loop_area)
 ```
 
-```{r, nearest_stations, message=FALSE, eval=FALSE}
+```{r, nearest_stations, message=FALSE, eval=TRUE}
 library(GSODR)
 library(readr)
 # Fetch station list from NCDC
@@ -87,7 +87,7 @@ of interest from 1960 until 2016. Then write the resulting data to a file called
 "Loop_Survey_Weather_1960-2016.csv" and put it in the "Home"" directory 
 (Mac/Linux) or "My Documents" directory (Windows).
 
-```{r, fetch_weather, message=FALSE, eval=FALSE}
+```{r, fetch_weather, message=FALSE, eval=TRUE}
 get_GSOD(station = eval(parse(text = loop_stations[, 12])), years = 1960:2016,
                               CSV = TRUE, dsn = "~/",
                               filename = "Loop_Survey_Weather_1960-2016")
