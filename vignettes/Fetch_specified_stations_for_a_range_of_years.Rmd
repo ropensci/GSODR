@@ -88,7 +88,7 @@ of interest from 1960 until 2016. Then write the resulting data to a file called
 (Mac/Linux) or "My Documents" directory (Windows).
 
 ```{r, fetch_weather, message=FALSE, eval=TRUE}
-get_GSOD(station = eval(parse(text = loop_stations[, 12])), years = 1960:2016,
+get_GSOD(station = eval(parse(text = loop_stations[, 12])), years = 1960:1961,
                               CSV = TRUE, dsn = "~/",
                               filename = "Loop_Survey_Weather_1960-2016")
 ```

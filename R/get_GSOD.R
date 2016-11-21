@@ -473,7 +473,6 @@ your entry. Station IDs are provided as a part of the GSODR package in the
         file_list, file.path(td, basename(file_list))),
         error = function(x) stop(
           "\nThe file downloads have failed. Please restart.\n"))
-      Sys.sleep(15) # slow requests to FTP server, otherwise error
     }
   }
 
