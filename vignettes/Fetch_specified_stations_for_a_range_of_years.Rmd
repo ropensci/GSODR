@@ -91,24 +91,9 @@ These requests are broken down into decades to help manage FTP server requests
 so as to not overwhelm it, otherwise you will get errors.
 
 ```{r, fetch_weather, message=FALSE, eval=TRUE}
-get_GSOD(station = eval(parse(text = loop_stations[, 12])), years = 1960:1969,
+get_GSOD(station = eval(parse(text = loop_stations[, 12])), years = 1960:2016,
                               CSV = TRUE, dsn = "~/",
                               filename = "Loop_Survey_Weather_1960-1969")
 
-get_GSOD(station = eval(parse(text = loop_stations[, 12])), years = 1970:1979,
-                              CSV = TRUE, dsn = "~/",
-                              filename = "Loop_Survey_Weather_1970-1979")
-
-get_GSOD(station = eval(parse(text = loop_stations[, 12])), years = 1980:1989,
-                              CSV = TRUE, dsn = "~/",
-                              filename = "Loop_Survey_Weather_1980-1989")
-
-get_GSOD(station = eval(parse(text = loop_stations[, 12])), years = 1990:1999,
-                              CSV = TRUE, dsn = "~/",
-                              filename = "Loop_Survey_Weather_1990-1999")
-
-get_GSOD(station = eval(parse(text = loop_stations[, 12])), years = 2000:2015,
-                              CSV = TRUE, dsn = "~/",
-                              filename = "Loop_Survey_Weather_2000-2015")
 ```
 
