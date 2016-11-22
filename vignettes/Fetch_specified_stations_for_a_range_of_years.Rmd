@@ -1,13 +1,8 @@
----
-title: "Fetch specified stations for a range of years"
-author: "Adam H. Sparks"
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Fetch specified stations for a range of years}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
----
+<!--
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{GSODR - Finding and fetching stations for Central Luzon}
+%\VignetteEncoding{UTF-8}
+-->
 # Fetch Data for IRRI Central Luzon Survey Loop
 
 The IRRI (International Rice Research Institute) survey loop in Central Luzon
@@ -34,30 +29,38 @@ include:
 First we retrieve data from GADM.org that will provide the provincial spatial
 data for the survey area. We will then use this to find the centroid, which will
 be used to find the nearest stations.
-```{r, RP Data, message=FALSE, eval=TRUE}
+```{r, RP Data, message=FALSE, eval=FALSE}
 library(raster)
 library(rgdal)
 
 RP <- getData(country = "Philippines", level = 1)
-RP <- RP[RP@data$NAME_1 == "Pampanga" | 
+
+```
+Select the provinces involved in the survey and make a new object called
+`Central_Luzon`.
+
+```{R, Central_Luzon, eval=FALSE}
+
+Central_Luzon <- RP[RP@data$NAME_1 == "Pampanga" | 
            RP@data$NAME_1 == "Tarlac" |
            RP@data$NAME_1 == "Pangasinan" |
            RP@data$NAME_1 == "La Union" |
            RP@data$NAME_1 == "Nueva Ecija" |
            RP@data$NAME_1 == "Bulacan", ]
+
 ```
 
 ## Dissolve Polygons and Find Centroid of Loop Survey Area
 Now that we have the provincial data imported, we will dissolve the polygons and
 find the centroid.
 
-```{r, dissolve, message=FALSE, eval=TRUE}
+```{r, dissolve, message=FALSE, eval=FALSE}
 library(rgeos)
-loop_area <- gUnaryUnion(RP)
-centroid <- gCentroid(loop_area)
+Central_Luzon <- gUnaryUnion(Central_Luzon)
+centroid <- gCentroid(Central_Luzon)
 ```
 
-```{r, nearest_stations, message=FALSE, eval=TRUE}
+```{r, nearest_stations, message=FALSE, eval=FALSE}
 library(GSODR)
 library(readr)
 # Fetch station list from NCDC
@@ -79,21 +82,51 @@ loop_stations <- station_meta[station_meta$STNID %in% loop_stations, ]
 loop_stations <- loop_stations[loop_stations$BEGIN <= 19591231 &
                                  loop_stations$END >= 20151231, ]
 
+loop_stations
+
 ```
 
-## Fetch GSOD Weather Data for These Stations and Save to Disk
-Using the `get_GSOD` function we can now fetch the weather data for our area
-of interest from 1960 until 2016. Then write the resulting data to a file called
-"Loop_Survey_Weather_1960-2016.csv" and put it in the "Home"" directory 
-(Mac/Linux) or "My Documents" directory (Windows).
+## Using get_GSOD to Fetch the Requested Station Files
+Using the `get_GSOD` function may not work with this many station and year
+combinations. Often the FTP server becomes overwhelmed and stops responding
+to requests.
 
-These requests are broken down into decades to help manage FTP server requests
-so as to not overwhelm it, otherwise you will get errors.
+This example shows how you could construct a query using the `get_GSOD`
+function. Be aware that it may or will likely result in incomplete data and
+an error from the server.
 
-```{r, fetch_weather, message=FALSE, eval=TRUE}
+```{r, fetch_weather, message=FALSE, eval=FALSE}
 get_GSOD(station = eval(parse(text = loop_stations[, 12])), years = 1960:2016,
                               CSV = TRUE, dsn = "~/",
                               filename = "Loop_Survey_Weather_1960-1969")
 
 ```
+
+## A Safer Option
+Using your FTP client, e.g. FileZilla, log into the NCDC FTP server,
+ftp.ncdc.noaa.gov and navigate to /pub/data/gsod/. Manually downloading the
+files for each station listed above from 1960 to 2015 is possible, but tedious.
+An easier solution is to simply download the annual files found in each yearly
+directory, "gsod-YYYY.tar" and untar them locally and then use R to
+list the available files and select only the files for the stations of interest.
+Lastly, write the data to disk as a CSV file for saving and later use.
+
+```{r, list_local_files, eval=FALSE}
+years <- 1960:2015
+
+loop_stations <- eval(parse(text = loop_stations[, 12]))
+
+# create file list
+loop_stations <- do.call(
+  paste0, c(expand.grid(loop_stations, "-", years, ".op.gz"))
+  )
+
+local_files <- list.files(path = "./GSOD", full.names = TRUE, recursive = TRUE)
+local_files <- local_files[basename(local_files) %in% loop_stations]
+
+loop_data <- reformat_GSOD(file_list = local_files)
+
+write.csv(loop_data, file = "loop_data")
+```
+
 

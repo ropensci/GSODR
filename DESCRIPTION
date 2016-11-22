@@ -35,21 +35,22 @@ Depends:
     R (>= 3.2.0)
 License: GPL (>= 3)
 Imports:
-    data.table,
     curl,
+    data.table,
+    dplyr,
     fields,
+    magrittr,
     plyr,
+    purrr,
     R.utils,
     RCurl,
     readr,
     rgdal,
     sp,
     stats,
-    stringi,
     utils
 Suggests:
     chillR,
-    dplyr,
     ggalt,
     ggplot2,
     knitr,

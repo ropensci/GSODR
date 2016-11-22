@@ -4,11 +4,14 @@
 \alias{reformat_GSOD}
 \title{Clean, Reformat and Generate New Variables From GSOD Weather Data}
 \usage{
-reformat_GSOD(file_path)
+reformat_GSOD(dsn = NULL, file_list = NULL)
 }
 \arguments{
-\item{file_path}{User supplied file path to location of station file data on
+\item{dsn}{User supplied file path to location of station file data on
 local disk for reformatting.}
+
+\item{file_list}{User supplied list of files of station data on local disk for
+reformatting.}
 }
 \description{
 This function automates cleaning and reformatting of GSOD,

@@ -19,8 +19,10 @@
 #'Radar Topography Mission 90 metre (SRTM 90m) digital elevation data based on
 #'NASA's original SRTM 90m data.
 #'
-#'@param file_path User supplied file path to location of station file data on
+#'@param dsn User supplied file path to location of station file data on
 #'local disk for reformatting.
+#'@param file_list User supplied list of files of station data on local disk for
+#'reformatting.
 #'
 #' @details
 #' Data summarise each year by station, which include vapour pressure and
@@ -187,8 +189,13 @@
 #' @examples
 #' \dontrun{
 #'
-#' Reformat station data files in local directory
-#' t <- reformat_GSOD(file_path = "~/tmp")
+#' # Reformat station data files in local directory
+#' x <- reformat_GSOD(dsn = "~/tmp")
+#' 
+#' # Reformat a list of data files
+#' y <- c("~/GSOD/gsod_1960/200490-99999-1960.op.gz",
+#'        "~/GSOD/gsod_1961/200490-99999-1961.op.gz")
+#' x <- reformat_GSOD(file_list = y)
 #' }
 #'
 #' @references {Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled
@@ -196,18 +203,21 @@
 #' \url{http://srtm.csi.cgiar.org}}
 #'
 #' @export
-reformat_GSOD <- function(file_path) {
-
+reformat_GSOD <- function(dsn = NULL, file_list = NULL) {
+  
   # Fetch latest station metadata from NCDC server
   if (!exists("stations")) {
     stations <- .fetch_station_list()
   }
-
-  # Create a list of files to reformat
-  GSOD_list <- list.files(path = file_path, pattern = "^.*\\.op.gz$",
-                          full.names = TRUE)
-
-  plyr::ldply(.data = GSOD_list, .fun = .process_gz, stations = stations,
+  
+  # If dsn !NULL, create a list of files to reformat
+  if (!is.null(dsn)) {
+    file_list <- list.files(path = dsn, pattern = "^.*\\.op.gz$",
+                            full.names = TRUE)
+  } else
+    file_list <- file_list
+  
+  plyr::ldply(.data = file_list, .fun = .process_gz, stations = stations,
               .progress = "text")
 }
 
