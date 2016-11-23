@@ -1,9 +1,11 @@
+
+
 #' Clean, Reformat and Generate New Variables From GSOD Weather Data
 #'
 #'This function automates cleaning and reformatting of GSOD,
 #'\url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod},
-#'station files in "WMO-WBAN-YYYY.op.gz" format that have been downloaded from the
-#'United States National Climatic Data Center's (NCDC) FTP server.
+#'station files in "WMO-WBAN-YYYY.op.gz" format that have been downloaded from
+#' the United States National Climatic Data Center's (NCDC) FTP server.
 #'
 #'For automated downloading and processing see the \code{\link{get_GSOD}}
 #'function which provides expanded functionality for automatically downloading
@@ -207,20 +209,21 @@
 #'
 #' @export
 reformat_GSOD <- function(dsn = NULL, file_list = NULL) {
-
   # Fetch latest station metadata from NCDC server
   if (!exists("stations")) {
     stations <- .fetch_station_list()
   }
-
   # If dsn !NULL, create a list of files to reformat
   if (!is.null(dsn)) {
-    file_list <- list.files(path = dsn, pattern = "^.*\\.op.gz$",
+    file_list <- list.files(path = dsn,
+                            pattern = "^.*\\.op.gz$",
                             full.names = TRUE)
   } else
     file_list <- file_list
-
-  plyr::ldply(.data = file_list, .fun = .process_gz, stations = stations,
-              .progress = "text")
+  plyr::ldply(
+    .data = file_list,
+    .fun = .process_gz,
+    stations = stations,
+    .progress = "text"
+  )
 }
-

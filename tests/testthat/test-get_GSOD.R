@@ -159,7 +159,7 @@ test_that("Check validate country returns an error on invalid entry", {
 test_that(".download_files properly works, subsetting for country and
           agroclimatology works and .process_gz returns a data table", {
             years <- 2015
-            agroclimatology = TRUE
+            agroclimatology <- TRUE
             country <- "RP"
             station <- NULL
             cache_dir <- tempdir()

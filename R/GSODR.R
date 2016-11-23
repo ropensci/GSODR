@@ -1,3 +1,5 @@
+
+
 #' GSODR: Global Surface Summary Daily Weather Data in R.
 #'
 #'The GSODR package offers automated downloading, parsing, cleaning,
