@@ -1,10 +1,15 @@
 .DS_Store
 
 .RData
+
 .Rhistory
+
 *.Rproj
+
 .Rproj.user
+
 fetch_isd-history_cache
+
 inst/doc
 
 .Rbuildignore~

@@ -218,8 +218,7 @@ reformat_GSOD <- function(dsn = NULL, file_list = NULL) {
     file_list <- list.files(path = dsn,
                             pattern = "^.*\\.op.gz$",
                             full.names = TRUE)
-  } else
-    file_list <- file_list
+  }
   plyr::ldply(
     .data = file_list,
     .fun = .process_gz,
