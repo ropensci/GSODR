@@ -455,7 +455,7 @@ get_GSOD <- function(years = NULL,
 
 #' @noRd
 .validate_missing_days <-
-  function(max_missing, GSOD_list, cache_dir) {
+  function(max_missing, GSOD_list) {
     records <-
       lapply(X = paste0(GSOD_list),
              FUN = R.utils::countLines)

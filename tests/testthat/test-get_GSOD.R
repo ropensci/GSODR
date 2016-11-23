@@ -27,8 +27,8 @@ test_that(".validate_years handles valid years", {
 test_that("invalid stations are handled", {
   skip_on_cran()
   stations <- .fetch_station_list()
-  expect_error(.validate_stations(years = 2015, station = "aaa-bbbbbb", stations),
-               "\nThis is not a valid station ID number, please check your entry.\n           \nStation IDs are provided as a part of the GSODR package in the\n           'stations' data in the STNID column.\n")
+  expect_error(.validate_station(years = 2015, station = "aaa-bbbbbb", stations),
+               "\naaa-bbbbbb is not a valid station ID number, please check\n      your entry. Station IDs are provided as a part of the GSODR package in the\n      'stations' data\nin the STNID column.\n")
 })
 
 # Check that invalid dsn is handled --------------------------------------------
@@ -87,9 +87,11 @@ test_that("missing days check allows stations with permissible days missing,
                                                   ".csv.gz"))
                    )
             )
-            GSOD_list <- as.list(list.files(td, pattern = "2015.csv.gz$"))
-            GSOD_list_filtered <- .validate_missing_days(max_missing, GSOD_list,
-                                                         td)
+            GSOD_list <-
+              list.files(path = td,
+                         pattern = "^.*\\.op.gz$",
+                         full.names = TRUE)
+            GSOD_list_filtered <- .validate_missing_days(max_missing, GSOD_list)
 
             expect_length(GSOD_list, 2)
             expect_match(basename(GSOD_list_filtered), "just_right_2015.csv.gz")
