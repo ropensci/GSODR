@@ -177,7 +177,6 @@
 #' \item{RH}{Mean daily relative humidity}
 #' }
 #'
-#' @author Adam Sparks \email{adamhsparks@gmail.com}
 #'
 #' @note Some of these data are redistributed with this R package. Originally
 #' from these data come from the US NCDC which states that users of these data
@@ -209,21 +208,28 @@
 #' filename = "GSOD_agroclimatology_2010-2011", agroclimatology = TRUE)
 #'
 #' }
-#'
+#' @author Adam H Sparks \email{adamhsparks@gmail.com}
 #' @references {Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled
 #' SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
 #' \url{http://srtm.csi.cgiar.org}}
 #'
+#' @seealso \code{\link{reformat_GSOD}}
+#'
 #' @importFrom dplyr %>%
 #' @export
-get_GSOD <- function(years = NULL, station = NULL, country = NULL,
-                     dsn = NULL, filename = NULL, max_missing = NULL,
-                     agroclimatology = FALSE, CSV = FALSE, GPKG = FALSE) {
-  
+get_GSOD <- function(years = NULL,
+                     station = NULL,
+                     country = NULL,
+                     dsn = NULL,
+                     filename = NULL,
+                     max_missing = NULL,
+                     agroclimatology = FALSE,
+                     CSV = FALSE,
+                     GPKG = FALSE) {
   # Create objects for use in retrieving files ---------------------------------
   cache_dir <- tempdir()
   ftp_base <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/%s/"
-  
+
   # Validate user inputs -------------------------------------------------------
   .validate_years(years)
   if (!is.null(dsn)) {
@@ -234,72 +240,80 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
     stations <- .fetch_station_list()
   }
   # Validate user entered stations for existence in stations list from NCDC
-  plyr::l_ply(.data = station, .fun = .validate_station, stations = stations,
-              years = years)
-  
+  plyr::l_ply(
+    .data = station,
+    .fun = .validate_station,
+    stations = stations,
+    years = years
+  )
+
   .validate_country(country)
-  
+
   # Download files from server -------------------------------------------------
-  
+
   GSOD_list <- .download_files(ftp_base, station, years, cache_dir)
-  
+
   # Validate stations for missing days -----------------------------------------
   if (!is.null(max_missing)) {
-    GSOD_list <- .validate_missing_days(max_missing, GSOD_list, cache_dir)
+    GSOD_list <-
+      .validate_missing_days(max_missing, GSOD_list, cache_dir)
   }
-  
+
   # Subset GSOD_list for agroclimatology only stations -------------------------
   if (isTRUE(agroclimatology)) {
-    GSOD_list <- .agroclimatology_list(GSOD_list, stations, cache_dir, years)
+    GSOD_list <-
+      .agroclimatology_list(GSOD_list, stations, cache_dir, years)
   }
-  
+
   # Subset GSOD_list for specified country -------------------------------------
   if (!is.null(country)) {
-    GSOD_list <- .country_list(country, GSOD_list, stations, cache_dir, years)
+    GSOD_list <-
+      .country_list(country, GSOD_list, stations, cache_dir, years)
   }
-  
-  # Download files from FTP server ---------------------------------------------
-  
-  .download_station_files(cache_dir, ftp_base, station, years)
-  
+
   # Clean and reformat list of station files from local disk in tempdir --------
-  
+
   message("Starting data file processing")
-  GSOD_XY <- as.data.frame(
-    try(
-      plyr::ldply(.data = GSOD_list, .fun = .process_gz,
-                  stations = stations, .progress = "text")
-    )
-  )
-  
-  
+  GSOD_XY <- as.data.frame(try(plyr::ldply(
+    .data = GSOD_list,
+    .fun = .process_gz,
+    stations = stations,
+    .progress = "text"
+  )))
+
+
   # Write files to disk --------------------------------------------------------
-  
+
   if (isTRUE(CSV)) {
     message("\nWriting CSV file to disk.\n")
     outfile <- paste0(outfile, ".csv")
     readr::write_csv(GSOD_XY, path = paste0(outfile))
   }
-  
+
   if (isTRUE(GPKG)) {
     message("\nWriting GeoPackage File to Disk.\n")
     outfile <- paste0(outfile, ".gpkg")
     # Convert object to standard df and then spatial object
     GSOD_XY <- as.data.frame(GSOD_XY)
-    sp::coordinates(GSOD_XY) <- ~LON + LAT
-    sp::proj4string(GSOD_XY) <- sp::CRS("+proj=longlat +datum=WGS84")
-    
+    sp::coordinates(GSOD_XY) <- ~ LON + LAT
+    sp::proj4string(GSOD_XY) <-
+      sp::CRS("+proj=longlat +datum=WGS84")
+
     # If the filename specified exists, remove it and create new
     if (file.exists(path.expand(outfile))) {
       file.remove(outfile)
     }
     # Create new .gpkg file
-    rgdal::writeOGR(GSOD_XY, dsn = path.expand(outfile), layer = "GSOD",
-                    driver = "GPKG")
+    rgdal::writeOGR(
+      GSOD_XY,
+      dsn = path.expand(outfile),
+      layer = "GSOD",
+      driver = "GPKG"
+    )
   }
-  
+
   return(GSOD_XY)
-  
+
   # Cleanup and reset to default state -----------------------------------------
   unlink(cache_dir)
 }
@@ -358,7 +372,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
       substr(dsn, nchar(dsn), nchar(dsn)) != "\\") {
     dsn <- paste0(dsn, "/")
   }
-  
+
   if (is.null(filename)) {
     filename_out <- "GSOD"
   } else {
@@ -372,259 +386,235 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
 #' @noRd
 .validate_station <- function(station, stations, years) {
   if (!station %in% stations[[12]]) {
-    stop("\n", paste0(station), " is not a valid station ID number, please check
-your entry. Station IDs are provided as a part of the GSODR package in the
-'stations' data\nin the STNID column.\n")
+    stop(
+      "\n",
+      paste0(station),
+      " is not a valid station ID number, please check
+      your entry. Station IDs are provided as a part of the GSODR package in the
+      'stations' data\nin the STNID column.\n"
+    )
   }
-  
-  BEGIN <- as.numeric(substr(stations[stations[[12]] == station]$BEGIN, 1, 4))
-  END <- as.numeric(substr(stations[stations[[12]] == station]$END, 1, 4))
+
+  BEGIN <-
+    as.numeric(substr(stations[stations[[12]] == station]$BEGIN, 1, 4))
+  END <-
+    as.numeric(substr(stations[stations[[12]] == station]$END, 1, 4))
   if (min(years) < BEGIN | max(years) > END) {
-    message("This station, ", station, ", only provides data for years ", BEGIN,
-            " to ", END, ".\n")
+    message("This station, ",
+            station,
+            ", only provides data for years ",
+            BEGIN,
+            " to ",
+            END,
+            ".\n")
   }
 }
 
 
 #' @noRd
-.validate_country <- function(country) {
-  if (!is.null(country)) {
-    country <- toupper(trimws(country[1]))
-    nc <- nchar(country)
-    if (nc == 3) {
-      if (country %in% GSODR::country_list$iso3c) {
-        c <- which(country == GSODR::country_list$iso3c)
+.validate_country <-
+  function(country) {
+    if (!is.null(country)) {
+      country <- toupper(trimws(country[1]))
+      nc <- nchar(country)
+      if (nc == 3) {
+        if (country %in% GSODR::country_list$iso3c) {
+          c <- which(country == GSODR::country_list$iso3c)
+          country <- GSODR::country_list[[c, 1]]
+        } else {
+          stop(
+            "\nPlease provide a valid name or 2 or 3 letter ISO country code;
+          you can view the entire list of valid countries in this data by
+          typing, 'country_list'.\n"
+          )
+        }
+      } else if (nc == 2) {
+        if (country %in% GSODR::country_list$iso2c) {
+          c <- which(country == GSODR::country_list$iso2c)
+          country <- GSODR::country_list[[c, 1]]
+        } else {
+          stop(
+            "\nPlease provide a valid name or 2 or 3 letter ISO country code;
+            you can view the entire list of valid countries in this data by
+            typing, 'country_list'.\n"
+          )
+        }
+      } else if (country %in% GSODR::country_list$COUNTRY_NAME) {
+        c <- which(country == GSODR::country_list$COUNTRY_NAME)
         country <- GSODR::country_list[[c, 1]]
       } else {
-        stop("\nPlease provide a valid name or 2 or 3 letter ISO country code;
-             you can view the entire list of valid countries in this data by
-             typing, 'country_list'.\n")
+        stop(
+          "\nPlease provide a valid name or 2 or 3 letter ISO country code;
+            you can view the entire list of valid countries in this data by
+            typing, 'country_list'.\n"
+        )
       }
-    } else if (nc == 2) {
-      if (country %in% GSODR::country_list$iso2c) {
-        c <- which(country == GSODR::country_list$iso2c)
-        country <- GSODR::country_list[[c, 1]]
-      } else {
-        stop("\nPlease provide a valid name or 2 or 3 letter ISO country code;
-               you can view the entire list of valid countries in this data by
-               typing, 'country_list'.\n")
-      }
-    } else if (country %in% GSODR::country_list$COUNTRY_NAME) {
-      c <- which(country == GSODR::country_list$COUNTRY_NAME)
-      country <- GSODR::country_list[[c, 1]]
-    } else {
-      stop("\nPlease provide a valid name or 2 or 3 letter ISO country code;
-               you can view the entire list of valid countries in this data by
-               typing, 'country_list'.\n")
     }
   }
-}
 
 
 #' @noRd
-.validate_missing_days <- function(max_missing, GSOD_list, cache_dir) {
-  records <- lapply(X = paste0(cache_dir, "/", GSOD_list), FUN = R.utils::countLines)
-  names(records) <- GSOD_list
-  year <- as.numeric(gsub("[^0-9]", "", GSOD_list[1]))
-  
-  ifelse(format(as.POSIXct(paste0(year, "-03-01")) - 1, "%d") != "29",
-         allow <- 365 - max_missing,
-         allow <- 366 - max_missing)
-  
-  GSOD_list <- stats::na.omit(ifelse(records >= allow,
-                                     paste0(cache_dir, "/", GSOD_list),
-                                     NA))
-}
+.validate_missing_days <-
+  function(max_missing, GSOD_list, cache_dir) {
+    records <-
+      lapply(X = paste0(cache_dir, "/", GSOD_list),
+             FUN = R.utils::countLines)
+    names(records) <- GSOD_list
+    year <- as.numeric(gsub("[^0-9]", "", GSOD_list[1]))
+
+    ifelse(
+      format(as.POSIXct(paste0(year, "-03-01")) - 1, "%d") != "29",
+      allow <- 365 - max_missing,
+      allow <- 366 - max_missing
+    )
+
+    GSOD_list <- stats::na.omit(ifelse(records >= allow,
+                                       paste0(cache_dir, "/", GSOD_list),
+                                       NA))
+  }
 
 
 # Function to download files from server --------------------------------------
 #' @noRd
-.download_files <- function(ftp_base, station, years, cache_dir) {
-  if (is.null(station)) {
-    file_list <- paste0(ftp_base, years, "/", "gsod_", years, ".tar")
-    tryCatch(Map(function(ftp, dest)
-      utils::download.file(url = ftp, destfile = dest),
-      file_list, file.path(cache_dir, basename(file_list))), error = function(x) stop(
-        "\nThe file downloads have failed. Please restart.\n"))
-    
-    tar_files <- list.files(cache_dir, pattern = "^gsod.*\\.tar$", full.names = TRUE)
-    
-    plyr::ldply(.data = tar_files, .fun = utils::untar, exdir = cache_dir)
-    
-    GSOD_list <- list.files(cache_dir, pattern = "^.*\\.op.gz$", full.names = TRUE)
-  }
-  
-  if (!is.null(station)) {
-    message("\nChecking requested station file for availability on server.")
-    
-    # this portion is adpated from hrbrmstr in response to my question
-    # posted on SO: http://stackoverflow.com/questions/40715370
-    
-    MAX_RETRIES <- 6
-    
-    dir_list_handle <- curl::new_handle(ftp_use_epsv = FALSE,
-                                        dirlistonly = TRUE, crlf = TRUE,
-                                        ssl_verifypeer = FALSE, 
-                                        ftp_response_timeout = 30)
-    
-    s_curl_fetch_memory <- purrr::safely(curl::curl_fetch_memory)
-    retry_cfm <- function(url, handle) {
-      
-      i <- 0
-      repeat {
-        i <- i + 1
-        res <- s_curl_fetch_memory(url, handle = handle)
-        if (!is.null(res$result)) return(res$result)
-        if (i == MAX_RETRIES) {
-          stop("Too many retries...server may be under load")
+.download_files <-
+  function(ftp_base, station, years, cache_dir) {
+    if (is.null(station)) {
+      file_list <- paste0(ftp_base, years, "/", "gsod_", years, ".tar")
+      tryCatch(
+        Map(
+          function(ftp, dest)
+            utils::download.file(url = ftp, destfile = dest),
+          file_list,
+          file.path(cache_dir, basename(file_list))
+        ),
+        error = function(x)
+          stop("\nThe file downloads have failed. Please restart.\n")
+      )
+
+      tar_files <-
+        list.files(cache_dir, pattern = "^gsod.*\\.tar$", full.names = TRUE)
+
+      plyr::ldply(.data = tar_files,
+                  .fun = utils::untar,
+                  exdir = cache_dir)
+
+      GSOD_list <-
+        list.files(cache_dir, pattern = "^.*\\.op.gz$", full.names = TRUE)
+    }
+
+    if (!is.null(station)) {
+      message("\nChecking requested station file for availability on server.")
+
+      MAX_RETRIES <- 6
+
+      dir_list_handle <-
+        curl::new_handle(
+          ftp_use_epsv = FALSE,
+          dirlistonly = TRUE,
+          crlf = TRUE,
+          ssl_verifypeer = FALSE,
+          ftp_response_timeout = 30
+        )
+
+      s_curl_fetch_memory <- purrr::safely(curl::curl_fetch_memory)
+      retry_cfm <-
+        function(url, handle) {
+        i <- 0
+        repeat {
+          i <- i + 1
+          res <- s_curl_fetch_memory(url, handle = handle)
+          if (!is.null(res$result))
+            return(res$result)
+          if (i == MAX_RETRIES) {
+            stop("Too many retries...server may be under load")
+          }
+        }
+
+      }
+
+      # Wrapping the disk writer (for the actual files)
+      # Note the use of the cache dir. It won't waste your bandwidth or the
+      # server's bandwidth or CPU if the file has already been retrieved.
+      s_curl_fetch_disk <- purrr::safely(curl::curl_fetch_disk)
+      retry_cfd <-
+        function(url, path) {
+        cache_file <- sprintf("%s/%s", cache_dir, basename(url))
+        if (file.exists(cache_file))
+          return()
+
+        i <- 0
+        repeat {
+          i <- i + 1
+          if (i == 6) {
+            stop("Too many retries...server may be under load")
+          }
+          res <- s_curl_fetch_disk(url, cache_file)
+          if (!is.null(res$result))
+            return()
         }
       }
-      
+
+      pb <- dplyr::progress_estimated(length(years))
+      purrr::walk(years, function(yr) {
+        year_url <- sprintf(ftp_base, yr)
+
+        tmp <- retry_cfm(year_url, handle = dir_list_handle)
+        con <- rawConnection(tmp$content)
+        fils <- readLines(con)
+        close(con)
+
+        # sift out only the target stations
+        purrr::map(station, ~ grep(., fils, value = TRUE)) %>%
+          purrr::keep( ~ length(.) > 0) %>%
+          purrr::flatten_chr() -> fils
+
+        # grab the station files
+        purrr::walk(paste0(year_url, fils), retry_cfd)
+
+        # progress bar
+        pb$tick()$print()
+
+      })
     }
-    
-    # Wrapping the disk writer (for the actual files)
-    # Note the use of the cache dir. It won't waste your bandwidth or the
-    # server's bandwidth or CPU if the file has already been retrieved.
-    s_curl_fetch_disk <- purrr::safely(curl::curl_fetch_disk)
-    retry_cfd <- function(url, path) {
-      
-      cache_file <- sprintf("%s/%s", cache_dir, basename(url))
-      if (file.exists(cache_file)) return()
-      
-      i <- 0
-      repeat {
-        i <- i + 1
-        if (i == 6) { 
-          stop("Too many retries...server may be under load")
-        }
-        res <- s_curl_fetch_disk(url, cache_file)
-        if (!is.null(res$result)) return()
-      }
-    }
-    
-    pb <- dplyr::progress_estimated(length(years))
-    purrr::walk(years, function(yr) {
-      
-      year_url <- sprintf(ftp_base, yr)
-      
-      tmp <- retry_cfm(year_url, handle = dir_list_handle)
-      con <- rawConnection(tmp$content)
-      fils <- readLines(con)
-      close(con)
-      
-      # sift out only the target stations
-      purrr::map(station, ~grep(., fils, value = TRUE)) %>%
-        purrr::keep(~length(.) > 0) %>%
-        purrr::flatten_chr() -> fils
-      
-      message("Downloading station files now")
-      # grab the station files
-      purrr::walk(paste0(year_url, fils), retry_cfd)
-      
-      # progress bar
-      pb$tick()$print()
-      
-    })
-    
-    GSOD_list <- list.files(path = cache_dir, pattern = "^.*\\.op.gz$",
-                            full.names = TRUE)
+
+    GSOD_list <-
+      list.files(path = cache_dir,
+                 pattern = "^.*\\.op.gz$",
+                 full.names = TRUE)
   }
-}
 
 
-# Agroclimatology: subset list of stations to process-------------------------
-.agroclimatology_list <- function(GSOD_list, stations, cache_dir, years) {
-  station_list <- stations[stations$LAT >= -60 &
-                             stations$LAT <= 60, ]$STNID
-  station_list <- do.call(paste0,
-                          c(expand.grid(cache_dir, "/", station_list, "-", years,
-                                        ".op.gz")))
-  GSOD_list <- GSOD_list[GSOD_list %in% station_list]
-  rm(station_list)
-  return(GSOD_list)
-}
+# Agroclimatology: subset list of stations to process---------------------------
+.agroclimatology_list <-
+  function(GSOD_list, stations, cache_dir, years) {
+    station_list <- stations[stations$LAT >= -60 &
+                               stations$LAT <= 60,]$STNID
+    station_list <- do.call(paste0,
+                            c(
+                              expand.grid(cache_dir, "/", station_list, "-",
+                                          years, ".op.gz")
+                            ))
+    GSOD_list <- GSOD_list[GSOD_list %in% station_list]
+    rm(station_list)
+    return(GSOD_list)
+  }
 
 # Specified country: subset list of stations to process ------------------------
-.country_list <- function(country, GSOD_list, stations, cache_dir, years) {
-  country_FIPS <- unlist(as.character(stats::na.omit(
-    GSODR::country_list[GSODR::country_list$FIPS == country, ][[1]]),
-    use.names = FALSE))
-  station_list <- stations[stations$CTRY == country_FIPS, ]$STNID
-  station_list <- do.call(paste0,
-                          c(expand.grid(cache_dir, "/", station_list, "-", years,
-                                        ".op.gz")))
-  GSOD_list <- GSOD_list[GSOD_list %in% station_list]
-  return(GSOD_list)
-  rm(station_list)
-}
-
-# FTP functions ----------------------------------------------------------------
-#' @noRd
-# Written by @hrbrmstr in response to my question: 
-# http://stackoverflow.com/questions/40715370
-
-.download_station_files <- function(cache_dir, ftp_base, station, years) {
-  MAX_RETRIES <- 6
-  
-  dir_list_handle <- curl::new_handle(ftp_use_epsv = FALSE, dirlistonly = TRUE,
-                                      crlf = TRUE, ssl_verifypeer = FALSE, 
-                                      ftp_response_timeout = 30)
-  
-  s_curl_fetch_memory <- purrr::safely(curl::curl_fetch_memory)
-  retry_cfm <- function(url, handle) {
-    i <- 0
-    repeat {
-      i <- i + 1
-      res <- s_curl_fetch_memory(url, handle = handle)
-      if (!is.null(res$result)) return(res$result)
-      if (i == MAX_RETRIES) { 
-        stop("Too many retries...server may be under load")
-      }
-    }
-    
+.country_list <-
+  function(country, GSOD_list, stations, cache_dir, years) {
+    country_FIPS <- unlist(
+      as.character(
+        stats::na.omit(
+          GSODR::country_list[GSODR::country_list$FIPS == country,][[1]]),
+        use.names = FALSE))
+    station_list <- stations[stations$CTRY == country_FIPS,]$STNID
+    station_list <- do.call(paste0,
+                            c(
+                              expand.grid(
+                                cache_dir, "/", station_list, "-", years,
+                                ".op.gz")
+                            ))
+    GSOD_list <- GSOD_list[GSOD_list %in% station_list]
+    return(GSOD_list)
+    rm(station_list)
   }
-  
-  # Wrapping the disk writer (for the actual files)
-  # Note the use of the cache dir. It won't waste your bandwidth or the
-  # server's bandwidth or CPU if the file has already been retrieved.
-  s_curl_fetch_disk <- purrr::safely(curl::curl_fetch_disk)
-  retry_cfd <- function(url, path) {
-    
-    cache_file <- sprintf("%s/%s", cache_dir, basename(url))
-    if (file.exists(cache_file)) return()
-    
-    i <- 0
-    repeat {
-      i <- i + 1
-      if (i == 6) { 
-        stop("Too many retries...server may be under load")
-      }
-      res <- s_curl_fetch_disk(url, cache_file)
-      if (!is.null(res$result)) return()
-    }
-  }
-  
-  pb <- dplyr::progress_estimated(length(years))
-  purrr::walk(years, function(yr) {
-    
-    year_url <- sprintf(ftp_base, yr)
-    
-    tmp <- retry_cfm(year_url, handle = dir_list_handle)
-    con <- rawConnection(tmp$content)
-    fils <- readLines(con)
-    close(con)
-    
-    # sift out only the target stations
-    purrr::map(station, ~grep(., fils, value = TRUE)) %>%
-      purrr::keep(~length(.)>0) %>%
-      purrr::flatten_chr() -> fils
-    
-    # grab the station files
-    purrr::walk(paste0(year_url, fils), retry_cfd)
-    
-    # progress bar
-    pb$tick()$print()
-    
-  })
-}
-
