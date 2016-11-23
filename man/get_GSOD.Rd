@@ -219,11 +219,11 @@ filename = "Philippines_GSOD", GPKG = TRUE, CSV = FALSE, max_missing = 5)
 
 # Download global GSOD data for agroclimatology work for years 2009 and 2010
 # and generate yearly summary files, GSOD-agroclimatology-2010.csv and
-# GSOD-agroclimatology-2011.csv in the user's home directory with a maximum
-# of five missing days per weather station allowed.
+# GSOD-agroclimatology-2011.csv in the user's home directory.
 
 get_GSOD(years = 2010:2011, dsn = "~/",
-filename = "GSOD_agroclimatology_2010-2011", agroclimatology = TRUE)
+filename = "GSOD_agroclimatology_2010-2011", agroclimatology = TRUE,
+CSV = TRUE)
 
 }
 }
