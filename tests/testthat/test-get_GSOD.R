@@ -162,20 +162,21 @@ test_that(".download_files properly works, subsetting for country and
             agroclimatology = TRUE
             country <- "RP"
             station <- NULL
-            options(timeout = 300)
-            td <- tempdir()
-            ftp <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
+            cache_dir <- tempdir()
+            ftp_base <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/%s/"
 
             stations <- .fetch_station_list()
 
-            GSOD_list <- .download_files(ftp, station, years, td)
+            GSOD_list <- .download_files(ftp_base, station, years, cache_dir)
 
             expect_length(GSOD_list, 12976)
 
-            agro_list <- .agroclimatology_list(GSOD_list, stations, td, years)
+            agro_list <- .agroclimatology_list(GSOD_list, stations, cache_dir
+                                               , years)
             expect_length(agro_list, 11302)
 
-            RP_list <- .country_list(country, GSOD_list, stations, td, years)
+            RP_list <- .country_list(country, GSOD_list, stations, cache_dir,
+                                     years)
             expect_length(RP_list, 53)
 
 # Check that .process_gz returns a properly formated data table-----------------
