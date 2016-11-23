@@ -19,15 +19,23 @@
 #'be returned as a comma-separated values (CSV) or GeoPackage (GPKG) file.
 #'For information on the original data from NCDC, please see the GSOD
 #'readme.txt file available from,
-#'<http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt>.
+#'\url{http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt}.
 #'
-#' @section GSODR functions:
-#' \code{\link{get_GSOD}}
-#'
-#' \code{\link{nearest_stations}}
-#'
-#' @section References:
-#' \url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod}
 #' @docType package
+#'
 #' @name GSODR
+#'
+#' @seealso \code{\link{get_GSOD}} Fetch, clean and reformat data from NCDC GSOD
+#' database
+#'
+#' @seealso \code{\link{reformat_GSOD}} Clean and reformat local files from NCDC
+#' GSOD database
+#'
+#' @seealso \code{\link{nearest_stations}} Find stations within a given radius
+#' expressed in kilometres for a given point using Latitude and Longitude
+#'
+#' @references
+#' \url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod}
+#'
+#'@author Adam H Sparks, Tomislav Hengle and Andrew Nelson
 NULL

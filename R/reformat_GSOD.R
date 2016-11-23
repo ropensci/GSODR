@@ -9,7 +9,7 @@
 #'function which provides expanded functionality for automatically downloading
 #'and expanding annual GSOD files and cleaning station files.
 #'
-#'This function reformats the data into a more usable form and caculates three
+#'This function reformats the data into a more usable form and calculates three
 #'new variables; Saturation Vapor Pressure (ES) – Actual Vapor Pressure (EA) and
 #'relative humidity (RH). All units are converted to International System of
 #'Units (SI), e.g., Fahrenheit to Celsius and inches to millimetres. Alternative
@@ -142,7 +142,6 @@
 #' \item{RH}{Mean daily relative humidity}
 #' }
 #'
-#' @author Adam Sparks \email{adamhsparks@gmail.com}
 #'
 #' @note Some of these data are redistributed with this R package. Originally
 #' from these data come from the US NCDC which states that users of these data
@@ -175,7 +174,7 @@
 #'
 #' }
 #'
-#' @author Adam Sparks \email{adamhsparks@gmail.com}
+#'
 #'
 #' @note Some of these data are redistributed with this R package. Originally
 #' from these data come from the US NCDC which states that users of these data
@@ -191,32 +190,36 @@
 #'
 #' # Reformat station data files in local directory
 #' x <- reformat_GSOD(dsn = "~/tmp")
-#' 
+#'
 #' # Reformat a list of data files
 #' y <- c("~/GSOD/gsod_1960/200490-99999-1960.op.gz",
 #'        "~/GSOD/gsod_1961/200490-99999-1961.op.gz")
 #' x <- reformat_GSOD(file_list = y)
 #' }
 #'
+#' @author Adam H Sparks, \email{adamhsparks@gmail.com}
+#'
 #' @references {Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled
 #' SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
 #' \url{http://srtm.csi.cgiar.org}}
 #'
+#' @seealso \code{\link{get_GSOD}}
+#'
 #' @export
 reformat_GSOD <- function(dsn = NULL, file_list = NULL) {
-  
+
   # Fetch latest station metadata from NCDC server
   if (!exists("stations")) {
     stations <- .fetch_station_list()
   }
-  
+
   # If dsn !NULL, create a list of files to reformat
   if (!is.null(dsn)) {
     file_list <- list.files(path = dsn, pattern = "^.*\\.op.gz$",
                             full.names = TRUE)
   } else
     file_list <- file_list
-  
+
   plyr::ldply(.data = file_list, .fun = .process_gz, stations = stations,
               .progress = "text")
 }

@@ -1,4 +1,4 @@
-#' Select Nearest Stations to Specified Latitude and Longitude
+#' Find Nearest GSOD Stations to Specified Latitude and Longitude
 #'
 #'Given a latitude and longitude value entered as decimal degrees (DD),
 #'this function returns a list of STNID values, which can be used in the
@@ -24,6 +24,7 @@
 #'
 #' n <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 100)
 #'}
+#' @author Adam H Sparks, \email{adamhsparks@gmail.com}
 #' @export
 nearest_stations <- function(LAT, LON, distance) {
   original_options <- options()

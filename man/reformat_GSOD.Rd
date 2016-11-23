@@ -24,7 +24,7 @@ For automated downloading and processing see the \code{\link{get_GSOD}}
 function which provides expanded functionality for automatically downloading
 and expanding annual GSOD files and cleaning station files.
 
-This function reformats the data into a more usable form and caculates three
+This function reformats the data into a more usable form and calculates three
 new variables; Saturation Vapor Pressure (ES) – Actual Vapor Pressure (EA) and
 relative humidity (RH). All units are converted to International System of
 Units (SI), e.g., Fahrenheit to Celsius and inches to millimetres. Alternative
@@ -193,15 +193,18 @@ filename = "GSOD_agroclimatology_2010-2011", agroclimatology = TRUE)
 
 }
 
+
+
 }
 \author{
-Adam Sparks \email{adamhsparks@gmail.com}
-
-Adam Sparks \email{adamhsparks@gmail.com}
+Adam H Sparks, \email{adamhsparks@gmail.com}
 }
 \references{
 {Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled
 SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
 \url{http://srtm.csi.cgiar.org}}
+}
+\seealso{
+\code{\link{get_GSOD}}
 }
 
