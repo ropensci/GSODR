@@ -269,7 +269,7 @@ get_GSOD <- function(years = NULL,
   if (!is.null(max_missing)) {
     message("Checking stations against max_missing value")
     GSOD_list <-
-      .validate_missing_days(max_missing, GSOD_list, cache_dir)
+      .validate_missing_days(max_missing, GSOD_list)
   }
 
   # Clean and reformat list of station files from local disk in tempdir --------

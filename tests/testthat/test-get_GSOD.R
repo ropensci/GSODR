@@ -89,7 +89,7 @@ test_that("missing days check allows stations with permissible days missing,
             )
             GSOD_list <-
               list.files(path = td,
-                         pattern = "^.*\\.op.gz$",
+                         pattern = ".2015.csv.gz$",
                          full.names = TRUE)
             GSOD_list_filtered <- .validate_missing_days(max_missing, GSOD_list)
 
@@ -104,9 +104,9 @@ test_that("missing days check allows stations with permissible days missing,
             skip_on_cran()
             max_missing <- 5
             td <- tempdir()
-            just_right_2015 <- data.frame(c(rep(12, 361)), c(rep("X", 361)))
-            too_short_2015 <- data.frame(c(rep(12, 300)), c(rep("X", 300)))
-            df_list <- list(just_right_2015, too_short_2015)
+            just_right_2016 <- data.frame(c(rep(12, 361)), c(rep("X", 361)))
+            too_short_2016 <- data.frame(c(rep(12, 300)), c(rep("X", 300)))
+            df_list <- list(just_right_2016, too_short_2016)
 
             filenames <- c("just_right_2016", "too_short_2016")
             sapply(1:length(df_list),
@@ -116,12 +116,13 @@ test_that("missing days check allows stations with permissible days missing,
                                                   ".csv.gz"))
                    )
             )
-            GSOD_list <- as.list(list.files(td, pattern = "2016.csv.gz$"))
-            GSOD_list_filtered <- .validate_missing_days(max_missing,GSOD_list,
-                                                         td)
+            GSOD_list <-
+              list.files(path = td,
+                         pattern = ".2016.csv.gz$",
+                         full.names = TRUE)
+            GSOD_list_filtered <- .validate_missing_days(max_missing, GSOD_list)
 
             expect_length(GSOD_list, 2)
-
             expect_match(basename(GSOD_list_filtered), "just_right_2016.csv.gz")
             unlink(td)
           })
