@@ -129,6 +129,7 @@ test_that("missing days check allows stations with permissible days missing,
 
 # Check validate country returns a two letter code -----------------------------
 test_that("Check validate country returns a two letter code", {
+  skip_on_cran()
   country <- "Philippines"
   Philippines <- .validate_country(country)
   expect_match(Philippines, "RP")
@@ -144,6 +145,7 @@ test_that("Check validate country returns a two letter code", {
 
 # Check validate country returns an error on invalid entry----------------------
 test_that("Check validate country returns an error on invalid entry", {
+  skip_on_cran()
   country <- "Philipines"
   expect_error(.validate_country(country),
                "\nPlease provide a valid name or 2 or 3 letter ISO country code;\n              you can view the entire list of valid countries in this data by\n              typing, 'country_list'.\n")
@@ -158,6 +160,8 @@ test_that("Check validate country returns an error on invalid entry", {
 # Check that .process_gz works properly and returns a data table.
 test_that(".download_files properly works, subsetting for country and
           agroclimatology works and .process_gz returns a data table", {
+            skip_on_cran()
+            skip_on_appveyor() # appveyor will not properly untar the file
             years <- 2015
             agroclimatology <- TRUE
             country <- "RP"

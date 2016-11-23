@@ -16,8 +16,8 @@ reformatting.}
 \description{
 This function automates cleaning and reformatting of GSOD,
 \url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod},
-station files in "WMO-WBAN-YYYY.op.gz" format that have been downloaded from the
-United States National Climatic Data Center's (NCDC) FTP server.
+station files in "WMO-WBAN-YYYY.op.gz" format that have been downloaded from
+the United States National Climatic Data Center's (NCDC) FTP server.
 }
 \details{
 For automated downloading and processing see the \code{\link{get_GSOD}}
