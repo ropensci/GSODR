@@ -197,7 +197,7 @@
 #' home directory with a maximum of five missing days per station allowed.
 #'
 #' get_GSOD(years = 2010, country = "Philippines", dsn = "~/",
-#' filename = "Philippines_GSOD", GPKG = TRUE, CSV = FALSE)
+#' filename = "Philippines_GSOD", GPKG = TRUE, CSV = FALSE, max_missing = 5)
 #'
 #' # Download global GSOD data for agroclimatology work for years 2009 and 2010
 #' # and generate yearly summary files, GSOD-agroclimatology-2010.csv and
@@ -247,17 +247,11 @@ get_GSOD <- function(years = NULL,
     years = years
   )
 
-  .validate_country(country)
+  country <- .validate_country(country)
 
   # Download files from server -------------------------------------------------
 
   GSOD_list <- .download_files(ftp_base, station, years, cache_dir)
-
-  # Validate stations for missing days -----------------------------------------
-  if (!is.null(max_missing)) {
-    GSOD_list <-
-      .validate_missing_days(max_missing, GSOD_list, cache_dir)
-  }
 
   # Subset GSOD_list for agroclimatology only stations -------------------------
   if (isTRUE(agroclimatology)) {
@@ -269,6 +263,13 @@ get_GSOD <- function(years = NULL,
   if (!is.null(country)) {
     GSOD_list <-
       .country_list(country, GSOD_list, stations, cache_dir, years)
+  }
+
+  # Validate stations for missing days -----------------------------------------
+  if (!is.null(max_missing)) {
+    message("Checking stations against max_missing value")
+    GSOD_list <-
+      .validate_missing_days(max_missing, GSOD_list, cache_dir)
   }
 
   # Clean and reformat list of station files from local disk in tempdir --------
@@ -288,6 +289,7 @@ get_GSOD <- function(years = NULL,
     message("\nWriting CSV file to disk.\n")
     outfile <- paste0(outfile, ".csv")
     readr::write_csv(GSOD_XY, path = paste0(outfile))
+    rm(outfile)
   }
 
   if (isTRUE(GPKG)) {
@@ -295,7 +297,7 @@ get_GSOD <- function(years = NULL,
     outfile <- paste0(outfile, ".gpkg")
     # Convert object to standard df and then spatial object
     GSOD_XY <- as.data.frame(GSOD_XY)
-    sp::coordinates(GSOD_XY) <- ~ LON + LAT
+    sp::coordinates(GSOD_XY) <- ~LON+LAT
     sp::proj4string(GSOD_XY) <-
       sp::CRS("+proj=longlat +datum=WGS84")
 
@@ -304,11 +306,10 @@ get_GSOD <- function(years = NULL,
       file.remove(outfile)
     }
     # Create new .gpkg file
-    rgdal::writeOGR(
-      GSOD_XY,
-      dsn = path.expand(outfile),
-      layer = "GSOD",
-      driver = "GPKG"
+    rgdal::writeOGR(GSOD_XY,
+                    dsn = path.expand(outfile),
+                    layer = "GSOD",
+                    driver = "GPKG"
     )
   }
 
@@ -372,13 +373,12 @@ get_GSOD <- function(years = NULL,
       substr(dsn, nchar(dsn), nchar(dsn)) != "\\") {
     dsn <- paste0(dsn, "/")
   }
-
   if (is.null(filename)) {
     filename_out <- "GSOD"
   } else {
     filename_out <- filename
   }
-  outfile <- paste0(dsn, "/", filename_out)
+  outfile <- paste0(dsn, filename_out)
   return(outfile)
 }
 
@@ -457,10 +457,13 @@ get_GSOD <- function(years = NULL,
 .validate_missing_days <-
   function(max_missing, GSOD_list, cache_dir) {
     records <-
-      lapply(X = paste0(cache_dir, "/", GSOD_list),
+      lapply(X = paste0(GSOD_list),
              FUN = R.utils::countLines)
     names(records) <- GSOD_list
-    year <- as.numeric(gsub("[^0-9]", "", GSOD_list[1]))
+
+    year <- as.numeric(substr(basename(GSOD_list[1]),
+                       start = nchar(basename(GSOD_list[1])) - 10 + 1,
+                       stop  = nchar(basename(GSOD_list[1])) - 7 + 1))
 
     ifelse(
       format(as.POSIXct(paste0(year, "-03-01")) - 1, "%d") != "29",
@@ -469,7 +472,7 @@ get_GSOD <- function(years = NULL,
     )
 
     GSOD_list <- stats::na.omit(ifelse(records >= allow,
-                                       paste0(cache_dir, "/", GSOD_list),
+                                       GSOD_list,
                                        NA))
   }
 
@@ -479,7 +482,7 @@ get_GSOD <- function(years = NULL,
 .download_files <-
   function(ftp_base, station, years, cache_dir) {
     if (is.null(station)) {
-      file_list <- paste0(ftp_base, years, "/", "gsod_", years, ".tar")
+      file_list <- paste0(sprintf(ftp_base, years), "gsod_", years, ".tar")
       tryCatch(
         Map(
           function(ftp, dest)
@@ -519,18 +522,18 @@ get_GSOD <- function(years = NULL,
       s_curl_fetch_memory <- purrr::safely(curl::curl_fetch_memory)
       retry_cfm <-
         function(url, handle) {
-        i <- 0
-        repeat {
-          i <- i + 1
-          res <- s_curl_fetch_memory(url, handle = handle)
-          if (!is.null(res$result))
-            return(res$result)
-          if (i == MAX_RETRIES) {
-            stop("Too many retries...server may be under load")
+          i <- 0
+          repeat {
+            i <- i + 1
+            res <- s_curl_fetch_memory(url, handle = handle)
+            if (!is.null(res$result))
+              return(res$result)
+            if (i == MAX_RETRIES) {
+              stop("Too many retries...server may be under load")
+            }
           }
-        }
 
-      }
+        }
 
       # Wrapping the disk writer (for the actual files)
       # Note the use of the cache dir. It won't waste your bandwidth or the
@@ -538,21 +541,21 @@ get_GSOD <- function(years = NULL,
       s_curl_fetch_disk <- purrr::safely(curl::curl_fetch_disk)
       retry_cfd <-
         function(url, path) {
-        cache_file <- sprintf("%s/%s", cache_dir, basename(url))
-        if (file.exists(cache_file))
-          return()
-
-        i <- 0
-        repeat {
-          i <- i + 1
-          if (i == 6) {
-            stop("Too many retries...server may be under load")
-          }
-          res <- s_curl_fetch_disk(url, cache_file)
-          if (!is.null(res$result))
+          cache_file <- sprintf("%s/%s", cache_dir, basename(url))
+          if (file.exists(cache_file))
             return()
+
+          i <- 0
+          repeat {
+            i <- i + 1
+            if (i == 6) {
+              stop("Too many retries...server may be under load")
+            }
+            res <- s_curl_fetch_disk(url, cache_file)
+            if (!is.null(res$result))
+              return()
+          }
         }
-      }
 
       pb <- dplyr::progress_estimated(length(years))
       purrr::walk(years, function(yr) {

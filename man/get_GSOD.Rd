@@ -215,7 +215,7 @@ t <- get_GSOD(years = 2010, station = "955510-99999")
 home directory with a maximum of five missing days per station allowed.
 
 get_GSOD(years = 2010, country = "Philippines", dsn = "~/",
-filename = "Philippines_GSOD", GPKG = TRUE, CSV = FALSE)
+filename = "Philippines_GSOD", GPKG = TRUE, CSV = FALSE, max_missing = 5)
 
 # Download global GSOD data for agroclimatology work for years 2009 and 2010
 # and generate yearly summary files, GSOD-agroclimatology-2010.csv and
