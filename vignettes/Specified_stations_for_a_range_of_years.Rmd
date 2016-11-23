@@ -3,7 +3,7 @@
 %\VignetteIndexEntry{GSODR - Finding and fetching stations for Central Luzon}
 %\VignetteEncoding{UTF-8}
 -->
-# Fetch Data for IRRI Central Luzon Survey Loop
+# Gather Data for IRRI Central Luzon Survey Loop
 
 The IRRI (International Rice Research Institute) survey loop in Central Luzon
 is a study that aims to monitor the changes in rice farming in the major rice
