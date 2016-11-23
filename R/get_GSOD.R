@@ -293,13 +293,13 @@ get_GSOD <- function(years = NULL,
   }
 
   if (isTRUE(GPKG)) {
+    LAT <- LON <- NULL
     message("\nWriting GeoPackage File to Disk.\n")
     outfile <- paste0(outfile, ".gpkg")
     # Convert object to standard df and then spatial object
     GSOD_XY <- as.data.frame(GSOD_XY)
     sp::coordinates(GSOD_XY) <- ~LON+LAT
-    sp::proj4string(GSOD_XY) <-
-      sp::CRS("+proj=longlat +datum=WGS84")
+    sp::proj4string(GSOD_XY) <- sp::CRS("+proj=longlat +datum=WGS84")
 
     # If the filename specified exists, remove it and create new
     if (file.exists(path.expand(outfile))) {
