@@ -74,6 +74,8 @@
   * The option to remove stations with too many missing days is now optional,
   it now defaults to including all stations, the user must specify how many
   misisng stations to check for an exclude.  
+  * The `max_missing` parameter is now user set, defaults to no check, return
+  all stations regardless of missing days  
 
 ******
 
