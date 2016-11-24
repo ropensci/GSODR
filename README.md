@@ -16,24 +16,43 @@ version](http://www.r-pkg.org/badges/version/GSODR)](https://cran.r-project.org/
 Introduction to GSODR
 =====================
 
-The GSODR package is an R package that provides a function that
-automates downloading and cleaning of data from the "[Global Surface
-Summary of the Day
-(GSOD)](https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod)"
-weather station data provided by the US National Climatic Data Center
-(NCDC). Data are formatted for easy use in R, returned as a `data.frame`
-object in R summarising each year by station, with options to save as a
-Comma Separated Value (CSV) file or as a spatial GeoPackage (GPKG) file,
-implemented by most major GIS softwares.
+The GSOD or [Global Surface Summary of the Day
+(GSOD)](https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod)
+data provided by the US National Climatic Data Center (NCDC) are a
+valuable source of weather data with global coverage. However, the data
+files are cumbersome and difficult to work with. The GSODR package aims
+to make it easy to find, tranfer and format the data you need for use in
+analysis. The GSODR package provides three main functions for
+facilitating this:
 
-Station files are individually checked for number of missing days to
-assure data quality, stations with too many missing observations are
-omitted. All units are converted to International System of Units (SI),
-e.g., inches to millimetres and Fahrenheit to Celsius.
+-   `get_GSOD` - the main function that will query and transfer files
+    from the FTP server, reformat them and return a data.frame in R or
+    save a file to disk  
+-   `reformat_GSOD` - the workhorse, this function takes individual
+    station files on the local disk and reformats them returning a
+    data.frame in R  
+-   `nearest_stations` - this function returns a dataframe containing a
+    list of stations and their metadata that fall within the given
+    radius of a point  
+    specified by the user
+
+When reformatting data either with `get_GSOD` or `reformat_GSOD`, all
+units are converted to International System of Units (SI), e.g., inches
+to millimetres and Fahrenheit to Celsius. File output can be saved as a
+Comma Separated Value (CSV) file or in a spatial GeoPackage (GPKG) file,
+implemented by most major GIS software, summarising each year by
+station, which also includes vapour pressure and relative humidity
+variables calculated from existing data in GSOD.
 
 Additional data are calculated by this R package using the original data
 and included in the final data. These include vapour pressure (ea and
 es) and relative humidity.
+
+For more information see the description of the data provided by NCDC,
+<http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
+
+Other Sources of Weather Data
+-----------------------------
 
 There are several other sources of weather data and ways of retrieving
 them through R. In particular, the excellent
@@ -95,53 +114,57 @@ library(GSODR)
 
 Tbar <- get_GSOD(years = 2010, station = "955510-99999")
 #> 
-#> Downloading the station file(s) now.
+#> Checking requested station file for availability on server.
+#> Starting data file processing
 #> 
-#> Finished downloading file. Parsing the station file(s) now.
+  |                                                                       
+  |                                                                 |   0%
+  |                                                                       
+  |=================================================================| 100%
 
 head(Tbar)
-#>     USAF  WBAN        STNID          STN_NAME CTRY STATE CALL    LAT
-#> 1 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55
-#> 2 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55
-#> 3 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55
-#> 4 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55
-#> 5 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55
-#> 6 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55
-#>       LON ELEV_M ELEV_M_SRTM_90m    BEGIN      END YEARMODA YEAR MONTH DAY
-#> 1 151.917    642             635 19980301 20161021 20100101 2010    01  01
-#> 2 151.917    642             635 19980301 20161021 20100102 2010    01  02
-#> 3 151.917    642             635 19980301 20161021 20100103 2010    01  03
-#> 4 151.917    642             635 19980301 20161021 20100104 2010    01  04
-#> 5 151.917    642             635 19980301 20161021 20100105 2010    01  05
-#> 6 151.917    642             635 19980301 20161021 20100106 2010    01  06
-#>   YDAY TEMP TEMP_CNT DEWP DEWP_CNT    SLP SLP_CNT   STP STP_CNT VISIB
-#> 1    1 21.2        8 17.9        8 1013.4       8 942.0       8    NA
-#> 2    2 23.2        8 19.4        8 1010.5       8 939.3       8    NA
-#> 3    3 21.4        8 18.9        8 1012.3       8 940.9       8  14.3
-#> 4    4 18.9        8 16.4        8 1015.7       8 944.1       8  23.3
-#> 5    5 20.5        8 16.4        8 1015.5       8 944.0       8    NA
-#> 6    6 21.9        8 18.7        8 1013.7       8 942.3       8    NA
-#>   VISIB_CNT WDSP WDSP_CNT MXSPD GUST   MAX MAX_FLAG   MIN MIN_FLAG PRCP
-#> 1         0  2.2        8   6.7   NA 25.78          17.78           1.5
-#> 2         0  1.9        8   5.1   NA 26.50          19.11           0.3
-#> 3         6  3.9        8  10.3   NA 28.72          19.28        * 19.8
-#> 4         4  4.5        8  10.3   NA 24.11          16.89        *  1.0
-#> 5         0  3.9        8  10.8   NA 24.61          16.72           0.3
-#> 6         0  3.2        8   7.7   NA 26.78          17.50           0.0
-#>   PRCP_FLAG SNDP I_FOG I_RAIN_DRIZZLE I_SNOW_ICE I_HAIL I_THUNDER
-#> 1         G   NA     0              0          0      0         0
-#> 2         G   NA     0              0          0      0         0
-#> 3         G   NA     1              1          0      0         0
-#> 4         G   NA     0              0          0      0         0
-#> 5         G   NA     0              0          0      0         0
-#> 6         G   NA     1              0          0      0         0
-#>   I_TORNADO_FUNNEL  EA  ES   RH
-#> 1                0 2.1 2.5 84.0
-#> 2                0 2.3 2.8 82.1
-#> 3                0 2.2 2.5 88.0
-#> 4                0 1.9 2.2 86.4
-#> 5                0 1.9 2.4 79.2
-#> 6                0 2.2 2.6 84.6
+#>    WBAN        STNID          STN_NAME CTRY STATE CALL    LAT     LON
+#> 1 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
+#> 2 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
+#> 3 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
+#> 4 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
+#> 5 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
+#> 6 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
+#>   ELEV_M ELEV_M_SRTM_90m    BEGIN      END YEARMODA YEAR MONTH DAY YDAY
+#> 1    642             635 19980301 20161121 20100101 2010    01  01    1
+#> 2    642             635 19980301 20161121 20100102 2010    01  02    2
+#> 3    642             635 19980301 20161121 20100103 2010    01  03    3
+#> 4    642             635 19980301 20161121 20100104 2010    01  04    4
+#> 5    642             635 19980301 20161121 20100105 2010    01  05    5
+#> 6    642             635 19980301 20161121 20100106 2010    01  06    6
+#>   TEMP TEMP_CNT DEWP DEWP_CNT    SLP SLP_CNT   STP STP_CNT VISIB VISIB_CNT
+#> 1 21.2        8 17.9        8 1013.4       8 942.0       8    NA         0
+#> 2 23.2        8 19.4        8 1010.5       8 939.3       8    NA         0
+#> 3 21.4        8 18.9        8 1012.3       8 940.9       8  14.3         6
+#> 4 18.9        8 16.4        8 1015.7       8 944.1       8  23.3         4
+#> 5 20.5        8 16.4        8 1015.5       8 944.0       8    NA         0
+#> 6 21.9        8 18.7        8 1013.7       8 942.3       8    NA         0
+#>   WDSP WDSP_CNT MXSPD GUST   MAX MAX_FLAG   MIN MIN_FLAG PRCP PRCP_FLAG
+#> 1  2.2        8   6.7   NA 25.78          17.78           1.5         G
+#> 2  1.9        8   5.1   NA 26.50          19.11           0.3         G
+#> 3  3.9        8  10.3   NA 28.72          19.28        * 19.8         G
+#> 4  4.5        8  10.3   NA 24.11          16.89        *  1.0         G
+#> 5  3.9        8  10.8   NA 24.61          16.72           0.3         G
+#> 6  3.2        8   7.7   NA 26.78          17.50           0.0         G
+#>   SNDP I_FOG I_RAIN_DRIZZLE I_SNOW_ICE I_HAIL I_THUNDER I_TORNADO_FUNNEL
+#> 1   NA     0              0          0      0         0                0
+#> 2   NA     0              0          0      0         0                0
+#> 3   NA     1              1          0      0         0                0
+#> 4   NA     0              0          0      0         0                0
+#> 5   NA     0              0          0      0         0                0
+#> 6   NA     1              0          0      0         0                0
+#>    EA  ES   RH
+#> 1 2.1 2.5 84.0
+#> 2 2.3 2.8 82.1
+#> 3 2.2 2.5 88.0
+#> 4 1.9 2.2 86.4
+#> 5 1.9 2.4 79.2
+#> 6 2.2 2.6 84.6
 ```
 
 #### Example 2 - Download GSOD data and generate agroclimatology files
@@ -149,30 +172,28 @@ head(Tbar)
 For years 2010 and 2011, download data and create the files,
 GSOD-agroclimatology-2010.csv and GSOD-agroclimatology-2011.csv, in the
 user's home directory with a maximum of five missing days per weather
-station allowed. Use parallel processing to run the process more
-quickly.
+station allowed.
 
 ``` r
 
 get_GSOD(years = 2010:2011, dsn = "~/", filename = "GSOD-agroclimatology",
-         agroclimatology = TRUE, max_missing = 5, threads = 3)
+         agroclimatology = TRUE, max_missing = 5)
 ```
 
-#### Example 3 - Download data for a single country and plot it
+#### Example 3 - Download and plot data for a single country
 
 Download data for Philippines for year 2010 and generate a spatial, year
-summary file, PHL-2010.gpkg, in the user's home directory with a maximum
-of five missing days per station allowed and no CSV file.
+summary file, PHL-2010.gpkg, in the user's home directory.
 
 ``` r
-get_GSOD(years = 2010, country = "Philippines", dsn = "~/", filename = "PHL",
-         GPKG = TRUE, CSV = FALSE, threads = 2)
+get_GSOD(years = 2010, country = "Philippines", dsn = "~/",
+         filename = "PHL-2010", GPKG = TRUE, max_missing = 5)
 ```
 
 ``` r
 library(rgdal)
 #> Loading required package: sp
-#> rgdal: version: 1.1-10, (SVN revision 622)
+#> rgdal: version: 1.2-4, (SVN revision 643)
 #>  Geospatial Data Abstraction Library extensions to R successfully loaded
 #>  Loaded GDAL runtime: GDAL 1.11.5, released 2016/07/01
 #>  Path to GDAL shared files: /usr/local/Cellar/gdal/1.11.5_1/share/gdal
@@ -188,7 +209,7 @@ layers <- ogrListLayers(dsn = path.expand("~/PHL-2010.gpkg"))
 pnts <- readOGR(dsn = path.expand("~/PHL-2010.gpkg"), layers[1])
 #> OGR data source with driver: GPKG 
 #> Source: "/Users/asparks/PHL-2010.gpkg", layer: "GSOD"
-#> with 2190 features
+#> with 4703 features
 #> It has 46 fields
 
 # Plot results in Google Earth as a spacetime object:
@@ -249,7 +270,7 @@ df_melt <- na.omit(melt(temp[, c("STNID", "DATE", "CHELSA_TEMP", "TEMP", "AVG_DA
                         id = c("DATE", "STNID")))
 
 ggplot(df_melt, aes(x = DATE, y = value)) +
-  geom_point(aes(color = variable), alpha = 0.5) +
+  geom_point(aes(color = variable), alpha = 0.2) +
   scale_x_date(date_labels = "%b") +
   ylab("Temperature (C)") +
   xlab("Month") +
@@ -261,7 +282,7 @@ ggplot(df_melt, aes(x = DATE, y = value)) +
 ![Comparison of GSOD daily values and average monthly values with CHELSA
 climate monthly values](README-example_3.2-1.png)
 
-### Example 4 - Finding stations within a given radius and download them
+#### Example 4 - Finding stations within a given radius and download them
 
 GSODR provides a function, `nearest_stations`, which will return a list
 of stations in the GSOD data set that are within a specified radius
@@ -274,74 +295,10 @@ decimal degrees.
 n <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 50)
 
 n
-#> [1] "945510-99999" "945520-99999" "945620-99999" "949999-00170"
-#> [5] "949999-00183" "955510-99999"
 
-toowoomba <- get_GSOD(years = 2015, station = n, threads = 3)
-#> This station, 945510-99999, only provides data for years 1956 to 2012.
-#> This station, 949999-00170, only provides data for years 1971 to 1984.
-#> This station, 949999-00183, only provides data for years 1983 to 1984.
-#> 
-#> Downloading the station file(s) now.
-#> 
-#> Finished downloading file. Parsing the station file(s) now.
-#> A file corresponding to station,ftp://ftp.ncdc.noaa.gov/pub/data/gsod/2015/945510-99999-2015.op.gzwas not found on
-#>                       the server. Any others requested will be processed.
-#> A file corresponding to station,ftp://ftp.ncdc.noaa.gov/pub/data/gsod/2015/949999-00170-2015.op.gzwas not found on
-#>                       the server. Any others requested will be processed.
-#> A file corresponding to station,ftp://ftp.ncdc.noaa.gov/pub/data/gsod/2015/949999-00183-2015.op.gzwas not found on
-#>                       the server. Any others requested will be processed.
+toowoomba <- get_GSOD(years = 2015, station = n)
 
 str(toowoomba)
-#> 'data.frame':    1094 obs. of  48 variables:
-#>  $ USAF            : chr  "945520" "945520" "945520" "945520" ...
-#>  $ WBAN            : chr  "99999" "99999" "99999" "99999" ...
-#>  $ STNID           : chr  "945520-99999" "945520-99999" "945520-99999" "945520-99999" ...
-#>  $ STN_NAME        : chr  "OAKEY" "OAKEY" "OAKEY" "OAKEY" ...
-#>  $ CTRY            : chr  "AS" "AS" "AS" "AS" ...
-#>  $ STATE           : chr  NA NA NA NA ...
-#>  $ CALL            : chr  "YBOK" "YBOK" "YBOK" "YBOK" ...
-#>  $ LAT             : num  -27.4 -27.4 -27.4 -27.4 -27.4 ...
-#>  $ LON             : num  152 152 152 152 152 ...
-#>  $ ELEV_M          : num  407 407 407 407 407 ...
-#>  $ ELEV_M_SRTM_90m : num  404 404 404 404 404 404 404 404 404 404 ...
-#>  $ BEGIN           : num  19730430 19730430 19730430 19730430 19730430 ...
-#>  $ END             : num  20161021 20161021 20161021 20161021 20161021 ...
-#>  $ YEARMODA        : chr  "20150101" "20150102" "20150103" "20150104" ...
-#>  $ YEAR            : chr  "2015" "2015" "2015" "2015" ...
-#>  $ MONTH           : chr  "01" "01" "01" "01" ...
-#>  $ DAY             : chr  "01" "02" "03" "04" ...
-#>  $ YDAY            : num  1 2 3 4 5 6 7 8 9 10 ...
-#>  $ TEMP            : num  24.9 24.3 22.3 23 22.5 22.6 21.8 22.6 24.6 24.9 ...
-#>  $ TEMP_CNT        : int  24 24 24 24 24 24 24 24 24 24 ...
-#>  $ DEWP            : num  18.4 18.2 17.4 16.3 17.7 14.3 15.7 16.4 16.4 16.4 ...
-#>  $ DEWP_CNT        : int  24 24 24 24 24 24 24 24 24 24 ...
-#>  $ SLP             : num  1014 1017 1017 1014 1015 ...
-#>  $ SLP_CNT         : int  16 16 16 16 16 16 16 16 16 16 ...
-#>  $ STP             : num  968 971 971 969 969 ...
-#>  $ STP_CNT         : int  16 16 16 16 16 16 16 16 16 16 ...
-#>  $ VISIB           : num  10 10 10 10 10 10 NA NA 10 NA ...
-#>  $ VISIB_CNT       : int  8 8 4 5 7 4 0 0 4 0 ...
-#>  $ WDSP            : num  2.3 2.8 2.8 2.3 3 3.5 3.1 2.5 2.9 2.7 ...
-#>  $ WDSP_CNT        : int  24 24 24 24 24 24 24 24 24 24 ...
-#>  $ MXSPD           : num  8.2 9.8 10.3 7.2 9.8 9.8 9.8 8.8 8.2 8.2 ...
-#>  $ GUST            : num  NA NA NA NA NA NA NA NA NA 12.4 ...
-#>  $ MAX             : num  31.8 31 27.3 29.3 27.6 ...
-#>  $ MAX_FLAG        : chr  "" "" "" "" ...
-#>  $ MIN             : num  18.9 18.2 17.7 16.8 16.4 ...
-#>  $ MIN_FLAG        : chr  "*" "" "*" "*" ...
-#>  $ PRCP            : num  0 0 0 0 0 0 0 0 0 0 ...
-#>  $ PRCP_FLAG       : chr  "G" "G" "G" "G" ...
-#>  $ SNDP            : num  NA NA NA NA NA NA NA NA NA NA ...
-#>  $ I_FOG           : int  0 0 0 0 0 0 0 0 0 0 ...
-#>  $ I_RAIN_DRIZZLE  : int  0 0 0 0 0 0 0 0 0 0 ...
-#>  $ I_SNOW_ICE      : int  0 0 0 0 0 0 0 0 0 0 ...
-#>  $ I_HAIL          : int  0 0 0 0 0 0 0 0 0 0 ...
-#>  $ I_THUNDER       : int  0 0 0 0 0 0 0 0 0 0 ...
-#>  $ I_TORNADO_FUNNEL: int  0 0 0 0 0 0 0 0 0 0 ...
-#>  $ EA              : num  2.1 2.1 2 1.9 2 1.6 1.8 1.9 1.9 1.9 ...
-#>  $ ES              : num  3.1 3 2.7 2.8 2.7 2.7 2.6 2.7 3.1 3.1 ...
-#>  $ RH              : num  67.7 70 74.1 67.9 74.1 59.3 69.2 70.4 61.3 61.3 ...
 ```
 
 Final data format and contents

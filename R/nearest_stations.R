@@ -1,6 +1,8 @@
-#' Select Nearest Stations to Specified Latitude and Longitude
+
+
+#' Find Nearest GSOD Stations to Specified Latitude and Longitude
 #'
-#'Given a latitude and longitiude value entered as decimal degrees (DD),
+#'Given a latitude and longitude value entered as decimal degrees (DD),
 #'this function returns a list of STNID values, which can be used in the
 #'\code{get_GSOD} function to query for specific stations as an argument in the
 #'\code{station} parameter of that function.
@@ -24,21 +26,18 @@
 #'
 #' n <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 100)
 #'}
+#' @author Adam H Sparks, \email{adamhsparks@gmail.com}
 #' @export
 nearest_stations <- function(LAT, LON, distance) {
   original_options <- options()
   options(warn = 2)
   options(timeout = 300)
-
   if (!exists("stations")) {
     stations <- as.data.frame(.fetch_station_list())
   }
-
   dists <- fields::rdist.earth(as.matrix(stations[c("LAT", "LON")]),
                                matrix(c(LAT, LON), ncol = 2), miles = FALSE)
   nearby <- which(dists[, 1] < distance)
-
   return(stations[as.numeric(nearby), ]$STNID)
-
   options(original_options)
 }

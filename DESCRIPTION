@@ -1,7 +1,7 @@
 Package: GSODR
 Type: Package
 Title: Global Summary Daily Weather Data in R
-Version: 0.3
+Version: 1.0
 Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     email = "adamhsparks@gmail.com"),
     person("Tomislav", "Hengl", role = "aut",
@@ -35,25 +35,27 @@ Depends:
     R (>= 3.2.0)
 License: GPL (>= 3)
 Imports:
+    curl,
     data.table,
+    dplyr,
     fields,
+    magrittr,
     plyr,
+    purrr,
     R.utils,
     RCurl,
     readr,
     rgdal,
     sp,
     stats,
-    stringi,
     utils
 Suggests:
-    chillR,
-    dplyr,
     ggalt,
     ggplot2,
     knitr,
     lubridate,
     plotKML,
+    raster,
     rgeos,
     rmarkdown,
     spacetime,

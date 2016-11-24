@@ -27,8 +27,8 @@ test_that(".validate_years handles valid years", {
 test_that("invalid stations are handled", {
   skip_on_cran()
   stations <- .fetch_station_list()
-  expect_error(.validate_stations(years = 2015, station = "aaa-bbbbbb", stations),
-               "\nThis is not a valid station ID number, please check your entry.\n           \nStation IDs are provided as a part of the GSODR package in the\n           'stations' data in the STNID column.\n")
+  expect_error(.validate_station(years = 2015, station = "aaa-bbbbbb", stations),
+               "\naaa-bbbbbb is not a valid station ID number, please check\n      your entry. Station IDs are provided as a part of the GSODR package in the\n      'stations' data\nin the STNID column.\n")
 })
 
 # Check that invalid dsn is handled --------------------------------------------
@@ -87,9 +87,11 @@ test_that("missing days check allows stations with permissible days missing,
                                                   ".csv.gz"))
                    )
             )
-            GSOD_list <- as.list(list.files(td, pattern = "2015.csv.gz$"))
-            GSOD_list_filtered <- .validate_missing_days(max_missing, GSOD_list,
-                                                         td)
+            GSOD_list <-
+              list.files(path = td,
+                         pattern = ".2015.csv.gz$",
+                         full.names = TRUE)
+            GSOD_list_filtered <- .validate_missing_days(max_missing, GSOD_list)
 
             expect_length(GSOD_list, 2)
             expect_match(basename(GSOD_list_filtered), "just_right_2015.csv.gz")
@@ -102,9 +104,9 @@ test_that("missing days check allows stations with permissible days missing,
             skip_on_cran()
             max_missing <- 5
             td <- tempdir()
-            just_right_2015 <- data.frame(c(rep(12, 361)), c(rep("X", 361)))
-            too_short_2015 <- data.frame(c(rep(12, 300)), c(rep("X", 300)))
-            df_list <- list(just_right_2015, too_short_2015)
+            just_right_2016 <- data.frame(c(rep(12, 361)), c(rep("X", 361)))
+            too_short_2016 <- data.frame(c(rep(12, 300)), c(rep("X", 300)))
+            df_list <- list(just_right_2016, too_short_2016)
 
             filenames <- c("just_right_2016", "too_short_2016")
             sapply(1:length(df_list),
@@ -114,18 +116,20 @@ test_that("missing days check allows stations with permissible days missing,
                                                   ".csv.gz"))
                    )
             )
-            GSOD_list <- as.list(list.files(td, pattern = "2016.csv.gz$"))
-            GSOD_list_filtered <- .validate_missing_days(max_missing,GSOD_list,
-                                                         td)
+            GSOD_list <-
+              list.files(path = td,
+                         pattern = ".2016.csv.gz$",
+                         full.names = TRUE)
+            GSOD_list_filtered <- .validate_missing_days(max_missing, GSOD_list)
 
             expect_length(GSOD_list, 2)
-
             expect_match(basename(GSOD_list_filtered), "just_right_2016.csv.gz")
             unlink(td)
           })
 
 # Check validate country returns a two letter code -----------------------------
 test_that("Check validate country returns a two letter code", {
+  skip_on_cran()
   country <- "Philippines"
   Philippines <- .validate_country(country)
   expect_match(Philippines, "RP")
@@ -141,17 +145,14 @@ test_that("Check validate country returns a two letter code", {
 
 # Check validate country returns an error on invalid entry----------------------
 test_that("Check validate country returns an error on invalid entry", {
+  skip_on_cran()
   country <- "Philipines"
   expect_error(.validate_country(country),
-               "Please provide a valid name or 2 or 3 letter ISO country code;
-               you can view the entire list of valid countries in this data by
-               typing, 'country_list'.")
+               "\nPlease provide a valid name or 2 or 3 letter ISO country code;\n              you can view the entire list of valid countries in this data by\n              typing, 'country_list'.\n")
 
   country <- "RP"
   expect_error(.validate_country(country),
-               "Please provide a valid name or 2 or 3 letter ISO country code;
-               you can view the entire list of valid countries in this data by
-               typing, 'country_list'.")
+               "\nPlease provide a valid name or 2 or 3 letter ISO country code;\n              you can view the entire list of valid countries in this data by\n              typing, 'country_list'.\n")
 
 })
 
@@ -159,24 +160,27 @@ test_that("Check validate country returns an error on invalid entry", {
 # Check that .process_gz works properly and returns a data table.
 test_that(".download_files properly works, subsetting for country and
           agroclimatology works and .process_gz returns a data table", {
+            skip_on_cran()
+            skip_on_appveyor() # appveyor will not properly untar the file
             years <- 2015
-            agroclimatology = TRUE
+            agroclimatology <- TRUE
             country <- "RP"
             station <- NULL
-            options(timeout = 300)
-            td <- tempdir()
-            ftp <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
+            cache_dir <- tempdir()
+            ftp_base <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/%s/"
 
             stations <- .fetch_station_list()
 
-            GSOD_list <- .download_files(ftp, station, years, td)
+            GSOD_list <- .download_files(ftp_base, station, years, cache_dir)
 
             expect_length(GSOD_list, 12976)
 
-            agro_list <- .agroclimatology_list(GSOD_list, stations, td, years)
+            agro_list <- .agroclimatology_list(GSOD_list, stations, cache_dir
+                                               , years)
             expect_length(agro_list, 11302)
 
-            RP_list <- .country_list(country, GSOD_list, stations, td, years)
+            RP_list <- .country_list(country, GSOD_list, stations, cache_dir,
+                                     years)
             expect_length(RP_list, 53)
 
 # Check that .process_gz returns a properly formated data table-----------------

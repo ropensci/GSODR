@@ -1,3 +1,5 @@
+
+
 #' Download, Clean, Reformat and Generate New Variables From GSOD Weather Data
 #'
 #'This function automates downloading, cleaning, reformatting of data from
@@ -62,7 +64,7 @@
 #' the user, defaulting to the current working directory.
 #'
 #' When querying selected stations and electing to write files to disk, all
-#' years queried and stations queried will be merged into one final ouptut file.
+#' years queried and stations queried will be merged into one final output file.
 #'
 #' All missing values in resulting files are represented as NA regardless of
 #' which field they occur in.
@@ -70,8 +72,8 @@
 #'For more information see the description of the data provided by NCDC,
 #'\url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
 #'
-#' The data returned either in a data.frame object or a file written to local
-#' disk include the followig fields:
+#' The data returned either in a data.frame object and/or a file written to
+#' local disk that includes the following fields:
 #' \describe{
 #' \item{STNID}{Station number (WMO/DATSAV3 number) for the location}
 #' \item{WBAN}{Number where applicable--this is the historical "Weather Bureau
@@ -177,7 +179,6 @@
 #' \item{RH}{Mean daily relative humidity}
 #' }
 #'
-#' @author Adam Sparks \email{adamhsparks@gmail.com}
 #'
 #' @note Some of these data are redistributed with this R package. Originally
 #' from these data come from the US NCDC which states that users of these data
@@ -198,88 +199,94 @@
 #' home directory with a maximum of five missing days per station allowed.
 #'
 #' get_GSOD(years = 2010, country = "Philippines", dsn = "~/",
-#' filename = "Philippines_GSOD", GPKG = TRUE, CSV = FALSE)
+#' filename = "Philippines_GSOD", GPKG = TRUE, max_missing = 5)
 #'
 #' # Download global GSOD data for agroclimatology work for years 2009 and 2010
 #' # and generate yearly summary files, GSOD-agroclimatology-2010.csv and
-#' # GSOD-agroclimatology-2011.csv in the user's home directory with a maximum
-#' # of five missing days per weather station allowed.
+#' # GSOD-agroclimatology-2011.csv in the user's home directory.
 #'
 #' get_GSOD(years = 2010:2011, dsn = "~/",
-#' filename = "GSOD_agroclimatology_2010-2011", agroclimatology = TRUE)
+#' filename = "GSOD_agroclimatology_2010-2011", agroclimatology = TRUE,
+#' CSV = TRUE)
 #'
 #' }
-#'
+#' @author Adam H Sparks \email{adamhsparks@gmail.com}
 #' @references {Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled
 #' SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
 #' \url{http://srtm.csi.cgiar.org}}
 #'
+#' @seealso \code{\link{reformat_GSOD}}
+#'
+#' @importFrom dplyr %>%
 #' @export
-get_GSOD <- function(years = NULL, station = NULL, country = NULL,
-                     dsn = NULL, filename = NULL, max_missing = NULL,
-                     agroclimatology = FALSE, CSV = FALSE, GPKG = FALSE) {
-
-  # Set up options, create objects, fetch most recent station metadata ---------
-  original_options <- options()
-  options(warn = 2)
-  options(timeout = 300)
-  td <- tempdir()
-  ftp <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
-
+get_GSOD <- function(years = NULL,
+                     station = NULL,
+                     country = NULL,
+                     dsn = NULL,
+                     filename = NULL,
+                     max_missing = NULL,
+                     agroclimatology = FALSE,
+                     CSV = FALSE,
+                     GPKG = FALSE) {
+  # Create objects for use in retrieving files ---------------------------------
+  cache_dir <- tempdir()
+  ftp_base <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/%s/"
   # Validate user inputs -------------------------------------------------------
   .validate_years(years)
-  outfile <- .validate_fileout(CSV, dsn, filename, GPKG)
-
+  if (!is.null(dsn)) {
+    outfile <- .validate_fileout(CSV, dsn, filename, GPKG)
+  }
   # Fetch latest station metadata from NCDC server
   if (!exists("stations")) {
     stations <- .fetch_station_list()
   }
-  .validate_stations(station, stations, years)
-  .validate_country(country)
+  # Validate user entered stations for existence in stations list from NCDC
+  plyr::l_ply(
+    .data = station,
+    .fun = .validate_station,
+    stations = stations,
+    years = years
+  )
+  country <- .validate_country(country)
 
-  # Download files from server -------------------------------------------------
-  GSOD_list <- .download_files(ftp, station, years, td)
+    # Download files from server -----------------------------------------------
+  GSOD_list <- .download_files(ftp_base, station, years, cache_dir)
 
-  # Validate stations for missing days -----------------------------------------
-  if (!is.null(max_missing)) {
-    GSOD_list <- .validate_missing_days(max_missing, GSOD_list, td)
-  }
-
-  # Subset GSOD_list for agroclimatology only stations -------------------------
+    # Subset GSOD_list for agroclimatology only stations -----------------------
   if (isTRUE(agroclimatology)) {
-    GSOD_list <- .agroclimatology_list(GSOD_list, stations, td, years)
+    GSOD_list <-
+      .agroclimatology_list(GSOD_list, stations, cache_dir, years)
   }
-
   # Subset GSOD_list for specified country -------------------------------------
   if (!is.null(country)) {
-    GSOD_list <- .country_list(country, GSOD_list, stations, td, years)
+    GSOD_list <-
+      .country_list(country, GSOD_list, stations, cache_dir, years)
   }
-
+  # Validate stations for missing days -----------------------------------------
+  if (!is.null(max_missing)) {
+    message("Checking stations against max_missing value")
+    GSOD_list <-
+      .validate_missing_days(max_missing, GSOD_list)
+  }
   # Clean and reformat list of station files from local disk in tempdir --------
-
   message("Starting data file processing")
-  GSOD_XY <- as.data.frame(
-    try(
-      plyr::ldply(.data = GSOD_list, .fun = .process_gz,
-                  stations = stations, .progress = "text")
-    )
-  )
-
-
+  GSOD_XY <- as.data.frame(plyr::ldply(
+    .data = GSOD_list,
+    .fun = .process_gz,
+    stations = stations,
+    .progress = "text"
+  ))[, -1]
   # Write files to disk --------------------------------------------------------
-
   if (isTRUE(CSV)) {
     message("\nWriting CSV file to disk.\n")
     outfile <- paste0(outfile, ".csv")
     readr::write_csv(GSOD_XY, path = paste0(outfile))
+    rm(outfile)
   }
-
   if (isTRUE(GPKG)) {
     message("\nWriting GeoPackage File to Disk.\n")
     outfile <- paste0(outfile, ".gpkg")
-    # Convert object to standard df and then spatial object
-    GSOD_XY <- as.data.frame(GSOD_XY)
-    sp::coordinates(GSOD_XY) <- ~LON + LAT
+    sp::coordinates(GSOD_XY) <- ~LON+LAT
     sp::proj4string(GSOD_XY) <- sp::CRS("+proj=longlat +datum=WGS84")
 
     # If the filename specified exists, remove it and create new
@@ -290,16 +297,13 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
     rgdal::writeOGR(GSOD_XY, dsn = path.expand(outfile), layer = "GSOD",
                     driver = "GPKG")
   }
-
   return(GSOD_XY)
-
-  # Cleanup and reset to default state -----------------------------------------
-  unlink(td)
-  options(original_options)
+  # Cleanup --------------------------------------------------------------------
+  do.call(file.remove, list(list.files(cache_dir, full.names = TRUE)))
+  unlink(cache_dir)
+  gc()
 }
-
 # Validation functions ---------------------------------------------------------
-
 #' @noRd
 .validate_years <- function(years) {
   this_year <- 1900 + as.POSIXlt(Sys.Date())$year
@@ -317,10 +321,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
         stop("\nThe year cannot be greater than current year.\n")
       }
     }
+    }
   }
-}
-
-
 #' @noRd
 .validate_fileout <- function(CSV, dsn, filename, GPKG) {
   if (!is.null(filename) & !isTRUE(CSV) & !isTRUE(GPKG)) {
@@ -332,7 +334,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
     }
   }
   dsn <- trimws(dsn)
-  if (dsn == "") {
+  if (is.null(dsn)) {
     stop("\nYou must supply a valid file path for storing the resulting
          file(s).\n")
   } else {
@@ -352,268 +354,229 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL,
       substr(dsn, nchar(dsn), nchar(dsn)) != "\\") {
     dsn <- paste0(dsn, "/")
   }
-
   if (is.null(filename)) {
     filename_out <- "GSOD"
   } else {
     filename_out <- filename
   }
-  outfile <- paste0(dsn, "/", filename_out)
+  outfile <- paste0(dsn, filename_out)
   return(outfile)
-}
-
-
-#' @noRd
-.validate_stations <- function(station, stations, years) {
-  if (!is.null(station)) {
-    if (!station %in% stations[[12]]) {
-      stop("\nThis is not a valid station ID number, please check your entry.
-           \nStation IDs are provided as a part of the GSODR package in the
-           'stations' data in the STNID column.\n")
-    }
-    # validate station years in station listing
-    for (vsy in station) {
-      BEGIN <- as.numeric(substr(stations[stations[[12]] == vsy]$BEGIN, 1, 4))
-      END <- as.numeric(substr(stations[stations[[12]] == vsy]$END, 1, 4))
-      if (min(years) < BEGIN | max(years) > END)
-        message("This station, ", vsy, ", only provides data for years ", BEGIN,
-                " to ", END, ".\n")
-    }
   }
-}
-
 #' @noRd
-.validate_country <- function(country) {
-  if (!is.null(country)) {
-    country <- toupper(trimws(country[1]))
-    nc <- nchar(country)
-    if (nc == 3) {
-      if (country %in% GSODR::country_list$iso3c) {
-        c <- which(country == GSODR::country_list$iso3c)
-        country <- GSODR::country_list[[c, 1]]
-      } else {
-        stop("\nPlease provide a valid name or 2 or 3 letter ISO country code;
-             you can view the entire list of valid countries in this data by
-             typing, 'country_list'.\n")
-      }
-    } else if (nc == 2) {
-      if (country %in% GSODR::country_list$iso2c) {
-        c <- which(country == GSODR::country_list$iso2c)
-        country <- GSODR::country_list[[c, 1]]
-      } else {
-        stop("\nPlease provide a valid name or 2 or 3 letter ISO country code;
-               you can view the entire list of valid countries in this data by
-               typing, 'country_list'.\n")
-      }
-    } else if (country %in% GSODR::country_list$COUNTRY_NAME) {
-      c <- which(country == GSODR::country_list$COUNTRY_NAME)
-      country <- GSODR::country_list[[c, 1]]
-    } else {
-      stop("\nPlease provide a valid name or 2 or 3 letter ISO country code;
-               you can view the entire list of valid countries in this data by
-               typing, 'country_list'.\n")
-    }
+.validate_station <- function(station, stations, years) {
+  if (!station %in% stations[[12]]) {
+    stop(
+      "\n",
+      paste0(station),
+      " is not a valid station ID number, please check
+      your entry. Station IDs are provided as a part of the GSODR package in the
+      'stations' data\nin the STNID column.\n"
+    )
   }
-}
-
-
+  BEGIN <-
+    as.numeric(substr(stations[stations[[12]] == station]$BEGIN, 1, 4))
+  END <-
+    as.numeric(substr(stations[stations[[12]] == station]$END, 1, 4))
+  if (min(years) < BEGIN | max(years) > END) {
+    message("This station, ",
+            station,
+            ", only provides data for years ",
+            BEGIN,
+            " to ",
+            END,
+            ".\n")
+  }
+  }
 #' @noRd
-.validate_missing_days <- function(max_missing, GSOD_list, td) {
-  records <- lapply(X = paste0(td, "/", GSOD_list), FUN = R.utils::countLines)
-  names(records) <- GSOD_list
-  year <- as.numeric(gsub("[^0-9]", "", GSOD_list[1]))
-
-  ifelse(format(as.POSIXct(paste0(year, "-03-01")) - 1, "%d") != "29",
-         allow <- 365 - max_missing,
-         allow <- 366 - max_missing)
-
-  GSOD_list <- stats::na.omit(ifelse(records >= allow,
-                                     paste0(td, "/", GSOD_list),
-                                     NA))
-}
-
+.validate_country <-
+  function(country) {
+    if (!is.null(country)) {
+      country <- toupper(trimws(country[1]))
+      nc <- nchar(country)
+      if (nc == 3) {
+        if (country %in% GSODR::country_list$iso3c) {
+          c <- which(country == GSODR::country_list$iso3c)
+          country <- GSODR::country_list[[c, 1]]
+        } else {
+          stop(
+            "\nPlease provide a valid name or 2 or 3 letter ISO country code;
+            you can view the entire list of valid countries in this data by
+            typing, 'country_list'.\n"
+          )
+        }
+        } else if (nc == 2) {
+          if (country %in% GSODR::country_list$iso2c) {
+            c <- which(country == GSODR::country_list$iso2c)
+            country <- GSODR::country_list[[c, 1]]
+          } else {
+            stop(
+              "\nPlease provide a valid name or 2 or 3 letter ISO country code;
+              you can view the entire list of valid countries in this data by
+              typing, 'country_list'.\n"
+            )
+          }
+          } else if (country %in% GSODR::country_list$COUNTRY_NAME) {
+            c <- which(country == GSODR::country_list$COUNTRY_NAME)
+            country <- GSODR::country_list[[c, 1]]
+          } else {
+            stop(
+              "\nPlease provide a valid name or 2 or 3 letter ISO country code;
+              you can view the entire list of valid countries in this data by
+              typing, 'country_list'.\n"
+            )
+          }
+          }
+          }
+#' @noRd
+.validate_missing_days <-
+  function(max_missing, GSOD_list) {
+    records <-
+      lapply(X = paste0(GSOD_list),
+             FUN = R.utils::countLines)
+    names(records) <- GSOD_list
+    year <- as.numeric(substr(
+      basename(GSOD_list[1]),
+      start = nchar(basename(GSOD_list[1])) - 10 + 1,
+      stop  = nchar(basename(GSOD_list[1])) - 7 + 1
+    ))
+    ifelse(
+      format(as.POSIXct(paste0(year, "-03-01")) - 1, "%d") != "29",
+      allow <- 365 - max_missing,
+      allow <- 366 - max_missing
+    )
+    GSOD_list <- stats::na.omit(ifelse(records >= allow,
+                                       GSOD_list,
+                                       NA))
+  }
 # Function to download files from server --------------------------------------
 #' @noRd
-.download_files <- function(ftp, station, years, td) {
-  if (is.null(station)) {
-    file_list <- paste0(ftp, years, "/", "gsod_", years, ".tar")
-    tryCatch(Map(function(ftp, dest)
-      utils::download.file(url = ftp, destfile = dest),
-      file_list, file.path(td, basename(file_list))), error = function(x) stop(
-        "\nThe file downloads have failed. Please restart.\n"))
-
-    tar_files <- list.files(td, pattern = "^gsod.*\\.tar$", full.names = TRUE)
-
-    plyr::ldply(.data = tar_files, .fun = utils::untar, exdir = td)
-
-    GSOD_list <- list.files(td, pattern = "^.*\\.op.gz$", full.names = TRUE)
+.download_files <-
+  function(ftp_base, station, years, cache_dir) {
+    if (is.null(station)) {
+      file_list <-
+        paste0(sprintf(ftp_base, years), "gsod_", years, ".tar")
+      tryCatch(
+        Map(
+          function(ftp, dest)
+            utils::download.file(url = ftp, destfile = dest),
+          file_list,
+          file.path(cache_dir, basename(file_list))
+        ),
+        error = function(x)
+          stop("\nThe file downloads have failed. Please restart.\n")
+      )
+      tar_files <-
+        list.files(cache_dir, pattern = "^gsod.*\\.tar$", full.names = TRUE)
+      plyr::ldply(.data = tar_files,
+                  .fun = utils::untar,
+                  exdir = cache_dir)
+      GSOD_list <-
+        list.files(cache_dir, pattern = "^.*\\.op.gz$", full.names = TRUE)
+    }
+    if (!is.null(station)) {
+      message("\nChecking requested station file for availability on server.")
+      MAX_RETRIES <- 6
+      dir_list_handle <-
+        curl::new_handle(
+          ftp_use_epsv = FALSE,
+          dirlistonly = TRUE,
+          crlf = TRUE,
+          ssl_verifypeer = FALSE,
+          ftp_response_timeout = 30
+        )
+      s_curl_fetch_memory <- purrr::safely(curl::curl_fetch_memory)
+      retry_cfm <-
+        function(url, handle) {
+          i <- 0
+          repeat {
+            i <- i + 1
+            res <- s_curl_fetch_memory(url, handle = handle)
+            if (!is.null(res$result))
+              return(res$result)
+            if (i == MAX_RETRIES) {
+              stop("Too many retries...server may be under load")
+            }
+          }
+        }
+      # Wrapping the disk writer (for the actual files)
+      # Note the use of the cache dir. It won't waste your bandwidth or the
+      # server's bandwidth or CPU if the file has already been retrieved.
+      s_curl_fetch_disk <- purrr::safely(curl::curl_fetch_disk)
+      retry_cfd <-
+        function(url, path) {
+          cache_file <- sprintf("%s/%s", cache_dir, basename(url))
+          if (file.exists(cache_file))
+            return()
+          i <- 0
+          repeat {
+            i <- i + 1
+            if (i == 6) {
+              stop("Too many retries...server may be under load")
+            }
+            res <- s_curl_fetch_disk(url, cache_file)
+            if (!is.null(res$result))
+              return()
+          }
+        }
+      pb <- dplyr::progress_estimated(length(years))
+      purrr::walk(years, function(yr) {
+        year_url <- sprintf(ftp_base, yr)
+        tmp <- retry_cfm(year_url, handle = dir_list_handle)
+        con <- rawConnection(tmp$content)
+        fils <- readLines(con)
+        close(con)
+        # sift out only the target stations
+        purrr::map(station, ~ grep(., fils, value = TRUE)) %>%
+          purrr::keep(~ length(.) > 0) %>%
+          purrr::flatten_chr() -> fils
+        # grab the station files
+        purrr::walk(paste0(year_url, fils), retry_cfd)
+        # progress bar
+        pb$tick()$print()
+      })
+    }
+    GSOD_list <-
+      list.files(path = cache_dir,
+                 pattern = "^.*\\.op.gz$",
+                 full.names = TRUE)
+  }
+# Agroclimatology: subset list of stations to process---------------------------
+.agroclimatology_list <-
+  function(GSOD_list, stations, cache_dir, years) {
+    station_list <- stations[stations$LAT >= -60 &
+                               stations$LAT <= 60, ]$STNID
+    station_list <- do.call(paste0,
+                            c(
+                              expand.grid(cache_dir, "/", station_list, "-",
+                                          years, ".op.gz")
+                            ))
+    GSOD_list <- GSOD_list[GSOD_list %in% station_list]
+    rm(station_list)
     return(GSOD_list)
   }
-
-
-  if (!is.null(station)) {
-    message("\nDownloading the station file(s) now.")
-    file_list <- paste0(ftp, years, "/")
-    file_list <- do.call(paste0, c(expand.grid(file_list, station)))
-    file_list <- paste0(file_list, "-", years, ".op.gz")
-
-    tryCatch(Map(function(ftp, dest)
-      utils::download.file(url = ftp, destfile = dest),
-      file_list, file.path(td, basename(file_list))),
-      error = function(x) message(paste0(
-        "\nThe file downloads have failed. Please restart.\n")))
-
-    GSOD_list <- list.files(path = td, pattern = "^.*\\.op.gz$",
-                            full.names = TRUE)
+# Specified country: subset list of stations to process ------------------------
+.country_list <-
+  function(country,
+           GSOD_list,
+           stations,
+           cache_dir,
+           years) {
+    country_FIPS <- unlist(
+      as.character(
+        stats::na.omit
+        (GSODR::country_list[GSODR::country_list$FIPS == country, ][[1]]),
+                                        use.names = FALSE))
+    station_list <- stations[stations$CTRY == country_FIPS, ]$STNID
+    station_list <- do.call(paste0,
+                            c(
+                              expand.grid(cache_dir,
+                                          "/",
+                                          station_list,
+                                          "-",
+                                          years,
+                                          ".op.gz")
+                            ))
+    GSOD_list <- GSOD_list[GSOD_list %in% station_list]
+    return(GSOD_list)
+    rm(station_list)
   }
-}
-
-
-# Agroclimatology: subset list of stations to process-------------------------
-.agroclimatology_list <- function(GSOD_list, stations, td, years) {
-  station_list <- stations[stations$LAT >= -60 &
-                             stations$LAT <= 60, ]$STNID
-  station_list <- do.call(paste0,
-                          c(expand.grid(td, "/", station_list, "-", years,
-                                        ".op.gz")))
-  GSOD_list <- GSOD_list[GSOD_list %in% station_list]
-  rm(station_list)
-  return(GSOD_list)
-}
-
-# Specified country: subset list of stations to process ----------------------
-.country_list <- function(country, GSOD_list, stations, td, years) {
-  country_FIPS <- unlist(as.character(stats::na.omit(
-    GSODR::country_list[GSODR::country_list$FIPS == country, ][[1]]),
-    use.names = FALSE))
-  station_list <- stations[stations$CTRY == country_FIPS, ]$STNID
-  station_list <- do.call(paste0,
-                          c(expand.grid(td, "/", station_list, "-", years,
-                                        ".op.gz")))
-  GSOD_list <- GSOD_list[GSOD_list %in% station_list]
-  return(GSOD_list)
-  rm(station_list)
-}
-
-
-# Process and format data files ----- ------------------------------------------
-
-#' @noRd
-#' @importFrom data.table :=
-.process_gz <- function(gz_file, stations) {
-  GSOD_XY <- data.table::data.table()
-  YEARMODA <- "YEARMODA"
-  MONTH <- "MONTH"
-  DAY <- "DAY"
-  YDAY <- "YDAY"
-  DEWP <- "DEWP"
-  EA <- "EA"
-  ES <- "ES"
-  GUST <- "GUST"
-  MAX <- "MAX"
-  MIN <- "MIN"
-  MODA <- "MODA"
-  MXSPD <- "MXSPD"
-  PRCP <- "PRCP"
-  RH <- "RH"
-  SNDP <- "SNDP"
-  STN <- "STN"
-  STNID <- "STNID"
-  TEMP <- "TEMP"
-  VISIB <- "VISIB"
-  WBAN <- "WBAN"
-  WDSP <- "WDSP"
-  tmp <- data.table::setDT(
-    readr::read_fwf(
-      file = gz_file, skip = 1,
-      readr::fwf_positions(c(1, 8, 15, 19, 25, 32, 36, 43, 47, 54,
-                             58, 65, 69, 75, 79, 85, 89, 96, 103,
-                             109, 111, 117, 119, 124, 126, 133,
-                             134, 135, 136, 137, 138),
-                           c(6, 12, 18, 22, 30, 33, 41, 44, 52,
-                             55, 63, 66, 73, 76, 83, 86, 93, 100,
-                             108, 109, 116, 117, 123, 124, 130,
-                             133, 134, 135, 136, 137, 138),
-                           col_names = c("STN", "WBAN", "YEAR",
-                                         "MODA", "TEMP",
-                                         "TEMP_CNT", "DEWP",
-                                         "DEWP_CNT", "SLP",
-                                         "SLP_CNT", "STP",
-                                         "STP_CNT", "VISIB",
-                                         "VISIB_CNT", "WDSP",
-                                         "WDSP_CNT", "MXSPD",
-                                         "GUST", "MAX",
-                                         "MAX_FLAG", "MIN",
-                                         "MIN_FLAG",
-                                         "PRCP", "PRCP_FLAG",
-                                         "SNDP", "I_FOG",
-                                         "I_RAIN_DRIZZLE",
-                                         "I_SNOW_ICE", "I_HAIL",
-                                         "I_THUNDER",
-                                         "I_TORNADO_FUNNEL")),
-      col_types = c("ccccdididididididddcdcdcdiiiiii"),
-      na = c("9999.9", "999.9", "99.99")))
-  # add names to columns in data table
-  data.table::setnames(tmp, c("STN", "WBAN", "YEAR", "MODA", "TEMP",
-                              "TEMP_CNT", "DEWP", "DEWP_CNT", "SLP",
-                              "SLP_CNT", "STP", "STP_CNT", "VISIB",
-                              "VISIB_CNT", "WDSP", "WDSP_CNT", "MXSPD",
-                              "GUST", "MAX", "MAX_FLAG", "MIN", "MIN_FLAG",
-                              "PRCP", "PRCP_FLAG", "SNDP", "I_FOG",
-                              "I_RAIN_DRIZZLE", "I_SNOW_ICE", "I_HAIL",
-                              "I_THUNDER", "I_TORNADO_FUNNEL"))
-  # Clean up and convert the station and weather data to metric ----------------
-  tmp[, (STNID) := paste(tmp$STN, tmp$WBAN, sep = "-")]
-  tmp[, (WBAN) := NULL]
-  tmp[, (STN) := NULL]
-  tmp[, (YEARMODA) := paste0(tmp$YEAR, tmp$MODA)]
-  tmp[, (MONTH) := substr(tmp$YEARMODA, 5, 6)]
-  tmp[, (DAY) := substr(tmp$YEARMODA, 7, 8)]
-  tmp[, (MODA) := NULL]
-  tmp[, (YDAY) := as.numeric(strftime(as.Date(paste(tmp$YEAR,
-                                                    tmp$MONTH,
-                                                    tmp$DAY,
-                                                    sep = "-")),
-                                      format = "%j"))]
-  tmp[, (TEMP)  := round( (5 / 9) * (tmp$TEMP - 32), 1)]
-  tmp[, (DEWP)  := round( (5 / 9) * (tmp$DEWP - 32), 1)]
-  tmp[, (WDSP)  := round(tmp$WDSP * 0.514444444, 1)]
-  tmp[, (MXSPD) := round(tmp$MXSPD * 0.514444444, 1)]
-  tmp[, (VISIB) := round(tmp$VISIB * 1.60934, 1)]
-  tmp[, (WDSP)  := round(tmp$WDSP * 0.514444444, 1)]
-  tmp[, (GUST)  := round(tmp$GUST * 0.514444444, 1)]
-  tmp[, (MAX)   := round( (tmp$MAX - 32) * (5 / 9), 2)]
-  tmp[, (MIN)   := round( (tmp$MIN - 32) * (5 / 9), 2)]
-  tmp[, (PRCP)  := round(tmp$PRCP * 25.4, 1)]
-  tmp[, (SNDP)  := round(tmp$SNDP * 25.4, 1)]
-  # Compute other weather vars--------------------------------------------------
-  # Mean actual (EA) and mean saturation vapour pressure (ES)
-  # Monteith JL (1973) Principles of environmental physics.
-  #   Edward Arnold, London
-  # EA derived from dew point
-  tmp[, (EA) := round(0.61078 * exp( (17.2694 * (tmp$DEWP)) /
-                                      ( (tmp$DEWP) + 237.3)), 1)]
-  # ES derived from average temperature
-  tmp[, (ES) := round(0.61078 * exp( (17.2694 * (tmp$TEMP)) /
-                                      ( (tmp$TEMP) + 237.3)), 1)]
-  # Calculate relative humidity
-  tmp[, (RH) := round(tmp$EA / tmp$ES * 100, 1)]
-  # Join to the station and SRTM data-------------------------------------------
-  data.table::setkey(tmp, STNID)
-  data.table::setkey(stations, STNID)
-  GSOD_XY <- stations[tmp]
-  data.table::setcolorder(GSOD_XY, c("USAF", "WBAN", "STNID", "STN_NAME",
-                                     "CTRY", "STATE", "CALL", "LAT", "LON",
-                                     "ELEV_M", "ELEV_M_SRTM_90m", "BEGIN",
-                                     "END", "YEARMODA", "YEAR", "MONTH", "DAY",
-                                     "YDAY", "TEMP", "TEMP_CNT", "DEWP",
-                                     "DEWP_CNT", "SLP", "SLP_CNT", "STP",
-                                     "STP_CNT", "VISIB", "VISIB_CNT", "WDSP",
-                                     "WDSP_CNT", "MXSPD", "GUST", "MAX",
-                                     "MAX_FLAG", "MIN", "MIN_FLAG",
-                                     "PRCP", "PRCP_FLAG", "SNDP", "I_FOG",
-                                     "I_RAIN_DRIZZLE", "I_SNOW_ICE", "I_HAIL",
-                                     "I_THUNDER", "I_TORNADO_FUNNEL", "EA",
-                                     "ES", "RH"))
-  return(GSOD_XY)
-}

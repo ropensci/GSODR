@@ -1,41 +1,48 @@
 <!--
 %\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{GSODR}
+%\VignetteIndexEntry{GSODR vignette}
 %\VignetteEncoding{UTF-8}
 -->
 
 # Introduction
-An R package that provides a function that automates downloading and
-cleaning data from the [Global Surface Summary of the Day (GSOD)](https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod)
-data provided by the US National Climatic Data Center (NCDC). Stations
-are individually checked for number of missing days to assure data
-quality, those stations with too many missing observations as defined by the
-user are omitted. All units are converted to International System of Units (SI),
-e.g., inches to millimetres and Fahrenheit to Celsius. Output is saved as a
-Comma Separated Value (CSV) file or in a spatial GeoPackage (GPKG) file,
-implemented by most major GIS software, summarising each year by station, which
-also includes vapour pressure and relative humidity variables calculated from
-existing data in GSOD.
+
+The GSOD or [Global Surface Summary of the Day (GSOD)](https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod)
+data provided by the US National Climatic Data Center (NCDC) are a valuable
+source of weather data with global coverage. However, the data files are
+cumbersome and difficult to work with. The GSODR package aims to make it easy to
+find, tranfer and format the data you need for use in analysis. The GSODR 
+package provides three main functions for facilitating this:
+
+* `get_GSOD` - the main function that will query and transfer files from the FTP
+server, reformat them and return a data.frame in R or save a file to disk  
+* `reformat_GSOD` - the workhorse, this function takes individual station files
+on the local disk and reformats them returning a data.frame in R  
+* `nearest_stations` - this function returns a dataframe containing a list of
+stations and their metadata that fall within the given radius of a point\
+specified by the user
+
+When reformatting data either with `get_GSOD` or `reformat_GSOD`, all units are
+converted to International System of Units (SI), e.g., inches to millimetres and
+Fahrenheit to Celsius. File output can be saved as a Comma Separated Value (CSV)
+file or in a spatial GeoPackage (GPKG) file, implemented by most major GIS
+software, summarising each year by station, which also includes vapour pressure
+and relative humidity variables calculated from existing data in GSOD.
 
 For more information see the description of the data provided by NCDC,
 <http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
 
-# Using the package
-
-## Load GSODR
-
-```r
-library(GSODR)
-```
+# Retrieving and Reformatting Data in R
 
 ## Plot Global Station Locations
 
-The `get_GSOD` function automatically fetches the most recent station data
-from the NCDC website and removes stations that are missing data (as shown
-below). Using this data we can plot the station locations that are included in
-GSOD that provide valid geo-locations after cleaning.
+The GSOD data are comprised of a global set of data from weather stations. To
+visualise where these stations are located we can fetch the station metadata and
+plot it in a map. The resulting map shows only stations with valid geo-locations
+after filtering.
 
 ```r
+library(GSODR)
+
   GSOD_stations <- readr::read_csv(
     "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
     col_types = "ccccccddddd",
@@ -80,7 +87,7 @@ ggplot(GSOD_stations, aes(x = LON, y = LAT)) +
   theme_bw()
 ```
 
-![GSOD Station Locations](figure/GSOD_station_locations.png)
+![GSOD Station Locations](./figure/GSOD_station_locations.png)
 
 ## Find Stations in Australia
 
@@ -89,7 +96,7 @@ GSODR provides lists of weather station locations and elevation values. Using
 in Australia.
 ```r
 library(dplyr)
-station_locations <- left_join(GSOD_stations, GSODR::GSOD_country_list,
+station_locations <- left_join(GSOD_stations, GSODR::country_list,
                                by = c("CTRY" = "FIPS"))
 
 # create data.frame for Australia only
@@ -128,7 +135,8 @@ filter(Oz, STN_NAME == "TOOWOOMBA")
 ## Using the `get_GSOD` Function in GSODR to Download a Single Station and
 Year
 
-Download weather data from the station Toowoomba, Queensland, Australia for 2010
+Now that we've seen where the reporting stations are located, we can download
+weather data from the station Toowoomba, Queensland, Australia for 2010
 by using the STNID in the `station` parameter of `get_GSOD`.
 
 ```r
@@ -260,9 +268,9 @@ ggplot(data = tbar_temps, aes(x = ymd(YEARMODA), y = value,
   scale_x_date(name = "Date") +
   theme_bw()
 ```
-![GSOD Station Locations](figure/Toowoomba_temperature.png)
+![GSOD Station Locations](./figure/Toowoomba_temperature.png)
 
-## Creating spatial files
+## Creating Spatial Files
 
 Because the stations provide geospatial location information, it is possible
 to create a spatial file. [GeoPackage files](http://www.geopackage.org) are a
@@ -357,96 +365,26 @@ print(AUS_sqlite, n = 5)
 #> #   I_THUNDER <int>, I_TORNADO_FUNNEL <int>, EA <dbl>, ES <dbl>, RH <dbl>
 
 ```
-# Generating hourly temperature data from daily using the `chillR` package
+# Reformating Local Data Files
 
-The [chillR](https://CRAN.R-project.org/package=chillR) package from
-[Eike Luedeling](http://eikeluedeling.com/index.html)
-has a function, `make_hourly_temps` that can be used to temporally downscale
-daily weather data to hourly using the station's latitude. Here's how that's
-possible using the Toowoomba-Airport data.
+You may have already downloaded GSOD data or may just wish to use an FTP client
+to download the files from the server to you local disk and not use the
+capabilities of `get_GSOD`. In that case the `reformat_GSOD` function is useful.
 
-To use this function it is necessary to rename the MAX, MIN, YEAR and YDAY
-columns and convert the `tibble` to a standard `data.frame` object so that
-`make_hourly_temps` will recognize the columns and can operate on the
-data.
+There are two ways, you can either provide `reformat_GSOD` with a list of
+specified station files or you can supply it with a directory containing all of
+the "WBAN-WMO-YYYY.op.gz" station files that you wish to reformat.
 
+## Reformat a List of Local Files
 ```r
-library(chillR)
+y <- c("~/GSOD/gsod_1960/200490-99999-1960.op.gz",
+       "~/GSOD/gsod_1961/200490-99999-1961.op.gz")
+x <- reformat_GSOD(file_list = y)
+```
 
-# rename columns and convert the object to a standard data.frame
-colnames(tbar)[colnames(tbar) == "MAX"] <- "Tmax"
-colnames(tbar)[colnames(tbar) == "MIN"] <- "Tmin"
-colnames(tbar)[colnames(tbar) == "YEAR"] <- "Year"
-colnames(tbar)[colnames(tbar) == "YDAY"] <- "JDay"
-tbar <- as.data.frame(tbar)
-
-# generate hourly temperature values
-tbar <- make_hourly_temps(tbar[, 8], tbar)
-
-head(tbar)
-#>     USAF  WBAN        STNID          STN_NAME CTRY STATE CALL    LAT     LON
-#> 1 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
-#> 2 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
-#> 3 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
-#> 4 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
-#> 5 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
-#> 6 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
-#>   ELEV_M ELEV_M_SRTM_90m    BEGIN      END YEARMODA Year MONTH DAY JDay TEMP
-#> 1    642             635 19980301 20161012 20100101 2010    01  01    1 21.2
-#> 2    642             635 19980301 20161012 20100102 2010    01  02    2 23.2
-#> 3    642             635 19980301 20161012 20100103 2010    01  03    3 21.4
-#> 4    642             635 19980301 20161012 20100104 2010    01  04    4 18.9
-#> 5    642             635 19980301 20161012 20100105 2010    01  05    5 20.5
-#> 6    642             635 19980301 20161012 20100106 2010    01  06    6 21.9
-#>   TEMP_CNT DEWP DEWP_CNT    SLP SLP_CNT   STP STP_CNT   VISIB VISIB_CNT WDSP
-#> 1        8 17.9        8 1013.4       8 942.0       8 -9999.0         0  2.2
-#> 2        8 19.4        8 1010.5       8 939.3       8 -9999.0         0  1.9
-#> 3        8 18.9        8 1012.3       8 940.9       8    14.3         6  3.9
-#> 4        8 16.4        8 1015.7       8 944.1       8    23.3         4  4.5
-#> 5        8 16.4        8 1015.5       8 944.0       8 -9999.0         0  3.9
-#> 6        8 18.7        8 1013.7       8 942.3       8 -9999.0         0  3.2
-#>   WDSP_CNT MXSPD  GUST  Tmax MAX_FLAG  Tmin MIN_FLAG PRCP PRCP_FLAG  SNDP
-#> 1        8   6.7 -9999 25.78          17.78           1.5         G -9999
-#> 2        8   5.1 -9999 26.50          19.11           0.3         G -9999
-#> 3        8  10.3 -9999 28.72          19.28        * 19.8         G -9999
-#> 4        8  10.3 -9999 24.11          16.89        *  1.0         G -9999
-#> 5        8  10.8 -9999 24.61          16.72           0.3         G -9999
-#> 6        8   7.7 -9999 26.78          17.50           0.0         G -9999
-#>   I_FOG I_RAIN_DRIZZLE I_SNOW_ICE I_HAIL I_THUNDER I_TORNADO_FUNNEL  EA  ES
-#> 1     0              0          0      0         0                0 2.1 2.5
-#> 2     0              0          0      0         0                0 2.3 2.8
-#> 3     1              1          0      0         0                0 2.2 2.5
-#> 4     0              0          0      0         0                0 1.9 2.2
-#> 5     0              0          0      0         0                0 1.9 2.4
-#> 6     1              0          0      0         0                0 2.2 2.6
-#>     RH   Hour_1   Hour_2   Hour_3   Hour_4   Hour_5   Hour_6   Hour_7
-#> 1 84.0 19.33310 18.93008 18.58862 18.29238 18.03077 17.79654 19.07710
-#> 2 82.1 20.26111 19.96258 19.70963 19.49017 19.29635 19.12280 20.30435
-#> 3 88.0 20.65993 20.30230 19.99924 19.73627 19.50402 19.29606 20.80028
-#> 4 86.4 19.43190 18.77359 18.21567 17.73153 17.30391 16.92099 18.04830
-#> 5 79.2 18.16871 17.79381 17.47604 17.20026 16.95667 16.73853 17.98054
-#> 6 84.6 18.79480 18.46000 18.17619 17.92986 17.71226 17.51739 18.97600
-#>     Hour_8   Hour_9  Hour_10  Hour_11  Hour_12  Hour_13  Hour_14 Hour_15
-#> 1 20.43922 21.71918 22.87744 23.87823 24.69062 25.28952 25.65643   25.78
-#> 2 21.56323 22.74626 23.81688 24.74198 25.49295 26.04658 26.38576   26.50
-#> 3 22.40926 23.92141 25.28995 26.47253 27.43256 28.14034 28.57395   28.72
-#> 4 19.27962 20.43694 21.48442 22.38961 23.12447 23.66627 23.99820   24.11
-#> 5 19.32699 20.59262 21.73821 22.72823 23.53201 24.12463 24.48771   24.61
-#> 6 20.56074 22.05049 23.39905 24.56455 25.51084 26.20854 26.63602   26.78
-#>    Hour_16  Hour_17  Hour_18  Hour_19  Hour_20  Hour_21  Hour_22  Hour_23
-#> 1 25.65643 25.28952 24.69062 23.87823 22.87744 22.83846 21.74620 21.09297
-#> 2 26.38576 26.04658 25.49295 24.74198 23.81688 23.74516 22.43863 21.65652
-#> 3 28.57395 28.14034 27.43256 26.47253 25.28995 25.10619 22.70519 21.26643
-#> 4 23.99820 23.66627 23.12447 22.38961 21.48442 21.39624 20.03163 19.21299
-#> 5 24.48771 24.12463 23.53201 22.72823 21.73821 21.67330 20.45728 19.72692
-#> 6 26.63602 26.20854 25.51084 24.56455 23.39905 23.34622 22.11384 21.37271
-#>    Hour_24
-#> 1 20.62538
-#> 2 21.09647
-#> 3 20.23575
-#> 4 18.62628
-#> 5 19.20322
-#> 6 20.84102
+## Reformat All Local Files Found in Directory
+```r
+x <- reformat_GSOD(dsn = "~/GSOD/gsod_1960")
 ```
 
 # Notes

@@ -23,16 +23,24 @@ metre data (Jarvis et al. 2008), are included for stations between -60 and
 name, country, latitude, longitude, elevation) and weather observations and
 associated flags. Data may be automatically saved to disk. File output may
 be returned as a comma-separated values (CSV) or GeoPackage (GPKG) file.
+For information on the original data from NCDC, please see the GSOD
+readme.txt file available from,
+\url{http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt}.
 }
-\section{GSODR functions}{
-
-\code{\link{get_GSOD}}
-
-\code{\link{nearest_stations}}
+\author{
+Adam H Sparks, Tomislav Hengle and Andrew Nelson
 }
-
-\section{References}{
-
+\references{
 \url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod}
+}
+\seealso{
+\code{\link{get_GSOD}} Fetch, clean and reformat data from NCDC GSOD
+database
+
+\code{\link{reformat_GSOD}} Clean and reformat local files from NCDC
+GSOD database
+
+\code{\link{nearest_stations}} Find stations within a given radius
+expressed in kilometres for a given point using Latitude and Longitude
 }
 
