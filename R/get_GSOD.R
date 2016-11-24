@@ -275,7 +275,7 @@ get_GSOD <- function(years = NULL,
     .fun = .process_gz,
     stations = stations,
     .progress = "text"
-  ))
+  ))[, -1]
   # Write files to disk --------------------------------------------------------
   if (isTRUE(CSV)) {
     message("\nWriting CSV file to disk.\n")
@@ -286,7 +286,6 @@ get_GSOD <- function(years = NULL,
   if (isTRUE(GPKG)) {
     message("\nWriting GeoPackage File to Disk.\n")
     outfile <- paste0(outfile, ".gpkg")
-    GSOD_XY[is.na(GSOD_XY)] <- -9999
     sp::coordinates(GSOD_XY) <- ~LON+LAT
     sp::proj4string(GSOD_XY) <- sp::CRS("+proj=longlat +datum=WGS84")
 
