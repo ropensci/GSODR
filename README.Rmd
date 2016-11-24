@@ -183,7 +183,7 @@ df_melt <- na.omit(melt(temp[, c("STNID", "DATE", "CHELSA_TEMP", "TEMP", "AVG_DA
                         id = c("DATE", "STNID")))
 
 ggplot(df_melt, aes(x = DATE, y = value)) +
-  geom_point(aes(color = variable), alpha = 0.5) +
+  geom_point(aes(color = variable), alpha = 0.2) +
   scale_x_date(date_labels = "%b") +
   ylab("Temperature (C)") +
   xlab("Month") +
@@ -199,7 +199,7 @@ GSODR provides a function, `nearest_stations`, which will return a list of
 stations in the GSOD data set that are within a specified radius (kilometres) of
 a given point expressed as latitude and longitude in decimal degrees.
 
-```{r example_4}
+```{r example_4, eval=FALSE}
 # Find stations within 50km of Toowoomba, QLD.
 
 n <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 50)
