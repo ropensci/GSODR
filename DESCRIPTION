@@ -50,7 +50,6 @@ Imports:
     stats,
     utils
 Suggests:
-    chillR,
     ggalt,
     ggplot2,
     knitr,

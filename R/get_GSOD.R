@@ -199,7 +199,7 @@
 #' home directory with a maximum of five missing days per station allowed.
 #'
 #' get_GSOD(years = 2010, country = "Philippines", dsn = "~/",
-#' filename = "Philippines_GSOD", GPKG = TRUE, CSV = FALSE, max_missing = 5)
+#' filename = "Philippines_GSOD", GPKG = TRUE, max_missing = 5)
 #'
 #' # Download global GSOD data for agroclimatology work for years 2009 and 2010
 #' # and generate yearly summary files, GSOD-agroclimatology-2010.csv and
@@ -270,13 +270,12 @@ get_GSOD <- function(years = NULL,
   }
   # Clean and reformat list of station files from local disk in tempdir --------
   message("Starting data file processing")
-  GSOD_XY <- as.data.frame(try(plyr::ldply(
+  GSOD_XY <- as.data.frame(plyr::ldply(
     .data = GSOD_list,
     .fun = .process_gz,
     stations = stations,
     .progress = "text"
   ))
-  )
   # Write files to disk --------------------------------------------------------
   if (isTRUE(CSV)) {
     message("\nWriting CSV file to disk.\n")
@@ -285,29 +284,24 @@ get_GSOD <- function(years = NULL,
     rm(outfile)
   }
   if (isTRUE(GPKG)) {
-    LAT <- LON <- NULL
     message("\nWriting GeoPackage File to Disk.\n")
     outfile <- paste0(outfile, ".gpkg")
-    # Convert object to standard df and then spatial object
-    GSOD_XY <- as.data.frame(GSOD_XY)
-    sp::coordinates(GSOD_XY) <- ~ LON + LAT
-    sp::proj4string(GSOD_XY) <-
-      sp::CRS("+proj=longlat +datum=WGS84")
+    sp::coordinates(GSOD_XY) <- ~LON + LAT
+    sp::proj4string(GSOD_XY) <- sp::CRS("+proj=longlat +datum=WGS84")
+
     # If the filename specified exists, remove it and create new
     if (file.exists(path.expand(outfile))) {
       file.remove(outfile)
     }
     # Create new .gpkg file
-    rgdal::writeOGR(
-      GSOD_XY,
-      dsn = path.expand(outfile),
-      layer = "GSOD",
-      driver = "GPKG"
-    )
+    rgdal::writeOGR(GSOD_XY, dsn = path.expand(outfile), layer = "GSOD",
+                    driver = "GPKG")
   }
   return(GSOD_XY)
-  # Cleanup and reset to default state -----------------------------------------
+  # Cleanup --------------------------------------------------------------------
+  do.call(file.remove, list(list.files(cache_dir, full.names = TRUE)))
   unlink(cache_dir)
+  gc()
 }
 # Validation functions ---------------------------------------------------------
 #' @noRd

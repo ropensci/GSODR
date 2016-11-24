@@ -203,30 +203,40 @@ hr {
 <body>
 <!--
 %\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{GSODR}
+%\VignetteIndexEntry{GSODR vignette}
 %\VignetteEncoding{UTF-8}
 -->
 
 <h1>Introduction</h1>
 
-<p>An R package that provides a function that automates downloading and
-cleaning data from the <a href="https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod">Global Surface Summary of the Day (GSOD)</a>
-data provided by the US National Climatic Data Center (NCDC). All units are
+<p>The GSOD or <a href="https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod">Global Surface Summary of the Day (GSOD)</a>
+data provided by the US National Climatic Data Center (NCDC) are a valuable
+source of weather data with global coverage. However, the data files are
+cumbersome and difficult to work with. The GSODR package aims to make it easy to
+find, tranfer and format the data you need for use in analysis. The GSODR 
+package provides three main functions for facilitating this:</p>
+
+<ul>
+<li><code>get_GSOD</code> - the main function that will query and transfer files from the FTP
+server, reformat them and return a data.frame in R or save a file to disk<br/></li>
+<li><code>reformat_GSOD</code> - the workhorse, this function takes individual station files
+on the local disk and reformats them returning a data.frame in R<br/></li>
+<li><code>nearest_stations</code> - this function returns a dataframe containing a list of
+stations and their metadata that fall within the given radius of a point\
+specified by the user</li>
+</ul>
+
+<p>When reformatting data either with <code>get_GSOD</code> or <code>reformat_GSOD</code>, all units are
 converted to International System of Units (SI), e.g., inches to millimetres and
-Fahrenheit to Celsius. Output is saved as a Comma Separated Value (CSV) file or
-in a spatial GeoPackage (GPKG) file, implemented by most major GIS software,
-summarising each year by station, which also includes vapour pressure and
-relative humidity variables calculated from existing data in GSOD.</p>
+Fahrenheit to Celsius. File output can be saved as a Comma Separated Value (CSV)
+file or in a spatial GeoPackage (GPKG) file, implemented by most major GIS
+software, summarising each year by station, which also includes vapour pressure
+and relative humidity variables calculated from existing data in GSOD.</p>
 
 <p>For more information see the description of the data provided by NCDC,
 <a href="http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt">http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt</a>.</p>
 
-<h1>Using the package</h1>
-
-<h2>Load GSODR</h2>
-
-<pre><code class="r">library(GSODR)
-</code></pre>
+<h1>Retrieving and Reformatting Data in R</h1>
 
 <h2>Plot Global Station Locations</h2>
 
@@ -235,7 +245,9 @@ visualise where these stations are located we can fetch the station metadata and
 plot it in a map. The resulting map shows only stations with valid geo-locations
 after filtering.</p>
 
-<pre><code class="r">  GSOD_stations &lt;- readr::read_csv(
+<pre><code class="r">library(GSODR)
+
+  GSOD_stations &lt;- readr::read_csv(
     &quot;ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv&quot;,
     col_types = &quot;ccccccddddd&quot;,
     col_names = c(&quot;USAF&quot;, &quot;WBAN&quot;, &quot;STN_NAME&quot;, &quot;CTRY&quot;, &quot;STATE&quot;, &quot;CALL&quot;,
@@ -279,7 +291,7 @@ library(ggalt)</p>
   theme_bw()</p>
 
 <pre><code>
-![GSOD Station Locations](figure/GSOD_station_locations.png)
+![GSOD Station Locations](./figure/GSOD_station_locations.png)
 
 ## Find Stations in Australia
 
@@ -554,95 +566,26 @@ print(AUS_sqlite, n = 5)
 
 </code></pre>
 
-<h1>Generating Hourly Temperature Data From Daily Using the <code>chillR</code> Package</h1>
+<h1>Reformating Local Data Files</h1>
 
-<p>The <a href="https://CRAN.R-project.org/package=chillR">chillR</a> package from
-<a href="http://eikeluedeling.com/index.html">Eike Luedeling</a>
-has a function, <code>make_hourly_temps</code> that can be used to temporally downscale
-daily weather data to hourly using the station&#39;s latitude. Here&#39;s how that&#39;s
-possible using the Toowoomba-Airport data.</p>
+<p>You may have already downloaded GSOD data or may just wish to use an FTP client
+to download the files from the server to you local disk and not use the
+capabilities of <code>get_GSOD</code>. In that case the <code>reformat_GSOD</code> function is useful.</p>
 
-<p>To use this function it is necessary to rename the MAX, MIN, YEAR and YDAY
-columns and convert the <code>tibble</code> to a standard <code>data.frame</code> object so that
-<code>make_hourly_temps</code> will recognize the columns and can operate on the
-data.</p>
+<p>There are two ways, you can either provide <code>reformat_GSOD</code> with a list of
+specified station files or you can supply it with a directory containing all of
+the &ldquo;WBAN-WMO-YYYY.op.gz&rdquo; station files that you wish to reformat.</p>
 
-<pre><code class="r">library(chillR)
+<h2>Reformat a List of Local Files</h2>
 
-# rename columns and convert the object to a standard data.frame
-colnames(tbar)[colnames(tbar) == &quot;MAX&quot;] &lt;- &quot;Tmax&quot;
-colnames(tbar)[colnames(tbar) == &quot;MIN&quot;] &lt;- &quot;Tmin&quot;
-colnames(tbar)[colnames(tbar) == &quot;YEAR&quot;] &lt;- &quot;Year&quot;
-colnames(tbar)[colnames(tbar) == &quot;YDAY&quot;] &lt;- &quot;JDay&quot;
-tbar &lt;- as.data.frame(tbar)
+<pre><code class="r">y &lt;- c(&quot;~/GSOD/gsod_1960/200490-99999-1960.op.gz&quot;,
+       &quot;~/GSOD/gsod_1961/200490-99999-1961.op.gz&quot;)
+x &lt;- reformat_GSOD(file_list = y)
+</code></pre>
 
-# generate hourly temperature values
-tbar &lt;- make_hourly_temps(tbar[, 8], tbar)
+<h2>Reformat All Local Files Found in Directory</h2>
 
-head(tbar)
-#&gt;     USAF  WBAN        STNID          STN_NAME CTRY STATE CALL    LAT     LON
-#&gt; 1 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  &lt;NA&gt; &lt;NA&gt; -27.55 151.917
-#&gt; 2 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  &lt;NA&gt; &lt;NA&gt; -27.55 151.917
-#&gt; 3 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  &lt;NA&gt; &lt;NA&gt; -27.55 151.917
-#&gt; 4 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  &lt;NA&gt; &lt;NA&gt; -27.55 151.917
-#&gt; 5 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  &lt;NA&gt; &lt;NA&gt; -27.55 151.917
-#&gt; 6 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  &lt;NA&gt; &lt;NA&gt; -27.55 151.917
-#&gt;   ELEV_M ELEV_M_SRTM_90m    BEGIN      END YEARMODA Year MONTH DAY JDay TEMP
-#&gt; 1    642             635 19980301 20161012 20100101 2010    01  01    1 21.2
-#&gt; 2    642             635 19980301 20161012 20100102 2010    01  02    2 23.2
-#&gt; 3    642             635 19980301 20161012 20100103 2010    01  03    3 21.4
-#&gt; 4    642             635 19980301 20161012 20100104 2010    01  04    4 18.9
-#&gt; 5    642             635 19980301 20161012 20100105 2010    01  05    5 20.5
-#&gt; 6    642             635 19980301 20161012 20100106 2010    01  06    6 21.9
-#&gt;   TEMP_CNT DEWP DEWP_CNT    SLP SLP_CNT   STP STP_CNT   VISIB VISIB_CNT WDSP
-#&gt; 1        8 17.9        8 1013.4       8 942.0       8 -9999.0         0  2.2
-#&gt; 2        8 19.4        8 1010.5       8 939.3       8 -9999.0         0  1.9
-#&gt; 3        8 18.9        8 1012.3       8 940.9       8    14.3         6  3.9
-#&gt; 4        8 16.4        8 1015.7       8 944.1       8    23.3         4  4.5
-#&gt; 5        8 16.4        8 1015.5       8 944.0       8 -9999.0         0  3.9
-#&gt; 6        8 18.7        8 1013.7       8 942.3       8 -9999.0         0  3.2
-#&gt;   WDSP_CNT MXSPD  GUST  Tmax MAX_FLAG  Tmin MIN_FLAG PRCP PRCP_FLAG  SNDP
-#&gt; 1        8   6.7 -9999 25.78          17.78           1.5         G -9999
-#&gt; 2        8   5.1 -9999 26.50          19.11           0.3         G -9999
-#&gt; 3        8  10.3 -9999 28.72          19.28        * 19.8         G -9999
-#&gt; 4        8  10.3 -9999 24.11          16.89        *  1.0         G -9999
-#&gt; 5        8  10.8 -9999 24.61          16.72           0.3         G -9999
-#&gt; 6        8   7.7 -9999 26.78          17.50           0.0         G -9999
-#&gt;   I_FOG I_RAIN_DRIZZLE I_SNOW_ICE I_HAIL I_THUNDER I_TORNADO_FUNNEL  EA  ES
-#&gt; 1     0              0          0      0         0                0 2.1 2.5
-#&gt; 2     0              0          0      0         0                0 2.3 2.8
-#&gt; 3     1              1          0      0         0                0 2.2 2.5
-#&gt; 4     0              0          0      0         0                0 1.9 2.2
-#&gt; 5     0              0          0      0         0                0 1.9 2.4
-#&gt; 6     1              0          0      0         0                0 2.2 2.6
-#&gt;     RH   Hour_1   Hour_2   Hour_3   Hour_4   Hour_5   Hour_6   Hour_7
-#&gt; 1 84.0 19.33310 18.93008 18.58862 18.29238 18.03077 17.79654 19.07710
-#&gt; 2 82.1 20.26111 19.96258 19.70963 19.49017 19.29635 19.12280 20.30435
-#&gt; 3 88.0 20.65993 20.30230 19.99924 19.73627 19.50402 19.29606 20.80028
-#&gt; 4 86.4 19.43190 18.77359 18.21567 17.73153 17.30391 16.92099 18.04830
-#&gt; 5 79.2 18.16871 17.79381 17.47604 17.20026 16.95667 16.73853 17.98054
-#&gt; 6 84.6 18.79480 18.46000 18.17619 17.92986 17.71226 17.51739 18.97600
-#&gt;     Hour_8   Hour_9  Hour_10  Hour_11  Hour_12  Hour_13  Hour_14 Hour_15
-#&gt; 1 20.43922 21.71918 22.87744 23.87823 24.69062 25.28952 25.65643   25.78
-#&gt; 2 21.56323 22.74626 23.81688 24.74198 25.49295 26.04658 26.38576   26.50
-#&gt; 3 22.40926 23.92141 25.28995 26.47253 27.43256 28.14034 28.57395   28.72
-#&gt; 4 19.27962 20.43694 21.48442 22.38961 23.12447 23.66627 23.99820   24.11
-#&gt; 5 19.32699 20.59262 21.73821 22.72823 23.53201 24.12463 24.48771   24.61
-#&gt; 6 20.56074 22.05049 23.39905 24.56455 25.51084 26.20854 26.63602   26.78
-#&gt;    Hour_16  Hour_17  Hour_18  Hour_19  Hour_20  Hour_21  Hour_22  Hour_23
-#&gt; 1 25.65643 25.28952 24.69062 23.87823 22.87744 22.83846 21.74620 21.09297
-#&gt; 2 26.38576 26.04658 25.49295 24.74198 23.81688 23.74516 22.43863 21.65652
-#&gt; 3 28.57395 28.14034 27.43256 26.47253 25.28995 25.10619 22.70519 21.26643
-#&gt; 4 23.99820 23.66627 23.12447 22.38961 21.48442 21.39624 20.03163 19.21299
-#&gt; 5 24.48771 24.12463 23.53201 22.72823 21.73821 21.67330 20.45728 19.72692
-#&gt; 6 26.63602 26.20854 25.51084 24.56455 23.39905 23.34622 22.11384 21.37271
-#&gt;    Hour_24
-#&gt; 1 20.62538
-#&gt; 2 21.09647
-#&gt; 3 20.23575
-#&gt; 4 18.62628
-#&gt; 5 19.20322
-#&gt; 6 20.84102
+<pre><code class="r">x &lt;- reformat_GSOD(dsn = &quot;~/GSOD/gsod_1960&quot;)
 </code></pre>
 
 <h1>Notes</h1>

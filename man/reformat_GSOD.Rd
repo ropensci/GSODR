@@ -161,39 +161,18 @@ They can be used within the U.S. or for non-commercial international
 activities without restriction. The non-U.S. data cannot be redistributed for
 commercial purposes. Re-distribution of these data by others must provide
 this same notification.}
-
-Some of these data are redistributed with this R package. Originally
-from these data come from the US NCDC which states that users of these data
-should take into account the following: \dQuote{The following data and
-products may have conditions placed on their international commercial use.
-They can be used within the U.S. or for non-commercial international
-activities without restriction. The non-U.S. data cannot be redistributed for
-commercial purposes. Re-distribution of these data by others must provide
-this same notification.}
 }
 \examples{
 \dontrun{
-# Download weather station for Toowoomba, Queensland for 2010
-t <- get_GSOD(years = 2010, station = "955510-99999")
 
-# Download data for Philippines for year 2010 and generate a yearly
-# summary GeoPackage file, Philippines_GSOD-2010.gpkg, file in the user's
-home directory with a maximum of five missing days per station allowed.
+# Reformat station data files in local directory
+x <- reformat_GSOD(dsn = "~/tmp")
 
-get_GSOD(years = 2010, country = "Philippines", dsn = "~/",
-filename = "Philippines_GSOD", GPKG = TRUE, CSV = FALSE)
-
-# Download global GSOD data for agroclimatology work for years 2009 and 2010
-# and generate yearly summary files, GSOD-agroclimatology-2010.csv and
-# GSOD-agroclimatology-2011.csv in the user's home directory with a maximum
-# of five missing days per weather station allowed.
-
-get_GSOD(years = 2010:2011, dsn = "~/",
-filename = "GSOD_agroclimatology_2010-2011", agroclimatology = TRUE)
-
+# Reformat a list of data files
+y <- c("~/GSOD/gsod_1960/200490-99999-1960.op.gz",
+       "~/GSOD/gsod_1961/200490-99999-1961.op.gz")
+x <- reformat_GSOD(file_list = y)
 }
-
-
 
 }
 \author{

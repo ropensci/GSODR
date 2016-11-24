@@ -1,8 +1,9 @@
 <!--
 %\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{GSODR - Finding and fetching stations for Central Luzon}
+%\VignetteIndexEntry{GSODR use case: Specified years/stations vignette}
 %\VignetteEncoding{UTF-8}
 -->
+
 # Gather Data for IRRI Central Luzon Survey Loop
 
 The IRRI (International Rice Research Institute) survey loop in Central Luzon
