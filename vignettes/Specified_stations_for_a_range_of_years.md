@@ -135,4 +135,44 @@ loop_data <- reformat_GSOD(file_list = local_files)
 write.csv(loop_data, file = "Loop_Survey_Weather_1960-1969")
 ```
 
+# Notes
+
+## Sources
+
+#### CHELSA climate layers
+CHELSA (climatic surfaces at 1 km resolution) is based on a quasi-mechanistical
+statistical downscaling of the ERA interim global circulation model
+(Karger et al. 2016). ESA's CCI-LC cloud probability monthly averages are based
+on the MODIS snow products (MOD10A2). <http://chelsa-climate.org/>
+
+#### EarthEnv MODIS cloud fraction 
+<http://www.earthenv.org/cloud>
+
+#### ESA's CCI-LC cloud probability
+<http://maps.elie.ucl.ac.be/CCI/viewer/index.php>
+
+#### Elevation Values
+
+90m hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was used
+to identify and correct/remove elevation errors in data for station
+locations between -60˚ and 60˚ latitude. This applies to cases here
+where elevation was missing in the reported values as well. In case the
+station reported an elevation and the DEM does not, the station reported
+is taken. For stations beyond -60˚ and 60˚ latitude, the values are
+station reported values in every instance. See
+<https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md>
+for more detail on the correction methods.
+
+## WMO Resolution 40. NOAA Policy
+
+*Users of these data should take into account the following (from the
+[NCDC website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):*
+
+> "The following data and products may have conditions placed on their 
+international commercial use. They can be used within the U.S. or for
+non-commercial international activities without restriction. The
+non-U.S. data cannot be redistributed for commercial purposes.
+Re-distribution of these data by others must provide this same
+notification." [WMO Resolution 40. NOAA
+Policy](http://www.wmo.int/pages/about/Resolution40.html)
 
