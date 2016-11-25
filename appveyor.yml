@@ -3,7 +3,7 @@
 #---------------------------------#
 
 # version format
-version: 0.1.2.{build}
+version: 1.0.0{build}
 
 environment:
   R_CHECK_ARGS: --no-build-vignettes --no-manual
