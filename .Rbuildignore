@@ -12,3 +12,4 @@ appveyor.yml
 ^CONDUCT\.md$
 ^paper$
 vignettes/figure
+^codecov\.yml$
