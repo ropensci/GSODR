@@ -46,3 +46,6 @@ env:
     - RVERSION=oldrel
     - RVERSION=release
     - RVERSION=devel
+
+after_success:
+  - Rscript -e 'covr::codecov()'

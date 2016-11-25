@@ -7,6 +7,8 @@ GSODR: Global Surface Summary Daily Weather Data in R
 Status](https://travis-ci.org/adamhsparks/GSODR.svg?branch=master)](https://travis-ci.org/adamhsparks/GSODR)
 [![Build
 status](https://ci.appveyor.com/api/projects/status/8daqtllo2sg6me07/branch/master?svg=true)](https://ci.appveyor.com/project/adamhsparks/GSODR/branch/master?svg=true)
+[![Coverage
+Status](https://img.shields.io/codecov/c/github/adamhsparks/GSODR/master.svg)](https://codecov.io/github/adamhsparks/GSODR?branch=master)
 [![rstudio mirror
 downloads](http://cranlogs.r-pkg.org/badges/GSODR?color=blue)](https://github.com/metacran/cranlogs.app)
 [![cran
@@ -131,12 +133,12 @@ head(Tbar)
 #> 5 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
 #> 6 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
 #>   ELEV_M ELEV_M_SRTM_90m    BEGIN      END YEARMODA YEAR MONTH DAY YDAY
-#> 1    642             635 19980301 20161121 20100101 2010    01  01    1
-#> 2    642             635 19980301 20161121 20100102 2010    01  02    2
-#> 3    642             635 19980301 20161121 20100103 2010    01  03    3
-#> 4    642             635 19980301 20161121 20100104 2010    01  04    4
-#> 5    642             635 19980301 20161121 20100105 2010    01  05    5
-#> 6    642             635 19980301 20161121 20100106 2010    01  06    6
+#> 1    642             635 19980301 20161122 20100101 2010    01  01    1
+#> 2    642             635 19980301 20161122 20100102 2010    01  02    2
+#> 3    642             635 19980301 20161122 20100103 2010    01  03    3
+#> 4    642             635 19980301 20161122 20100104 2010    01  04    4
+#> 5    642             635 19980301 20161122 20100105 2010    01  05    5
+#> 6    642             635 19980301 20161122 20100106 2010    01  06    6
 #>   TEMP TEMP_CNT DEWP DEWP_CNT    SLP SLP_CNT   STP STP_CNT VISIB VISIB_CNT
 #> 1 21.2        8 17.9        8 1013.4       8 942.0       8    NA         0
 #> 2 23.2        8 19.4        8 1010.5       8 939.3       8    NA         0
@@ -208,7 +210,7 @@ library(plotKML)
 layers <- ogrListLayers(dsn = path.expand("~/PHL-2010.gpkg"))
 pnts <- readOGR(dsn = path.expand("~/PHL-2010.gpkg"), layers[1])
 #> OGR data source with driver: GPKG 
-#> Source: "/Users/asparks/PHL-2010.gpkg", layer: "GSOD"
+#> Source: "/Users/U8004755/PHL-2010.gpkg", layer: "GSOD"
 #> with 4703 features
 #> It has 46 fields
 
