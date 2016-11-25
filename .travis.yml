@@ -36,11 +36,11 @@ script:
 after_failure:
   - ./pkg-build.sh dump_logs
 
-r_packages:
-  - covr
+r_github_packages:
+  - jimhester/covr
 
 after_success:
-  - Rscript -e 'library(covr); codecov()'
+  - Rscript -e 'covr::codecov()'
 
 notifications:
   email:
