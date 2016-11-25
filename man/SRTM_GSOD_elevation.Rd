@@ -9,7 +9,7 @@
   \item{STNID}{Unique station ID, a concatenation of USAF and WBAN number,
   used for merging with station data weather files}
   \item{ELEV_M_SRTM_90m}{Elevation in metres extracted from SRTM data (Jarvis
-  \emph{et al.} 2008)}
+  \emph{et al}. 2008)}
 }
 
 Station elevation information for the US National Climatic Data Centre (NCDC)
