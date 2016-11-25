@@ -141,18 +141,18 @@
 #' \item{MODCF_monthlymean_12}{Mean December cloud fraction}
 #' \item{MODCF_seasonality_concentration}{Cloud fraction seasonality
 #' concentration}
-#' \item{ESACCI_snow_prob_Jan_500m}{Mean January snow probability}
-#' \item{ESACCI_snow_prob_Feb_500m}{Mean February fraction}
-#' \item{ESACCI_snow_prob_Mar_500m}{Mean March snow probability}
-#' \item{ESACCI_snow_prob_Apr_500m}{Mean April snow probability}
-#' \item{ESACCI_snow_prob_May_500m}{Mean May snow probability}
-#' \item{ESACCI_snow_prob_Jun_500m}{Mean June snow probability}
-#' \item{ESACCI_snow_prob_Jul_500m}{Mean July snow probability}
-#' \item{ESACCI_snow_prob_Aug_500m}{Mean August snow probability}
-#' \item{ESACCI_snow_prob_Sep_500m}{Mean September snow probability}
-#' \item{ESACCI_snow_prob_Oct_500m}{Mean October snow probability}
-#' \item{ESACCI_snow_prob_Nov_500m}{Mean November snow probability}
-#' \item{ESACCI_snow_prob_Dec_500m}{Mean December snow probability}
+#' \item{ESACCI_snow_prob_Jan_500m}{Mean January snow cover probability}
+#' \item{ESACCI_snow_prob_Feb_500m}{Mean February snow cover probability}
+#' \item{ESACCI_snow_prob_Mar_500m}{Mean March snow cover probability}
+#' \item{ESACCI_snow_prob_Apr_500m}{Mean April snow cover probability}
+#' \item{ESACCI_snow_prob_May_500m}{Mean May snow cover probability}
+#' \item{ESACCI_snow_prob_Jun_500m}{Mean June snow cover probability}
+#' \item{ESACCI_snow_prob_Jul_500m}{Mean July snow cover probability}
+#' \item{ESACCI_snow_prob_Aug_500m}{Mean August snow cover probability}
+#' \item{ESACCI_snow_prob_Sep_500m}{Mean September snow cover probability}
+#' \item{ESACCI_snow_prob_Oct_500m}{Mean October snow cover probability}
+#' \item{ESACCI_snow_prob_Nov_500m}{Mean November snow cover probability}
+#' \item{ESACCI_snow_prob_Dec_500m}{Mean December snow cover probability}
 #' }
 #'
 #' @note CHELSA (climatic surfaces at 1 km resolution) is based on a
@@ -169,7 +169,7 @@
 #' Wilson AM, Jetz W (2016). Remotely Sensed High-Resolution Global Cloud
 #' Dynamics for Predicting Ecosystem and Biodiversity Distributions. PLoS Biol
 #' 14(3): e1002415.
-#' @source ESA's CCI-LC cloud probability
+#' @source ESA's CCI-LC snow cover probability
 #' (\url{http://maps.elie.ucl.ac.be/CCI/viewer/index.php})
 #'
 "GSOD_clim"
