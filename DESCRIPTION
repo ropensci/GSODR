@@ -1,7 +1,7 @@
 Package: GSODR
 Type: Package
 Title: Global Summary Daily Weather Data in R
-Version: 1.0.0
+Version: 1.0
 Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     email = "adamhsparks@gmail.com"),
     person("Tomislav", "Hengl", role = "aut",
@@ -62,8 +62,7 @@ Suggests:
     spacetime,
     testthat,
     tibble,
-    tidyr,
-    covr
+    tidyr
 RoxygenNote: 5.0.1
 Encoding: UTF-8
 NeedsCompilation: no

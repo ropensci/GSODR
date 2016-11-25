@@ -36,12 +36,6 @@ script:
 after_failure:
   - ./pkg-build.sh dump_logs
 
-r_github_packages:
-  - jimhester/covr
-
-after_success:
-  - Rscript -e 'covr::codecov()'
-
 notifications:
   email:
     on_success: change
@@ -52,4 +46,3 @@ env:
     - RVERSION=oldrel
     - RVERSION=release
     - RVERSION=devel
-
