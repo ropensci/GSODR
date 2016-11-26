@@ -36,6 +36,8 @@
   * A new `reformat_GSOD` function reformats station files in
   "WMO-WBAN-YYYY.op.gz" format that have been downloaded from the United States
   National Climatic Data Center's (NCDC) FTP server.  
+  * A function, `fetch_station_list`, fetches the latest station list from the
+  FTP server.  
   * New data layers are included, CHELSA (climatic surfaces at 1 km resolution),
   http://chelsa-climate.org/, http://www.earthenv.org/cloud,
   http://maps.elie.ucl.ac.be/CCI/viewer/index.php
