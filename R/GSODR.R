@@ -36,14 +36,17 @@
 #' @seealso \code{\link{nearest_stations}} Find stations within a given radius
 #' expressed in kilometres for a given point using Latitude and Longitude
 #'
+#' @seealso \code{\link{fetch_station_list}} Fetch latest list of stations and
+#' corresponding metadata from the NCDC FTP server
+#'
 #' @seealso \code{\link{GSOD_clim}} GSDOR provides additional climatological
-#' data sets to enhance the use of this weather data.
+#' data sets to enhance the use of this weather data
 #'
 #' @seealso \code{\link{SRTM_GSOD_elevation}} GSDOR provides additional
-#' elevation data derived from SRTM90m data.
+#' elevation data derived from SRTM90m data
 #'
 #' @seealso \code{\link{country_list}} GSDOR provides a cleaned list of the
-#' countries which are represented in the GSOD data set.
+#' countries which are represented in the GSOD data set
 #'
 #' @references
 #' \url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod}

@@ -43,13 +43,16 @@ GSOD database
 \code{\link{nearest_stations}} Find stations within a given radius
 expressed in kilometres for a given point using Latitude and Longitude
 
+\code{\link{fetch_station_list}} Fetch latest list of stations and
+corresponding metadata from the NCDC FTP server
+
 \code{\link{GSOD_clim}} GSDOR provides additional climatological
-data sets to enhance the use of this weather data.
+data sets to enhance the use of this weather data
 
 \code{\link{SRTM_GSOD_elevation}} GSDOR provides additional
-elevation data derived from SRTM90m data.
+elevation data derived from SRTM90m data
 
 \code{\link{country_list}} GSDOR provides a cleaned list of the
-countries which are represented in the GSOD data set.
+countries which are represented in the GSOD data set
 }
 

@@ -26,7 +26,7 @@ test_that(".validate_years handles valid years", {
 # Check that invalid stations are handled --------------------------------------
 test_that("invalid stations are handled", {
   skip_on_cran()
-  stations <- .fetch_station_list()
+  stations <- fetch_station_list()
   expect_error(.validate_station(years = 2015, station = "aaa-bbbbbb", stations),
                "\naaa-bbbbbb is not a valid station ID number, please check\n      your entry. Station IDs are provided as a part of the GSODR package in the\n      'stations' data\nin the STNID column.\n")
 })
@@ -47,7 +47,7 @@ test_that("invalid dsn is handled", {
 test_that("stations list and associated metatdata", {
   skip_on_cran()
 
-  stations <- .fetch_station_list()
+  stations <- fetch_station_list()
 
   expect_length(stations, 13)
 
@@ -169,7 +169,7 @@ test_that(".download_files properly works, subsetting for country and
             cache_dir <- tempdir()
             ftp_base <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/%s/"
 
-            stations <- .fetch_station_list()
+            stations <- fetch_station_list()
 
             GSOD_list <- .download_files(ftp_base, station, years, cache_dir)
 
