@@ -1,5 +1,3 @@
-
-
 #' Download, Clean, Reformat and Generate New Variables From GSOD Weather Data
 #'
 #'This function automates downloading, cleaning, reformatting of data from
@@ -238,7 +236,7 @@ get_GSOD <- function(years = NULL,
   }
   # Fetch latest station metadata from NCDC server
   if (!exists("stations")) {
-    stations <- .fetch_station_list()
+    stations <- fetch_station_list()
   }
   # Validate user entered stations for existence in stations list from NCDC
   plyr::l_ply(
