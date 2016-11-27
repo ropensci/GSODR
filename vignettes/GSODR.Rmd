@@ -20,6 +20,8 @@ on the local disk and reformats them returning a data.frame in R
 * `nearest_stations` - this function returns a dataframe containing a list of
 stations and their metadata that fall within the given radius of a point\
 specified by the user
+* `get_station_list` - this function retrieves the most up-to-date list of
+stations and corresponding metadata
 
 When reformatting data either with `get_GSOD` or `reformat_GSOD`, all units are
 converted to International System of Units (SI), e.g., inches to millimetres and
@@ -43,33 +45,7 @@ after filtering.
 ```r
 library(GSODR)
 
-  GSOD_stations <- readr::read_csv(
-    "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
-    col_types = "ccccccddddd",
-    col_names = c("USAF", "WBAN", "STN_NAME", "CTRY", "STATE", "CALL",
-                  "LAT", "LON", "ELEV_M", "BEGIN", "END"), skip = 1)
-
-  GSOD_stations[GSOD_stations == -999.9] <- NA
-  GSOD_stations[GSOD_stations == -999] <- NA
-
-  GSOD_stations <- GSOD_stations[!is.na(GSOD_stations$LAT) &
-                                   !is.na(GSOD_stations$LON), ]
-  GSOD_stations <- GSOD_stations[GSOD_stations$LAT != 0 &
-                                   GSOD_stations$LON != 0, ]
-  GSOD_stations <- GSOD_stations[GSOD_stations$LAT > -90 &
-                                   GSOD_stations$LAT < 90, ]
-  GSOD_stations <- GSOD_stations[GSOD_stations$LON > -180 &
-                                   GSOD_stations$LON < 180, ]
-  GSOD_stations$STNID <- as.character(paste(GSOD_stations$USAF,
-                                            GSOD_stations$WBAN, sep = "-"))
-  
-  SRTM_GSOD_elevation <- data.table::setkey(GSODR::SRTM_GSOD_elevation, STNID)
-  data.table::setDT(GSOD_stations)
-  data.table::setkey(GSOD_stations, STNID)
-  GSOD_stations <- GSOD_stations[SRTM_GSOD_elevation, on = "STNID"]
-  
-  GSOD_stations <- GSOD_stations[!is.na(GSOD_stations$LAT), ]
-  GSOD_stations <- GSOD_stations[!is.na(GSOD_stations$LON), ]
+  GSOD_stations <- get_station_list()
 ```
 
 Using [ggplot2](https://CRAN.R-project.org/package=ggplot2) and the 

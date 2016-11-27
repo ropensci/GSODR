@@ -36,7 +36,7 @@
 #' @seealso \code{\link{nearest_stations}} Find stations within a given radius
 #' expressed in kilometres for a given point using Latitude and Longitude
 #'
-#' @seealso \code{\link{fetch_station_list}} Fetch latest list of stations and
+#' @seealso \code{\link{get_station_list}} Fetch latest list of stations and
 #' corresponding metadata from the NCDC FTP server
 #'
 #' @seealso \code{\link{GSOD_clim}} GSDOR provides additional climatological

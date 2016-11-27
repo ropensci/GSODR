@@ -31,7 +31,7 @@ nearest_stations <- function(LAT, LON, distance) {
   options(warn = 2)
   options(timeout = 300)
   if (!exists("stations")) {
-    stations <- as.data.frame(fetch_station_list())
+    stations <- as.data.frame(get_station_list())
   }
   dists <- fields::rdist.earth(as.matrix(stations[c("LAT", "LON")]),
                                matrix(c(LAT, LON), ncol = 2), miles = FALSE)

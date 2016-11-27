@@ -175,7 +175,7 @@
 reformat_GSOD <- function(dsn = NULL, file_list = NULL) {
   # Fetch latest station metadata from NCDC server
   if (!exists("stations")) {
-    stations <- fetch_station_list()
+    stations <- get_station_list()
   }
   # If dsn !NULL, create a list of files to reformat
   if (!is.null(dsn)) {
