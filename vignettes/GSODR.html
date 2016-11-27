@@ -224,6 +224,8 @@ on the local disk and reformats them returning a data.frame in R<br/></li>
 <li><code>nearest_stations</code> - this function returns a dataframe containing a list of
 stations and their metadata that fall within the given radius of a point\
 specified by the user</li>
+<li><code>get_station_list</code> - this function retrieves the most up-to-date list of
+stations and corresponding metadata</li>
 </ul>
 
 <p>When reformatting data either with <code>get_GSOD</code> or <code>reformat_GSOD</code>, all units are
@@ -247,33 +249,7 @@ after filtering.</p>
 
 <pre><code class="r">library(GSODR)
 
-  GSOD_stations &lt;- readr::read_csv(
-    &quot;ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv&quot;,
-    col_types = &quot;ccccccddddd&quot;,
-    col_names = c(&quot;USAF&quot;, &quot;WBAN&quot;, &quot;STN_NAME&quot;, &quot;CTRY&quot;, &quot;STATE&quot;, &quot;CALL&quot;,
-                  &quot;LAT&quot;, &quot;LON&quot;, &quot;ELEV_M&quot;, &quot;BEGIN&quot;, &quot;END&quot;), skip = 1)
-
-  GSOD_stations[GSOD_stations == -999.9] &lt;- NA
-  GSOD_stations[GSOD_stations == -999] &lt;- NA
-
-  GSOD_stations &lt;- GSOD_stations[!is.na(GSOD_stations$LAT) &amp;
-                                   !is.na(GSOD_stations$LON), ]
-  GSOD_stations &lt;- GSOD_stations[GSOD_stations$LAT != 0 &amp;
-                                   GSOD_stations$LON != 0, ]
-  GSOD_stations &lt;- GSOD_stations[GSOD_stations$LAT &gt; -90 &amp;
-                                   GSOD_stations$LAT &lt; 90, ]
-  GSOD_stations &lt;- GSOD_stations[GSOD_stations$LON &gt; -180 &amp;
-                                   GSOD_stations$LON &lt; 180, ]
-  GSOD_stations$STNID &lt;- as.character(paste(GSOD_stations$USAF,
-                                            GSOD_stations$WBAN, sep = &quot;-&quot;))
-
-  SRTM_GSOD_elevation &lt;- data.table::setkey(GSODR::SRTM_GSOD_elevation, STNID)
-  data.table::setDT(GSOD_stations)
-  data.table::setkey(GSOD_stations, STNID)
-  GSOD_stations &lt;- GSOD_stations[SRTM_GSOD_elevation, on = &quot;STNID&quot;]
-
-  GSOD_stations &lt;- GSOD_stations[!is.na(GSOD_stations$LAT), ]
-  GSOD_stations &lt;- GSOD_stations[!is.na(GSOD_stations$LON), ]
+  GSOD_stations &lt;- get_station_list()
 </code></pre>
 
 <p>Using <a href="https://CRAN.R-project.org/package=ggplot2">ggplot2</a> and the 
