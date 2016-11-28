@@ -455,8 +455,8 @@ final file which includes the following fields:
 -   **I\_HAIL** - Indicator for hail, (1 = yes, 0 = no/not reported) for
     the occurrence during the day;
 
--   **I\_THUNDER** - Indicator for thunder, (1 = yes, 0 = no/not
-    reported) for the occurrence during the day;
+-   **I\_THUNDER** - Indicator for thunder, (1 = yes, 0 =
+    no/not reported) for the occurrence during the day;
 
 -   **I\_TORNADO\_FUNNEL** - Indicator for tornado or funnel cloud, (1 =
     yes, 0 = no/not reported) for the occurrence during the day;
