@@ -97,7 +97,7 @@ If you find bugs, please file a report as an issue.
 
 ``` r
 install.packages("devtools")
-devtools::install_github("adamhsparks/GSODR")
+devtools::install_github("adamhsparks/GSODR", build_vignettes = TRUE)
 ```
 
 Using GSODR

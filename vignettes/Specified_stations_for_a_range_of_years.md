@@ -1,8 +1,13 @@
-<!--
-%\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{GSODR use case: Specified years/stations vignette}
-%\VignetteEncoding{UTF-8}
--->
+---
+title: "GSODR use case: Specified years/stations vignette"
+author: "Tomislav Hengl and Adam H Sparks"
+date: "2016-11-30"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteIndexEntry{GSODR use case: Specified years/stations vignette}
+  %\VignetteEncoding{UTF-8}
+---
 
 # Gather Data for IRRI Central Luzon Survey Loop
 

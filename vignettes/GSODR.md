@@ -1,8 +1,13 @@
-<!--
-%\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{GSODR vignette}
-%\VignetteEncoding{UTF-8}
--->
+---
+title: "GSODR"
+author: "Adam H Sparks"
+date: "2016-11-30"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteIndexEntry{GSODR vignette}
+  %\VignetteEncoding{UTF-8}
+---
 
 # Introduction
 

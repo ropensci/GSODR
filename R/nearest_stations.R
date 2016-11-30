@@ -28,7 +28,6 @@
 #' @export
 nearest_stations <- function(LAT, LON, distance) {
   original_options <- options()
-  options(warn = 2)
   options(timeout = 300)
   if (!exists("stations")) {
     stations <- as.data.frame(get_station_list())

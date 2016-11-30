@@ -227,6 +227,8 @@ get_GSOD <- function(years = NULL,
                      CSV = FALSE,
                      GPKG = FALSE) {
   # Create objects for use in retrieving files ---------------------------------
+  original_options <- options()
+  options(timeout = 300)
   cache_dir <- tempdir()
   ftp_base <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/%s/"
   # Validate user inputs -------------------------------------------------------
@@ -300,6 +302,7 @@ get_GSOD <- function(years = NULL,
   do.call(file.remove, list(list.files(cache_dir, full.names = TRUE)))
   unlink(cache_dir)
   gc()
+  options(original_options)
 }
 # Validation functions ---------------------------------------------------------
 #' @noRd
