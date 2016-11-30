@@ -521,6 +521,7 @@ get_GSOD <- function(years = NULL,
               return()
           }
         }
+      message("\nDownloading individual station files.\n")
       pb <- dplyr::progress_estimated(length(years))
       purrr::walk(years, function(yr) {
         year_url <- sprintf(ftp_base, yr)
