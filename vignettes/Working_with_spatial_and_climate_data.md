@@ -1,8 +1,13 @@
-<!--
-%\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{GSODR vignette}
-%\VignetteEncoding{UTF-8}
--->
+---
+title: "Working with spatial and climate data from GSODR"
+author: "Adam H Sparks"
+date: "2016-11-30"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteIndexEntry{Working with spatial and climate data from GSODR}
+  %\VignetteEncoding{UTF-8}
+---
 
 # Introduction
 
