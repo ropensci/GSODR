@@ -1,0 +1,37 @@
+---
+title: "CRU CL2.0 Data"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## CRU CL2.0 Data
+
+CRU CL2.0 data are a gridded climatology of 1961-1990 monthly means released in 2002 and cover all land areas (excluding Antarctica) at 10 arc-second resolution. For more information see the description of the data provided by the University of East Anglia Climate Research Unit (CRU), http://www.cru.uea.ac.uk/cru/data/hrg/tmc/readme.txt.
+
+```{r get_data}
+install.packages("devtools")
+devtools::install_github("adamhsparks/getCRUCL2.0")
+
+library(getCRUCL2.0)
+
+CRU_stack <- create_CRU_stack(pre = TRUE,
+                              pre_cv = TRUE,
+                              rd0 = TRUE,
+                              tmp = TRUE,
+                              dtr = TRUE,
+                              reh = TRUE,
+                              tmn = TRUE,
+                              tmx = TRUE,
+                              sunp = TRUE,
+                              frs = TRUE,
+                              wnd = TRUE,
+                              elv = TRUE)
+```
+
+## Extract data for station locations
+```{r extract_data}
+GSOD_CRU <- raster::extract(CRU_stack, stations)
+```
