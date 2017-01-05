@@ -1,9 +1,6 @@
 CRU CL2.0 Data
 ================
 
-CRU CL2.0 Data
---------------
-
 CRU CL2.0 data are a gridded climatology of 1961-1990 monthly means released in 2002 and cover all land areas (excluding Antarctica) at 10 arc-second resolution. For more information see the description of the data provided by the University of East Anglia Climate Research Unit (CRU), <http://www.cru.uea.ac.uk/cru/data/hrg/tmc/readme.txt>.
 
 Download, extract and merge CRU data with provided GSOD climate data
@@ -24,13 +21,10 @@ Get CRU CL2.0 data
 
 ``` r
 CRU_stack <- create_CRU_stack(pre = TRUE,
-                              pre_cv = TRUE,
                               rd0 = TRUE,
                               tmp = TRUE,
                               dtr = TRUE,
                               reh = TRUE,
-                              tmn = TRUE,
-                              tmx = TRUE,
                               sunp = TRUE,
                               frs = TRUE,
                               wnd = TRUE)
@@ -109,25 +103,6 @@ CRU_stack_names <- c(
     "CRU_CL2_0_",
     names(CRU_stack[2]),
     "_",
-    c(
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec"
-    )
-  ),
-  paste0(
-    "CRU_CL2_0_",
-    names(CRU_stack[2]),
-    "_cv_",
     c(
       "Jan",
       "Feb",
@@ -277,7 +252,7 @@ CRU_GSOD$stations.STNID <- as.character(CRU_GSOD$stations.STNID)
 GSOD_clim$STNID <- as.character(GSOD_clim$STNID)
 
 # Left join GSOD_clim data with the new CRU data
-test <- dplyr::left_join(GSOD_clim, CRU_GSOD, by = c("STNID" = "stations.STNID"))
+GSOD_clim <- dplyr::left_join(GSOD_clim, CRU_GSOD, by = c("STNID" = "stations.STNID"))
 ```
 
 Save new data to disk for distribution with R package

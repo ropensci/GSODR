@@ -9,27 +9,27 @@
 \item{STNID}{Unique station ID}
 \item{LON}{Longitude in WGS84 system}
 \item{LAT}{Latitude in WGS84 system}
-\item{CHELSA_bio1_1979-2013_V1_1}{Annual mean temperature [degree C]}
-\item{CHELSA_bio2_1979-2013_V1_1}{Mean diurnal range [degree C]}
+\item{CHELSA_bio1_1979-2013_V1_1}{Annual mean temperature [degrees Celsius]}
+\item{CHELSA_bio2_1979-2013_V1_1}{Mean diurnal range [degrees Celsius]}
 \item{CHELSA_bio3_1979-2013_V1_1}{Isothermality}
 \item{CHELSA_bio4_1979-2013_V1_1}{Temperature seasonality}
-\item{CHELSA_bio5_1979-2013_V1_1}{Maximum Temperature of warmest month
-[degree C]}
-\item{CHELSA_bio6_1979-2013_V1_1}{Minimum Temperature of coldest month
-[degree C]}
-\item{CHELSA_bio7_1979-2013_V1_1}{Temperature Annual Range [degree C]}
+\item{CHELSA_bio5_1979-2013_V1_1}{Maximum temperature of warmest month
+[degrees Celsius]}
+\item{CHELSA_bio6_1979-2013_V1_1}{Minimum temperature of coldest month
+[degrees Celsius]}
+\item{CHELSA_bio7_1979-2013_V1_1}{Temperature annual range [degrees Celsius]}
 \item{CHELSA_bio8_1979-2013_V1_1}{Mean Temperature of wettest quarter
-[degree C]}
+[degrees Celsius]}
 \item{CHELSA_bio9_1979-2013_V1_1}{Mean Temperature of driest quarter
-[degree C]}
+[degrees Celsius]}
 \item{CHELSA_bio10_1979-2013_V1_1}{Mean Temperature of warmest quarter
-[degree C]}
+[degrees Celsius]}
 \item{CHELSA_bio11_1979-2013_V1_1}{Mean Temperature of coldest quarter
-[degree C]}
+[degrees Celsius]}
 \item{CHELSA_bio12_1979-2013_V1_1}{Annual precipitation amount [mm]}
 \item{CHELSA_bio13_1979-2013_V1_1}{Precipitation of wettest month [mm]}
 \item{CHELSA_bio14_1979-2013_V1_1}{Precipitation of driest month [mm]}
-\item{CHELSA_bio15_1979-2013_V1_1}{Precipitation Seasonality}
+\item{CHELSA_bio15_1979-2013_V1_1}{Precipitation seasonality}
 \item{CHELSA_bio16_1979-2013_V1_1}{Precipitation of wettest quarter [mm]}
 \item{CHELSA_bio17_1979-2013_V1_1}{Precipitation of driest quarter [mm]}
 \item{CHELSA_bio18_1979-2013_V1_1}{Precipitation of warmest quarter [mm]}
@@ -60,6 +60,101 @@
 \item{CHELSA_temp_11_1979-2013}{Mean November temperature}
 \item{CHELSA_temp_12_1979-2013}{Mean December temperature}
 \item{CHELSA_temp_1979-2013_land}{Mean annual temperature}
+\item{CRU_CL2_0_dtr_01}{Mean January diurnal temperature range [degrees Celsius]}
+\item{CRU_CL2_0_dtr_02}{Mean Februrary diurnal temperature range [degrees Celsius]}
+\item{CRU_CL2_0_dtr_03}{Mean March diurnal temperature range [degrees Celsius]}
+\item{CRU_CL2_0_dtr_04}{Mean April diurnal temperature range [degrees Celsius]}
+\item{CRU_CL2_0_dtr_05}{Mean May diurnal temperature range [degrees Celsius]}
+\item{CRU_CL2_0_dtr_06}{Mean June diurnal temperature range [degrees Celsius]}
+\item{CRU_CL2_0_dtr_07}{Mean July diurnal temperature range [degrees Celsius]}
+\item{CRU_CL2_0_dtr_08}{Mean August diurnal temperature range [degrees Celsius]}
+\item{CRU_CL2_0_dtr_09}{Mean September diurnal temperature range [degrees Celsius]}
+\item{CRU_CL2_0_dtr_10}{Mean October diurnal temperature range [degrees Celsius]}
+\item{CRU_CL2_0_dtr_11}{Mean November diurnal temperature range [degrees Celsius]}
+\item{CRU_CL2_0_dtr_12}{Mean December diurnal temperature range [degrees Celsius]}
+\item{CRU_CL2_0_frs_01}{January ground-frost [number of days with ground-frost per month]}
+\item{CRU_CL2_0_frs_02}{Februrary ground-frost [number of days with ground-frost per month]}
+\item{CRU_CL2_0_frs_03}{March ground-frost [number of days with ground-frost per month]}
+\item{CRU_CL2_0_frs_04}{April ground-frost [number of days with ground-frost per month]}
+\item{CRU_CL2_0_frs_05}{May ground-frost [number of days with ground-frost per month]}
+\item{CRU_CL2_0_frs_06}{June ground-frost [number of days with ground-frost per month]}
+\item{CRU_CL2_0_frs_07}{July ground-frost [number of days with ground-frost per month]}
+\item{CRU_CL2_0_frs_08}{August ground-frost [number of days with ground-frost per month]}
+\item{CRU_CL2_0_frs_09}{September ground-frost [number of days with ground-frost per month]}
+\item{CRU_CL2_0_frs_10}{October ground-frost [number of days with ground-frost per month]}
+\item{CRU_CL2_0_frs_11}{November ground-frost [number of days with ground-frost per month]}
+\item{CRU_CL2_0_frs_12}{December ground-frost [number of days with ground-frost per month]}
+\item{CRU_CL2_0_pre_01}{January precipitation [millimetres per month]}
+\item{CRU_CL2_0_pre_02}{Februrary precipitation [millimetres per month]}
+\item{CRU_CL2_0_pre_03}{March precipitation [millimetres per month]}
+\item{CRU_CL2_0_pre_04}{April precipitation [millimetres per month]}
+\item{CRU_CL2_0_pre_05}{May precipitation [millimetres per month]}
+\item{CRU_CL2_0_pre_06}{June precipitation [millimetres per month]}
+\item{CRU_CL2_0_pre_07}{July precipitation [millimetres per month]}
+\item{CRU_CL2_0_pre_08}{August precipitation [millimetres per month]}
+\item{CRU_CL2_0_pre_09}{September precipitation [millimetres per month]}
+\item{CRU_CL2_0_pre_10}{October precipitation [millimetres per month]}
+\item{CRU_CL2_0_pre_11}{November precipitation [millimetres per month]}
+\item{CRU_CL2_0_pre_12}{December precipitation [millimetres per month]}
+\item{CRU_CL2_0_rd0_01}{January wet-days [no days with >0.1mm rain per month]}
+\item{CRU_CL2_0_rd0_02}{Februrary wet-days [no days with >0.1mm rain per month]}
+\item{CRU_CL2_0_rd0_03}{March wet-days [no days with >0.1mm rain per month]}
+\item{CRU_CL2_0_rd0_04}{April wet-days [no days with >0.1mm rain per month]}
+\item{CRU_CL2_0_rd0_05}{May wet-days [no days with >0.1mm rain per month]}
+\item{CRU_CL2_0_rd0_06}{June wet-days [no days with >0.1mm rain per month]}
+\item{CRU_CL2_0_rd0_07}{July wet-days [no days with >0.1mm rain per month]}
+\item{CRU_CL2_0_rd0_08}{August wet-days [no days with >0.1mm rain per month]}
+\item{CRU_CL2_0_rd0_09}{September wet-days [no days with >0.1mm rain per month]}
+\item{CRU_CL2_0_rd0_10}{October wet-days [no days with >0.1mm rain per month]}
+\item{CRU_CL2_0_rd0_11}{November wet-days [no days with >0.1mm rain per month]}
+\item{CRU_CL2_0_rd0_12}{December wet-days [no days with >0.1mm rain per month]}
+\item{CRU_CL2_0_reh_01}{Mean January relative humidity [percent]}
+\item{CRU_CL2_0_reh_02}{Mean Februrary relative humidity [percent]}
+\item{CRU_CL2_0_reh_03}{Mean March relative humidity [percent]}
+\item{CRU_CL2_0_reh_04}{Mean April relative humidity [percent]}
+\item{CRU_CL2_0_reh_05}{Mean May relative humidity [percent]}
+\item{CRU_CL2_0_reh_06}{Mean June relative humidity [percent]}
+\item{CRU_CL2_0_reh_07}{Mean July relative humidity [percent]}
+\item{CRU_CL2_0_reh_08}{Mean August relative humidity [percent]}
+\item{CRU_CL2_0_reh_09}{Mean September relative humidity [percent]}
+\item{CRU_CL2_0_reh_10}{Mean October relative humidity [percent]}
+\item{CRU_CL2_0_reh_11}{Mean November relative humidity [percent]}
+\item{CRU_CL2_0_sun_01}{Mean January sunshine [percent of maximum possible (percent of day length)]}
+\item{CRU_CL2_0_sun_02}{Mean Februrary sunshine [percent of maximum possible (percent of day length)]}
+\item{CRU_CL2_0_sun_03}{Mean March sunshine [percent of maximum possible (percent of day length)]}
+\item{CRU_CL2_0_sun_04}{Mean April sunshine [percent of maximum possible (percent of day length)]}
+\item{CRU_CL2_0_sun_05}{Mean May sunshine [percent of maximum possible (percent of day length)]}
+\item{CRU_CL2_0_sun_06}{Mean June sunshine [percent of maximum possible (percent of day length)]}
+\item{CRU_CL2_0_sun_07}{Mean July sunshine [percent of maximum possible (percent of day length)]}
+\item{CRU_CL2_0_sun_08}{Mean August sunshine [percent of maximum possible (percent of day length)]}
+\item{CRU_CL2_0_sun_09}{Mean September sunshine [percent of maximum possible (percent of day length)]}
+\item{CRU_CL2_0_sun_10}{Mean October sunshine [percent of maximum possible (percent of day length)]}
+\item{CRU_CL2_0_sun_11}{Mean November sunshine [percent of maximum possible (percent of day length)]}
+\item{CRU_CL2_0_sun_12}{Mean December sunshine [percent of maximum possible (percent of day length)]}
+\item{CRU_CL2_0_tmp_01}{Mean January temperature [degrees Celsius]}
+\item{CRU_CL2_0_tmp_02}{Mean Februrary temperature [degrees Celsius]}
+\item{CRU_CL2_0_tmp_03}{Mean March temperature [degrees Celsius]}
+\item{CRU_CL2_0_tmp_04}{Mean April temperature [degrees Celsius]}
+\item{CRU_CL2_0_tmp_05}{Mean May temperature [degrees Celsius]}
+\item{CRU_CL2_0_tmp_06}{Mean June temperature [degrees Celsius]}
+\item{CRU_CL2_0_tmp_07}{Mean July temperature [degrees Celsius]}
+\item{CRU_CL2_0_tmp_08}{Mean August temperature [degrees Celsius]}
+\item{CRU_CL2_0_tmp_09}{Mean September temperature [degrees Celsius]}
+\item{CRU_CL2_0_tmp_10}{Mean October temperature [degrees Celsius]}
+\item{CRU_CL2_0_tmp_11}{Mean November temperature [degrees Celsius]}
+\item{CRU_CL2_0_tmp_12}{Mean December temperature [degrees Celsius]}
+\item{CRU_CL2_0_wnd_01}{Mean January 10 metre wind speed [metres per second]}
+\item{CRU_CL2_0_wnd_02}{Mean Februrary 10 metre wind speed [metres per second]}
+\item{CRU_CL2_0_wnd_03}{Mean March 10 metre wind speed [metres per second]}
+\item{CRU_CL2_0_wnd_04}{Mean April 10 metre wind speed [metres per second]}
+\item{CRU_CL2_0_wnd_05}{Mean May 10 metre wind speed [metres per second]}
+\item{CRU_CL2_0_wnd_06}{Mean June 10 metre wind speed [metres per second]}
+\item{CRU_CL2_0_wnd_07}{Mean July 10 metre wind speed [metres per second]}
+\item{CRU_CL2_0_wnd_08}{Mean August 10 metre wind speed [metres per second]}
+\item{CRU_CL2_0_wnd_09}{Mean September 10 metre wind speed [metres per second]}
+\item{CRU_CL2_0_wnd_10}{Mean October 10 metre wind speed [metres per second]}
+\item{CRU_CL2_0_wnd_11}{Mean November 10 metre wind speed [metres per second]}
+\item{CRU_CL2_0_wnd_12}{Mean December 10 metre wind speed [metres per second]}
 \item{MODCF_meanannual}{Mean annual cloud fraction}
 \item{MODCF_monthlymean_01}{Mean January cloud fraction}
 \item{MODCF_monthlymean_02}{Mean February fraction}
@@ -75,18 +170,18 @@
 \item{MODCF_monthlymean_12}{Mean December cloud fraction}
 \item{MODCF_seasonality_concentration}{Cloud fraction seasonality
 concentration}
-\item{ESACCI_snow_prob_Jan_500m}{Mean January snow cover probability}
-\item{ESACCI_snow_prob_Feb_500m}{Mean February snow cover probability}
-\item{ESACCI_snow_prob_Mar_500m}{Mean March snow cover probability}
-\item{ESACCI_snow_prob_Apr_500m}{Mean April snow cover probability}
-\item{ESACCI_snow_prob_May_500m}{Mean May snow cover probability}
-\item{ESACCI_snow_prob_Jun_500m}{Mean June snow cover probability}
-\item{ESACCI_snow_prob_Jul_500m}{Mean July snow cover probability}
-\item{ESACCI_snow_prob_Aug_500m}{Mean August snow cover probability}
-\item{ESACCI_snow_prob_Sep_500m}{Mean September snow cover probability}
-\item{ESACCI_snow_prob_Oct_500m}{Mean October snow cover probability}
-\item{ESACCI_snow_prob_Nov_500m}{Mean November snow cover probability}
-\item{ESACCI_snow_prob_Dec_500m}{Mean December snow cover probability}
+\item{ESACCI_snow_prob_1_500m}{Mean January snow cover probability}
+\item{ESACCI_snow_prob_2_500m}{Mean February snow cover probability}
+\item{ESACCI_snow_prob_3_500m}{Mean March snow cover probability}
+\item{ESACCI_snow_prob_4_500m}{Mean April snow cover probability}
+\item{ESACCI_snow_prob_5_500m}{Mean May snow cover probability}
+\item{ESACCI_snow_prob_6_500m}{Mean June snow cover probability}
+\item{ESACCI_snow_prob_7_500m}{Mean July snow cover probability}
+\item{ESACCI_snow_prob_8_500m}{Mean August snow cover probability}
+\item{ESACCI_snow_prob_9_500m}{Mean September snow cover probability}
+\item{ESACCI_snow_prob_10_500m}{Mean October snow cover probability}
+\item{ESACCI_snow_prob_11_500m}{Mean November snow cover probability}
+\item{ESACCI_snow_prob_12_500m}{Mean December snow cover probability}
 }}
 \source{
 CHELSA climate layers (\url{http://chelsa-climate.org/}) / Karger,
@@ -101,6 +196,10 @@ Dynamics for Predicting Ecosystem and Biodiversity Distributions. PLoS Biol
 
 ESA's CCI-LC snow cover probability
 (\url{http://maps.elie.ucl.ac.be/CCI/viewer/index.php})
+
+A high-resolution data set of surface climate over global land areas.
+(2000) New M, Lister D, Hulme M, Makin I. Climate Research, Vol 21, pg 1-25
+http://www.cru.uea.ac.uk/cru/data/hrg/tmc/readme.txt
 }
 \usage{
 GSOD_clim
