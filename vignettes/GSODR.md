@@ -1,11 +1,11 @@
 ---
 title: "GSODR"
 author: "Adam H Sparks"
-date: "2016-11-30"
+date: "2017-01-05"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteEngine{knitr::knitr}
-  %\VignetteIndexEntry{GSODR vignette}
+  %\VignetteIndexEntry{GSODR}
   %\VignetteEncoding{UTF-8}
 ---
 
