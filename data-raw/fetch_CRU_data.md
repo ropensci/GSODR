@@ -1,7 +1,7 @@
 CRU CL2.0 Data
 ================
 
-CRU CL2.0 data are a gridded climatology of 1961-1990 monthly means released in 2002 and cover all land areas (excluding Antarctica) at 10 arc-second resolution. For more information see the description of the data provided by the University of East Anglia Climate Research Unit (CRU), <http://www.cru.uea.ac.uk/cru/data/hrg/tmc/readme.txt>.
+CRU CL2.0 data are a gridded climatology of 1961-1990 monthly means released in 2002 and cover all land areas (excluding Antarctica) at 10 minute resolution. For more information see the description of the data provided by the University of East Anglia Climate Research Unit (CRU), <http://www.cru.uea.ac.uk/cru/data/hrg/tmc/readme.txt>.
 
 Download, extract and merge CRU data with provided GSOD climate data
 ====================================================================
@@ -85,18 +85,18 @@ CRU_stack_names <- c(
     names(CRU_stack[1]),
     "_",
     c(
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec"
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11",
+      "12"
     )
   ),
   paste0(
@@ -104,18 +104,18 @@ CRU_stack_names <- c(
     names(CRU_stack[2]),
     "_",
     c(
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec"
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11",
+      "12"
     )
   ),
   paste0(
@@ -123,18 +123,18 @@ CRU_stack_names <- c(
     names(CRU_stack[3]),
     "_",
     c(
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec"
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11",
+      "12"
     )
   ),
   paste0(
@@ -142,18 +142,18 @@ CRU_stack_names <- c(
     names(CRU_stack[4]),
     "_",
     c(
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec"
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11",
+      "12"
     )
   ),
   paste0(
@@ -161,18 +161,18 @@ CRU_stack_names <- c(
     names(CRU_stack[5]),
     "_",
     c(
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec"
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11",
+      "12"
     )
   ),
   paste0(
@@ -180,18 +180,18 @@ CRU_stack_names <- c(
     names(CRU_stack[6]),
     "_",
     c(
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec"
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11",
+      "12"
     )
   ),
   paste0(
@@ -199,18 +199,18 @@ CRU_stack_names <- c(
     names(CRU_stack[7]),
     "_",
     c(
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec"
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11",
+      "12"
     )
   ),
   paste0(
@@ -218,18 +218,18 @@ CRU_stack_names <- c(
     names(CRU_stack[8]),
     "_",
     c(
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec"
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11",
+      "12"
     )
   )
 )
@@ -262,14 +262,14 @@ Save new data to disk for distribution with R package
 devtools::use_data(GSOD_clim, overwrite = TRUE, compress = "bzip2")
 ```
 
-    ## Saving GSOD_clim as GSOD_clim.rda to /Users/U8004755/Development/GSODR/data
+    ## Saving GSOD_clim as GSOD_clim.rda to /Users/asparks/Development/GSODR/data
 
 R System Information
 --------------------
 
     ## R version 3.3.2 (2016-10-31)
-    ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-    ## Running under: OS X El Capitan 10.11.6
+    ## Platform: x86_64-apple-darwin16.1.0 (64-bit)
+    ## Running under: macOS Sierra 10.12.2
     ## 
     ## locale:
     ## [1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8
@@ -288,7 +288,7 @@ R System Information
     ## [13] grid_3.3.2        data.table_1.10.0 DBI_0.5-1        
     ## [16] withr_1.0.2       GSODR_1.0         htmltools_0.3.5  
     ## [19] yaml_2.1.14       assertthat_0.1    rprojroot_1.1    
-    ## [22] digest_0.6.10     tibble_1.2        readr_1.0.0      
+    ## [22] digest_0.6.11     tibble_1.2        readr_1.0.0      
     ## [25] purrr_0.2.2       curl_2.3          memoise_1.0.0    
     ## [28] evaluate_0.10     rmarkdown_1.3     sp_1.2-4         
     ## [31] stringi_1.1.2     backports_1.0.4

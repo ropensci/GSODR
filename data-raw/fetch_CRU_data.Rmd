@@ -7,14 +7,14 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-CRU CL2.0 data are a gridded climatology of 1961-1990 monthly means released in 2002 and cover all land areas (excluding Antarctica) at 10 arc-second resolution. For more information see the description of the data provided by the University of East Anglia Climate Research Unit (CRU), http://www.cru.uea.ac.uk/cru/data/hrg/tmc/readme.txt.
+CRU CL2.0 data are a gridded climatology of 1961-1990 monthly means released in 2002 and cover all land areas (excluding Antarctica) at 10-minute resolution. For more information see the description of the data provided by the University of East Anglia Climate Research Unit (CRU), http://www.cru.uea.ac.uk/cru/data/hrg/tmc/readme.txt.
 
 # Download, extract and merge CRU data with provided GSOD climate data
 
 ## Setup the R session
 
 ```{r session_setup}
-library(getCRUCL2.0)
+library(getCRUCLdata)
 
 # load existing GSOD_clim data from package
 GSOD_clim <- GSODR::GSOD_clim
@@ -60,18 +60,18 @@ CRU_stack_names <- c(
     names(CRU_stack[1]),
     "_",
     c(
-      01,
-      02,
-      03,
-      04,
-      05,
-      06,
-      07,
-      08,
-      09,
-      10,
-      11,
-      12
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11",
+      "12"
     )
   ),
   paste0(
@@ -79,18 +79,18 @@ CRU_stack_names <- c(
     names(CRU_stack[2]),
     "_",
     c(
-      01,
-      02,
-      03,
-      04,
-      05,
-      06,
-      07,
-      08,
-      09,
-      10,
-      11,
-      12
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11",
+      "12"
     )
   ),
   paste0(
@@ -98,18 +98,18 @@ CRU_stack_names <- c(
     names(CRU_stack[3]),
     "_",
     c(
-      01,
-      02,
-      03,
-      04,
-      05,
-      06,
-      07,
-      08,
-      09,
-      10,
-      11,
-      12
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11",
+      "12"
     )
   ),
   paste0(
@@ -117,18 +117,18 @@ CRU_stack_names <- c(
     names(CRU_stack[4]),
     "_",
     c(
-      01,
-      02,
-      03,
-      04,
-      05,
-      06,
-      07,
-      08,
-      09,
-      10,
-      11,
-      12
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11",
+      "12"
     )
   ),
   paste0(
@@ -136,18 +136,18 @@ CRU_stack_names <- c(
     names(CRU_stack[5]),
     "_",
     c(
-      01,
-      02,
-      03,
-      04,
-      05,
-      06,
-      07,
-      08,
-      09,
-      10,
-      11,
-      12
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11",
+      "12"
     )
   ),
   paste0(
@@ -155,18 +155,18 @@ CRU_stack_names <- c(
     names(CRU_stack[6]),
     "_",
     c(
-      01,
-      02,
-      03,
-      04,
-      05,
-      06,
-      07,
-      08,
-      09,
-      10,
-      11,
-      12
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11",
+      "12"
     )
   ),
   paste0(
@@ -174,18 +174,18 @@ CRU_stack_names <- c(
     names(CRU_stack[7]),
     "_",
     c(
-      01,
-      02,
-      03,
-      04,
-      05,
-      06,
-      07,
-      08,
-      09,
-      10,
-      11,
-      12
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11",
+      "12"
     )
   ),
   paste0(
@@ -193,18 +193,18 @@ CRU_stack_names <- c(
     names(CRU_stack[8]),
     "_",
     c(
-      01,
-      02,
-      03,
-      04,
-      05,
-      06,
-      07,
-      08,
-      09,
-      10,
-      11,
-      12
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11",
+      "12"
     )
   )
 )
@@ -250,7 +250,7 @@ Mansfield Road, Oxford OX1 3TB, United Kingdom
 > (2) Climatic Research Unit, and (3) Tyndall Centre for Climate Change Research,
 both at School of Environmental Sciences, University of East Anglia,
 Norwich NR4 7TJ, United Kingdom  
-> (4) International Water Management Institute, PO Box 2075, Colombo, Sri Lanka
+> (4) International Water Management Institute, PO Box 2"07"5, Colombo, Sri Lanka
 
 > **ABSTRACT:** We describe the construction of a 10-minute latitude/longitude data
 set of mean monthly surface climate over global land areas, excluding Antarctica.
