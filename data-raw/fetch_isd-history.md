@@ -1,7 +1,7 @@
 Fetch, clean and correct altitude in GSOD isd\_history.csv Data
 ================
 Adam H. Sparks
-2016-11-25
+2017-01-05
 
 Introduction
 ============
@@ -179,7 +179,7 @@ summary(SRTM_GSOD_elevation)
 ```
 
     ##      USAF               WBAN             STN_NAME        
-    ##  Length:28322       Length:28322       Length:28322      
+    ##  Length:28326       Length:28326       Length:28326      
     ##  Class :character   Class :character   Class :character  
     ##  Mode  :character   Mode  :character   Mode  :character  
     ##                                                          
@@ -187,23 +187,23 @@ summary(SRTM_GSOD_elevation)
     ##                                                          
     ##                                                          
     ##      CTRY              STATE               CALL                LAT        
-    ##  Length:28322       Length:28322       Length:28322       Min.   :-89.00  
+    ##  Length:28326       Length:28326       Length:28326       Min.   :-89.00  
     ##  Class :character   Class :character   Class :character   1st Qu.: 22.47  
-    ##  Mode  :character   Mode  :character   Mode  :character   Median : 39.26  
-    ##                                                           Mean   : 31.14  
+    ##  Mode  :character   Mode  :character   Mode  :character   Median : 39.25  
+    ##                                                           Mean   : 31.13  
     ##                                                           3rd Qu.: 49.88  
     ##                                                           Max.   : 89.37  
     ##                                                                           
     ##       LON               ELEV_M           BEGIN               END          
     ##  Min.   :-179.983   Min.   :-350.0   Min.   :19010101   Min.   :19051231  
-    ##  1st Qu.: -83.269   1st Qu.:  23.0   1st Qu.:19570701   1st Qu.:20020415  
-    ##  Median :   6.700   Median : 140.0   Median :19760302   Median :20160113  
-    ##  Mean   :  -3.444   Mean   : 360.7   Mean   :19782304   Mean   :20043017  
-    ##  3rd Qu.:  61.899   3rd Qu.: 435.0   3rd Qu.:20020328   3rd Qu.:20161122  
-    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20161113   Max.   :20161124  
+    ##  1st Qu.: -83.269   1st Qu.:  23.0   1st Qu.:19570701   1st Qu.:20020417  
+    ##  Median :   6.706   Median : 140.0   Median :19760302   Median :20160127  
+    ##  Mean   :  -3.439   Mean   : 360.8   Mean   :19782357   Mean   :20043158  
+    ##  3rd Qu.:  61.899   3rd Qu.: 435.0   3rd Qu.:20020384   3rd Qu.:20161230  
+    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20161229   Max.   :20161231  
     ##                     NA's   :218                                           
     ##     STNID           ELEV_M_SRTM_90m 
-    ##  Length:28322       Min.   :-361.0  
+    ##  Length:28326       Min.   :-361.0  
     ##  Class :character   1st Qu.:  25.0  
     ##  Mode  :character   Median : 156.0  
     ##                     Mean   : 380.1  
@@ -243,11 +243,11 @@ SRTM_GSOD_elevation[, c(1:11) := NULL]
     ##     4: 010015-99999              NA
     ##     5: 010016-99999              NA
     ##    ---                             
-    ## 28318: 999999-94996             416
-    ## 28319: 999999-96404              NA
-    ## 28320: 999999-96406              NA
-    ## 28321: 999999-96407              NA
-    ## 28322: 999999-96408              NA
+    ## 28322: 999999-94996             416
+    ## 28323: 999999-96404              NA
+    ## 28324: 999999-96406              NA
+    ## 28325: 999999-96407              NA
+    ## 28326: 999999-96408              NA
 
 ``` r
 devtools::use_data(SRTM_GSOD_elevation, overwrite = TRUE, compress = "bzip2")
@@ -284,26 +284,26 @@ R System Information
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ## [1] ggalt_0.1.1   ggplot2_2.2.0 foreach_1.4.3
+    ## [1] ggalt_0.1.1   ggplot2_2.2.1 foreach_1.4.3
     ## 
     ## loaded via a namespace (and not attached):
     ##  [1] Rcpp_0.12.8        highr_0.6          RColorBrewer_1.1-2
     ##  [4] compiler_3.3.2     plyr_1.8.4         iterators_1.0.8   
     ##  [7] tools_3.3.2        digest_0.6.10      memoise_1.0.0     
     ## [10] evaluate_0.10      tibble_1.2         gtable_0.2.0      
-    ## [13] lattice_0.20-34    DBI_0.5-1          curl_2.2          
-    ## [16] yaml_2.1.14        rgdal_1.2-4        parallel_3.3.2    
+    ## [13] lattice_0.20-34    DBI_0.5-1          curl_2.3          
+    ## [16] yaml_2.1.14        rgdal_1.2-5        parallel_3.3.2    
     ## [19] withr_1.0.2        dplyr_0.5.0        stringr_1.1.0     
     ## [22] raster_2.5-8       knitr_1.15.1       devtools_1.12.0   
     ## [25] maps_3.1.1         rprojroot_1.1      grid_3.3.2        
-    ## [28] data.table_1.9.6   R6_2.2.0           rmarkdown_1.2     
-    ## [31] sp_1.2-3           readr_1.0.0        magrittr_1.5      
+    ## [28] data.table_1.10.0  R6_2.2.0           rmarkdown_1.3     
+    ## [31] sp_1.2-4           readr_1.0.0        magrittr_1.5      
     ## [34] MASS_7.3-45        backports_1.0.4    scales_0.4.1      
     ## [37] codetools_0.2-15   htmltools_0.3.5    proj4_1.0-8       
-    ## [40] assertthat_0.1     countrycode_0.18   colorspace_1.3-1  
+    ## [40] assertthat_0.1     countrycode_0.18   colorspace_1.3-2  
     ## [43] labeling_0.3       ash_1.0-15         KernSmooth_2.23-15
     ## [46] stringi_1.1.2      lazyeval_0.2.0     doParallel_1.0.10 
-    ## [49] munsell_0.4.3      chron_2.3-47
+    ## [49] munsell_0.4.3
 
 References
 ==========
