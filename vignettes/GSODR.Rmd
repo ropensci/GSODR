@@ -249,7 +249,7 @@ ggplot(data = tbar_temps, aes(x = ymd(YEARMODA), y = value,
   scale_x_date(name = "Date") +
   theme_bw()
 ```
-![GSOD Station Locations](./figure/Toowoomba_temperature.png)
+![GSOD Toowoomba Temperatures](./figure/Toowoomba_temperature.png)
 
 ## Creating Spatial Files
 
@@ -367,6 +367,19 @@ x <- reformat_GSOD(file_list = y)
 ```r
 x <- reformat_GSOD(dsn = "~/GSOD/gsod_1960")
 ```
+
+# Additional Climate Data
+
+Additional climate data, [GSOD.data](https://github.com/adamhsparks/GSODR.data),
+formatted for use with GSOD data provided by GSODR are available as an R package
+instalable through GitHub due to the package size, 5.1Mb, being too large for
+CRAN.
+
+```r
+install.packages("devtools")
+devtools::install_github("adamhsparks/GSOD_data")
+library("GSOD_data")
+````
 
 # Notes
 
