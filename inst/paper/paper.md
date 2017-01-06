@@ -54,19 +54,12 @@ provide:
   * a function to help identify stations within a given radius of a point of
 interest.
 
-Two additional data sets are included. The first is a data set of alternative
+Three additional data sets are included. The first is a data set of alternative
 elevation data based on a 200 meter buffer of elevation values, derived from the
 CGIAR-CSI SRTM 90m Database [@Jarvis2008]. These data are useful to help address
 possible inaccuracies and in many cases, missing elevation values, in the
 reported station elevations. The second set contains climate data corresponding
-to GSOD station locations. This set contains three types of data, i) 
-Climatologies at High Resolution for the Earth’s Land Surface Areas (CHELSA) 
-[@Karger2016], downscaled temperature and precipitation estimates from the
-European Centre for Medium-Range Weather Forecast (ECMWF) climatic reanalysis
-interim (ERA-Interim), ii) EarthEnv MODIS cloud fraction, which integrate 15
-years of twice-daily remote sensing-derived cloud observations [@Wilson2016]
-and iii) European Space Agency Climate Change Initiative (ESA CCI) seasonal
-probability of snow cover [@ESA2016].
+to GSOD station locations.
 
 When using this package, GSOD stations are checked for inaccurate longitude and
 latitude values and any stations that are missing or having incorrect are

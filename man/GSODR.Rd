@@ -46,9 +46,6 @@ expressed in kilometres for a given point using Latitude and Longitude
 \code{\link{get_station_list}} Fetch latest list of stations and
 corresponding metadata from the NCDC FTP server
 
-\code{\link{GSOD_clim}} GSDOR provides additional climatological
-data sets to enhance the use of this weather data
-
 \code{\link{SRTM_GSOD_elevation}} GSDOR provides additional
 elevation data derived from SRTM90m data
 
