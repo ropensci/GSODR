@@ -49,7 +49,6 @@ Imports:
     stats,
     utils
 Suggests:
-    GSODR.data,
     ggalt,
     ggplot2,
     knitr,
