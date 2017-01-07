@@ -233,6 +233,13 @@ get_GSOD <- function(years = NULL,
   ftp_base <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/%s/"
   # Validate user inputs -------------------------------------------------------
   .validate_years(years)
+  # Validate stations for missing days -----------------------------------------
+  if (!is.null(max_missing)) {
+    if (is.na(max_missing) | max_missing < 1) {
+      stop("\nThe 'max_missing' parameter must be a positive value larger than
+           1\n")
+    }
+  }
   if (!is.null(dsn)) {
     outfile <- .validate_fileout(CSV, dsn, filename, GPKG)
   }
