@@ -30,8 +30,9 @@ file, PHL-2010.gpkg, in the user's home directory.
 
 ### Install GSODR.data package
 
-This package is only available from GitHub due to its large size. It provides
-optional data for use with the GSODR package.
+This package is only available from GitHub; due to its large size (5.5Mb
+installed) it is not allowed on CRAN. It provides optional data for use with the
+GSODR package.
 
 ```r
 install.packages("devtools")
