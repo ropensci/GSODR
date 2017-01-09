@@ -243,11 +243,11 @@ Example - Download and plot data for a single country
 Download data for Philippines for year 2010 and generate a spatial, year
 summary file, PHL-2010.gpkg, in the user's home directory.
 
-### Install GSODR.data package
+### Install GSODRdata package
 
 This package is only available from GitHub; due to its large size (5.5Mb
 installed) it is not allowed on CRAN. It provides optional data for use
-with the GSODR package. See <https://github.com/adamhsparks/GSODR.data>
+with the GSODR package. See <https://github.com/adamhsparks/GSODRdata>
 for more.
 
 ``` r
@@ -255,7 +255,7 @@ install.packages("devtools")
 devtools::install_github("adamhsparks/GSOD.data")
 ```
 
-### Working with climate data from GSODR.data
+### Working with climate data from GSODRdata
 
 Now that the extra data have been installed, take a look at the CHELSA
 data. CHELSA (Climatologies at high resolution for the earth’s land
@@ -280,7 +280,7 @@ available in the download section.
 
 See <http://chelsa-climate.org> for more information on these data.
 
-    library(GSODR.data)
+    library(GSODRdata)
     head(CHELSA)
 
     ##          STNID    LON    LAT CHELSA_bio10_1979-2013_V1_1 CHELSA_bio11_1979-2013_V1_1 CHELSA_bio1_1979-2013_V1_1
