@@ -32,16 +32,12 @@ file, PHL-2010.gpkg, in the user's home directory.
 
 This package is only available from GitHub; due to its large size (5.5Mb
 installed) it is not allowed on CRAN. It provides optional data for use with the
-GSODR package.
+GSODR package.  See https://github.com/adamhsparks/GSODR.data for more.
 
 ```r
 install.packages("devtools")
 devtools::install_github("adamhsparks/GSOD.data")
 ````
-
-### Working with climate data from GSODR.data
-
-Now that the extra data have been installed, take a look at the CHELSA data.
 
 ### Working with climate data from GSODR.data
 
