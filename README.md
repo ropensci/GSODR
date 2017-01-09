@@ -6,7 +6,7 @@ GSODR: Global Surface Summary Daily Weather Data in R
 [![Travis-CI Build
 Status](https://travis-ci.org/adamhsparks/GSODR.svg?branch=master)](https://travis-ci.org/adamhsparks/GSODR)
 [![Build
-status](https://ci.appveyor.com/api/projects/status/8daqtllo2sg6me07/branch/master?svg=true)](https://ci.appveyor.com/project/adamhsparks/GSODR/branch/master?svg=true)
+status](https://ci.appveyor.com/api/projects/status/s09kh2nj59o35ob1/branch/master?svg=true)](https://ci.appveyor.com/project/adamhsparks/gsodr/branch/master)
 [![Coverage
 Status](https://img.shields.io/codecov/c/github/adamhsparks/GSODR/master.svg)](https://codecov.io/github/adamhsparks/GSODR?branch=master)
 [![rstudio mirror
