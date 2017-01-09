@@ -591,8 +591,8 @@ final file which includes the following fields:
 Notes
 =====
 
-Sources
--------
+Data Sources
+------------
 
 #### CHELSA climate layers
 
