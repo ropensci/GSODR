@@ -37,7 +37,7 @@ GSODR package.  See https://github.com/adamhsparks/GSODRdata for more.
 ```r
 install.packages("devtools")
 devtools::install_github("adamhsparks/GSOD.data")
-````
+```
 
 ### Working with climate data from GSODRdata
 
@@ -46,6 +46,7 @@ CHELSA (Climatologies at high resolution for the earth’s land surface areas) a
 climate data at (30 arc sec) for the earth land surface areas. 
 
 **Description of CHELSA data from CHELSA website**
+
 > CHELSA is a high resolution (30 arc sec) climate data set for the earth land surface areas currently under development in coorporation with the Department of Geography of the University of Hamburg (Prof. Dr. Jürgen Böhner, Dr. Olaf Conrad, Tobias Kawohl), the Swiss Federal Institute for Forest, Snow and Landscape Research WSL (Prof. Dr. Niklaus Zimmermann), the University of Zurich (Dr. Dirk N. Karger, Dr. Michael Kessler), and the University of Göttingen (Prof. Dr. Holger Kreft).
 It includes monthly mean temperature and precipitation patterns for the time period 1979-2013.
 CHELSA is based on a quasi-mechanistical statistical downscaling of the ERA interim global circulation model (http://www.ecmwf.int/en/research/climate-reanalysis/era-interim) with a GPCC bias correction (https://www.dwd.de/EN/ourservices/gpcc/gpcc.html) and is freely available  in the download section.
