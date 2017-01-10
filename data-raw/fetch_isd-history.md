@@ -1,7 +1,7 @@
 Fetch, clean and correct altitude in GSOD isd\_history.csv Data
 ================
 Adam H. Sparks
-2017-01-05
+2017-01-10
 
 Introduction
 ============
@@ -179,7 +179,7 @@ summary(SRTM_GSOD_elevation)
 ```
 
     ##      USAF               WBAN             STN_NAME        
-    ##  Length:28326       Length:28326       Length:28326      
+    ##  Length:28327       Length:28327       Length:28327      
     ##  Class :character   Class :character   Class :character  
     ##  Mode  :character   Mode  :character   Mode  :character  
     ##                                                          
@@ -187,7 +187,7 @@ summary(SRTM_GSOD_elevation)
     ##                                                          
     ##                                                          
     ##      CTRY              STATE               CALL                LAT        
-    ##  Length:28326       Length:28326       Length:28326       Min.   :-89.00  
+    ##  Length:28327       Length:28327       Length:28327       Min.   :-89.00  
     ##  Class :character   Class :character   Class :character   1st Qu.: 22.47  
     ##  Mode  :character   Mode  :character   Mode  :character   Median : 39.25  
     ##                                                           Mean   : 31.13  
@@ -196,14 +196,14 @@ summary(SRTM_GSOD_elevation)
     ##                                                                           
     ##       LON               ELEV_M           BEGIN               END          
     ##  Min.   :-179.983   Min.   :-350.0   Min.   :19010101   Min.   :19051231  
-    ##  1st Qu.: -83.269   1st Qu.:  23.0   1st Qu.:19570701   1st Qu.:20020417  
-    ##  Median :   6.706   Median : 140.0   Median :19760302   Median :20160127  
-    ##  Mean   :  -3.439   Mean   : 360.8   Mean   :19782357   Mean   :20043158  
-    ##  3rd Qu.:  61.899   3rd Qu.: 435.0   3rd Qu.:20020384   3rd Qu.:20161230  
-    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20161229   Max.   :20161231  
+    ##  1st Qu.: -83.270   1st Qu.:  23.0   1st Qu.:19570701   1st Qu.:20020417  
+    ##  Median :   6.700   Median : 140.0   Median :19760302   Median :20160127  
+    ##  Mean   :  -3.442   Mean   : 360.8   Mean   :19782371   Mean   :20047239  
+    ##  3rd Qu.:  61.898   3rd Qu.: 435.0   3rd Qu.:20020404   3rd Qu.:20170107  
+    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20170105   Max.   :20170109  
     ##                     NA's   :218                                           
     ##     STNID           ELEV_M_SRTM_90m 
-    ##  Length:28326       Min.   :-361.0  
+    ##  Length:28327       Min.   :-361.0  
     ##  Class :character   1st Qu.:  25.0  
     ##  Mode  :character   Median : 156.0  
     ##                     Mean   : 380.1  
@@ -243,11 +243,11 @@ SRTM_GSOD_elevation[, c(1:11) := NULL]
     ##     4: 010015-99999              NA
     ##     5: 010016-99999              NA
     ##    ---                             
-    ## 28322: 999999-94996             416
-    ## 28323: 999999-96404              NA
-    ## 28324: 999999-96406              NA
-    ## 28325: 999999-96407              NA
-    ## 28326: 999999-96408              NA
+    ## 28323: 999999-94996             416
+    ## 28324: 999999-96404              NA
+    ## 28325: 999999-96406              NA
+    ## 28326: 999999-96407              NA
+    ## 28327: 999999-96408              NA
 
 ``` r
 devtools::use_data(SRTM_GSOD_elevation, overwrite = TRUE, compress = "bzip2")
@@ -289,7 +289,7 @@ R System Information
     ## loaded via a namespace (and not attached):
     ##  [1] Rcpp_0.12.8        highr_0.6          RColorBrewer_1.1-2
     ##  [4] compiler_3.3.2     plyr_1.8.4         iterators_1.0.8   
-    ##  [7] tools_3.3.2        digest_0.6.10      memoise_1.0.0     
+    ##  [7] tools_3.3.2        digest_0.6.11      memoise_1.0.0     
     ## [10] evaluate_0.10      tibble_1.2         gtable_0.2.0      
     ## [13] lattice_0.20-34    DBI_0.5-1          curl_2.3          
     ## [16] yaml_2.1.14        rgdal_1.2-5        parallel_3.3.2    
