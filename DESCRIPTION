@@ -1,14 +1,10 @@
 Package: GSODR
 Type: Package
 Title: Global Summary Daily Weather Data in R
-Version: 1.0
-Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
-    email = "adamhsparks@gmail.com"),
-    person("Tomislav", "Hengl", role = "aut",
-    email = "tom.hengl@isric.org"),
-    person("Andrew", "Nelson", role = "aut",
-    email = "dr.andy.nelson@gmail.com"))
-Maintainer: Adam Sparks <adamhsparks@gmail.com>
+Version: 1.0.0
+Authors@R: as.person(c("Adam Sparks <adamhsparks@gmail.com> [aut, cre]",
+            "Tomislav Hengl <tom.hengl@isric.org> [aut]",
+            "Andrew Nelson <dr.andy.nelson@gmail.com> [aut]"))
 URL: https://github.com/adamhsparks/GSODR
 BugReports: https://github.com/adamhsparks/GSODR/issues
 Description: Provides automated downloading, parsing, cleaning, unit conversion

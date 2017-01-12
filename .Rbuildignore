@@ -13,3 +13,4 @@ appveyor.yml
 ^paper$
 vignettes/figure
 ^codecov\.yml$
+^docs$
