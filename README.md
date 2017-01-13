@@ -23,28 +23,27 @@ The GSOD or [Global Surface Summary of the Day
 data provided by the US National Climatic Data Center (NCDC) are a
 valuable source of weather data with global coverage. However, the data
 files are cumbersome and difficult to work with. The GSODR package aims
-to make it easy to find, tranfer and format the data you need for use in
-analysis. The GSODR package provides three main functions for
+to make it easy to find, transfer and format the data you need for use
+in analysis. The GSODR package provides four main functions for
 facilitating this:
 
--   `get_GSOD` - the main function that will query and transfer files
+-   `get_GSOD()` - the main function that will query and transfer files
     from the FTP server, reformat them and return a data.frame in R or
     save a file to disk  
--   `reformat_GSOD` - the workhorse, this function takes individual
+-   `reformat_GSOD()` - the workhorse, this function takes individual
     station files on the local disk and reformats them returning a
     data.frame in R  
--   `nearest_stations` - this function returns a dataframe containing a
-    list of stations and their metadata that fall within the given
-    radius of a point  
-    specified by the user
+-   `nearest_stations()` - this function returns a dataframe containing
+    a list of stations and their metadata that fall within the given
+    radius of a point specified by the user
 
-When reformatting data either with `get_GSOD` or `reformat_GSOD`, all
-units are converted to International System of Units (SI), e.g., inches
-to millimetres and Fahrenheit to Celsius. File output can be saved as a
-Comma Separated Value (CSV) file or in a spatial GeoPackage (GPKG) file,
-implemented by most major GIS software, summarising each year by
-station, which also includes vapour pressure and relative humidity
-variables calculated from existing data in GSOD.
+When reformatting data either with `get_GSOD()` or `reformat_GSOD()`,
+all units are converted to International System of Units (SI), e.g.,
+inches to millimetres and Fahrenheit to Celsius. File output can be
+saved as a Comma Separated Value (CSV) file or in a spatial GeoPackage
+(GPKG) file, implemented by most major GIS software, summarising each
+year by station, which also includes vapour pressure and relative
+humidity variables calculated from existing data in GSOD.
 
 Additional data are calculated by this R package using the original data
 and included in the final data. These include vapour pressure (ea and
@@ -93,10 +92,11 @@ package](https://CRAN.R-project.org/package=devtools), available from
 CRAN. We strive to keep the master branch on GitHub functional and
 working properly, although this may not always happen.
 
-If you find bugs, please file a report as an issue.
+If you find bugs, please file a [report as an
+issue](https://github.com/adamhsparks/GSODR/issues).
 
 ``` r
-install.packages("devtools")
+#install.packages("devtools")
 devtools::install_github("adamhsparks/GSODR", build_vignettes = TRUE)
 ```
 
@@ -105,13 +105,12 @@ Using GSODR
 
 ### Query the NCDC FTP server for GSOD data
 
-GSODR's main function, `get_GSOD`, downloads and cleans GSOD data from
+GSODR's main function, `get_GSOD()`, downloads and cleans GSOD data from
 the NCDC server. Following are a few examples of its capabilities.
 
-#### Example 1 - Download weather station for Toowoomba, Queensland for 2010
+#### Example 1 - Download weather station data for Toowoomba, Queensland for 2010
 
 ``` r
-
 library(GSODR)
 
 Tbar <- get_GSOD(years = 2010, station = "955510-99999")
@@ -177,9 +176,8 @@ user's home directory with a maximum of five missing days per weather
 station allowed.
 
 ``` r
-
 get_GSOD(years = 2010:2011, dsn = "~/", filename = "GSOD-agroclimatology",
-         agroclimatology = TRUE, max_missing = 5)
+         agroclimatology = TRUE, CSV = TRUE, max_missing = 5)
 ```
 
 #### Example 3 - Download and plot data for a single country
@@ -193,6 +191,9 @@ get_GSOD(years = 2010, country = "Philippines", dsn = "~/",
 ```
 
 ``` r
+#install.packages("spacetime")
+#install.packages("plotKML")
+
 library(rgdal)
 #> Loading required package: sp
 #> rgdal: version: 1.2-4, (SVN revision 643)
@@ -234,33 +235,33 @@ kml(tmp_ST, dtime = 24 * 3600, colour = TEMP, shape = shape, labels = TEMP,
 system("zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml")
 ```
 
-Compare the GSOD weather data from the Philippines with climatic data
-provided by the GSODR package in the `GSOD_clim` data set.
+#### Example 4 - Working with climate data from GSODRdata
 
-Example - Download and plot data for a single country
------------------------------------------------------
+This example will demonstrate how to download data for Philippines for
+year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in
+the user's home directory and link it with climate data from the
+`GSODRdata` package.
 
-Download data for Philippines for year 2010 and generate a spatial, year
-summary file, PHL-2010.gpkg, in the user's home directory.
-
-### Install GSODRdata package
+##### Install `GSODRdata` package
 
 This package is only available from GitHub; due to its large size (5.5Mb
 installed) it is not allowed on CRAN. It provides optional data for use
-with the GSODR package. See <https://github.com/adamhsparks/GSODRdata>
+with the `GSODR` package. See <https://github.com/adamhsparks/GSODRdata>
 for more.
 
 ``` r
-install.packages("devtools")
-devtools::install_github("adamhsparks/GSOD.data")
+# install.packages("devtools")
+devtools::install_github("adamhsparks/GSODdata")
 ```
 
-### Working with climate data from GSODRdata
+##### Working with climate data from `GSODRdata`
 
 Now that the extra data have been installed, take a look at the CHELSA
-data. CHELSA (Climatologies at high resolution for the earth’s land
-surface areas) are climate data at (30 arc sec) for the earth land
-surface areas.
+data that are one of the data sets included in the `GSODRdata` package.
+
+CHELSA (Climatologies at high resolution for the earth’s land surface
+areas) are climate data at (30 arc sec) for the earth land surface
+areas.
 
 **Description of CHELSA data from CHELSA website**
 
@@ -282,81 +283,89 @@ surface areas.
 
 See <http://chelsa-climate.org> for more information on these data.
 
-    library(GSODRdata)
-    head(CHELSA)
+Compare the GSOD weather data from the Philippines with climatic data
+provided by the GSODR package in the `CHELSA` data set.
 
-    ##          STNID    LON    LAT CHELSA_bio10_1979-2013_V1_1 CHELSA_bio11_1979-2013_V1_1 CHELSA_bio1_1979-2013_V1_1
-    ## 1 008268-99999 65.567 32.950                        30.0                         5.8                       18.3
-    ## 2 010014-99999  5.341 59.792                        14.3                         1.0                        7.1
-    ## 3 010015-99999  5.867 61.383                        12.5                        -3.2                        4.2
-    ## 4 010882-99999 11.342 62.578                        12.6                        -7.0                        2.3
-    ## 5 010883-99999  6.117 61.833                        15.2                        -0.2                        7.0
-    ## 6 010884-99999  9.567 59.185                        16.3                        -2.2                        6.6
-    ##   CHELSA_bio12_1979-2013_V1_1 CHELSA_bio13_1979-2013_V1_1 CHELSA_bio14_1979-2013_V1_1 CHELSA_bio15_1979-2013_V1_1
-    ## 1                       214.0                        54.6                         0.1                       104.9
-    ## 2                      1889.3                       223.7                        87.7                        30.3
-    ## 3                      2209.1                       254.7                       108.9                        30.1
-    ## 4                       563.0                        73.0                        26.7                        30.7
-    ## 5                      1710.3                       200.6                        78.5                        32.1
-    ## 6                       987.0                       120.9                        52.3                        24.4
-    ##   CHELSA_bio16_1979-2013_V1_1 CHELSA_bio17_1979-2013_V1_1 CHELSA_bio18_1979-2013_V1_1 CHELSA_bio19_1979-2013_V1_1
-    ## 1                       155.4                         0.6                         1.7                        96.9
-    ## 2                       650.7                       273.5                       433.3                       490.4
-    ## 3                       752.8                       332.6                       448.3                       621.1
-    ## 4                       216.2                        85.5                       198.7                       122.0
-    ## 5                       590.0                       244.7                       330.9                       494.4
-    ## 6                       338.0                       175.3                       242.3                       182.7
-    ##   CHELSA_bio2_1979-2013_V1_1 CHELSA_bio3_1979-2013_V1_1 CHELSA_bio4_1979-2013_V1_1 CHELSA_bio5_1979-2013_V1_1
-    ## 1                       23.0                       48.3                      884.1                       40.5
-    ## 2                       12.5                       44.8                      486.3                       21.5
-    ## 3                       16.7                       45.3                      591.5                       22.2
-    ## 4                       20.1                       45.5                      734.1                       23.6
-    ## 5                       15.6                       45.0                      573.4                       23.9
-    ## 6                       17.1                       44.3                      693.1                       25.4
-    ##   CHELSA_bio6_1979-2013_V1_1 CHELSA_bio7_1979-2013_V1_1 CHELSA_bio8_1979-2013_V1_1 CHELSA_bio9_1979-2013_V1_1 CHELSA_prec_10_1979-2013
-    ## 1                       -7.2                       47.7                       10.5                       26.7                      3.6
-    ## 2                       -6.5                       28.0                        5.7                        7.8                    230.6
-    ## 3                      -14.5                       36.8                       -1.7                        8.4                    237.5
-    ## 4                      -20.7                       44.3                       12.5                       -0.1                     48.9
-    ## 5                      -10.7                       34.7                        1.3                       12.2                    192.8
-    ## 6                      -13.3                       38.7                        8.5                        3.8                    122.1
-    ##   CHELSA_prec_11_1979-2013 CHELSA_prec_1_1979-2013 CHELSA_prec_12_1979-2013 CHELSA_prec_1979-2013_land CHELSA_prec_2_1979-2013
-    ## 1                     10.5                    35.8                     25.4                      214.5                    46.5
-    ## 2                    219.9                   198.4                    215.5                     1912.0                   153.3
-    ## 3                    237.8                   227.7                    248.3                     2170.2                   188.4
-    ## 4                     41.3                    40.3                     40.5                      559.3                    32.5
-    ## 5                    189.6                   189.5                    201.5                     1719.6                   153.7
-    ## 6                    106.2                    79.0                     82.4                      998.1                    53.0
-    ##  CHELSA_prec_3_1979-2013 CHELSA_prec_4_1979-2013 CHELSA_prec_5_1979-2013 CHELSA_prec_6_1979-2013 CHELSA_prec_7_1979-2013
-    ## 1                    54.8                    28.3                     7.0                     1.2                     1.0
-    ## 2                   151.9                   101.1                    90.6                   100.5                   116.7
-    ## 3                   176.4                   114.4                   107.0                   110.1                   119.2
-    ## 4                    31.8                    26.6                    38.9                    58.0                    69.7
-    ## 5                   145.0                    91.6                    79.0                    84.0                    90.1
-    ## 6                    63.7                    57.0                    72.1                    76.1                    84.3
-    ##   CHELSA_prec_8_1979-2013 CHELSA_prec_9_1979-2013 CHELSA_temp_10_1979-2013 CHELSA_temp_11_1979-2013 CHELSA_temp_1_1979-2013
-    ## 1                     0.3                     0.1                     19.2                     13.2                     4.9
-    ## 2                   165.6                   204.0                      8.0                      4.5                     1.2
-    ## 3                   159.6                   229.6                      4.3                      0.2                    -3.4
-    ## 4                    72.7                    57.9                      2.3                     -3.0                    -7.2
-    ## 5                   121.6                   181.4                      7.2                      3.0                    -0.4
-    ## 6                   105.0                    97.2                      6.7                      2.2                    -2.4
-    ##   CHELSA_temp_12_1979-2013 CHELSA_temp_1979-2013_land CHELSA_temp_2_1979-2013 CHELSA_temp_3_1979-2013 CHELSA_temp_4_1979-2013
-    ## 1                      7.7                       18.3                     7.0                    12.2                    18.3
-    ## 2                      2.1                        7.1                     0.8                     2.3                     5.1
-    ## 3                     -2.7                        4.1                    -3.2                    -0.8                     3.0
-    ## 4                     -6.5                        2.3                    -6.6                    -3.3                     1.5
-    ## 5                      0.3                        6.9                    -0.2                     2.2                     5.8
-    ## 6                     -1.4                        6.5                    -2.2                     0.8                     5.1
-    ##   CHELSA_temp_5_1979-2013 CHELSA_temp_6_1979-2013 CHELSA_temp_7_1979-2013 CHELSA_temp_8_1979-2013 ## CHELSA_temp_9_1979-2013
-    ## 1                    23.5                    28.2                    28.2                    29.7                    25.1
-    ## 2                     9.0                    12.0                    12.0                    14.2                    11.5
-    ## 3                     7.6                    10.9                    10.9                    12.2                     8.6
-    ## 4                     6.4                    10.9                    10.9                    12.1                     7.7
-    ## 5                    10.1                    13.2                    13.2                    14.9                    11.5
-    ## 6                    10.7                    14.7                    14.7                    15.8                    11.6
+``` r
+library(GSODRdata)
 
-### Using `dplyr` functions, join the CHELSA and GSODR data for plotting.
+head(CHELSA)
+```
+
+``` r
+##          STNID    LON    LAT CHELSA_bio10_1979-2013_V1_1 CHELSA_bio11_1979-2013_V1_1 CHELSA_bio1_1979-2013_V1_1
+## 1 008268-99999 65.567 32.950                        30.0                         5.8                       18.3
+## 2 010014-99999  5.341 59.792                        14.3                         1.0                        7.1
+## 3 010015-99999  5.867 61.383                        12.5                        -3.2                        4.2
+## 4 010882-99999 11.342 62.578                        12.6                        -7.0                        2.3
+## 5 010883-99999  6.117 61.833                        15.2                        -0.2                        7.0
+## 6 010884-99999  9.567 59.185                        16.3                        -2.2                        6.6
+##   CHELSA_bio12_1979-2013_V1_1 CHELSA_bio13_1979-2013_V1_1 CHELSA_bio14_1979-2013_V1_1 CHELSA_bio15_1979-2013_V1_1
+## 1                       214.0                        54.6                         0.1                       104.9
+## 2                      1889.3                       223.7                        87.7                        30.3
+## 3                      2209.1                       254.7                       108.9                        30.1
+## 4                       563.0                        73.0                        26.7                        30.7
+## 5                      1710.3                       200.6                        78.5                        32.1
+## 6                       987.0                       120.9                        52.3                        24.4
+##   CHELSA_bio16_1979-2013_V1_1 CHELSA_bio17_1979-2013_V1_1 CHELSA_bio18_1979-2013_V1_1 CHELSA_bio19_1979-2013_V1_1
+## 1                       155.4                         0.6                         1.7                        96.9
+## 2                       650.7                       273.5                       433.3                       490.4
+## 3                       752.8                       332.6                       448.3                       621.1
+## 4                       216.2                        85.5                       198.7                       122.0
+## 5                       590.0                       244.7                       330.9                       494.4
+## 6                       338.0                       175.3                       242.3                       182.7
+##   CHELSA_bio2_1979-2013_V1_1 CHELSA_bio3_1979-2013_V1_1 CHELSA_bio4_1979-2013_V1_1 CHELSA_bio5_1979-2013_V1_1
+## 1                       23.0                       48.3                      884.1                       40.5
+## 2                       12.5                       44.8                      486.3                       21.5
+## 3                       16.7                       45.3                      591.5                       22.2
+## 4                       20.1                       45.5                      734.1                       23.6
+## 5                       15.6                       45.0                      573.4                       23.9
+## 6                       17.1                       44.3                      693.1                       25.4
+##   CHELSA_bio6_1979-2013_V1_1 CHELSA_bio7_1979-2013_V1_1 CHELSA_bio8_1979-2013_V1_1 CHELSA_bio9_1979-2013_V1_1 CHELSA_prec_10_1979-2013
+## 1                       -7.2                       47.7                       10.5                       26.7                      3.6
+## 2                       -6.5                       28.0                        5.7                        7.8                    230.6
+## 3                      -14.5                       36.8                       -1.7                        8.4                    237.5
+## 4                      -20.7                       44.3                       12.5                       -0.1                     48.9
+## 5                      -10.7                       34.7                        1.3                       12.2                    192.8
+## 6                      -13.3                       38.7                        8.5                        3.8                    122.1
+##   CHELSA_prec_11_1979-2013 CHELSA_prec_1_1979-2013 CHELSA_prec_12_1979-2013 CHELSA_prec_1979-2013_land CHELSA_prec_2_1979-2013
+## 1                     10.5                    35.8                     25.4                      214.5                    46.5
+## 2                    219.9                   198.4                    215.5                     1912.0                   153.3
+## 3                    237.8                   227.7                    248.3                     2170.2                   188.4
+## 4                     41.3                    40.3                     40.5                      559.3                    32.5
+## 5                    189.6                   189.5                    201.5                     1719.6                   153.7
+## 6                    106.2                    79.0                     82.4                      998.1                    53.0
+##  CHELSA_prec_3_1979-2013 CHELSA_prec_4_1979-2013 CHELSA_prec_5_1979-2013 CHELSA_prec_6_1979-2013 CHELSA_prec_7_1979-2013
+## 1                    54.8                    28.3                     7.0                     1.2                     1.0
+## 2                   151.9                   101.1                    90.6                   100.5                   116.7
+## 3                   176.4                   114.4                   107.0                   110.1                   119.2
+## 4                    31.8                    26.6                    38.9                    58.0                    69.7
+## 5                   145.0                    91.6                    79.0                    84.0                    90.1
+## 6                    63.7                    57.0                    72.1                    76.1                    84.3
+##   CHELSA_prec_8_1979-2013 CHELSA_prec_9_1979-2013 CHELSA_temp_10_1979-2013 CHELSA_temp_11_1979-2013 CHELSA_temp_1_1979-2013
+## 1                     0.3                     0.1                     19.2                     13.2                     4.9
+## 2                   165.6                   204.0                      8.0                      4.5                     1.2
+## 3                   159.6                   229.6                      4.3                      0.2                    -3.4
+## 4                    72.7                    57.9                      2.3                     -3.0                    -7.2
+## 5                   121.6                   181.4                      7.2                      3.0                    -0.4
+## 6                   105.0                    97.2                      6.7                      2.2                    -2.4
+##   CHELSA_temp_12_1979-2013 CHELSA_temp_1979-2013_land CHELSA_temp_2_1979-2013 CHELSA_temp_3_1979-2013 CHELSA_temp_4_1979-2013
+## 1                      7.7                       18.3                     7.0                    12.2                    18.3
+## 2                      2.1                        7.1                     0.8                     2.3                     5.1
+## 3                     -2.7                        4.1                    -3.2                    -0.8                     3.0
+## 4                     -6.5                        2.3                    -6.6                    -3.3                     1.5
+## 5                      0.3                        6.9                    -0.2                     2.2                     5.8
+## 6                     -1.4                        6.5                    -2.2                     0.8                     5.1
+##   CHELSA_temp_5_1979-2013 CHELSA_temp_6_1979-2013 CHELSA_temp_7_1979-2013 CHELSA_temp_8_1979-2013 ## CHELSA_temp_9_1979-2013
+## 1                    23.5                    28.2                    28.2                    29.7                    25.1
+## 2                     9.0                    12.0                    12.0                    14.2                    11.5
+## 3                     7.6                    10.9                    10.9                    12.2                     8.6
+## 4                     6.4                    10.9                    10.9                    12.1                     7.7
+## 5                    10.1                    13.2                    13.2                    14.9                    11.5
+## 6                    10.7                    14.7                    14.7                    15.8                    11.6
+```
+
+##### Using `dplyr` functions, join the CHELSA and GSODR data for plotting.
 
 ``` r
 library(dplyr)
@@ -371,9 +380,8 @@ library(dplyr)
 library(ggplot2)
 library(reshape2)
 
-data(GSOD_clim)
 cnames <- paste0("CHELSA_temp_", 1:12, "_1979-2013")
-clim_temp <- GSOD_clim[GSOD_clim$STNID %in% pnts$STNID,
+clim_temp <- CHELSA[CHELSA$STNID %in% pnts$STNID,
                        paste(c("STNID", cnames))]
 clim_temp_df <- data.frame(STNID = rep(clim_temp$STNID, 12),
                            MONTHC = as.vector(sapply(1:12, rep,
@@ -405,12 +413,12 @@ ggplot(df_melt, aes(x = DATE, y = value)) +
 ![Comparison of GSOD daily values and average monthly values with CHELSA
 climate monthly values](README-example_3.2-1.png)
 
-#### Example 4 - Finding stations within a given radius and download them
+#### Example 5 - Finding stations within a given radius of a point
 
-GSODR provides a function, `nearest_stations`, which will return a list
-of stations in the GSOD data set that are within a specified radius
-(kilometres) of a given point expressed as latitude and longitude in
-decimal degrees.
+Using the `nearest_station()` function will return a list of stations in
+the GSOD data set that are within a specified radius (kilometres) of a
+given point expressed as latitude and longitude in decimal degrees
+\[WGS84\].
 
 ``` r
 # Find stations within 50km of Toowoomba, QLD.
@@ -418,16 +426,80 @@ decimal degrees.
 n <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 50)
 
 n
+[1] "945510-99999" "945520-99999" "945620-99999" "949999-00170" "949999-00183" "955510-99999"
 
 toowoomba <- get_GSOD(years = 2015, station = n)
 
+#> This station, 945510-99999, only provides data for years 1956 to 2012.
+
+#> This station, 949999-00170, only provides data for years 1971 to 1984.
+
+#> This station, 949999-00183, only provides data for years 1983 to 1984.
+
+#> Checking requested station file for availability on server.
+
+#> Downloading individual station files.
+
+|=============================================================================================================================|100% ~0 s remaining     
+Starting data file processing
+  |=============================================================================================================================================| 100%
+
 str(toowoomba)
+
+#> 'data.frame':    1094 obs. of  47 variables:
+#> $ WBAN            : chr  "99999" "99999" "99999" "99999" ...
+#> $ STNID           : chr  "945520-99999" "945520-99999" "945520-99999" "945520-99999" ...
+#> $ STN_NAME        : chr  "OAKEY" "OAKEY" "OAKEY" "OAKEY" ...
+#> $ CTRY            : chr  "AS" "AS" "AS" "AS" ...
+#> $ STATE           : chr  NA NA NA NA ...
+#> $ CALL            : chr  "YBOK" "YBOK" "YBOK" "YBOK" ...
+#> $ LAT             : num  -27.4 -27.4 -27.4 -27.4 -27.4 ...
+#> $ LON             : num  152 152 152 152 152 ...
+#> $ ELEV_M          : num  407 407 407 407 407 ...
+#> $ ELEV_M_SRTM_90m : num  404 404 404 404 404 404 404 404 404 404 ...
+#> $ BEGIN           : num  19730430 19730430 19730430 19730430 19730430 ...
+#> $ END             : num  20170111 20170111 20170111 20170111 20170111 ...
+#> $ YEARMODA        : chr  "20150101" "20150102" "20150103" "20150104" ...
+#> $ YEAR            : chr  "2015" "2015" "2015" "2015" ...
+#> $ MONTH           : chr  "01" "01" "01" "01" ...
+#> $ DAY             : chr  "01" "02" "03" "04" ...
+#> $ YDAY            : num  1 2 3 4 5 6 7 8 9 10 ...
+#> $ TEMP            : num  24.9 24.3 22.3 23 22.5 22.6 21.8 22.6 24.6 24.9 ...
+#> $ TEMP_CNT        : int  24 24 24 24 24 24 24 24 24 24 ...
+#> $ DEWP            : num  18.4 18.2 17.4 16.3 17.7 14.3 15.7 16.4 16.4 16.4 ...
+#> $ DEWP_CNT        : int  24 24 24 24 24 24 24 24 24 24 ...
+#> $ SLP             : num  1014 1017 1017 1014 1015 ...
+#> $ SLP_CNT         : int  16 16 16 16 16 16 16 16 16 16 ...
+#> $ STP             : num  968 971 971 969 969 ...
+#> $ STP_CNT         : int  16 16 16 16 16 16 16 16 16 16 ...
+#> $ VISIB           : num  10 10 10 10 10 10 NA NA 10 NA ...
+#> $ VISIB_CNT       : int  8 8 4 5 7 4 0 0 4 0 ...
+#> $ WDSP            : num  2.3 2.8 2.8 2.3 3 3.5 3.1 2.5 2.9 2.7 ...
+#> $ WDSP_CNT        : int  24 24 24 24 24 24 24 24 24 24 ...
+#> $ MXSPD           : num  8.2 9.8 10.3 7.2 9.8 9.8 9.8 8.8 8.2 8.2 ...
+#> $ GUST            : num  NA NA NA NA NA NA NA NA NA 12.4 ...
+#> $ MAX             : num  31.8 31 27.3 29.3 27.6 ...
+#> $ MAX_FLAG        : chr  "" "" "" "" ...
+#> $ MIN             : num  18.9 18.2 17.7 16.8 16.4 ...
+#> $ MIN_FLAG        : chr  "*" "" "*" "*" ...
+#> $ PRCP            : num  0 0 0 0 0 0 0 0 0 0 ...
+#> $ PRCP_FLAG       : chr  "G" "G" "G" "G" ...
+#> $ SNDP            : num  NA NA NA NA NA NA NA NA NA NA ...
+#> $ I_FOG           : int  0 0 0 0 0 0 0 0 0 0 ...
+#> $ I_RAIN_DRIZZLE  : int  0 0 0 0 0 0 0 0 0 0 ...
+#> $ I_SNOW_ICE      : int  0 0 0 0 0 0 0 0 0 0 ...
+#> $ I_HAIL          : int  0 0 0 0 0 0 0 0 0 0 ...
+#> $ I_THUNDER       : int  0 0 0 0 0 0 0 0 0 0 ...
+#> $ I_TORNADO_FUNNEL: int  0 0 0 0 0 0 0 0 0 0 ...
+#> $ EA              : num  2.1 2.1 2 1.9 2 1.6 1.8 1.9 1.9 1.9 ...
+#> $ ES              : num  3.1 3 2.7 2.8 2.7 2.7 2.6 2.7 3.1 3.1 ...
+#> $ RH              : num  67.7 70 74.1 67.9 74.1 59.3 69.2 70.4 61.3 61.3 ...
 ```
 
 Final data format and contents
 ------------------------------
 
-The function, `get_GSOD`, returns a `data.frame` object in R and can
+The function, `get_GSOD()`, returns a `data.frame()` object in R and can
 also save a Comma Separated Value (CSV) file or GeoPackage (GPKG) file
 for use in a GIS. Station data are merged with weather data for the
 final file which includes the following fields:
@@ -441,11 +513,11 @@ final file which includes the following fields:
 
 -   **CTRY** - Country in which the station is located;
 
--   **LAT** - Latitude. *Station dropped in cases where values are
-    &lt;-90 or &gt;90 degrees or Lat = 0 and Lon = 0*;
+-   **LAT** - Latitude. *Station dropped in cases where values are &lt;
+    -90 or &gt; 90 degrees or Lat = 0 and Lon = 0*;
 
--   **LON** - Longitude. *Station dropped in cases where values are
-    &lt;-180 or &gt;180 degrees or Lat = 0 and Lon = 0*;
+-   **LON** - Longitude. *Station dropped in cases where values are &lt;
+    -180 or &gt; 180 degrees or Lat = 0 and Lon = 0*;
 
 -   **ELEV\_M** - Elevation in metres;
 
@@ -554,7 +626,7 @@ final file which includes the following fields:
     -   H = Station reported '0' as the amount for the day (e.g., from
         6-hour reports), but also reported at least one occurrence of
         precipitation in hourly observations--this could indicate a
-        trace occurred, but should be considered as incomplete data for
+        rrace occurred, but should be considered as incomplete data for
         the day;
 
     -   I = Station did not report any precipitation data for the day

@@ -5,7 +5,6 @@ Version: 1.0.0
 Authors@R: as.person(c("Adam Sparks <adamhsparks@gmail.com> [aut, cre]",
             "Tomislav Hengl <tom.hengl@isric.org> [aut]",
             "Andrew Nelson <dr.andy.nelson@gmail.com> [aut]"))
-Maintainer: Adam Sparks <adamhsparks@gmail.com>
 URL: https://github.com/adamhsparks/GSODR
 BugReports: https://github.com/adamhsparks/GSODR/issues
 Description: Provides automated downloading, parsing, cleaning, unit conversion

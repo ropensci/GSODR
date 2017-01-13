@@ -203,39 +203,26 @@ hr {
 <body>
 <h1>Introduction</h1>
 
-<p>The GSODR package provides the ability to interact with GSOD data using
-spatial methods. The <code>get_GSOD</code> function allows for the data to be saved as
-a GeoPackage file which can be read by most GIS software packages or in R using
-R&#39;s GIS capabilities with contributed packages as well.</p>
+<p>The GSODR package provides the ability to interact with GSOD data using spatial methods. The <code>get_GSOD()</code> function allows for the data to be saved as a GeoPackage file which can be read by most GIS software packages or in R using R&#39;s GIS capabilities with contributed packages as well.</p>
 
-<p>Following is an example of how you might download and save GSOD annual data for
-a given country, Philippines in this example, and convert it into a KML file for
-viewing in GoogleEarth. The second portion uses the same GeoPackage file to
-import the data back into R and combine the GSOD data with CHELSA data from the
-<a href="https://github.com/adamhsparks/GSODRdata">GSODRdata package</a> available from
-GitHub and plot the station temperatures for daily GSOD, average monthly GSOD
-and CHELSA temperatures (1979-2013). </p>
+<p>Following is an example of how you might download and save GSOD annual data for a given country, Philippines in this example, and convert it into a KML file for viewing in GoogleEarth. The second portion uses the same GeoPackage file to
+import the data back into R and combine the GSOD data with CHELSA data from the <a href="https://github.com/adamhsparks/GSODRdata">GSODRdata package</a> available from GitHub and plot the station temperatures for daily GSOD, average monthly GSOD and CHELSA temperatures (1979-2013). </p>
 
-<h2>Example - Download and plot data for a single country</h2>
+<h4>Example - Working with climate data from GSODRdata</h4>
 
-<p>Download data for Philippines for year 2010 and generate a spatial, year summary
-file, PHL-2010.gpkg, in the user&#39;s home directory.</p>
+<p>This example will demonstrate how to download data for Philippines for year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in the user&#39;s home directory and link it with climate data from the <code>GSODRdata</code> package.</p>
 
-<h3>Install GSODRdata package</h3>
+<h5>Install <code>GSODRdata</code> package</h5>
 
-<p>This package is only available from GitHub; due to its large size (5.5Mb
-installed) it is not allowed on CRAN. It provides optional data for use with the
-GSODR package.  See <a href="https://github.com/adamhsparks/GSODRdata">https://github.com/adamhsparks/GSODRdata</a> for more.</p>
-
-<pre><code class="r">install.packages(&quot;devtools&quot;)
-devtools::install_github(&quot;adamhsparks/GSOD.data&quot;)
+<pre><code class="r"># install.packages(&quot;devtools&quot;)
+devtools::install_github(&quot;adamhsparks/GSODdata&quot;)
 </code></pre>
 
-<h3>Working with climate data from GSODRdata</h3>
+<h5>Working with climate data from <code>GSODRdata</code></h5>
 
-<p>Now that the extra data have been installed, take a look at the CHELSA data.
-CHELSA (Climatologies at high resolution for the earth’s land surface areas) are
-climate data at (30 arc sec) for the earth land surface areas. </p>
+<p>Now that the extra data have been installed, take a look at the CHELSA data that are one of the data sets included in the <code>GSODRdata</code> package.</p>
+
+<p>CHELSA (Climatologies at high resolution for the earth’s land surface areas) are climate data at (30 arc sec) for the earth land surface areas. </p>
 
 <p><strong>Description of CHELSA data from CHELSA website</strong></p>
 
@@ -247,12 +234,14 @@ CHELSA is based on a quasi-mechanistical statistical downscaling of the ERA inte
 
 <p>See <a href="http://chelsa-climate.org">http://chelsa-climate.org</a> for more information on these data.</p>
 
-<pre><code class="r">library(GSODR)
-library(GSODRdata)
+<p>Compare the GSOD weather data from the Philippines with climatic data provided by the GSODR package in the <code>CHELSA</code> data set.</p>
+
+<pre><code class="r">library(GSODRdata)
+
 head(CHELSA)
 </code></pre>
 
-<pre><code>##          STNID    LON    LAT CHELSA_bio10_1979-2013_V1_1 CHELSA_bio11_1979-2013_V1_1 CHELSA_bio1_1979-2013_V1_1
+<pre><code class="r">##          STNID    LON    LAT CHELSA_bio10_1979-2013_V1_1 CHELSA_bio11_1979-2013_V1_1 CHELSA_bio1_1979-2013_V1_1
 ## 1 008268-99999 65.567 32.950                        30.0                         5.8                       18.3
 ## 2 010014-99999  5.341 59.792                        14.3                         1.0                        7.1
 ## 3 010015-99999  5.867 61.383                        12.5                        -3.2                        4.2
@@ -324,98 +313,22 @@ head(CHELSA)
 ## 6                    10.7                    14.7                    14.7                    15.8                    11.6
 </code></pre>
 
-<pre><code class="r">get_GSOD(years = 2010, country = &quot;Philippines&quot;, dsn = &quot;~/&quot;,
-         filename = &quot;PHL-2010&quot;, GPKG = TRUE, max_missing = 5)
-</code></pre>
-
-<pre><code class="r">library(rgdal)
-</code></pre>
-
-<pre><code>## Loading required package: sp
-</code></pre>
-
-<pre><code>## rgdal: version: 1.2-4, (SVN revision 643)
-##  Geospatial Data Abstraction Library extensions to R successfully loaded
-##  Loaded GDAL runtime: GDAL 1.11.5, released 2016/07/01
-##  Path to GDAL shared files: /usr/local/Cellar/gdal/1.11.5_1/share/gdal
-##  Loaded PROJ.4 runtime: Rel. 4.9.3, 15 August 2016, [PJ_VERSION: 493]
-##  Path to PROJ.4 shared files: (autodetected)
-##  Linking to sp version: 1.2-3
-</code></pre>
-
-<pre><code class="r">library(spacetime)
-library(plotKML)
-</code></pre>
-
-<pre><code>## plotKML version 0.5-6 (2016-05-02)
-</code></pre>
-
-<pre><code>## URL: http://plotkml.r-forge.r-project.org/
-</code></pre>
-
-<pre><code class="r">layers &lt;- ogrListLayers(dsn = path.expand(&quot;~/PHL-2010.gpkg&quot;))
-pnts &lt;- readOGR(dsn = path.expand(&quot;~/PHL-2010.gpkg&quot;), layers[1])
-</code></pre>
-
-<pre><code>## OGR data source with driver: GPKG 
-## Source: &quot;/Users/U8004755/PHL-2010.gpkg&quot;, layer: &quot;GSOD&quot;
-## with 4703 features
-## It has 46 fields
-</code></pre>
-
-<pre><code class="r"># Plot results in Google Earth as a spacetime object:
-pnts$DATE = as.Date(paste(pnts$YEAR, pnts$MONTH, pnts$DAY, sep = &quot;-&quot;))
-row.names(pnts) &lt;- paste(&quot;point&quot;, 1:nrow(pnts), sep = &quot;&quot;)
-
-tmp_ST &lt;- STIDF(sp = as(pnts, &quot;SpatialPoints&quot;),
-                time = pnts$DATE - 0.5,
-                data = pnts@data[, c(&quot;TEMP&quot;, &quot;STNID&quot;)],
-                endTime = pnts$DATE + 0.5)
-
-shape = &quot;http://maps.google.com/mapfiles/kml/pal2/icon18.png&quot;
-
-kml(tmp_ST, dtime = 24 * 3600, colour = TEMP, shape = shape, labels = TEMP,
-    file.name = &quot;Temperatures_PHL_2010-2010.kml&quot;, folder.name = &quot;TEMP&quot;)
-</code></pre>
-
-<pre><code>## KML file opened for writing...
-</code></pre>
-
-<pre><code>## Writing to KML...
-</code></pre>
-
-<pre><code>## Closing  Temperatures_PHL_2010-2010.kml
-</code></pre>
-
-<pre><code class="r">system(&quot;zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml&quot;)
-</code></pre>
-
-<p>Compare the GSOD weather data from the Philippines with climatic data provided
-by the GSODR package in the <code>GSOD_clim</code> data set.</p>
+<h5>Using <code>dplyr</code> functions, join the CHELSA and GSODR data for plotting.</h5>
 
 <pre><code class="r">library(dplyr)
-</code></pre>
-
-<pre><code>## 
-## Attaching package: &#39;dplyr&#39;
-</code></pre>
-
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     filter, lag
-</code></pre>
-
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     intersect, setdiff, setequal, union
-</code></pre>
-
-<pre><code class="r">library(ggplot2)
+#&gt; 
+#&gt; Attaching package: &#39;dplyr&#39;
+#&gt; The following objects are masked from &#39;package:stats&#39;:
+#&gt; 
+#&gt;     filter, lag
+#&gt; The following objects are masked from &#39;package:base&#39;:
+#&gt; 
+#&gt;     intersect, setdiff, setequal, union
+library(ggplot2)
 library(reshape2)
 
-data(GSOD_clim)
 cnames &lt;- paste0(&quot;CHELSA_temp_&quot;, 1:12, &quot;_1979-2013&quot;)
-clim_temp &lt;- GSOD_clim[GSOD_clim$STNID %in% pnts$STNID,
+clim_temp &lt;- CHELSA[CHELSA$STNID %in% pnts$STNID,
                        paste(c(&quot;STNID&quot;, cnames))]
 clim_temp_df &lt;- data.frame(STNID = rep(clim_temp$STNID, 12),
                            MONTHC = as.vector(sapply(1:12, rep,
@@ -424,13 +337,10 @@ clim_temp_df &lt;- data.frame(STNID = rep(clim_temp$STNID, 12),
 
 pnts$MONTHC &lt;- as.numeric(paste(pnts$MONTH))
 temp &lt;- left_join(pnts@data, clim_temp_df, by = c(&quot;STNID&quot;, &quot;MONTHC&quot;))
-</code></pre>
+#&gt; Warning in left_join_impl(x, y, by$x, by$y, suffix$x, suffix$y): joining
+#&gt; factors with different levels, coercing to character vector
 
-<pre><code>## Warning in left_join_impl(x, y, by$x, by$y, suffix$x, suffix$y): joining
-## factors with different levels, coercing to character vector
-</code></pre>
-
-<pre><code class="r">temp &lt;- temp %&gt;% 
+temp &lt;- temp %&gt;% 
   group_by(MONTH) %&gt;% 
   mutate(AVG_DAILY_TEMP = round(mean(TEMP), 1))
 
@@ -482,8 +392,7 @@ for more detail on the correction methods.</p>
 
 <h2>WMO Resolution 40. NOAA Policy</h2>
 
-<p><em>Users of these data should take into account the following (from the
-<a href="http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&amp;countryabbv=&amp;georegionabbv=">NCDC website</a>):</em></p>
+<p><em>Users of these data should take into account the following (from the <a href="http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&amp;countryabbv=&amp;georegionabbv=">NCDC website</a>):</em></p>
 
 <blockquote>
 <p>&ldquo;The following data and products may have conditions placed on their 
