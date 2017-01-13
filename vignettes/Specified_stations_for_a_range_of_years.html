@@ -283,13 +283,13 @@ loop_stations &lt;- loop_stations[loop_stations$BEGIN &lt;= 19591231 &amp;
 
 <h2>Using get_GSOD to Fetch the Requested Station Files</h2>
 
-<p>Using the <code>get_GSOD</code> function may not work with this many station and year
+<p>Using the <code>get_GSOD()</code> function may not work with this many station and year
 combinations. Often the FTP server becomes overwhelmed and stops responding
 to requests.</p>
 
-<p>This example shows how you could construct a query using the <code>get_GSOD</code>
+<p>This example shows how you could construct a query using the <code>get_GSOD()</code>
 function. Be aware that it may result in incomplete data and error from the
-server. If it does this, see the following option for using the <code>format_GSOD</code>
+server. If it does this, see the following option for using the <code>reformat_GSOD()</code>
 function.</p>
 
 <pre><code class="r">get_GSOD(station = eval(parse(text = loop_stations[, 12])), years = 1960:2015,
@@ -300,8 +300,8 @@ function.</p>
 <h2>Another Option</h2>
 
 <p><code>GSODR</code> provides a function for dealing with local files that have been
-transfered from the server already as well, <code>reformat_GSOD</code>. If the previous
-example with <code>get_GSOD</code> does not work, this is a good alternative that takes a
+transfered from the server already as well, <code>reformat_GSOD()</code>. If the previous
+example with <code>get_GSOD()</code> does not work, this is a good alternative that takes a
 bit more intervention but gives the same results.</p>
 
 <p>Using your FTP client, e.g. FileZilla, log into the NCDC FTP server,

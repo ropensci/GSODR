@@ -60,7 +60,7 @@
       <h1>Working with spatial and climate data from GSODR</h1>
                         <h4 class="author">Adam H Sparks</h4>
             
-            <h4 class="date">2017-01-12</h4>
+            <h4 class="date">2017-01-13</h4>
           </div>
 
     
@@ -69,7 +69,7 @@
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <html><body><a href="#introduction" class="anchor"> </a></body></html>Introduction</h1>
-<p>The GSODR package provides the ability to interact with GSOD data using spatial methods. The <code>get_GSOD</code> function allows for the data to be saved as a GeoPackage file which can be read by most GIS software packages or in R using R’s GIS capabilities with contributed packages as well.</p>
+<p>The GSODR package provides the ability to interact with GSOD data using spatial methods. The <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> function allows for the data to be saved as a GeoPackage file which can be read by most GIS software packages or in R using R’s GIS capabilities with contributed packages as well.</p>
 <p>Following is an example of how you might download and save GSOD annual data for a given country, Philippines in this example, and convert it into a KML file for viewing in GoogleEarth. The second portion uses the same GeoPackage file to import the data back into R and combine the GSOD data with CHELSA data from the <a href="https://github.com/adamhsparks/GSODRdata">GSODRdata package</a> available from GitHub and plot the station temperatures for daily GSOD, average monthly GSOD and CHELSA temperatures (1979-2013).</p>
 <div id="example---download-and-plot-data-for-a-single-country" class="section level2">
 <h2 class="hasAnchor">
@@ -202,7 +202,7 @@ shape =<span class="st"> "http://maps.google.com/mapfiles/kml/pal2/icon18.png"</
 <pre><code>## Writing to KML...</code></pre>
 <pre><code>## Closing  Temperatures_PHL_2010-2010.kml</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">system</span>(<span class="st">"zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml"</span>)</code></pre></div>
-<p>Compare the GSOD weather data from the Philippines with climatic data provided by the GSODR package in the <code>GSOD_clim</code> data set.</p>
+<p>Compare the GSOD weather data from the Philippines with climatic data provided by the GSODRdata package in the <code>CHELSA</code> data set.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)</code></pre></div>
 <pre><code>## 
 ## Attaching package: 'dplyr'</code></pre>

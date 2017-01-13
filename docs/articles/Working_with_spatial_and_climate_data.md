@@ -1,7 +1,7 @@
 ---
 title: "Working with spatial and climate data from GSODR"
 author: "Adam H Sparks"
-date: "2017-01-10"
+date: "2017-01-13"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteEngine{knitr::knitr}
@@ -12,7 +12,7 @@ vignette: >
 # Introduction
 
 The GSODR package provides the ability to interact with GSOD data using
-spatial methods. The `get_GSOD` function allows for the data to be saved as
+spatial methods. The `get_GSOD()` function allows for the data to be saved as
 a GeoPackage file which can be read by most GIS software packages or in R using
 R's GIS capabilities with contributed packages as well.
 
@@ -214,7 +214,7 @@ system("zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml")
 ```
 
 Compare the GSOD weather data from the Philippines with climatic data provided
-by the GSODR package in the `GSOD_clim` data set.
+by the GSODRdata package in the `CHELSA` data set.
 
 
 ```r
@@ -310,8 +310,7 @@ for more detail on the correction methods.
 
 ## WMO Resolution 40. NOAA Policy
 
-*Users of these data should take into account the following (from the
-[NCDC website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):*
+*Users of these data should take into account the following (from the [NCDC website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):*
 
 > "The following data and products may have conditions placed on their 
 international commercial use. They can be used within the U.S. or for

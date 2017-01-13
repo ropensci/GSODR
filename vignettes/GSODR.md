@@ -1,7 +1,7 @@
 ---
 title: "GSODR"
 author: "Adam H Sparks"
-date: "2017-01-10"
+date: "2017-01-13"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteEngine{knitr::knitr}
@@ -18,17 +18,17 @@ cumbersome and difficult to work with. The GSODR package aims to make it easy to
 find, tranfer and format the data you need for use in analysis. The GSODR 
 package provides three main functions for facilitating this:
 
-* `get_GSOD` - the main function that will query and transfer files from the FTP
+* `get_GSOD()` - the main function that will query and transfer files from the FTP
 server, reformat them and return a data.frame in R or save a file to disk  
-* `reformat_GSOD` - the workhorse, this function takes individual station files
+* `reformat_GSOD()` - the workhorse, this function takes individual station files
 on the local disk and reformats them returning a data.frame in R  
-* `nearest_stations` - this function returns a dataframe containing a list of
+* `nearest_stations()` - this function returns a dataframe containing a list of
 stations and their metadata that fall within the given radius of a point\
 specified by the user
-* `get_station_list` - this function retrieves the most up-to-date list of
+* `get_station_list()` - this function retrieves the most up-to-date list of
 stations and corresponding metadata
 
-When reformatting data either with `get_GSOD` or `reformat_GSOD`, all units are
+When reformatting data either with `get_GSOD()` or `reformat_GSOD()`, all units are
 converted to International System of Units (SI), e.g., inches to millimetres and
 Fahrenheit to Celsius. File output can be saved as a Comma Separated Value (CSV)
 file or in a spatial GeoPackage (GPKG) file, implemented by most major GIS
@@ -113,12 +113,12 @@ filter(Oz, STN_NAME == "TOOWOOMBA")
 #> 1 20120503 945510-99999             670    AUSTRALIA    AU   AUS
 ```
 
-## Using the `get_GSOD` Function in GSODR to Download a Single Station and
+## Using the `get_GSOD()` Function in GSODR to Download a Single Station and
 Year
 
 Now that we've seen where the reporting stations are located, we can download
 weather data from the station Toowoomba, Queensland, Australia for 2010
-by using the STNID in the `station` parameter of `get_GSOD`.
+by using the STNID in the `station` parameter of `get_GSOD()`.
 
 ```r
 Tbar <- get_GSOD(years = 2010, station = "955510-99999")
@@ -167,9 +167,9 @@ head(Tbar)
 
 ## Find Stations Within a Specified Distance of a Point
 
-Using the `nearest_stations` function, you can find stations closest to a
+Using the `nearest_stations()` function, you can find stations closest to a
 given point specified by latitude and longitude in decimal degrees. This can be
-used to generate a vector to pass along to `get_GSOD` and download the
+used to generate a vector to pass along to `get_GSOD()` and download the
 stations of interest.
 
 There are missing stations in this query. Not all that are listed and queried
@@ -258,7 +258,7 @@ to create a spatial file. [GeoPackage files](http://www.geopackage.org) are a
 open, standards-based, platform-independent, portable, self-describing compact
 format for transferring geospatial information, which handle vector files much
 like shapefiles do, but eliminate many of the issues that shapefiles have with
-field names and the number of files. The `get_GSOD` function can create a
+field names and the number of files. The `get_GSOD()` function can create a
 GeoPackage file, which can be used with a GIS for further analysis and mapping
 with other spatial objects.
 
@@ -286,7 +286,7 @@ get_GSOD(years = 2015, country = "Australia", dsn = "~/", filename = "AUS",
 
 Importing the GeoPackage file can be a bit tricky. The dsn will be the full path
 along with the file name. The layer to be specified is "GSOD", this is specified
-in the `get_GSOD` function and will not change. The file name, specified in
+in the `get_GSOD()` function and will not change. The file name, specified in
 the dsn will, but the layer name will not.
 
 ```r
@@ -350,9 +350,9 @@ print(AUS_sqlite, n = 5)
 
 You may have already downloaded GSOD data or may just wish to use an FTP client
 to download the files from the server to you local disk and not use the
-capabilities of `get_GSOD`. In that case the `reformat_GSOD` function is useful.
+capabilities of `get_GSOD()`. In that case the `reformat_GSOD()` function is useful.
 
-There are two ways, you can either provide `reformat_GSOD` with a list of
+There are two ways, you can either provide `reformat_GSOD()` with a list of
 specified station files or you can supply it with a directory containing all of
 the "WBAN-WMO-YYYY.op.gz" station files that you wish to reformat.
 

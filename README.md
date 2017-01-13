@@ -27,24 +27,24 @@ to make it easy to find, tranfer and format the data you need for use in
 analysis. The GSODR package provides three main functions for
 facilitating this:
 
--   `get_GSOD` - the main function that will query and transfer files
+-   `get_GSOD()` - the main function that will query and transfer files
     from the FTP server, reformat them and return a data.frame in R or
     save a file to disk  
--   `reformat_GSOD` - the workhorse, this function takes individual
+-   `reformat_GSOD()` - the workhorse, this function takes individual
     station files on the local disk and reformats them returning a
     data.frame in R  
--   `nearest_stations` - this function returns a dataframe containing a
-    list of stations and their metadata that fall within the given
+-   `nearest_stations()` - this function returns a dataframe containing
+    a list of stations and their metadata that fall within the given
     radius of a point  
     specified by the user
 
-When reformatting data either with `get_GSOD` or `reformat_GSOD`, all
-units are converted to International System of Units (SI), e.g., inches
-to millimetres and Fahrenheit to Celsius. File output can be saved as a
-Comma Separated Value (CSV) file or in a spatial GeoPackage (GPKG) file,
-implemented by most major GIS software, summarising each year by
-station, which also includes vapour pressure and relative humidity
-variables calculated from existing data in GSOD.
+When reformatting data either with `get_GSOD()` or `reformat_GSOD()`,
+all units are converted to International System of Units (SI), e.g.,
+inches to millimetres and Fahrenheit to Celsius. File output can be
+saved as a Comma Separated Value (CSV) file or in a spatial GeoPackage
+(GPKG) file, implemented by most major GIS software, summarising each
+year by station, which also includes vapour pressure and relative
+humidity variables calculated from existing data in GSOD.
 
 Additional data are calculated by this R package using the original data
 and included in the final data. These include vapour pressure (ea and
@@ -105,7 +105,7 @@ Using GSODR
 
 ### Query the NCDC FTP server for GSOD data
 
-GSODR's main function, `get_GSOD`, downloads and cleans GSOD data from
+GSODR's main function, `get_GSOD()`, downloads and cleans GSOD data from
 the NCDC server. Following are a few examples of its capabilities.
 
 #### Example 1 - Download weather station for Toowoomba, Queensland for 2010
@@ -407,8 +407,8 @@ climate monthly values](README-example_3.2-1.png)
 
 #### Example 4 - Finding stations within a given radius and download them
 
-GSODR provides a function, `nearest_stations`, which will return a list
-of stations in the GSOD data set that are within a specified radius
+GSODR provides a function, `nearest_stations()`, which will return a
+list of stations in the GSOD data set that are within a specified radius
 (kilometres) of a given point expressed as latitude and longitude in
 decimal degrees.
 
@@ -427,7 +427,7 @@ str(toowoomba)
 Final data format and contents
 ------------------------------
 
-The function, `get_GSOD`, returns a `data.frame` object in R and can
+The function, `get_GSOD()`, returns a `data.frame` object in R and can
 also save a Comma Separated Value (CSV) file or GeoPackage (GPKG) file
 for use in a GIS. Station data are merged with weather data for the
 final file which includes the following fields:

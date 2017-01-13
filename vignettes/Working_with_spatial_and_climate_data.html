@@ -204,7 +204,7 @@ hr {
 <h1>Introduction</h1>
 
 <p>The GSODR package provides the ability to interact with GSOD data using
-spatial methods. The <code>get_GSOD</code> function allows for the data to be saved as
+spatial methods. The <code>get_GSOD()</code> function allows for the data to be saved as
 a GeoPackage file which can be read by most GIS software packages or in R using
 R&#39;s GIS capabilities with contributed packages as well.</p>
 
@@ -391,7 +391,7 @@ kml(tmp_ST, dtime = 24 * 3600, colour = TEMP, shape = shape, labels = TEMP,
 </code></pre>
 
 <p>Compare the GSOD weather data from the Philippines with climatic data provided
-by the GSODR package in the <code>GSOD_clim</code> data set.</p>
+by the GSODRdata package in the <code>CHELSA</code> data set.</p>
 
 <pre><code class="r">library(dplyr)
 </code></pre>
@@ -482,8 +482,7 @@ for more detail on the correction methods.</p>
 
 <h2>WMO Resolution 40. NOAA Policy</h2>
 
-<p><em>Users of these data should take into account the following (from the
-<a href="http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&amp;countryabbv=&amp;georegionabbv=">NCDC website</a>):</em></p>
+<p><em>Users of these data should take into account the following (from the <a href="http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&amp;countryabbv=&amp;georegionabbv=">NCDC website</a>):</em></p>
 
 <blockquote>
 <p>&ldquo;The following data and products may have conditions placed on their 
