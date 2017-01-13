@@ -23,8 +23,8 @@ The GSOD or [Global Surface Summary of the Day
 data provided by the US National Climatic Data Center (NCDC) are a
 valuable source of weather data with global coverage. However, the data
 files are cumbersome and difficult to work with. The GSODR package aims
-to make it easy to find, tranfer and format the data you need for use in
-analysis. The GSODR package provides three main functions for
+to make it easy to find, transfer and format the data you need for use
+in analysis. The GSODR package provides four main functions for
 facilitating this:
 
 -   `get_GSOD()` - the main function that will query and transfer files
@@ -35,8 +35,7 @@ facilitating this:
     data.frame in R  
 -   `nearest_stations()` - this function returns a dataframe containing
     a list of stations and their metadata that fall within the given
-    radius of a point  
-    specified by the user
+    radius of a point specified by the user
 
 When reformatting data either with `get_GSOD()` or `reformat_GSOD()`,
 all units are converted to International System of Units (SI), e.g.,
@@ -93,10 +92,11 @@ package](https://CRAN.R-project.org/package=devtools), available from
 CRAN. We strive to keep the master branch on GitHub functional and
 working properly, although this may not always happen.
 
-If you find bugs, please file a report as an issue.
+If you find bugs, please file a [report as an
+issue](https://github.com/adamhsparks/GSODR/issues).
 
 ``` r
-install.packages("devtools")
+#install.packages("devtools")
 devtools::install_github("adamhsparks/GSODR", build_vignettes = TRUE)
 ```
 
@@ -108,10 +108,9 @@ Using GSODR
 GSODR's main function, `get_GSOD()`, downloads and cleans GSOD data from
 the NCDC server. Following are a few examples of its capabilities.
 
-#### Example 1 - Download weather station for Toowoomba, Queensland for 2010
+#### Example 1 - Download weather station data for Toowoomba, Queensland for 2010
 
 ``` r
-
 library(GSODR)
 
 Tbar <- get_GSOD(years = 2010, station = "955510-99999")
@@ -177,9 +176,8 @@ user's home directory with a maximum of five missing days per weather
 station allowed.
 
 ``` r
-
 get_GSOD(years = 2010:2011, dsn = "~/", filename = "GSOD-agroclimatology",
-         agroclimatology = TRUE, max_missing = 5)
+         agroclimatology = TRUE, CSV = TRUE, max_missing = 5)
 ```
 
 #### Example 3 - Download and plot data for a single country
@@ -193,6 +191,9 @@ get_GSOD(years = 2010, country = "Philippines", dsn = "~/",
 ```
 
 ``` r
+#install.packages("spacetime")
+#install.packages("plotKML")
+
 library(rgdal)
 #> Loading required package: sp
 #> rgdal: version: 1.2-4, (SVN revision 643)
@@ -234,20 +235,18 @@ kml(tmp_ST, dtime = 24 * 3600, colour = TEMP, shape = shape, labels = TEMP,
 system("zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml")
 ```
 
-Compare the GSOD weather data from the Philippines with climatic data
-provided by the GSODR package in the `CHELSA` data set.
+#### Example 4 - Working with climate data from GSODRdata
 
-Example - Download and plot data for a single country
------------------------------------------------------
+This example will demonstrate how to download data for Philippines for
+year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in
+the user's home directory and link it with climate data from the
+`GSODRdata` package.
 
-Download data for Philippines for year 2010 and generate a spatial, year
-summary file, PHL-2010.gpkg, in the user's home directory.
-
-### Install GSODRdata package
+##### Install `GSODRdata` package
 
 This package is only available from GitHub; due to its large size (5.5Mb
 installed) it is not allowed on CRAN. It provides optional data for use
-with the GSODR package. See <https://github.com/adamhsparks/GSODRdata>
+with the `GSODR` package. See <https://github.com/adamhsparks/GSODRdata>
 for more.
 
 ``` r
@@ -255,10 +254,11 @@ for more.
 devtools::install_github("adamhsparks/GSODdata")
 ```
 
-### Working with climate data from `GSODRdata`
+##### Working with climate data from `GSODRdata`
 
 Now that the extra data have been installed, take a look at the CHELSA
 data that are one of the data sets included in the `GSODRdata` package.
+
 CHELSA (Climatologies at high resolution for the earth’s land surface
 areas) are climate data at (30 arc sec) for the earth land surface
 areas.
@@ -282,6 +282,9 @@ areas.
 > available in the download section.
 
 See <http://chelsa-climate.org> for more information on these data.
+
+Compare the GSOD weather data from the Philippines with climatic data
+provided by the GSODR package in the `CHELSA` data set.
 
 ``` r
 library(GSODRdata)
@@ -362,7 +365,7 @@ head(CHELSA)
 ## 6                    10.7                    14.7                    14.7                    15.8                    11.6
 ```
 
-### Using `dplyr` functions, join the CHELSA and GSODR data for plotting.
+##### Using `dplyr` functions, join the CHELSA and GSODR data for plotting.
 
 ``` r
 library(dplyr)
@@ -410,12 +413,12 @@ ggplot(df_melt, aes(x = DATE, y = value)) +
 ![Comparison of GSOD daily values and average monthly values with CHELSA
 climate monthly values](README-example_3.2-1.png)
 
-#### Example 4 - Finding stations within a given radius and download them
+#### Example 5 - Finding stations within a given radius of a point
 
-GSODR provides a function, `nearest_stations()`, which will return a
-list of stations in the GSOD data set that are within a specified radius
-(kilometres) of a given point expressed as latitude and longitude in
-decimal degrees.
+Using the `nearest_station()` function will return a list of stations in
+the GSOD data set that are within a specified radius (kilometres) of a
+given point expressed as latitude and longitude in decimal degrees
+\[WGS84\].
 
 ``` r
 # Find stations within 50km of Toowoomba, QLD.
@@ -510,11 +513,11 @@ final file which includes the following fields:
 
 -   **CTRY** - Country in which the station is located;
 
--   **LAT** - Latitude. *Station dropped in cases where values are
-    &lt;-90 or &gt;90 degrees or Lat = 0 and Lon = 0*;
+-   **LAT** - Latitude. *Station dropped in cases where values are &lt;
+    -90 or &gt; 90 degrees or Lat = 0 and Lon = 0*;
 
--   **LON** - Longitude. *Station dropped in cases where values are
-    &lt;-180 or &gt;180 degrees or Lat = 0 and Lon = 0*;
+-   **LON** - Longitude. *Station dropped in cases where values are &lt;
+    -180 or &gt; 180 degrees or Lat = 0 and Lon = 0*;
 
 -   **ELEV\_M** - Elevation in metres;
 
@@ -623,7 +626,7 @@ final file which includes the following fields:
     -   H = Station reported '0' as the amount for the day (e.g., from
         6-hour reports), but also reported at least one occurrence of
         precipitation in hourly observations--this could indicate a
-        trace occurred, but should be considered as incomplete data for
+        rrace occurred, but should be considered as incomplete data for
         the day;
 
     -   I = Station did not report any precipitation data for the day

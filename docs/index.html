@@ -70,7 +70,7 @@
 <div id="introduction-to-gsodr" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction-to-gsodr" class="anchor"> </a>Introduction to GSODR</h1>
-<p>The GSOD or <a href="https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod">Global Surface Summary of the Day (GSOD)</a> data provided by the US National Climatic Data Center (NCDC) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. The GSODR package aims to make it easy to find, tranfer and format the data you need for use in analysis. The GSODR package provides three main functions for facilitating this:</p>
+<p>The GSOD or <a href="https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod">Global Surface Summary of the Day (GSOD)</a> data provided by the US National Climatic Data Center (NCDC) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. The GSODR package aims to make it easy to find, transfer and format the data you need for use in analysis. The GSODR package provides four main functions for facilitating this:</p>
 <ul>
 <li>
 <code><a href="reference/get_GSOD.html">get_GSOD()</a></code> - the main function that will query and transfer files from the FTP server, reformat them and return a data.frame in R or save a file to disk<br>
@@ -79,8 +79,7 @@
 <code><a href="reference/reformat_GSOD.html">reformat_GSOD()</a></code> - the workhorse, this function takes individual station files on the local disk and reformats them returning a data.frame in R<br>
 </li>
 <li>
-<code><a href="reference/nearest_stations.html">nearest_stations()</a></code> - this function returns a dataframe containing a list of stations and their metadata that fall within the given radius of a point<br>
-specified by the user</li>
+<code><a href="reference/nearest_stations.html">nearest_stations()</a></code> - this function returns a dataframe containing a list of stations and their metadata that fall within the given radius of a point specified by the user</li>
 </ul>
 <p>When reformatting data either with <code><a href="reference/get_GSOD.html">get_GSOD()</a></code> or <code><a href="reference/reformat_GSOD.html">reformat_GSOD()</a></code>, all units are converted to International System of Units (SI), e.g., inches to millimetres and Fahrenheit to Celsius. File output can be saved as a Comma Separated Value (CSV) file or in a spatial GeoPackage (GPKG) file, implemented by most major GIS software, summarising each year by station, which also includes vapour pressure and relative humidity variables calculated from existing data in GSOD.</p>
 <p>Additional data are calculated by this R package using the original data and included in the final data. These include vapour pressure (ea and es) and relative humidity.</p>
@@ -109,8 +108,8 @@ specified by the user</li>
 <h3 class="hasAnchor">
 <a href="#development-version" class="anchor"> </a>Development version</h3>
 <p>A development version is available from from GitHub. If you wish to install the development version that may have new features (but also may not work properly), install the <a href="https://CRAN.R-project.org/package=devtools">devtools package</a>, available from CRAN. We strive to keep the master branch on GitHub functional and working properly, although this may not always happen.</p>
-<p>If you find bugs, please file a report as an issue.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"devtools"</span>)
+<p>If you find bugs, please file a <a href="https://github.com/adamhsparks/GSODR/issues">report as an issue</a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages("devtools")</span>
 devtools::<span class="kw">install_github</span>(<span class="st">"adamhsparks/GSODR"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>)</code></pre></div>
 </div>
 </div>
@@ -121,11 +120,10 @@ devtools::<span class="kw">install_github</span>(<span class="st">"adamhsparks/G
 <h3 class="hasAnchor">
 <a href="#query-the-ncdc-ftp-server-for-gsod-data" class="anchor"> </a>Query the NCDC FTP server for GSOD data</h3>
 <p>GSODR’s main function, <code><a href="reference/get_GSOD.html">get_GSOD()</a></code>, downloads and cleans GSOD data from the NCDC server. Following are a few examples of its capabilities.</p>
-<div id="example-1---download-weather-station-for-toowoomba-queensland-for-2010" class="section level4">
+<div id="example-1---download-weather-station-data-for-toowoomba-queensland-for-2010" class="section level4">
 <h4 class="hasAnchor">
-<a href="#example-1---download-weather-station-for-toowoomba-queensland-for-2010" class="anchor"> </a>Example 1 - Download weather station for Toowoomba, Queensland for 2010</h4>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
-<span class="kw">library</span>(GSODR)
+<a href="#example-1---download-weather-station-data-for-toowoomba-queensland-for-2010" class="anchor"> </a>Example 1 - Download weather station data for Toowoomba, Queensland for 2010</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(GSODR)
 
 Tbar &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> <span class="st">"955510-99999"</span>)
 <span class="co">#&gt; </span>
@@ -185,9 +183,8 @@ Tbar &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_GSOD.
 <h4 class="hasAnchor">
 <a href="#example-2---download-gsod-data-and-generate-agroclimatology-files" class="anchor"> </a>Example 2 - Download GSOD data and generate agroclimatology files</h4>
 <p>For years 2010 and 2011, download data and create the files, GSOD-agroclimatology-2010.csv and GSOD-agroclimatology-2011.csv, in the user’s home directory with a maximum of five missing days per weather station allowed.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
-<span class="kw"><a href="reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>:<span class="dv">2011</span>, <span class="dt">dsn =</span> <span class="st">"~/"</span>, <span class="dt">filename =</span> <span class="st">"GSOD-agroclimatology"</span>,
-         <span class="dt">agroclimatology =</span> <span class="ot">TRUE</span>, <span class="dt">max_missing =</span> <span class="dv">5</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>:<span class="dv">2011</span>, <span class="dt">dsn =</span> <span class="st">"~/"</span>, <span class="dt">filename =</span> <span class="st">"GSOD-agroclimatology"</span>,
+         <span class="dt">agroclimatology =</span> <span class="ot">TRUE</span>, <span class="dt">CSV =</span> <span class="ot">TRUE</span>, <span class="dt">max_missing =</span> <span class="dv">5</span>)</code></pre></div>
 </div>
 <div id="example-3---download-and-plot-data-for-a-single-country" class="section level4">
 <h4 class="hasAnchor">
@@ -195,7 +192,10 @@ Tbar &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_GSOD.
 <p>Download data for Philippines for year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in the user’s home directory.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">country =</span> <span class="st">"Philippines"</span>, <span class="dt">dsn =</span> <span class="st">"~/"</span>,
          <span class="dt">filename =</span> <span class="st">"PHL-2010"</span>, <span class="dt">GPKG =</span> <span class="ot">TRUE</span>, <span class="dt">max_missing =</span> <span class="dv">5</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rgdal)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages("spacetime")</span>
+<span class="co">#install.packages("plotKML")</span>
+
+<span class="kw">library</span>(rgdal)
 <span class="co">#&gt; Loading required package: sp</span>
 <span class="co">#&gt; rgdal: version: 1.2-4, (SVN revision 643)</span>
 <span class="co">#&gt;  Geospatial Data Abstraction Library extensions to R successfully loaded</span>
@@ -234,31 +234,30 @@ shape =<span class="st"> "http://maps.google.com/mapfiles/kml/pal2/icon18.png"</
 <span class="co">#&gt; Closing  Temperatures_PHL_2010-2010.kml</span>
 
 <span class="kw">system</span>(<span class="st">"zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml"</span>)</code></pre></div>
-<p>Compare the GSOD weather data from the Philippines with climatic data provided by the GSODR package in the <code>CHELSA</code> data set.</p>
 </div>
-</div>
-</div>
-<div id="example---download-and-plot-data-for-a-single-country" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example---download-and-plot-data-for-a-single-country" class="anchor"> </a>Example - Download and plot data for a single country</h2>
-<p>Download data for Philippines for year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in the user’s home directory.</p>
-<div id="install-gsodrdata-package" class="section level3">
-<h3 class="hasAnchor">
-<a href="#install-gsodrdata-package" class="anchor"> </a>Install GSODRdata package</h3>
-<p>This package is only available from GitHub; due to its large size (5.5Mb installed) it is not allowed on CRAN. It provides optional data for use with the GSODR package. See <a href="https://github.com/adamhsparks/GSODRdata" class="uri">https://github.com/adamhsparks/GSODRdata</a> for more.</p>
+<div id="example-4---working-with-climate-data-from-gsodrdata" class="section level4">
+<h4 class="hasAnchor">
+<a href="#example-4---working-with-climate-data-from-gsodrdata" class="anchor"> </a>Example 4 - Working with climate data from GSODRdata</h4>
+<p>This example will demonstrate how to download data for Philippines for year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in the user’s home directory and link it with climate data from the <code>GSODRdata</code> package.</p>
+<div id="install-gsodrdata-package" class="section level5">
+<h5 class="hasAnchor">
+<a href="#install-gsodrdata-package" class="anchor"> </a>Install <code>GSODRdata</code> package</h5>
+<p>This package is only available from GitHub; due to its large size (5.5Mb installed) it is not allowed on CRAN. It provides optional data for use with the <code>GSODR</code> package. See <a href="https://github.com/adamhsparks/GSODRdata" class="uri">https://github.com/adamhsparks/GSODRdata</a> for more.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("devtools")</span>
 devtools::<span class="kw">install_github</span>(<span class="st">"adamhsparks/GSODdata"</span>)</code></pre></div>
 </div>
-<div id="working-with-climate-data-from-gsodrdata" class="section level3">
-<h3 class="hasAnchor">
+<div id="working-with-climate-data-from-gsodrdata" class="section level5">
+<h5 class="hasAnchor">
 <a href="#working-with-climate-data-from-gsodrdata" class="anchor"> </a>Working with climate data from <code>GSODRdata</code>
-</h3>
-<p>Now that the extra data have been installed, take a look at the CHELSA data that are one of the data sets included in the <code>GSODRdata</code> package. CHELSA (Climatologies at high resolution for the earth’s land surface areas) are climate data at (30 arc sec) for the earth land surface areas.</p>
+</h5>
+<p>Now that the extra data have been installed, take a look at the CHELSA data that are one of the data sets included in the <code>GSODRdata</code> package.</p>
+<p>CHELSA (Climatologies at high resolution for the earth’s land surface areas) are climate data at (30 arc sec) for the earth land surface areas.</p>
 <p><strong>Description of CHELSA data from CHELSA website</strong></p>
 <blockquote>
 <p>CHELSA is a high resolution (30 arc sec) climate data set for the earth land surface areas currently under development in coorporation with the Department of Geography of the University of Hamburg (Prof. Dr. Jürgen Böhner, Dr. Olaf Conrad, Tobias Kawohl), the Swiss Federal Institute for Forest, Snow and Landscape Research WSL (Prof. Dr. Niklaus Zimmermann), the University of Zurich (Dr. Dirk N. Karger, Dr. Michael Kessler), and the University of Göttingen (Prof. Dr. Holger Kreft). It includes monthly mean temperature and precipitation patterns for the time period 1979-2013. CHELSA is based on a quasi-mechanistical statistical downscaling of the ERA interim global circulation model (<a href="http://www.ecmwf.int/en/research/climate-reanalysis/era-interim" class="uri">http://www.ecmwf.int/en/research/climate-reanalysis/era-interim</a>) with a GPCC bias correction (<a href="https://www.dwd.de/EN/ourservices/gpcc/gpcc.html" class="uri">https://www.dwd.de/EN/ourservices/gpcc/gpcc.html</a>) and is freely available in the download section.</p>
 </blockquote>
 <p>See <a href="http://chelsa-climate.org" class="uri">http://chelsa-climate.org</a> for more information on these data.</p>
+<p>Compare the GSOD weather data from the Philippines with climatic data provided by the GSODR package in the <code>CHELSA</code> data set.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(GSODRdata)
 
 <span class="kw">head</span>(CHELSA)</code></pre></div>
@@ -333,9 +332,9 @@ devtools::<span class="kw">install_github</span>(<span class="st">"adamhsparks/G
 ## 5                    10.1                    13.2                    13.2                    14.9                    11.5
 ## 6                    10.7                    14.7                    14.7                    15.8                    11.6</code></pre></div>
 </div>
-<div id="using-dplyr-functions-join-the-chelsa-and-gsodr-data-for-plotting-" class="section level3">
-<h3 class="hasAnchor">
-<a href="#using-dplyr-functions-join-the-chelsa-and-gsodr-data-for-plotting-" class="anchor"> </a>Using <code>dplyr</code> functions, join the CHELSA and GSODR data for plotting.</h3>
+<div id="using-dplyr-functions-join-the-chelsa-and-gsodr-data-for-plotting-" class="section level5">
+<h5 class="hasAnchor">
+<a href="#using-dplyr-functions-join-the-chelsa-and-gsodr-data-for-plotting-" class="anchor"> </a>Using <code>dplyr</code> functions, join the CHELSA and GSODR data for plotting.</h5>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Attaching package: 'dplyr'</span>
@@ -379,10 +378,12 @@ df_melt &lt;-<span class="st"> </span><span class="kw">na.omit</span>(<span clas
 <div class="figure">
 <img src="README-example_3.2-1.png" alt="Comparison of GSOD daily values and average monthly values with CHELSA climate monthly values"><p class="caption">Comparison of GSOD daily values and average monthly values with CHELSA climate monthly values</p>
 </div>
-<div id="example-4---finding-stations-within-a-given-radius-and-download-them" class="section level4">
+</div>
+</div>
+<div id="example-5---finding-stations-within-a-given-radius-of-a-point" class="section level4">
 <h4 class="hasAnchor">
-<a href="#example-4---finding-stations-within-a-given-radius-and-download-them" class="anchor"> </a>Example 4 - Finding stations within a given radius and download them</h4>
-<p>GSODR provides a function, <code><a href="reference/nearest_stations.html">nearest_stations()</a></code>, which will return a list of stations in the GSOD data set that are within a specified radius (kilometres) of a given point expressed as latitude and longitude in decimal degrees.</p>
+<a href="#example-5---finding-stations-within-a-given-radius-of-a-point" class="anchor"> </a>Example 5 - Finding stations within a given radius of a point</h4>
+<p>Using the <code>nearest_station()</code> function will return a list of stations in the GSOD data set that are within a specified radius (kilometres) of a given point expressed as latitude and longitude in decimal degrees [WGS84].</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Find stations within 50km of Toowoomba, QLD.</span>
 
 n &lt;-<span class="st"> </span><span class="kw"><a href="reference/nearest_stations.html">nearest_stations</a></span>(<span class="dt">LAT =</span> -<span class="fl">27.5598</span>, <span class="dt">LON =</span> <span class="fl">151.9507</span>, <span class="dt">distance =</span> <span class="dv">50</span>)
@@ -468,8 +469,8 @@ Starting data file processing
 <li><p><strong>WBAN</strong> - number where applicable–this is the historical “Weather Bureau Air Force Navy” number - with WBAN being the acronym;</p></li>
 <li><p><strong>STN_NAME</strong> - Unique text identifier;</p></li>
 <li><p><strong>CTRY</strong> - Country in which the station is located;</p></li>
-<li><p><strong>LAT</strong> - Latitude. <em>Station dropped in cases where values are &lt;-90 or &gt;90 degrees or Lat = 0 and Lon = 0</em>;</p></li>
-<li><p><strong>LON</strong> - Longitude. <em>Station dropped in cases where values are &lt;-180 or &gt;180 degrees or Lat = 0 and Lon = 0</em>;</p></li>
+<li><p><strong>LAT</strong> - Latitude. <em>Station dropped in cases where values are &lt; -90 or &gt; 90 degrees or Lat = 0 and Lon = 0</em>;</p></li>
+<li><p><strong>LON</strong> - Longitude. <em>Station dropped in cases where values are &lt; -180 or &gt; 180 degrees or Lat = 0 and Lon = 0</em>;</p></li>
 <li><p><strong>ELEV_M</strong> - Elevation in metres;</p></li>
 <li><p><strong>ELEV_M_SRTM_90m</strong> - Elevation in metres corrected for possible errors, derived from the CGIAR-CSI SRTM 90m database (Jarvis et al. 2008);</p></li>
 <li><p><strong>YEARMODA</strong> - Date in YYYY-mm-dd format;</p></li>
@@ -506,7 +507,7 @@ Starting data file processing
 <li><p>E = 1 report of 12-hour precipitation amount;</p></li>
 <li><p>F = Summation of 2 reports of 12-hour precipitation amount;</p></li>
 <li><p>G = 1 report of 24-hour precipitation amount;</p></li>
-<li><p>H = Station reported ‘0’ as the amount for the day (e.g., from 6-hour reports), but also reported at least one occurrence of precipitation in hourly observations–this could indicate a trace occurred, but should be considered as incomplete data for the day;</p></li>
+<li><p>H = Station reported ‘0’ as the amount for the day (e.g., from 6-hour reports), but also reported at least one occurrence of precipitation in hourly observations–this could indicate a rrace occurred, but should be considered as incomplete data for the day;</p></li>
 <li><p>I = Station did not report any precipitation data for the day and did not report any occurrences of precipitation in its hourly observations–it’s still possible that precipitation occurred but was not reported;</p></li>
 </ul>
 </li>

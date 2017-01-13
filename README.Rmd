@@ -18,37 +18,17 @@ GSODR: Global Surface Summary Daily Weather Data in R
 Introduction to GSODR
 =====================
 
-The GSOD or [Global Surface Summary of the Day
-(GSOD)](https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod)
-data provided by the US National Climatic Data Center (NCDC) are a
-valuable source of weather data with global coverage. However, the data
-files are cumbersome and difficult to work with. The GSODR package aims
-to make it easy to find, tranfer and format the data you need for use in
-analysis. The GSODR package provides three main functions for
-facilitating this:
+The GSOD or [Global Surface Summary of the Day (GSOD)](https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod) data provided by the US National Climatic Data Center (NCDC) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. The GSODR package aims to make it easy to find, transfer and format the data you need for use in
+analysis. The GSODR package provides four main functions for facilitating this:
 
--   `get_GSOD()` - the main function that will query and transfer files
-    from the FTP server, reformat them and return a data.frame in R or
-    save a file to disk  
--   `reformat_GSOD()` - the workhorse, this function takes individual
-    station files on the local disk and reformats them returning a
-    data.frame in R  
--   `nearest_stations()` - this function returns a dataframe containing a
-    list of stations and their metadata that fall within the given
-    radius of a point  
-    specified by the user
+-   `get_GSOD()` - the main function that will query and transfer files from the FTP server, reformat them and return a data.frame in R or save a file to disk  
+-   `reformat_GSOD()` - the workhorse, this function takes individual station files on the local disk and reformats them returning a data.frame in R  
+-   `nearest_stations()` - this function returns a dataframe containing a list of stations and their metadata that fall within the given radius of a point specified by the user
 
-When reformatting data either with `get_GSOD()` or `reformat_GSOD()`, all
-units are converted to International System of Units (SI), e.g., inches
-to millimetres and Fahrenheit to Celsius. File output can be saved as a
-Comma Separated Value (CSV) file or in a spatial GeoPackage (GPKG) file,
-implemented by most major GIS software, summarising each year by
-station, which also includes vapour pressure and relative humidity
-variables calculated from existing data in GSOD.
+When reformatting data either with `get_GSOD()` or `reformat_GSOD()`, all units are converted to International System of Units (SI), e.g., inches to millimetres and Fahrenheit to Celsius. File output can be saved as a Comma Separated Value (CSV) file or in a spatial GeoPackage (GPKG) file, implemented by most major GIS software, summarising each year by
+station, which also includes vapour pressure and relative humidity variables calculated from existing data in GSOD.
 
-Additional data are calculated by this R package using the original data
-and included in the final data. These include vapour pressure (ea and
-es) and relative humidity.
+Additional data are calculated by this R package using the original data and included in the final data. These include vapour pressure (ea and es) and relative humidity.
 
 For more information see the description of the data provided by NCDC,
 <http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
@@ -56,18 +36,12 @@ For more information see the description of the data provided by NCDC,
 Other Sources of Weather Data
 -----------------------------
 
-There are several other sources of weather data and ways of retrieving
-them through R. In particular, the excellent
-[rnoaa](https://CRAN.R-project.org/package=rnoaa) package from
-[ROpenSci](https://ropensci.org) offers tools for interacting with and
-downloading weather data from the United States National Oceanic and
-Atmospheric Administration but lacks support GSOD data.
+There are several other sources of weather data and ways of retrieving them through R. In particular, the excellent
+[rnoaa](https://CRAN.R-project.org/package=rnoaa) package from [ROpenSci](https://ropensci.org) offers tools for interacting with and downloading weather data from the United States National Oceanic and Atmospheric Administration but lacks support GSOD data. 
 
-It is recommended that you have a good Internet connection to download
-the data files as they can be quite large and slow to download.
+It is recommended that you have a good Internet connection to download the data files as they can be quite large and slow to download.
 
-For more information on GSOD data see the description of the data
-provided by NCDC, <http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
+For more information on GSOD data see the description of the data provided by NCDC, <http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
 
 Quick Start
 ===========
@@ -86,17 +60,12 @@ install.packages("GSODR")
 
 ### Development version
 
-A development version is available from from GitHub. If you wish to
-install the development version that may have new features (but also may
-not work properly), install the [devtools
-package](https://CRAN.R-project.org/package=devtools), available from
-CRAN. We strive to keep the master branch on GitHub functional and
-working properly, although this may not always happen.
+A development version is available from from GitHub. If you wish to install the development version that may have new features (but also may not work properly), install the [devtools package](https://CRAN.R-project.org/package=devtools), available from CRAN. We strive to keep the master branch on GitHub functional and working properly, although this may not always happen.
 
-If you find bugs, please file a report as an issue.
+If you find bugs, please file a [report as an issue](https://github.com/adamhsparks/GSODR/issues).
 
 ``` r
-install.packages("devtools")
+#install.packages("devtools")
 devtools::install_github("adamhsparks/GSODR", build_vignettes = TRUE)
 ```
 
@@ -105,13 +74,11 @@ Using GSODR
 
 ### Query the NCDC FTP server for GSOD data
 
-GSODR's main function, `get_GSOD()`, downloads and cleans GSOD data from
-the NCDC server. Following are a few examples of its capabilities.
+GSODR's main function, `get_GSOD()`, downloads and cleans GSOD data from the NCDC server. Following are a few examples of its capabilities.
 
-#### Example 1 - Download weather station for Toowoomba, Queensland for 2010
+#### Example 1 - Download weather station data for Toowoomba, Queensland for 2010
 
 ``` r
-
 library(GSODR)
 
 Tbar <- get_GSOD(years = 2010, station = "955510-99999")
@@ -177,9 +144,8 @@ user's home directory with a maximum of five missing days per weather
 station allowed.
 
 ``` r
-
 get_GSOD(years = 2010:2011, dsn = "~/", filename = "GSOD-agroclimatology",
-         agroclimatology = TRUE, max_missing = 5)
+         agroclimatology = TRUE, CSV = TRUE, max_missing = 5)
 ```
 
 #### Example 3 - Download and plot data for a single country
@@ -193,6 +159,9 @@ get_GSOD(years = 2010, country = "Philippines", dsn = "~/",
 ```
 
 ``` r
+#install.packages("spacetime")
+#install.packages("plotKML")
+
 library(rgdal)
 #> Loading required package: sp
 #> rgdal: version: 1.2-4, (SVN revision 643)
@@ -234,30 +203,24 @@ kml(tmp_ST, dtime = 24 * 3600, colour = TEMP, shape = shape, labels = TEMP,
 system("zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml")
 ```
 
-Compare the GSOD weather data from the Philippines with climatic data
-provided by the GSODR package in the `CHELSA` data set.
+#### Example 4 - Working with climate data from GSODRdata
 
-## Example - Download and plot data for a single country
-Download data for Philippines for year 2010 and generate a spatial, year summary
-file, PHL-2010.gpkg, in the user's home directory.
+This example will demonstrate how to download data for Philippines for year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in the user's home directory and link it with climate data from the `GSODRdata` package.
 
-### Install GSODRdata package
+##### Install `GSODRdata` package
 
-This package is only available from GitHub; due to its large size (5.5Mb
-installed) it is not allowed on CRAN. It provides optional data for use with the
-GSODR package. See https://github.com/adamhsparks/GSODRdata for more.
+This package is only available from GitHub; due to its large size (5.5Mb installed) it is not allowed on CRAN. It provides optional data for use with the `GSODR` package. See https://github.com/adamhsparks/GSODRdata for more.
 
 ```r
 # install.packages("devtools")
 devtools::install_github("adamhsparks/GSODdata")
 ````
 
-### Working with climate data from `GSODRdata`
+##### Working with climate data from `GSODRdata`
 
-Now that the extra data have been installed, take a look at the CHELSA data that
-are one of the data sets included in the `GSODRdata` package.
-CHELSA (Climatologies at high resolution for the earth’s land surface areas) are
-climate data at (30 arc sec) for the earth land surface areas. 
+Now that the extra data have been installed, take a look at the CHELSA data that are one of the data sets included in the `GSODRdata` package.
+
+CHELSA (Climatologies at high resolution for the earth’s land surface areas) are climate data at (30 arc sec) for the earth land surface areas. 
 
 **Description of CHELSA data from CHELSA website**
 
@@ -266,6 +229,8 @@ It includes monthly mean temperature and precipitation patterns for the time per
 CHELSA is based on a quasi-mechanistical statistical downscaling of the ERA interim global circulation model (http://www.ecmwf.int/en/research/climate-reanalysis/era-interim) with a GPCC bias correction (https://www.dwd.de/EN/ourservices/gpcc/gpcc.html) and is freely available  in the download section.
 
 See http://chelsa-climate.org for more information on these data.
+
+Compare the GSOD weather data from the Philippines with climatic data provided by the GSODR package in the `CHELSA` data set.
 
 ``` r
 library(GSODRdata)
@@ -345,7 +310,7 @@ head(CHELSA)
 ## 5                    10.1                    13.2                    13.2                    14.9                    11.5
 ## 6                    10.7                    14.7                    14.7                    15.8                    11.6
 ```
-### Using `dplyr` functions, join the CHELSA and GSODR data for plotting.
+##### Using `dplyr` functions, join the CHELSA and GSODR data for plotting.
 
 ``` r
 library(dplyr)
@@ -390,15 +355,11 @@ ggplot(df_melt, aes(x = DATE, y = value)) +
   facet_wrap( ~ STNID)
 ```
 
-![Comparison of GSOD daily values and average monthly values with CHELSA
-climate monthly values](README-example_3.2-1.png)
+![Comparison of GSOD daily values and average monthly values with CHELSA climate monthly values](README-example_3.2-1.png)
 
-#### Example 4 - Finding stations within a given radius and download them
+#### Example 5 - Finding stations within a given radius of a point
 
-GSODR provides a function, `nearest_stations()`, which will return a list
-of stations in the GSOD data set that are within a specified radius
-(kilometres) of a given point expressed as latitude and longitude in
-decimal degrees.
+Using the `nearest_station()` function will return a list of stations in the GSOD data set that are within a specified radius (kilometres) of a given point expressed as latitude and longitude in decimal degrees [WGS84].
 
 ``` r
 # Find stations within 50km of Toowoomba, QLD.
@@ -479,31 +440,23 @@ str(toowoomba)
 Final data format and contents
 ------------------------------
 
-The function, `get_GSOD()`, returns a `data.frame()` object in R and can
-also save a Comma Separated Value (CSV) file or GeoPackage (GPKG) file
-for use in a GIS. Station data are merged with weather data for the
-final file which includes the following fields:
+The function, `get_GSOD()`, returns a `data.frame()` object in R and can also save a Comma Separated Value (CSV) file or GeoPackage (GPKG) file for use in a GIS. Station data are merged with weather data for the final file which includes the following fields:
 
 -   **STNID** - Station number (WMO/DATSAV3 number) for the location;
 
--   **WBAN** - number where applicable--this is the historical "Weather
-    Bureau Air Force Navy" number - with WBAN being the acronym;
+-   **WBAN** - number where applicable--this is the historical "Weather Bureau Air Force Navy" number - with WBAN being the acronym;
 
 -   **STN\_NAME** - Unique text identifier;
 
 -   **CTRY** - Country in which the station is located;
 
--   **LAT** - Latitude. *Station dropped in cases where values are
-    &lt;-90 or &gt;90 degrees or Lat = 0 and Lon = 0*;
+-   **LAT** - Latitude. *Station dropped in cases where values are < -90 or > 90 degrees or Lat = 0 and Lon = 0*;
 
--   **LON** - Longitude. *Station dropped in cases where values are
-    &lt;-180 or &gt;180 degrees or Lat = 0 and Lon = 0*;
+-   **LON** - Longitude. *Station dropped in cases where values are < -180 or > 180 degrees or Lat = 0 and Lon = 0*;
 
 -   **ELEV\_M** - Elevation in metres;
 
--   **ELEV\_M\_SRTM\_90m** - Elevation in metres corrected for possible
-    errors, derived from the CGIAR-CSI SRTM 90m database (Jarvis et al.
-    2008);
+-   **ELEV\_M\_SRTM\_90m** - Elevation in metres corrected for possible errors, derived from the CGIAR-CSI SRTM 90m database (Jarvis et al. 2008);
 
 -   **YEARMODA** - Date in YYYY-mm-dd format;
 
@@ -515,77 +468,43 @@ final file which includes the following fields:
 
 -   **YDAY** - Sequential day of year (not in original GSOD);
 
--   **TEMP** - Mean daily temperature converted to degrees C to tenths.
-    Missing = NA;
+-   **TEMP** - Mean daily temperature converted to degrees C to tenths. Missing = NA;
 
--   **TEMP\_CNT** - Number of observations used in calculating mean
-    daily temperature;
+-   **TEMP\_CNT** - Number of observations used in calculating mean daily temperature;
 
--   **DEWP** - Mean daily dew point converted to degrees C to tenths.
-    Missing = NA;
+-   **DEWP** - Mean daily dew point converted to degrees C to tenths. Missing = NA;
 
--   **DEWP\_CNT** - Number of observations used in calculating mean
-    daily dew point;
+-   **DEWP\_CNT** - Number of observations used in calculating mean daily dew point;
 
--   **SLP** - Mean sea level pressure in millibars to tenths. Missing =
-    NA;
+-   **SLP** - Mean sea level pressure in millibars to tenths. Missing = NA;
 
--   **SLP\_CNT** - Number of observations used in calculating mean sea
-    level pressure;
+-   **SLP\_CNT** - Number of observations used in calculating mean sea level pressure;
 
--   **STP** - Mean station pressure for the day in millibars to tenths.
-    Missing = NA;
+-   **STP** - Mean station pressure for the day in millibars to tenths. Missing = NA;
 
--   **STP\_CNT** - Number of observations used in calculating mean
-    station pressure;
+-   **STP\_CNT** - Number of observations used in calculating mean station pressure;
 
--   **VISIB** - Mean visibility for the day converted to kilometres to
-    tenths Missing = NA;
+-   **VISIB** - Mean visibility for the day converted to kilometres to tenths Missing = NA;
 
--   **VISIB\_CNT** - Number of observations used in calculating mean
-    daily visibility;
+-   **VISIB\_CNT** - Number of observations used in calculating mean daily visibility;
 
--   **WDSP** - Mean daily wind speed value converted to metres/second to
-    tenths Missing = NA;
+-   **WDSP** - Mean daily wind speed value converted to metres/second to tenths Missing = NA;
 
--   **WDSP\_CNT** - Number of observations used in calculating mean
-    daily wind speed;
+-   **WDSP\_CNT** - Number of observations used in calculating mean daily wind speed;
 
--   **MXSPD** - Maximum sustained wind speed reported for the day
-    converted to metres/second to tenths. Missing = NA;
+-   **MXSPD** - Maximum sustained wind speed reported for the day converted to metres/second to tenths. Missing = NA;
 
--   **GUST** - Maximum wind gust reported for the day converted to
-    metres/second to tenths. Missing = NA;
+-   **GUST** - Maximum wind gust reported for the day converted to metres/second to tenths. Missing = NA;
 
--   **MAX** - Maximum temperature reported during the day converted to
-    Celsius to tenths--time of max temp report varies by country and
-    region, so this will sometimes not be the max for the calendar day.
-    Missing = NA;
+-   **MAX** - Maximum temperature reported during the day converted to Celsius to tenths--time of max temp report varies by country and region, so this will sometimes not be the max for the calendar day. Missing = NA;
 
--   **MAX\_FLAG** - Blank indicates max temp was taken from the explicit
-    max temp report and not from the 'hourly' data. An "\*" indicates
-    max temp was derived from the hourly data (i.e., highest hourly or
-    synoptic-reported temperature);
+-   **MAX\_FLAG** - Blank indicates max temp was taken from the explicit max temp report and not from the 'hourly' data. An "\*" indicates max temp was derived from the hourly data (i.e., highest hourly or synoptic-reported temperature);
 
--   **MIN** - Minimum temperature reported during the day converted to
-    Celsius to tenths--time of min temp report varies by country and
-    region, so this will sometimes not be the max for the calendar day.
-    Missing = NA;
+-   **MIN** - Minimum temperature reported during the day converted to Celsius to tenths--time of min temp report varies by country and region, so this will sometimes not be the max for the calendar day. Missing = NA;
 
--   **MIN\_FLAG** - Blank indicates max temp was taken from the explicit
-    min temp report and not from the 'hourly' data. An "\*" indicates
-    min temp was derived from the hourly data (i.e., highest hourly or
-    synoptic-reported temperature);
+-   **MIN\_FLAG** - Blank indicates max temp was taken from the explicit min temp report and not from the 'hourly' data. An "\*" indicates min temp was derived from the hourly data (i.e., highest hourly or synoptic-reported temperature);
 
--   **PRCP** - Total precipitation (rain and/or melted snow) reported
-    during the day converted to millimetres to hundredths; will usually
-    not end with the midnight observation, i.e., may include latter part
-    of previous day. A value of ".00" indicates no measurable
-    precipitation (includes a trace). Missing = NA; *Note: Many stations
-    do not report '0' on days with no precipitation-- therefore, 'NA'
-    will often appear on these days. For example, a station may only
-    report a 6-hour amount for the period during which rain fell.* See
-    FLAGS\_PRCP column for source of data;
+-   **PRCP** - Total precipitation (rain and/or melted snow) reported during the day converted to millimetres to hundredths; will usually not end with the midnight observation, i.e., may include latter part of previous day. A value of ".00" indicates no measurable precipitation (includes a trace). Missing = NA; *Note: Many stations do not report '0' on days with no precipitation-- therefore, 'NA' will often appear on these days. For example, a station may only report a 6-hour amount for the period during which rain fell.* See FLAGS\_PRCP column for source of data;
 
 -   **PRCP\_FLAG** -
 
@@ -603,36 +522,23 @@ final file which includes the following fields:
 
     -   G = 1 report of 24-hour precipitation amount;
 
-    -   H = Station reported '0' as the amount for the day (e.g., from
-        6-hour reports), but also reported at least one occurrence of
-        precipitation in hourly observations--this could indicate a
-        trace occurred, but should be considered as incomplete data for
-        the day;
+    -   H = Station reported '0' as the amount for the day (e.g., from 6-hour reports), but also reported at least one occurrence of precipitation in hourly observations--this could indicate a rrace occurred, but should be considered as incomplete data for the day;
 
-    -   I = Station did not report any precipitation data for the day
-        and did not report any occurrences of precipitation in its
-        hourly observations--it's still possible that precipitation
-        occurred but was not reported;
+    -   I = Station did not report any precipitation data for the day and did not report any occurrences of precipitation in its hourly observations--it's still possible that precipitation occurred but was not reported;
 
 -   **SNDP** - Snow depth in millimetres to tenths. Missing = NA;
 
--   **I\_FOG** - Indicator for fog, (1 = yes, 0 = no/not reported) for
-    the occurrence during the day;
+-   **I\_FOG** - Indicator for fog, (1 = yes, 0 = no/not reported) for the occurrence during the day;
 
--   **I\_RAIN\_DRIZZLE** - Indicator for rain or drizzle, (1 = yes, 0 =
-    no/not reported) for the occurrence during the day;
+-   **I\_RAIN\_DRIZZLE** - Indicator for rain or drizzle, (1 = yes, 0 = no/not reported) for the occurrence during the day;
 
--   **I\_SNOW\_ICE** - Indicator for snow or ice pellets, (1 = yes, 0 =
-    no/not reported) for the occurrence during the day;
+-   **I\_SNOW\_ICE** - Indicator for snow or ice pellets, (1 = yes, 0 = no/not reported) for the occurrence during the day;
 
--   **I\_HAIL** - Indicator for hail, (1 = yes, 0 = no/not reported) for
-    the occurrence during the day;
+-   **I\_HAIL** - Indicator for hail, (1 = yes, 0 = no/not reported) for the occurrence during the day;
 
--   **I\_THUNDER** - Indicator for thunder, (1 = yes, 0 = no/not
-    reported) for the occurrence during the day;
+-   **I\_THUNDER** - Indicator for thunder, (1 = yes, 0 = no/not reported) for the occurrence during the day;
 
--   **I\_TORNADO\_FUNNEL** - Indicator for tornado or funnel cloud, (1 =
-    yes, 0 = no/not reported) for the occurrence during the day;
+-   **I\_TORNADO\_FUNNEL** - Indicator for tornado or funnel cloud, (1 = yes, 0 = no/not reported) for the occurrence during the day;
 
 -   **ea** - Mean daily actual vapour pressure;
 
@@ -648,10 +554,7 @@ Data Sources
 
 #### CHELSA climate layers
 
-CHELSA (climatic surfaces at 1 km resolution) is based on a
-quasi-mechanistical statistical downscaling of the ERA interim global
-circulation model (Karger et al. 2016). ESA's CCI-LC cloud probability
-monthly averages are based on the MODIS snow products (MOD10A2).
+CHELSA (climatic surfaces at 1 km resolution) is based on a quasi-mechanistical statistical downscaling of the ERA interim global circulation model (Karger et al. 2016). ESA's CCI-LC cloud probability monthly averages are based on the MODIS snow products (MOD10A2).
 <http://chelsa-climate.org/>
 
 #### EarthEnv MODIS cloud fraction
@@ -664,22 +567,13 @@ monthly averages are based on the MODIS snow products (MOD10A2).
 
 #### Elevation Values
 
-90m hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was used
-to identify and correct/remove elevation errors in data for station
-locations between -60˚ and 60˚ latitude. This applies to cases here
-where elevation was missing in the reported values as well. In case the
-station reported an elevation and the DEM does not, the station reported
-is taken. For stations beyond -60˚ and 60˚ latitude, the values are
-station reported values in every instance. See
-<https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md>
-for more detail on the correction methods.
+90m hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was used to identify and correct/remove elevation errors in data for station locations between -60˚ and 60˚ latitude. This applies to cases here where elevation was missing in the reported values as well. In case the station reported an elevation and the DEM does not, the station reported is taken. For stations beyond -60˚ and 60˚ latitude, the values are station reported values in every instance. See
+<https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md> for more detail on the correction methods.
 
 WMO Resolution 40. NOAA Policy
 ------------------------------
 
-*Users of these data should take into account the following (from the
-[NCDC
-website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):*
+*Users of these data should take into account the following (from the [NCDC website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):*
 
 > "The following data and products may have conditions placed on their
 > international commercial use. They can be used within the U.S. or for
@@ -692,23 +586,14 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
 Code of Conduct
 ---------------
 
-Please note that this project is released with a [Contributor Code of
-Conduct](CONDUCT.md). By participating in this project you agree to
-abide by its terms.
+Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
 
 References
 ==========
 
-Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled SRTM for
-the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
-(<http://srtm.csI_cgiar.org>)
+Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database (<http://srtm.csI_cgiar.org>)
 
-Karger, D. N., Conrad, O., Bohner, J., Kawohl, T., Kreft, H.,
-Soria-Auza, R. W., et al. (2016). Climatologies at high resolution for
-the Earth land surface areas. arXiv preprint arXiv:1607.00217.
-(<http://chelsa-climate.org/>)
+Karger, D. N., Conrad, O., Bohner, J., Kawohl, T., Kreft, H., Soria-Auza, R. W., et al. (2016). Climatologies at high resolution for the Earth land surface areas. arXiv preprint arXiv:1607.00217. (<http://chelsa-climate.org/>)
 
-Wilson AM, Jetz W (2016). Remotely Sensed High-Resolution Global Cloud
-Dynamics for Predicting Ecosystem and Biodiversity Distributions. PLoS
-Biol 14(3): e1002415.
+Wilson AM, Jetz W (2016). Remotely Sensed High-Resolution Global Cloud Dynamics for Predicting Ecosystem and Biodiversity Distributions. PLoS Biol 14(3): e1002415.
 
