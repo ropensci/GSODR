@@ -1,6 +1,6 @@
 ---
 title: "Working with spatial and climate data from GSODR"
-author: "Adam H Sparks"
+author: "Adam H Sparks and Tomislav Hengl"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -35,8 +35,8 @@ installed) it is not allowed on CRAN. It provides optional data for use with the
 GSODR package.  See https://github.com/adamhsparks/GSODRdata for more.
 
 ```r
-install.packages("devtools")
-devtools::install_github("adamhsparks/GSOD.data")
+#install.packages("devtools")
+devtools::install_github("adamhsparks/GSODdata")
 ```
 
 ### Working with climate data from GSODRdata
@@ -242,9 +242,8 @@ library(dplyr)
 library(ggplot2)
 library(reshape2)
 
-data(GSOD_clim)
 cnames <- paste0("CHELSA_temp_", 1:12, "_1979-2013")
-clim_temp <- GSOD_clim[GSOD_clim$STNID %in% pnts$STNID,
+clim_temp <- CHELSA[CHELSA$STNID %in% pnts$STNID,
                        paste(c("STNID", cnames))]
 clim_temp_df <- data.frame(STNID = rep(clim_temp$STNID, 12),
                            MONTHC = as.vector(sapply(1:12, rep,

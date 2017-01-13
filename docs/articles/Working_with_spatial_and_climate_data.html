@@ -58,7 +58,7 @@
   <div class="col-md-9">
     <div class="page-header toc-ignore">
       <h1>Working with spatial and climate data from GSODR</h1>
-                        <h4 class="author">Adam H Sparks</h4>
+                        <h4 class="author">Adam H Sparks and Tomislav Hengl</h4>
             
             <h4 class="date">2017-01-13</h4>
           </div>
@@ -79,8 +79,8 @@
 <h3 class="hasAnchor">
 <html><body><a href="#install-gsodrdata-package" class="anchor"> </a></body></html>Install GSODRdata package</h3>
 <p>This package is only available from GitHub; due to its large size (5.5Mb installed) it is not allowed on CRAN. It provides optional data for use with the GSODR package. See <a href="https://github.com/adamhsparks/GSODRdata" class="uri">https://github.com/adamhsparks/GSODRdata</a> for more.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"devtools"</span>)
-devtools::<span class="kw">install_github</span>(<span class="st">"adamhsparks/GSOD.data"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages("devtools")</span>
+devtools::<span class="kw">install_github</span>(<span class="st">"adamhsparks/GSODdata"</span>)</code></pre></div>
 </div>
 <div id="working-with-climate-data-from-gsodrdata" class="section level3">
 <h3 class="hasAnchor">
@@ -215,9 +215,8 @@ shape =<span class="st"> "http://maps.google.com/mapfiles/kml/pal2/icon18.png"</
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
 <span class="kw">library</span>(reshape2)
 
-<span class="kw">data</span>(GSOD_clim)
 cnames &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">"CHELSA_temp_"</span>, <span class="dv">1</span>:<span class="dv">12</span>, <span class="st">"_1979-2013"</span>)
-clim_temp &lt;-<span class="st"> </span>GSOD_clim[GSOD_clim$STNID %in%<span class="st"> </span>pnts$STNID,
+clim_temp &lt;-<span class="st"> </span>CHELSA[CHELSA$STNID %in%<span class="st"> </span>pnts$STNID,
                        <span class="kw">paste</span>(<span class="kw">c</span>(<span class="st">"STNID"</span>, cnames))]
 clim_temp_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">STNID =</span> <span class="kw">rep</span>(clim_temp$STNID, <span class="dv">12</span>),
                            <span class="dt">MONTHC =</span> <span class="kw">as.vector</span>(<span class="kw">sapply</span>(<span class="dv">1</span>:<span class="dv">12</span>, rep,
