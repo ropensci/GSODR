@@ -36,7 +36,7 @@ after filtering.
 ```r
 library(GSODR)
 
-  GSOD_stations <- get_station_list()
+GSOD_stations <- get_station_list()
 ```
 
 Using [ggplot2](https://CRAN.R-project.org/package=ggplot2) and the 
@@ -58,9 +58,8 @@ ggplot(GSOD_stations, aes(x = LON, y = LAT)) +
 
 ## Find Stations in Australia
 
-GSODR provides lists of weather station locations and elevation values. Using
-[dplyr](https://CRAN.R-project.org/package=dplyr), we can find all the stations
-in Australia.
+GSODR provides lists of weather station locations and elevation values. Using [dplyr](https://CRAN.R-project.org/package=dplyr), we can find all the stations in Australia.
+
 ```r
 library(dplyr)
 station_locations <- left_join(GSOD_stations, GSODR::country_list,
@@ -181,9 +180,7 @@ get_GSOD(years = 2010, station = tbar_stations, dsn = "~/",
 
 ## Plot Maximum and Miniumum Temperature Values
 
-Using the first data downloaded for a single station, 955510-99999, plot the
-temperature for 2010 using `read_csv()` from Hadley's
-[readr](https://CRAN.R-project.org/package=readr) package.
+Using the first data downloaded for a single station, 955510-99999, plot the temperature for 2010 using `read_csv()` from Hadley's [readr](https://CRAN.R-project.org/package=readr) package.
 
 ```r
 library(lubridate)
@@ -239,19 +236,10 @@ ggplot(data = tbar_temps, aes(x = ymd(YEARMODA), y = value,
 
 ## Creating Spatial Files
 
-Because the stations provide geospatial location information, it is possible
-to create a spatial file. [GeoPackage files](http://www.geopackage.org) are a
-open, standards-based, platform-independent, portable, self-describing compact
-format for transferring geospatial information, which handle vector files much
-like shapefiles do, but eliminate many of the issues that shapefiles have with
-field names and the number of files. The `get_GSOD()` function can create a
-GeoPackage file, which can be used with a GIS for further analysis and mapping
-with other spatial objects.
+Because the stations provide geospatial location information, it is possible to create a spatial file. [GeoPackage files](http://www.geopackage.org) are a open, standards-based, platform-independent, portable, self-describing compact
+format for transferring geospatial information, which handle vector files much like shapefiles do, but eliminate many of the issues that shapefiles have with field names and the number of files. The `get_GSOD()` function can create a GeoPackage file, which can be used with a GIS for further analysis and mapping with other spatial objects.
 
-After getting weather stations for Australia and creating a GeoPackage file,
-the rgdal package can import the data into R and the raster package can download
-an outline of Australia useful for plotting the station locations in this
-country.
+After getting weather stations for Australia and creating a GeoPackage file, the rgdal package can import the data into R and the raster package can download an outline of Australia useful for plotting the station locations in this country.
 
 ```r
 get_GSOD(years = 2015, country = "Australia", dsn = "~/", filename = "AUS",
@@ -270,10 +258,8 @@ get_GSOD(years = 2015, country = "Australia", dsn = "~/", filename = "AUS",
 #> Finished parsing files. Writing files to disk now.
 ```
 
-Importing the GeoPackage file can be a bit tricky. The dsn will be the full path
-along with the file name. The layer to be specified is "GSOD", this is specified
-in the `get_GSOD()` function and will not change. The file name, specified in
-the dsn will, but the layer name will not.
+Importing the GeoPackage file can be a bit tricky. The dsn will be the full path along with the file name. The layer to be specified is "GSOD", this is specified in the `get_GSOD()` function and will not change. The file name, specified in
+the dsn will, but the layer name will not. 
 
 ```r
 library(rgdal)
@@ -298,10 +284,8 @@ class(AUS_stations)
 #> [1] "sp"
 ```
 
-Since GeoPackage files are formatted as SQLite databases you can use the
-existing R tools for SQLite files
-[(J. Stachelek 2016)](https://jsta.github.io/2016/07/14/geopackage-r.html).
-One easy way is using dplyr, which we've already used to filter the stations.
+Since GeoPackage files are formatted as SQLite databases you can use the existing R tools for SQLite files
+[(J. Stachelek 2016)](https://jsta.github.io/2016/07/14/geopackage-r.html). One easy way is using dplyr, which we've already used to filter the stations.
 
 This option is much faster to load since it does not load the geometry.
 
@@ -334,15 +318,12 @@ print(AUS_sqlite, n = 5)
 ```
 # Reformating Local Data Files
 
-You may have already downloaded GSOD data or may just wish to use an FTP client
-to download the files from the server to you local disk and not use the
-capabilities of `get_GSOD()`. In that case the `reformat_GSOD()` function is useful.
+You may have already downloaded GSOD data or may just wish to use an FTP client to download the files from the server to you local disk and not use the capabilities of `get_GSOD()`. In that case the `reformat_GSOD()` function is useful.
 
-There are two ways, you can either provide `reformat_GSOD()` with a list of
-specified station files or you can supply it with a directory containing all of
-the "WBAN-WMO-YYYY.op.gz" station files that you wish to reformat.
+There are two ways, you can either provide `reformat_GSOD()` with a list of specified station files or you can supply it with a directory containing all of the "WBAN-WMO-YYYY.op.gz" station files that you wish to reformat.
 
 ## Reformat a List of Local Files
+
 ```r
 y <- c("~/GSOD/gsod_1960/200490-99999-1960.op.gz",
        "~/GSOD/gsod_1961/200490-99999-1961.op.gz")
@@ -350,49 +331,33 @@ x <- reformat_GSOD(file_list = y)
 ```
 
 ## Reformat All Local Files Found in Directory
+
 ```r
 x <- reformat_GSOD(dsn = "~/GSOD/gsod_1960")
 ```
 
 # Additional Climate Data
 
-Additional climate data, [GSOD.data](https://github.com/adamhsparks/GSODR.data),
-formatted for use with GSOD data provided by GSODR are available as an R package
-instalable through GitHub due to the package size, 5.1Mb, being too large for
-CRAN.
+Additional climate data, [GSOD.data](https://github.com/adamhsparks/GSODR.data), formatted for use with GSOD data provided by GSODR are available as an R package instalable through GitHub due to the package size, 5.1Mb, being too large for CRAN.
 
 ```r
-install.packages("devtools")
-devtools::install_github("adamhsparks/GSOD_data")
-library("GSOD_data")
+#install.packages("devtools")
+devtools::install_github("adamhsparks/GSODdata")
+library("GSODdata")
 ````
 
 # Notes
 
 ## Elevation Values
 
-90 metre (90m) hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was
-used to identify and correct/remove elevation errors in data for station
-locations between -60˚ and 60˚ latitude. This applies to cases here
-where elevation was missing in the reported values as well. In case the
-station reported an elevation and the DEM does not, the station reported
-is taken. For stations beyond -60˚ and 60˚ latitude, the values are
-station reported values in every instance. See
-<https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md>
+90 metre (90m) hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was used to identify and correct/remove elevation errors in data for station locations between -60˚ and 60˚ latitude. This applies to cases here where elevation was missing in the reported values as well. In case the station reported an elevation and the DEM does not, the station reported is taken. For stations beyond -60˚ and 60˚ latitude, the values are station reported values in every instance. See <https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md>
 for more detail on the correction methods.
 
 ## WMO Resolution 40. NOAA Policy
 
-*Users of these data should take into account the following (from the
-[NCDC website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):*
+*Users of these data should take into account the following (from the [NCDC website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):*
 
-> "The following data and products may have conditions placed on their 
-international commercial use. They can be used within the U.S. or for
-non-commercial international activities without restriction. The
-non-U.S. data cannot be redistributed for commercial purposes.
-Re-distribution of these data by others must provide this same
-notification." [WMO Resolution 40. NOAA
-Policy](http://www.wmo.int/pages/about/Resolution40.html)
+> "The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification." [WMO Resolution 40. NOAA Policy](http://www.wmo.int/pages/about/Resolution40.html)
 
 # References
 Stachelek, J. 2016. Using the Geopackage Format with R. 

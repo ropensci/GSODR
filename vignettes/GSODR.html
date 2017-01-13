@@ -229,7 +229,7 @@ after filtering.</p>
 
 <pre><code class="r">library(GSODR)
 
-  GSOD_stations &lt;- get_station_list()
+GSOD_stations &lt;- get_station_list()
 </code></pre>
 
 <p>Using <a href="https://CRAN.R-project.org/package=ggplot2">ggplot2</a> and the 
@@ -251,9 +251,8 @@ library(ggalt)</p>
 
 ## Find Stations in Australia
 
-GSODR provides lists of weather station locations and elevation values. Using
-[dplyr](https://CRAN.R-project.org/package=dplyr), we can find all the stations
-in Australia.
+GSODR provides lists of weather station locations and elevation values. Using [dplyr](https://CRAN.R-project.org/package=dplyr), we can find all the stations in Australia.
+
 ```r
 library(dplyr)
 station_locations &lt;- left_join(GSOD_stations, GSODR::country_list,
@@ -373,9 +372,7 @@ get_GSOD(years = 2010, station = tbar_stations, dsn = &quot;~/&quot;,
 
 <h2>Plot Maximum and Miniumum Temperature Values</h2>
 
-<p>Using the first data downloaded for a single station, 955510-99999, plot the
-temperature for 2010 using <code>read_csv()</code> from Hadley&#39;s
-<a href="https://CRAN.R-project.org/package=readr">readr</a> package.</p>
+<p>Using the first data downloaded for a single station, 955510-99999, plot the temperature for 2010 using <code>read_csv()</code> from Hadley&#39;s <a href="https://CRAN.R-project.org/package=readr">readr</a> package.</p>
 
 <pre><code class="r">library(lubridate)
 library(readr)
@@ -431,19 +428,10 @@ ggplot(data = tbar_temps, aes(x = ymd(YEARMODA), y = value,
 
 <h2>Creating Spatial Files</h2>
 
-<p>Because the stations provide geospatial location information, it is possible
-to create a spatial file. <a href="http://www.geopackage.org">GeoPackage files</a> are a
-open, standards-based, platform-independent, portable, self-describing compact
-format for transferring geospatial information, which handle vector files much
-like shapefiles do, but eliminate many of the issues that shapefiles have with
-field names and the number of files. The <code>get_GSOD()</code> function can create a
-GeoPackage file, which can be used with a GIS for further analysis and mapping
-with other spatial objects.</p>
+<p>Because the stations provide geospatial location information, it is possible to create a spatial file. <a href="http://www.geopackage.org">GeoPackage files</a> are a open, standards-based, platform-independent, portable, self-describing compact
+format for transferring geospatial information, which handle vector files much like shapefiles do, but eliminate many of the issues that shapefiles have with field names and the number of files. The <code>get_GSOD()</code> function can create a GeoPackage file, which can be used with a GIS for further analysis and mapping with other spatial objects.</p>
 
-<p>After getting weather stations for Australia and creating a GeoPackage file,
-the rgdal package can import the data into R and the raster package can download
-an outline of Australia useful for plotting the station locations in this
-country.</p>
+<p>After getting weather stations for Australia and creating a GeoPackage file, the rgdal package can import the data into R and the raster package can download an outline of Australia useful for plotting the station locations in this country.</p>
 
 <pre><code class="r">get_GSOD(years = 2015, country = &quot;Australia&quot;, dsn = &quot;~/&quot;, filename = &quot;AUS&quot;,
          CSV = FALSE, GPKG = TRUE)
@@ -461,10 +449,8 @@ country.</p>
 #&gt; Finished parsing files. Writing files to disk now.
 </code></pre>
 
-<p>Importing the GeoPackage file can be a bit tricky. The dsn will be the full path
-along with the file name. The layer to be specified is &ldquo;GSOD&rdquo;, this is specified
-in the <code>get_GSOD()</code> function and will not change. The file name, specified in
-the dsn will, but the layer name will not.</p>
+<p>Importing the GeoPackage file can be a bit tricky. The dsn will be the full path along with the file name. The layer to be specified is &ldquo;GSOD&rdquo;, this is specified in the <code>get_GSOD()</code> function and will not change. The file name, specified in
+the dsn will, but the layer name will not. </p>
 
 <pre><code class="r">library(rgdal)
 #&gt; Loading required package: sp
@@ -488,10 +474,8 @@ class(AUS_stations)
 #&gt; [1] &quot;sp&quot;
 </code></pre>
 
-<p>Since GeoPackage files are formatted as SQLite databases you can use the
-existing R tools for SQLite files
-<a href="https://jsta.github.io/2016/07/14/geopackage-r.html">(J. Stachelek 2016)</a>.
-One easy way is using dplyr, which we&#39;ve already used to filter the stations.</p>
+<p>Since GeoPackage files are formatted as SQLite databases you can use the existing R tools for SQLite files
+<a href="https://jsta.github.io/2016/07/14/geopackage-r.html">(J. Stachelek 2016)</a>. One easy way is using dplyr, which we&#39;ve already used to filter the stations.</p>
 
 <p>This option is much faster to load since it does not load the geometry.</p>
 
@@ -524,13 +508,9 @@ print(AUS_sqlite, n = 5)
 
 <h1>Reformating Local Data Files</h1>
 
-<p>You may have already downloaded GSOD data or may just wish to use an FTP client
-to download the files from the server to you local disk and not use the
-capabilities of <code>get_GSOD()</code>. In that case the <code>reformat_GSOD()</code> function is useful.</p>
+<p>You may have already downloaded GSOD data or may just wish to use an FTP client to download the files from the server to you local disk and not use the capabilities of <code>get_GSOD()</code>. In that case the <code>reformat_GSOD()</code> function is useful.</p>
 
-<p>There are two ways, you can either provide <code>reformat_GSOD()</code> with a list of
-specified station files or you can supply it with a directory containing all of
-the &ldquo;WBAN-WMO-YYYY.op.gz&rdquo; station files that you wish to reformat.</p>
+<p>There are two ways, you can either provide <code>reformat_GSOD()</code> with a list of specified station files or you can supply it with a directory containing all of the &ldquo;WBAN-WMO-YYYY.op.gz&rdquo; station files that you wish to reformat.</p>
 
 <h2>Reformat a List of Local Files</h2>
 
@@ -546,43 +526,26 @@ x &lt;- reformat_GSOD(file_list = y)
 
 <h1>Additional Climate Data</h1>
 
-<p>Additional climate data, <a href="https://github.com/adamhsparks/GSODR.data">GSOD.data</a>,
-formatted for use with GSOD data provided by GSODR are available as an R package
-instalable through GitHub due to the package size, 5.1Mb, being too large for
-CRAN.</p>
+<p>Additional climate data, <a href="https://github.com/adamhsparks/GSODR.data">GSOD.data</a>, formatted for use with GSOD data provided by GSODR are available as an R package instalable through GitHub due to the package size, 5.1Mb, being too large for CRAN.</p>
 
-<pre><code class="r">install.packages(&quot;devtools&quot;)
-devtools::install_github(&quot;adamhsparks/GSOD_data&quot;)
-library(&quot;GSOD_data&quot;)
+<pre><code class="r">#install.packages(&quot;devtools&quot;)
+devtools::install_github(&quot;adamhsparks/GSODdata&quot;)
+library(&quot;GSODdata&quot;)
 </code></pre>
 
 <h1>Notes</h1>
 
 <h2>Elevation Values</h2>
 
-<p>90 metre (90m) hole-filled SRTM digital elevation (Jarvis <em>et al.</em> 2008) was
-used to identify and correct/remove elevation errors in data for station
-locations between -60˚ and 60˚ latitude. This applies to cases here
-where elevation was missing in the reported values as well. In case the
-station reported an elevation and the DEM does not, the station reported
-is taken. For stations beyond -60˚ and 60˚ latitude, the values are
-station reported values in every instance. See
-<a href="https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md">https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md</a>
+<p>90 metre (90m) hole-filled SRTM digital elevation (Jarvis <em>et al.</em> 2008) was used to identify and correct/remove elevation errors in data for station locations between -60˚ and 60˚ latitude. This applies to cases here where elevation was missing in the reported values as well. In case the station reported an elevation and the DEM does not, the station reported is taken. For stations beyond -60˚ and 60˚ latitude, the values are station reported values in every instance. See <a href="https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md">https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md</a>
 for more detail on the correction methods.</p>
 
 <h2>WMO Resolution 40. NOAA Policy</h2>
 
-<p><em>Users of these data should take into account the following (from the
-<a href="http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&amp;countryabbv=&amp;georegionabbv=">NCDC website</a>):</em></p>
+<p><em>Users of these data should take into account the following (from the <a href="http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&amp;countryabbv=&amp;georegionabbv=">NCDC website</a>):</em></p>
 
 <blockquote>
-<p>&ldquo;The following data and products may have conditions placed on their 
-international commercial use. They can be used within the U.S. or for
-non-commercial international activities without restriction. The
-non-U.S. data cannot be redistributed for commercial purposes.
-Re-distribution of these data by others must provide this same
-notification.&rdquo; <a href="http://www.wmo.int/pages/about/Resolution40.html">WMO Resolution 40. NOAA
-Policy</a></p>
+<p>&ldquo;The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification.&rdquo; <a href="http://www.wmo.int/pages/about/Resolution40.html">WMO Resolution 40. NOAA Policy</a></p>
 </blockquote>
 
 <h1>References</h1>

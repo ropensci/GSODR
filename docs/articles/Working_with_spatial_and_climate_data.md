@@ -1,6 +1,6 @@
 ---
 title: "Working with spatial and climate data from GSODR"
-author: "Adam H Sparks and Tomislav Hengl"
+author: "Tomislav Hengl and Adam H Sparks"
 date: "2017-01-13"
 output: rmarkdown::html_vignette
 vignette: >

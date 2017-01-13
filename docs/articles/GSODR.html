@@ -94,7 +94,7 @@
 <p>The GSOD data are comprised of a global set of data from weather stations. To visualise where these stations are located we can fetch the station metadata and plot it in a map. The resulting map shows only stations with valid geo-locations after filtering.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(GSODR)
 
-  GSOD_stations &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_station_list.html">get_station_list</a></span>()</code></pre></div>
+GSOD_stations &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_station_list.html">get_station_list</a></span>()</code></pre></div>
 <p>Using <a href="https://CRAN.R-project.org/package=ggplot2">ggplot2</a> and the <a href="https://CRAN.R-project.org/package=ggalt">ggalt</a> package it is possible to plot the station locations using alpha transparency to see the densest part of the network and use the Robinson projection for the map.</p>
 <pre class="{r"><code>library(ggplot2)
 library(ggalt)
@@ -358,9 +358,9 @@ x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reformat_
 <h1 class="hasAnchor">
 <html><body><a href="#additional-climate-data" class="anchor"> </a></body></html>Additional Climate Data</h1>
 <p>Additional climate data, <a href="https://github.com/adamhsparks/GSODR.data">GSOD.data</a>, formatted for use with GSOD data provided by GSODR are available as an R package instalable through GitHub due to the package size, 5.1Mb, being too large for CRAN.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"devtools"</span>)
-devtools::<span class="kw">install_github</span>(<span class="st">"adamhsparks/GSOD_data"</span>)
-<span class="kw">library</span>(<span class="st">"GSOD_data"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages("devtools")</span>
+devtools::<span class="kw">install_github</span>(<span class="st">"adamhsparks/GSODdata"</span>)
+<span class="kw">library</span>(<span class="st">"GSODdata"</span>)</code></pre></div>
 </div>
 <div id="notes" class="section level1">
 <h1 class="hasAnchor">
