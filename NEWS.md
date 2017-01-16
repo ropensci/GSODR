@@ -26,7 +26,8 @@
 - A internal new function, `get_station_list()`, fetches the latest station list from the FTP server.  
 - New data layers are provided through a separate package, GSOD.data (https://github.com/adamhsparks/GSODR.data), which provide climate data formatted for use with GSODR. CHELSA (climatic surfaces at 1 km resolution), http://chelsa-climate.org/, http://www.earthenv.org/cloud, http://maps.elie.ucl.ac.be/CCI/viewer/index.php and CRU CL2.0 (https://crudata.uea.ac.uk/%7Etimm/grid/CRU_CL_2_0.html) 
 - Improved file handling for individual station downloads  
-- Missing values are handled as `NA` not -9999
+- Missing values are handled as `NA` not -9999  
+- Change from GPL >= 3 to MIT licence to bring into line with ropensci packages  
   
 ## Minor changes
 
