@@ -706,7 +706,7 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
 > non-U.S. data cannot be redistributed for commercial purposes.
 > Re-distribution of these data by others must provide this same
 > notification." [WMO Resolution 40. NOAA
-> Policy](http://www.wmo.int/pages/about/Resolution40.html)
+> Policy](https://public.wmo.int/en/our-mandate/what-we-do/data-exchange-and-technology-transfer)
 
 Code of Conduct
 ---------------
@@ -720,7 +720,7 @@ References
 
 Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled SRTM for
 the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
-(<http://srtm.csI_cgiar.org>)
+(<http://srtm.csi.cgiar.org>)
 
 Karger, D. N., Conrad, O., Bohner, J., Kawohl, T., Kreft, H.,
 Soria-Auza, R. W., et al. (2016). Climatologies at high resolution for
