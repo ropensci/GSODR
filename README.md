@@ -720,7 +720,7 @@ References
 
 Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled SRTM for
 the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
-(<http://srtm.csI_cgiar.org>)
+(<http://srtm.csi.cgiar.org>)
 
 Karger, D. N., Conrad, O., Bohner, J., Kawohl, T., Kreft, H.,
 Soria-Auza, R. W., et al. (2016). Climatologies at high resolution for

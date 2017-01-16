@@ -579,12 +579,7 @@ WMO Resolution 40. NOAA Policy
 
 *Users of these data should take into account the following (from the [NCDC website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):*
 
-> "The following data and products may have conditions placed on their
-> international commercial use. They can be used within the U.S. or for
-> non-commercial international activities without restriction. The
-> non-U.S. data cannot be redistributed for commercial purposes.
-> Re-distribution of these data by others must provide this same
-> notification." [WMO Resolution 40. NOAA Policy](https://public.wmo.int/en/our-mandate/what-we-do/data-exchange-and-technology-transfer)
+> "The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification." [WMO Resolution 40. NOAA Policy](https://public.wmo.int/en/our-mandate/what-we-do/data-exchange-and-technology-transfer)
 
 Code of Conduct
 ---------------
@@ -594,7 +589,7 @@ Please note that this project is released with a [Contributor Code of Conduct](C
 References
 ==========
 
-Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database (<http://srtm.csI_cgiar.org>)
+Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database (<http://srtm.csi.cgiar.org>)
 
 Karger, D. N., Conrad, O., Bohner, J., Kawohl, T., Kreft, H., Soria-Auza, R. W., et al. (2016). Climatologies at high resolution for the Earth land surface areas. arXiv preprint arXiv:1607.00217. (<http://chelsa-climate.org/>)
 
