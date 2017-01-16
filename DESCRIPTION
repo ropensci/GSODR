@@ -31,8 +31,7 @@ Description: Provides automated downloading, parsing, cleaning, unit conversion
     from, <http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt>.
 Depends:
     R (>= 3.2.0)
-License:
-    GPL (>= 3)
+License: MIT + file LICENSE
 Imports:
     curl,
     data.table,
