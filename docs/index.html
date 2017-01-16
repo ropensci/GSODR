@@ -111,7 +111,71 @@
 <p>If you find bugs, please file a <a href="https://github.com/adamhsparks/GSODR/issues">report as an issue</a>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages("devtools")</span>
 devtools::<span class="kw">install_github</span>(<span class="st">"adamhsparks/GSODR"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<hr>
 </div>
+</div>
+<div id="final-data-format-and-contents" class="section level2">
+<h2 class="hasAnchor">
+<a href="#final-data-format-and-contents" class="anchor"> </a>Final data format and contents</h2>
+<p>The <code>GSODR</code> package returns data with the following fields/units.</p>
+<ul>
+<li><p><strong>STNID</strong> - Station number (WMO/DATSAV3 number) for the location;</p></li>
+<li><p><strong>WBAN</strong> - number where applicable–this is the historical “Weather Bureau Air Force Navy” number - with WBAN being the acronym;</p></li>
+<li><p><strong>STN_NAME</strong> - Unique text identifier;</p></li>
+<li><p><strong>CTRY</strong> - Country in which the station is located;</p></li>
+<li><p><strong>LAT</strong> - Latitude. <em>Station dropped in cases where values are &lt; -90 or &gt; 90 degrees or Lat = 0 and Lon = 0</em>;</p></li>
+<li><p><strong>LON</strong> - Longitude. <em>Station dropped in cases where values are &lt; -180 or &gt; 180 degrees or Lat = 0 and Lon = 0</em>;</p></li>
+<li><p><strong>ELEV_M</strong> - Elevation in metres;</p></li>
+<li><p><strong>ELEV_M_SRTM_90m</strong> - Elevation in metres corrected for possible errors, derived from the CGIAR-CSI SRTM 90m database (Jarvis et al. 2008);</p></li>
+<li><p><strong>YEARMODA</strong> - Date in YYYY-mm-dd format;</p></li>
+<li><p><strong>YEAR</strong> - The year (YYYY);</p></li>
+<li><p><strong>MONTH</strong> - The month (mm);</p></li>
+<li><p><strong>DAY</strong> - The day (dd);</p></li>
+<li><p><strong>YDAY</strong> - Sequential day of year (not in original GSOD);</p></li>
+<li><p><strong>TEMP</strong> - Mean daily temperature converted to degrees C to tenths. Missing = NA;</p></li>
+<li><p><strong>TEMP_CNT</strong> - Number of observations used in calculating mean daily temperature;</p></li>
+<li><p><strong>DEWP</strong> - Mean daily dew point converted to degrees C to tenths. Missing = NA;</p></li>
+<li><p><strong>DEWP_CNT</strong> - Number of observations used in calculating mean daily dew point;</p></li>
+<li><p><strong>SLP</strong> - Mean sea level pressure in millibars to tenths. Missing = NA;</p></li>
+<li><p><strong>SLP_CNT</strong> - Number of observations used in calculating mean sea level pressure;</p></li>
+<li><p><strong>STP</strong> - Mean station pressure for the day in millibars to tenths. Missing = NA;</p></li>
+<li><p><strong>STP_CNT</strong> - Number of observations used in calculating mean station pressure;</p></li>
+<li><p><strong>VISIB</strong> - Mean visibility for the day converted to kilometres to tenths Missing = NA;</p></li>
+<li><p><strong>VISIB_CNT</strong> - Number of observations used in calculating mean daily visibility;</p></li>
+<li><p><strong>WDSP</strong> - Mean daily wind speed value converted to metres/second to tenths Missing = NA;</p></li>
+<li><p><strong>WDSP_CNT</strong> - Number of observations used in calculating mean daily wind speed;</p></li>
+<li><p><strong>MXSPD</strong> - Maximum sustained wind speed reported for the day converted to metres/second to tenths. Missing = NA;</p></li>
+<li><p><strong>GUST</strong> - Maximum wind gust reported for the day converted to metres/second to tenths. Missing = NA;</p></li>
+<li><p><strong>MAX</strong> - Maximum temperature reported during the day converted to Celsius to tenths–time of max temp report varies by country and region, so this will sometimes not be the max for the calendar day. Missing = NA;</p></li>
+<li><p><strong>MAX_FLAG</strong> - Blank indicates max temp was taken from the explicit max temp report and not from the ‘hourly’ data. An “*” indicates max temp was derived from the hourly data (i.e., highest hourly or synoptic-reported temperature);</p></li>
+<li><p><strong>MIN</strong> - Minimum temperature reported during the day converted to Celsius to tenths–time of min temp report varies by country and region, so this will sometimes not be the max for the calendar day. Missing = NA;</p></li>
+<li><p><strong>MIN_FLAG</strong> - Blank indicates max temp was taken from the explicit min temp report and not from the ‘hourly’ data. An “*” indicates min temp was derived from the hourly data (i.e., highest hourly or synoptic-reported temperature);</p></li>
+<li><p><strong>PRCP</strong> - Total precipitation (rain and/or melted snow) reported during the day converted to millimetres to hundredths; will usually not end with the midnight observation, i.e., may include latter part of previous day. A value of “.00” indicates no measurable precipitation (includes a trace). Missing = NA; <em>Note: Many stations do not report ‘0’ on days with no precipitation– therefore, ‘NA’ will often appear on these days. For example, a station may only report a 6-hour amount for the period during which rain fell.</em> See FLAGS_PRCP column for source of data;</p></li>
+<li>
+<p><strong>PRCP_FLAG</strong> -</p>
+<ul>
+<li><p>A = 1 report of 6-hour precipitation amount;</p></li>
+<li><p>B = Summation of 2 reports of 6-hour precipitation amount;</p></li>
+<li><p>C = Summation of 3 reports of 6-hour precipitation amount;</p></li>
+<li><p>D = Summation of 4 reports of 6-hour precipitation amount;</p></li>
+<li><p>E = 1 report of 12-hour precipitation amount;</p></li>
+<li><p>F = Summation of 2 reports of 12-hour precipitation amount;</p></li>
+<li><p>G = 1 report of 24-hour precipitation amount;</p></li>
+<li><p>H = Station reported ‘0’ as the amount for the day (e.g., from 6-hour reports), but also reported at least one occurrence of precipitation in hourly observations–this could indicate a rrace occurred, but should be considered as incomplete data for the day;</p></li>
+<li><p>I = Station did not report any precipitation data for the day and did not report any occurrences of precipitation in its hourly observations–it’s still possible that precipitation occurred but was not reported;</p></li>
+</ul>
+</li>
+<li><p><strong>SNDP</strong> - Snow depth in millimetres to tenths. Missing = NA;</p></li>
+<li><p><strong>I_FOG</strong> - Indicator for fog, (1 = yes, 0 = no/not reported) for the occurrence during the day;</p></li>
+<li><p><strong>I_RAIN_DRIZZLE</strong> - Indicator for rain or drizzle, (1 = yes, 0 = no/not reported) for the occurrence during the day;</p></li>
+<li><p><strong>I_SNOW_ICE</strong> - Indicator for snow or ice pellets, (1 = yes, 0 = no/not reported) for the occurrence during the day;</p></li>
+<li><p><strong>I_HAIL</strong> - Indicator for hail, (1 = yes, 0 = no/not reported) for the occurrence during the day;</p></li>
+<li><p><strong>I_THUNDER</strong> - Indicator for thunder, (1 = yes, 0 = no/not reported) for the occurrence during the day;</p></li>
+<li><p><strong>I_TORNADO_FUNNEL</strong> - Indicator for tornado or funnel cloud, (1 = yes, 0 = no/not reported) for the occurrence during the day;</p></li>
+<li><p><strong>ea</strong> - Mean daily actual vapour pressure;</p></li>
+<li><p><strong>es</strong> - Mean daily saturation vapour pressure;</p></li>
+<li><p><strong>RH</strong> - Mean daily relative humidity.</p></li>
+</ul>
 </div>
 <div id="using-gsodr" class="section level2">
 <h2 class="hasAnchor">
@@ -459,69 +523,6 @@ Starting data file processing
 <span class="co">#&gt; $ RH              : num  67.7 70 74.1 67.9 74.1 59.3 69.2 70.4 61.3 61.3 ...</span></code></pre></div>
 </div>
 </div>
-</div>
-<div id="final-data-format-and-contents" class="section level2">
-<h2 class="hasAnchor">
-<a href="#final-data-format-and-contents" class="anchor"> </a>Final data format and contents</h2>
-<p>The function, <code><a href="reference/get_GSOD.html">get_GSOD()</a></code>, returns a <code>data.frame()</code> object in R and can also save a Comma Separated Value (CSV) file or GeoPackage (GPKG) file for use in a GIS. Station data are merged with weather data for the final file which includes the following fields:</p>
-<ul>
-<li><p><strong>STNID</strong> - Station number (WMO/DATSAV3 number) for the location;</p></li>
-<li><p><strong>WBAN</strong> - number where applicable–this is the historical “Weather Bureau Air Force Navy” number - with WBAN being the acronym;</p></li>
-<li><p><strong>STN_NAME</strong> - Unique text identifier;</p></li>
-<li><p><strong>CTRY</strong> - Country in which the station is located;</p></li>
-<li><p><strong>LAT</strong> - Latitude. <em>Station dropped in cases where values are &lt; -90 or &gt; 90 degrees or Lat = 0 and Lon = 0</em>;</p></li>
-<li><p><strong>LON</strong> - Longitude. <em>Station dropped in cases where values are &lt; -180 or &gt; 180 degrees or Lat = 0 and Lon = 0</em>;</p></li>
-<li><p><strong>ELEV_M</strong> - Elevation in metres;</p></li>
-<li><p><strong>ELEV_M_SRTM_90m</strong> - Elevation in metres corrected for possible errors, derived from the CGIAR-CSI SRTM 90m database (Jarvis et al. 2008);</p></li>
-<li><p><strong>YEARMODA</strong> - Date in YYYY-mm-dd format;</p></li>
-<li><p><strong>YEAR</strong> - The year (YYYY);</p></li>
-<li><p><strong>MONTH</strong> - The month (mm);</p></li>
-<li><p><strong>DAY</strong> - The day (dd);</p></li>
-<li><p><strong>YDAY</strong> - Sequential day of year (not in original GSOD);</p></li>
-<li><p><strong>TEMP</strong> - Mean daily temperature converted to degrees C to tenths. Missing = NA;</p></li>
-<li><p><strong>TEMP_CNT</strong> - Number of observations used in calculating mean daily temperature;</p></li>
-<li><p><strong>DEWP</strong> - Mean daily dew point converted to degrees C to tenths. Missing = NA;</p></li>
-<li><p><strong>DEWP_CNT</strong> - Number of observations used in calculating mean daily dew point;</p></li>
-<li><p><strong>SLP</strong> - Mean sea level pressure in millibars to tenths. Missing = NA;</p></li>
-<li><p><strong>SLP_CNT</strong> - Number of observations used in calculating mean sea level pressure;</p></li>
-<li><p><strong>STP</strong> - Mean station pressure for the day in millibars to tenths. Missing = NA;</p></li>
-<li><p><strong>STP_CNT</strong> - Number of observations used in calculating mean station pressure;</p></li>
-<li><p><strong>VISIB</strong> - Mean visibility for the day converted to kilometres to tenths Missing = NA;</p></li>
-<li><p><strong>VISIB_CNT</strong> - Number of observations used in calculating mean daily visibility;</p></li>
-<li><p><strong>WDSP</strong> - Mean daily wind speed value converted to metres/second to tenths Missing = NA;</p></li>
-<li><p><strong>WDSP_CNT</strong> - Number of observations used in calculating mean daily wind speed;</p></li>
-<li><p><strong>MXSPD</strong> - Maximum sustained wind speed reported for the day converted to metres/second to tenths. Missing = NA;</p></li>
-<li><p><strong>GUST</strong> - Maximum wind gust reported for the day converted to metres/second to tenths. Missing = NA;</p></li>
-<li><p><strong>MAX</strong> - Maximum temperature reported during the day converted to Celsius to tenths–time of max temp report varies by country and region, so this will sometimes not be the max for the calendar day. Missing = NA;</p></li>
-<li><p><strong>MAX_FLAG</strong> - Blank indicates max temp was taken from the explicit max temp report and not from the ‘hourly’ data. An “*” indicates max temp was derived from the hourly data (i.e., highest hourly or synoptic-reported temperature);</p></li>
-<li><p><strong>MIN</strong> - Minimum temperature reported during the day converted to Celsius to tenths–time of min temp report varies by country and region, so this will sometimes not be the max for the calendar day. Missing = NA;</p></li>
-<li><p><strong>MIN_FLAG</strong> - Blank indicates max temp was taken from the explicit min temp report and not from the ‘hourly’ data. An “*” indicates min temp was derived from the hourly data (i.e., highest hourly or synoptic-reported temperature);</p></li>
-<li><p><strong>PRCP</strong> - Total precipitation (rain and/or melted snow) reported during the day converted to millimetres to hundredths; will usually not end with the midnight observation, i.e., may include latter part of previous day. A value of “.00” indicates no measurable precipitation (includes a trace). Missing = NA; <em>Note: Many stations do not report ‘0’ on days with no precipitation– therefore, ‘NA’ will often appear on these days. For example, a station may only report a 6-hour amount for the period during which rain fell.</em> See FLAGS_PRCP column for source of data;</p></li>
-<li>
-<p><strong>PRCP_FLAG</strong> -</p>
-<ul>
-<li><p>A = 1 report of 6-hour precipitation amount;</p></li>
-<li><p>B = Summation of 2 reports of 6-hour precipitation amount;</p></li>
-<li><p>C = Summation of 3 reports of 6-hour precipitation amount;</p></li>
-<li><p>D = Summation of 4 reports of 6-hour precipitation amount;</p></li>
-<li><p>E = 1 report of 12-hour precipitation amount;</p></li>
-<li><p>F = Summation of 2 reports of 12-hour precipitation amount;</p></li>
-<li><p>G = 1 report of 24-hour precipitation amount;</p></li>
-<li><p>H = Station reported ‘0’ as the amount for the day (e.g., from 6-hour reports), but also reported at least one occurrence of precipitation in hourly observations–this could indicate a rrace occurred, but should be considered as incomplete data for the day;</p></li>
-<li><p>I = Station did not report any precipitation data for the day and did not report any occurrences of precipitation in its hourly observations–it’s still possible that precipitation occurred but was not reported;</p></li>
-</ul>
-</li>
-<li><p><strong>SNDP</strong> - Snow depth in millimetres to tenths. Missing = NA;</p></li>
-<li><p><strong>I_FOG</strong> - Indicator for fog, (1 = yes, 0 = no/not reported) for the occurrence during the day;</p></li>
-<li><p><strong>I_RAIN_DRIZZLE</strong> - Indicator for rain or drizzle, (1 = yes, 0 = no/not reported) for the occurrence during the day;</p></li>
-<li><p><strong>I_SNOW_ICE</strong> - Indicator for snow or ice pellets, (1 = yes, 0 = no/not reported) for the occurrence during the day;</p></li>
-<li><p><strong>I_HAIL</strong> - Indicator for hail, (1 = yes, 0 = no/not reported) for the occurrence during the day;</p></li>
-<li><p><strong>I_THUNDER</strong> - Indicator for thunder, (1 = yes, 0 = no/not reported) for the occurrence during the day;</p></li>
-<li><p><strong>I_TORNADO_FUNNEL</strong> - Indicator for tornado or funnel cloud, (1 = yes, 0 = no/not reported) for the occurrence during the day;</p></li>
-<li><p><strong>ea</strong> - Mean daily actual vapour pressure;</p></li>
-<li><p><strong>es</strong> - Mean daily saturation vapour pressure;</p></li>
-<li><p><strong>RH</strong> - Mean daily relative humidity.</p></li>
-</ul>
 </div>
 </div>
 <div id="notes" class="section level1">
