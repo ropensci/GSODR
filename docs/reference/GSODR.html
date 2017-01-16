@@ -81,26 +81,16 @@
     </div>
 
     
-    <p>The GSODR package offers automated downloading, parsing, cleaning,
-unit conversion and formatting of Global Surface Summary of the Day (GSOD)
-weather data from the from the USA National Climatic Data Center (NCDC).
-All units are converted from from United States Customary System (USCS)
-units to International System of Units (SI). Stations may be individually
-checked for number of missing days defined by the user, where stations
-with too many missing observations are omitted. Only stations with valid
-reported latitude and longitude values are permitted in the final data.
-Additional useful variables, saturation vapour pressure (es), actual vapour
-pressure (ea) and relative humidity are calculated from the original data
-and included in the final data set. The resulting data include station data
-(e.g., station name, country, latitude, longitude, elevation) and weather
-observations and associated flags. Data may be automatically saved to disk.
-File output may be returned as a comma-separated values (CSV) or GeoPackage
-(GPKG) file. Additional data are included with this R package: a list of
-elevation values for stations between -60 and 60 degrees latitude derived
-from the Shuttle Radar Topography Measuring Mission (SRTM) and three sets of
-historic climate data. For information on the original GSOD data from NCDC,
-please see the  GSOD readme.txt file available from,
-<a href = '&lt;http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt'>&lt;http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt</a>.</p>
+    <p>Provides automated downloading, parsing, cleaning, unit conversion and formatting of Global Surface Summary of the Day (GSOD) weather data from
+the from the USA National Climatic Data Center (NCDC) for use in R. All units are converted from from United States Customary System (USCS) units to
+International System of Units (SI). Stations may be individually checked for number of missing days defined by the user, where stations with too many
+missing observations are omitted. Only stations with valid reported latitude and longitude values are permitted in the final data. Additional useful
+variables, saturation vapour pressure (es), actual vapour pressure (ea) and relative humidity are calculated from the original data and included in the
+final data set. The resulting data include station identification information, state, country, latitude, longitude, elevation, weather
+observations and associated flags. Data may be automatically saved to disk. File output may be returned as a comma-separated values (CSV) or GeoPackage
+(GPKG) file. Additional data are included with this R package: a list of elevation values for stations between -60 and 60 degrees latitude derived
+from the Shuttle Radar Topography Measuring Mission (SRTM). For information on the GSOD data from NCDC, please see the  GSOD readme.txt file available
+from, &lt;http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt&gt;.</p>
     
 
         
@@ -110,18 +100,12 @@ please see the  GSOD readme.txt file available from,
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='get_GSOD.html'>get_GSOD</a></code> Fetch, clean and reformat data from NCDC GSOD
-database</p>
-    <p><code><a href='reformat_GSOD.html'>reformat_GSOD</a></code> Clean and reformat local files from NCDC
-GSOD database</p>
-    <p><code><a href='nearest_stations.html'>nearest_stations</a></code> Find stations within a given radius
-expressed in kilometres for a given point using Latitude and Longitude</p>
-    <p><code><a href='get_station_list.html'>get_station_list</a></code> Fetch latest list of stations and
-corresponding metadata from the NCDC FTP server</p>
-    <p><code><a href='SRTM_GSOD_elevation.html'>SRTM_GSOD_elevation</a></code> GSDOR provides additional
-elevation data derived from SRTM90m data</p>
-    <p><code><a href='country_list.html'>country_list</a></code> GSDOR provides a cleaned list of the
-countries which are represented in the GSOD data set</p>
+    <p><code><a href='get_GSOD.html'>get_GSOD</a></code> Fetch, clean and reformat data from NCDC GSOD database</p>
+    <p><code><a href='reformat_GSOD.html'>reformat_GSOD</a></code> Clean and reformat local files from NCDC GSOD database</p>
+    <p><code><a href='nearest_stations.html'>nearest_stations</a></code> Find stations within a given radius expressed in kilometres for a given point using Latitude and Longitude</p>
+    <p><code><a href='get_station_list.html'>get_station_list</a></code> Fetch latest list of stations and corresponding metadata from the NCDC FTP server</p>
+    <p><code><a href='SRTM_GSOD_elevation.html'>SRTM_GSOD_elevation</a></code> GSDOR provides additional elevation data derived from SRTM90m data</p>
+    <p><code><a href='country_list.html'>country_list</a></code> GSDOR provides a cleaned list of the countries which are represented in the GSOD data set</p>
     
 
   </div>
@@ -136,7 +120,7 @@ countries which are represented in the GSOD data set</p>
 
     <h2>Author</h2>
     
-Adam H Sparks, Tomislav Hengl and Andrew Nelson
+Adam Sparks, Tomislav Hengl and Andrew Nelson
 
   </div>
 </div>
