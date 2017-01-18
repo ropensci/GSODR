@@ -28,16 +28,16 @@ in analysis. The GSODR package provides four main functions for
 facilitating this:
 
 -   `get_GSOD()` - queries and transfers files from the FTP server,
-    reformats them and returns a `data.frame()` object in R or saves a
-    file to disk with options for a GeoPackage or comma seperated values
-    (CSV) file,  
+    reformats them and returns a `data.frame()` object in R session or
+    saves a file to disk with options for a GeoPackage or comma
+    seperated values (CSV) file,  
 -   `reformat_GSOD()` - the workhorse, takes individual station files on
     the local disk and reformats them returning a data.frame in R,  
 -   `nearest_stations()` - returns a dataframe containing a list of
     stations and their metadata that fall within the given radius of a
     point specified by the user,  
 -   `get_station_list()` - downloads the latest station list from the
-    NCDC FTP server.
+    NCDC FTP server and returns a `data.frame()` object in R session.
 
 When reformatting data either with `get_GSOD()` or `reformat_GSOD()`,
 all units are converted to International System of Units (SI), e.g.,
