@@ -343,11 +343,7 @@ get_GSOD <- function(years = NULL,
     if (is.null(dsn)) {
       dsn <- getwd()
     }
-  }
   dsn <- trimws(dsn)
-  if (is.null(dsn)) {
-    stop("\nYou must supply a valid file path for storing the resulting
-         file(s).\n")
   } else {
     if (substr(dsn, nchar(dsn) - 1, nchar(dsn)) == "//") {
       p <- substr(dsn, 1, nchar(dsn) - 2)
@@ -372,7 +368,7 @@ get_GSOD <- function(years = NULL,
   }
   outfile <- paste0(dsn, filename_out)
   return(outfile)
-  }
+}
 #' @noRd
 .validate_station <- function(station, stations, years) {
   if (!station %in% stations[[12]]) {
@@ -397,7 +393,8 @@ get_GSOD <- function(years = NULL,
             END,
             ".\n")
   }
-  }
+}
+
 #' @noRd
 .validate_country <-
   function(country) {
