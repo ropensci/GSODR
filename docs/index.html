@@ -76,13 +76,13 @@
 <code><a href="reference/get_GSOD.html">get_GSOD()</a></code> - queries and transfers files from the FTP server, reformats them and returns a <code>data.frame()</code> object in R session or saves a file to disk with options for a GeoPackage or comma seperated values (CSV) file,<br>
 </li>
 <li>
-<code><a href="reference/reformat_GSOD.html">reformat_GSOD()</a></code> - the workhorse, takes individual station files on the local disk and reformats them returning a data.frame in R,<br>
+<code><a href="reference/reformat_GSOD.html">reformat_GSOD()</a></code> - the workhorse, takes individual station files on the local disk and reformats them, returns a <code>data.frame()</code> object in R session,<br>
 </li>
 <li>
-<code><a href="reference/nearest_stations.html">nearest_stations()</a></code> - returns a dataframe containing a list of stations and their metadata that fall within the given radius of a point specified by the user,<br>
+<code><a href="reference/nearest_stations.html">nearest_stations()</a></code> - returns a <code>vector()</code> object containing a list of stations and their metadata that fall within the given radius of a point specified by the user,<br>
 </li>
 <li>
-<code><a href="reference/get_station_list.html">get_station_list()</a></code> - downloads the latest station list from the NCDC FTP server and returns a <code>data.frame()</code> object in R session.</li>
+<code><a href="reference/get_station_list.html">get_station_list()</a></code> - downloads the latest station list from the NCDC FTP server and returns a <code>data.table()</code> object in R session.</li>
 </ul>
 <p>When reformatting data either with <code><a href="reference/get_GSOD.html">get_GSOD()</a></code> or <code><a href="reference/reformat_GSOD.html">reformat_GSOD()</a></code>, all units are converted to International System of Units (SI), e.g., inches to millimetres and Fahrenheit to Celsius. File output can be saved as a Comma Separated Value (CSV) file or in a spatial GeoPackage (GPKG) file, implemented by most major GIS software, summarising each year by station, which also includes vapour pressure and relative humidity variables calculated from existing data in GSOD.</p>
 <p>Additional data are calculated by this R package using the original data and included in the final data. These include vapour pressure (ea and es) and relative humidity.</p>
