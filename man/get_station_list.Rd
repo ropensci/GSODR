@@ -15,7 +15,7 @@ values will not be included.
 }
 \examples{
 \dontrun{
-GSOD_stations <- fetch_station_list()
+GSOD_stations <- get_station_list()
 }
 }
 \author{
