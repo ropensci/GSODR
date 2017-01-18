@@ -30,11 +30,11 @@ facilitating this:
 -   `get_GSOD()` - queries and transfers files from the FTP server,
     reformats them and returns a `data.frame()` object in R session or
     saves a file to disk with options for a GeoPackage spatially enabled
-    file or comma seperated values (CSV) file,  
+    file or comma separated values (CSV) file,  
 -   `reformat_GSOD()` - the workhorse, takes individual station files on
     the local disk and reformats them, returns a `data.frame()` object
     in R session or saves a file to disk with options for a GeoPackage
-    spatially enabled file or comma seperated values (CSV) file,  
+    spatially enabled file or comma separated values (CSV) file,  
 -   `nearest_stations()` - returns a `vector()` object containing a list
     of stations and their metadata that fall within the given radius of
     a point specified by the user,  

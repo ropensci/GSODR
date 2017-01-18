@@ -21,8 +21,8 @@ Introduction to GSODR
 The GSOD or [Global Surface Summary of the Day (GSOD)](https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod) data provided by the US National Climatic Data Center (NCDC) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. The GSODR package aims to make it easy to find, transfer and format the data you need for use in
 analysis. The GSODR package provides four main functions for facilitating this:
 
--   `get_GSOD()` - queries and transfers files from the FTP server, reformats them and returns a `data.frame()` object in R session or saves a file to disk with options for a GeoPackage spatially enabled file or comma seperated values (CSV) file,  
--   `reformat_GSOD()` - the workhorse, takes individual station files on the local disk and reformats them, returns a `data.frame()` object in R session or saves a file to disk with options for a GeoPackage spatially enabled file or comma seperated values (CSV) file,  
+-   `get_GSOD()` - queries and transfers files from the FTP server, reformats them and returns a `data.frame()` object in R session or saves a file to disk with options for a GeoPackage spatially enabled file or comma separated values (CSV) file,  
+-   `reformat_GSOD()` - the workhorse, takes individual station files on the local disk and reformats them, returns a `data.frame()` object in R session or saves a file to disk with options for a GeoPackage spatially enabled file or comma separated values (CSV) file,  
 -   `nearest_stations()` - returns a `vector()` object containing a list of stations and their metadata that fall within the given radius of a point specified by the user,  
 -   `get_station_list()` - downloads the latest station list from the NCDC FTP server and returns a `data.table()` object in R session.
 
