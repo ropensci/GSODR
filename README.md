@@ -32,12 +32,13 @@ facilitating this:
     saves a file to disk with options for a GeoPackage or comma
     seperated values (CSV) file,  
 -   `reformat_GSOD()` - the workhorse, takes individual station files on
-    the local disk and reformats them returning a data.frame in R,  
--   `nearest_stations()` - returns a dataframe containing a list of
-    stations and their metadata that fall within the given radius of a
-    point specified by the user,  
+    the local disk and reformats them, returns a `data.frame()` object
+    in R session,  
+-   `nearest_stations()` - returns a `vector()` object containing a list
+    of stations and their metadata that fall within the given radius of
+    a point specified by the user,  
 -   `get_station_list()` - downloads the latest station list from the
-    NCDC FTP server and returns a `data.frame()` object in R session.
+    NCDC FTP server and returns a `data.table()` object in R session.
 
 When reformatting data either with `get_GSOD()` or `reformat_GSOD()`,
 all units are converted to International System of Units (SI), e.g.,
