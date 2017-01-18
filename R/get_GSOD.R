@@ -194,7 +194,7 @@
 #'
 #' # Download data for Philippines for year 2010 and generate a yearly
 #' # summary GeoPackage file, Philippines_GSOD-2010.gpkg, file in the user's
-#' home directory with a maximum of five missing days per station allowed.
+#' # home directory with a maximum of five missing days per station allowed.
 #'
 #' get_GSOD(years = 2010, country = "Philippines", dsn = "~/",
 #' filename = "Philippines_GSOD", GPKG = TRUE, max_missing = 5)
