@@ -30,7 +30,7 @@ test_that("invalid stations are handled", {
 })
 
 # Check that invalid dsn is handled --------------------------------------------
-test_that("invalid dsn is handled", {
+test_that("Missing or invalid dsn is handled", {
 
   expect_error(.validate_fileout(CSV = FALSE, dsn = "~/NULL", filename = NULL,
                                  GPKG = FALSE),
@@ -38,6 +38,9 @@ test_that("invalid dsn is handled", {
   expect_error(.validate_fileout(CSV = FALSE, dsn = NULL, filename = "test",
                                  GPKG = FALSE),
                "\nYou need to specify a filetype, CSV or GPKG.")
+  outfile <- .validate_fileout(CSV = TRUE,dsn = NULL, filename = "test",
+                               GPKG = FALSE)
+  expect_match(outfile, paste0(getwd(), "/", "test"))
 })
 
 # Check stations list and associated metadata for validity ---------------------
