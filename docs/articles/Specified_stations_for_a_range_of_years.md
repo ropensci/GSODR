@@ -1,7 +1,7 @@
 ---
 title: "GSODR use case: Specified years/stations vignette"
 author: "Adam H Sparks"
-date: "2017-01-16"
+date: "2017-01-18"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteEngine{knitr::knitr}

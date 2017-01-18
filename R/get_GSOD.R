@@ -194,7 +194,7 @@
 #'
 #' # Download data for Philippines for year 2010 and generate a yearly
 #' # summary GeoPackage file, Philippines_GSOD-2010.gpkg, file in the user's
-#' home directory with a maximum of five missing days per station allowed.
+#' # home directory with a maximum of five missing days per station allowed.
 #'
 #' get_GSOD(years = 2010, country = "Philippines", dsn = "~/",
 #' filename = "Philippines_GSOD", GPKG = TRUE, max_missing = 5)
@@ -212,6 +212,9 @@
 #' @references {Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled
 #' SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
 #' \url{http://srtm.csi.cgiar.org}}
+#'
+#' @return A \code{data.frame} object of weather data or a comma-separated value
+#' (CSV) or GeoPackage (GPKG) file saved to local disk.
 #'
 #' @seealso \code{\link{reformat_GSOD}}
 #'

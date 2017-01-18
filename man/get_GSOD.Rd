@@ -51,6 +51,10 @@ not specified by the user, defaults to the current working directory.}
 save it locally in a user specified location, if \code{dsn} is not specified
 by the user, defaults to the current working directory.}
 }
+\value{
+A \code{data.frame} object of weather data or a comma-separated value
+(CSV) or GeoPackage (GPKG) file saved to local disk.
+}
 \description{
 This function automates downloading, cleaning, reformatting of data from
 the Global Surface Summary of the Day (GSOD) data provided by the US National
@@ -212,7 +216,7 @@ t <- get_GSOD(years = 2010, station = "955510-99999")
 
 # Download data for Philippines for year 2010 and generate a yearly
 # summary GeoPackage file, Philippines_GSOD-2010.gpkg, file in the user's
-home directory with a maximum of five missing days per station allowed.
+# home directory with a maximum of five missing days per station allowed.
 
 get_GSOD(years = 2010, country = "Philippines", dsn = "~/",
 filename = "Philippines_GSOD", GPKG = TRUE, max_missing = 5)

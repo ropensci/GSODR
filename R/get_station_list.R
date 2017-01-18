@@ -8,8 +8,9 @@
 #'
 #' @examples
 #' \dontrun{
-#' GSOD_stations <- fetch_station_list()
+#' GSOD_stations <- get_station_list()
 #' }
+#' @return \code{\link[data.table]{data.table}} object of station metadata.
 #' @author Adam H Sparks \email{adamhsparks@gmail.com}
 #' @export
 #'
@@ -35,9 +36,9 @@ get_station_list <- function() {
   )
   stations[stations == -999.9] <- NA
   stations[stations == -999] <- NA
-  stations <- stations[stations$LAT != 0 & stations$LON != 0,]
-  stations <- stations[stations$LAT > -90 & stations$LAT < 90,]
-  stations <- stations[stations$LON > -180 & stations$LON < 180,]
+  stations <- stations[stations$LAT != 0 & stations$LON != 0, ]
+  stations <- stations[stations$LAT > -90 & stations$LAT < 90, ]
+  stations <- stations[stations$LON > -180 & stations$LON < 180, ]
   stations$STNID <-
     as.character(paste(stations$USAF, stations$WBAN, sep = "-"))
   SRTM_GSOD_elevation <-
@@ -45,7 +46,7 @@ get_station_list <- function() {
   data.table::setDT(stations)
   data.table::setkey(stations, STNID)
   stations <- stations[SRTM_GSOD_elevation, on = "STNID"]
-  stations <- stations[!is.na(stations$LAT),]
-  stations <- stations[!is.na(stations$LON),]
+  stations <- stations[!is.na(stations$LAT), ]
+  stations <- stations[!is.na(stations$LON), ]
   return(stations)
 }

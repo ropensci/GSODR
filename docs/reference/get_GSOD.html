@@ -151,6 +151,11 @@ save it locally in a user specified location, if <code>dsn</code> is not specifi
 by the user, defaults to the current working directory.</dd>
     </dl>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A <code>data.frame</code> object of weather data or a comma-separated value
+(CSV) or GeoPackage (GPKG) file saved to local disk.</p>
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Data summarise each year by station, which include vapour pressure and
@@ -300,7 +305,7 @@ SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
 <span class='co'># </span>
 <span class='co'># # Download data for Philippines for year 2010 and generate a yearly</span>
 <span class='co'># # summary GeoPackage file, Philippines_GSOD-2010.gpkg, file in the user's</span>
-<span class='co'># home directory with a maximum of five missing days per station allowed.</span>
+<span class='co'># # home directory with a maximum of five missing days per station allowed.</span>
 <span class='co'># </span>
 <span class='co'># get_GSOD(years = 2010, country = "Philippines", dsn = "~/",</span>
 <span class='co'># filename = "Philippines_GSOD", GPKG = TRUE, max_missing = 5)</span>
@@ -320,6 +325,8 @@ SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#value">Value</a></li>
+
       <li><a href="#details">Details</a></li>
 
       <li><a href="#note">Note</a></li>
