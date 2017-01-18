@@ -14,6 +14,9 @@ nearest_stations(LAT, LON, distance)
 \item{distance}{Distance in kilometres from point for which stations are to
 be returned.}
 }
+\value{
+\code{vector} object of station identification numbers
+}
 \description{
 Given a latitude and longitude value entered as decimal degrees (DD),
 this function returns a list of STNID values, which can be used in the

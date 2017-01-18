@@ -6,6 +6,9 @@
 \usage{
 get_station_list()
 }
+\value{
+\code{\link[data.table]{data.table}} object of station metadata.
+}
 \description{
 This function downloads the latest station list from the NCDC FTP server.
 This list includes metadata for all stations including unique identifiers,

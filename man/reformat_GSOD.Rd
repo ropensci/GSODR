@@ -13,6 +13,10 @@ local disk for reformatting.}
 \item{file_list}{User supplied list of files of station data on local disk for
 reformatting.}
 }
+\value{
+A \code{data.frame} object of weather data or a comma-separated value
+(CSV) or GeoPackage (GPKG) file saved to local disk.
+}
 \description{
 This function automates cleaning and reformatting of GSOD,
 \url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod},
