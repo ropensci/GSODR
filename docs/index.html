@@ -73,10 +73,10 @@
 <p>The GSOD or <a href="https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod">Global Surface Summary of the Day (GSOD)</a> data provided by the US National Climatic Data Center (NCDC) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. The GSODR package aims to make it easy to find, transfer and format the data you need for use in analysis. The GSODR package provides four main functions for facilitating this:</p>
 <ul>
 <li>
-<code><a href="reference/get_GSOD.html">get_GSOD()</a></code> - queries and transfers files from the FTP server, reformats them and returns a <code>data.frame()</code> object in R session or saves a file to disk with options for a GeoPackage or comma seperated values (CSV) file,<br>
+<code><a href="reference/get_GSOD.html">get_GSOD()</a></code> - queries and transfers files from the FTP server, reformats them and returns a <code>data.frame()</code> object in R session or saves a file to disk with options for a GeoPackage spatially enabled file or comma seperated values (CSV) file,<br>
 </li>
 <li>
-<code><a href="reference/reformat_GSOD.html">reformat_GSOD()</a></code> - the workhorse, takes individual station files on the local disk and reformats them, returns a <code>data.frame()</code> object in R session,<br>
+<code><a href="reference/reformat_GSOD.html">reformat_GSOD()</a></code> - the workhorse, takes individual station files on the local disk and reformats them, returns a <code>data.frame()</code> object in R session or saves a file to disk with options for a GeoPackage spatially enabled file or comma seperated values (CSV) file,<br>
 </li>
 <li>
 <code><a href="reference/nearest_stations.html">nearest_stations()</a></code> - returns a <code>vector()</code> object containing a list of stations and their metadata that fall within the given radius of a point specified by the user,<br>
