@@ -8,7 +8,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' GSOD_stations <- fetch_station_list()
+#' GSOD_stations <- get_station_list()
 #' }
 #' @author Adam H Sparks \email{adamhsparks@gmail.com}
 #' @export
