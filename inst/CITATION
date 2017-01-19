@@ -8,4 +8,4 @@ bibentry(bibtype = "Manual",
                     person("Andrew", "Nelson")),
          year = year,
          note = note,
-         url = "https://github.com/adamhsparks/GSODR")
+         url = "https://github.com/ropensci/GSODR")

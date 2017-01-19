@@ -17,7 +17,7 @@
 #' station location within the CGIAR-CSI hole-filled 90m SRTM digital elevation model (Jarvis \emph{et al}. 2008).}
 #' }
 #' For more on this, please consult the document available from the GSODR GitHub repository detailing the process used to generate these data,
-#' \url{https://github.com/adamhsparks/GSODR/blob/master/data-raw/fetch_isd-history.md}
+#' \url{https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md}
 #' @note Users of these data should take into account the following (from the NCDC website): \dQuote{The following data and products may have conditions
 #' placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The
 #' non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same

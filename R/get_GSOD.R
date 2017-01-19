@@ -17,7 +17,7 @@
 #'digital elevation data based on NASA's original SRTM 90m data. Further
 #'information on these data and methods can be found on GSODR's GitHub
 #'repository here:
-#'\url{https://github.com/adamhsparks/GSODR/blob/master/data-raw/fetch_isd-history.md}
+#'\url{https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md}
 #'
 #' @param years Year(s) of weather data to download.
 #' @param station Optional. Specify a station or multiple stations for which to
