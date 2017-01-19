@@ -1,7 +1,7 @@
 ---
 title: "Working with spatial and climate data from GSODR"
 author: "Tomislav Hengl and Adam H Sparks"
-date: "2017-01-18"
+date: "2017-01-19"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteEngine{knitr::knitr}
@@ -193,7 +193,7 @@ where elevation was missing in the reported values as well. In case the
 station reported an elevation and the DEM does not, the station reported
 is taken. For stations beyond -60˚ and 60˚ latitude, the values are
 station reported values in every instance. See
-<https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md>
+<https://github.com/ropensci/GSODR/blob/devel/data-raw/fetch_isd-history.md>
 for more detail on the correction methods.
 
 ## WMO Resolution 40. NOAA Policy
