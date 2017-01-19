@@ -734,3 +734,5 @@ the Earth land surface areas. arXiv preprint arXiv:1607.00217.
 Wilson AM, Jetz W (2016). Remotely Sensed High-Resolution Global Cloud
 Dynamics for Predicting Ecosystem and Biodiversity Distributions. PLoS
 Biol 14(3): e1002415.
+
+[![ropensci\_footer](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)

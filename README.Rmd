@@ -596,3 +596,4 @@ Karger, D. N., Conrad, O., Bohner, J., Kawohl, T., Kreft, H., Soria-Auza, R. W.,
 
 Wilson AM, Jetz W (2016). Remotely Sensed High-Resolution Global Cloud Dynamics for Predicting Ecosystem and Biodiversity Distributions. PLoS Biol 14(3): e1002415.
 
+[![ropensci_footer](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
