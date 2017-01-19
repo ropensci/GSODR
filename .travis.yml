@@ -43,7 +43,8 @@ notifications:
 
 env:
   matrix:
-    - RVERSION=release
+    - r: release
+      not_cran: true
 
 after_success:
   - Rscript -e 'covr::codecov()'
