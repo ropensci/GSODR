@@ -25,7 +25,7 @@ before_install:
   - ./configure --prefix=/usr
   - make
   - sudo make install
-  - cd /home/travis/build/adamhsparks/GSODR
+  - cd /home/travis/build/ropensci/GSODR
 
 install:
   - ./pkg-build.sh install_deps
