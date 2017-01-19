@@ -21,7 +21,7 @@ with the following changes to the original list of stations from the NCDC:
 station location within the CGIAR-CSI hole-filled 90m SRTM digital elevation model (Jarvis \emph{et al}. 2008).}
 }
 For more on this, please consult the document available from the GSODR GitHub repository detailing the process used to generate these data,
-\url{https://github.com/adamhsparks/GSODR/blob/master/data-raw/fetch_isd-history.md}}
+\url{https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md}}
 \source{
 \url{ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv}
 }

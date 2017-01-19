@@ -242,7 +242,7 @@
 <h2 class="hasAnchor">
 <a href="#bug-fixes-2" class="anchor"> </a>Bug Fixes</h2>
 <ul>
-<li>Fix bug with connection timing out for single station queries commit: <a href="https://github.com/adamhsparks/GSODR/commit/a126641e00dc7acc21844ff0436e5702f8b6e04a">a126641e00dc7acc21844ff0436e5702f8b6e04a</a><br>
+<li>Fix bug with connection timing out for single station queries commit: <a href="https://github.com/ropensci/GSODR/commit/a126641e00dc7acc21844ff0436e5702f8b6e04a">a126641e00dc7acc21844ff0436e5702f8b6e04a</a><br>
 </li>
 <li>Somehow the previously working function that checked country names broke with the <code>toupper()</code> function. A new <a href="http://stackoverflow.com/questions/16516593/convert-from-lowercase-to-uppercase-all-values-in-all-character-variables-in-dat">function from juba</a> fixes this issue and users can now select country again</li>
 </ul>
@@ -255,7 +255,7 @@
 </li>
 <li>stations.rda is compressed<br>
 </li>
-<li>stations.rda now includes a field for “corrected” elevation using hole-filled SRTM data from Jarvis et al. 2008, see <a href="https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md" class="uri">https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md</a> for a description<br>
+<li>stations.rda now includes a field for “corrected” elevation using hole-filled SRTM data from Jarvis et al. 2008, see <a href="https://github.com/ropensci/GSODR/blob/devel/data-raw/fetch_isd-history.md" class="uri">https://github.com/ropensci/GSODR/blob/devel/data-raw/fetch_isd-history.md</a> for a description<br>
 </li>
 <li>Set NA or missing values in CSV or shapefile to -9999 from -9999.99 to align with other data sources such as Worldclim</li>
 </ul>
@@ -275,9 +275,9 @@
 <h2 class="hasAnchor">
 <a href="#bug-fixes-3" class="anchor"> </a>Bug Fixes</h2>
 <ul>
-<li>Fix issues with MIN/MAX where MIN referred to MAX <a href="https://github.com/adamhsparks/GSODR/issues/5">(Issue 5)</a><br>
+<li>Fix issues with MIN/MAX where MIN referred to MAX <a href="https://github.com/ropensci/GSODR/issues/5">(Issue 5)</a><br>
 </li>
-<li>Fix bug where the <code>tf</code> item was incorrectly set as <code>tf &lt;- "~/tmp/GSOD-2010.tar</code>, not <code>tf &lt;- tempfile</code>, in <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> <a href="https://github.com/adamhsparks/GSODR/issues/6">(Issue 6)</a><br>
+<li>Fix bug where the <code>tf</code> item was incorrectly set as <code>tf &lt;- "~/tmp/GSOD-2010.tar</code>, not <code>tf &lt;- tempfile</code>, in <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> <a href="https://github.com/ropensci/GSODR/issues/6">(Issue 6)</a><br>
 </li>
 <li>CITATION file is updated and corrected</li>
 </ul>
@@ -286,7 +286,7 @@
 <h2 class="hasAnchor">
 <a href="#minor-changes-4" class="anchor"> </a>Minor changes</h2>
 <ul>
-<li>User now has the ability to generate a shapefile as well as CSV file output <a href="https://github.com/adamhsparks/GSODR/issues/3">(Issue 3)</a><br>
+<li>User now has the ability to generate a shapefile as well as CSV file output <a href="https://github.com/ropensci/GSODR/issues/3">(Issue 3)</a><br>
 </li>
 <li>Documentation is more complete and easier to use</li>
 </ul>
@@ -299,7 +299,7 @@
 <h2 class="hasAnchor">
 <a href="#bug-fixes-4" class="anchor"> </a>Bug Fixes</h2>
 <ul>
-<li>Fix issue when reading .op files into R where temperature was incorrectly read causing negative values where T &gt;= 100F, this issue caused RH values of &gt;100% and incorrect TEMP values <a href="https://github.com/adamhsparks/GSODR/issues/1">(Issue 1)</a><br>
+<li>Fix issue when reading .op files into R where temperature was incorrectly read causing negative values where T &gt;= 100F, this issue caused RH values of &gt;100% and incorrect TEMP values <a href="https://github.com/ropensci/GSODR/issues/1">(Issue 1)</a><br>
 </li>
 <li>Spelling corrections</li>
 </ul>
