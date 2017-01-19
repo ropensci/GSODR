@@ -1,5 +1,6 @@
 language: r
 sudo: required
+dist: trusty
 cache: packages
 
 env:
@@ -7,7 +8,7 @@ env:
     - NOT_CRAN=true
 
 before_install:
-- sudo apt-get install -y libcurl4-openssl-dev libgdal-dev libproj-dev
+- sudo apt-get install -y libgdal-dev libproj-dev
 
 after_failure:
   - ./pkg-build.sh dump_logs
