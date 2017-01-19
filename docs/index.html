@@ -86,13 +86,12 @@
 </ul>
 <p>When reformatting data either with <code><a href="reference/get_GSOD.html">get_GSOD()</a></code> or <code><a href="reference/reformat_GSOD.html">reformat_GSOD()</a></code>, all units are converted to International System of Units (SI), e.g., inches to millimetres and Fahrenheit to Celsius. File output can be saved as a Comma Separated Value (CSV) file or in a spatial GeoPackage (GPKG) file, implemented by most major GIS software, summarising each year by station, which also includes vapour pressure and relative humidity variables calculated from existing data in GSOD.</p>
 <p>Additional data are calculated by this R package using the original data and included in the final data. These include vapour pressure (ea and es) and relative humidity.</p>
+<p>It is recommended that you have a good Internet connection to download the data files as they can be quite large and slow to download.</p>
 <p>For more information see the description of the data provided by NCDC, <a href="http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt" class="uri">http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt</a>.</p>
 <div id="other-sources-of-weather-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#other-sources-of-weather-data" class="anchor"> </a>Other Sources of Weather Data</h2>
 <p>There are several other sources of weather data and ways of retrieving them through R. In particular, the excellent <a href="https://CRAN.R-project.org/package=rnoaa">rnoaa</a> package from <a href="https://ropensci.org">ROpenSci</a> offers tools for interacting with and downloading weather data from the United States National Oceanic and Atmospheric Administration but lacks support GSOD data.</p>
-<p>It is recommended that you have a good Internet connection to download the data files as they can be quite large and slow to download.</p>
-<p>For more information on GSOD data see the description of the data provided by NCDC, <a href="http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt" class="uri">http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt</a>.</p>
 </div>
 </div>
 <div id="quick-start" class="section level1">

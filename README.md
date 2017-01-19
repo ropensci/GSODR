@@ -53,6 +53,9 @@ Additional data are calculated by this R package using the original data
 and included in the final data. These include vapour pressure (ea and
 es) and relative humidity.
 
+It is recommended that you have a good Internet connection to download
+the data files as they can be quite large and slow to download.
+
 For more information see the description of the data provided by NCDC,
 <http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
 
@@ -65,12 +68,6 @@ them through R. In particular, the excellent
 [ROpenSci](https://ropensci.org) offers tools for interacting with and
 downloading weather data from the United States National Oceanic and
 Atmospheric Administration but lacks support GSOD data.
-
-It is recommended that you have a good Internet connection to download
-the data files as they can be quite large and slow to download.
-
-For more information on GSOD data see the description of the data
-provided by NCDC, <http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
 
 Quick Start
 ===========
