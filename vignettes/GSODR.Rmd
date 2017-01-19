@@ -338,7 +338,7 @@ x <- reformat_GSOD(dsn = "~/GSOD/gsod_1960")
 
 # Additional Climate Data
 
-Additional climate data, [GSOD.data](https://github.com/adamhsparks/GSODR.data), formatted for use with GSOD data provided by GSODR are available as an R package instalable through GitHub due to the package size, 5.1Mb, being too large for CRAN.
+Additional climate data, [GSODdata](https://github.com/adamhsparks/GSODRdata), formatted for use with GSOD data provided by GSODR are available as an R package instalable through GitHub due to the package size, 5.1Mb, being too large for CRAN.
 
 ```r
 #install.packages("devtools")
@@ -350,7 +350,7 @@ library("GSODdata")
 
 ## Elevation Values
 
-90 metre (90m) hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was used to identify and correct/remove elevation errors in data for station locations between -60˚ and 60˚ latitude. This applies to cases here where elevation was missing in the reported values as well. In case the station reported an elevation and the DEM does not, the station reported is taken. For stations beyond -60˚ and 60˚ latitude, the values are station reported values in every instance. See <https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md>
+90 metre (90m) hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was used to identify and correct/remove elevation errors in data for station locations between -60˚ and 60˚ latitude. This applies to cases here where elevation was missing in the reported values as well. In case the station reported an elevation and the DEM does not, the station reported is taken. For stations beyond -60˚ and 60˚ latitude, the values are station reported values in every instance. See <https://github.com/ropensci/GSODR/blob/devel/data-raw/fetch_isd-history.md>
 for more detail on the correction methods.
 
 ## WMO Resolution 40. NOAA Policy

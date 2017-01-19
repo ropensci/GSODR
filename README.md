@@ -4,11 +4,11 @@ GSODR: Global Surface Summary Daily Weather Data in R
 =====================================================
 
 [![Travis-CI Build
-Status](https://travis-ci.org/adamhsparks/GSODR.svg?branch=master)](https://travis-ci.org/adamhsparks/GSODR)
+Status](https://travis-ci.org/ropensci/GSODR.svg?branch=master)](https://travis-ci.org/ropensci/GSODR)
 [![Build
-status](https://ci.appveyor.com/api/projects/status/s09kh2nj59o35ob1/branch/master?svg=true)](https://ci.appveyor.com/project/adamhsparks/gsodr/branch/master)
+status](https://ci.appveyor.com/api/projects/status/s09kh2nj59o35ob1/branch/master?svg=true)](https://ci.appveyor.com/project/ropensci/gsodr/branch/master)
 [![Coverage
-Status](https://img.shields.io/codecov/c/github/adamhsparks/GSODR/master.svg)](https://codecov.io/github/adamhsparks/GSODR?branch=master)
+Status](https://img.shields.io/codecov/c/github/ropensci/GSODR/master.svg)](https://codecov.io/github/ropensci/GSODR?branch=master)
 [![rstudio mirror
 downloads](http://cranlogs.r-pkg.org/badges/GSODR?color=blue)](https://github.com/metacran/cranlogs.app)
 [![cran
@@ -97,11 +97,11 @@ CRAN. We strive to keep the master branch on GitHub functional and
 working properly, although this may not always happen.
 
 If you find bugs, please file a [report as an
-issue](https://github.com/adamhsparks/GSODR/issues).
+issue](https://github.com/ropensci/GSODR/issues).
 
 ``` r
 #install.packages("devtools")
-devtools::install_github("adamhsparks/GSODR", build_vignettes = TRUE)
+devtools::install_github("ropensci/GSODR", build_vignettes = TRUE)
 ```
 
 ------------------------------------------------------------------------
@@ -694,7 +694,7 @@ where elevation was missing in the reported values as well. In case the
 station reported an elevation and the DEM does not, the station reported
 is taken. For stations beyond -60˚ and 60˚ latitude, the values are
 station reported values in every instance. See
-<https://github.com/adamhsparks/GSODR/blob/devel/data-raw/fetch_isd-history.md>
+<https://github.com/ropensci/GSODR/blob/devel/data-raw/fetch_isd-history.md>
 for more detail on the correction methods.
 
 WMO Resolution 40. NOAA Policy
@@ -734,3 +734,5 @@ the Earth land surface areas. arXiv preprint arXiv:1607.00217.
 Wilson AM, Jetz W (2016). Remotely Sensed High-Resolution Global Cloud
 Dynamics for Predicting Ecosystem and Biodiversity Distributions. PLoS
 Biol 14(3): e1002415.
+
+[![ropensci\_footer](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)

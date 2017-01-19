@@ -8,8 +8,8 @@ Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     email = "tom.hengl@isric.org"),
     person("Andrew", "Nelson", role = "aut",
     email = "dr.andy.nelson@gmail.com"))
-URL: https://github.com/adamhsparks/GSODR
-BugReports: https://github.com/adamhsparks/GSODR/issues
+URL: https://github.com/ropensci/GSODR
+BugReports: https://github.com/ropensci/GSODR/issues
 Description: Provides automated downloading, parsing, cleaning, unit conversion
     and formatting of Global Surface Summary of the Day (GSOD) weather data from
     the from the USA National Climatic Data Center (NCDC) for use in R. All
