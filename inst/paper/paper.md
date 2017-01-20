@@ -27,7 +27,8 @@ affiliations:
 - index: 2
   name: ISRIC - World Soil Information, P.O. Box 353, 6700 AJ Wageningen, The Netherlands
 - index: 3
-  name: Faculty of Geo-Information and Earth Observation (ITC), University of Twente, Enschede 7500 AE, The Netherlands
+  name: Faculty of Geo-Information and Earth Observation (ITC), University of Twente,
+    Enschede 7500 AE, The Netherlands
 ---
 
 # Summary
@@ -224,4 +225,3 @@ no/not reported) for the occurrence during the day;
 * **RH** - Mean daily relative humidity.
 
 # References
-

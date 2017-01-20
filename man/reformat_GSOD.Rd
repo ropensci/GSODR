@@ -183,9 +183,9 @@ x <- reformat_GSOD(file_list = y)
 Adam H Sparks, \email{adamhsparks@gmail.com}
 }
 \references{
-{Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled
-SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
-\url{http://srtm.csi.cgiar.org}}
+{Jarvis, A., Reuter, H.I, Nelson, A., Guevara, E. (2008)
+Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
+90m Database \url{http://srtm.csi.cgiar.org}}
 }
 \seealso{
 \code{\link{get_GSOD}}

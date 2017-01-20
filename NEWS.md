@@ -5,8 +5,9 @@
 
 ## Minor changes
 - Update documentation for `get_GSOD()` when using `station` parameter  
-- Minor changes to unit tests to enhance coverage  
-- Edits to paper.md for submission to JOSS
+- Edit unit tests to enhance coverage  
+- Edit paper.md for submission to JOSS  
+- Remove extra packages listed as dependencies that are no longer necessary  
 
 ## Bug fixes
 
