@@ -1,5 +1,5 @@
 ---
-title: 'GSODR: Global Surface Summary Daily Weather Data in R'
+title: 'GSODR: Global Summary Daily Weather Data in R'
 authors:
 - affiliation: 1
   name: Adam H Sparks
@@ -10,7 +10,7 @@ authors:
 - affiliation: 3
   name: Andrew Nelson
   orcid: 0000-0002-7249-3778
-date: "25 November 2016"
+date: "20 January 2017"
 output: pdf_document
 bibliography: paper.bib
 tags:
@@ -54,12 +54,10 @@ provide:
   * a function to help identify stations within a given radius of a point of
 interest.
 
-Three additional data sets are included. The first is a data set of alternative
-elevation data based on a 200 meter buffer of elevation values, derived from the
-CGIAR-CSI SRTM 90m Database [@Jarvis2008]. These data are useful to help address
-possible inaccuracies and in many cases, missing elevation values, in the
-reported station elevations. The second set contains climate data corresponding
-to GSOD station locations.
+Additional data, alternative elevation data based on a 200 meter buffer of 
+elevation values derived from the CGIAR-CSI SRTM 90m Database [@Jarvis2008]
+are included. These data are useful to help address possible inaccuracies and
+in many cases, missing elevation values, in the reported station elevations.
 
 When using this package, GSOD stations are checked for inaccurate longitude and
 latitude values and any stations that are missing or having incorrect are
@@ -226,4 +224,3 @@ no/not reported) for the occurrence during the day;
 * **RH** - Mean daily relative humidity.
 
 # References
-
