@@ -20,7 +20,7 @@ be returned.}
 \description{
 Given a latitude and longitude value entered as decimal degrees (DD),
 this function returns a list of STNID values, which can be used in
-\link{\code{get_GSOD}} to query for specific stations as an argument in the
+\code{\link{get_GSOD}} to query for specific stations as an argument in the
 \code{station} parameter of that function.
 }
 \note{
