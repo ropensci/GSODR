@@ -43,7 +43,7 @@
 #'\url{http://maps.elie.ucl.ac.be/CCI/viewer/index.php}}
 #'\item{MODCF}{Remotely sensed high-resolution global cloud dynamics for
 #'predicting ecosystem and biodiversity distributions (Wilson et al. 2016)
-#'provides new near-global, fine-grain (≈1km) monthly cloud frequencies from
+#'provides new near-global, fine-grain (~1km) monthly cloud frequencies from
 #'15 years of twice-daily MODIS satellite images.}
 #'}
 #'
