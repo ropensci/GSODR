@@ -34,16 +34,16 @@ affiliations:
 # Summary
 
 The GSODR package [@GSODR] is an R package [@R-base] providing automated
-downloading, parsing, cleaning and of Global Surface Summary of the
+downloading, parsing and cleaning of Global Surface Summary of the
 Day (GSOD) [@NCDC] weather data for use in R or saving as local files in either
 a Comma Separated Values (CSV) or GeoPackage (GPKG) [@geopackage] file. It
 builds on or complements several other scripts and packages. We take advantage
 of modern techniques in R to make more efficient use of available computing
 resources to complete the process, e.g., data.table [@data.table], plyr [@plyr]
 and readr [@readr], which allow the data cleaning, conversions and disk 
-input/output processes to take advantage of modern computer hardware. The rnoaa 
-[@rnoaa] package already offers an excellent suite of tools for interacting with
-and downloading weather data from the United States National Oceanic and
+input/output processes to function quickly and efficiently. The rnoaa [@rnoaa]
+package already offers an excellent suite of tools for interacting with and
+downloading weather data from the United States National Oceanic and 
 Atmospheric Administration, but lacks options for GSOD data retrieval. Several
 other APIs and R packages exist to access weather data, but most are region or
 continent specific, whereas GSOD is global. This package was developed to
@@ -55,15 +55,16 @@ provide:
   * a function to help identify stations within a given radius of a point of
 interest.
 
-Additional data, alternative elevation data based on a 200 meter buffer of 
+Alternative elevation data based on a 200 meter buffer of 
 elevation values derived from the CGIAR-CSI SRTM 90m Database [@Jarvis2008]
 are included. These data are useful to help address possible inaccuracies and
-in many cases, missing elevation values, in the reported station elevations.
+in many cases, fill in for missing elevation values in the reported station
+elevations.
 
 When using this package, GSOD stations are checked for inaccurate longitude and
-latitude values and any stations that are missing or having incorrect are
-omitted from the final data set. Station files with too many missing
-observations as defined by the user may be omitted from the final output to help
+latitude values and any stations that have missing or have incorrect values are
+omitted from the final data set. Users may set a threshold for station files
+with too many missing observations for omission from the final output to help
 ensure data quality. All units are converted from the United States Customary
 System (USCS) to the International System of Units (SI), e.g., inches to
 millimetres and Fahrenheit to Celsius. Wind speed is also converted from knots
