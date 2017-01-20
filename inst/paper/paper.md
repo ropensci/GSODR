@@ -55,7 +55,7 @@ provide:
 interest.
 
 Additional data, alternative elevation data based on a 200 meter buffer of 
-elevation values, derived from the CGIAR-CSI SRTM 90m Database [@Jarvis2008]
+elevation values derived from the CGIAR-CSI SRTM 90m Database [@Jarvis2008]
 are included. These data are useful to help address possible inaccuracies and
 in many cases, missing elevation values, in the reported station elevations.
 
