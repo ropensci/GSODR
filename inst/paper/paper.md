@@ -11,7 +11,9 @@ authors:
   name: Andrew Nelson
   orcid: 0000-0002-7249-3778
 date: "20 January 2017"
-output: pdf_document
+output:
+  word_document: default
+  pdf_document: default
 bibliography: paper.bib
 tags:
 - Global Surface Summary of the Day
@@ -27,7 +29,8 @@ affiliations:
 - index: 2
   name: ISRIC - World Soil Information, P.O. Box 353, 6700 AJ Wageningen, The Netherlands
 - index: 3
-  name: Faculty of Geo-Information and Earth Observation (ITC), University of Twente, Enschede 7500 AE, The Netherlands
+  name: Faculty of Geo-Information and Earth Observation (ITC), University of Twente,
+    Enschede 7500 AE, The Netherlands
 ---
 
 # Summary

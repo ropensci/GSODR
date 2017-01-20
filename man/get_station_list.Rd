@@ -13,7 +13,7 @@ get_station_list()
 This function downloads the latest station list from the NCDC FTP server.
 This list includes metadata for all stations including unique identifiers,
 country, state (if in US), latitude, longitude, elevation and when weather
-observations begin and end. Stations with invalid latitude and longitude
+observations begin and end.  Stations with invalid latitude and longitude
 values will not be included.
 }
 \examples{
@@ -22,6 +22,6 @@ GSOD_stations <- get_station_list()
 }
 }
 \author{
-Adam H Sparks \email{adamhsparks@gmail.com}
+Adam Sparks, \email{adamhsparks@gmail.com}
 }
 

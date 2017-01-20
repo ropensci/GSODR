@@ -165,9 +165,9 @@
 #'
 #' @author Adam H Sparks, \email{adamhsparks@gmail.com}
 #'
-#' @references {Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled
-#' SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
-#' \url{http://srtm.csi.cgiar.org}}
+#' @references {Jarvis, A., Reuter, H.I, Nelson, A., Guevara, E. (2008)
+#' Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
+#' 90m Database \url{http://srtm.csi.cgiar.org}}
 #'
 #' @return A \code{data.frame} object of weather data or a comma-separated value
 #' (CSV) or GeoPackage (GPKG) file saved to local disk.
