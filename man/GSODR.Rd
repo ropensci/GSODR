@@ -62,15 +62,15 @@ Karger, D. N., Conrad, O., Bohner, J., Kawohl, T., Kreft, H., Soria-Auza,
 R. W., \emph{et al}. (2016) Climatologies at high resolution for the Earth
 land surface areas. \emph{arXiv preprint} \bold{arXiv:1607.00217}
 
-New, M., Lister, D., Hulme, M. and Makin, I., (2002) A high-resolution data
+New, M., Lister, D., Hulme, M., Makin, I., (2002) A high-resolution data
 set of surface climate over global land areas. \emph{Climate Research}
 \bold{21}:1--25
 
-Sparks A., Hengl T. and Nelson A. (2017) GSODRdata: Extra Climate Data for
+Sparks A., Hengl T., Nelson A. (2017) GSODRdata: Extra Climate Data for
 the GSODR Package. R package version 0.1.0,
 \url{https://adamhsparks.github.io/GSODRdata/index.html}.
 
-Wilson A.M., Jetz W. (2016) Remotely Sensed High-Resolution Global Cloud
+Wilson A. M., Jetz W. (2016) Remotely Sensed High-Resolution Global Cloud
 Dynamics for Predicting Ecosystem and Biodiversity Distributions.
 \emph{PLoS Biol} \bold{14(3)}: e1002415. doi:10.1371/journal. pbio.1002415
 }
