@@ -21,13 +21,14 @@
 #'
 #' @param years Year(s) of weather data to download.
 #' @param station Optional. Specify a station or multiple stations for which to
-#' retrieve, check and clean weather data. The NCDC reports years for which the
-#' data are available. This function checks against these years. However, not
-#' all cases are properly documented and in some cases files may not exist on
-#' the ftp server even though it is indicated that data was recorded for the
-#' station for a particular year. If a station is specified that does not have
-#' an existing file on the server, this function will silently fail and move on
-#' to existing files for download and cleaning from the FTP server.
+#' retrieve, check and clean weather data using \code{STNID}. The NCDC reports
+#' years for which the data are available. This function checks against these
+#' years. However, not all cases are properly documented and in some cases files
+#' may not exist on the ftp server even though it is indicated that data was
+#' recorded for the station for a particular year. If a station is specified
+#' that does not have an existing file on the server, this function will
+#' silently fail and move on to existing files for download and cleaning from
+#' the FTP server.
 #' @param country Optional. Specify a country for which to retrieve weather
 #' data; full name or ISO codes can be used. See
 #' \code{\link{country_list}} for a full list of country names and ISO

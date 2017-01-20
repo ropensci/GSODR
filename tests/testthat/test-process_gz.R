@@ -1,3 +1,4 @@
+context(".process_gz")
   # Check that .process_gz works properly and returns a data table.
   test_that(".download_files properly works, subsetting for country and
             agroclimatology works and .process_gz returns a data table", {

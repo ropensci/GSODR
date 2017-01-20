@@ -1,4 +1,13 @@
 
+# GSODR 1.0.1
+
+## Major changes
+
+## Minor changes
+- Update documentation for `get_GSOD()` when using `station` parameter
+
+## Bug fixes
+
 # GSODR 1.0.0
 
 ## Major changes

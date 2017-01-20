@@ -12,7 +12,7 @@ status](https://ci.appveyor.com/api/projects/status/s09kh2nj59o35ob1/branch/mast
 downloads](http://cranlogs.r-pkg.org/badges/GSODR?color=blue)](https://github.com/metacran/cranlogs.app)
 [![cran
 version](http://www.r-pkg.org/badges/version/GSODR)](https://cran.r-project.org/package=GSODR)
-[![DOI](https://zenodo.org/badge/32764550.svg)](https://zenodo.org/badge/latestdoi/32764550)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.252817.svg)](https://doi.org/10.5281/zenodo.252817)
 
 Introduction to GSODR
 =====================
