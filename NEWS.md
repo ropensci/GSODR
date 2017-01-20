@@ -4,7 +4,9 @@
 ## Major changes
 
 ## Minor changes
-- Update documentation for `get_GSOD()` when using `station` parameter
+- Update documentation for `get_GSOD()` when using `station` parameter  
+- Minor changes to unit tests to enhance coverage  
+- Edits to paper.md for submission to JOSS
 
 ## Bug fixes
 
