@@ -1,5 +1,5 @@
 ---
-title: 'GSODR: Global Surface Summary Daily Weather Data in R'
+title: 'GSODR: Global Summary Daily Weather Data in R'
 authors:
 - affiliation: 1
   name: Adam H Sparks
@@ -10,7 +10,7 @@ authors:
 - affiliation: 3
   name: Andrew Nelson
   orcid: 0000-0002-7249-3778
-date: "25 November 2016"
+date: "20 January 2017"
 output: pdf_document
 bibliography: paper.bib
 tags:
