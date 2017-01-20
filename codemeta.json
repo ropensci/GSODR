@@ -1,0 +1,37 @@
+{
+  "@context": "https://raw.githubusercontent.com/mbjones/codemeta/master/codemeta.jsonld",
+  "@type": "Code",
+  "author": [
+    {
+      "@id": "0000-0002-0061-8359",
+      "@type": "Person",
+      "email": "adamhsparks@gmail.com",
+      "name": "Adam H. Sparks",
+      "affiliation": "Centre for Crop Health, University of Southern Queensland, Toowoomba Queensland 4350, Australia"
+    },
+    {
+      "@id": "0000-0002-9921-5129",
+      "@type": "Person",
+      "email": "tom.hengl@isric.org",
+      "name": "Tomislav Hengl",
+      "affiliation": "ISRIC - World Soil Information, P.O. Box 353, 6700 AJ Wageningen, The Netherlands"
+    }
+    {
+      "@id": "0000-0002-7249-3778",
+      "@type": "Person",
+      "email": "dr.andy.nelson@gmail.com",
+      "name": "Andrew Nelson",
+      "affiliation": "Faculty of Geo-Information and Earth Observation (ITC), University of Twente, Enschede 7500 AE, The Netherlands"
+    }
+  ],
+  "identifier": "10.5281/zenodo.25281710.5281/zenodo.252817",
+  "codeRepository": "https://github.com/ropensci/GSODR",
+  "datePublished": "2017-01-21",
+  "dateModified": "2017-01-21",
+  "dateCreated": "2017-01-21",
+  "description": "The GSOD or Global Surface Summary of the Day (GSOD) data provided by the US National Climatic Data Center (NCDC) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. The GSODR package aims to make it easy to find, transfer and format the data you need for use in analysis.",
+  "keywords": "weather, data, daily, global, station",
+  "license": "MIT",
+  "title": "GSODR",
+  "version": "1.0.1"
+}
