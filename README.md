@@ -409,7 +409,7 @@ the user's home directory and link it with climate data from the
 
 This package is only available from GitHub; due to its large size (5.5Mb
 installed) it is not allowed on CRAN. It provides optional data for use
-with the `GSODR` package. See <https://github.com/ropensci/GSODRdata>
+with the `GSODR` package. See <https://github.com/adamhsparks/GSODRdata>
 for more.
 
 ``` r
@@ -727,4 +727,4 @@ Soria-Auza, R. W., *et al*. (2016) Climatologies at high resolution for
 the Earth land surface areas. *arXiv preprint* **arXiv:1607.00217**.
 (<http://chelsa-climate.org/>)
 
-[![ropensci\_footer](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org)
+[![ropensci\_footer](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
