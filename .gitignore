@@ -20,4 +20,4 @@ inst/doc
 
 *.rds
 
-*.rb
+generate.rb
