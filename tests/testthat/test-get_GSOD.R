@@ -31,18 +31,28 @@ test_that("invalid stations are handled", {
 
 # Check that invalid dsn is handled --------------------------------------------
 test_that("Missing or invalid dsn is handled", {
-
-  expect_error(.validate_fileout(CSV = FALSE, dsn = "~/NULL", filename = NULL,
-                                 GPKG = FALSE),
+  dsn <- "~/NULL"
+  expect_error(
+    if (!is.null(dsn)) {
+    .validate_fileout(CSV = FALSE, dsn = dsn, filename = NULL,
+                                 GPKG = FALSE)
+    },
                "\nFile dsn does not exist: ~/NULL.\n")
-  expect_error(.validate_fileout(CSV = FALSE, dsn = NULL, filename = "test",
-                                 GPKG = FALSE),
+
+  expect_error(
+    if (!is.null(dsn)) {
+    .validate_fileout(CSV = FALSE, dsn = dsn, filename = "test",
+                                 GPKG = FALSE)
+      },
                "\nYou need to specify a filetype, CSV or GPKG.")
-  outfile <- .validate_fileout(CSV = TRUE,dsn = NULL, filename = "test",
+  rm(dsn)
+})
+
+test_that("If dsn is not specified, defaults to working directory", {
+  outfile <- .validate_fileout(CSV = TRUE, dsn = NULL, filename = "test",
                                GPKG = FALSE)
   expect_match(outfile, paste0(getwd(), "/", "test"))
 })
-
 
 # Check missing days in non-leap years -----------------------------------------
 test_that("missing days check allows stations with permissible days missing,
@@ -66,8 +76,11 @@ test_that("missing days check allows stations with permissible days missing,
               list.files(path = td,
                          pattern = ".2015.csv.gz$",
                          full.names = TRUE)
-            GSOD_list_filtered <- .validate_missing_days(max_missing, GSOD_list)
 
+            if (!is.null(max_missing)) {
+              GSOD_list_filtered <- .validate_missing_days(max_missing,
+                                                           GSOD_list)
+            }
             expect_length(GSOD_list, 2)
             expect_match(basename(GSOD_list_filtered), "just_right_2015.csv.gz")
             unlink(td)
@@ -95,7 +108,10 @@ test_that("missing days check allows stations with permissible days missing,
               list.files(path = td,
                          pattern = ".2016.csv.gz$",
                          full.names = TRUE)
-            GSOD_list_filtered <- .validate_missing_days(max_missing, GSOD_list)
+            if (!is.null(max_missing)) {
+              GSOD_list_filtered <- .validate_missing_days(max_missing,
+                                                           GSOD_list)
+            }
 
             expect_length(GSOD_list, 2)
             expect_match(basename(GSOD_list_filtered), "just_right_2016.csv.gz")
