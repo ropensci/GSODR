@@ -52,7 +52,7 @@ The \code{SRTM_GSOD_elevation} data are automatically loaded with the \code{GSOD
 in the "isd-history.csv" file.
 }
 \references{
-{Jarvis, A., Reuter, H.I, Nelson, A., Guevara, E. (2008)
+{Jarvis, A., Reuter, H. I, Nelson, A., Guevara, E. (2008)
 Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
 90m Database  \url{http://srtm.csi.cgiar.org}}
 }

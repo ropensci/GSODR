@@ -39,7 +39,7 @@
 #'
 #' @source \url{ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv}
 #'
-#' @references {Jarvis, A., Reuter, H.I, Nelson, A., Guevara, E. (2008)
+#' @references {Jarvis, A., Reuter, H. I, Nelson, A., Guevara, E. (2008)
 #' Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
 #' 90m Database  \url{http://srtm.csi.cgiar.org}}
 "SRTM_GSOD_elevation"
