@@ -178,12 +178,6 @@ statistical downscaling of the ERA interim global circulation model
 (Karger et al. 2016). ESA's CCI-LC cloud probability monthly averages are based
 on the MODIS snow products (MOD10A2). <http://chelsa-climate.org/>
 
-#### EarthEnv MODIS cloud fraction 
-<http://www.earthenv.org/cloud>
-
-#### ESA's CCI-LC cloud probability
-<http://maps.elie.ucl.ac.be/CCI/viewer/index.php>
-
 #### Elevation Values
 
 90m hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was used
@@ -203,5 +197,10 @@ for more detail on the correction methods.
 > "The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification." [WMO Resolution 40. NOAA Policy](https://public.wmo.int/en/our-mandate/what-we-do/data-exchange-and-technology-transfer)
 
 # References
-Stachelek, J. 2016. Using the Geopackage Format with R. 
+
+Jarvis, A., Reuter, H.I., Nelson, A., Guevara, E. (2008) Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database (<http://srtm.csi.cgiar.org>)
+
+Karger, D. N., Conrad, O., Bohner, J., Kawohl, T., Kreft, H., Soria-Auza, R. W., *et al*. (2016) Climatologies at high resolution for the Earth land surface areas. *arXiv preprint* **arXiv:1607.00217**. (<http://chelsa-climate.org/>)
+
+Stachelek, J. (2016) Using the Geopackage Format with R. 
 URL: https://jsta.github.io/2016/07/14/geopackage-r.html

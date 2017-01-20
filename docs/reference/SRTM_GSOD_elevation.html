@@ -90,24 +90,33 @@
 
     <p>A data frame with 28322 observations of 2 variables:
 <dl class='dl-horizontal'>
-  <dt>STNID</dt><dd>Unique station ID, a concatenation of USAF and WBAN number, used for merging with station data weather files</dd>
-  <dt>ELEV_M_SRTM_90m</dt><dd>Elevation in metres extracted from SRTM data (Jarvis <em>et al</em>. 2008)</dd>
+  <dt>STNID</dt><dd>Unique station ID, a concatenation of USAF and WBAN number,
+  used for merging with station data weather files</dd>
+  <dt>ELEV_M_SRTM_90m</dt><dd>Elevation in metres extracted from SRTM data (Jarvis
+  <em>et al</em>. 2008)</dd>
 </dl></p>
-    <p>Station elevation information for the US National Climatic Data Centre (NCDC) Global Surface Summary of the Day (GSOD) weather data. The original file has
-missing and incorrect geographic data including location (LAT/LON) and elevation. This data frame provides an alternative set of elevation values
+    <p>Station elevation information for the US National Climatic Data Centre (NCDC)
+Global Surface Summary of the Day (GSOD) weather data.  The original file has
+missing and incorrect geographic data including location (LAT/LON) and
+elevation.  This data frame provides an alternative set of elevation values
 with the following changes to the original list of stations from the NCDC:
 <ol>
 <li>Stations with both a latitude and longitude of 0 degrees were removed.
 </li>
-<li>Stations with longitude values that are beyond -180/180 degrees were removed.
+<li>Stations with longitude values that are beyond -180/180 degrees were
+removed.
 </li>
-<li>Stations with latitude values that are beyond -90/90 degrees were removed.
+<li>Stations with latitude values that are beyond -90/90 degrees were
+removed.
 </li>
-<li>A new field for elevation is included, ELEV_M_SRTM_90m. This was created using mean values of a 200m buffer around the reported LAT/LON
-station location within the CGIAR-CSI hole-filled 90m SRTM digital elevation model (Jarvis <em>et al</em>. 2008).
+<li>A new field for elevation is included, ELEV_M_SRTM_90m. This was
+created using mean values of a 200m buffer around the reported LAT/LON
+station location within the CGIAR-CSI hole-filled 90m SRTM digital elevation
+model (Jarvis <em>et al</em>. 2008).
 </li>
 </ol></p>
-    <p>For more on this, please consult the document available from the GSODR GitHub repository detailing the process used to generate these data,
+    <p>For more on this, please consult the document available from the GSODR
+GitHub repository detailing the process used to generate these data,
 <a href = 'https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md'>https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md</a></p>
     
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
@@ -116,17 +125,20 @@ station location within the CGIAR-CSI hole-filled 90m SRTM digital elevation mod
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Users of these data should take into account the following (from the NCDC website): &#8220;The following data and products may have conditions
-placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The
-non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same
-notification.&#8221;</p>
+    <p>Users of these data should take into account the following (from the
+NCDC website): &#8220;The following data and products may have conditions
+placed on their international commercial use.  They can be used within the
+U.S. or for non-commercial international activities without restriction. The
+non-U.S. data cannot be redistributed for commercial purposes.
+Re-distribution of these data by others must provide this same notification.&#8221;</p>
     <p>The <code>SRTM_GSOD_elevation</code> data are automatically loaded with the <code>GSODR</code> package and merged with the latest available data from the NCDC
 in the &quot;isd-history.csv&quot; file.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
-<a href = 'http://srtm.csi.cgiar.org'>http://srtm.csi.cgiar.org</a></p>
+    <p>Jarvis, A., Reuter, H.I, Nelson, A., Guevara, E. (2008)
+Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
+90m Database  <a href = 'http://srtm.csi.cgiar.org'>http://srtm.csi.cgiar.org</a></p>
     
 
   </div>

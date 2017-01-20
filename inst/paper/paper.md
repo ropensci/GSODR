@@ -12,7 +12,6 @@ authors:
   orcid: 0000-0002-7249-3778
 date: "20 January 2017"
 output:
-  word_document: default
   pdf_document: default
 bibliography: paper.bib
 tags:

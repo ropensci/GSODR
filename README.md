@@ -718,17 +718,13 @@ abide by its terms.
 References
 ==========
 
-Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled SRTM for
-the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
-(<http://srtm.csi.cgiar.org>)
+Jarvis, A., Reuter, H.I., Nelson, A., Guevara, E. (2008) Hole-filled
+SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m
+Database (<http://srtm.csi.cgiar.org>)
 
 Karger, D. N., Conrad, O., Bohner, J., Kawohl, T., Kreft, H.,
-Soria-Auza, R. W., et al. (2016). Climatologies at high resolution for
-the Earth land surface areas. arXiv preprint arXiv:1607.00217.
+Soria-Auza, R. W., *et al*. (2016) Climatologies at high resolution for
+the Earth land surface areas. *arXiv preprint* **arXiv:1607.00217**.
 (<http://chelsa-climate.org/>)
-
-Wilson AM, Jetz W (2016). Remotely Sensed High-Resolution Global Cloud
-Dynamics for Predicting Ecosystem and Biodiversity Distributions. PLoS
-Biol 14(3): e1002415.
 
 [![ropensci\_footer](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)

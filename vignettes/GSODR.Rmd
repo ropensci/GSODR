@@ -360,5 +360,5 @@ for more detail on the correction methods.
 > "The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification." [WMO Resolution 40. NOAA Policy](https://public.wmo.int/en/our-mandate/what-we-do/data-exchange-and-technology-transfer)
 
 # References
-Stachelek, J. 2016. Using the Geopackage Format with R. 
+Stachelek, J. (2016) Using the Geopackage Format with R. 
 URL: https://jsta.github.io/2016/07/14/geopackage-r.html
