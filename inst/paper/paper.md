@@ -11,8 +11,7 @@ authors:
   name: Andrew Nelson
   orcid: 0000-0002-7249-3778
 date: "20 January 2017"
-output:
-  pdf_document: default
+output: pdf_document
 bibliography: paper.bib
 tags:
 - Global Surface Summary of the Day
