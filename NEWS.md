@@ -1,15 +1,12 @@
 
 # GSODR 1.0.1
 
-## Major changes
+## Minor changes  
 
-## Minor changes
 - Update documentation for `get_GSOD()` when using `station` parameter  
-- Edit unit tests to enhance coverage  
 - Edit paper.md for submission to JOSS  
 - Remove extra packages listed as dependencies that are no longer necessary  
-
-## Bug fixes
+- Correct Working_with_spatial_and_climate_data.Rmd where it was missing the first portion of documentation and thus examples did not work  
 
 # GSODR 1.0.0
 
