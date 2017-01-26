@@ -71,14 +71,19 @@
 <html><body><a href="#introduction" class="anchor"> </a></body></html>Introduction</h1>
 <p>The GSODR package provides the ability to interact with GSOD data using spatial methods. The <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> function allows for the data to be saved as a GeoPackage file which can be read by most GIS software packages or in R using R’s GIS capabilities with contributed packages as well.</p>
 <p>Following is an example of how you might download and save GSOD annual data for a given country, Philippines in this example, and convert it into a KML file for viewing in GoogleEarth. The second portion uses the same GeoPackage file to import the data back into R and combine the GSOD data with CHELSA data from the <a href="https://github.com/adamhsparks/GSODRdata">GSODRdata package</a> available from GitHub and plot the station temperatures for daily GSOD, average monthly GSOD and CHELSA temperatures (1979-2013).</p>
-<div id="example---download-and-plot-data-for-a-single-country" class="section level3">
-<h3 class="hasAnchor">
-<html><body><a href="#example---download-and-plot-data-for-a-single-country" class="anchor"> </a></body></html>Example - Download and plot data for a single country</h3>
+<div id="example---download-and-plot-data-for-a-single-country" class="section level2">
+<h2 class="hasAnchor">
+<html><body><a href="#example---download-and-plot-data-for-a-single-country" class="anchor"> </a></body></html>Example - Download and plot data for a single country</h2>
 <p>This example will demonstrate how to download data for Philippines for year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in the user’s home directory and link it with climate data from the <code>GSODRdata</code> package.</p>
 <p>Download data for Philippines for year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in the user’s home directory.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(GSODR)
 <span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">country =</span> <span class="st">"Philippines"</span>, <span class="dt">dsn =</span> <span class="st">"~/"</span>,
          <span class="dt">filename =</span> <span class="st">"PHL-2010"</span>, <span class="dt">GPKG =</span> <span class="ot">TRUE</span>, <span class="dt">max_missing =</span> <span class="dv">5</span>)</code></pre></div>
+</div>
+<div id="example---use-the-geopackage-file-to-create-a-kml-file" class="section level2">
+<h2 class="hasAnchor">
+<html><body><a href="#example---use-the-geopackage-file-to-create-a-kml-file" class="anchor"> </a></body></html>Example - Use the GeoPackage file to create a KML file</h2>
+<p>Using the GeoPackage that was just created, you can now create a KML file to open with Google Earth and visualise the data spatially and over time.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rgdal)
 <span class="kw">library</span>(spacetime)
 <span class="kw">library</span>(plotKML)
@@ -101,25 +106,20 @@ shape =<span class="st"> "http://maps.google.com/mapfiles/kml/pal2/icon18.png"</
     <span class="dt">file.name =</span> <span class="st">"Temperatures_PHL_2010-2010.kml"</span>, <span class="dt">folder.name =</span> <span class="st">"TEMP"</span>)
 
 <span class="kw">system</span>(<span class="st">"zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml"</span>)</code></pre></div>
-<div id="compare-the-gsod-weather-data-from-the-philippines-with-climatic-data-provided-by-the-gsodrdata-package-" class="section level5">
-<h5 class="hasAnchor">
-<html><body><a href="#compare-the-gsod-weather-data-from-the-philippines-with-climatic-data-provided-by-the-gsodrdata-package-" class="anchor"> </a></body></html>Compare the GSOD weather data from the Philippines with climatic data provided by the <a href="https://adamhsparks.github.io/GSODRdata/"><code>GSODRdata</code></a> package.</h5>
-<p>Install the <code>GSODRdata</code> package.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("devtools")</span>
-devtools::<span class="kw">install_github</span>(<span class="st">"adamhsparks/GSODdata"</span>)</code></pre></div>
 </div>
-<div id="working-with-climate-data-from-gsodrdata" class="section level5">
-<h5 class="hasAnchor">
-<html><body><a href="#working-with-climate-data-from-gsodrdata" class="anchor"> </a></body></html>Working with climate data from <code>GSODRdata</code>
-</h5>
-<p>Now that the extra data have been installed, take a look at the CHELSA data that are one of the data sets included in the <code>GSODRdata</code> package.</p>
+<div id="example---compare-the-gsod-weather-data-from-the-philippines-with-climate-data-provided-by-the-gsodrdata-package-" class="section level2">
+<h2 class="hasAnchor">
+<html><body><a href="#example---compare-the-gsod-weather-data-from-the-philippines-with-climate-data-provided-by-the-gsodrdata-package-" class="anchor"> </a></body></html>Example - Compare the GSOD weather data from the Philippines with climate data provided by the <a href="https://adamhsparks.github.io/GSODRdata/"><code>GSODRdata</code></a> package.</h2>
+<p>The the <code>GSODRdata</code> package provides climate data from four climate data sets that have been formatted for easy use with the <code>GSODR</code> package. Following is a description how to install the <code>GSODRdata</code> package and use it to visualise the weather data for the Philippines in 2010 against CHELSA data.</p>
 <p>CHELSA (Climatologies at high resolution for the earth’s land surface areas) are climate data at 30 arc seconds for the earth land surface areas.</p>
 <p><strong>Description of CHELSA data from CHELSA website</strong></p>
 <blockquote>
 <p>CHELSA is a high resolution (30 arc sec) climate data set for the earth land surface areas currently under development in coorporation with the Department of Geography of the University of Hamburg (Prof. Dr. Jürgen Böhner, Dr. Olaf Conrad, Tobias Kawohl), the Swiss Federal Institute for Forest, Snow and Landscape Research WSL (Prof. Dr. Niklaus Zimmermann), the University of Zurich (Dr. Dirk N. Karger, Dr. Michael Kessler), and the University of Göttingen (Prof. Dr. Holger Kreft). It includes monthly mean temperature and precipitation patterns for the time period 1979-2013. CHELSA is based on a quasi-mechanistical statistical downscaling of the ERA interim global circulation model (<a href="http://www.ecmwf.int/en/research/climate-reanalysis/era-interim" class="uri">http://www.ecmwf.int/en/research/climate-reanalysis/era-interim</a>) with a GPCC bias correction (<a href="https://www.dwd.de/EN/ourservices/gpcc/gpcc.html" class="uri">https://www.dwd.de/EN/ourservices/gpcc/gpcc.html</a>) and is freely available in the download section.</p>
 </blockquote>
 <p>See <a href="http://chelsa-climate.org" class="uri">http://chelsa-climate.org</a> for more information on these data.</p>
-<p>Compare the GSOD weather data from the Philippines with climatic data provided by the GSODR package in the <code>CHELSA</code> data set.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("devtools")</span>
+devtools::<span class="kw">install_github</span>(<span class="st">"adamhsparks/GSODdata"</span>)</code></pre></div>
+<p>Now that the extra data have been installed, take a look at the CHELSA data that are one of the data sets included in the <code>GSODRdata</code> package.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(GSODRdata)
 
 <span class="kw">head</span>(CHELSA)</code></pre></div>
@@ -193,10 +193,7 @@ devtools::<span class="kw">install_github</span>(<span class="st">"adamhsparks/G
 ## 4                     6.4                    10.9                    10.9                    12.1                     7.7
 ## 5                    10.1                    13.2                    13.2                    14.9                    11.5
 ## 6                    10.7                    14.7                    14.7                    15.8                    11.6</code></pre></div>
-</div>
-<div id="using-dplyr-functions-join-the-chelsa-and-gsodr-data-for-plotting-" class="section level5">
-<h5 class="hasAnchor">
-<html><body><a href="#using-dplyr-functions-join-the-chelsa-and-gsodr-data-for-plotting-" class="anchor"> </a></body></html>Using <code>dplyr</code> functions, join the CHELSA and GSODR data for plotting.</h5>
+<p>Compare the GSOD weather data from the Philippines with climatic data provided by the GSODR package in the <code>CHELSA</code> data set using <code>dplyr</code> functions to join the CHELSA and GSODR data for plotting.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Attaching package: 'dplyr'</span>
@@ -242,7 +239,6 @@ df_melt &lt;-<span class="st"> </span><span class="kw">na.omit</span>(<span clas
 </div>
 </div>
 </div>
-</div>
 <div id="notes" class="section level1">
 <h1 class="hasAnchor">
 <html><body><a href="#notes" class="anchor"> </a></body></html>Notes</h1>
@@ -283,7 +279,14 @@ df_melt &lt;-<span class="st"> </span><span class="kw">na.omit</span>(<span clas
         <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#introduction">Introduction</a></li>
+<li>
+<a href="#introduction">Introduction</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#example---download-and-plot-data-for-a-single-country">Example - Download and plot data for a single country</a></li>
+      <li><a href="#example---use-the-geopackage-file-to-create-a-kml-file">Example - Use the GeoPackage file to create a KML file</a></li>
+      <li>
+<a href="#example---compare-the-gsod-weather-data-from-the-philippines-with-climate-data-provided-by-the-gsodrdata-package.">Example - Compare the GSOD weather data from the Philippines with climate data provided by the </a><a href="https://adamhsparks.github.io/GSODRdata/"><code>GSODRdata</code></a> package.</li>
+      </ul>
+</li>
       <li>
 <a href="#notes">Notes</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#sources">Sources</a></li>
