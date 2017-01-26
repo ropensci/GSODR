@@ -65,7 +65,7 @@ test_that("missing days check allows stations with permissible days missing,
             df_list <- list(just_right_2015, too_short_2015)
 
             filenames <- c("just_right_2015", "too_short_2015")
-            sapply(1:length(df_list),
+            sapply(seq_along(df_list),
                    function(x) write.csv(df_list[[x]],
                                          file = gzfile(
                                            paste0(td, "/", filenames[x],
@@ -97,7 +97,7 @@ test_that("missing days check allows stations with permissible days missing,
             df_list <- list(just_right_2016, too_short_2016)
 
             filenames <- c("just_right_2016", "too_short_2016")
-            sapply(1:length(df_list),
+            sapply(seq_along(df_list),
                    function(x) write.csv(df_list[[x]],
                                          file = gzfile(
                                            paste0(td, "/", filenames[x],
