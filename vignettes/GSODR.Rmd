@@ -35,7 +35,6 @@ after filtering.
 
 ```r
 library(GSODR)
-
 GSOD_stations <- get_station_list()
 ```
 
@@ -98,7 +97,7 @@ filter(Oz, STN_NAME == "TOOWOOMBA")
 #> 1 20120503 945510-99999             670    AUSTRALIA    AU   AUS
 ```
 
-## Using the `get_GSOD()` Function in GSODR to Download a Single Station and
+## Using the get_GSOD() Function in GSODR to Download a Single Station and
 Year
 
 Now that we've seen where the reporting stations are located, we can download
