@@ -14,7 +14,7 @@ downloads](http://cranlogs.r-pkg.org/badges/GSODR?color=blue)](https://github.co
 downloads](http://cranlogs.r-pkg.org/badges/grand-total/GSODR?color=blue)](https://github.com/metacran/cranlogs.app)
 [![cran
 version](http://www.r-pkg.org/badges/version/GSODR)](https://cran.r-project.org/package=GSODR)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.252817.svg)](https://doi.org/10.5281/zenodo.252817)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.2602297.svg)](https://doi.org/10.5281/zenodo.2602297)
 [![Research software
 impact](http://depsy.org/api/package/cran/GSODR/badge.svg)](http://depsy.org/package/r/GSODR)
 
