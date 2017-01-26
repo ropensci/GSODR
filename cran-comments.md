@@ -1,6 +1,6 @@
 ## Test environments  
 
-- local OS X install, R version 3.3.2 (2016-10-31)
+- local macOS install, R version 3.3.2 (2016-10-31)
 - Ubuntu 12.04 (on travis-ci), R version 3.3.2 (2016-10-31)
 - Windows (on win-builder), R version 3.3.2 (2016-10-31)
 - Windows (on win-builder), R Under development (unstable) (2017-01-25 r72030)
