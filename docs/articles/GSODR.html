@@ -93,7 +93,6 @@
 <html><body><a href="#plot-global-station-locations" class="anchor"> </a></body></html>Plot Global Station Locations</h2>
 <p>The GSOD data are comprised of a global set of data from weather stations. To visualise where these stations are located we can fetch the station metadata and plot it in a map. The resulting map shows only stations with valid geo-locations after filtering.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(GSODR)
-
 GSOD_stations &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_station_list.html">get_station_list</a></span>()</code></pre></div>
 <p>Using <a href="https://CRAN.R-project.org/package=ggplot2">ggplot2</a> and the <a href="https://CRAN.R-project.org/package=ggalt">ggalt</a> package it is possible to plot the station locations using alpha transparency to see the densest part of the network and use the Robinson projection for the map.</p>
 <pre class="{r"><code>library(ggplot2)
@@ -149,7 +148,7 @@ Oz &lt;-<span class="st"> </span><span class="kw">filter</span>(station_location
 </div>
 <div id="using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and" class="section level2">
 <h2 class="hasAnchor">
-<html><body><a href="#using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and" class="anchor"> </a></body></html>Using the <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> Function in GSODR to Download a Single Station and</h2>
+<html><body><a href="#using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and" class="anchor"> </a></body></html>Using the get_GSOD() Function in GSODR to Download a Single Station and</h2>
 <p>Year</p>
 <p>Now that we’ve seen where the reporting stations are located, we can download weather data from the station Toowoomba, Queensland, Australia for 2010 by using the STNID in the <code>station</code> parameter of <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> <span class="st">"955510-99999"</span>)
@@ -396,7 +395,7 @@ devtools::<span class="kw">install_github</span>(<span class="st">"adamhsparks/G
 <a href="#retrieving-and-reformatting-data-in-r">Retrieving and Reformatting Data in R</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#plot-global-station-locations">Plot Global Station Locations</a></li>
       <li><a href="#find-stations-in-australia">Find Stations in Australia</a></li>
-      <li><a href="#using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and">Using the <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> Function in GSODR to Download a Single Station and</a></li>
+      <li><a href="#using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and">Using the get_GSOD() Function in GSODR to Download a Single Station and</a></li>
       <li><a href="#find-stations-within-a-specified-distance-of-a-point">Find Stations Within a Specified Distance of a Point</a></li>
       <li><a href="#plot-maximum-and-miniumum-temperature-values">Plot Maximum and Miniumum Temperature Values</a></li>
       <li><a href="#creating-spatial-files">Creating Spatial Files</a></li>
