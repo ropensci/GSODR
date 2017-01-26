@@ -56,7 +56,7 @@ kml(tmp_ST, dtime = 24 * 3600, colour = TEMP, shape = shape, labels = TEMP,
 system("zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml")
 ```
 
-## Example - Compare the GSOD weather data from the Philippines with climate data provided by the [`GSODRdata`](https://adamhsparks.github.io/GSODRdata/) package.
+## Example - Compare the GSOD weather data from the Philippines with climate data provided by the [GSODRdata](https://adamhsparks.github.io/GSODRdata/) package.
 
 The the `GSODRdata` package provides climate data from four climate data sets that have been formatted for easy use with the `GSODR` package. Following is a description how to install the `GSODRdata` package and use it to visualise the weather data for the Philippines in 2010 against CHELSA data.
 
