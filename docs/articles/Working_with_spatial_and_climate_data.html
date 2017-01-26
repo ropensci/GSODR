@@ -60,7 +60,7 @@
       <h1>Working with spatial and climate data from GSODR</h1>
                         <h4 class="author">Tomislav Hengl and Adam H Sparks</h4>
             
-            <h4 class="date">2017-01-22</h4>
+            <h4 class="date">2017-01-26</h4>
           </div>
 
     
@@ -71,13 +71,40 @@
 <html><body><a href="#introduction" class="anchor"> </a></body></html>Introduction</h1>
 <p>The GSODR package provides the ability to interact with GSOD data using spatial methods. The <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> function allows for the data to be saved as a GeoPackage file which can be read by most GIS software packages or in R using R’s GIS capabilities with contributed packages as well.</p>
 <p>Following is an example of how you might download and save GSOD annual data for a given country, Philippines in this example, and convert it into a KML file for viewing in GoogleEarth. The second portion uses the same GeoPackage file to import the data back into R and combine the GSOD data with CHELSA data from the <a href="https://github.com/adamhsparks/GSODRdata">GSODRdata package</a> available from GitHub and plot the station temperatures for daily GSOD, average monthly GSOD and CHELSA temperatures (1979-2013).</p>
-<div id="example---working-with-climate-data-from-gsodrdata" class="section level4">
-<h4 class="hasAnchor">
-<html><body><a href="#example---working-with-climate-data-from-gsodrdata" class="anchor"> </a></body></html>Example - Working with climate data from GSODRdata</h4>
+<div id="example---download-and-plot-data-for-a-single-country" class="section level3">
+<h3 class="hasAnchor">
+<html><body><a href="#example---download-and-plot-data-for-a-single-country" class="anchor"> </a></body></html>Example - Download and plot data for a single country</h3>
 <p>This example will demonstrate how to download data for Philippines for year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in the user’s home directory and link it with climate data from the <code>GSODRdata</code> package.</p>
-<div id="install-gsodrdata-package" class="section level5">
+<p>Download data for Philippines for year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in the user’s home directory.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(GSODR)
+<span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">country =</span> <span class="st">"Philippines"</span>, <span class="dt">dsn =</span> <span class="st">"~/"</span>,
+         <span class="dt">filename =</span> <span class="st">"PHL-2010"</span>, <span class="dt">GPKG =</span> <span class="ot">TRUE</span>, <span class="dt">max_missing =</span> <span class="dv">5</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rgdal)
+<span class="kw">library</span>(spacetime)
+<span class="kw">library</span>(plotKML)
+
+layers &lt;-<span class="st"> </span><span class="kw">ogrListLayers</span>(<span class="dt">dsn =</span> <span class="kw">path.expand</span>(<span class="st">"~/PHL-2010.gpkg"</span>))
+pnts &lt;-<span class="st"> </span><span class="kw">readOGR</span>(<span class="dt">dsn =</span> <span class="kw">path.expand</span>(<span class="st">"~/PHL-2010.gpkg"</span>), layers[<span class="dv">1</span>])
+
+<span class="co"># Plot results in Google Earth as a spacetime object:</span>
+pnts$DATE =<span class="st"> </span><span class="kw">as.Date</span>(<span class="kw">paste</span>(pnts$YEAR, pnts$MONTH, pnts$DAY, <span class="dt">sep =</span> <span class="st">"-"</span>))
+<span class="kw">row.names</span>(pnts) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">"point"</span>, <span class="dv">1</span>:<span class="kw">nrow</span>(pnts), <span class="dt">sep =</span> <span class="st">""</span>)
+
+tmp_ST &lt;-<span class="st"> </span><span class="kw">STIDF</span>(<span class="dt">sp =</span> <span class="kw">as</span>(pnts, <span class="st">"SpatialPoints"</span>),
+                <span class="dt">time =</span> pnts$DATE -<span class="st"> </span><span class="fl">0.5</span>,
+                <span class="dt">data =</span> pnts@data[, <span class="kw">c</span>(<span class="st">"TEMP"</span>, <span class="st">"STNID"</span>)],
+                <span class="dt">endTime =</span> pnts$DATE +<span class="st"> </span><span class="fl">0.5</span>)
+
+shape =<span class="st"> "http://maps.google.com/mapfiles/kml/pal2/icon18.png"</span>
+
+<span class="kw">kml</span>(tmp_ST, <span class="dt">dtime =</span> <span class="dv">24</span> *<span class="st"> </span><span class="dv">3600</span>, <span class="dt">colour =</span> TEMP, <span class="dt">shape =</span> shape, <span class="dt">labels =</span> TEMP,
+    <span class="dt">file.name =</span> <span class="st">"Temperatures_PHL_2010-2010.kml"</span>, <span class="dt">folder.name =</span> <span class="st">"TEMP"</span>)
+
+<span class="kw">system</span>(<span class="st">"zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml"</span>)</code></pre></div>
+<div id="compare-the-gsod-weather-data-from-the-philippines-with-climatic-data-provided-by-the-gsodrdata-package-" class="section level5">
 <h5 class="hasAnchor">
-<html><body><a href="#install-gsodrdata-package" class="anchor"> </a></body></html>Install <code>GSODRdata</code> package</h5>
+<html><body><a href="#compare-the-gsod-weather-data-from-the-philippines-with-climatic-data-provided-by-the-gsodrdata-package-" class="anchor"> </a></body></html>Compare the GSOD weather data from the Philippines with climatic data provided by the <a href="https://adamhsparks.github.io/GSODRdata/"><code>GSODRdata</code></a> package.</h5>
+<p>Install the <code>GSODRdata</code> package.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("devtools")</span>
 devtools::<span class="kw">install_github</span>(<span class="st">"adamhsparks/GSODdata"</span>)</code></pre></div>
 </div>
@@ -86,7 +113,7 @@ devtools::<span class="kw">install_github</span>(<span class="st">"adamhsparks/G
 <html><body><a href="#working-with-climate-data-from-gsodrdata" class="anchor"> </a></body></html>Working with climate data from <code>GSODRdata</code>
 </h5>
 <p>Now that the extra data have been installed, take a look at the CHELSA data that are one of the data sets included in the <code>GSODRdata</code> package.</p>
-<p>CHELSA (Climatologies at high resolution for the earth’s land surface areas) are climate data at (30 arc sec) for the earth land surface areas.</p>
+<p>CHELSA (Climatologies at high resolution for the earth’s land surface areas) are climate data at 30 arc seconds for the earth land surface areas.</p>
 <p><strong>Description of CHELSA data from CHELSA website</strong></p>
 <blockquote>
 <p>CHELSA is a high resolution (30 arc sec) climate data set for the earth land surface areas currently under development in coorporation with the Department of Geography of the University of Hamburg (Prof. Dr. Jürgen Böhner, Dr. Olaf Conrad, Tobias Kawohl), the Swiss Federal Institute for Forest, Snow and Landscape Research WSL (Prof. Dr. Niklaus Zimmermann), the University of Zurich (Dr. Dirk N. Karger, Dr. Michael Kessler), and the University of Göttingen (Prof. Dr. Holger Kreft). It includes monthly mean temperature and precipitation patterns for the time period 1979-2013. CHELSA is based on a quasi-mechanistical statistical downscaling of the ERA interim global circulation model (<a href="http://www.ecmwf.int/en/research/climate-reanalysis/era-interim" class="uri">http://www.ecmwf.int/en/research/climate-reanalysis/era-interim</a>) with a GPCC bias correction (<a href="https://www.dwd.de/EN/ourservices/gpcc/gpcc.html" class="uri">https://www.dwd.de/EN/ourservices/gpcc/gpcc.html</a>) and is freely available in the download section.</p>

@@ -15,11 +15,46 @@ The GSODR package provides the ability to interact with GSOD data using spatial 
 
 Following is an example of how you might download and save GSOD annual data for a given country, Philippines in this example, and convert it into a KML file for viewing in GoogleEarth. The second portion uses the same GeoPackage file to import the data back into R and combine the GSOD data with CHELSA data from the [GSODRdata package](https://github.com/adamhsparks/GSODRdata) available from GitHub and plot the station temperatures for daily GSOD, average monthly GSOD and CHELSA temperatures (1979-2013).
 
-#### Example - Working with climate data from GSODRdata
+### Example - Download and plot data for a single country
 
 This example will demonstrate how to download data for Philippines for year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in the user's home directory and link it with climate data from the `GSODRdata` package.
 
-##### Install `GSODRdata` package
+Download data for Philippines for year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in the user's home directory.
+
+```{r example_1, eval=FALSE, message=FALSE, results='hide'}
+library(GSODR)
+get_GSOD(years = 2010, country = "Philippines", dsn = "~/",
+         filename = "PHL-2010", GPKG = TRUE, max_missing = 5)
+```
+
+```{r example_1.1, eval=FALSE, echo=TRUE}
+library(rgdal)
+library(spacetime)
+library(plotKML)
+
+layers <- ogrListLayers(dsn = path.expand("~/PHL-2010.gpkg"))
+pnts <- readOGR(dsn = path.expand("~/PHL-2010.gpkg"), layers[1])
+
+# Plot results in Google Earth as a spacetime object:
+pnts$DATE = as.Date(paste(pnts$YEAR, pnts$MONTH, pnts$DAY, sep = "-"))
+row.names(pnts) <- paste("point", 1:nrow(pnts), sep = "")
+
+tmp_ST <- STIDF(sp = as(pnts, "SpatialPoints"),
+                time = pnts$DATE - 0.5,
+                data = pnts@data[, c("TEMP", "STNID")],
+                endTime = pnts$DATE + 0.5)
+
+shape = "http://maps.google.com/mapfiles/kml/pal2/icon18.png"
+
+kml(tmp_ST, dtime = 24 * 3600, colour = TEMP, shape = shape, labels = TEMP,
+    file.name = "Temperatures_PHL_2010-2010.kml", folder.name = "TEMP")
+
+system("zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml")
+```
+
+##### Compare the GSOD weather data from the Philippines with climatic data provided by the [`GSODRdata`](https://adamhsparks.github.io/GSODRdata/) package.
+
+Install the `GSODRdata` package.
 
 ```r
 # install.packages("devtools")
