@@ -10,6 +10,10 @@ test_that(".validate_years handles invalid years", {
                "\nThe GSOD data files start at 1929, you have entered a year prior\n             to 1929.\n")
   expect_error(.validate_years(years = 1901 + as.POSIXlt(Sys.Date())$year),
                "\nThe year cannot be greater than current year.\n")
+  expect_error(.validate_years(years = 0),
+               "\nThis is not a valid year.\n")
+  expect_error(.validate_years(years = -1),
+               "\nThis is not a valid year.\n")
 
 })
 
@@ -175,3 +179,4 @@ test_that("Check validate country returns an error on invalid entry when two
   expect_error(.validate_country(country),
                "\nPlease provide a valid name or 2 or 3 letter ISO country code;\n            you can view the entire list of valid countries in this data by\n            typing, 'country_list'.\n")
           })
+
