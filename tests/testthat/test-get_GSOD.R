@@ -28,10 +28,7 @@ test_that(".validate_years handles valid years", {
 
 # Check that .download_files works properly ------------------------------------
 test_that("invalid stations are handled", {
-<<<<<<< HEAD
-=======
   skip_on_cran()
->>>>>>> devel
   ftp_base <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/%s/"
   station <- NULL
   years <- 2010
