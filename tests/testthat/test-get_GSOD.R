@@ -5,11 +5,15 @@ test_that(".validate_years handles invalid years", {
   expect_error(.validate_years(years = NULL),
                "\nYou must provide at least one year of data to download in a numeric\n         format.\n")
   expect_error(.validate_years(years = "nineteen ninety two"),
-                "\nYou must provide at least one year of data to download in a numeric\n         format.\n")
+               "\nYou must provide at least one year of data to download in a numeric\n         format.\n")
   expect_error(.validate_years(years = 1923),
                "\nThe GSOD data files start at 1929, you have entered a year prior\n             to 1929.\n")
   expect_error(.validate_years(years = 1901 + as.POSIXlt(Sys.Date())$year),
                "\nThe year cannot be greater than current year.\n")
+  expect_error(.validate_years(years = 0),
+               "\nThis is not a valid year.\n")
+  expect_error(.validate_years(years = -1),
+               "\nThis is not a valid year.\n")
 
 })
 
@@ -26,7 +30,13 @@ test_that(".validate_years handles valid years", {
 test_that("invalid stations are handled", {
   stations <- get_station_list()
   expect_error(.validate_station(years = 2015, station = "aaa-bbbbbb", stations),
-               "\naaa-bbbbbb is not a valid station ID number, please check\n      your entry. Station IDs are provided as a part of the GSODR package in the\n      'stations' data\nin the STNID column.\n")
+               "\naaa-bbbbbb is not a valid station ID number, please check your entry. Station IDs\n      can be found in the 'stations' dataframe in the STNID column.\n")
+})
+
+# Check that GSOD filename is assigned if a user does not specify a name
+test_that("GSOD filename is used when user does not specify a filename", {
+  expect_equal(.validate_fileout(CSV = TRUE, dsn = "~/", filename =  NULL,
+                                 GPKG = NULL), "~/GSOD")
 })
 
 # Check that invalid dsn is handled --------------------------------------------
@@ -34,17 +44,17 @@ test_that("Missing or invalid dsn is handled", {
   dsn <- "~/NULL"
   expect_error(
     if (!is.null(dsn)) {
-    .validate_fileout(CSV = FALSE, dsn = dsn, filename = NULL,
-                                 GPKG = FALSE)
+      .validate_fileout(CSV = FALSE, dsn = dsn, filename = NULL,
+                        GPKG = FALSE)
     },
-               "\nFile dsn does not exist: ~/NULL.\n")
+    "\nFile dsn does not exist: ~/NULL.\n")
 
   expect_error(
     if (!is.null(dsn)) {
-    .validate_fileout(CSV = FALSE, dsn = dsn, filename = "test",
-                                 GPKG = FALSE)
-      },
-               "\nYou need to specify a filetype, CSV or GPKG.")
+      .validate_fileout(CSV = FALSE, dsn = dsn, filename = "test",
+                        GPKG = FALSE)
+    },
+    "\nYou need to specify a filetype, CSV or GPKG.")
   rm(dsn)
 })
 
@@ -84,7 +94,7 @@ test_that("missing days check allows stations with permissible days missing,
             expect_length(GSOD_list, 2)
             expect_match(basename(GSOD_list_filtered), "just_right_2015.csv.gz")
             unlink(td)
-          })
+            })
 
 # Check missing days in leap years ---------------------------------------------
 test_that("missing days check allows stations with permissible days missing,
@@ -116,21 +126,19 @@ test_that("missing days check allows stations with permissible days missing,
             expect_length(GSOD_list, 2)
             expect_match(basename(GSOD_list_filtered), "just_right_2016.csv.gz")
             unlink(td)
-          })
+            })
 
 # Check that max_missing only accepts positive values --------------------------
 test_that("The 'max_missing' parameter will not accept NA values", {
 
   expect_error(get_GSOD(years = 2010, max_missing = NA),
-"\nThe 'max_missing' parameter must be a positive value larger than
-           1\n")
+               "\nThe 'max_missing' parameter must be a positive value larger than\n           1\n")
 })
 
 test_that("The 'max_missing' parameter will not accept values < 1", {
 
   expect_error(get_GSOD(years = 2010, max_missing = 0.1),
-  "\nThe 'max_missing' parameter must be a positive value larger than
-           1\n")
+               "\nThe 'max_missing' parameter must be a positive value larger than\n           1\n")
 })
 
 # Check validate country returns a two letter code -----------------------------
@@ -150,14 +158,41 @@ test_that("Check validate country returns a two letter code", {
 })
 
 # Check validate country returns an error on invalid entry----------------------
-test_that("Check validate country returns an error on invalid entry", {
+test_that("Check validate country returns an error on invalid entry when
+          mispelled", {
 
   country <- "Philipines"
   expect_error(.validate_country(country),
                "\nPlease provide a valid name or 2 or 3 letter ISO country code;\n              you can view the entire list of valid countries in this data by\n              typing, 'country_list'.\n")
+})
 
+test_that("Check validate country returns an error on invalid entry when two
+          two characters are used that are not in the list", {
   country <- "RP"
   expect_error(.validate_country(country),
                "\nPlease provide a valid name or 2 or 3 letter ISO country code;\n              you can view the entire list of valid countries in this data by\n              typing, 'country_list'.\n")
+          })
 
+test_that("Check validate country returns an error on invalid entry when two
+          three characters are used that are not in the list", {
+  country <- "RPS"
+  expect_error(.validate_country(country),
+               "\nPlease provide a valid name or 2 or 3 letter ISO country code;\n            you can view the entire list of valid countries in this data by\n            typing, 'country_list'.\n")
+          })
+
+# Check if stations list exists locally if not fetch, if it does don't fetch again
+test_that("Check that stations list is fetched if already does not exist
+          locally", {
+            rm(stations) # be sure the list does not exist in current session
+            stations <- NULL
+            expect_message(stations <- .check_station_list(stations),
+                           "Fetching latest station metadata.")
+            expect_is(stations, "data.table")
+          })
+
+test_that("Check that stations list is not fetched if already exists locally", {
+  stations <- get_station_list()
+  expect_silent(stations <- .check_station_list(stations))
+  expect_is(stations, "data.table")
 })
+

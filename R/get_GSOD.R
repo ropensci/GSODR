@@ -237,6 +237,7 @@ get_GSOD <- function(years = NULL,
   options(timeout = 300)
   cache_dir <- tempdir()
   ftp_base <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/%s/"
+  stations <- NULL
   # Validate user inputs -------------------------------------------------------
   .validate_years(years)
   # Validate stations for missing days -----------------------------------------
@@ -250,9 +251,7 @@ get_GSOD <- function(years = NULL,
     outfile <- .validate_fileout(CSV, dsn, filename, GPKG)
   }
   # Fetch latest station metadata from NCDC server
-  if (!exists("stations")) {
-    stations <- get_station_list()
-  }
+  stations <- .check_station_list(stations)
   # Validate user entered stations for existence in stations list from NCDC
   plyr::l_ply(
     .data = station,
@@ -262,10 +261,10 @@ get_GSOD <- function(years = NULL,
   )
   country <- .validate_country(country)
 
-    # Download files from server -----------------------------------------------
+  # Download files from server -----------------------------------------------
   GSOD_list <- .download_files(ftp_base, station, years, cache_dir)
 
-    # Subset GSOD_list for agroclimatology only stations -----------------------
+  # Subset GSOD_list for agroclimatology only stations -----------------------
   if (isTRUE(agroclimatology)) {
     GSOD_list <-
       .agroclimatology_list(GSOD_list, stations, cache_dir, years)
@@ -378,9 +377,8 @@ get_GSOD <- function(years = NULL,
     stop(
       "\n",
       paste0(station),
-      " is not a valid station ID number, please check
-      your entry. Station IDs are provided as a part of the GSODR package in the
-      'stations' data\nin the STNID column.\n"
+      " is not a valid station ID number, please check your entry. Station IDs
+      can be found in the 'stations' dataframe in the STNID column.\n"
     )
   }
   BEGIN <-
@@ -458,6 +456,17 @@ get_GSOD <- function(years = NULL,
     GSOD_list <- stats::na.omit(ifelse(records >= allow,
                                        GSOD_list,
                                        NA))
+  }
+# Check for existence of and download station files ----------------------------
+#' @noRd
+.check_station_list <-
+  function(stations){
+    if (is.null(stations)) {
+      message("Fetching latest station metadata.")
+      get_station_list()
+    } else {
+      stations <- stations
+    }
   }
 # Function to download files from server --------------------------------------
 #' @noRd
