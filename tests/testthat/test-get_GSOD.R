@@ -26,6 +26,16 @@ test_that(".validate_years handles valid years", {
 
 })
 
+# Check that .download_files works properly ------------------------------------
+test_that("invalid stations are handled", {
+  ftp_base <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/%s/"
+  station <- NULL
+  years <- 2010
+  cache_dir <- tempdir()
+  GSOD_list <- .download_files(ftp_base, station, years, cache_dir)
+  expect_length(GSOD_list, 11447)
+  expect_type(GSOD_list, "character")
+})
 # Check that invalid stations are handled --------------------------------------
 test_that("invalid stations are handled", {
   stations <- get_station_list()
@@ -44,14 +54,13 @@ test_that("Missing or invalid dsn is handled", {
   dsn <- "~/NULL"
   expect_error(
     if (!is.null(dsn)) {
-      .validate_fileout(CSV = FALSE, dsn = dsn, filename = NULL,
-                        GPKG = FALSE)
-    },
-    "\nFile dsn does not exist: ~/NULL.\n")
+     outfile <- .validate_fileout(CSV = FALSE, dsn = dsn, filename = NULL,
+                                  GPKG = FALSE)
+    }, "\nFile dsn does not exist: ~/NULL.\n")
 
   expect_error(
     if (!is.null(dsn)) {
-      .validate_fileout(CSV = FALSE, dsn = dsn, filename = "test",
+     outfile <-  .validate_fileout(CSV = FALSE, dsn = dsn, filename = "test",
                         GPKG = FALSE)
     },
     "\nYou need to specify a filetype, CSV or GPKG.")
