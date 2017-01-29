@@ -28,6 +28,10 @@ test_that(".validate_years handles valid years", {
 
 # Check that .download_files works properly ------------------------------------
 test_that("invalid stations are handled", {
+<<<<<<< HEAD
+=======
+  skip_on_cran()
+>>>>>>> devel
   ftp_base <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/%s/"
   station <- NULL
   years <- 2010
@@ -38,32 +42,48 @@ test_that("invalid stations are handled", {
 })
 # Check that invalid stations are handled --------------------------------------
 test_that("invalid stations are handled", {
+  skip_on_cran()
   stations <- get_station_list()
   expect_error(.validate_station(years = 2015, station = "aaa-bbbbbb", stations),
                "\naaa-bbbbbb is not a valid station ID number, please check your entry. Station IDs\n      can be found in the 'stations' dataframe in the STNID column.\n")
 })
 
+# Check that station validation for years available on server works properly
+test_that("Station validations are properly handled for years available on server", {
+  skip_on_cran()
+  stations <- get_station_list()
+  expect_message(.validate_station(station = "949999-00170", stations, years = 2010),
+                 "This station, 949999-00170, only provides data for years 1971 to 1984.")
+})
+
+test_that("Station validations are properly handled for years available on server", {
+  skip_on_cran()
+  stations <- get_station_list()
+  expect_silent(.validate_station(years = 2010, station = "955510-99999", stations = stations))
+})
+
 # Check that GSOD filename is assigned if a user does not specify a name
 test_that("GSOD filename is used when user does not specify a filename", {
+  skip_on_cran()
   expect_equal(.validate_fileout(CSV = TRUE, dsn = "~/", filename =  NULL,
                                  GPKG = NULL), "~/GSOD")
 })
 
 # Check that invalid dsn is handled --------------------------------------------
 test_that("Missing or invalid dsn is handled", {
+  skip_on_cran()
   dsn <- "~/NULL"
   expect_error(
     if (!is.null(dsn)) {
-     outfile <- .validate_fileout(CSV = FALSE, dsn = dsn, filename = NULL,
-                                  GPKG = FALSE)
+      outfile <- .validate_fileout(CSV = FALSE, dsn = dsn, filename = NULL,
+                                   GPKG = FALSE)
     }, "\nFile dsn does not exist: ~/NULL.\n")
 
   expect_error(
     if (!is.null(dsn)) {
-     outfile <-  .validate_fileout(CSV = FALSE, dsn = dsn, filename = "test",
-                        GPKG = FALSE)
-    },
-    "\nYou need to specify a filetype, CSV or GPKG.")
+      outfile <-  .validate_fileout(CSV = FALSE, dsn = dsn, filename = "test",
+                                    GPKG = FALSE)
+    }, "\nYou need to specify a filetype, CSV or GPKG.")
   rm(dsn)
 })
 
@@ -170,24 +190,24 @@ test_that("Check validate country returns a two letter code", {
 test_that("Check validate country returns an error on invalid entry when
           mispelled", {
 
-  country <- "Philipines"
-  expect_error(.validate_country(country),
-               "\nPlease provide a valid name or 2 or 3 letter ISO country code;\n              you can view the entire list of valid countries in this data by\n              typing, 'country_list'.\n")
-})
+            country <- "Philipines"
+            expect_error(.validate_country(country),
+                         "\nPlease provide a valid name or 2 or 3 letter ISO country code;\n              you can view the entire list of valid countries in this data by\n              typing, 'country_list'.\n")
+            })
 
 test_that("Check validate country returns an error on invalid entry when two
           two characters are used that are not in the list", {
-  country <- "RP"
-  expect_error(.validate_country(country),
-               "\nPlease provide a valid name or 2 or 3 letter ISO country code;\n              you can view the entire list of valid countries in this data by\n              typing, 'country_list'.\n")
-          })
+            country <- "RP"
+            expect_error(.validate_country(country),
+                         "\nPlease provide a valid name or 2 or 3 letter ISO country code;\n              you can view the entire list of valid countries in this data by\n              typing, 'country_list'.\n")
+            })
 
 test_that("Check validate country returns an error on invalid entry when two
           three characters are used that are not in the list", {
-  country <- "RPS"
-  expect_error(.validate_country(country),
-               "\nPlease provide a valid name or 2 or 3 letter ISO country code;\n            you can view the entire list of valid countries in this data by\n            typing, 'country_list'.\n")
-          })
+            country <- "RPS"
+            expect_error(.validate_country(country),
+                         "\nPlease provide a valid name or 2 or 3 letter ISO country code;\n            you can view the entire list of valid countries in this data by\n            typing, 'country_list'.\n")
+            })
 
 # Check if stations list exists locally if not fetch, if it does don't fetch again
 test_that("Check that stations list is fetched if already does not exist
@@ -197,7 +217,7 @@ test_that("Check that stations list is fetched if already does not exist
             expect_message(stations <- .check_station_list(stations),
                            "Fetching latest station metadata.")
             expect_is(stations, "data.table")
-          })
+            })
 
 test_that("Check that stations list is not fetched if already exists locally", {
   stations <- get_station_list()

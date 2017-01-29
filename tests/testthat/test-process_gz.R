@@ -4,6 +4,7 @@ context(".process_gz")
             agroclimatology works and .process_gz returns a data table", {
               skip_on_cran()
               skip_on_appveyor() # appveyor will not properly untar the file
+              do.call(file.remove, list(list.files(tempdir(), full.names = TRUE)))
               years <- 2015
               agroclimatology <- TRUE
               country <- "RP"
