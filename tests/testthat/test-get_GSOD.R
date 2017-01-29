@@ -30,7 +30,7 @@ test_that(".validate_years handles valid years", {
 test_that("invalid stations are handled", {
   stations <- get_station_list()
   expect_error(.validate_station(years = 2015, station = "aaa-bbbbbb", stations),
-               "\naaa-bbbbbb is not a valid station ID number, please check\n      your entry. Station IDs are provided as a part of the GSODR package in the\n      'stations' data\nin the STNID column.\n")
+               "\naaa-bbbbbb is not a valid station ID number, please check your entry. Station IDs\n      can be found in the 'stations' dataframe in the STNID column.\n")
 })
 
 # Check that GSOD filename is assigned if a user does not specify a name
@@ -179,4 +179,20 @@ test_that("Check validate country returns an error on invalid entry when two
   expect_error(.validate_country(country),
                "\nPlease provide a valid name or 2 or 3 letter ISO country code;\n            you can view the entire list of valid countries in this data by\n            typing, 'country_list'.\n")
           })
+
+# Check if stations list exists locally if not fetch, if it does don't fetch again
+test_that("Check that stations list is fetched if already does not exist
+          locally", {
+            rm(stations) # be sure the list does not exist in current session
+            stations <- NULL
+            expect_message(stations <- .check_station_list(stations),
+                           "Fetching latest station metadata.")
+            expect_is(stations, "data.table")
+          })
+
+test_that("Check that stations list is not fetched if already exists locally", {
+  stations <- get_station_list()
+  expect_silent(stations <- .check_station_list(stations))
+  expect_is(stations, "data.table")
+})
 
