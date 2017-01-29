@@ -237,7 +237,6 @@ get_GSOD <- function(years = NULL,
   options(timeout = 300)
   cache_dir <- tempdir()
   ftp_base <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/%s/"
-  stations <- NULL
   # Validate user inputs -------------------------------------------------------
   .validate_years(years)
   # Validate stations for missing days -----------------------------------------
@@ -251,7 +250,7 @@ get_GSOD <- function(years = NULL,
     outfile <- .validate_fileout(CSV, dsn, filename, GPKG)
   }
   # Fetch latest station metadata from NCDC server
-  stations <- .check_station_list(stations)
+  stations <- get_station_list()
   # Validate user entered stations for existence in stations list from NCDC
   plyr::l_ply(
     .data = station,
@@ -456,17 +455,6 @@ get_GSOD <- function(years = NULL,
     GSOD_list <- stats::na.omit(ifelse(records >= allow,
                                        GSOD_list,
                                        NA))
-  }
-# Check for existence of and download station files ----------------------------
-#' @noRd
-.check_station_list <-
-  function(stations){
-    if (is.null(stations)) {
-      message("Fetching latest station metadata.")
-      get_station_list()
-    } else {
-      stations <- stations
-    }
   }
 # Function to download files from server --------------------------------------
 #' @noRd
