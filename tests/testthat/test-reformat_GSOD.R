@@ -34,7 +34,7 @@ test_that("reformat_GSOD dsn parameter reformats data properly", {
   
   Map(function(u, d) download.file(u, d, mode = "wb"),
       paste0(ftp_base, test_files), destinations)
-  
+
   x <- reformat_GSOD(dsn = dest)
   expect_equal(nrow(x), 1454)
   expect_equal(ncol(x), 48)

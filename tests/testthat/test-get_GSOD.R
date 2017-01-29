@@ -28,7 +28,10 @@ test_that(".validate_years handles valid years", {
 
 # Check that .download_files works properly ------------------------------------
 test_that("invalid stations are handled", {
+<<<<<<< HEAD
+=======
   skip_on_cran()
+>>>>>>> devel
   ftp_base <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/%s/"
   station <- NULL
   years <- 2010
@@ -80,8 +83,7 @@ test_that("Missing or invalid dsn is handled", {
     if (!is.null(dsn)) {
       outfile <-  .validate_fileout(CSV = FALSE, dsn = dsn, filename = "test",
                                     GPKG = FALSE)
-    },
-    "\nYou need to specify a filetype, CSV or GPKG.")
+    }, "\nYou need to specify a filetype, CSV or GPKG.")
   rm(dsn)
 })
 

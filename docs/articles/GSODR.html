@@ -60,7 +60,7 @@
       <h1>GSODR</h1>
                         <h4 class="author">Adam H Sparks</h4>
             
-            <h4 class="date">2017-01-27</h4>
+            <h4 class="date">2017-01-29</h4>
           </div>
 
     
@@ -78,7 +78,8 @@
 <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code> - the workhorse, this function takes individual station files on the local disk and reformats them returning a data.frame in R<br>
 </li>
 <li>
-<code><a href="../reference/nearest_stations.html">nearest_stations()</a></code> - this function returns a dataframe containing a list of stations and their metadata that fall within the given radius of a point specified by the user</li>
+<code><a href="../reference/nearest_stations.html">nearest_stations()</a></code> - this function returns a dataframe containing a list of stations and their metadata that fall within the given radius of a point specified by the user<br>
+</li>
 <li>
 <code><a href="../reference/get_station_list.html">get_station_list()</a></code> - this function retrieves the most up-to-date list of stations and corresponding metadata</li>
 </ul>
@@ -146,10 +147,9 @@ Oz &lt;-<span class="st"> </span><span class="kw">filter</span>(station_location
 <span class="co">#&gt;        END        STNID ELEV_M_SRTM_90m COUNTRY_NAME iso2c iso3c</span>
 <span class="co">#&gt; 1 20120503 945510-99999             670    AUSTRALIA    AU   AUS</span></code></pre></div>
 </div>
-<div id="using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and" class="section level2">
+<div id="using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and-year" class="section level2">
 <h2 class="hasAnchor">
-<html><body><a href="#using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and" class="anchor"> </a></body></html>Using the get_GSOD() Function in GSODR to Download a Single Station and</h2>
-<p>Year</p>
+<html><body><a href="#using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and-year" class="anchor"> </a></body></html>Using the get_GSOD() Function in GSODR to Download a Single Station and Year</h2>
 <p>Now that we’ve seen where the reporting stations are located, we can download weather data from the station Toowoomba, Queensland, Australia for 2010 by using the STNID in the <code>station</code> parameter of <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> <span class="st">"955510-99999"</span>)
 
@@ -395,7 +395,7 @@ devtools::<span class="kw">install_github</span>(<span class="st">"adamhsparks/G
 <a href="#retrieving-and-reformatting-data-in-r">Retrieving and Reformatting Data in R</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#plot-global-station-locations">Plot Global Station Locations</a></li>
       <li><a href="#find-stations-in-australia">Find Stations in Australia</a></li>
-      <li><a href="#using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and">Using the get_GSOD() Function in GSODR to Download a Single Station and</a></li>
+      <li><a href="#using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and-year">Using the get_GSOD() Function in GSODR to Download a Single Station and Year</a></li>
       <li><a href="#find-stations-within-a-specified-distance-of-a-point">Find Stations Within a Specified Distance of a Point</a></li>
       <li><a href="#plot-maximum-and-miniumum-temperature-values">Plot Maximum and Miniumum Temperature Values</a></li>
       <li><a href="#creating-spatial-files">Creating Spatial Files</a></li>
