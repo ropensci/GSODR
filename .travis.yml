@@ -3,16 +3,21 @@ sudo: required
 dist: trusty
 cache: packages
 
+## Set up the matrix of different runs
 env:
   matrix:
-    - r: release
-      NOT_CRAN=true
-    - r: release
-      NOT_CRAN=false
-    - r: devel
-      NOT_CRAN=true
-    - r: devel
-      NOT_CRAN=false
+  - r: release
+    not_cran: true
+    r_check_args: "--no-manual"
+  - r: release
+    not_cran: false
+    r_check_args: "--no-manual --as--cran"
+  - r: devel
+    not_cran: true
+    r_check_args: "--no-manual"
+  - r: devel
+    not_cran: false
+    r_check_args: "--no-manual --as--cran"
 
 before_install:
 - sudo apt-get install -y libgdal-dev libproj-dev
