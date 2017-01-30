@@ -28,14 +28,12 @@
 #' @author Adam Sparks, \email{adamhsparks@gmail.com}
 #' @export
 nearest_stations <- function(LAT, LON, distance) {
-  original_options <- options()
+  original_timeout <- options("timeout")[[1]]
   options(timeout = 300)
-  if (!exists("stations")) {
-    stations <- as.data.frame(get_station_list())
-  }
+  on.exit(options(timeout = original_timeout), add = TRUE)
+  stations <- as.data.frame(get_station_list())
   dists <- fields::rdist.earth(as.matrix(stations[c("LAT", "LON")]),
                                matrix(c(LAT, LON), ncol = 2), miles = FALSE)
   nearby <- which(dists[, 1] < distance)
   return(stations[as.numeric(nearby), ]$STNID)
-  options(original_options)
 }
