@@ -1,7 +1,7 @@
 ---
 title: "GSODR"
 author: "Adam H Sparks"
-date: "2017-01-19"
+date: "2017-01-30"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteEngine{knitr::knitr}
@@ -16,7 +16,7 @@ data provided by the US National Climatic Data Center (NCDC) are a valuable sour
 
 * `get_GSOD()` - the main function that will query and transfer files from the FTP server, reformat them and return a data.frame in R or save a file to disk  
 * `reformat_GSOD()` - the workhorse, this function takes individual station files on the local disk and reformats them returning a data.frame in R  
-* `nearest_stations()` - this function returns a dataframe containing a list of stations and their metadata that fall within the given radius of a point specified by the user
+* `nearest_stations()` - this function returns a dataframe containing a list of stations and their metadata that fall within the given radius of a point specified by the user  
 * `get_station_list()` - this function retrieves the most up-to-date list of stations and corresponding metadata
 
 When reformatting data either with `get_GSOD()` or `reformat_GSOD()`, all units are converted to International System of Units (SI), e.g., inches to millimetres and Fahrenheit to Celsius. File output can be saved as a Comma Separated Value (CSV) file or in a spatial GeoPackage (GPKG) file, implemented by most major GIS software, summarising each year by station, which also includes vapour pressure and relative humidity variables calculated from existing data in GSOD.
@@ -28,21 +28,15 @@ For more information see the description of the data provided by NCDC,
 
 ## Plot Global Station Locations
 
-The GSOD data are comprised of a global set of data from weather stations. To
-visualise where these stations are located we can fetch the station metadata and
-plot it in a map. The resulting map shows only stations with valid geo-locations
-after filtering.
+The GSOD data are comprised of a global set of data from weather stations. To visualise where these stations are located we can fetch the station metadata and plot it in a map. The resulting map shows only stations with valid geo-locations after filtering.
 
 ```r
 library(GSODR)
-
 GSOD_stations <- get_station_list()
 ```
 
 Using [ggplot2](https://CRAN.R-project.org/package=ggplot2) and the 
-[ggalt](https://CRAN.R-project.org/package=ggalt) package it is possible to plot
-the station locations using alpha transparency to see the densest part of the
-network and use the Robinson projection for the map.
+[ggalt](https://CRAN.R-project.org/package=ggalt) package it is possible to plot the station locations using alpha transparency to see the densest part of the network and use the Robinson projection for the map.
 
 ```{r
 library(ggplot2)
@@ -98,12 +92,9 @@ filter(Oz, STN_NAME == "TOOWOOMBA")
 #> 1 20120503 945510-99999             670    AUSTRALIA    AU   AUS
 ```
 
-## Using the `get_GSOD()` Function in GSODR to Download a Single Station and
-Year
+## Using the get_GSOD() Function in GSODR to Download a Single Station and Year
 
-Now that we've seen where the reporting stations are located, we can download
-weather data from the station Toowoomba, Queensland, Australia for 2010
-by using the STNID in the `station` parameter of `get_GSOD()`.
+Now that we've seen where the reporting stations are located, we can download weather data from the station Toowoomba, Queensland, Australia for 2010 by using the STNID in the `station` parameter of `get_GSOD()`.
 
 ```r
 Tbar <- get_GSOD(years = 2010, station = "955510-99999")
@@ -152,13 +143,9 @@ head(Tbar)
 
 ## Find Stations Within a Specified Distance of a Point
 
-Using the `nearest_stations()` function, you can find stations closest to a
-given point specified by latitude and longitude in decimal degrees. This can be
-used to generate a vector to pass along to `get_GSOD()` and download the
-stations of interest.
+Using the `nearest_stations()` function, you can find stations closest to a given point specified by latitude and longitude in decimal degrees. This can be used to generate a vector to pass along to `get_GSOD()` and download the stations of interest.
 
-There are missing stations in this query. Not all that are listed and queried
-actually have files on the server.
+There are missing stations in this query. Not all that are listed and queried actually have files on the server.
 
 ```r
 tbar_stations <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 50)
@@ -167,8 +154,7 @@ tbar_stations <- tbar_stations$STNID
 get_GSOD(years = 2010, station = tbar_stations, dsn = "~/",
          filename = "Toowoomba_50km_2010")
 ```
-If you wished to drop the stations, 949999-00170 and 949999-00183 from the
-query, you could do this.
+If you wished to drop the stations, 949999-00170 and 949999-00183 from the query, you could do this.
 
 ```r
 remove <- c("949999-00170", "949999-00183")
@@ -360,5 +346,5 @@ for more detail on the correction methods.
 > "The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification." [WMO Resolution 40. NOAA Policy](https://public.wmo.int/en/our-mandate/what-we-do/data-exchange-and-technology-transfer)
 
 # References
-Stachelek, J. 2016. Using the Geopackage Format with R. 
+Stachelek, J. (2016) Using the Geopackage Format with R. 
 URL: https://jsta.github.io/2016/07/14/geopackage-r.html

@@ -309,21 +309,6 @@ write.csv(loop_data, file = &quot;Loop_Survey_Weather_1960-1969&quot;)
 
 <h2>Sources</h2>
 
-<h4>CHELSA climate layers</h4>
-
-<p>CHELSA (climatic surfaces at 1 km resolution) is based on a quasi-mechanistical
-statistical downscaling of the ERA interim global circulation model
-(Karger et al. 2016). ESA&#39;s CCI-LC cloud probability monthly averages are based
-on the MODIS snow products (MOD10A2). <a href="http://chelsa-climate.org/">http://chelsa-climate.org/</a></p>
-
-<h4>EarthEnv MODIS cloud fraction</h4>
-
-<p><a href="http://www.earthenv.org/cloud">http://www.earthenv.org/cloud</a></p>
-
-<h4>ESA&#39;s CCI-LC cloud probability</h4>
-
-<p><a href="http://maps.elie.ucl.ac.be/CCI/viewer/index.php">http://maps.elie.ucl.ac.be/CCI/viewer/index.php</a></p>
-
 <h4>Elevation Values</h4>
 
 <p>90m hole-filled SRTM digital elevation (Jarvis <em>et al.</em> 2008) was used to identify and correct/remove elevation errors in data for station locations between -60˚ and 60˚ latitude. This applies to cases here where elevation was missing in the reported values as well. In case the station reported an elevation and the DEM does not, the station reported is taken. For stations beyond -60˚ and 60˚ latitude, the values are station reported values in every instance. See <a href="https://github.com/ropensci/GSODR/blob/devel/data-raw/fetch_isd-history.md">https://github.com/ropensci/GSODR/blob/devel/data-raw/fetch_isd-history.md</a>
@@ -336,6 +321,10 @@ for more detail on the correction methods.</p>
 <blockquote>
 <p>&ldquo;The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification.&rdquo; <a href="https://public.wmo.int/en/our-mandate/what-we-do/data-exchange-and-technology-transfer">WMO Resolution 40. NOAA Policy</a></p>
 </blockquote>
+
+<h1>References</h1>
+
+<p>Jarvis, A., Reuter, H.I., Nelson, A., Guevara, E. (2008) Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database (<a href="http://srtm.csi.cgiar.org">http://srtm.csi.cgiar.org</a>)</p>
 
 </body>
 

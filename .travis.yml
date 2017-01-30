@@ -5,7 +5,14 @@ cache: packages
 
 env:
   matrix:
-    - NOT_CRAN=true
+    - r: release
+      NOT_CRAN=true
+    - r: release
+      NOT_CRAN=false
+    - r: devel
+      NOT_CRAN=true
+    - r: devel
+      NOT_CRAN=false
 
 before_install:
 - sudo apt-get install -y libgdal-dev libproj-dev
