@@ -54,9 +54,6 @@ provides new near-global, fine-grain (~1km) monthly cloud frequencies from
 15 years of twice-daily MODIS satellite images.}
 }
 }
-\author{
-Adam Sparks, Tomislav Hengle and Andrew Nelson
-}
 \references{
 Karger, D. N., Conrad, O., Bohner, J., Kawohl, T., Kreft, H., Soria-Auza,
 R. W., \emph{et al}. (2016) Climatologies at high resolution for the Earth
@@ -93,4 +90,6 @@ elevation data derived from SRTM90m data
 \code{\link{country_list}} GSDOR provides a cleaned list of the
 countries which are represented in the GSOD data set
 }
-
+\author{
+Adam Sparks, Tomislav Hengle and Andrew Nelson
+}
