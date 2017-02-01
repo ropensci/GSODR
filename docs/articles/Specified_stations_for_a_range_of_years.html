@@ -60,7 +60,7 @@
       <h1>GSODR use case: Specified years/stations vignette</h1>
                         <h4 class="author">Adam H Sparks</h4>
             
-            <h4 class="date">2017-01-30</h4>
+            <h4 class="date">2017-02-01</h4>
           </div>
 
     
@@ -80,12 +80,12 @@
 
 RP &lt;-<span class="st"> </span><span class="kw">getData</span>(<span class="dt">country =</span> <span class="st">"Philippines"</span>, <span class="dt">level =</span> <span class="dv">1</span>)</code></pre></div>
 <p>Select the provinces involved in the survey and make a new object called <code>Central_Luzon</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Central_Luzon &lt;-<span class="st"> </span>RP[RP@data$NAME_1 ==<span class="st"> "Pampanga"</span> |<span class="st"> </span>
-<span class="st">           </span>RP@data$NAME_1 ==<span class="st"> "Tarlac"</span> |
-<span class="st">           </span>RP@data$NAME_1 ==<span class="st"> "Pangasinan"</span> |
-<span class="st">           </span>RP@data$NAME_1 ==<span class="st"> "La Union"</span> |
-<span class="st">           </span>RP@data$NAME_1 ==<span class="st"> "Nueva Ecija"</span> |
-<span class="st">           </span>RP@data$NAME_1 ==<span class="st"> "Bulacan"</span>, ]</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Central_Luzon &lt;-<span class="st"> </span>RP[RP<span class="op">@</span>data<span class="op">$</span>NAME_<span class="dv">1</span> <span class="op">==</span><span class="st"> "Pampanga"</span> <span class="op">|</span><span class="st"> </span>
+<span class="st">           </span>RP<span class="op">@</span>data<span class="op">$</span>NAME_<span class="dv">1</span> <span class="op">==</span><span class="st"> "Tarlac"</span> <span class="op">|</span>
+<span class="st">           </span>RP<span class="op">@</span>data<span class="op">$</span>NAME_<span class="dv">1</span> <span class="op">==</span><span class="st"> "Pangasinan"</span> <span class="op">|</span>
+<span class="st">           </span>RP<span class="op">@</span>data<span class="op">$</span>NAME_<span class="dv">1</span> <span class="op">==</span><span class="st"> "La Union"</span> <span class="op">|</span>
+<span class="st">           </span>RP<span class="op">@</span>data<span class="op">$</span>NAME_<span class="dv">1</span> <span class="op">==</span><span class="st"> "Nueva Ecija"</span> <span class="op">|</span>
+<span class="st">           </span>RP<span class="op">@</span>data<span class="op">$</span>NAME_<span class="dv">1</span> <span class="op">==</span><span class="st"> "Bulacan"</span>, ]</code></pre></div>
 </div>
 <div id="dissolve-polygons-and-find-centroid-of-loop-survey-area" class="section level2">
 <h2 class="hasAnchor">
@@ -103,25 +103,25 @@ station_meta &lt;-<span class="st"> </span><span class="kw">read_csv</span>(
   <span class="dt">col_types =</span> <span class="st">"ccccccddddd"</span>,
   <span class="dt">col_names =</span> <span class="kw">c</span>(<span class="st">"USAF"</span>, <span class="st">"WBAN"</span>, <span class="st">"STN_NAME"</span>, <span class="st">"CTRY"</span>, <span class="st">"STATE"</span>, <span class="st">"CALL"</span>, <span class="st">"LAT"</span>,
                 <span class="st">"LON"</span>, <span class="st">"ELEV_M"</span>, <span class="st">"BEGIN"</span>, <span class="st">"END"</span>), <span class="dt">skip =</span> <span class="dv">1</span>)
-station_meta$STNID &lt;-<span class="st"> </span><span class="kw">as.character</span>(<span class="kw">paste</span>(station_meta$USAF,
-                                         station_meta$WBAN,
+station_meta<span class="op">$</span>STNID &lt;-<span class="st"> </span><span class="kw">as.character</span>(<span class="kw">paste</span>(station_meta<span class="op">$</span>USAF,
+                                         station_meta<span class="op">$</span>WBAN,
                                          <span class="dt">sep =</span> <span class="st">"-"</span>))
 
-loop_stations &lt;-<span class="st"> </span><span class="kw"><a href="../reference/nearest_stations.html">nearest_stations</a></span>(<span class="dt">LAT =</span> centroid@coords[, <span class="dv">2</span>],
-                                  <span class="dt">LON =</span> centroid@coords[, <span class="dv">1</span>], 
+loop_stations &lt;-<span class="st"> </span><span class="kw"><a href="../reference/nearest_stations.html">nearest_stations</a></span>(<span class="dt">LAT =</span> centroid<span class="op">@</span>coords[, <span class="dv">2</span>],
+                                  <span class="dt">LON =</span> centroid<span class="op">@</span>coords[, <span class="dv">1</span>], 
                                   <span class="dt">distance =</span> <span class="dv">100</span>)
 
-loop_stations &lt;-<span class="st"> </span>station_meta[station_meta$STNID %in%<span class="st"> </span>loop_stations, ]
+loop_stations &lt;-<span class="st"> </span>station_meta[station_meta<span class="op">$</span>STNID <span class="op">%in%</span><span class="st"> </span>loop_stations, ]
 
-loop_stations &lt;-<span class="st"> </span>loop_stations[loop_stations$BEGIN &lt;=<span class="st"> </span><span class="dv">19591231</span> &amp;
-<span class="st">                                 </span>loop_stations$END &gt;=<span class="st"> </span><span class="dv">20151231</span>, ]</code></pre></div>
+loop_stations &lt;-<span class="st"> </span>loop_stations[loop_stations<span class="op">$</span>BEGIN <span class="op">&lt;=</span><span class="st"> </span><span class="dv">19591231</span> <span class="op">&amp;</span>
+<span class="st">                                 </span>loop_stations<span class="op">$</span>END <span class="op">&gt;=</span><span class="st"> </span><span class="dv">20151231</span>, ]</code></pre></div>
 </div>
 <div id="using-get_gsod-to-fetch-the-requested-station-files" class="section level2">
 <h2 class="hasAnchor">
 <html><body><a href="#using-get_gsod-to-fetch-the-requested-station-files" class="anchor"> </a></body></html>Using get_GSOD to Fetch the Requested Station Files</h2>
 <p>Using the <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> function may not work with this many station and year combinations. Often the FTP server becomes overwhelmed and stops responding to requests.</p>
 <p>This example shows how you could construct a query using the <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> function. Be aware that it may result in incomplete data and error from the server. If it does this, see the following option for using the <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code> function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">station =</span> <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text =</span> loop_stations[, <span class="dv">12</span>])), <span class="dt">years =</span> <span class="dv">1960</span>:<span class="dv">2015</span>,
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">station =</span> <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text =</span> loop_stations[, <span class="dv">12</span>])), <span class="dt">years =</span> <span class="dv">1960</span><span class="op">:</span><span class="dv">2015</span>,
                               <span class="dt">CSV =</span> <span class="ot">TRUE</span>, <span class="dt">dsn =</span> <span class="st">"~/"</span>,
                               <span class="dt">filename =</span> <span class="st">"Loop_Survey_Weather_1960-1969"</span>)</code></pre></div>
 </div>
@@ -130,7 +130,7 @@ loop_stations &lt;-<span class="st"> </span>loop_stations[loop_stations$BEGIN &l
 <html><body><a href="#another-option" class="anchor"> </a></body></html>Another Option</h2>
 <p><code>GSODR</code> provides a function for dealing with local files that have been transfered from the server already as well, <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code>. If the previous example with <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> does not work, this is a good alternative that takes a bit more intervention but gives the same results.</p>
 <p>Using your FTP client, e.g. FileZilla, log into the NCDC FTP server, &lt;ftp.ncdc.noaa.gov&gt; and navigate to /pub/data/gsod/. Manually downloading the files for each station listed above from 1960 to 2015 is possible, but tedious. An easier solution is to simply download the annual files found in each yearly directory, “gsod-YYYY.tar” and untar them locally and then use R to list the available files and select only the files for the stations of interest. Lastly, write the data to disk as a CSV file for saving and later use.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">years &lt;-<span class="st"> </span><span class="dv">1960</span>:<span class="dv">2015</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">years &lt;-<span class="st"> </span><span class="dv">1960</span><span class="op">:</span><span class="dv">2015</span>
 
 loop_stations &lt;-<span class="st"> </span><span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text =</span> loop_stations[, <span class="dv">12</span>]))
 
@@ -140,7 +140,7 @@ loop_stations &lt;-<span class="st"> </span><span class="kw">do.call</span>(
   )
 
 local_files &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="dt">path =</span> <span class="st">"./GSOD"</span>, <span class="dt">full.names =</span> <span class="ot">TRUE</span>, <span class="dt">recursive =</span> <span class="ot">TRUE</span>)
-local_files &lt;-<span class="st"> </span>local_files[<span class="kw">basename</span>(local_files) %in%<span class="st"> </span>loop_stations]
+local_files &lt;-<span class="st"> </span>local_files[<span class="kw">basename</span>(local_files) <span class="op">%in%</span><span class="st"> </span>loop_stations]
 
 loop_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reformat_GSOD.html">reformat_GSOD</a></span>(<span class="dt">file_list =</span> local_files)
 

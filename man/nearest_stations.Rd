@@ -42,4 +42,3 @@ n <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 100)
 \author{
 Adam Sparks, \email{adamhsparks@gmail.com}
 }
-

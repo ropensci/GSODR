@@ -112,7 +112,7 @@
 <p>A development version is available from from GitHub. If you wish to install the development version that may have new features (but also may not work properly), install the <a href="https://CRAN.R-project.org/package=devtools">devtools package</a>, available from CRAN. We strive to keep the master branch on GitHub functional and working properly, although this may not always happen.</p>
 <p>If you find bugs, please file a <a href="https://github.com/ropensci/GSODR/issues">report as an issue</a>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages("devtools")</span>
-devtools::<span class="kw">install_github</span>(<span class="st">"ropensci/GSODR"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>)</code></pre></div>
+devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"ropensci/GSODR"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <hr>
 </div>
 </div>
@@ -196,9 +196,9 @@ Tbar &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_GSOD.
 <span class="co">#&gt; Checking requested station file for availability on server.</span>
 <span class="co">#&gt; Starting data file processing</span>
 <span class="co">#&gt; </span>
-  |<span class="st">                                                                       </span>
+  <span class="op">|</span><span class="st">                                                                       </span>
 <span class="st">  </span><span class="er">|</span><span class="st">                                                                 </span><span class="er">|</span><span class="st">   </span><span class="dv">0</span>%
-  |<span class="st">                                                                       </span>
+  <span class="op">|</span><span class="st">                                                                       </span>
 <span class="st">  </span><span class="er">|=================================================================|</span><span class="st"> </span><span class="dv">100</span>%
 
 <span class="kw">head</span>(Tbar)
@@ -209,7 +209,7 @@ Tbar &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_GSOD.
 <span class="co">#&gt; 4 99999 955510-99999 TOOWOOMBA AIRPORT   AS  &lt;NA&gt; &lt;NA&gt; -27.55 151.917</span>
 <span class="co">#&gt; 5 99999 955510-99999 TOOWOOMBA AIRPORT   AS  &lt;NA&gt; &lt;NA&gt; -27.55 151.917</span>
 <span class="co">#&gt; 6 99999 955510-99999 TOOWOOMBA AIRPORT   AS  &lt;NA&gt; &lt;NA&gt; -27.55 151.917</span>
-<span class="co">#&gt;   ELEV_M ELEV_M_SRTM_90m    BEGIN      END YEARMODA YEAR MONTH DAY YDAY</span>
+<span class="co">#&gt;   ELEV_M ELEV_M_SRTM_90m    </span><span class="re">BEGIN</span><span class="co">      </span><span class="re">END</span><span class="co"> YEARMODA YEAR MONTH DAY YDAY</span>
 <span class="co">#&gt; 1    642             635 19980301 20161122 20100101 2010    01  01    1</span>
 <span class="co">#&gt; 2    642             635 19980301 20161122 20100102 2010    01  02    2</span>
 <span class="co">#&gt; 3    642             635 19980301 20161122 20100103 2010    01  03    3</span>
@@ -249,7 +249,7 @@ Tbar &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_GSOD.
 <h4 class="hasAnchor">
 <a href="#example-2---download-gsod-data-and-generate-agroclimatology-files" class="anchor"> </a>Example 2 - Download GSOD data and generate agroclimatology files</h4>
 <p>For years 2010 and 2011, download data and create the files, GSOD-agroclimatology-2010.csv and GSOD-agroclimatology-2011.csv, in the user’s home directory with a maximum of five missing days per weather station allowed.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>:<span class="dv">2011</span>, <span class="dt">dsn =</span> <span class="st">"~/"</span>, <span class="dt">filename =</span> <span class="st">"GSOD-agroclimatology"</span>,
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span><span class="op">:</span><span class="dv">2011</span>, <span class="dt">dsn =</span> <span class="st">"~/"</span>, <span class="dt">filename =</span> <span class="st">"GSOD-agroclimatology"</span>,
          <span class="dt">agroclimatology =</span> <span class="ot">TRUE</span>, <span class="dt">CSV =</span> <span class="ot">TRUE</span>, <span class="dt">max_missing =</span> <span class="dv">5</span>)</code></pre></div>
 </div>
 <div id="example-3---download-and-plot-data-for-a-single-country" class="section level4">
@@ -283,17 +283,17 @@ pnts &lt;-<span class="st"> </span><span class="kw">readOGR</span>(<span class="
 <span class="co">#&gt; It has 46 fields</span>
 
 <span class="co"># Plot results in Google Earth as a spacetime object:</span>
-pnts$DATE =<span class="st"> </span><span class="kw">as.Date</span>(<span class="kw">paste</span>(pnts$YEAR, pnts$MONTH, pnts$DAY, <span class="dt">sep =</span> <span class="st">"-"</span>))
-<span class="kw">row.names</span>(pnts) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">"point"</span>, <span class="dv">1</span>:<span class="kw">nrow</span>(pnts), <span class="dt">sep =</span> <span class="st">""</span>)
+pnts<span class="op">$</span>DATE =<span class="st"> </span><span class="kw">as.Date</span>(<span class="kw">paste</span>(pnts<span class="op">$</span>YEAR, pnts<span class="op">$</span>MONTH, pnts<span class="op">$</span>DAY, <span class="dt">sep =</span> <span class="st">"-"</span>))
+<span class="kw">row.names</span>(pnts) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">"point"</span>, <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(pnts), <span class="dt">sep =</span> <span class="st">""</span>)
 
 tmp_ST &lt;-<span class="st"> </span><span class="kw">STIDF</span>(<span class="dt">sp =</span> <span class="kw">as</span>(pnts, <span class="st">"SpatialPoints"</span>),
-                <span class="dt">time =</span> pnts$DATE -<span class="st"> </span><span class="fl">0.5</span>,
-                <span class="dt">data =</span> pnts@data[, <span class="kw">c</span>(<span class="st">"TEMP"</span>, <span class="st">"STNID"</span>)],
-                <span class="dt">endTime =</span> pnts$DATE +<span class="st"> </span><span class="fl">0.5</span>)
+                <span class="dt">time =</span> pnts<span class="op">$</span>DATE <span class="op">-</span><span class="st"> </span><span class="fl">0.5</span>,
+                <span class="dt">data =</span> pnts<span class="op">@</span>data[, <span class="kw">c</span>(<span class="st">"TEMP"</span>, <span class="st">"STNID"</span>)],
+                <span class="dt">endTime =</span> pnts<span class="op">$</span>DATE <span class="op">+</span><span class="st"> </span><span class="fl">0.5</span>)
 
 shape =<span class="st"> "http://maps.google.com/mapfiles/kml/pal2/icon18.png"</span>
 
-<span class="kw">kml</span>(tmp_ST, <span class="dt">dtime =</span> <span class="dv">24</span> *<span class="st"> </span><span class="dv">3600</span>, <span class="dt">colour =</span> TEMP, <span class="dt">shape =</span> shape, <span class="dt">labels =</span> TEMP,
+<span class="kw">kml</span>(tmp_ST, <span class="dt">dtime =</span> <span class="dv">24</span> <span class="op">*</span><span class="st"> </span><span class="dv">3600</span>, <span class="dt">colour =</span> TEMP, <span class="dt">shape =</span> shape, <span class="dt">labels =</span> TEMP,
     <span class="dt">file.name =</span> <span class="st">"Temperatures_PHL_2010-2010.kml"</span>, <span class="dt">folder.name =</span> <span class="st">"TEMP"</span>)
 <span class="co">#&gt; KML file opened for writing...</span>
 <span class="co">#&gt; Writing to KML...</span>
@@ -310,7 +310,7 @@ shape =<span class="st"> "http://maps.google.com/mapfiles/kml/pal2/icon18.png"</
 <a href="#install-gsodrdata-package" class="anchor"> </a>Install <code>GSODRdata</code> package</h5>
 <p>This package is only available from GitHub; due to its large size (5.5Mb installed) it is not allowed on CRAN. It provides optional data for use with the <code>GSODR</code> package. See <a href="https://github.com/adamhsparks/GSODRdata" class="uri">https://github.com/adamhsparks/GSODRdata</a> for more.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("devtools")</span>
-devtools::<span class="kw">install_github</span>(<span class="st">"adamhsparks/GSODdata"</span>)</code></pre></div>
+devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"adamhsparks/GSODdata"</span>)</code></pre></div>
 </div>
 <div id="working-with-climate-data-from-gsodrdata" class="section level5">
 <h5 class="hasAnchor">
@@ -413,34 +413,34 @@ devtools::<span class="kw">install_github</span>(<span class="st">"adamhsparks/G
 <span class="kw">library</span>(ggplot2)
 <span class="kw">library</span>(reshape2)
 
-cnames &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">"CHELSA_temp_"</span>, <span class="dv">1</span>:<span class="dv">12</span>, <span class="st">"_1979-2013"</span>)
-clim_temp &lt;-<span class="st"> </span>CHELSA[CHELSA$STNID %in%<span class="st"> </span>pnts$STNID,
+cnames &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">"CHELSA_temp_"</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>, <span class="st">"_1979-2013"</span>)
+clim_temp &lt;-<span class="st"> </span>CHELSA[CHELSA<span class="op">$</span>STNID <span class="op">%in%</span><span class="st"> </span>pnts<span class="op">$</span>STNID,
                        <span class="kw">paste</span>(<span class="kw">c</span>(<span class="st">"STNID"</span>, cnames))]
-clim_temp_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">STNID =</span> <span class="kw">rep</span>(clim_temp$STNID, <span class="dv">12</span>),
-                           <span class="dt">MONTHC =</span> <span class="kw">as.vector</span>(<span class="kw">sapply</span>(<span class="dv">1</span>:<span class="dv">12</span>, rep,
+clim_temp_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">STNID =</span> <span class="kw">rep</span>(clim_temp<span class="op">$</span>STNID, <span class="dv">12</span>),
+                           <span class="dt">MONTHC =</span> <span class="kw">as.vector</span>(<span class="kw">sapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>, rep,
                                                     <span class="dt">times =</span> <span class="kw">nrow</span>(clim_temp))), 
                            <span class="dt">CHELSA_TEMP =</span> <span class="kw">as.vector</span>(<span class="kw">unlist</span>(clim_temp[, cnames])))
 
-pnts$MONTHC &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">paste</span>(pnts$MONTH))
-temp &lt;-<span class="st"> </span><span class="kw">left_join</span>(pnts@data, clim_temp_df, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">"STNID"</span>, <span class="st">"MONTHC"</span>))
+pnts<span class="op">$</span>MONTHC &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">paste</span>(pnts<span class="op">$</span>MONTH))
+temp &lt;-<span class="st"> </span><span class="kw">left_join</span>(pnts<span class="op">@</span>data, clim_temp_df, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">"STNID"</span>, <span class="st">"MONTHC"</span>))
 <span class="co">#&gt; Warning in left_join_impl(x, y, by$x, by$y, suffix$x, suffix$y): joining</span>
 <span class="co">#&gt; factors with different levels, coercing to character vector</span>
 
-temp &lt;-<span class="st"> </span>temp %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(MONTH) %&gt;%<span class="st"> </span>
+temp &lt;-<span class="st"> </span>temp <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(MONTH) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">AVG_DAILY_TEMP =</span> <span class="kw">round</span>(<span class="kw">mean</span>(TEMP), <span class="dv">1</span>))
 
 df_melt &lt;-<span class="st"> </span><span class="kw">na.omit</span>(<span class="kw">melt</span>(temp[, <span class="kw">c</span>(<span class="st">"STNID"</span>, <span class="st">"DATE"</span>, <span class="st">"CHELSA_TEMP"</span>, <span class="st">"TEMP"</span>, <span class="st">"AVG_DAILY_TEMP"</span>)],
                         <span class="dt">id =</span> <span class="kw">c</span>(<span class="st">"DATE"</span>, <span class="st">"STNID"</span>)))
 
-<span class="kw">ggplot</span>(df_melt, <span class="kw">aes</span>(<span class="dt">x =</span> DATE, <span class="dt">y =</span> value)) +
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> variable), <span class="dt">alpha =</span> <span class="fl">0.2</span>) +
-<span class="st">  </span><span class="kw">scale_x_date</span>(<span class="dt">date_labels =</span> <span class="st">"%b"</span>) +
-<span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Temperature (C)"</span>) +
-<span class="st">  </span><span class="kw">xlab</span>(<span class="st">"Month"</span>) +
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">colour =</span> <span class="st">""</span>) +
-<span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette =</span> <span class="st">"Dark2"</span>) +
-<span class="st">  </span><span class="kw">facet_wrap</span>( ~<span class="st"> </span>STNID)</code></pre></div>
+<span class="kw">ggplot</span>(df_melt, <span class="kw">aes</span>(<span class="dt">x =</span> DATE, <span class="dt">y =</span> value)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> variable), <span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_date</span>(<span class="dt">date_labels =</span> <span class="st">"%b"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Temperature (C)"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">"Month"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">colour =</span> <span class="st">""</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette =</span> <span class="st">"Dark2"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>STNID)</code></pre></div>
 <div class="figure">
 <img src="README-example_3.2-1.png" alt="Comparison of GSOD daily values and average monthly values with CHELSA climate monthly values"><p class="caption">Comparison of GSOD daily values and average monthly values with CHELSA climate monthly values</p>
 </div>
@@ -452,7 +452,7 @@ df_melt &lt;-<span class="st"> </span><span class="kw">na.omit</span>(<span clas
 <p>Using the <code>nearest_station()</code> function will return a list of stations in the GSOD data set that are within a specified radius (kilometres) of a given point expressed as latitude and longitude in decimal degrees [WGS84].</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Find stations within 50km of Toowoomba, QLD.</span>
 
-n &lt;-<span class="st"> </span><span class="kw"><a href="reference/nearest_stations.html">nearest_stations</a></span>(<span class="dt">LAT =</span> -<span class="fl">27.5598</span>, <span class="dt">LON =</span> <span class="fl">151.9507</span>, <span class="dt">distance =</span> <span class="dv">50</span>)
+n &lt;-<span class="st"> </span><span class="kw"><a href="reference/nearest_stations.html">nearest_stations</a></span>(<span class="dt">LAT =</span> <span class="op">-</span><span class="fl">27.5598</span>, <span class="dt">LON =</span> <span class="fl">151.9507</span>, <span class="dt">distance =</span> <span class="dv">50</span>)
 
 n
 [<span class="dv">1</span>] <span class="st">"945510-99999"</span> <span class="st">"945520-99999"</span> <span class="st">"945620-99999"</span> <span class="st">"949999-00170"</span> <span class="st">"949999-00183"</span> <span class="st">"955510-99999"</span>
@@ -469,9 +469,9 @@ toowoomba &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_
 
 <span class="co">#&gt; Downloading individual station files.</span>
 
-|<span class="er">=============================================================================================================================|</span><span class="dv">100</span>% ~<span class="dv">0</span> s remaining     
+<span class="op">|</span><span class="er">=============================================================================================================================|</span><span class="dv">100</span>% <span class="op">~</span><span class="dv">0</span> s remaining     
 Starting data file processing
-  |<span class="er">=============================================================================================================================================|</span><span class="st"> </span><span class="dv">100</span>%
+  <span class="op">|</span><span class="er">=============================================================================================================================================|</span><span class="st"> </span><span class="dv">100</span>%
 
 <span class="kw">str</span>(toowoomba)
 
@@ -486,8 +486,8 @@ Starting data file processing
 <span class="co">#&gt; $ LON             : num  152 152 152 152 152 ...</span>
 <span class="co">#&gt; $ ELEV_M          : num  407 407 407 407 407 ...</span>
 <span class="co">#&gt; $ ELEV_M_SRTM_90m : num  404 404 404 404 404 404 404 404 404 404 ...</span>
-<span class="co">#&gt; $ BEGIN           : num  19730430 19730430 19730430 19730430 19730430 ...</span>
-<span class="co">#&gt; $ END             : num  20170111 20170111 20170111 20170111 20170111 ...</span>
+<span class="co">#&gt; $ </span><span class="re">BEGIN</span><span class="co">           : num  19730430 19730430 19730430 19730430 19730430 ...</span>
+<span class="co">#&gt; $ </span><span class="re">END</span><span class="co">             : num  20170111 20170111 20170111 20170111 20170111 ...</span>
 <span class="co">#&gt; $ YEARMODA        : chr  "20150101" "20150102" "20150103" "20150104" ...</span>
 <span class="co">#&gt; $ YEAR            : chr  "2015" "2015" "2015" "2015" ...</span>
 <span class="co">#&gt; $ MONTH           : chr  "01" "01" "01" "01" ...</span>

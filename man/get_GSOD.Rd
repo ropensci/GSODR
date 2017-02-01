@@ -233,9 +233,6 @@ CSV = TRUE)
 }
 
 }
-\author{
-Adam Sparks, \email{adamhsparks@gmail.com}
-}
 \references{
 {Jarvis, A., Reuter, H. I, Nelson, A., Guevara, E. (2008)
 Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
@@ -244,4 +241,6 @@ Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
 \seealso{
 \code{\link{reformat_GSOD}}
 }
-
+\author{
+Adam Sparks, \email{adamhsparks@gmail.com}
+}

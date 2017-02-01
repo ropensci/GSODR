@@ -24,4 +24,3 @@ GSOD_stations <- get_station_list()
 \author{
 Adam Sparks, \email{adamhsparks@gmail.com}
 }
-
