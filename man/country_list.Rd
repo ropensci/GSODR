@@ -33,4 +33,3 @@ The \code{country_list} data are automatically loaded with the \code{GSODR}
 package.
 }
 \keyword{datasets}
-

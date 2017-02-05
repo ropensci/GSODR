@@ -193,8 +193,8 @@
   tmp[, (VISIB) := round(tmp$VISIB * 1.60934, 1)]
   tmp[, (WDSP)  := round(tmp$WDSP * 0.514444444, 1)]
   tmp[, (GUST)  := round(tmp$GUST * 0.514444444, 1)]
-  tmp[, (MAX)   := round( (tmp$MAX - 32) * (5 / 9), 2)]
-  tmp[, (MIN)   := round( (tmp$MIN - 32) * (5 / 9), 2)]
+  tmp[, (MAX)   := round( (tmp$MAX - 32) * (5 / 9), 1)]
+  tmp[, (MIN)   := round( (tmp$MIN - 32) * (5 / 9), 1)]
   tmp[, (PRCP)  := round(tmp$PRCP * 25.4, 1)]
   tmp[, (SNDP)  := round(tmp$SNDP * 25.4, 1)]
   # Compute other weather vars--------------------------------------------------
