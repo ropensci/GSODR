@@ -15,6 +15,7 @@ downloads](http://cranlogs.r-pkg.org/badges/grand-total/GSODR?color=blue)](https
 [![cran
 version](http://www.r-pkg.org/badges/version/GSODR)](https://cran.r-project.org/package=GSODR)
 [![DOI](https://zenodo.org/badge/32764550.svg)](https://zenodo.org/badge/latestdoi/32764550)
+[![JOSS](http://joss.theoj.org/papers/10.21105/joss.00177/status.svg)](http://joss.theoj.org/papers/14021f4e4931cdaab4ea41be27df2df6)
 [![Research software
 impact](http://depsy.org/api/package/cran/GSODR/badge.svg)](http://depsy.org/package/r/GSODR)
 
@@ -95,9 +96,6 @@ not work properly), install the [devtools
 package](https://CRAN.R-project.org/package=devtools), available from
 CRAN. We strive to keep the master branch on GitHub functional and
 working properly, although this may not always happen.
-
-If you find bugs, please file a [report as an
-issue](https://github.com/ropensci/GSODR/issues).
 
 ``` r
 #install.packages("devtools")
@@ -712,12 +710,17 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
 > notification." [WMO Resolution 40. NOAA
 > Policy](https://public.wmo.int/en/our-mandate/what-we-do/data-exchange-and-technology-transfer)
 
-Code of Conduct
----------------
+Meta
+----
 
-Please note that this project is released with a [Contributor Code of
-Conduct](CONDUCT.md). By participating in this project you agree to
-abide by its terms.
+-   Please [report any issues or
+    bugs](https://github.com/ropensci/GSODR/issues).
+-   License: MIT
+-   Get citation information for `GSODR` in R typing
+    `citation(package = "GSODR")`
+-   Please note that this project is released with a [Contributor Code
+    of Conduct](CONDUCT.md). By participating in this project you agree
+    to abide by its terms.
 
 References
 ==========
