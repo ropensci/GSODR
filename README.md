@@ -63,16 +63,6 @@ the data files as they can be quite large and slow to download.
 For more information see the description of the data provided by NCDC,
 <http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
 
-Other Sources of Weather Data
------------------------------
-
-There are several other sources of weather data and ways of retrieving
-them through R. In particular, the excellent
-[rnoaa](https://CRAN.R-project.org/package=rnoaa) package from
-[ROpenSci](https://ropensci.org) offers tools for interacting with and
-downloading weather data from the United States National Oceanic and
-Atmospheric Administration but lacks support GSOD data.
-
 Quick Start
 ===========
 
@@ -660,6 +650,30 @@ str(toowoomba)
 #> $ ES              : num  3.1 3 2.7 2.8 2.7 2.7 2.6 2.7 3.1 3.1 ...
 #> $ RH              : num  67.7 70 74.1 67.9 74.1 59.3 69.2 70.4 61.3 61.3 ...
 ```
+
+Other Sources of Weather Data
+-----------------------------
+
+There are several other sources of weather data and ways of retrieving
+them through R. In particular, the excellent
+[rnoaa](https://CRAN.R-project.org/package=rnoaa) package from
+[ROpenSci](https://ropensci.org) offers tools for interacting with and
+downloading weather data from the United States National Oceanic and
+Atmospheric Administration but lacks support GSOD data.
+
+Other Sources for Fetching GSOD Weather Data
+--------------------------------------------
+
+The
+[GSODTools](https://github.com/environmentalinformatics-marburg/GSODTools)
+is an R package that offers similar functionality as `GSODR` but also
+has the ability to graph the data and working with data for time series
+analysis.
+
+The
+[ULMO](https://ulmo.readthedocs.io/en/latest/api.html#module-ulmo.ncdc.gsod)
+library by Dharhas Pothina offers an interface to retrieve GSOD data
+using Python.
 
 Notes
 =====
