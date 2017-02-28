@@ -666,9 +666,9 @@ Other Sources for Fetching GSOD Weather Data
 
 The
 [GSODTools](https://github.com/environmentalinformatics-marburg/GSODTools)
-is an R package that offers similar functionality as `GSODR` but also
-has the ability to graph the data and working with data for time series
-analysis.
+by [Florian Detsch](https://github.com/fdetsch) is an R package that
+offers similar functionality as `GSODR` but also has the ability to
+graph the data and working with data for time series analysis.
 
 The
 [ULMO](https://ulmo.readthedocs.io/en/latest/api.html#module-ulmo.ncdc.gsod)
