@@ -122,38 +122,38 @@ print(country_list)
 There are unnecessary data in several columns. `GSODR` only requires FIPS, name, and ISO codes to function.
 
 ``` r
-country_list[, c(3:14, 18:35) := NULL]
+country_list[, c(3:14, 17:35) := NULL]
 ```
 
-    ##      FIPS                         COUNTRY_NAME iso2c iso3c iso3n
-    ##   1:   AA                                ARUBA    AW   ABW   533
-    ##   2:   AC                  ANTIGUA AND BARBUDA    AG   ATG    28
-    ##   3:   AF                          AFGHANISTAN    AF   AFG     4
-    ##   4:   AG                              ALGERIA    DZ   DZA    12
-    ##   5:   AI                     ASCENSION ISLAND    NA    NA    NA
-    ##  ---                                                            
-    ## 289:   YY ST. MARTEEN, ST. EUSTATIUS, AND SABA    NA    NA    NA
-    ## 290:   ZA                               ZAMBIA    ZM   ZMB   894
-    ## 291:   ZI                             ZIMBABWE    ZW   ZWE   716
-    ## 292:   ZM                                SAMOA    NA    NA    NA
-    ## 293:   ZZ       ST. MARTIN AND ST. BARTHOLOMEW    NA    NA    NA
+    ##      FIPS                         COUNTRY_NAME iso2c iso3c
+    ##   1:   AA                                ARUBA    AW   ABW
+    ##   2:   AC                  ANTIGUA AND BARBUDA    AG   ATG
+    ##   3:   AF                          AFGHANISTAN    AF   AFG
+    ##   4:   AG                              ALGERIA    DZ   DZA
+    ##   5:   AI                     ASCENSION ISLAND    NA    NA
+    ##  ---                                                      
+    ## 289:   YY ST. MARTEEN, ST. EUSTATIUS, AND SABA    NA    NA
+    ## 290:   ZA                               ZAMBIA    ZM   ZMB
+    ## 291:   ZI                             ZIMBABWE    ZW   ZWE
+    ## 292:   ZM                                SAMOA    NA    NA
+    ## 293:   ZZ       ST. MARTIN AND ST. BARTHOLOMEW    NA    NA
 
 ``` r
 print(country_list)
 ```
 
-    ##      FIPS                         COUNTRY_NAME iso2c iso3c iso3n
-    ##   1:   AA                                ARUBA    AW   ABW   533
-    ##   2:   AC                  ANTIGUA AND BARBUDA    AG   ATG    28
-    ##   3:   AF                          AFGHANISTAN    AF   AFG     4
-    ##   4:   AG                              ALGERIA    DZ   DZA    12
-    ##   5:   AI                     ASCENSION ISLAND    NA    NA    NA
-    ##  ---                                                            
-    ## 289:   YY ST. MARTEEN, ST. EUSTATIUS, AND SABA    NA    NA    NA
-    ## 290:   ZA                               ZAMBIA    ZM   ZMB   894
-    ## 291:   ZI                             ZIMBABWE    ZW   ZWE   716
-    ## 292:   ZM                                SAMOA    NA    NA    NA
-    ## 293:   ZZ       ST. MARTIN AND ST. BARTHOLOMEW    NA    NA    NA
+    ##      FIPS                         COUNTRY_NAME iso2c iso3c
+    ##   1:   AA                                ARUBA    AW   ABW
+    ##   2:   AC                  ANTIGUA AND BARBUDA    AG   ATG
+    ##   3:   AF                          AFGHANISTAN    AF   AFG
+    ##   4:   AG                              ALGERIA    DZ   DZA
+    ##   5:   AI                     ASCENSION ISLAND    NA    NA
+    ##  ---                                                      
+    ## 289:   YY ST. MARTEEN, ST. EUSTATIUS, AND SABA    NA    NA
+    ## 290:   ZA                               ZAMBIA    ZM   ZMB
+    ## 291:   ZI                             ZIMBABWE    ZW   ZWE
+    ## 292:   ZM                                SAMOA    NA    NA
+    ## 293:   ZZ       ST. MARTIN AND ST. BARTHOLOMEW    NA    NA
 
 Write .rda file to disk.
 
