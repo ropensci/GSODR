@@ -1,7 +1,7 @@
 Fetch, clean and correct altitude in GSOD isd\_history.csv Data
 ================
 Adam H. Sparks
-2017-02-08
+2017-03-03
 
 Introduction
 ============
@@ -72,7 +72,7 @@ stations$STNID <- as.character(paste(stations$USAF, stations$WBAN, sep = "-"))
 
 # join countries with countrycode data
 countries <- dplyr::left_join(countries, countrycode::countrycode_data,
-                              by = c(FIPS = "fips104"))
+                              by = c(FIPS = "fips105"))
 
 # create xy object to check for geographic location agreement with reported
 xy <- dplyr::left_join(stations, countries, by = c("CTRY" = "FIPS"))
@@ -196,11 +196,11 @@ summary(SRTM_GSOD_elevation)
     ##                                                                           
     ##       LON               ELEV_M           BEGIN               END          
     ##  Min.   :-179.983   Min.   :-350.0   Min.   :19010101   Min.   :19051231  
-    ##  1st Qu.: -83.269   1st Qu.:  23.0   1st Qu.:19570701   1st Qu.:20020417  
-    ##  Median :   6.700   Median : 140.0   Median :19760304   Median :20160217  
-    ##  Mean   :  -3.445   Mean   : 360.8   Mean   :19782412   Mean   :20047419  
-    ##  3rd Qu.:  61.889   3rd Qu.: 435.0   3rd Qu.:20020409   3rd Qu.:20170205  
-    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20170118   Max.   :20170206  
+    ##  1st Qu.: -83.269   1st Qu.:  23.0   1st Qu.:19570701   1st Qu.:20020418  
+    ##  Median :   6.700   Median : 140.0   Median :19760304   Median :20160222  
+    ##  Mean   :  -3.445   Mean   : 360.8   Mean   :19782412   Mean   :20047483  
+    ##  3rd Qu.:  61.889   3rd Qu.: 435.0   3rd Qu.:20020409   3rd Qu.:20170227  
+    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20170118   Max.   :20170301  
     ##                     NA's   :218                                           
     ##     STNID           ELEV_M_SRTM_90m 
     ##  Length:28330       Min.   :-361.0  
@@ -284,26 +284,27 @@ R System Information
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ## [1] ggalt_0.1.1   ggplot2_2.2.1 foreach_1.4.3
+    ## [1] ggalt_0.4.0   ggplot2_2.2.1 foreach_1.4.3
     ## 
     ## loaded via a namespace (and not attached):
     ##  [1] Rcpp_0.12.9        highr_0.6          RColorBrewer_1.1-2
     ##  [4] compiler_3.3.2     plyr_1.8.4         iterators_1.0.8   
-    ##  [7] tools_3.3.2        digest_0.6.12      memoise_1.0.0     
-    ## [10] evaluate_0.10      tibble_1.2         gtable_0.2.0      
-    ## [13] lattice_0.20-34    DBI_0.5-1          curl_2.3          
-    ## [16] yaml_2.1.14        rgdal_1.2-5        parallel_3.3.2    
-    ## [19] withr_1.0.2        dplyr_0.5.0        stringr_1.1.0     
-    ## [22] raster_2.5-8       knitr_1.15.1       devtools_1.12.0   
-    ## [25] maps_3.1.1         rprojroot_1.2      grid_3.3.2        
-    ## [28] data.table_1.10.4  R6_2.2.0           rmarkdown_1.3     
-    ## [31] sp_1.2-4           readr_1.0.0        magrittr_1.5      
-    ## [34] MASS_7.3-45        backports_1.0.5    scales_0.4.1      
-    ## [37] codetools_0.2-15   htmltools_0.3.5    proj4_1.0-8       
-    ## [40] assertthat_0.1     countrycode_0.18   colorspace_1.3-2  
-    ## [43] labeling_0.3       ash_1.0-15         KernSmooth_2.23-15
-    ## [46] stringi_1.1.2      lazyeval_0.2.0     doParallel_1.0.10 
-    ## [49] munsell_0.4.3
+    ##  [7] tools_3.3.2        extrafont_0.17     digest_0.6.12     
+    ## [10] memoise_1.0.0      evaluate_0.10      tibble_1.2        
+    ## [13] gtable_0.2.0       lattice_0.20-34    DBI_0.5-1         
+    ## [16] curl_2.3           yaml_2.1.14        rgdal_1.2-5       
+    ## [19] parallel_3.3.2     Rttf2pt1_1.3.4     withr_1.0.2       
+    ## [22] dplyr_0.5.0        stringr_1.2.0      raster_2.5-8      
+    ## [25] knitr_1.15.1       devtools_1.12.0    maps_3.1.1        
+    ## [28] rprojroot_1.2      grid_3.3.2         data.table_1.10.4 
+    ## [31] R6_2.2.0           rmarkdown_1.3      sp_1.2-4          
+    ## [34] extrafontdb_1.0    readr_1.0.0        magrittr_1.5      
+    ## [37] MASS_7.3-45        backports_1.0.5    scales_0.4.1      
+    ## [40] codetools_0.2-15   htmltools_0.3.5    proj4_1.0-8       
+    ## [43] assertthat_0.1     countrycode_0.19   colorspace_1.3-2  
+    ## [46] labeling_0.3       ash_1.0-15         KernSmooth_2.23-15
+    ## [49] stringi_1.1.2      lazyeval_0.2.0     doParallel_1.0.10 
+    ## [52] munsell_0.4.3
 
 References
 ==========
