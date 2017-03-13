@@ -566,7 +566,7 @@ ggplot(df_melt, aes(x = DATE, y = value)) +
 ```
 
 ![Comparison of GSOD daily values and average monthly values with CHELSA
-climate monthly values](README-example_3.2-1.png)
+climate monthly values](./vignettes/figure/example_1.2-1.png)
 
 #### Example 5 - Finding stations within a given radius of a point
 
