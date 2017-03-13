@@ -93,10 +93,10 @@ omitting stations with too many missing observations.  All units are converted
 to International System of Units (SI), e.g., Fahrenheit to Celsius and inches
 to millimetres.  Alternative elevation measurements are supplied for missing
 values or values found to be questionable based on the Consultative Group for
-International Agricultural Research&#39;s Consortium for Spatial Information
-group&#39;s (CGIAR-CSI) Shuttle Radar Topography Mission 90 metre (SRTM 90m)
-digital elevation data based on NASA&#39;s original SRTM 90m data.  Further
-information on these data and methods can be found on GSODR&#39;s GitHub
+International Agricultural Research's Consortium for Spatial Information
+group's (CGIAR-CSI) Shuttle Radar Topography Mission 90 metre (SRTM 90m)
+digital elevation data based on NASA's original SRTM 90m data.  Further
+information on these data and methods can be found on GSODR's GitHub
 repository here:
 <a href = 'https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md'>https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md</a>.</p>
     
@@ -108,9 +108,9 @@ repository here:
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
       <dt>years</dt>
-      <dd>Year(s) of weather data to download.</dd>
+      <dd><p>Year(s) of weather data to download.</p></dd>
       <dt>station</dt>
-      <dd>Optional. Specify a station or multiple stations for which to
+      <dd><p>Optional. Specify a station or multiple stations for which to
 retrieve, check and clean weather data using <code>STNID</code>. The NCDC reports
 years for which the data are available. This function checks against these
 years. However, not all cases are properly documented and in some cases files
@@ -118,38 +118,38 @@ may not exist on the ftp server even though it is indicated that data was
 recorded for the station for a particular year. If a station is specified
 that does not have an existing file on the server, this function will
 silently fail and move on to existing files for download and cleaning from
-the FTP server.</dd>
+the FTP server.</p></dd>
       <dt>country</dt>
-      <dd>Optional. Specify a country for which to retrieve weather
+      <dd><p>Optional. Specify a country for which to retrieve weather
 data; full name or ISO codes can be used. See
 <code><a href='country_list.html'>country_list</a></code> for a full list of country names and ISO
-codes available.</dd>
+codes available.</p></dd>
       <dt>dsn</dt>
-      <dd>Optional. Local file path to write file out to. Must be specified
+      <dd><p>Optional. Local file path to write file out to. Must be specified
 if CSV or GPKG parameters are selected. If unspecified and <code>CSV</code> or
 <code>GPKG</code> are set to TRUE, <code>dsn</code> will default to the current working
-directory.</dd>
+directory.</p></dd>
       <dt>filename</dt>
-      <dd>Optional. The filename for resulting file(s) to be written
+      <dd><p>Optional. The filename for resulting file(s) to be written
 with no file extension. File extension will be automatically appended to file
-outputs. If unspecified by the user it will default to &quot;GSOD&quot; followed by
-the file extension(s) set using <code>CSV</code> or <code>GPKG</code>.</dd>
+outputs. If unspecified by the user it will default to "GSOD" followed by
+the file extension(s) set using <code>CSV</code> or <code>GPKG</code>.</p></dd>
       <dt>max_missing</dt>
-      <dd>Optional. The maximum number of days allowed to be missing
-from a station&#39;s data before it is excluded from final file output.</dd>
+      <dd><p>Optional. The maximum number of days allowed to be missing
+from a station's data before it is excluded from final file output.</p></dd>
       <dt>agroclimatology</dt>
-      <dd>Optional. Logical. Only clean data for stations
+      <dd><p>Optional. Logical. Only clean data for stations
 between latitudes 60 and -60 for agroclimatology work, defaults to FALSE.
 Set to TRUE to include only stations within the confines of these
-latitudes.</dd>
+latitudes.</p></dd>
       <dt>CSV</dt>
-      <dd>Optional. Logical. If set to TRUE, create a comma separated value
+      <dd><p>Optional. Logical. If set to TRUE, create a comma separated value
 (CSV) file and save it locally in a user specified location, if <code>dsn</code> is
-not specified by the user, defaults to the current working directory.</dd>
+not specified by the user, defaults to the current working directory.</p></dd>
       <dt>GPKG</dt>
-      <dd>Optional. Logical. If set to TRUE, create a GeoPackage file and
+      <dd><p>Optional. Logical. If set to TRUE, create a GeoPackage file and
 save it locally in a user specified location, if <code>dsn</code> is not specified
-by the user, defaults to the current working directory.</dd>
+by the user, defaults to the current working directory.</p></dd>
     </dl>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -161,121 +161,118 @@ by the user, defaults to the current working directory.</dd>
 
     <p>Data summarise each year by station, which include vapour pressure and
 relative humidity variables calculated from existing data in GSOD.</p>
-    <p>If the option to save locally is selected. Output may be saved as comma-
+<p>If the option to save locally is selected. Output may be saved as comma-
 separated, CSV, files or GeoPackage, GPKG, files in a directory specified by
 the user, defaulting to the current working directory.</p>
-    <p>When querying selected stations and electing to write files to disk, all
+<p>When querying selected stations and electing to write files to disk, all
 years queried and stations queried will be merged into one final output file.</p>
-    <p>All missing values in resulting files are represented as NA regardless of
+<p>All missing values in resulting files are represented as NA regardless of
 which field they occur in.</p>
-    <p>For more information see the description of the data provided by NCDC,
+<p>For more information see the description of the data provided by NCDC,
 <a href = 'http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt'>http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt</a>.</p>
-    <p>The data returned either in a data.frame object and/or a file written to
-local disk that includes the following fields:
-<dl class='dl-horizontal'>
-<dt>STNID</dt><dd>Station number (WMO/DATSAV3 number) for the location</dd>
-<dt>WBAN</dt><dd>Number where applicable--this is the historical &quot;Weather Bureau
-Air Force Navy&quot; number - with WBAN being the acronym</dd>
-<dt>STN_NAME</dt><dd>Unique text identifier</dd>
-<dt>CTRY</dt><dd>Country in which the station is located</dd>
-<dt>LAT</dt><dd>Latitude. *Station dropped in cases where values are &lt; -90 or
-&gt; 90 degrees or Lat = 0 and Lon = 0* (WGS84)</dd>
-<dt>LON</dt><dd>Longitude. *Station dropped in cases where values are &lt; -180 or
-&gt; 180 degrees or Lat = 0 and Lon = 0* (WGS84)</dd>
-<dt>ELEV_M</dt><dd>Elevation in metres</dd>
-<dt>ELEV_M_SRTM_90m</dt><dd>Elevation in metres corrected for possible errors,
-derived from the CGIAR-CSI SRTM 90m database (Jarvis et al. 2008)</dd>
-<dt>YEARMODA</dt><dd>Date in YYYY-mm-dd format</dd>
-<dt>YEAR</dt><dd>The year (YYYY)</dd>
-<dt>MONTH</dt><dd>The month (mm)</dd>
-<dt>DAY</dt><dd>The day (dd)</dd>
-<dt>YDAY</dt><dd>Sequential day of year (not in original GSOD)</dd>
-<dt>TEMP</dt><dd>Mean daily temperature converted to degrees C to tenths.
-Missing = NA</dd>
-<dt>TEMP_CNT</dt><dd>Number of observations used in calculating mean daily
-temperature</dd>
-<dt>DEWP</dt><dd>Mean daily dew point converted to degrees C to tenths. Missing
-= NA</dd>
-<dt>DEWP_CNT</dt><dd>Number of observations used in calculating mean daily dew
-point</dd>
-<dt>SLP</dt><dd>Mean sea level pressure in millibars to tenths. Missing = NA</dd>
-<dt>SLP_CNT</dt><dd>Number of observations used in calculating mean sea level
-pressure</dd>
-<dt>STP</dt><dd>Mean station pressure for the day in millibars to tenths.
-Missing = NA</dd>
-<dt>STP_CNT</dt><dd>Number of observations used in calculating mean station
-pressure</dd>
-<dt>VISIB</dt><dd>Mean visibility for the day converted to kilometres to
-tenths Missing = NA</dd>
-<dt>VISIB_CNT</dt><dd>Number of observations used in calculating mean daily
-visibility</dd>
-<dt>WDSP</dt><dd>Mean daily wind speed value converted to metres/second to
-tenths Missing = NA</dd>
-<dt>WDSP_CNT</dt><dd>Number of observations used in calculating mean daily
-wind speed</dd>
-<dt>MXSPD</dt><dd>Maximum sustained wind speed reported for the day converted
-to metres/second to tenths. Missing = NA</dd>
-<dt>GUST</dt><dd>Maximum wind gust reported for the day converted to
-metres/second to tenths. Missing = NA</dd>
-<dt>MAX</dt><dd>Maximum temperature reported during the day converted to
+<p>The data returned either in a data.frame object and/or a file written to
+local disk that includes the following fields:</p><dl class='dl-horizontal'>
+<dt>STNID</dt><dd><p>Station number (WMO/DATSAV3 number) for the location</p></dd>
+<dt>WBAN</dt><dd><p>Number where applicable--this is the historical "Weather Bureau
+Air Force Navy" number - with WBAN being the acronym</p></dd>
+<dt>STN_NAME</dt><dd><p>Unique text identifier</p></dd>
+<dt>CTRY</dt><dd><p>Country in which the station is located</p></dd>
+<dt>LAT</dt><dd><p>Latitude. *Station dropped in cases where values are &lt; -90 or
+&gt; 90 degrees or Lat = 0 and Lon = 0* (WGS84)</p></dd>
+<dt>LON</dt><dd><p>Longitude. *Station dropped in cases where values are &lt; -180 or
+&gt; 180 degrees or Lat = 0 and Lon = 0* (WGS84)</p></dd>
+<dt>ELEV_M</dt><dd><p>Elevation in metres</p></dd>
+<dt>ELEV_M_SRTM_90m</dt><dd><p>Elevation in metres corrected for possible errors,
+derived from the CGIAR-CSI SRTM 90m database (Jarvis et al. 2008)</p></dd>
+<dt>YEARMODA</dt><dd><p>Date in YYYY-mm-dd format</p></dd>
+<dt>YEAR</dt><dd><p>The year (YYYY)</p></dd>
+<dt>MONTH</dt><dd><p>The month (mm)</p></dd>
+<dt>DAY</dt><dd><p>The day (dd)</p></dd>
+<dt>YDAY</dt><dd><p>Sequential day of year (not in original GSOD)</p></dd>
+<dt>TEMP</dt><dd><p>Mean daily temperature converted to degrees C to tenths.
+Missing = NA</p></dd>
+<dt>TEMP_CNT</dt><dd><p>Number of observations used in calculating mean daily
+temperature</p></dd>
+<dt>DEWP</dt><dd><p>Mean daily dew point converted to degrees C to tenths. Missing
+= NA</p></dd>
+<dt>DEWP_CNT</dt><dd><p>Number of observations used in calculating mean daily dew
+point</p></dd>
+<dt>SLP</dt><dd><p>Mean sea level pressure in millibars to tenths. Missing = NA</p></dd>
+<dt>SLP_CNT</dt><dd><p>Number of observations used in calculating mean sea level
+pressure</p></dd>
+<dt>STP</dt><dd><p>Mean station pressure for the day in millibars to tenths.
+Missing = NA</p></dd>
+<dt>STP_CNT</dt><dd><p>Number of observations used in calculating mean station
+pressure</p></dd>
+<dt>VISIB</dt><dd><p>Mean visibility for the day converted to kilometres to
+tenths Missing = NA</p></dd>
+<dt>VISIB_CNT</dt><dd><p>Number of observations used in calculating mean daily
+visibility</p></dd>
+<dt>WDSP</dt><dd><p>Mean daily wind speed value converted to metres/second to
+tenths Missing = NA</p></dd>
+<dt>WDSP_CNT</dt><dd><p>Number of observations used in calculating mean daily
+wind speed</p></dd>
+<dt>MXSPD</dt><dd><p>Maximum sustained wind speed reported for the day converted
+to metres/second to tenths. Missing = NA</p></dd>
+<dt>GUST</dt><dd><p>Maximum wind gust reported for the day converted to
+metres/second to tenths. Missing = NA</p></dd>
+<dt>MAX</dt><dd><p>Maximum temperature reported during the day converted to
 Celsius to tenths--time of max temp report varies by country and region,
 so this will sometimes not be the max for the calendar day. Missing =
-NA</dd>
-<dt>MAX_FLAG</dt><dd>Blank indicates max temp was taken from the explicit max
-temp report and not from the &#39;hourly&#39; data. An &quot;*&quot; indicates max temp was
+NA</p></dd>
+<dt>MAX_FLAG</dt><dd><p>Blank indicates max temp was taken from the explicit max
+temp report and not from the 'hourly' data. An "*" indicates max temp was
 derived from the hourly data (i.e., highest hourly or synoptic-reported
-temperature)</dd>
-<dt>MIN</dt><dd>Minimum temperature reported during the day converted to
+temperature)</p></dd>
+<dt>MIN</dt><dd><p>Minimum temperature reported during the day converted to
 Celsius to tenths--time of min temp report varies by country and region,
 so this will sometimes not be the max for the calendar day. Missing =
-NA</dd>
-<dt>MIN_FLAG</dt><dd>Blank indicates max temp was taken from the explicit max
-temp report and not from the &#39;hourly&#39; data. An &quot;*&quot; indicates min temp was
+NA</p></dd>
+<dt>MIN_FLAG</dt><dd><p>Blank indicates max temp was taken from the explicit max
+temp report and not from the 'hourly' data. An "*" indicates min temp was
 derived from the hourly data (i.e., highest hourly or synoptic-reported
-temperature)</dd>
-<dt>PRCP</dt><dd>Total precipitation (rain and/or melted snow) reported during
+temperature)</p></dd>
+<dt>PRCP</dt><dd><p>Total precipitation (rain and/or melted snow) reported during
 the day converted to millimetres to hundredths; will usually not end
 with the midnight observation, i.e., may include latter part of previous
-day. A &quot;.00&quot; value indicates no measurable precipitation (includes a trace).
-Missing = NA; *Note: Many stations do not report &#39;0&#39; on days with no
-precipitation-- therefore, &#39;NA&#39; will often appear on these days. For
+day. A ".00" value indicates no measurable precipitation (includes a trace).
+Missing = NA; *Note: Many stations do not report '0' on days with no
+precipitation-- therefore, 'NA' will often appear on these days. For
 example, a station may only report a 6-hour amount for the period during
-which rain fell.* See FLAGS_PRCP column for source of data</dd>
-<dt>PRCP_FLAG</dt><dd>
-  <dl class='dl-horizontal'>
-   <dt>A</dt><dd>1 report of 6-hour precipitation amount</dd>
-   <dt>B</dt><dd>Summation of 2 reports of 6-hour precipitation amount</dd>
-   <dt>C</dt><dd>Summation of 3 reports of 6-hour precipitation amount</dd>
-   <dt>D</dt><dd>Summation of 4 reports of 6-hour precipitation amount</dd>
-   <dt>E</dt><dd>1 report of 12-hour precipitation amount</dd>
-   <dt>F</dt><dd>Summation of 2 reports of 12-hour precipitation amount</dd>
-   <dt>G</dt><dd>1 report of 24-hour precipitation amount</dd>
-   <dt>H</dt><dd>Station reported &#39;0&#39; as the amount for the day (e.g., from
+which rain fell.* See FLAGS_PRCP column for source of data</p></dd>
+<dt>PRCP_FLAG</dt><dd><p><dl class='dl-horizontal'>
+   <dt>A</dt><dd><p>1 report of 6-hour precipitation amount</p></dd>
+   <dt>B</dt><dd><p>Summation of 2 reports of 6-hour precipitation amount</p></dd>
+   <dt>C</dt><dd><p>Summation of 3 reports of 6-hour precipitation amount</p></dd>
+   <dt>D</dt><dd><p>Summation of 4 reports of 6-hour precipitation amount</p></dd>
+   <dt>E</dt><dd><p>1 report of 12-hour precipitation amount</p></dd>
+   <dt>F</dt><dd><p>Summation of 2 reports of 12-hour precipitation amount</p></dd>
+   <dt>G</dt><dd><p>1 report of 24-hour precipitation amount</p></dd>
+   <dt>H</dt><dd><p>Station reported '0' as the amount for the day (e.g., from
    6-hour reports), but also reported at least one occurrence of
    precipitation in hourly observations--this could indicate a trace
-   occurred, but should be considered as incomplete data for the day</dd>
-   <dt>I</dt><dd>Station did not report any precip data for the day and did not
-   report any occurrences of precipitation in its hourly observations--it&#39;s
-   still possible that precipitation occurred but was not reported</dd>
-  </dl></p>
-    <p></dd>
-<dt>SNDP</dt><dd>Snow depth in millimetres to tenths. Missing = NA</dd>
-<dt>I_FOG</dt><dd>Indicator for fog, (1 = yes, 0 = no/not reported) for the
-occurrence during the day</dd>
-<dt>I_RAIN_DRIZZLE</dt><dd>Indicator for rain or drizzle, (1 = yes, 0 = no/not
-reported) for the occurrence during the day</dd>
-<dt>I_SNOW_ICE</dt><dd>Indicator for snow or ice pellets, (1 = yes, 0 = no/not
-reported) for the occurrence during the day</dd>
-<dt>I_HAIL</dt><dd>Indicator for hail, (1 = yes, 0 = no/not reported) for the
-occurrence during the day</dd>
-<dt>I_THUNDER</dt><dd>Indicator for thunder, (1 = yes, 0 = no/not reported)
-for the occurrence during the day</dd>
-<dt>I_TORNADO_FUNNEL</dt><dd>Indicator for tornado or funnel cloud, (1 = yes, 0 =
-no/not reported) for the occurrence during the day</dd>
-<dt>ea</dt><dd>Mean daily actual vapour pressure</dd>
-<dt>es</dt><dd>Mean daily saturation vapour pressure</dd>
-<dt>RH</dt><dd>Mean daily relative humidity</dd>
-</dl></p>
+   occurred, but should be considered as incomplete data for the day</p></dd>
+   <dt>I</dt><dd><p>Station did not report any precip data for the day and did not
+   report any occurrences of precipitation in its hourly observations--it's
+   still possible that precipitation occurred but was not reported</p></dd>
+  </dl></p></dd>
+<dt>SNDP</dt><dd><p>Snow depth in millimetres to tenths. Missing = NA</p></dd>
+<dt>I_FOG</dt><dd><p>Indicator for fog, (1 = yes, 0 = no/not reported) for the
+occurrence during the day</p></dd>
+<dt>I_RAIN_DRIZZLE</dt><dd><p>Indicator for rain or drizzle, (1 = yes, 0 = no/not
+reported) for the occurrence during the day</p></dd>
+<dt>I_SNOW_ICE</dt><dd><p>Indicator for snow or ice pellets, (1 = yes, 0 = no/not
+reported) for the occurrence during the day</p></dd>
+<dt>I_HAIL</dt><dd><p>Indicator for hail, (1 = yes, 0 = no/not reported) for the
+occurrence during the day</p></dd>
+<dt>I_THUNDER</dt><dd><p>Indicator for thunder, (1 = yes, 0 = no/not reported)
+for the occurrence during the day</p></dd>
+<dt>I_TORNADO_FUNNEL</dt><dd><p>Indicator for tornado or funnel cloud, (1 = yes, 0 =
+no/not reported) for the occurrence during the day</p></dd>
+<dt>ea</dt><dd><p>Mean daily actual vapour pressure</p></dd>
+<dt>es</dt><dd><p>Mean daily saturation vapour pressure</p></dd>
+<dt>RH</dt><dd><p>Mean daily relative humidity</p></dd>
+</dl>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 

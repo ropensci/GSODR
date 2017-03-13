@@ -1,6 +1,6 @@
 #'SRTM_GSOD_elevation
 #'
-#' @format A data frame with 28322 observations of 2 variables:
+#' @format A data frame with 28330 observations of 2 variables:
 #' \describe{
 #'   \item{STNID}{Unique station ID, a concatenation of USAF and WBAN number,
 #'   used for merging with station data weather files}
