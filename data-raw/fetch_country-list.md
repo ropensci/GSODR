@@ -1,7 +1,7 @@
 Fetch GSOD Country List and Merge with ISO Country Codes
 ================
 Adam H. Sparks
-2017-03-13
+2017-03-03
 
 Introduction
 ============
@@ -123,7 +123,22 @@ There are unnecessary data in several columns. `GSODR` only requires FIPS, name,
 
 ``` r
 country_list[, c(3:14, 17:35) := NULL]
+```
 
+    ##      FIPS                         COUNTRY_NAME iso2c iso3c
+    ##   1:   AA                                ARUBA    AW   ABW
+    ##   2:   AC                  ANTIGUA AND BARBUDA    AG   ATG
+    ##   3:   AF                          AFGHANISTAN    AF   AFG
+    ##   4:   AG                              ALGERIA    DZ   DZA
+    ##   5:   AI                     ASCENSION ISLAND    NA    NA
+    ##  ---                                                      
+    ## 289:   YY ST. MARTEEN, ST. EUSTATIUS, AND SABA    NA    NA
+    ## 290:   ZA                               ZAMBIA    ZM   ZMB
+    ## 291:   ZI                             ZIMBABWE    ZW   ZWE
+    ## 292:   ZM                                SAMOA    NA    NA
+    ## 293:   ZZ       ST. MARTIN AND ST. BARTHOLOMEW    NA    NA
+
+``` r
 print(country_list)
 ```
 
@@ -161,7 +176,7 @@ Users of these data should take into account the following (from the [NCDC websi
 R System Information
 --------------------
 
-    ## R version 3.3.3 (2017-03-06)
+    ## R version 3.3.2 (2016-10-31)
     ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
     ## Running under: OS X El Capitan 10.11.6
     ## 
@@ -175,12 +190,11 @@ R System Information
     ## [1] countrycode_0.19
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] Rcpp_0.12.9          withr_1.0.2          dplyr_0.5.0         
-    ##  [4] digest_0.6.12        rprojroot_1.2        assertthat_0.1      
-    ##  [7] R6_2.2.0             DBI_0.6              backports_1.0.5     
-    ## [10] magrittr_1.5         evaluate_0.10        stringi_1.1.2       
-    ## [13] curl_2.3             data.table_1.10.4    rmarkdown_1.3.9004  
-    ## [16] devtools_1.12.0.9000 tools_3.3.3          stringr_1.2.0       
-    ## [19] readr_1.0.0          pkgload_0.0.0.9000   yaml_2.1.14         
-    ## [22] pkgbuild_0.0.0.9000  memoise_1.0.0        htmltools_0.3.5     
-    ## [25] knitr_1.15.1         tibble_1.2
+    ##  [1] Rcpp_0.12.9       withr_1.0.2       dplyr_0.5.0      
+    ##  [4] digest_0.6.12     rprojroot_1.2     assertthat_0.1   
+    ##  [7] R6_2.2.0          DBI_0.5-1         backports_1.0.5  
+    ## [10] magrittr_1.5      evaluate_0.10     stringi_1.1.2    
+    ## [13] curl_2.3          data.table_1.10.4 rmarkdown_1.3    
+    ## [16] devtools_1.12.0   tools_3.3.2       stringr_1.2.0    
+    ## [19] readr_1.0.0       yaml_2.1.14       memoise_1.0.0    
+    ## [22] htmltools_0.3.5   knitr_1.15.1      tibble_1.2
