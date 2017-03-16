@@ -1,7 +1,7 @@
 ---
 title: "GSODR"
 author: "Adam H Sparks"
-date: "2017-01-30"
+date: "2017-03-16"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteEngine{knitr::knitr}
@@ -12,11 +12,11 @@ vignette: >
 # Introduction
 
 The GSOD or [Global Surface Summary of the Day (GSOD)](https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod)
-data provided by the US National Climatic Data Center (NCDC) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. The GSODR package aims to make it easy to find, tranfer and format the data you need for use in analysis. The GSODR package provides four main functions for facilitating this:
+data provided by the US National Climatic Data Center (NCDC) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. The GSODR package aims to make it easy to find, transfer and format the data you need for use in analysis. The GSODR package provides four main functions for facilitating this:
 
 * `get_GSOD()` - the main function that will query and transfer files from the FTP server, reformat them and return a data.frame in R or save a file to disk  
 * `reformat_GSOD()` - the workhorse, this function takes individual station files on the local disk and reformats them returning a data.frame in R  
-* `nearest_stations()` - this function returns a dataframe containing a list of stations and their metadata that fall within the given radius of a point specified by the user  
+* `nearest_stations()` - this function returns a data frame containing a list of stations and their metadata that fall within the given radius of a point specified by the user  
 * `get_station_list()` - this function retrieves the most up-to-date list of stations and corresponding metadata
 
 When reformatting data either with `get_GSOD()` or `reformat_GSOD()`, all units are converted to International System of Units (SI), e.g., inches to millimetres and Fahrenheit to Celsius. File output can be saved as a Comma Separated Value (CSV) file or in a spatial GeoPackage (GPKG) file, implemented by most major GIS software, summarising each year by station, which also includes vapour pressure and relative humidity variables calculated from existing data in GSOD.
@@ -324,7 +324,7 @@ x <- reformat_GSOD(dsn = "~/GSOD/gsod_1960")
 
 # Additional Climate Data
 
-Additional climate data, [GSODdata](https://github.com/adamhsparks/GSODRdata), formatted for use with GSOD data provided by GSODR are available as an R package instalable through GitHub due to the package size, 5.1Mb, being too large for CRAN.
+Additional climate data, [GSODdata](https://github.com/adamhsparks/GSODRdata), formatted for use with GSOD data provided by GSODR are available as an R package installable through GitHub due to the package size, 5.1Mb, being too large for CRAN.
 
 ```r
 #install.packages("devtools")

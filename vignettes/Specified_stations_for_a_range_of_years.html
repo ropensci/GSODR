@@ -209,7 +209,7 @@ hr {
 
 <ul>
 <li>retrieving a spatial object of provincial level data;</li>
-<li>subsetting this data for the provinces of interest;</li>
+<li>sub-setting this data for the provinces of interest;</li>
 <li>merging the polygons into one object;</li>
 <li>finding the centroid of this resulting polygon;</li>
 <li>using the centroid of the polygon to find stations within 100km of this point;</li>
@@ -284,7 +284,7 @@ loop_stations &lt;- loop_stations[loop_stations$BEGIN &lt;= 19591231 &amp;
 
 <h2>Another Option</h2>
 
-<p><code>GSODR</code> provides a function for dealing with local files that have been transfered from the server already as well, <code>reformat_GSOD()</code>. If the previous example with <code>get_GSOD()</code> does not work, this is a good alternative that takes a bit more intervention but gives the same results.</p>
+<p><code>GSODR</code> provides a function for dealing with local files that have been transferred from the server already as well, <code>reformat_GSOD()</code>. If the previous example with <code>get_GSOD()</code> does not work, this is a good alternative that takes a bit more intervention but gives the same results.</p>
 
 <p>Using your FTP client, e.g. FileZilla, log into the NCDC FTP server, <ftp.ncdc.noaa.gov> and navigate to /pub/data/gsod/. Manually downloading the files for each station listed above from 1960 to 2015 is possible, but tedious. An easier solution is to simply download the annual files found in each yearly directory, &ldquo;gsod-YYYY.tar&rdquo; and untar them locally and then use R to list the available files and select only the files for the stations of interest. Lastly, write the data to disk as a CSV file for saving and later use.</p>
 

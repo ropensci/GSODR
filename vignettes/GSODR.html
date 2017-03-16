@@ -204,12 +204,12 @@ hr {
 <h1>Introduction</h1>
 
 <p>The GSOD or <a href="https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod">Global Surface Summary of the Day (GSOD)</a>
-data provided by the US National Climatic Data Center (NCDC) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. The GSODR package aims to make it easy to find, tranfer and format the data you need for use in analysis. The GSODR package provides four main functions for facilitating this:</p>
+data provided by the US National Climatic Data Center (NCDC) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. The GSODR package aims to make it easy to find, transfer and format the data you need for use in analysis. The GSODR package provides four main functions for facilitating this:</p>
 
 <ul>
 <li><code>get_GSOD()</code> - the main function that will query and transfer files from the FTP server, reformat them and return a data.frame in R or save a file to disk<br/></li>
 <li><code>reformat_GSOD()</code> - the workhorse, this function takes individual station files on the local disk and reformats them returning a data.frame in R<br/></li>
-<li><code>nearest_stations()</code> - this function returns a dataframe containing a list of stations and their metadata that fall within the given radius of a point specified by the user<br/></li>
+<li><code>nearest_stations()</code> - this function returns a data frame containing a list of stations and their metadata that fall within the given radius of a point specified by the user<br/></li>
 <li><code>get_station_list()</code> - this function retrieves the most up-to-date list of stations and corresponding metadata</li>
 </ul>
 
@@ -511,7 +511,7 @@ x &lt;- reformat_GSOD(file_list = y)
 
 <h1>Additional Climate Data</h1>
 
-<p>Additional climate data, <a href="https://github.com/adamhsparks/GSODRdata">GSODdata</a>, formatted for use with GSOD data provided by GSODR are available as an R package instalable through GitHub due to the package size, 5.1Mb, being too large for CRAN.</p>
+<p>Additional climate data, <a href="https://github.com/adamhsparks/GSODRdata">GSODdata</a>, formatted for use with GSOD data provided by GSODR are available as an R package installable through GitHub due to the package size, 5.1Mb, being too large for CRAN.</p>
 
 <pre><code class="r">#install.packages(&quot;devtools&quot;)
 devtools::install_github(&quot;adamhsparks/GSODdata&quot;)

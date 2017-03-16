@@ -233,13 +233,6 @@ GSOD_clim <- dplyr::left_join(GSOD_clim, CRU_GSOD, by = c("STNID" = "stations.ST
 devtools::use_data(GSOD_clim, overwrite = TRUE, compress = "bzip2")
 ```
 
-
-## R System Information
-
-```{r system information, echo=FALSE}
-sessionInfo()
-```
-
 # Data reference and abstract
 
 > Mark New (1,*), David Lister (2), Mike Hulme (3), Ian Makin (4)  
@@ -267,3 +260,10 @@ meteorology and are available through the School of Geography Oxford
 (http://www.geog.ox.ac.uk), the International Water Management Institute
 "World Water and Climate Atlas" (http://www.iwmi.org) and the Climatic
 Research Unit (http://www.cru.uea.ac.uk).
+
+
+## R System Information
+
+```{r system information, echo=FALSE}
+sessionInfo()
+```

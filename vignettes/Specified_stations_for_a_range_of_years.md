@@ -1,7 +1,7 @@
 ---
 title: "GSODR use case: Specified years/stations vignette"
 author: "Adam H Sparks"
-date: "2017-01-30"
+date: "2017-03-16"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteEngine{knitr::knitr}
@@ -15,7 +15,7 @@ The IRRI (International Rice Research Institute) survey loop in Central Luzon is
 
 This vignette details how to find and retrieve weather data for the area that this survey covers for the time period of 1960-2016. Methods that are detailed include: 
   * retrieving a spatial object of provincial level data;
-  * subsetting this data for the provinces of interest;
+  * sub-setting this data for the provinces of interest;
   * merging the polygons into one object;
   * finding the centroid of this resulting polygon;
   * using the centroid of the polygon to find stations within 100km of this point;
@@ -95,7 +95,7 @@ get_GSOD(station = eval(parse(text = loop_stations[, 12])), years = 1960:2015,
 
 ## Another Option
 
-`GSODR` provides a function for dealing with local files that have been transfered from the server already as well, `reformat_GSOD()`. If the previous example with `get_GSOD()` does not work, this is a good alternative that takes a bit more intervention but gives the same results.
+`GSODR` provides a function for dealing with local files that have been transferred from the server already as well, `reformat_GSOD()`. If the previous example with `get_GSOD()` does not work, this is a good alternative that takes a bit more intervention but gives the same results.
 
 Using your FTP client, e.g. FileZilla, log into the NCDC FTP server, <ftp.ncdc.noaa.gov> and navigate to /pub/data/gsod/. Manually downloading the files for each station listed above from 1960 to 2015 is possible, but tedious. An easier solution is to simply download the annual files found in each yearly directory, "gsod-YYYY.tar" and untar them locally and then use R to list the available files and select only the files for the stations of interest. Lastly, write the data to disk as a CSV file for saving and later use.
 
