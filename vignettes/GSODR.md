@@ -1,7 +1,7 @@
 ---
 title: "GSODR"
 author: "Adam H Sparks"
-date: "2017-03-16"
+date: "2017-03-17"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteEngine{knitr::knitr}
@@ -52,7 +52,7 @@ ggplot(GSOD_stations, aes(x = LON, y = LAT)) +
 
 ## Find Stations in Australia
 
-GSODR provides lists of weather station locations and elevation values. Using [dplyr](https://CRAN.R-project.org/package=dplyr), we can find all the stations in Australia.
+GSODR provides lists of weather station locations and elevation values. Using [`dplyr`](https://CRAN.R-project.org/package=dplyr), we can find all the stations in Australia.
 
 ```r
 library(dplyr)
@@ -166,7 +166,7 @@ get_GSOD(years = 2010, station = tbar_stations, dsn = "~/",
 
 ## Plot Maximum and Miniumum Temperature Values
 
-Using the first data downloaded for a single station, 955510-99999, plot the temperature for 2010 using `read_csv()` from Hadley's [readr](https://CRAN.R-project.org/package=readr) package.
+Using the first data downloaded for a single station, 955510-99999, plot the temperature for 2010 using `read_csv()` from Hadley's [`readr`](https://CRAN.R-project.org/package=readr) package.
 
 ```r
 library(lubridate)
@@ -271,7 +271,7 @@ class(AUS_stations)
 ```
 
 Since GeoPackage files are formatted as SQLite databases you can use the existing R tools for SQLite files
-[(J. Stachelek 2016)](https://jsta.github.io/2016/07/14/geopackage-r.html). One easy way is using dplyr, which we've already used to filter the stations.
+[(J. Stachelek 2016)](https://jsta.github.io/2016/07/14/geopackage-r.html). One easy way is using `dplyr`, which we've already used to filter the stations.
 
 This option is much faster to load since it does not load the geometry.
 

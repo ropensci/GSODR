@@ -245,7 +245,7 @@ library(ggalt)</p>
 
 ## Find Stations in Australia
 
-GSODR provides lists of weather station locations and elevation values. Using [dplyr](https://CRAN.R-project.org/package=dplyr), we can find all the stations in Australia.
+GSODR provides lists of weather station locations and elevation values. Using [`dplyr`](https://CRAN.R-project.org/package=dplyr), we can find all the stations in Australia.
 
 ```r
 library(dplyr)
@@ -357,7 +357,7 @@ get_GSOD(years = 2010, station = tbar_stations, dsn = &quot;~/&quot;,
 
 <h2>Plot Maximum and Miniumum Temperature Values</h2>
 
-<p>Using the first data downloaded for a single station, 955510-99999, plot the temperature for 2010 using <code>read_csv()</code> from Hadley&#39;s <a href="https://CRAN.R-project.org/package=readr">readr</a> package.</p>
+<p>Using the first data downloaded for a single station, 955510-99999, plot the temperature for 2010 using <code>read_csv()</code> from Hadley&#39;s <a href="https://CRAN.R-project.org/package=readr"><code>readr</code></a> package.</p>
 
 <pre><code class="r">library(lubridate)
 library(readr)
@@ -460,7 +460,7 @@ class(AUS_stations)
 </code></pre>
 
 <p>Since GeoPackage files are formatted as SQLite databases you can use the existing R tools for SQLite files
-<a href="https://jsta.github.io/2016/07/14/geopackage-r.html">(J. Stachelek 2016)</a>. One easy way is using dplyr, which we&#39;ve already used to filter the stations.</p>
+<a href="https://jsta.github.io/2016/07/14/geopackage-r.html">(J. Stachelek 2016)</a>. One easy way is using <code>dplyr</code>, which we&#39;ve already used to filter the stations.</p>
 
 <p>This option is much faster to load since it does not load the geometry.</p>
 

@@ -1,11 +1,21 @@
-year <- sub("-.*", "", meta$Date)
-note <- sprintf("R package version %s", meta$Version)
+citHeader("To cite GSODR in publications, please use:")
 
-bibentry(bibtype = "Manual",
-         title = "{GSODR}: Global Summary Daily Weather Data in R",
-         author = c(person("Adam", "Sparks"),
-                    person("Tomislav", "Hengl"),
-                    person("Andrew", "Nelson")),
-         year = year,
-         note = note,
-         url = "https://github.com/ropensci/GSODR")
+citEntry(entry = "Article",
+  author = personList(as.person(c("Adam H Sparks", "Tomislav Hengl", "Andrew Nelson"))),
+  title = "{GSODR}: Global Summary Daily Weather Data in R",
+  doi = "10.21105/joss.00177",
+  year = "2017",
+  month = "feb",
+  publisher = "The Open Journal",
+  volume = {2},
+  number = {10},
+  journal = "The Journal of Open Source Software",
+  url = "https://doi.org/10.21105%2Fjoss.00177",
+
+  textVersion =
+  paste("Adam H Sparks, Tomislav Hengl and Andrew Nelson (2017).",
+        "GSODR: Global Summary Daily Weather Data in R.",
+        "The Journal of Open Source Software, 2(10).",
+        "DOI: 10.21105/joss.00177.",
+        "URL: https://doi.org/10.21105%2Fjoss.00177")
+)
