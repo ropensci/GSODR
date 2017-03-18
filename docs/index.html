@@ -70,7 +70,7 @@
 <div id="introduction-to-gsodr" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction-to-gsodr" class="anchor"> </a>Introduction to GSODR</h1>
-<p>The GSOD or <a href="https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod">Global Surface Summary of the Day (GSOD)</a> data provided by the US National Climatic Data Center (NCDC) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. The GSODR package aims to make it easy to find, transfer and format the data you need for use in analysis. The GSODR package provides four main functions for facilitating this:</p>
+<p>The GSOD or <a href="https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod">Global Surface Summary of the Day (GSOD)</a> data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. The GSODR package aims to make it easy to find, transfer and format the data you need for use in analysis. The GSODR package provides four main functions for facilitating this:</p>
 <ul>
 <li>
 <code><a href="reference/get_GSOD.html">get_GSOD()</a></code> - queries and transfers files from the FTP server, reformats them and returns a <code>data.frame()</code> object in R session or saves a file to disk with options for a GeoPackage spatially enabled file or comma separated values (CSV) file,<br>
@@ -82,12 +82,12 @@
 <code><a href="reference/nearest_stations.html">nearest_stations()</a></code> - returns a <code>vector()</code> object containing a list of stations and their metadata that fall within the given radius of a point specified by the user,<br>
 </li>
 <li>
-<code><a href="reference/get_station_list.html">get_station_list()</a></code> - downloads the latest station list from the NCDC FTP server and returns a <code>data.table()</code> object in R session.</li>
+<code><a href="reference/get_station_list.html">get_station_list()</a></code> - downloads the latest station list from the NCEI FTP server and returns a <code>data.table()</code> object in R session.</li>
 </ul>
-<p>When reformatting data either with <code><a href="reference/get_GSOD.html">get_GSOD()</a></code> or <code><a href="reference/reformat_GSOD.html">reformat_GSOD()</a></code>, all units are converted to International System of Units (SI), e.g., inches to millimetres and Fahrenheit to Celsius. File output can be saved as a Comma Separated Value (CSV) file or in a spatial GeoPackage (GPKG) file, implemented by most major GIS software, summarising each year by station, which also includes vapour pressure and relative humidity variables calculated from existing data in GSOD.</p>
+<p>When reformatting data either with <code><a href="reference/get_GSOD.html">get_GSOD()</a></code> or <code><a href="reference/reformat_GSOD.html">reformat_GSOD()</a></code>, all units are converted to International System of Units (SI), e.g., inches to millimetres and Fahrenheit to Celsius. File output can be saved as a Comma Separated Value (CSV) file or in a spatial GeoPackage (GPKG) file, implemented by most major GIS software, summarising each year by station, which also includes vapour pressure and relative humidity elements calculated from existing data in GSOD.</p>
 <p>Additional data are calculated by this R package using the original data and included in the final data. These include vapour pressure (ea and es) and relative humidity.</p>
 <p>It is recommended that you have a good Internet connection to download the data files as they can be quite large and slow to download.</p>
-<p>For more information see the description of the data provided by NCDC, <a href="http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt" class="uri">http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt</a>.</p>
+<p>For more information see the description of the data provided by NCEI, <a href="http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt" class="uri">http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt</a>.</p>
 </div>
 <div id="quick-start" class="section level1">
 <h1 class="hasAnchor">
@@ -176,10 +176,10 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 <div id="using-gsodr" class="section level2">
 <h2 class="hasAnchor">
 <a href="#using-gsodr" class="anchor"> </a>Using GSODR</h2>
-<div id="query-the-ncdc-ftp-server-for-gsod-data" class="section level3">
+<div id="query-the-ncei-ftp-server-for-gsod-data" class="section level3">
 <h3 class="hasAnchor">
-<a href="#query-the-ncdc-ftp-server-for-gsod-data" class="anchor"> </a>Query the NCDC FTP server for GSOD data</h3>
-<p>GSODR’s main function, <code><a href="reference/get_GSOD.html">get_GSOD()</a></code>, downloads and cleans GSOD data from the NCDC server. Following are a few examples of its capabilities.</p>
+<a href="#query-the-ncei-ftp-server-for-gsod-data" class="anchor"> </a>Query the NCEI FTP server for GSOD data</h3>
+<p>GSODR’s main function, <code><a href="reference/get_GSOD.html">get_GSOD()</a></code>, downloads and cleans GSOD data from the NCEI server. Following are a few examples of its capabilities.</p>
 <div id="example-1---download-weather-station-data-for-toowoomba-queensland-for-2010" class="section level4">
 <h4 class="hasAnchor">
 <a href="#example-1---download-weather-station-data-for-toowoomba-queensland-for-2010" class="anchor"> </a>Example 1 - Download weather station data for Toowoomba, Queensland for 2010</h4>
@@ -436,7 +436,7 @@ df_melt &lt;-<span class="st"> </span><span class="kw">na.omit</span>(<span clas
 <span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette =</span> <span class="st">"Dark2"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>STNID)</code></pre></div>
 <div class="figure">
-<img src="articles/figure/example_1.2-1.png" alt="Comparison of GSOD daily values and average monthly values with CHELSA climate monthly values"><p class="caption">Comparison of GSOD daily values and average monthly values with CHELSA climate monthly values</p>
+<img src="./articles/figure/example_1.2-1.png" alt="Comparison of GSOD daily values and average monthly values with CHELSA climate monthly values"><p class="caption">Comparison of GSOD daily values and average monthly values with CHELSA climate monthly values</p>
 </div>
 </div>
 </div>
@@ -523,13 +523,13 @@ Starting data file processing
 <div id="other-sources-of-weather-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#other-sources-of-weather-data" class="anchor"> </a>Other Sources of Weather Data</h2>
-<p>There are several other sources of weather data and ways of retrieving them through R. In particular, the excellent <a href="https://CRAN.R-project.org/package=rnoaa">rnoaa</a> package from <a href="https://ropensci.org">ROpenSci</a> offers tools for interacting with and downloading weather data from the United States National Oceanic and Atmospheric Administration but lacks support GSOD data.</p>
+<p>There are several other sources of weather data and ways of retrieving them through R. In particular, the excellent <a href="https://CRAN.R-project.org/package=rnoaa"><code>rnoaa</code></a> package also from <a href="https://ropensci.org">rOpenSci</a> offers tools for interacting with and downloading weather data from the United States National Oceanic and Atmospheric Administration but lacks support GSOD data.</p>
 </div>
 <div id="other-sources-for-fetching-gsod-weather-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#other-sources-for-fetching-gsod-weather-data" class="anchor"> </a>Other Sources for Fetching GSOD Weather Data</h2>
-<p>The <a href="https://github.com/environmentalinformatics-marburg/GSODTools">GSODTools</a> by <a href="https://github.com/fdetsch">Florian Detsch</a> is an R package that offers similar functionality as <code>GSODR</code> but also has the ability to graph the data and working with data for time series analysis.</p>
-<p>The <a href="https://github.com/ulmo-dev/ulmo">ULMO</a> library offers an interface to retrieve GSOD data using Python.</p>
+<p>The <a href="https://github.com/environmentalinformatics-marburg/GSODTools"><code>GSODTools</code></a> by <a href="https://github.com/fdetsch">Florian Detsch</a> is an R package that offers similar functionality as <code>GSODR</code> but also has the ability to graph the data and working with data for time series analysis.</p>
+<p>The <a href="https://github.com/ulmo-dev/ulmo"><code>ULMO</code></a> library offers an interface to retrieve GSOD data using Python.</p>
 </div>
 </div>
 <div id="notes" class="section level1">
@@ -562,7 +562,7 @@ Starting data file processing
 <div id="wmo-resolution-40--noaa-policy" class="section level2">
 <h2 class="hasAnchor">
 <a href="#wmo-resolution-40--noaa-policy" class="anchor"> </a>WMO Resolution 40. NOAA Policy</h2>
-<p><em>Users of these data should take into account the following (from the <a href="http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&amp;countryabbv=&amp;georegionabbv=">NCDC website</a>):</em></p>
+<p><em>Users of these data should take into account the following (from the <a href="http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&amp;countryabbv=&amp;georegionabbv=">NCEI website</a>):</em></p>
 <blockquote>
 <p>“The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification.” <a href="https://public.wmo.int/en/our-mandate/what-we-do/data-exchange-and-technology-transfer">WMO Resolution 40. NOAA Policy</a></p>
 </blockquote>
@@ -607,7 +607,7 @@ Starting data file processing
 <li>Tomislav Hengl <br><small class="roles"> Author </small> </li>
 <li>Andrew Nelson <br><small class="roles"> Author </small> </li>
 </ul>
-<html><body>
+<div>
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://travis-ci.org/ropensci/GSODR"><img src="https://travis-ci.org/ropensci/GSODR.svg?branch=master" alt="Travis-CI Build Status"></a></li>
@@ -620,7 +620,7 @@ Starting data file processing
 <li><a href="http://joss.theoj.org/papers/14021f4e4931cdaab4ea41be27df2df6"><img src="http://joss.theoj.org/papers/10.21105/joss.00177/status.svg" alt="JOSS"></a></li>
 <li><a href="http://depsy.org/package/r/GSODR"><img src="http://depsy.org/api/package/cran/GSODR/badge.svg" alt="Research software impact"></a></li>
 </ul>
-</body></html>
+</div>
 </div>
 
 </div>

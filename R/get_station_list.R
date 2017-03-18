@@ -1,6 +1,6 @@
-#' Download the Latest Station List From the NCDC Server
+#' Download the Latest Station List From the NCEI Server
 #'
-#' This function downloads the latest station list from the NCDC FTP server.
+#' This function downloads the latest station list from the NCEI FTP server.
 #' This list includes metadata for all stations including unique identifiers,
 #' country, state (if in US), latitude, longitude, elevation and when weather
 #' observations begin and end.  Stations with invalid latitude and longitude

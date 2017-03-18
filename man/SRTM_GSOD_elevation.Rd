@@ -4,7 +4,7 @@
 \name{SRTM_GSOD_elevation}
 \alias{SRTM_GSOD_elevation}
 \title{SRTM_GSOD_elevation}
-\format{A data frame with 28330 observations of 2 variables:
+\format{A data frame with 28330 observations of 2 elements:
 \describe{
   \item{STNID}{Unique station ID, a concatenation of USAF and WBAN number,
   used for merging with station data weather files}
@@ -12,11 +12,12 @@
   \emph{et al}. 2008)}
 }
 
-Station elevation information for the US National Climatic Data Centre (NCDC)
-Global Surface Summary of the Day (GSOD) weather data.  The original file has
-missing and incorrect geographic data including location (LAT/LON) and
-elevation.  This data frame provides an alternative set of elevation values
-with the following changes to the original list of stations from the NCDC:
+Station elevation information for the US National Centers for Environmenta
+Information (NCEI) Global Surface Summary of the Day (GSOD) weather data.  
+The original file has missing and incorrect geographic data including 
+location (LAT/LON) and elevation.  This data frame provides an alternative 
+set of elevation values with the following changes to the original list of 
+stations from the NCEI:
 \enumerate{
 \item{Stations with both a latitude and longitude of 0 degrees were removed.}
 \item{Stations with longitude values that are beyond -180/180 degrees were
@@ -42,13 +43,14 @@ SRTM_GSOD_elevation
 }
 \note{
 Users of these data should take into account the following (from the
-NCDC website): \dQuote{The following data and products may have conditions
+NCEI website): \dQuote{The following data and products may have conditions
 placed on their international commercial use.  They can be used within the
 U.S. or for non-commercial international activities without restriction. The
 non-U.S. data cannot be redistributed for commercial purposes.
 Re-distribution of these data by others must provide this same notification.}
 
-The \code{SRTM_GSOD_elevation} data are automatically loaded with the \code{GSODR} package and merged with the latest available data from the NCDC
+The \code{SRTM_GSOD_elevation} data are automatically loaded with the
+\code{GSODR} package and merged with the latest available data from the NCEI
 in the "isd-history.csv" file.
 }
 \references{

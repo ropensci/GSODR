@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 # Introduction
 
-This script will fetch the country list provided by the NCDC for the GSOD
+This script will fetch the country list provided by the NCEI for the GSOD
 stations from the ftp server and merge it with ISO codes from the
 [`countrycode`](https://cran.r-project.org/package=countrycode)
 package for inclusion in the GSODR package in /data/country-list.rda. These
@@ -18,7 +18,7 @@ codes are used when a user selects a single country for a data query.
 
 # R Data Processing
 
-Read "country-list.txt" file from NCDC FTP server and merge with `countrycode`
+Read "country-list.txt" file from NCEI FTP server and merge with `countrycode`
 data.
 
 ```{r download_merge_inspect, echo=TRUE, messages=FALSE}
@@ -57,7 +57,7 @@ devtools::use_data(country_list, overwrite = TRUE, compress = "bzip2")
 
 ## NOAA Policy
 
-Users of these data should take into account the following (from the [NCDC website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)): 
+Users of these data should take into account the following (from the [NCEI website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)): 
 
 > "The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification." [WMO Resolution 40. NOAA Policy](http://www.wmo.int/pages/about/Resolution40.html)
 

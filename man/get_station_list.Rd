@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_station_list.R
 \name{get_station_list}
 \alias{get_station_list}
-\title{Download the Latest Station List From the NCDC Server}
+\title{Download the Latest Station List From the NCEI Server}
 \usage{
 get_station_list()
 }
@@ -10,7 +10,7 @@ get_station_list()
 \code{\link[data.table]{data.table}} object of station metadata.
 }
 \description{
-This function downloads the latest station list from the NCDC FTP server.
+This function downloads the latest station list from the NCEI FTP server.
 This list includes metadata for all stations including unique identifiers,
 country, state (if in US), latitude, longitude, elevation and when weather
 observations begin and end.  Stations with invalid latitude and longitude

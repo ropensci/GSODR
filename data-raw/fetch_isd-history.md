@@ -6,7 +6,7 @@ Adam H. Sparks
 Introduction
 ============
 
-This document details how the GSOD station history data file, ["isd-history.csv"](ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv), is fetched from the NCDC ftp server, error checked and new elevation values generated. The new elevation values are then saved for inclusion in package as /data/SRTM\_GSOD\_elevation.rda. The resulting values are merged with the most recent station history data file from the NCDC when the user runs the `get_GSOD()` function. The resulting data frame of station information, based on the merging of the `SRTM_GSOD_elevation` data frame with the most recently available "isd-history.csv" file will result in the following changes to the data:
+This document details how the GSOD station history data file, ["isd-history.csv"](ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv), is fetched from the NCEI ftp server, error checked and new elevation values generated. The new elevation values are then saved for inclusion in package as /data/SRTM\_GSOD\_elevation.rda. The resulting values are merged with the most recent station history data file from the NCEI when the user runs the `get_GSOD()` function. The resulting data frame of station information, based on the merging of the `SRTM_GSOD_elevation` data frame with the most recently available "isd-history.csv" file will result in the following changes to the data:
 
 -   Stations where latitude or longitude are NA or both 0 are removed
 
@@ -34,7 +34,7 @@ cor_stations <- list()
 tf <- tempfile()
 ```
 
-Download from Natural Earth and NCDC
+Download from Natural Earth and NCEI
 ------------------------------------
 
 ``` r
