@@ -1,11 +1,11 @@
-#' Download, Clean, Reformat and Generate New Variables From GSOD Weather Data
+#' Download, Clean, Reformat and Generate New Elements From GSOD Weather Data
 #'
 #'This function automates downloading, cleaning, reformatting of data from
 #'the Global Surface Summary of the Day (GSOD) data provided by the US National
-#'Climatic Data Center (NCDC),
+#'Centers for Environmental Information (NCEI),
 #'\url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod},
-#'and calculates three new variables; Saturation Vapor Pressure (ES) – Actual
-#'Vapor Pressure (EA) and relative humidity (RH).  Stations reporting a latitude
+#'and elements three new variables; saturation vapour pressure (es) – Actual
+#'vapour pressure (ea) and relative humidity (RH).  Stations reporting a latitude
 #'of < -90 or > 90 or longitude of < -180 or > 180 are removed.  Stations may be
 #'individually checked for number of missing days to assure data quality and
 #'omitting stations with too many missing observations.  All units are converted
@@ -21,7 +21,7 @@
 #'
 #' @param years Year(s) of weather data to download.
 #' @param station Optional. Specify a station or multiple stations for which to
-#' retrieve, check and clean weather data using \code{STNID}. The NCDC reports
+#' retrieve, check and clean weather data using \code{STNID}. The NCEI reports
 #' years for which the data are available. This function checks against these
 #' years. However, not all cases are properly documented and in some cases files
 #' may not exist on the ftp server even though it is indicated that data was
@@ -56,7 +56,7 @@
 #'
 #' @details
 #' Data summarise each year by station, which include vapour pressure and
-#' relative humidity variables calculated from existing data in GSOD.
+#' relative humidity elements calculated from existing data in GSOD.
 #'
 #' If the option to save locally is selected. Output may be saved as comma-
 #' separated, CSV, files or GeoPackage, GPKG, files in a directory specified by
@@ -68,7 +68,7 @@
 #' All missing values in resulting files are represented as NA regardless of
 #' which field they occur in.
 #'
-#'For more information see the description of the data provided by NCDC,
+#'For more information see the description of the data provided by NCEI,
 #'\url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
 #'
 #' The data returned either in a data.frame object and/or a file written to
@@ -180,7 +180,7 @@
 #'
 #'
 #' @note Some of these data are redistributed with this R package.  Originally
-#' from these data come from the US NCDC which states that users of these data
+#' from these data come from the US NCEI which states that users of these data
 #' should take into account the following: \dQuote{The following data and
 #' products may have conditions placed on their international commercial use.
 #' They can be used within the U.S. or for non-commercial international
@@ -250,9 +250,9 @@ get_GSOD <- function(years = NULL,
   if (!is.null(dsn)) {
     outfile <- .validate_fileout(CSV, dsn, filename, GPKG)
   }
-  # Fetch latest station metadata from NCDC server
+  # Fetch latest station metadata from NCEI server
   stations <- get_station_list()
-  # Validate user entered stations for existence in stations list from NCDC
+  # Validate user entered stations for existence in stations list from NCEI
   plyr::l_ply(
     .data = station,
     .fun = .validate_station,

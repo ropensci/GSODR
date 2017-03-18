@@ -24,12 +24,12 @@ Introduction to GSODR
 
 The GSOD or [Global Surface Summary of the Day
 (GSOD)](https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod)
-data provided by the US National Climatic Data Center (NCDC) are a
-valuable source of weather data with global coverage. However, the data
-files are cumbersome and difficult to work with. The GSODR package aims
-to make it easy to find, transfer and format the data you need for use
-in analysis. The GSODR package provides four main functions for
-facilitating this:
+data provided by the US National Centers for Environmental Information
+(NCEI) are a valuable source of weather data with global coverage.
+However, the data files are cumbersome and difficult to work with. The
+GSODR package aims to make it easy to find, transfer and format the data
+you need for use in analysis. The GSODR package provides four main
+functions for facilitating this:
 
 -   `get_GSOD()` - queries and transfers files from the FTP server,
     reformats them and returns a `data.frame()` object in R session or
@@ -43,7 +43,7 @@ facilitating this:
     of stations and their metadata that fall within the given radius of
     a point specified by the user,  
 -   `get_station_list()` - downloads the latest station list from the
-    NCDC FTP server and returns a `data.table()` object in R session.
+    NCEI FTP server and returns a `data.table()` object in R session.
 
 When reformatting data either with `get_GSOD()` or `reformat_GSOD()`,
 all units are converted to International System of Units (SI), e.g.,
@@ -51,7 +51,7 @@ inches to millimetres and Fahrenheit to Celsius. File output can be
 saved as a Comma Separated Value (CSV) file or in a spatial GeoPackage
 (GPKG) file, implemented by most major GIS software, summarising each
 year by station, which also includes vapour pressure and relative
-humidity variables calculated from existing data in GSOD.
+humidity elements calculated from existing data in GSOD.
 
 Additional data are calculated by this R package using the original data
 and included in the final data. These include vapour pressure (ea and
@@ -60,7 +60,7 @@ es) and relative humidity.
 It is recommended that you have a good Internet connection to download
 the data files as they can be quite large and slow to download.
 
-For more information see the description of the data provided by NCDC,
+For more information see the description of the data provided by NCEI,
 <http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
 
 Quick Start
@@ -258,10 +258,10 @@ The `GSODR` package returns data with the following fields/units.
 Using GSODR
 -----------
 
-### Query the NCDC FTP server for GSOD data
+### Query the NCEI FTP server for GSOD data
 
-GSODR's main function, `get_GSOD()`, downloads and cleans GSOD data from
-the NCDC server. Following are a few examples of its capabilities.
+`GSODR`'s main function, `get_GSOD()`, downloads and cleans GSOD data
+from the NCEI server. Following are a few examples of its capabilities.
 
 #### Example 1 - Download weather station data for Toowoomba, Queensland for 2010
 
@@ -656,8 +656,8 @@ Other Sources of Weather Data
 
 There are several other sources of weather data and ways of retrieving
 them through R. In particular, the excellent
-[rnoaa](https://CRAN.R-project.org/package=rnoaa) package from
-[ROpenSci](https://ropensci.org) offers tools for interacting with and
+[`rnoaa`](https://CRAN.R-project.org/package=rnoaa) package also from
+[rOpenSci](https://ropensci.org) offers tools for interacting with and
 downloading weather data from the United States National Oceanic and
 Atmospheric Administration but lacks support GSOD data.
 
@@ -665,13 +665,13 @@ Other Sources for Fetching GSOD Weather Data
 --------------------------------------------
 
 The
-[GSODTools](https://github.com/environmentalinformatics-marburg/GSODTools)
+[`GSODTools`](https://github.com/environmentalinformatics-marburg/GSODTools)
 by [Florian Detsch](https://github.com/fdetsch) is an R package that
 offers similar functionality as `GSODR` but also has the ability to
 graph the data and working with data for time series analysis.
 
-The [ULMO](https://github.com/ulmo-dev/ulmo) library offers an interface
-to retrieve GSOD data using Python.
+The [`ULMO`](https://github.com/ulmo-dev/ulmo) library offers an
+interface to retrieve GSOD data using Python.
 
 Notes
 =====
@@ -711,7 +711,7 @@ WMO Resolution 40. NOAA Policy
 ------------------------------
 
 *Users of these data should take into account the following (from the
-[NCDC
+[NCEI
 website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):*
 
 > "The following data and products may have conditions placed on their

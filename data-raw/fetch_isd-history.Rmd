@@ -12,10 +12,10 @@ knitr::opts_chunk$set(echo = TRUE)
 # Introduction
 
 This document details how the GSOD station history data file, ["isd-history.csv"](ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv),
-is fetched from the NCDC ftp server, error checked and new elevation values
+is fetched from the NCEI ftp server, error checked and new elevation values
 generated. The new elevation values are then saved for inclusion in package as
 /data/SRTM_GSOD_elevation.rda. The resulting values are merged with the most
-recent station history data file from the NCDC when the user runs the
+recent station history data file from the NCEI when the user runs the
 `get_GSOD()` function. The resulting data frame of station information, based on
 the merging of the `SRTM_GSOD_elevation` data frame with the most recently
 available "isd-history.csv" file will result in the following changes to the
@@ -52,7 +52,7 @@ cor_stations <- list()
 tf <- tempfile()
 ```
 
-## Download from Natural Earth and NCDC
+## Download from Natural Earth and NCEI
 
 ```{r download NE data, echo=TRUE}
 # import Natural Earth cultural 1:10m data
@@ -77,7 +77,7 @@ countries <- readr::read_table(
 
 ```
 
-## Reformat and clean station data file from NCDC
+## Reformat and clean station data file from NCEI
 
 ```{r clean and reformat station data, echo=TRUE, cache=FALSE}
 # clean data
@@ -264,7 +264,7 @@ the new elevation data as the field; ELEV\_M\_SRTM\_90m.
 
 ## NOAA Policy
 
-Users of these data should take into account the following (from the [NCDC website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)): 
+Users of these data should take into account the following (from the [NCEI website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)): 
 
 > "The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification." [WMO Resolution 40. NOAA Policy](http://www.wmo.int/pages/about/Resolution40.html)
 

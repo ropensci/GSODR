@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_GSOD.R
 \name{get_GSOD}
 \alias{get_GSOD}
-\title{Download, Clean, Reformat and Generate New Variables From GSOD Weather Data}
+\title{Download, Clean, Reformat and Generate New Elements From GSOD Weather Data}
 \usage{
 get_GSOD(years = NULL, station = NULL, country = NULL, dsn = NULL,
   filename = NULL, max_missing = NULL, agroclimatology = FALSE,
@@ -12,7 +12,7 @@ get_GSOD(years = NULL, station = NULL, country = NULL, dsn = NULL,
 \item{years}{Year(s) of weather data to download.}
 
 \item{station}{Optional. Specify a station or multiple stations for which to
-retrieve, check and clean weather data using \code{STNID}. The NCDC reports
+retrieve, check and clean weather data using \code{STNID}. The NCEI reports
 years for which the data are available. This function checks against these
 years. However, not all cases are properly documented and in some cases files
 may not exist on the ftp server even though it is indicated that data was
@@ -59,10 +59,10 @@ A \code{data.frame} object of weather data or a comma-separated value
 \description{
 This function automates downloading, cleaning, reformatting of data from
 the Global Surface Summary of the Day (GSOD) data provided by the US National
-Climatic Data Center (NCDC),
+Centers for Environmental Information (NCEI),
 \url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod},
-and calculates three new variables; Saturation Vapor Pressure (ES) – Actual
-Vapor Pressure (EA) and relative humidity (RH).  Stations reporting a latitude
+and elements three new variables; saturation vapour pressure (es) – Actual
+vapour pressure (ea) and relative humidity (RH).  Stations reporting a latitude
 of < -90 or > 90 or longitude of < -180 or > 180 are removed.  Stations may be
 individually checked for number of missing days to assure data quality and
 omitting stations with too many missing observations.  All units are converted
@@ -78,7 +78,7 @@ repository here:
 }
 \details{
 Data summarise each year by station, which include vapour pressure and
-relative humidity variables calculated from existing data in GSOD.
+relative humidity elements calculated from existing data in GSOD.
 
 If the option to save locally is selected. Output may be saved as comma-
 separated, CSV, files or GeoPackage, GPKG, files in a directory specified by
@@ -90,7 +90,7 @@ years queried and stations queried will be merged into one final output file.
 All missing values in resulting files are represented as NA regardless of
 which field they occur in.
 
-For more information see the description of the data provided by NCDC,
+For more information see the description of the data provided by NCEI,
 \url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
 
 The data returned either in a data.frame object and/or a file written to
@@ -202,7 +202,7 @@ no/not reported) for the occurrence during the day}
 }
 \note{
 Some of these data are redistributed with this R package.  Originally
-from these data come from the US NCDC which states that users of these data
+from these data come from the US NCEI which states that users of these data
 should take into account the following: \dQuote{The following data and
 products may have conditions placed on their international commercial use.
 They can be used within the U.S. or for non-commercial international
