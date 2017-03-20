@@ -60,7 +60,7 @@
       <h1>GSODR use case: Specified years/stations vignette</h1>
                         <h4 class="author">Adam H Sparks</h4>
             
-            <h4 class="date">2017-03-14</h4>
+            <h4 class="date">2017-03-20</h4>
           </div>
 
     
@@ -70,7 +70,7 @@
 <h1 class="hasAnchor">
 <html><body><a href="#gather-data-for-irri-central-luzon-survey-loop" class="anchor"> </a></body></html>Gather Data for IRRI Central Luzon Survey Loop</h1>
 <p>The IRRI (International Rice Research Institute) survey loop in Central Luzon is a study that aims to monitor the changes in rice farming in the major rice producing area of the Philippines - the Central Luzon region, which is called as the “rice bowl of the Philippines”. Data have been collected in this project since the 1960s. See, <a href="http://ricestat.irri.org/fhsd/php/panel.php?page=1&amp;sortBy=title&amp;sortOrder=ascending#" class="uri">http://ricestat.irri.org/fhsd/php/panel.php?page=1&amp;sortBy=title&amp;sortOrder=ascending#</a> for the panel data.</p>
-<p>This vignette details how to find and retrieve weather data for the area that this survey covers for the time period of 1960-2016. Methods that are detailed include: * retrieving a spatial object of provincial level data; * subsetting this data for the provinces of interest; * merging the polygons into one object; * finding the centroid of this resulting polygon; * using the centroid of the polygon to find stations within 100km of this point; * determining which stations provide data for the specified time-period, 1960-2016; and * downloading the station files and creating a single CSV file of the data.</p>
+<p>This vignette details how to find and retrieve weather data for the area that this survey covers for the time period of 1960-2016. Methods that are detailed include: * retrieving a spatial object of provincial level data; * sub-setting this data for the provinces of interest; * merging the polygons into one object; * finding the centroid of this resulting polygon; * using the centroid of the polygon to find stations within 100km of this point; * determining which stations provide data for the specified time-period, 1960-2016; and * downloading the station files and creating a single CSV file of the data.</p>
 <div id="retrieve-phl-provincial-data-and-select-loop-provinces" class="section level2">
 <h2 class="hasAnchor">
 <html><body><a href="#retrieve-phl-provincial-data-and-select-loop-provinces" class="anchor"> </a></body></html>Retrieve PHL Provincial Data and Select Loop Provinces</h2>
@@ -97,7 +97,7 @@ centroid &lt;-<span class="st"> </span><span class="kw">gCentroid</span>(Central
 <p>Next, make a list of stations that are within this area.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(GSODR)
 <span class="kw">library</span>(readr)
-<span class="co"># Fetch station list from NCDC</span>
+<span class="co"># Fetch station list from NCEI</span>
 station_meta &lt;-<span class="st"> </span><span class="kw">read_csv</span>(
   <span class="st">"ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv"</span>,
   <span class="dt">col_types =</span> <span class="st">"ccccccddddd"</span>,
@@ -128,8 +128,8 @@ loop_stations &lt;-<span class="st"> </span>loop_stations[loop_stations<span cla
 <div id="another-option" class="section level2">
 <h2 class="hasAnchor">
 <html><body><a href="#another-option" class="anchor"> </a></body></html>Another Option</h2>
-<p><code>GSODR</code> provides a function for dealing with local files that have been transfered from the server already as well, <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code>. If the previous example with <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> does not work, this is a good alternative that takes a bit more intervention but gives the same results.</p>
-<p>Using your FTP client, e.g. FileZilla, log into the NCDC FTP server, &lt;ftp.ncdc.noaa.gov&gt; and navigate to /pub/data/gsod/. Manually downloading the files for each station listed above from 1960 to 2015 is possible, but tedious. An easier solution is to simply download the annual files found in each yearly directory, “gsod-YYYY.tar” and untar them locally and then use R to list the available files and select only the files for the stations of interest. Lastly, write the data to disk as a CSV file for saving and later use.</p>
+<p><code>GSODR</code> provides a function for dealing with local files that have been transferred from the server already as well, <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code>. If the previous example with <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> does not work, this is a good alternative that takes a bit more intervention but gives the same results.</p>
+<p>Using your FTP client (<em>e.g.</em> FileZilla) log into the NCEI FTP server, &lt;ftp.ncdc.noaa.gov&gt; and navigate to /pub/data/gsod/. Manually downloading the files for each station listed above from 1960 to 2015 is possible, but tedious. An easier solution is to simply download the annual files found in each yearly directory, “gsod-YYYY.tar” and untar them locally and then use R to list the available files and select only the files for the stations of interest. Lastly, write the data to disk as a CSV file for saving and later use.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">years &lt;-<span class="st"> </span><span class="dv">1960</span><span class="op">:</span><span class="dv">2015</span>
 
 loop_stations &lt;-<span class="st"> </span><span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text =</span> loop_stations[, <span class="dv">12</span>]))
@@ -162,7 +162,7 @@ loop_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/r
 <div id="wmo-resolution-40--noaa-policy" class="section level2">
 <h2 class="hasAnchor">
 <html><body><a href="#wmo-resolution-40--noaa-policy" class="anchor"> </a></body></html>WMO Resolution 40. NOAA Policy</h2>
-<p><em>Users of these data should take into account the following (from the <a href="http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&amp;countryabbv=&amp;georegionabbv=">NCDC website</a>):</em></p>
+<p><em>Users of these data should take into account the following (from the <a href="http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&amp;countryabbv=&amp;georegionabbv=">NCEI website</a>):</em></p>
 <blockquote>
 <p>“The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification.” <a href="https://public.wmo.int/en/our-mandate/what-we-do/data-exchange-and-technology-transfer">WMO Resolution 40. NOAA Policy</a></p>
 </blockquote>

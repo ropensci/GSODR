@@ -60,7 +60,7 @@
       <h1>Working with spatial and climate data from GSODR</h1>
                         <h4 class="author">Tomislav Hengl and Adam H Sparks</h4>
             
-            <h4 class="date">2017-03-14</h4>
+            <h4 class="date">2017-03-20</h4>
           </div>
 
     
@@ -122,77 +122,55 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 <p>Now that the extra data have been installed, take a look at the CHELSA data that are one of the data sets included in the <code>GSODRdata</code> package.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(GSODRdata)
 
-<span class="kw">head</span>(CHELSA)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">##          STNID    LON    LAT CHELSA_bio10_1979-2013_V1_1 CHELSA_bio11_1979-2013_V1_1 CHELSA_bio1_1979-2013_V1_1
-## 1 008268-99999 65.567 32.950                        30.0                         5.8                       18.3
-## 2 010014-99999  5.341 59.792                        14.3                         1.0                        7.1
-## 3 010015-99999  5.867 61.383                        12.5                        -3.2                        4.2
-## 4 010882-99999 11.342 62.578                        12.6                        -7.0                        2.3
-## 5 010883-99999  6.117 61.833                        15.2                        -0.2                        7.0
-## 6 010884-99999  9.567 59.185                        16.3                        -2.2                        6.6
-##   CHELSA_bio12_1979-2013_V1_1 CHELSA_bio13_1979-2013_V1_1 CHELSA_bio14_1979-2013_V1_1 CHELSA_bio15_1979-2013_V1_1
-## 1                       214.0                        54.6                         0.1                       104.9
-## 2                      1889.3                       223.7                        87.7                        30.3
-## 3                      2209.1                       254.7                       108.9                        30.1
-## 4                       563.0                        73.0                        26.7                        30.7
-## 5                      1710.3                       200.6                        78.5                        32.1
-## 6                       987.0                       120.9                        52.3                        24.4
-##   CHELSA_bio16_1979-2013_V1_1 CHELSA_bio17_1979-2013_V1_1 CHELSA_bio18_1979-2013_V1_1 CHELSA_bio19_1979-2013_V1_1
-## 1                       155.4                         0.6                         1.7                        96.9
-## 2                       650.7                       273.5                       433.3                       490.4
-## 3                       752.8                       332.6                       448.3                       621.1
-## 4                       216.2                        85.5                       198.7                       122.0
-## 5                       590.0                       244.7                       330.9                       494.4
-## 6                       338.0                       175.3                       242.3                       182.7
-##   CHELSA_bio2_1979-2013_V1_1 CHELSA_bio3_1979-2013_V1_1 CHELSA_bio4_1979-2013_V1_1 CHELSA_bio5_1979-2013_V1_1
-## 1                       23.0                       48.3                      884.1                       40.5
-## 2                       12.5                       44.8                      486.3                       21.5
-## 3                       16.7                       45.3                      591.5                       22.2
-## 4                       20.1                       45.5                      734.1                       23.6
-## 5                       15.6                       45.0                      573.4                       23.9
-## 6                       17.1                       44.3                      693.1                       25.4
-##   CHELSA_bio6_1979-2013_V1_1 CHELSA_bio7_1979-2013_V1_1 CHELSA_bio8_1979-2013_V1_1 CHELSA_bio9_1979-2013_V1_1 CHELSA_prec_10_1979-2013
-## 1                       -7.2                       47.7                       10.5                       26.7                      3.6
-## 2                       -6.5                       28.0                        5.7                        7.8                    230.6
-## 3                      -14.5                       36.8                       -1.7                        8.4                    237.5
-## 4                      -20.7                       44.3                       12.5                       -0.1                     48.9
-## 5                      -10.7                       34.7                        1.3                       12.2                    192.8
-## 6                      -13.3                       38.7                        8.5                        3.8                    122.1
-##   CHELSA_prec_11_1979-2013 CHELSA_prec_1_1979-2013 CHELSA_prec_12_1979-2013 CHELSA_prec_1979-2013_land CHELSA_prec_2_1979-2013
-## 1                     10.5                    35.8                     25.4                      214.5                    46.5
-## 2                    219.9                   198.4                    215.5                     1912.0                   153.3
-## 3                    237.8                   227.7                    248.3                     2170.2                   188.4
-## 4                     41.3                    40.3                     40.5                      559.3                    32.5
-## 5                    189.6                   189.5                    201.5                     1719.6                   153.7
-## 6                    106.2                    79.0                     82.4                      998.1                    53.0
-##  CHELSA_prec_3_1979-2013 CHELSA_prec_4_1979-2013 CHELSA_prec_5_1979-2013 CHELSA_prec_6_1979-2013 CHELSA_prec_7_1979-2013
-## 1                    54.8                    28.3                     7.0                     1.2                     1.0
-## 2                   151.9                   101.1                    90.6                   100.5                   116.7
-## 3                   176.4                   114.4                   107.0                   110.1                   119.2
-## 4                    31.8                    26.6                    38.9                    58.0                    69.7
-## 5                   145.0                    91.6                    79.0                    84.0                    90.1
-## 6                    63.7                    57.0                    72.1                    76.1                    84.3
-##   CHELSA_prec_8_1979-2013 CHELSA_prec_9_1979-2013 CHELSA_temp_10_1979-2013 CHELSA_temp_11_1979-2013 CHELSA_temp_1_1979-2013
-## 1                     0.3                     0.1                     19.2                     13.2                     4.9
-## 2                   165.6                   204.0                      8.0                      4.5                     1.2
-## 3                   159.6                   229.6                      4.3                      0.2                    -3.4
-## 4                    72.7                    57.9                      2.3                     -3.0                    -7.2
-## 5                   121.6                   181.4                      7.2                      3.0                    -0.4
-## 6                   105.0                    97.2                      6.7                      2.2                    -2.4
-##   CHELSA_temp_12_1979-2013 CHELSA_temp_1979-2013_land CHELSA_temp_2_1979-2013 CHELSA_temp_3_1979-2013 CHELSA_temp_4_1979-2013
-## 1                      7.7                       18.3                     7.0                    12.2                    18.3
-## 2                      2.1                        7.1                     0.8                     2.3                     5.1
-## 3                     -2.7                        4.1                    -3.2                    -0.8                     3.0
-## 4                     -6.5                        2.3                    -6.6                    -3.3                     1.5
-## 5                      0.3                        6.9                    -0.2                     2.2                     5.8
-## 6                     -1.4                        6.5                    -2.2                     0.8                     5.1
-##   CHELSA_temp_5_1979-2013 CHELSA_temp_6_1979-2013 CHELSA_temp_7_1979-2013 CHELSA_temp_8_1979-2013 ## CHELSA_temp_9_1979-2013
-## 1                    23.5                    28.2                    28.2                    29.7                    25.1
-## 2                     9.0                    12.0                    12.0                    14.2                    11.5
-## 3                     7.6                    10.9                    10.9                    12.2                     8.6
-## 4                     6.4                    10.9                    10.9                    12.1                     7.7
-## 5                    10.1                    13.2                    13.2                    14.9                    11.5
-## 6                    10.7                    14.7                    14.7                    15.8                    11.6</code></pre></div>
+<span class="kw">str</span>(CHELSA)
+
+<span class="co">#&gt; 'data.frame':    23927 obs. of  46 variables:</span>
+<span class="co">#&gt;   $ STNID                      : chr  "008268-99999" "010014-99999" "010015-99999" "010882-99999" ...</span>
+<span class="co">#&gt; $ CHELSA_bio10_1979-2013_V1_1: num  30 14.3 12.5 12.6 15.2 16.3 13.9 12.7 13.4 12.9 ...</span>
+<span class="co">#&gt; $ CHELSA_bio11_1979-2013_V1_1: num  5.8 1 -3.2 -7 -0.2 -2.2 -3 -6.9 -2.1 -1.2 ...</span>
+<span class="co">#&gt; $ CHELSA_bio1_1979-2013_V1_1 : num  18.3 7.1 4.2 2.3 7 6.6 4.8 2.4 5 5.2 ...</span>
+<span class="co">#&gt; $ CHELSA_bio12_1979-2013_V1_1: num  214 1889 2209 563 1710 ...</span>
+<span class="co">#&gt; $ CHELSA_bio13_1979-2013_V1_1: num  54.6 223.7 254.7 73 200.6 ...</span>
+<span class="co">#&gt; $ CHELSA_bio14_1979-2013_V1_1: num  0.1 87.7 108.9 26.7 78.5 ...</span>
+<span class="co">#&gt; $ CHELSA_bio15_1979-2013_V1_1: num  104.9 30.3 30.1 30.7 32.1 ...</span>
+<span class="co">#&gt; $ CHELSA_bio16_1979-2013_V1_1: num  155 651 753 216 590 ...</span>
+<span class="co">#&gt; $ CHELSA_bio17_1979-2013_V1_1: num  0.6 273.5 332.6 85.5 244.7 ...</span>
+<span class="co">#&gt; $ CHELSA_bio18_1979-2013_V1_1: num  1.7 433.3 448.3 198.7 330.9 ...</span>
+<span class="co">#&gt; $ CHELSA_bio19_1979-2013_V1_1: num  96.9 490.4 621.1 122 494.4 ...</span>
+<span class="co">#&gt; $ CHELSA_bio2_1979-2013_V1_1 : num  23 12.5 16.7 20.1 15.6 17.1 16.4 18.6 14.8 13.3 ...</span>
+<span class="co">#&gt; $ CHELSA_bio3_1979-2013_V1_1 : num  48.3 44.8 45.3 45.5 45 44.3 43.8 44.6 43.8 43.8 ...</span>
+<span class="co">#&gt; $ CHELSA_bio4_1979-2013_V1_1 : num  884 486 592 734 573 ...</span>
+<span class="co">#&gt; $ CHELSA_bio5_1979-2013_V1_1 : num  40.5 21.5 22.2 23.6 23.9 25.4 23.1 23 21.8 20.4 ...</span>
+<span class="co">#&gt; $ CHELSA_bio6_1979-2013_V1_1 : num  -7.2 -6.5 -14.5 -20.7 -10.7 -13.3 -14.3 -18.7 -11.9 -9.9 ...</span>
+<span class="co">#&gt; $ CHELSA_bio7_1979-2013_V1_1 : num  47.7 28 36.8 44.3 34.7 38.7 37.4 41.7 33.8 30.3 ...</span>
+<span class="co">#&gt; $ CHELSA_bio8_1979-2013_V1_1 : num  10.5 5.7 -1.7 12.5 1.3 8.5 6.8 12.5 7 7.2 ...</span>
+<span class="co">#&gt; $ CHELSA_bio9_1979-2013_V1_1 : num  26.7 7.8 8.4 -0.1 12.2 3.8 9.6 0.1 9.8 9.3 ...</span>
+<span class="co">#&gt; $ CHELSA_prec_10_1979-2013   : num  3.6 230.6 237.5 48.9 192.8 ...</span>
+<span class="co">#&gt; $ CHELSA_prec_11_1979-2013   : num  10.5 219.9 237.8 41.3 189.6 ...</span>
+<span class="co">#&gt; $ CHELSA_prec_1_1979-2013    : num  35.8 198.4 227.7 40.3 189.5 ...</span>
+<span class="co">#&gt; $ CHELSA_prec_12_1979-2013   : num  25.4 215.5 248.3 40.5 201.5 ...</span>
+<span class="co">#&gt; $ CHELSA_prec_1979-2013_land : num  214 1912 2170 559 1720 ...</span>
+<span class="co">#&gt; $ CHELSA_prec_2_1979-2013    : num  46.5 153.3 188.4 32.5 153.7 ...</span>
+<span class="co">#&gt; $ CHELSA_prec_3_1979-2013    : num  54.8 151.9 176.4 31.8 145 ...</span>
+<span class="co">#&gt; $ CHELSA_prec_4_1979-2013    : num  28.3 101.1 114.4 26.6 91.6 ...</span>
+<span class="co">#&gt; $ CHELSA_prec_5_1979-2013    : num  7 90.6 107 38.9 79 72.1 75.6 46.7 91.3 85.1 ...</span>
+<span class="co">#&gt; $ CHELSA_prec_6_1979-2013    : num  1.2 100.5 110.1 58 84 ...</span>
+<span class="co">#&gt; $ CHELSA_prec_7_1979-2013    : num  1 116.7 119.2 69.7 90.1 ...</span>
+<span class="co">#&gt; $ CHELSA_prec_8_1979-2013    : num  0.3 165.6 159.6 72.7 121.6 ...</span>
+<span class="co">#&gt; $ CHELSA_prec_9_1979-2013    : num  0.1 204 229.6 57.9 181.4 ...</span>
+<span class="co">#&gt; $ CHELSA_temp_10_1979-2013   : num  19.2 8 4.3 2.3 7.2 6.7 5.7 2.4 5.6 5.9 ...</span>
+<span class="co">#&gt; $ CHELSA_temp_11_1979-2013   : num  13.2 4.5 0.2 -3 3 2.2 1.2 -2.7 1.6 2.2 ...</span>
+<span class="co">#&gt; $ CHELSA_temp_1_1979-2013    : num  4.9 1.2 -3.4 -7.2 -0.4 -2.4 -2.5 -7 -1.9 -1 ...</span>
+<span class="co">#&gt; $ CHELSA_temp_12_1979-2013   : num  7.7 2.1 -2.7 -6.5 0.3 -1.4 -1.3 -6.3 -0.7 -0.1 ...</span>
+<span class="co">#&gt; $ CHELSA_temp_1979-2013_land : num  18.3 7.1 4.1 2.3 6.9 6.5 5.1 2.5 5 5.2 ...</span>
+<span class="co">#&gt; $ CHELSA_temp_2_1979-2013    : num  7 0.8 -3.2 -6.6 -0.2 -2.2 -2.8 -6.4 -2.1 -1.2 ...</span>
+<span class="co">#&gt; $ CHELSA_temp_3_1979-2013    : num  12.2 2.3 -0.8 -3.3 2.2 0.8 -0.9 -2.7 -0.6 0.1 ...</span>
+<span class="co">#&gt; $ CHELSA_temp_4_1979-2013    : num  18.3 5.1 3 1.5 5.8 5.1 3 1.7 2.9 3.1 ...</span>
+<span class="co">#&gt; $ CHELSA_temp_5_1979-2013    : num  23.5 9 7.6 6.4 10.1 10.7 7.8 6.6 7.3 7.1 ...</span>
+<span class="co">#&gt; $ CHELSA_temp_6_1979-2013    : num  28.2 12 10.9 10.9 13.2 14.7 11.9 11.3 11.1 10.5 ...</span>
+<span class="co">#&gt; $ CHELSA_temp_7_1979-2013    : num  28.2 12 10.9 10.9 13.2 14.7 11.9 11.3 11.1 10.5 ...</span>
+<span class="co">#&gt; $ CHELSA_temp_8_1979-2013    : num  29.7 14.2 12.2 12.1 14.9 15.8 14 12.2 13.3 12.8 ...</span>
+<span class="co">#&gt; $ CHELSA_temp_9_1979-2013    : num  25.1 11.5 8.6 7.7 11.5 11.6 10.2 7.6 9.9 9.8 ...</span></code></pre></div>
 <p>Compare the GSOD weather data from the Philippines with climatic data provided by the GSODR package in the <code>CHELSA</code> data set using <code>dplyr</code> functions to join the CHELSA and GSODR data for plotting.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
 <span class="co">#&gt; </span>
@@ -252,14 +230,14 @@ df_melt &lt;-<span class="st"> </span><span class="kw">na.omit</span>(<span clas
 </div>
 <div id="elevation-values" class="section level4">
 <h4 class="hasAnchor">
-<html><body><a href="#elevation-values" class="anchor"> </a></body></html>Elevation Values</h4>
+<html><body><a href="#elevation-values" class="anchor"> </a></body></html>Elevation values</h4>
 <p>90m hole-filled SRTM digital elevation (Jarvis <em>et al.</em> 2008) was used to identify and correct/remove elevation errors in data for station locations between -60˚ and 60˚ latitude. This applies to cases here where elevation was missing in the reported values as well. In case the station reported an elevation and the DEM does not, the station reported is taken. For stations beyond -60˚ and 60˚ latitude, the values are station reported values in every instance. See <a href="https://github.com/ropensci/GSODR/blob/devel/data-raw/fetch_isd-history.md" class="uri">https://github.com/ropensci/GSODR/blob/devel/data-raw/fetch_isd-history.md</a> for more detail on the correction methods.</p>
 </div>
 </div>
 <div id="wmo-resolution-40--noaa-policy" class="section level2">
 <h2 class="hasAnchor">
 <html><body><a href="#wmo-resolution-40--noaa-policy" class="anchor"> </a></body></html>WMO Resolution 40. NOAA Policy</h2>
-<p><em>Users of these data should take into account the following (from the <a href="http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&amp;countryabbv=&amp;georegionabbv=">NCDC website</a>):</em></p>
+<p><em>Users of these data should take into account the following (from the <a href="http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&amp;countryabbv=&amp;georegionabbv=">NCEI website</a>):</em></p>
 <blockquote>
 <p>“The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification.” <a href="https://public.wmo.int/en/our-mandate/what-we-do/data-exchange-and-technology-transfer">WMO Resolution 40. NOAA Policy</a></p>
 </blockquote>
