@@ -662,14 +662,6 @@ circulation model (Karger et al. 2016). ESA's CCI-LC cloud probability
 monthly averages are based on the MODIS snow products (MOD10A2).
 <http://chelsa-climate.org/>
 
-#### EarthEnv MODIS cloud fraction
-
-<http://www.earthenv.org/cloud>
-
-#### ESA's CCI-LC cloud probability
-
-<http://maps.elie.ucl.ac.be/CCI/viewer/index.php>
-
 #### Elevation Values
 
 90m hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was used
@@ -701,10 +693,13 @@ Meta
 ----
 
 -   Please [report any issues or
-    bugs](https://github.com/ropensci/GSODR/issues).
--   License: MIT
--   Get citation information for `GSODR` in R typing
-    `citation(package = "GSODR")`
+    bugs](https://github.com/ropensci/GSODR/issues).  
+-   License: MIT  
+-   To cite `GSODR`, please use:  
+    Adam H Sparks, Tomislav Hengl and Andrew Nelson (2017). GSODR:
+    Global Summary Daily Weather Data in R. *The Journal of Open Source
+    Software*, **2(10)**. DOI: 10.21105/joss.00177. URL:
+    <https://doi.org/10.21105%2Fjoss.00177>  
 -   Please note that this project is released with a [Contributor Code
     of Conduct](CONDUCT.md). By participating in this project you agree
     to abide by its terms.
