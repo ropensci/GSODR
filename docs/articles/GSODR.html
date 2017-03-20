@@ -60,7 +60,7 @@
       <h1>GSODR</h1>
                         <h4 class="author">Adam H Sparks</h4>
             
-            <h4 class="date">2017-03-14</h4>
+            <h4 class="date">2017-03-20</h4>
           </div>
 
     
@@ -69,7 +69,7 @@
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <html><body><a href="#introduction" class="anchor"> </a></body></html>Introduction</h1>
-<p>The GSOD or <a href="https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod">Global Surface Summary of the Day (GSOD)</a> data provided by the US National Climatic Data Center (NCDC) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. The GSODR package aims to make it easy to find, tranfer and format the data you need for use in analysis. The GSODR package provides four main functions for facilitating this:</p>
+<p>The GSOD or <a href="https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod">Global Surface Summary of the Day (GSOD)</a> data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. The GSODR package aims to make it easy to find, transfer and format the data you need for use in analysis. The GSODR package provides four main functions for facilitating this:</p>
 <ul>
 <li>
 <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> - the main function that will query and transfer files from the FTP server, reformat them and return a data.frame in R or save a file to disk<br>
@@ -78,13 +78,13 @@
 <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code> - the workhorse, this function takes individual station files on the local disk and reformats them returning a data.frame in R<br>
 </li>
 <li>
-<code><a href="../reference/nearest_stations.html">nearest_stations()</a></code> - this function returns a dataframe containing a list of stations and their metadata that fall within the given radius of a point specified by the user<br>
+<code><a href="../reference/nearest_stations.html">nearest_stations()</a></code> - this function returns a data frame containing a list of stations and their metadata that fall within the given radius of a point specified by the user<br>
 </li>
 <li>
 <code><a href="../reference/get_station_list.html">get_station_list()</a></code> - this function retrieves the most up-to-date list of stations and corresponding metadata</li>
 </ul>
-<p>When reformatting data either with <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> or <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code>, all units are converted to International System of Units (SI), e.g., inches to millimetres and Fahrenheit to Celsius. File output can be saved as a Comma Separated Value (CSV) file or in a spatial GeoPackage (GPKG) file, implemented by most major GIS software, summarising each year by station, which also includes vapour pressure and relative humidity variables calculated from existing data in GSOD.</p>
-<p>For more information see the description of the data provided by NCDC, <a href="http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt" class="uri">http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt</a>.</p>
+<p>When reformatting data either with <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> or <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code>, all units are converted to International System of Units (SI), e.g., inches to millimetres and Fahrenheit to Celsius. File output can be saved as a Comma Separated Value (CSV) file or in a spatial GeoPackage (GPKG) file, implemented by most major GIS software, summarising each year by station, which also includes vapour pressure and relative humidity elements calculated from existing data in GSOD.</p>
+<p>For more information see the description of the data provided by NCEI, <a href="http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt" class="uri">http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt</a>.</p>
 </div>
 <div id="retrieving-and-reformatting-data-in-r" class="section level1">
 <h1 class="hasAnchor">
@@ -110,7 +110,7 @@ ggplot(GSOD_stations, aes(x = LON, y = LAT)) +
 <div id="find-stations-in-australia" class="section level2">
 <h2 class="hasAnchor">
 <html><body><a href="#find-stations-in-australia" class="anchor"> </a></body></html>Find Stations in Australia</h2>
-<p>GSODR provides lists of weather station locations and elevation values. Using <a href="https://CRAN.R-project.org/package=dplyr">dplyr</a>, we can find all the stations in Australia.</p>
+<p>GSODR provides lists of weather station locations and elevation values. Using <a href="https://CRAN.R-project.org/package=dplyr"><code>dplyr</code></a>, we can find all the stations in Australia.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
 station_locations &lt;-<span class="st"> </span><span class="kw">left_join</span>(GSOD_stations, GSODR<span class="op">::</span>country_list,
                                <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">"CTRY"</span> =<span class="st"> "FIPS"</span>))
@@ -214,7 +214,7 @@ tbar_stations &lt;-<span class="st"> </span>tbar_stations[<span class="op">!</sp
 <div id="plot-maximum-and-miniumum-temperature-values" class="section level2">
 <h2 class="hasAnchor">
 <html><body><a href="#plot-maximum-and-miniumum-temperature-values" class="anchor"> </a></body></html>Plot Maximum and Miniumum Temperature Values</h2>
-<p>Using the first data downloaded for a single station, 955510-99999, plot the temperature for 2010 using <code>read_csv()</code> from Hadley’s <a href="https://CRAN.R-project.org/package=readr">readr</a> package.</p>
+<p>Using the first data downloaded for a single station, 955510-99999, plot the temperature for 2010 using <code>read_csv()</code> from Hadley’s <a href="https://CRAN.R-project.org/package=readr"><code>readr</code></a> package.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(lubridate)
 <span class="kw">library</span>(readr)
 <span class="kw">library</span>(tidyr)
@@ -307,7 +307,7 @@ AUS_stations &lt;-<span class="st"> </span><span class="kw">readOGR</span>(<span
 <span class="co">#&gt; [1] "SpatialPointsDataFrame"</span>
 <span class="co">#&gt; attr(,"package")</span>
 <span class="co">#&gt; [1] "sp"</span></code></pre></div>
-<p>Since GeoPackage files are formatted as SQLite databases you can use the existing R tools for SQLite files <a href="https://jsta.github.io/2016/07/14/geopackage-r.html">(J. Stachelek 2016)</a>. One easy way is using dplyr, which we’ve already used to filter the stations.</p>
+<p>Since GeoPackage files are formatted as SQLite databases you can use the existing R tools for SQLite files <a href="https://jsta.github.io/2016/07/14/geopackage-r.html">(J. Stachelek 2016)</a>. One easy way is using <code>dplyr</code>, which we’ve already used to filter the stations.</p>
 <p>This option is much faster to load since it does not load the geometry.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">AUS_sqlite &lt;-<span class="st"> </span><span class="kw">tbl</span>(<span class="kw">src_sqlite</span>(<span class="kw">path.expand</span>(<span class="st">"~/AUS-2015.gpkg"</span>)), <span class="st">"GSOD"</span>)
 <span class="kw">class</span>(AUS_sqlite)
@@ -356,7 +356,7 @@ x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reformat_
 <div id="additional-climate-data" class="section level1">
 <h1 class="hasAnchor">
 <html><body><a href="#additional-climate-data" class="anchor"> </a></body></html>Additional Climate Data</h1>
-<p>Additional climate data, <a href="https://github.com/adamhsparks/GSODRdata">GSODdata</a>, formatted for use with GSOD data provided by GSODR are available as an R package instalable through GitHub due to the package size, 5.1Mb, being too large for CRAN.</p>
+<p>Additional climate data, <a href="https://github.com/adamhsparks/GSODRdata">GSODdata</a>, formatted for use with GSOD data provided by GSODR are available as an R package installable through GitHub due to the package size, 5.1Mb, being too large for CRAN.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages("devtools")</span>
 devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"adamhsparks/GSODdata"</span>)
 <span class="kw">library</span>(<span class="st">"GSODdata"</span>)</code></pre></div>
@@ -372,7 +372,7 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 <div id="wmo-resolution-40--noaa-policy" class="section level2">
 <h2 class="hasAnchor">
 <html><body><a href="#wmo-resolution-40--noaa-policy" class="anchor"> </a></body></html>WMO Resolution 40. NOAA Policy</h2>
-<p><em>Users of these data should take into account the following (from the <a href="http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&amp;countryabbv=&amp;georegionabbv=">NCDC website</a>):</em></p>
+<p><em>Users of these data should take into account the following (from the <a href="http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&amp;countryabbv=&amp;georegionabbv=">NCEI website</a>):</em></p>
 <blockquote>
 <p>“The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification.” <a href="https://public.wmo.int/en/our-mandate/what-we-do/data-exchange-and-technology-transfer">WMO Resolution 40. NOAA Policy</a></p>
 </blockquote>
