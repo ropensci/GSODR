@@ -1,21 +1,25 @@
 citHeader("To cite GSODR in publications, please use:")
 
-citEntry(entry = "Article",
-  author = personList(as.person(c("Adam H Sparks", "Tomislav Hengl", "Andrew Nelson"))),
+citEntry(
+  entry = "Article",
+  author = personList(as.person("Adam H Sparks"), 
+                      as.person("Tomislav Hengl"),
+                      as.person("Andrew Nelson")),
   title = "{GSODR}: Global Summary Daily Weather Data in R",
   doi = "10.21105/joss.00177",
-  year = "2017",
+  year = 2017,
   month = "feb",
   publisher = "The Open Journal",
-  volume = {2},
-  number = {10},
+  volume = 2,
+  number = 10,
   journal = "The Journal of Open Source Software",
   url = "https://doi.org/10.21105%2Fjoss.00177",
-
-  textVersion =
-  paste("Adam H Sparks, Tomislav Hengl and Andrew Nelson (2017).",
+  
+  textVersion = paste("Adam H Sparks, Tomislav Hengl and Andrew Nelson (2017).",
         "GSODR: Global Summary Daily Weather Data in R.",
         "The Journal of Open Source Software, 2(10).",
         "DOI: 10.21105/joss.00177.",
-        "URL: https://doi.org/10.21105%2Fjoss.00177")
+        "URL: https://doi.org/10.21105%2Fjoss.00177"),
+        
+citFooter("As GSODR is under continuous development, you may want to cite its version number. Find it with 'help(package=GSODR)'.")
 )
