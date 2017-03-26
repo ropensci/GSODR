@@ -60,7 +60,7 @@
       <h1>GSODR</h1>
                         <h4 class="author">Adam H Sparks</h4>
             
-            <h4 class="date">2017-03-20</h4>
+            <h4 class="date">2017-03-27</h4>
           </div>
 
     
@@ -68,7 +68,7 @@
 <div class="contents">
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
-<html><body><a href="#introduction" class="anchor"> </a></body></html>Introduction</h1>
+<a href="#introduction" class="anchor"></a>Introduction</h1>
 <p>The GSOD or <a href="https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod">Global Surface Summary of the Day (GSOD)</a> data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. The GSODR package aims to make it easy to find, transfer and format the data you need for use in analysis. The GSODR package provides four main functions for facilitating this:</p>
 <ul>
 <li>
@@ -88,10 +88,10 @@
 </div>
 <div id="retrieving-and-reformatting-data-in-r" class="section level1">
 <h1 class="hasAnchor">
-<html><body><a href="#retrieving-and-reformatting-data-in-r" class="anchor"> </a></body></html>Retrieving and Reformatting Data in R</h1>
+<a href="#retrieving-and-reformatting-data-in-r" class="anchor"></a>Retrieving and Reformatting Data in R</h1>
 <div id="plot-global-station-locations" class="section level2">
 <h2 class="hasAnchor">
-<html><body><a href="#plot-global-station-locations" class="anchor"> </a></body></html>Plot Global Station Locations</h2>
+<a href="#plot-global-station-locations" class="anchor"></a>Plot Global Station Locations</h2>
 <p>The GSOD data are comprised of a global set of data from weather stations. To visualise where these stations are located we can fetch the station metadata and plot it in a map. The resulting map shows only stations with valid geo-locations after filtering.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(GSODR)
 GSOD_stations &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_station_list.html">get_station_list</a></span>()</code></pre></div>
@@ -109,7 +109,7 @@ ggplot(GSOD_stations, aes(x = LON, y = LAT)) +
 </div>
 <div id="find-stations-in-australia" class="section level2">
 <h2 class="hasAnchor">
-<html><body><a href="#find-stations-in-australia" class="anchor"> </a></body></html>Find Stations in Australia</h2>
+<a href="#find-stations-in-australia" class="anchor"></a>Find Stations in Australia</h2>
 <p>GSODR provides lists of weather station locations and elevation values. Using <a href="https://CRAN.R-project.org/package=dplyr"><code>dplyr</code></a>, we can find all the stations in Australia.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
 station_locations &lt;-<span class="st"> </span><span class="kw">left_join</span>(GSOD_stations, GSODR<span class="op">::</span>country_list,
@@ -149,7 +149,7 @@ Oz &lt;-<span class="st"> </span><span class="kw">filter</span>(station_location
 </div>
 <div id="using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and-year" class="section level2">
 <h2 class="hasAnchor">
-<html><body><a href="#using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and-year" class="anchor"> </a></body></html>Using the get_GSOD() Function in GSODR to Download a Single Station and Year</h2>
+<a href="#using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and-year" class="anchor"></a>Using the get_GSOD() Function in GSODR to Download a Single Station and Year</h2>
 <p>Now that we’ve seen where the reporting stations are located, we can download weather data from the station Toowoomba, Queensland, Australia for 2010 by using the STNID in the <code>station</code> parameter of <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> <span class="st">"955510-99999"</span>)
 
@@ -196,7 +196,7 @@ Oz &lt;-<span class="st"> </span><span class="kw">filter</span>(station_location
 </div>
 <div id="find-stations-within-a-specified-distance-of-a-point" class="section level2">
 <h2 class="hasAnchor">
-<html><body><a href="#find-stations-within-a-specified-distance-of-a-point" class="anchor"> </a></body></html>Find Stations Within a Specified Distance of a Point</h2>
+<a href="#find-stations-within-a-specified-distance-of-a-point" class="anchor"></a>Find Stations Within a Specified Distance of a Point</h2>
 <p>Using the <code><a href="../reference/nearest_stations.html">nearest_stations()</a></code> function, you can find stations closest to a given point specified by latitude and longitude in decimal degrees. This can be used to generate a vector to pass along to <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> and download the stations of interest.</p>
 <p>There are missing stations in this query. Not all that are listed and queried actually have files on the server.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tbar_stations &lt;-<span class="st"> </span><span class="kw"><a href="../reference/nearest_stations.html">nearest_stations</a></span>(<span class="dt">LAT =</span> <span class="op">-</span><span class="fl">27.5598</span>, <span class="dt">LON =</span> <span class="fl">151.9507</span>, <span class="dt">distance =</span> <span class="dv">50</span>)
@@ -213,7 +213,7 @@ tbar_stations &lt;-<span class="st"> </span>tbar_stations[<span class="op">!</sp
 </div>
 <div id="plot-maximum-and-miniumum-temperature-values" class="section level2">
 <h2 class="hasAnchor">
-<html><body><a href="#plot-maximum-and-miniumum-temperature-values" class="anchor"> </a></body></html>Plot Maximum and Miniumum Temperature Values</h2>
+<a href="#plot-maximum-and-miniumum-temperature-values" class="anchor"></a>Plot Maximum and Miniumum Temperature Values</h2>
 <p>Using the first data downloaded for a single station, 955510-99999, plot the temperature for 2010 using <code>read_csv()</code> from Hadley’s <a href="https://CRAN.R-project.org/package=readr"><code>readr</code></a> package.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(lubridate)
 <span class="kw">library</span>(readr)
@@ -269,7 +269,7 @@ tbar_temps &lt;-<span class="st"> </span><span class="kw">gather</span>(tbar_tem
 </div>
 <div id="creating-spatial-files" class="section level2">
 <h2 class="hasAnchor">
-<html><body><a href="#creating-spatial-files" class="anchor"> </a></body></html>Creating Spatial Files</h2>
+<a href="#creating-spatial-files" class="anchor"></a>Creating Spatial Files</h2>
 <p>Because the stations provide geospatial location information, it is possible to create a spatial file. <a href="http://www.geopackage.org">GeoPackage files</a> are a open, standards-based, platform-independent, portable, self-describing compact format for transferring geospatial information, which handle vector files much like shapefiles do, but eliminate many of the issues that shapefiles have with field names and the number of files. The <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> function can create a GeoPackage file, which can be used with a GIS for further analysis and mapping with other spatial objects.</p>
 <p>After getting weather stations for Australia and creating a GeoPackage file, the rgdal package can import the data into R and the raster package can download an outline of Australia useful for plotting the station locations in this country.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2015</span>, <span class="dt">country =</span> <span class="st">"Australia"</span>, <span class="dt">dsn =</span> <span class="st">"~/"</span>, <span class="dt">filename =</span> <span class="st">"AUS"</span>,
@@ -337,25 +337,25 @@ AUS_stations &lt;-<span class="st"> </span><span class="kw">readOGR</span>(<span
 </div>
 <div id="reformating-local-data-files" class="section level1">
 <h1 class="hasAnchor">
-<html><body><a href="#reformating-local-data-files" class="anchor"> </a></body></html>Reformating Local Data Files</h1>
+<a href="#reformating-local-data-files" class="anchor"></a>Reformating Local Data Files</h1>
 <p>You may have already downloaded GSOD data or may just wish to use an FTP client to download the files from the server to you local disk and not use the capabilities of <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code>. In that case the <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code> function is useful.</p>
 <p>There are two ways, you can either provide <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code> with a list of specified station files or you can supply it with a directory containing all of the “WBAN-WMO-YYYY.op.gz” station files that you wish to reformat.</p>
 <div id="reformat-a-list-of-local-files" class="section level2">
 <h2 class="hasAnchor">
-<html><body><a href="#reformat-a-list-of-local-files" class="anchor"> </a></body></html>Reformat a List of Local Files</h2>
+<a href="#reformat-a-list-of-local-files" class="anchor"></a>Reformat a List of Local Files</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"~/GSOD/gsod_1960/200490-99999-1960.op.gz"</span>,
        <span class="st">"~/GSOD/gsod_1961/200490-99999-1961.op.gz"</span>)
 x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reformat_GSOD.html">reformat_GSOD</a></span>(<span class="dt">file_list =</span> y)</code></pre></div>
 </div>
 <div id="reformat-all-local-files-found-in-directory" class="section level2">
 <h2 class="hasAnchor">
-<html><body><a href="#reformat-all-local-files-found-in-directory" class="anchor"> </a></body></html>Reformat All Local Files Found in Directory</h2>
+<a href="#reformat-all-local-files-found-in-directory" class="anchor"></a>Reformat All Local Files Found in Directory</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reformat_GSOD.html">reformat_GSOD</a></span>(<span class="dt">dsn =</span> <span class="st">"~/GSOD/gsod_1960"</span>)</code></pre></div>
 </div>
 </div>
 <div id="additional-climate-data" class="section level1">
 <h1 class="hasAnchor">
-<html><body><a href="#additional-climate-data" class="anchor"> </a></body></html>Additional Climate Data</h1>
+<a href="#additional-climate-data" class="anchor"></a>Additional Climate Data</h1>
 <p>Additional climate data, <a href="https://github.com/adamhsparks/GSODRdata">GSODdata</a>, formatted for use with GSOD data provided by GSODR are available as an R package installable through GitHub due to the package size, 5.1Mb, being too large for CRAN.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages("devtools")</span>
 devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"adamhsparks/GSODdata"</span>)
@@ -363,15 +363,15 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 </div>
 <div id="notes" class="section level1">
 <h1 class="hasAnchor">
-<html><body><a href="#notes" class="anchor"> </a></body></html>Notes</h1>
+<a href="#notes" class="anchor"></a>Notes</h1>
 <div id="elevation-values" class="section level2">
 <h2 class="hasAnchor">
-<html><body><a href="#elevation-values" class="anchor"> </a></body></html>Elevation Values</h2>
+<a href="#elevation-values" class="anchor"></a>Elevation Values</h2>
 <p>90 metre (90m) hole-filled SRTM digital elevation (Jarvis <em>et al.</em> 2008) was used to identify and correct/remove elevation errors in data for station locations between -60˚ and 60˚ latitude. This applies to cases here where elevation was missing in the reported values as well. In case the station reported an elevation and the DEM does not, the station reported is taken. For stations beyond -60˚ and 60˚ latitude, the values are station reported values in every instance. See <a href="https://github.com/ropensci/GSODR/blob/devel/data-raw/fetch_isd-history.md" class="uri">https://github.com/ropensci/GSODR/blob/devel/data-raw/fetch_isd-history.md</a> for more detail on the correction methods.</p>
 </div>
 <div id="wmo-resolution-40--noaa-policy" class="section level2">
 <h2 class="hasAnchor">
-<html><body><a href="#wmo-resolution-40--noaa-policy" class="anchor"> </a></body></html>WMO Resolution 40. NOAA Policy</h2>
+<a href="#wmo-resolution-40--noaa-policy" class="anchor"></a>WMO Resolution 40. NOAA Policy</h2>
 <p><em>Users of these data should take into account the following (from the <a href="http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&amp;countryabbv=&amp;georegionabbv=">NCEI website</a>):</em></p>
 <blockquote>
 <p>“The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification.” <a href="https://public.wmo.int/en/our-mandate/what-we-do/data-exchange-and-technology-transfer">WMO Resolution 40. NOAA Policy</a></p>
@@ -380,7 +380,7 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 </div>
 <div id="references" class="section level1">
 <h1 class="hasAnchor">
-<html><body><a href="#references" class="anchor"> </a></body></html>References</h1>
+<a href="#references" class="anchor"></a>References</h1>
 <p>Stachelek, J. (2016) Using the Geopackage Format with R. URL: <a href="https://jsta.github.io/2016/07/14/geopackage-r.html" class="uri">https://jsta.github.io/2016/07/14/geopackage-r.html</a></p>
 </div>
 </div>

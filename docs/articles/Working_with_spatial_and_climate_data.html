@@ -60,7 +60,7 @@
       <h1>Working with spatial and climate data from GSODR</h1>
                         <h4 class="author">Tomislav Hengl and Adam H Sparks</h4>
             
-            <h4 class="date">2017-03-20</h4>
+            <h4 class="date">2017-03-27</h4>
           </div>
 
     
@@ -68,12 +68,12 @@
 <div class="contents">
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
-<html><body><a href="#introduction" class="anchor"> </a></body></html>Introduction</h1>
+<a href="#introduction" class="anchor"></a>Introduction</h1>
 <p>The GSODR package provides the ability to interact with GSOD data using spatial methods. The <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> function allows for the data to be saved as a GeoPackage file which can be read by most GIS software packages or in R using R’s GIS capabilities with contributed packages as well.</p>
 <p>Following is an example of how you might download and save GSOD annual data for a given country, Philippines in this example, and convert it into a KML file for viewing in GoogleEarth. The second portion uses the same GeoPackage file to import the data back into R and combine the GSOD data with CHELSA data from the <a href="https://github.com/adamhsparks/GSODRdata">GSODRdata package</a> available from GitHub and plot the station temperatures for daily GSOD, average monthly GSOD and CHELSA temperatures (1979-2013).</p>
 <div id="example---download-and-plot-data-for-a-single-country" class="section level2">
 <h2 class="hasAnchor">
-<html><body><a href="#example---download-and-plot-data-for-a-single-country" class="anchor"> </a></body></html>Example - Download and plot data for a single country</h2>
+<a href="#example---download-and-plot-data-for-a-single-country" class="anchor"></a>Example - Download and plot data for a single country</h2>
 <p>This example will demonstrate how to download data for Philippines for year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in the user’s home directory and link it with climate data from the <code>GSODRdata</code> package.</p>
 <p>Download data for Philippines for year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in the user’s home directory.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(GSODR)
@@ -82,7 +82,7 @@
 </div>
 <div id="example---use-the-geopackage-file-to-create-a-kml-file" class="section level2">
 <h2 class="hasAnchor">
-<html><body><a href="#example---use-the-geopackage-file-to-create-a-kml-file" class="anchor"> </a></body></html>Example - Use the GeoPackage file to create a KML file</h2>
+<a href="#example---use-the-geopackage-file-to-create-a-kml-file" class="anchor"></a>Example - Use the GeoPackage file to create a KML file</h2>
 <p>Using the GeoPackage that was just created, you can now create a KML file to open with Google Earth and visualise the data spatially and over time.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rgdal)
 <span class="kw">library</span>(spacetime)
@@ -109,7 +109,7 @@ shape =<span class="st"> "http://maps.google.com/mapfiles/kml/pal2/icon18.png"</
 </div>
 <div id="example---compare-the-gsod-weather-data-from-the-philippines-with-climate-data-provided-by-the-gsodrdata-package-" class="section level2">
 <h2 class="hasAnchor">
-<html><body><a href="#example---compare-the-gsod-weather-data-from-the-philippines-with-climate-data-provided-by-the-gsodrdata-package-" class="anchor"> </a></body></html>Example - Compare the GSOD weather data from the Philippines with climate data provided by the GSODRdata package.</h2>
+<a href="#example---compare-the-gsod-weather-data-from-the-philippines-with-climate-data-provided-by-the-gsodrdata-package-" class="anchor"></a>Example - Compare the GSOD weather data from the Philippines with climate data provided by the GSODRdata package.</h2>
 <p>The the <a href="https://adamhsparks.github.io/GSODRdata/"><code>GSODRdata</code></a> package provides climate data from four climate data sets that have been formatted for easy use with the <code>GSODR</code> package. Following is a description how to install the <code>GSODRdata</code> package and use it to visualise the weather data for the Philippines in 2010 against CHELSA data.</p>
 <p>CHELSA (Climatologies at high resolution for the earth’s land surface areas) are climate data at 30 arc seconds for the earth land surface areas.</p>
 <p><strong>Description of CHELSA data from CHELSA website</strong></p>
@@ -219,24 +219,24 @@ df_melt &lt;-<span class="st"> </span><span class="kw">na.omit</span>(<span clas
 </div>
 <div id="notes" class="section level1">
 <h1 class="hasAnchor">
-<html><body><a href="#notes" class="anchor"> </a></body></html>Notes</h1>
+<a href="#notes" class="anchor"></a>Notes</h1>
 <div id="sources" class="section level2">
 <h2 class="hasAnchor">
-<html><body><a href="#sources" class="anchor"> </a></body></html>Sources</h2>
+<a href="#sources" class="anchor"></a>Sources</h2>
 <div id="chelsa-climate-layers" class="section level4">
 <h4 class="hasAnchor">
-<html><body><a href="#chelsa-climate-layers" class="anchor"> </a></body></html>CHELSA climate layers</h4>
+<a href="#chelsa-climate-layers" class="anchor"></a>CHELSA climate layers</h4>
 <p>CHELSA (climatic surfaces at 1 km resolution) is based on a quasi-mechanistical statistical downscaling of the ERA interim global circulation model (Karger et al. 2016). ESA’s CCI-LC cloud probability monthly averages are based on the MODIS snow products (MOD10A2). <a href="http://chelsa-climate.org/" class="uri">http://chelsa-climate.org/</a></p>
 </div>
 <div id="elevation-values" class="section level4">
 <h4 class="hasAnchor">
-<html><body><a href="#elevation-values" class="anchor"> </a></body></html>Elevation values</h4>
+<a href="#elevation-values" class="anchor"></a>Elevation values</h4>
 <p>90m hole-filled SRTM digital elevation (Jarvis <em>et al.</em> 2008) was used to identify and correct/remove elevation errors in data for station locations between -60˚ and 60˚ latitude. This applies to cases here where elevation was missing in the reported values as well. In case the station reported an elevation and the DEM does not, the station reported is taken. For stations beyond -60˚ and 60˚ latitude, the values are station reported values in every instance. See <a href="https://github.com/ropensci/GSODR/blob/devel/data-raw/fetch_isd-history.md" class="uri">https://github.com/ropensci/GSODR/blob/devel/data-raw/fetch_isd-history.md</a> for more detail on the correction methods.</p>
 </div>
 </div>
 <div id="wmo-resolution-40--noaa-policy" class="section level2">
 <h2 class="hasAnchor">
-<html><body><a href="#wmo-resolution-40--noaa-policy" class="anchor"> </a></body></html>WMO Resolution 40. NOAA Policy</h2>
+<a href="#wmo-resolution-40--noaa-policy" class="anchor"></a>WMO Resolution 40. NOAA Policy</h2>
 <p><em>Users of these data should take into account the following (from the <a href="http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&amp;countryabbv=&amp;georegionabbv=">NCEI website</a>):</em></p>
 <blockquote>
 <p>“The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification.” <a href="https://public.wmo.int/en/our-mandate/what-we-do/data-exchange-and-technology-transfer">WMO Resolution 40. NOAA Policy</a></p>
@@ -245,7 +245,7 @@ df_melt &lt;-<span class="st"> </span><span class="kw">na.omit</span>(<span clas
 </div>
 <div id="references" class="section level1">
 <h1 class="hasAnchor">
-<html><body><a href="#references" class="anchor"> </a></body></html>References</h1>
+<a href="#references" class="anchor"></a>References</h1>
 <p>Jarvis, A., Reuter, H. I., Nelson, A., Guevara, E. (2008) Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database (<a href="http://srtm.csi.cgiar.org" class="uri">http://srtm.csi.cgiar.org</a>)</p>
 <p>Karger, D. N., Conrad, O., Bohner, J., Kawohl, T., Kreft, H., Soria-Auza, R. W., <em>et al</em>. (2016) Climatologies at high resolution for the Earth land surface areas. <em>arXiv preprint</em> <strong>arXiv:1607.00217</strong>. (<a href="http://chelsa-climate.org/" class="uri">http://chelsa-climate.org/</a>)</p>
 <p>Stachelek, J. (2016) Using the Geopackage Format with R. URL: <a href="https://jsta.github.io/2016/07/14/geopackage-r.html" class="uri">https://jsta.github.io/2016/07/14/geopackage-r.html</a></p>

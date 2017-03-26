@@ -31,6 +31,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -84,20 +86,26 @@
     <p>This function automates cleaning and reformatting of GSOD,
 <a href = 'https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod'>https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod</a>,
 station files in "WMO-WBAN-YYYY.op.gz" format that have been downloaded from
-the United States National Climatic Data Center's (NCDC) FTP server.</p>
+the United States National Center for Environmental Information's (NCEI)
+FTP server.</p>
     
 
     <pre><span class='fu'>reformat_GSOD</span>(<span class='kw'>dsn</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>file_list</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>dsn</dt>
-      <dd><p>User supplied file path to location of station file data on
-local disk for reformatting.</p></dd>
-      <dt>file_list</dt>
-      <dd><p>User supplied list of files of station data on local disk for
-reformatting.</p></dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>dsn</th>
+      <td><p>User supplied file path to location of station file data on
+local disk for reformatting.</p></td>
+    </tr>
+    <tr>
+      <th>file_list</th>
+      <td><p>User supplied list of files of station data on local disk for
+reformatting.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -110,19 +118,19 @@ reformatting.</p></dd>
 function which provides expanded functionality for automatically downloading
 and expanding annual GSOD files and cleaning station files.</p>
 <p>This function reformats the data into a more usable form and calculates three
-new variables; Saturation Vapor Pressure (ES) – Actual Vapor Pressure (EA) and
-relative humidity (RH). All units are converted to International System of
-Units (SI), e.g., Fahrenheit to Celsius and inches to millimetres. Alternative
-elevation measurements are supplied for missing values or values found to be
-questionable based on the Consultative Group for International Agricultural
-Research's Consortium for Spatial Information group's (CGIAR-CSI) Shuttle
-Radar Topography Mission 90 metre (SRTM 90m) digital elevation data based on
-NASA's original SRTM 90m data.</p>
+new elements; saturation vapour pressure (es), actual vapour pressure (ea) and
+relative humidity (RH).  All units are converted to International System of
+Units (SI), e.g., Fahrenheit to Celsius and inches to millimetres. 
+Alternative elevation measurements are supplied for missing values or values 
+found to be questionable based on the Consultative Group for International
+Agricultural Research's Consortium for Spatial Information group's (CGIAR-CSI)
+Shuttle Radar Topography Mission 90 metre (SRTM 90m) digital elevation data 
+based on NASA's original SRTM 90m data.</p>
     <p>Data summarise each year by station, which include vapour pressure and
-relative humidity variables calculated from existing data in GSOD.</p>
+relative humidity elements calculated from existing data in GSOD.</p>
 <p>All missing values in resulting files are represented as NA regardless of
 which field they occur in.</p>
-<p>Only station files in .op.gz file format are supported by this function. If
+<p>Only station files in ".op.gz" file format are supported by this function. If
 you have downloaded the full annual "gsod_YYYY.tar" file you will need to
 extract the individual station files first to use this function.</p>
 <p>The data returned either in a data.frame object that includes the following
@@ -232,7 +240,7 @@ no/not reported) for the occurrence during the day</p></dd>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>Some of these data are redistributed with this R package. Originally
-from these data come from the US NCDC which states that users of these data
+from these data come from the US NCEI which states that users of these data
 should take into account the following: &#8220;The following data and
 products may have conditions placed on their international commercial use.
 They can be used within the U.S. or for non-commercial international
