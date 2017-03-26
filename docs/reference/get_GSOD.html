@@ -108,11 +108,15 @@ repository here:
   <span class='kw'>CSV</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>GPKG</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>years</dt>
-      <dd><p>Year(s) of weather data to download.</p></dd>
-      <dt>station</dt>
-      <dd><p>Optional. Specify a station or multiple stations for which to
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>years</th>
+      <td><p>Year(s) of weather data to download.</p></td>
+    </tr>
+    <tr>
+      <th>station</th>
+      <td><p>Optional. Specify a station or multiple stations for which to
 retrieve, check and clean weather data using <code>STNID</code>. The NCEI reports
 years for which the data are available. This function checks against these
 years. However, not all cases are properly documented and in some cases files
@@ -120,39 +124,54 @@ may not exist on the ftp server even though it is indicated that data was
 recorded for the station for a particular year. If a station is specified
 that does not have an existing file on the server, this function will
 silently fail and move on to existing files for download and cleaning from
-the FTP server.</p></dd>
-      <dt>country</dt>
-      <dd><p>Optional. Specify a country for which to retrieve weather
+the FTP server.</p></td>
+    </tr>
+    <tr>
+      <th>country</th>
+      <td><p>Optional. Specify a country for which to retrieve weather
 data; full name or ISO codes can be used. See
 <code><a href='country_list.html'>country_list</a></code> for a full list of country names and ISO
-codes available.</p></dd>
-      <dt>dsn</dt>
-      <dd><p>Optional. Local file path to write file out to. Must be specified
+codes available.</p></td>
+    </tr>
+    <tr>
+      <th>dsn</th>
+      <td><p>Optional. Local file path to write file out to. Must be specified
 if CSV or GPKG parameters are selected. If unspecified and <code>CSV</code> or
 <code>GPKG</code> are set to TRUE, <code>dsn</code> will default to the current working
-directory.</p></dd>
-      <dt>filename</dt>
-      <dd><p>Optional. The filename for resulting file(s) to be written
+directory.</p></td>
+    </tr>
+    <tr>
+      <th>filename</th>
+      <td><p>Optional. The filename for resulting file(s) to be written
 with no file extension. File extension will be automatically appended to file
 outputs. If unspecified by the user it will default to "GSOD" followed by
-the file extension(s) set using <code>CSV</code> or <code>GPKG</code>.</p></dd>
-      <dt>max_missing</dt>
-      <dd><p>Optional. The maximum number of days allowed to be missing
-from a station's data before it is excluded from final file output.</p></dd>
-      <dt>agroclimatology</dt>
-      <dd><p>Optional. Logical. Only clean data for stations
+the file extension(s) set using <code>CSV</code> or <code>GPKG</code>.</p></td>
+    </tr>
+    <tr>
+      <th>max_missing</th>
+      <td><p>Optional. The maximum number of days allowed to be missing
+from a station's data before it is excluded from final file output.</p></td>
+    </tr>
+    <tr>
+      <th>agroclimatology</th>
+      <td><p>Optional. Logical. Only clean data for stations
 between latitudes 60 and -60 for agroclimatology work, defaults to FALSE.
 Set to TRUE to include only stations within the confines of these
-latitudes.</p></dd>
-      <dt>CSV</dt>
-      <dd><p>Optional. Logical. If set to TRUE, create a comma separated value
+latitudes.</p></td>
+    </tr>
+    <tr>
+      <th>CSV</th>
+      <td><p>Optional. Logical. If set to TRUE, create a comma separated value
 (CSV) file and save it locally in a user specified location, if <code>dsn</code> is
-not specified by the user, defaults to the current working directory.</p></dd>
-      <dt>GPKG</dt>
-      <dd><p>Optional. Logical. If set to TRUE, create a GeoPackage file and
+not specified by the user, defaults to the current working directory.</p></td>
+    </tr>
+    <tr>
+      <th>GPKG</th>
+      <td><p>Optional. Logical. If set to TRUE, create a GeoPackage file and
 save it locally in a user specified location, if <code>dsn</code> is not specified
-by the user, defaults to the current working directory.</p></dd>
-    </dl>
+by the user, defaults to the current working directory.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 

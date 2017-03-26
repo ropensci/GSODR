@@ -31,6 +31,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -88,17 +90,18 @@
         
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A data frame with 28330 observations of 2 variables:</p><dl class='dl-horizontal'>
+    <p>A data frame with 28330 observations of 2 elements:</p><dl class='dl-horizontal'>
   <dt>STNID</dt><dd><p>Unique station ID, a concatenation of USAF and WBAN number,
   used for merging with station data weather files</p></dd>
   <dt>ELEV_M_SRTM_90m</dt><dd><p>Elevation in metres extracted from SRTM data (Jarvis
   <em>et al</em>. 2008)</p></dd>
 </dl>
-    <p>Station elevation information for the US National Climatic Data Centre (NCDC)
-Global Surface Summary of the Day (GSOD) weather data.  The original file has
-missing and incorrect geographic data including location (LAT/LON) and
-elevation.  This data frame provides an alternative set of elevation values
-with the following changes to the original list of stations from the NCDC:</p><ol>
+    <p>Station elevation information for the US National Centers for Environmenta
+Information (NCEI) Global Surface Summary of the Day (GSOD) weather data.  
+The original file has missing and incorrect geographic data including 
+location (LAT/LON) and elevation.  This data frame provides an alternative 
+set of elevation values with the following changes to the original list of 
+stations from the NCEI:</p><ol>
 <li><p>Stations with both a latitude and longitude of 0 degrees were removed.</p></li>
 <li><p>Stations with longitude values that are beyond -180/180 degrees were
 removed.</p></li>
@@ -119,12 +122,13 @@ GitHub repository detailing the process used to generate these data,
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>Users of these data should take into account the following (from the
-NCDC website): &#8220;The following data and products may have conditions
+NCEI website): &#8220;The following data and products may have conditions
 placed on their international commercial use.  They can be used within the
 U.S. or for non-commercial international activities without restriction. The
 non-U.S. data cannot be redistributed for commercial purposes.
 Re-distribution of these data by others must provide this same notification.&#8221;</p>
-<p>The <code>SRTM_GSOD_elevation</code> data are automatically loaded with the <code>GSODR</code> package and merged with the latest available data from the NCDC
+<p>The <code>SRTM_GSOD_elevation</code> data are automatically loaded with the
+<code>GSODR</code> package and merged with the latest available data from the NCEI
 in the "isd-history.csv" file.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
