@@ -19,8 +19,8 @@ version](http://www.r-pkg.org/badges/version/GSODR)](https://cran.r-project.org/
 [![Research software
 impact](http://depsy.org/api/package/cran/GSODR/badge.svg)](http://depsy.org/package/r/GSODR)
 
-Introduction to GSODR
-=====================
+Introduction to *GSODR*
+=======================
 
 The GSOD or [Global Surface Summary of the Day
 (GSOD)](https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod)
@@ -28,7 +28,7 @@ data provided by the US National Centers for Environmental Information
 (NCEI) are a valuable source of weather data with global coverage.
 However, the data files are cumbersome and difficult to work with. The
 GSODR package aims to make it easy to find, transfer and format the data
-you need for use in analysis. The GSODR package provides four main
+you need for use in analysis. The *GSODR* package provides four main
 functions for facilitating this:
 
 -   `get_GSOD()` - queries and transfers files from the FTP server,
@@ -71,7 +71,7 @@ Install
 
 ### Stable version
 
-A stable version of GSODR is available from
+A stable version of *GSODR* is available from
 [CRAN](https://cran.r-project.org/package=GSODR).
 
 ``` r
@@ -97,7 +97,7 @@ devtools::install_github("ropensci/GSODR", build_vignettes = TRUE)
 Final data format and contents
 ------------------------------
 
-The `GSODR` package returns data with the following fields/units.
+The *GSODR* package returns data with the following fields/units.
 
 -   **STNID** - Station number (WMO/DATSAV3 number) for the location;
 
@@ -255,12 +255,12 @@ The `GSODR` package returns data with the following fields/units.
 
 -   **RH** - Mean daily relative humidity.
 
-Using GSODR
------------
+Using *GSODR*
+-------------
 
 ### Query the NCEI FTP server for GSOD data
 
-`GSODR`'s main function, `get_GSOD()`, downloads and cleans GSOD data
+*GSODR's* main function, `get_GSOD()`, downloads and cleans GSOD data
 from the NCEI server. Following are a few examples of its capabilities.
 
 #### Example 1 - Download weather station data for Toowoomba, Queensland for 2010
@@ -390,18 +390,18 @@ kml(tmp_ST, dtime = 24 * 3600, colour = TEMP, shape = shape, labels = TEMP,
 system("zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml")
 ```
 
-#### Example 4 - Working with climate data from GSODRdata
+#### Example 4 - Working with climate data from *GSODRdata*
 
 This example will demonstrate how to download data for Philippines for
 year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in
 the user's home directory and link it with climate data from the
-`GSODRdata` package.
+*GSODRdata* package.
 
-##### Install `GSODRdata` package
+##### Install *GSODRdata* package
 
 This package is only available from GitHub; due to its large size
 (&lt;9Mb installed) it is not allowed on CRAN. It provides optional data
-for use with the `GSODR` package. See
+for use with the *GSODR* package. See
 <https://github.com/adamhsparks/GSODRdata> for more.
 
 ``` r
@@ -409,10 +409,10 @@ for use with the `GSODR` package. See
 devtools::install_github("adamhsparks/GSODdata")
 ```
 
-##### Working with climate data from `GSODRdata`
+##### Working with climate data from *GSODRdata*
 
 Now that the extra data have been installed, take a look at the CHELSA
-data that are one of the data sets included in the `GSODRdata` package.
+data that are one of the data sets included in the *GSODRdata* package.
 
 CHELSA (Climatologies at high resolution for the earth’s land surface
 areas) are climate data at (30 arc sec) for the earth land surface
@@ -439,7 +439,7 @@ areas.
 See <http://chelsa-climate.org> for more information on these data.
 
 Compare the GSOD weather data from the Philippines with climatic data
-provided by the GSODR package in the `CHELSA` data set.
+provided by the *GSODRdata* package in the `CHELSA` data set.
 
 ``` r
 library(GSODRdata)
@@ -495,7 +495,7 @@ str(CHELSA)
 #> $ CHELSA_temp_9_1979-2013    : num  25.1 11.5 8.6 7.7 11.5 11.6 10.2 7.6 9.9 9.8 ...
 ```
 
-##### Using `dplyr` functions, join the CHELSA and GSODR data for plotting.
+##### Using *dplyr* functions, join the CHELSA and *GSODR* data for plotting.
 
 ``` r
 library(dplyr)
@@ -541,7 +541,7 @@ ggplot(df_melt, aes(x = DATE, y = value)) +
 ```
 
 ![Comparison of GSOD daily values and average monthly values with CHELSA
-climate monthly values](./vignettes/figure/example_1.2-1.png)
+climate monthly values](vignettes/figure/example_1.2-1.png)
 
 #### Example 5 - Finding stations within a given radius of a point
 
@@ -626,8 +626,8 @@ str(toowoomba)
 #> $ RH              : num  67.7 70 74.1 67.9 74.1 59.3 69.2 70.4 61.3 61.3 ...
 ```
 
-Other Sources of Weather Data
------------------------------
+Other Sources of Weather Data in R
+----------------------------------
 
 There are several other sources of weather data and ways of retrieving
 them through R. In particular, the excellent
@@ -640,12 +640,12 @@ Other Sources for Fetching GSOD Weather Data
 --------------------------------------------
 
 The
-[`GSODTools`](https://github.com/environmentalinformatics-marburg/GSODTools)
+[*GSODTools*](https://github.com/environmentalinformatics-marburg/GSODTools)
 by [Florian Detsch](https://github.com/fdetsch) is an R package that
-offers similar functionality as `GSODR` but also has the ability to
+offers similar functionality as *GSODR* but also has the ability to
 graph the data and working with data for time series analysis.
 
-The [`ULMO`](https://github.com/ulmo-dev/ulmo) library offers an
+The [*ULMO*](https://github.com/ulmo-dev/ulmo) library offers an
 interface to retrieve GSOD data using Python.
 
 Notes
@@ -695,7 +695,7 @@ Meta
 -   Please [report any issues or
     bugs](https://github.com/ropensci/GSODR/issues).  
 -   License: MIT  
--   To cite `GSODR`, please use:  
+-   To cite *GSODR*, please use:  
     Adam H Sparks, Tomislav Hengl and Andrew Nelson (2017). GSODR:
     Global Summary Daily Weather Data in R. *The Journal of Open Source
     Software*, **2(10)**. DOI: 10.21105/joss.00177. URL:

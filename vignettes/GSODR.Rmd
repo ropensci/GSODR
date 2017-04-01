@@ -19,7 +19,7 @@ if (!all(unlist(lapply(required, function(pkg) requireNamespace(pkg, quietly = T
 # Introduction
 
 The GSOD or [Global Surface Summary of the Day (GSOD)](https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod)
-data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. The GSODR package aims to make it easy to find, transfer and format the data you need for use in analysis. The GSODR package provides four main functions for facilitating this:
+data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. The _GSODR_ package aims to make it easy to find, transfer and format the data you need for use in analysis. The _GSODR_ package provides four main functions for facilitating this:
 
 * `get_GSOD()` - the main function that will query and transfer files from the FTP server, reformat them and return a data.frame in R or save a file to disk  
 * `reformat_GSOD()` - the workhorse, this function takes individual station files on the local disk and reformats them returning a data.frame in R  
@@ -59,7 +59,7 @@ ggplot(GSOD_stations, aes(x = LON, y = LAT)) +
 
 ## Find Stations in Australia
 
-GSODR provides lists of weather station locations and elevation values. Using [`dplyr`](https://CRAN.R-project.org/package=dplyr), we can find all the stations in Australia.
+_GSODR_ provides lists of weather station locations and elevation values. Using [_dplyr_](https://CRAN.R-project.org/package=dplyr), we can find all the stations in Australia.
 
 ```r
 library(dplyr)
@@ -99,7 +99,7 @@ filter(Oz, STN_NAME == "TOOWOOMBA")
 #> 1 20120503 945510-99999             670    AUSTRALIA    AU   AUS
 ```
 
-## Using the get_GSOD() Function in GSODR to Download a Single Station and Year
+## Using the get_GSOD() Function in _GSODR_ to Download a Single Station and Year
 
 Now that we've seen where the reporting stations are located, we can download weather data from the station Toowoomba, Queensland, Australia for 2010 by using the STNID in the `station` parameter of `get_GSOD()`.
 
@@ -278,7 +278,7 @@ class(AUS_stations)
 ```
 
 Since GeoPackage files are formatted as SQLite databases you can use the existing R tools for SQLite files
-[(J. Stachelek 2016)](https://jsta.github.io/2016/07/14/geopackage-r.html). One easy way is using `dplyr`, which we've already used to filter the stations.
+[(J. Stachelek 2016)](https://jsta.github.io/2016/07/14/geopackage-r.html). One easy way is using _dplyr_, which we've already used to filter the stations.
 
 This option is much faster to load since it does not load the geometry.
 
@@ -331,7 +331,7 @@ x <- reformat_GSOD(dsn = "~/GSOD/gsod_1960")
 
 # Additional Climate Data
 
-Additional climate data, [GSODdata](https://github.com/adamhsparks/GSODRdata), formatted for use with GSOD data provided by GSODR are available as an R package installable through GitHub due to the package size, 5.1Mb, being too large for CRAN.
+Additional climate data, [_GSODdata_](https://github.com/adamhsparks/GSODRdata), formatted for use with GSOD data provided by _GSODR_ are available as an R package installable through GitHub due to the package size, 5.1Mb, being too large for CRAN.
 
 ```r
 #install.packages("devtools")

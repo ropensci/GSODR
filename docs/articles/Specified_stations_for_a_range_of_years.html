@@ -60,7 +60,7 @@
       <h1>GSODR use case: Specified years/stations vignette</h1>
                         <h4 class="author">Adam H Sparks</h4>
             
-            <h4 class="date">2017-03-27</h4>
+            <h4 class="date">2017-04-01</h4>
           </div>
 
     
@@ -210,7 +210,7 @@ loop_stations &lt;-<span class="st"> </span>loop_stations[loop_stations<span cla
 <div id="using-get_gsod-to-fetch-the-requested-station-files" class="section level3">
 <h3 class="hasAnchor">
 <a href="#using-get_gsod-to-fetch-the-requested-station-files" class="anchor"></a>Using <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> to Fetch the Requested Station Files</h3>
-<p>This example shows how you could construct a query using the <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> function. Be aware that it may result in incomplete data and error from the server if it stops responding. We’ve done our best to make <code>GSODR</code> handle these errors, but if it does this, see the following option for using the <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code> function.</p>
+<p>This example shows how you could construct a query using the <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> function. Be aware that it may result in incomplete data and error from the server if it stops responding. We’ve done our best to make <em>GSODR</em> handle these errors, but if it does this, see the following option for using the <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">PHL &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">station =</span> 
                   <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text =</span> loop_stations[, <span class="dv">12</span>])), <span class="dt">years =</span> <span class="dv">1960</span><span class="op">:</span><span class="dv">2015</span>)</code></pre></div>
 </div>
@@ -218,7 +218,7 @@ loop_stations &lt;-<span class="st"> </span>loop_stations[loop_stations<span cla
 <h3 class="hasAnchor">
 <a href="#another-option-using-reformat_gsod" class="anchor"></a>Another Option, Using <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code>
 </h3>
-<p><code>GSODR</code> provides a function for dealing with local files that have been transferred from the server already as well, <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code>. If the previous example with <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> does not work, this is a good alternative that takes a bit more intervention but gives the same results.</p>
+<p><em>GSODR</em> provides a function for dealing with local files that have been transferred from the server already as well, <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code>. If the previous example with <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> does not work, this is a good alternative that takes a bit more intervention but gives the same results.</p>
 <p>Using your FTP client (<em>e.g.</em>, FileZilla) log into the NCEI FTP server, <a href="ftp.ncdc.noaa.gov">&lt;ftp.ncdc.noaa.gov&gt;</a> and navigate to /pub/data/gsod/. Manually downloading the files for each station listed above from 1960 to 2015 is possible, but tedious. An easier solution is to simply download the annual files found in each yearly directory, “gsod-YYYY.tar” and untar them locally and then use R to list the available files and select only the files for the stations of interest. Lastly, write the data to disk as a CSV file for saving and later use.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">years &lt;-<span class="st"> </span><span class="dv">1960</span><span class="op">:</span><span class="dv">2015</span>
 
