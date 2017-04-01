@@ -60,7 +60,7 @@
       <h1>GSODR</h1>
                         <h4 class="author">Adam H Sparks</h4>
             
-            <h4 class="date">2017-03-27</h4>
+            <h4 class="date">2017-04-01</h4>
           </div>
 
     
@@ -69,7 +69,7 @@
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
-<p>The GSOD or <a href="https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod">Global Surface Summary of the Day (GSOD)</a> data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. The GSODR package aims to make it easy to find, transfer and format the data you need for use in analysis. The GSODR package provides four main functions for facilitating this:</p>
+<p>The GSOD or <a href="https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod">Global Surface Summary of the Day (GSOD)</a> data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. The <em>GSODR</em> package aims to make it easy to find, transfer and format the data you need for use in analysis. The <em>GSODR</em> package provides four main functions for facilitating this:</p>
 <ul>
 <li>
 <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> - the main function that will query and transfer files from the FTP server, reformat them and return a data.frame in R or save a file to disk<br>
@@ -110,7 +110,7 @@ ggplot(GSOD_stations, aes(x = LON, y = LAT)) +
 <div id="find-stations-in-australia" class="section level2">
 <h2 class="hasAnchor">
 <a href="#find-stations-in-australia" class="anchor"></a>Find Stations in Australia</h2>
-<p>GSODR provides lists of weather station locations and elevation values. Using <a href="https://CRAN.R-project.org/package=dplyr"><code>dplyr</code></a>, we can find all the stations in Australia.</p>
+<p><em>GSODR</em> provides lists of weather station locations and elevation values. Using <a href="https://CRAN.R-project.org/package=dplyr"><em>dplyr</em></a>, we can find all the stations in Australia.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
 station_locations &lt;-<span class="st"> </span><span class="kw">left_join</span>(GSOD_stations, GSODR<span class="op">::</span>country_list,
                                <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">"CTRY"</span> =<span class="st"> "FIPS"</span>))
@@ -149,7 +149,7 @@ Oz &lt;-<span class="st"> </span><span class="kw">filter</span>(station_location
 </div>
 <div id="using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and-year" class="section level2">
 <h2 class="hasAnchor">
-<a href="#using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and-year" class="anchor"></a>Using the get_GSOD() Function in GSODR to Download a Single Station and Year</h2>
+<a href="#using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and-year" class="anchor"></a>Using the get_GSOD() Function in <em>GSODR</em> to Download a Single Station and Year</h2>
 <p>Now that we’ve seen where the reporting stations are located, we can download weather data from the station Toowoomba, Queensland, Australia for 2010 by using the STNID in the <code>station</code> parameter of <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> <span class="st">"955510-99999"</span>)
 
@@ -307,7 +307,7 @@ AUS_stations &lt;-<span class="st"> </span><span class="kw">readOGR</span>(<span
 <span class="co">#&gt; [1] "SpatialPointsDataFrame"</span>
 <span class="co">#&gt; attr(,"package")</span>
 <span class="co">#&gt; [1] "sp"</span></code></pre></div>
-<p>Since GeoPackage files are formatted as SQLite databases you can use the existing R tools for SQLite files <a href="https://jsta.github.io/2016/07/14/geopackage-r.html">(J. Stachelek 2016)</a>. One easy way is using <code>dplyr</code>, which we’ve already used to filter the stations.</p>
+<p>Since GeoPackage files are formatted as SQLite databases you can use the existing R tools for SQLite files <a href="https://jsta.github.io/2016/07/14/geopackage-r.html">(J. Stachelek 2016)</a>. One easy way is using <em>dplyr</em>, which we’ve already used to filter the stations.</p>
 <p>This option is much faster to load since it does not load the geometry.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">AUS_sqlite &lt;-<span class="st"> </span><span class="kw">tbl</span>(<span class="kw">src_sqlite</span>(<span class="kw">path.expand</span>(<span class="st">"~/AUS-2015.gpkg"</span>)), <span class="st">"GSOD"</span>)
 <span class="kw">class</span>(AUS_sqlite)
@@ -356,7 +356,7 @@ x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reformat_
 <div id="additional-climate-data" class="section level1">
 <h1 class="hasAnchor">
 <a href="#additional-climate-data" class="anchor"></a>Additional Climate Data</h1>
-<p>Additional climate data, <a href="https://github.com/adamhsparks/GSODRdata">GSODdata</a>, formatted for use with GSOD data provided by GSODR are available as an R package installable through GitHub due to the package size, 5.1Mb, being too large for CRAN.</p>
+<p>Additional climate data, <a href="https://github.com/adamhsparks/GSODRdata"><em>GSODdata</em></a>, formatted for use with GSOD data provided by <em>GSODR</em> are available as an R package installable through GitHub due to the package size, 5.1Mb, being too large for CRAN.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages("devtools")</span>
 devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"adamhsparks/GSODdata"</span>)
 <span class="kw">library</span>(<span class="st">"GSODdata"</span>)</code></pre></div>
@@ -395,7 +395,7 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 <a href="#retrieving-and-reformatting-data-in-r">Retrieving and Reformatting Data in R</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#plot-global-station-locations">Plot Global Station Locations</a></li>
       <li><a href="#find-stations-in-australia">Find Stations in Australia</a></li>
-      <li><a href="#using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and-year">Using the get_GSOD() Function in GSODR to Download a Single Station and Year</a></li>
+      <li><a href="#using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and-year">Using the get_GSOD() Function in <em>GSODR</em> to Download a Single Station and Year</a></li>
       <li><a href="#find-stations-within-a-specified-distance-of-a-point">Find Stations Within a Specified Distance of a Point</a></li>
       <li><a href="#plot-maximum-and-miniumum-temperature-values">Plot Maximum and Miniumum Temperature Values</a></li>
       <li><a href="#creating-spatial-files">Creating Spatial Files</a></li>

@@ -69,8 +69,9 @@
 </div>
 <div id="introduction-to-gsodr" class="section level1">
 <h1 class="hasAnchor">
-<a href="#introduction-to-gsodr" class="anchor"></a>Introduction to GSODR</h1>
-<p>The GSOD or <a href="https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod">Global Surface Summary of the Day (GSOD)</a> data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. The GSODR package aims to make it easy to find, transfer and format the data you need for use in analysis. The GSODR package provides four main functions for facilitating this:</p>
+<a href="#introduction-to-gsodr" class="anchor"></a>Introduction to <em>GSODR</em>
+</h1>
+<p>The GSOD or <a href="https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod">Global Surface Summary of the Day (GSOD)</a> data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. The GSODR package aims to make it easy to find, transfer and format the data you need for use in analysis. The <em>GSODR</em> package provides four main functions for facilitating this:</p>
 <ul>
 <li>
 <code><a href="reference/get_GSOD.html">get_GSOD()</a></code> - queries and transfers files from the FTP server, reformats them and returns a <code>data.frame()</code> object in R session or saves a file to disk with options for a GeoPackage spatially enabled file or comma separated values (CSV) file,<br>
@@ -98,7 +99,7 @@
 <div id="stable-version" class="section level3">
 <h3 class="hasAnchor">
 <a href="#stable-version" class="anchor"></a>Stable version</h3>
-<p>A stable version of GSODR is available from <a href="https://cran.r-project.org/package=GSODR">CRAN</a>.</p>
+<p>A stable version of <em>GSODR</em> is available from <a href="https://cran.r-project.org/package=GSODR">CRAN</a>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"GSODR"</span>)</code></pre></div>
 </div>
 <div id="development-version" class="section level3">
@@ -113,7 +114,7 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 <div id="final-data-format-and-contents" class="section level2">
 <h2 class="hasAnchor">
 <a href="#final-data-format-and-contents" class="anchor"></a>Final data format and contents</h2>
-<p>The <code>GSODR</code> package returns data with the following fields/units.</p>
+<p>The <em>GSODR</em> package returns data with the following fields/units.</p>
 <ul>
 <li><p><strong>STNID</strong> - Station number (WMO/DATSAV3 number) for the location;</p></li>
 <li><p><strong>WBAN</strong> - number where applicable–this is the historical “Weather Bureau Air Force Navy” number - with WBAN being the acronym;</p></li>
@@ -175,11 +176,12 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 </div>
 <div id="using-gsodr" class="section level2">
 <h2 class="hasAnchor">
-<a href="#using-gsodr" class="anchor"></a>Using GSODR</h2>
+<a href="#using-gsodr" class="anchor"></a>Using <em>GSODR</em>
+</h2>
 <div id="query-the-ncei-ftp-server-for-gsod-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#query-the-ncei-ftp-server-for-gsod-data" class="anchor"></a>Query the NCEI FTP server for GSOD data</h3>
-<p><code>GSODR</code>’s main function, <code><a href="reference/get_GSOD.html">get_GSOD()</a></code>, downloads and cleans GSOD data from the NCEI server. Following are a few examples of its capabilities.</p>
+<p><em>GSODR’s</em> main function, <code><a href="reference/get_GSOD.html">get_GSOD()</a></code>, downloads and cleans GSOD data from the NCEI server. Following are a few examples of its capabilities.</p>
 <div id="example-1---download-weather-station-data-for-toowoomba-queensland-for-2010" class="section level4">
 <h4 class="hasAnchor">
 <a href="#example-1---download-weather-station-data-for-toowoomba-queensland-for-2010" class="anchor"></a>Example 1 - Download weather station data for Toowoomba, Queensland for 2010</h4>
@@ -297,27 +299,28 @@ shape =<span class="st"> "http://maps.google.com/mapfiles/kml/pal2/icon18.png"</
 </div>
 <div id="example-4---working-with-climate-data-from-gsodrdata" class="section level4">
 <h4 class="hasAnchor">
-<a href="#example-4---working-with-climate-data-from-gsodrdata" class="anchor"></a>Example 4 - Working with climate data from GSODRdata</h4>
-<p>This example will demonstrate how to download data for Philippines for year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in the user’s home directory and link it with climate data from the <code>GSODRdata</code> package.</p>
+<a href="#example-4---working-with-climate-data-from-gsodrdata" class="anchor"></a>Example 4 - Working with climate data from <em>GSODRdata</em>
+</h4>
+<p>This example will demonstrate how to download data for Philippines for year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in the user’s home directory and link it with climate data from the <em>GSODRdata</em> package.</p>
 <div id="install-gsodrdata-package" class="section level5">
 <h5 class="hasAnchor">
-<a href="#install-gsodrdata-package" class="anchor"></a>Install <code>GSODRdata</code> package</h5>
-<p>This package is only available from GitHub; due to its large size (&lt;9Mb installed) it is not allowed on CRAN. It provides optional data for use with the <code>GSODR</code> package. See <a href="https://github.com/adamhsparks/GSODRdata" class="uri">https://github.com/adamhsparks/GSODRdata</a> for more.</p>
+<a href="#install-gsodrdata-package" class="anchor"></a>Install <em>GSODRdata</em> package</h5>
+<p>This package is only available from GitHub; due to its large size (&lt;9Mb installed) it is not allowed on CRAN. It provides optional data for use with the <em>GSODR</em> package. See <a href="https://github.com/adamhsparks/GSODRdata" class="uri">https://github.com/adamhsparks/GSODRdata</a> for more.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("devtools")</span>
 devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"adamhsparks/GSODdata"</span>)</code></pre></div>
 </div>
 <div id="working-with-climate-data-from-gsodrdata" class="section level5">
 <h5 class="hasAnchor">
-<a href="#working-with-climate-data-from-gsodrdata" class="anchor"></a>Working with climate data from <code>GSODRdata</code>
+<a href="#working-with-climate-data-from-gsodrdata" class="anchor"></a>Working with climate data from <em>GSODRdata</em>
 </h5>
-<p>Now that the extra data have been installed, take a look at the CHELSA data that are one of the data sets included in the <code>GSODRdata</code> package.</p>
+<p>Now that the extra data have been installed, take a look at the CHELSA data that are one of the data sets included in the <em>GSODRdata</em> package.</p>
 <p>CHELSA (Climatologies at high resolution for the earth’s land surface areas) are climate data at (30 arc sec) for the earth land surface areas.</p>
 <p><strong>Description of CHELSA data from CHELSA website</strong></p>
 <blockquote>
 <p>CHELSA is a high resolution (30 arc sec) climate data set for the earth land surface areas currently under development in coorporation with the Department of Geography of the University of Hamburg (Prof. Dr. Jürgen Böhner, Dr. Olaf Conrad, Tobias Kawohl), the Swiss Federal Institute for Forest, Snow and Landscape Research WSL (Prof. Dr. Niklaus Zimmermann), the University of Zurich (Dr. Dirk N. Karger, Dr. Michael Kessler), and the University of Göttingen (Prof. Dr. Holger Kreft). It includes monthly mean temperature and precipitation patterns for the time period 1979-2013. CHELSA is based on a quasi-mechanistical statistical downscaling of the ERA interim global circulation model (<a href="http://www.ecmwf.int/en/research/climate-reanalysis/era-interim" class="uri">http://www.ecmwf.int/en/research/climate-reanalysis/era-interim</a>) with a GPCC bias correction (<a href="https://www.dwd.de/EN/ourservices/gpcc/gpcc.html" class="uri">https://www.dwd.de/EN/ourservices/gpcc/gpcc.html</a>) and is freely available in the download section.</p>
 </blockquote>
 <p>See <a href="http://chelsa-climate.org" class="uri">http://chelsa-climate.org</a> for more information on these data.</p>
-<p>Compare the GSOD weather data from the Philippines with climatic data provided by the GSODR package in the <code>CHELSA</code> data set.</p>
+<p>Compare the GSOD weather data from the Philippines with climatic data provided by the <em>GSODRdata</em> package in the <code>CHELSA</code> data set.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(GSODRdata)
 
 <span class="kw">str</span>(CHELSA)
@@ -372,7 +375,7 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 </div>
 <div id="using-dplyr-functions-join-the-chelsa-and-gsodr-data-for-plotting-" class="section level5">
 <h5 class="hasAnchor">
-<a href="#using-dplyr-functions-join-the-chelsa-and-gsodr-data-for-plotting-" class="anchor"></a>Using <code>dplyr</code> functions, join the CHELSA and GSODR data for plotting.</h5>
+<a href="#using-dplyr-functions-join-the-chelsa-and-gsodr-data-for-plotting-" class="anchor"></a>Using <em>dplyr</em> functions, join the CHELSA and <em>GSODR</em> data for plotting.</h5>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Attaching package: 'dplyr'</span>
@@ -414,7 +417,7 @@ df_melt &lt;-<span class="st"> </span><span class="kw">na.omit</span>(<span clas
 <span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette =</span> <span class="st">"Dark2"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>STNID)</code></pre></div>
 <div class="figure">
-<img src="./articles/figure/example_1.2-1.png" alt="Comparison of GSOD daily values and average monthly values with CHELSA climate monthly values"><p class="caption">Comparison of GSOD daily values and average monthly values with CHELSA climate monthly values</p>
+<img src="articles/figure/example_1.2-1.png" alt="Comparison of GSOD daily values and average monthly values with CHELSA climate monthly values"><p class="caption">Comparison of GSOD daily values and average monthly values with CHELSA climate monthly values</p>
 </div>
 </div>
 </div>
@@ -498,16 +501,16 @@ Starting data file processing
 </div>
 </div>
 </div>
-<div id="other-sources-of-weather-data" class="section level2">
+<div id="other-sources-of-weather-data-in-r" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-sources-of-weather-data" class="anchor"></a>Other Sources of Weather Data</h2>
+<a href="#other-sources-of-weather-data-in-r" class="anchor"></a>Other Sources of Weather Data in R</h2>
 <p>There are several other sources of weather data and ways of retrieving them through R. In particular, the excellent <a href="https://CRAN.R-project.org/package=rnoaa"><code>rnoaa</code></a> package also from <a href="https://ropensci.org">rOpenSci</a> offers tools for interacting with and downloading weather data from the United States National Oceanic and Atmospheric Administration but lacks support GSOD data.</p>
 </div>
 <div id="other-sources-for-fetching-gsod-weather-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#other-sources-for-fetching-gsod-weather-data" class="anchor"></a>Other Sources for Fetching GSOD Weather Data</h2>
-<p>The <a href="https://github.com/environmentalinformatics-marburg/GSODTools"><code>GSODTools</code></a> by <a href="https://github.com/fdetsch">Florian Detsch</a> is an R package that offers similar functionality as <code>GSODR</code> but also has the ability to graph the data and working with data for time series analysis.</p>
-<p>The <a href="https://github.com/ulmo-dev/ulmo"><code>ULMO</code></a> library offers an interface to retrieve GSOD data using Python.</p>
+<p>The <a href="https://github.com/environmentalinformatics-marburg/GSODTools"><em>GSODTools</em></a> by <a href="https://github.com/fdetsch">Florian Detsch</a> is an R package that offers similar functionality as <em>GSODR</em> but also has the ability to graph the data and working with data for time series analysis.</p>
+<p>The <a href="https://github.com/ulmo-dev/ulmo"><em>ULMO</em></a> library offers an interface to retrieve GSOD data using Python.</p>
 </div>
 </div>
 <div id="notes" class="section level1">
@@ -543,7 +546,7 @@ Starting data file processing
 </li>
 <li>License: MIT<br>
 </li>
-<li>To cite <code>GSODR</code>, please use:<br>
+<li>To cite <em>GSODR</em>, please use:<br>
 Adam H Sparks, Tomislav Hengl and Andrew Nelson (2017). GSODR: Global Summary Daily Weather Data in R. <em>The Journal of Open Source Software</em>, <strong>2(10)</strong>. DOI: 10.21105/joss.00177. URL: <a href="https://doi.org/10.21105%2Fjoss.00177">https://doi.org/10.21105%2Fjoss.00177</a><br>
 </li>
 <li>Please note that this project is released with a <a href="CONDUCT.md">Contributor Code of Conduct</a>. By participating in this project you agree to abide by its terms.</li>
