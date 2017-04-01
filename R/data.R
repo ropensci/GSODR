@@ -8,11 +8,11 @@
 #'   \emph{et al}. 2008)}
 #' }
 #'
-#' Station elevation information for the US National Centers for Environmenta
-#' Information (NCEI) Global Surface Summary of the Day (GSOD) weather data.  
-#' The original file has missing and incorrect geographic data including 
-#' location (LAT/LON) and elevation.  This data frame provides an alternative 
-#' set of elevation values with the following changes to the original list of 
+#' Station elevation information for the US National Centers for Environmental
+#' Information (NCEI) Global Surface Summary of the Day (GSOD) weather data.
+#' The original file has missing and incorrect geographic data including
+#' location (LAT/LON) and elevation.  This data frame provides an alternative
+#' set of elevation values with the following changes to the original list of
 #' stations from the NCEI:
 #' \enumerate{
 #' \item{Stations with both a latitude and longitude of 0 degrees were removed.}

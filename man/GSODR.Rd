@@ -11,7 +11,7 @@
 \description{
 Provides automated downloading, parsing, cleaning, unit conversion and
 formatting of Global Surface Summary of the Day (GSOD) weather data from
-the from the USA's National Oceanic and Atmospheric Administration's (NOAA) 
+the from the USA's National Oceanic and Atmospheric Administration's (NOAA)
 National Centre for Environmental Information (NCEI) for use in R.  All units
 are converted from from United States Customary System (USCS) units to
 International System of Units (SI).  Stations may be individually checked for
@@ -68,7 +68,7 @@ corresponding metadata from the NCEI FTP server
 \code{\link{SRTM_GSOD_elevation}} GSDOR provides additional
 elevation data derived from SRTM90m data
 
-\code{\link{country_list}} GSDOR provides a cleaned list of the
+\code{\link{country_list}} GSODR provides a cleaned list of the
 countries which are represented in the GSOD data set
 }
 \author{
