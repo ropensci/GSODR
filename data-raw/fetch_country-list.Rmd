@@ -11,14 +11,14 @@ knitr::opts_chunk$set(echo = TRUE)
 # Introduction
 
 This script will fetch the country list provided by the NCEI for the GSOD
-stations from the ftp server and merge it with ISO codes from the
-[`countrycode`](https://cran.r-project.org/package=countrycode)
-package for inclusion in the GSODR package in /data/country-list.rda. These
+stations from the FTP server and merge it with ISO codes from the
+[_countrycode_](https://cran.r-project.org/package=countrycode)
+package for inclusion in the _GSODR_ package in /data/country-list.rda. These
 codes are used when a user selects a single country for a data query.
 
 # R Data Processing
 
-Read "country-list.txt" file from NCEI FTP server and merge with `countrycode`
+Read "country-list.txt" file from NCEI FTP server and merge with _countrycode_
 data.
 
 ```{r download_merge_inspect, echo=TRUE, messages=FALSE}
@@ -38,7 +38,7 @@ country_list <- data.table::setDT(country_list)
 print(country_list)
 ```
 
-There are unnecessary data in several columns. `GSODR` only requires FIPS, name,
+There are unnecessary data in several columns. _GSODR_ only requires FIPS, name,
 and ISO codes to function.
 
 ```{r remove_uncessesary, echo=TRUE, messages=FALSE}
