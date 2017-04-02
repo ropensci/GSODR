@@ -216,7 +216,7 @@
 #' Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
 #' 90m Database \url{http://srtm.csi.cgiar.org}}
 #'
-#' @return A \code{\link{[base]data.frame}} object of weather data or a
+#' @return A \code{\link[base]{data.frame}} object of weather data or a
 #' comma-separated value (CSV) or GeoPackage (GPKG) file saved to local disk.
 #'
 #' @seealso \code{\link{reformat_GSOD}}
