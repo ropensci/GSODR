@@ -15,7 +15,7 @@ nearest_stations(LAT, LON, distance)
 be returned.}
 }
 \value{
-\code{vector} object of station identification numbers
+\code{\link[base]{vector}} object of station identification numbers
 }
 \description{
 Given a latitude and longitude value entered as decimal degrees (DD),
@@ -40,5 +40,5 @@ n <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 100)
 }
 }
 \author{
-Adam Sparks, \email{adamhsparks@gmail.com}
+Adam H Sparks, \email{adamhsparks@gmail.com}
 }

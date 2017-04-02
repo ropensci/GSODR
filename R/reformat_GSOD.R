@@ -13,11 +13,11 @@
 #'This function reformats the data into a more usable form and calculates three
 #'new elements; saturation vapour pressure (es), actual vapour pressure (ea) and
 #'relative humidity (RH).  All units are converted to International System of
-#'Units (SI), e.g., Fahrenheit to Celsius and inches to millimetres. 
-#'Alternative elevation measurements are supplied for missing values or values 
+#'Units (SI), e.g., Fahrenheit to Celsius and inches to millimetres.
+#'Alternative elevation measurements are supplied for missing values or values
 #'found to be questionable based on the Consultative Group for International
 #'Agricultural Research's Consortium for Spatial Information group's (CGIAR-CSI)
-#'Shuttle Radar Topography Mission 90 metre (SRTM 90m) digital elevation data 
+#'Shuttle Radar Topography Mission 90 metre (SRTM 90m) digital elevation data
 #'based on NASA's original SRTM 90m data.
 #'
 #'@param dsn User supplied file path to location of station file data on
@@ -170,8 +170,8 @@
 #' Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
 #' 90m Database \url{http://srtm.csi.cgiar.org}}
 #'
-#' @return A \code{data.frame} object of weather data or a comma-separated value
-#' (CSV) or GeoPackage (GPKG) file saved to local disk.
+#' @return A \code{\link[base]{data.frame}} object of weather data or a
+#' comma-separated value (CSV) or GeoPackage (GPKG) file saved to local disk.
 #'
 #' @seealso \code{\link{get_GSOD}}
 #'

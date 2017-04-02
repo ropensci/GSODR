@@ -24,8 +24,8 @@
 #'
 #' n <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 100)
 #'}
-#' @return \code{vector} object of station identification numbers
-#' @author Adam Sparks, \email{adamhsparks@gmail.com}
+#' @return \code{\link[base]{vector}} object of station identification numbers
+#' @author Adam H Sparks, \email{adamhsparks@gmail.com}
 #' @export
 nearest_stations <- function(LAT, LON, distance) {
   original_timeout <- options("timeout")[[1]]

@@ -14,8 +14,8 @@ local disk for reformatting.}
 reformatting.}
 }
 \value{
-A \code{data.frame} object of weather data or a comma-separated value
-(CSV) or GeoPackage (GPKG) file saved to local disk.
+A \code{\link[base]{data.frame}} object of weather data or a
+comma-separated value (CSV) or GeoPackage (GPKG) file saved to local disk.
 }
 \description{
 This function automates cleaning and reformatting of GSOD,
@@ -32,11 +32,11 @@ and expanding annual GSOD files and cleaning station files.
 This function reformats the data into a more usable form and calculates three
 new elements; saturation vapour pressure (es), actual vapour pressure (ea) and
 relative humidity (RH).  All units are converted to International System of
-Units (SI), e.g., Fahrenheit to Celsius and inches to millimetres. 
-Alternative elevation measurements are supplied for missing values or values 
+Units (SI), e.g., Fahrenheit to Celsius and inches to millimetres.
+Alternative elevation measurements are supplied for missing values or values
 found to be questionable based on the Consultative Group for International
 Agricultural Research's Consortium for Spatial Information group's (CGIAR-CSI)
-Shuttle Radar Topography Mission 90 metre (SRTM 90m) digital elevation data 
+Shuttle Radar Topography Mission 90 metre (SRTM 90m) digital elevation data
 based on NASA's original SRTM 90m data.
 
 
