@@ -11,7 +11,7 @@
 #' GSOD_stations <- get_station_list()
 #' }
 #' @return \code{\link[data.table]{data.table}} object of station metadata.
-#' @author Adam Sparks, \email{adamhsparks@gmail.com}
+#' @author Adam H Sparks, \email{adamhsparks@gmail.com}
 #' @export
 #'
 get_station_list <- function() {

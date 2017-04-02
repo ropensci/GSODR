@@ -53,8 +53,8 @@ save it locally in a user specified location, if \code{dsn} is not specified
 by the user, defaults to the current working directory.}
 }
 \value{
-A \code{data.frame} object of weather data or a comma-separated value
-(CSV) or GeoPackage (GPKG) file saved to local disk.
+A \code{\link{[base]data.frame}} object of weather data or a
+comma-separated value (CSV) or GeoPackage (GPKG) file saved to local disk.
 }
 \description{
 This function automates downloading, cleaning, reformatting of data from
@@ -242,5 +242,5 @@ Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
 \code{\link{reformat_GSOD}}
 }
 \author{
-Adam Sparks, \email{adamhsparks@gmail.com}
+Adam H Sparks, \email{adamhsparks@gmail.com}
 }
