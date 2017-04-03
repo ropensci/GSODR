@@ -242,7 +242,7 @@ values that are included in the final data for distribution with the GSODR
 package following the approach of Hijmans *et al.* (2005).
 
 Only values for elevation derived from the SRTM data and the STNID, used to
-join this with the original "isd-history.csv" file data when running `get_GSOD`
+join this with the original "isd-history.csv" file data when running `get_GSOD()`
 are included in the final data frame for distribution with the GSODR package.
 
 ```{r cleanup and .rda file creation, message=FALSE, echo=TRUE, warning=FALSE, error=FALSE}

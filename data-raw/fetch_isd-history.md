@@ -1,7 +1,7 @@
 Fetch, clean and correct altitude in GSOD isd\_history.csv Data
 ================
 Adam H. Sparks
-2017-03-03
+2017-04-03
 
 Introduction
 ============
@@ -59,7 +59,14 @@ countries <- readr::read_table(
   "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/country-list.txt")[-1, c(1, 3)]
 ```
 
-Reformat and clean station data file from NCDC
+    ## Parsed with column specification:
+    ## cols(
+    ##   FIPS = col_character(),
+    ##   ID = col_character(),
+    ##   `COUNTRY NAME` = col_character()
+    ## )
+
+Reformat and clean station data file from NCEI
 ----------------------------------------------
 
 ``` r
@@ -179,7 +186,7 @@ summary(SRTM_GSOD_elevation)
 ```
 
     ##      USAF               WBAN             STN_NAME        
-    ##  Length:28330       Length:28330       Length:28330      
+    ##  Length:28339       Length:28339       Length:28339      
     ##  Class :character   Class :character   Class :character  
     ##  Mode  :character   Mode  :character   Mode  :character  
     ##                                                          
@@ -187,23 +194,23 @@ summary(SRTM_GSOD_elevation)
     ##                                                          
     ##                                                          
     ##      CTRY              STATE               CALL                LAT        
-    ##  Length:28330       Length:28330       Length:28330       Min.   :-89.00  
+    ##  Length:28339       Length:28339       Length:28339       Min.   :-89.00  
     ##  Class :character   Class :character   Class :character   1st Qu.: 22.47  
-    ##  Mode  :character   Mode  :character   Mode  :character   Median : 39.25  
-    ##                                                           Mean   : 31.13  
-    ##                                                           3rd Qu.: 49.88  
+    ##  Mode  :character   Mode  :character   Mode  :character   Median : 39.27  
+    ##                                                           Mean   : 31.14  
+    ##                                                           3rd Qu.: 49.87  
     ##                                                           Max.   : 89.37  
     ##                                                                           
     ##       LON               ELEV_M           BEGIN               END          
     ##  Min.   :-179.983   Min.   :-350.0   Min.   :19010101   Min.   :19051231  
-    ##  1st Qu.: -83.269   1st Qu.:  23.0   1st Qu.:19570701   1st Qu.:20020418  
-    ##  Median :   6.700   Median : 140.0   Median :19760304   Median :20160222  
-    ##  Mean   :  -3.445   Mean   : 360.8   Mean   :19782412   Mean   :20047483  
-    ##  3rd Qu.:  61.889   3rd Qu.: 435.0   3rd Qu.:20020409   3rd Qu.:20170227  
-    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20170118   Max.   :20170301  
+    ##  1st Qu.: -83.287   1st Qu.:  23.0   1st Qu.:19570701   1st Qu.:20020421  
+    ##  Median :   6.683   Median : 140.0   Median :19760305   Median :20160421  
+    ##  Mean   :  -3.474   Mean   : 360.8   Mean   :19782535   Mean   :20047780  
+    ##  3rd Qu.:  61.842   3rd Qu.: 435.0   3rd Qu.:20020416   3rd Qu.:20170331  
+    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20170310   Max.   :20170402  
     ##                     NA's   :218                                           
     ##     STNID           ELEV_M_SRTM_90m 
-    ##  Length:28330       Min.   :-361.0  
+    ##  Length:28339       Min.   :-361.0  
     ##  Class :character   1st Qu.:  25.0  
     ##  Mode  :character   Median : 156.0  
     ##                     Mean   : 380.1  
@@ -234,22 +241,6 @@ Only values for elevation derived from the SRTM data and the STNID, used to join
 # write rda file to disk for use with GSODR package
 data.table::setDT(SRTM_GSOD_elevation)
 SRTM_GSOD_elevation[, c(1:11) := NULL]
-```
-
-    ##               STNID ELEV_M_SRTM_90m
-    ##     1: 008268-99999            1160
-    ##     2: 010010-99999              NA
-    ##     3: 010014-99999              48
-    ##     4: 010015-99999              NA
-    ##     5: 010016-99999              NA
-    ##    ---                             
-    ## 28326: 999999-94996             416
-    ## 28327: 999999-96404              NA
-    ## 28328: 999999-96406              NA
-    ## 28329: 999999-96407              NA
-    ## 28330: 999999-96408              NA
-
-``` r
 devtools::use_data(SRTM_GSOD_elevation, overwrite = TRUE, compress = "bzip2")
 
 # clean up Natural Earth data files before we leave
@@ -266,14 +257,14 @@ Notes
 NOAA Policy
 -----------
 
-Users of these data should take into account the following (from the [NCDC website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):
+Users of these data should take into account the following (from the [NCEI website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):
 
 > "The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification." [WMO Resolution 40. NOAA Policy](http://www.wmo.int/pages/about/Resolution40.html)
 
 R System Information
 --------------------
 
-    ## R version 3.3.2 (2016-10-31)
+    ## R version 3.3.3 (2017-03-06)
     ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
     ## Running under: OS X El Capitan 10.11.6
     ## 
@@ -287,24 +278,25 @@ R System Information
     ## [1] ggalt_0.4.0   ggplot2_2.2.1 foreach_1.4.3
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] Rcpp_0.12.9        highr_0.6          RColorBrewer_1.1-2
-    ##  [4] compiler_3.3.2     plyr_1.8.4         iterators_1.0.8   
-    ##  [7] tools_3.3.2        extrafont_0.17     digest_0.6.12     
-    ## [10] memoise_1.0.0      evaluate_0.10      tibble_1.2        
-    ## [13] gtable_0.2.0       lattice_0.20-34    DBI_0.5-1         
-    ## [16] curl_2.3           yaml_2.1.14        rgdal_1.2-5       
-    ## [19] parallel_3.3.2     Rttf2pt1_1.3.4     withr_1.0.2       
-    ## [22] dplyr_0.5.0        stringr_1.2.0      raster_2.5-8      
-    ## [25] knitr_1.15.1       devtools_1.12.0    maps_3.1.1        
-    ## [28] rprojroot_1.2      grid_3.3.2         data.table_1.10.4 
-    ## [31] R6_2.2.0           rmarkdown_1.3      sp_1.2-4          
-    ## [34] extrafontdb_1.0    readr_1.0.0        magrittr_1.5      
-    ## [37] MASS_7.3-45        backports_1.0.5    scales_0.4.1      
-    ## [40] codetools_0.2-15   htmltools_0.3.5    proj4_1.0-8       
-    ## [43] assertthat_0.1     countrycode_0.19   colorspace_1.3-2  
-    ## [46] labeling_0.3       ash_1.0-15         KernSmooth_2.23-15
-    ## [49] stringi_1.1.2      lazyeval_0.2.0     doParallel_1.0.10 
-    ## [52] munsell_0.4.3
+    ##  [1] Rcpp_0.12.10         highr_0.6            RColorBrewer_1.1-2  
+    ##  [4] compiler_3.3.3       plyr_1.8.4           iterators_1.0.8     
+    ##  [7] tools_3.3.3          pkgload_0.0.0.9000   pkgbuild_0.0.0.9000 
+    ## [10] extrafont_0.17       digest_0.6.12        memoise_1.0.0       
+    ## [13] evaluate_0.10        tibble_1.2           gtable_0.2.0        
+    ## [16] lattice_0.20-34      DBI_0.6              curl_2.4            
+    ## [19] yaml_2.1.14          rgdal_1.2-5          parallel_3.3.3      
+    ## [22] Rttf2pt1_1.3.4       withr_1.0.2          dplyr_0.5.0         
+    ## [25] stringr_1.2.0        raster_2.5-8         knitr_1.15.1        
+    ## [28] devtools_1.12.0.9000 maps_3.1.1           hms_0.3             
+    ## [31] rprojroot_1.2        grid_3.3.3           data.table_1.10.4   
+    ## [34] R6_2.2.0             rmarkdown_1.4        sp_1.2-4            
+    ## [37] extrafontdb_1.0      readr_1.1.0          magrittr_1.5        
+    ## [40] MASS_7.3-45          backports_1.0.5      scales_0.4.1        
+    ## [43] codetools_0.2-15     htmltools_0.3.5      proj4_1.0-8         
+    ## [46] assertthat_0.1       countrycode_0.19     colorspace_1.3-2    
+    ## [49] labeling_0.3         ash_1.0-15           KernSmooth_2.23-15  
+    ## [52] stringi_1.1.3        lazyeval_0.2.0       doParallel_1.0.10   
+    ## [55] munsell_0.4.3
 
 References
 ==========

@@ -12,12 +12,6 @@ env:
   - r: release
     not_cran: false
     r_check_args: "--no-manual --as--cran"
-  - r: devel
-    not_cran: true
-    r_check_args: "--no-manual"
-  - r: devel
-    not_cran: false
-    r_check_args: "--no-manual --as--cran"
 
 before_install:
 - sudo apt-get install -y libgdal-dev libproj-dev
