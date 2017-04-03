@@ -1,3 +1,8 @@
+# GSODR 1.0.2.1
+
+## Minor changes  
+
+- Correct references to _GSODRdata_ package where incorrectly referred to as _GSODdata_
 
 # GSODR 1.0.2
 
@@ -9,7 +14,7 @@
 - Update SRTM elevation data  
 - Update country list data  
 - Fix missing images in README.html on CRAN  
-
+- Correct references to _GSODRdata_ package where incorrectly referred to as _GSODdata_
 # GSODR 1.0.1
 
 ## Minor changes  

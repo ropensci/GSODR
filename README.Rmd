@@ -319,7 +319,7 @@ This package is only available from GitHub; due to its large size (<9Mb installe
 
 ```r
 # install.packages("devtools")
-devtools::install_github("adamhsparks/GSODdata")
+devtools::install_github("adamhsparks/GSODRdata")
 ````
 
 ##### Working with climate data from _GSODRdata_

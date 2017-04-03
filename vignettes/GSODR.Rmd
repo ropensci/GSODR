@@ -331,12 +331,12 @@ x <- reformat_GSOD(dsn = "~/GSOD/gsod_1960")
 
 # Additional Climate Data
 
-Additional climate data, [_GSODdata_](https://github.com/adamhsparks/GSODRdata), formatted for use with GSOD data provided by _GSODR_ are available as an R package installable through GitHub due to the package size, 5.1Mb, being too large for CRAN.
+Additional climate data, [_GSODRdata_](https://github.com/adamhsparks/GSODRdata), formatted for use with GSOD data provided by _GSODR_ are available as an R package installable through GitHub due to the package size, 5.1Mb, being too large for CRAN.
 
 ```r
 #install.packages("devtools")
-devtools::install_github("adamhsparks/GSODdata")
-library("GSODdata")
+devtools::install_github("adamhsparks/GSODRdata")
+library("GSODRdata")
 ````
 
 # Notes

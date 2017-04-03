@@ -406,7 +406,7 @@ for use with the *GSODR* package. See
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("adamhsparks/GSODdata")
+devtools::install_github("adamhsparks/GSODRdata")
 ```
 
 ##### Working with climate data from *GSODRdata*
