@@ -71,7 +71,7 @@
 <h1 class="hasAnchor">
 <a href="#introduction-to-gsodr" class="anchor"></a>Introduction to <em>GSODR</em>
 </h1>
-<p>The GSOD or <a href="https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod">Global Surface Summary of the Day (GSOD)</a> data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. The GSODR package aims to make it easy to find, transfer and format the data you need for use in analysis. The <em>GSODR</em> package provides four main functions for facilitating this:</p>
+<p>The GSOD or <a href="https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod">Global Surface Summary of the Day (GSOD)</a> data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. <em>GSODR</em> aims to make it easy to find, transfer and format the data you need for use in analysis and provides four main functions for facilitating this:</p>
 <ul>
 <li>
 <code><a href="reference/get_GSOD.html">get_GSOD()</a></code> - queries and transfers files from the FTP server, reformats them and returns a <code>data.frame()</code> object in R session or saves a file to disk with options for a GeoPackage spatially enabled file or comma separated values (CSV) file,<br>
@@ -114,7 +114,7 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 <div id="final-data-format-and-contents" class="section level2">
 <h2 class="hasAnchor">
 <a href="#final-data-format-and-contents" class="anchor"></a>Final data format and contents</h2>
-<p>The <em>GSODR</em> package returns data with the following fields/units.</p>
+<p><em>GSODR</em> formatted data include the following fields and units:</p>
 <ul>
 <li><p><strong>STNID</strong> - Station number (WMO/DATSAV3 number) for the location;</p></li>
 <li><p><strong>WBAN</strong> - number where applicable–this is the historical “Weather Bureau Air Force Navy” number - with WBAN being the acronym;</p></li>
