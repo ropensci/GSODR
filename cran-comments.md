@@ -14,14 +14,14 @@ There were no ERRORs or WARNINGs
 This is a new minor release
 
 ## Minor changes  
-
+- This new version supplants v 1.0.2 previously submitted but not yet released on CRAN
+- Correct references to _GSODRdata_ package where incorrectly referred to as _GSODdata_
 - Improved documentation (i.e., spelling corrections and more descriptive)  
 - More descriptive vignette for "GSODR use case: Specified years/stations vignette"
 - Round MAX/MIN temp to one decimal place, not two  
 - Update SRTM elevation data  
 - Update country list data  
 - Fix missing images in README.html on CRAN  
-- Correct references to _GSODRdata_ package where incorrectly referred to as _GSODdata_
 
 ## Reverse dependencies  
 - There are no reverse dependencies  
