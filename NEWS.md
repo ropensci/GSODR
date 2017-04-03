@@ -1,4 +1,15 @@
 
+# GSODR 1.0.2
+
+## Minor changes  
+
+- Improved documentation (i.e., spelling corrections and more descriptive)  
+- More descriptive vignette for "GSODR use case: Specified years/stations vignette"
+- Round MAX/MIN temp to one decimal place, not two  
+- Update SRTM elevation data  
+- Update country list data  
+- Fix missing images in README.html on CRAN  
+
 # GSODR 1.0.1
 
 ## Minor changes  
