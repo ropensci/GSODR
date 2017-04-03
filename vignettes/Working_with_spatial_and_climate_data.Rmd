@@ -79,7 +79,7 @@ See http://chelsa-climate.org for more information on these data.
 
 ```r
 # install.packages("devtools")
-devtools::install_github("adamhsparks/GSODdata")
+devtools::install_github("adamhsparks/GSODRdata")
 ````
 
 Now that the extra data have been installed, take a look at the CHELSA data that are one of the data sets included in the _GSODRdata_ package.

@@ -21,6 +21,7 @@ This is a new minor release
 - Update SRTM elevation data  
 - Update country list data  
 - Fix missing images in README.html on CRAN  
+- Correct references to _GSODRdata_ package where incorrectly referred to as _GSODdata_
 
 ## Reverse dependencies  
 - There are no reverse dependencies  
