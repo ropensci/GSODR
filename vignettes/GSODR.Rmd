@@ -19,7 +19,7 @@ if (!all(unlist(lapply(required, function(pkg) requireNamespace(pkg, quietly = T
 # Introduction
 
 The GSOD or [Global Surface Summary of the Day (GSOD)](https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod)
-data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. The _GSODR_ package aims to make it easy to find, transfer and format the data you need for use in analysis. The _GSODR_ package provides four main functions for facilitating this:
+data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. _GSODR_ aims to make it easy to find, transfer and format the data you need for use in analysis and provides four main functions for facilitating this:
 
 * `get_GSOD()` - the main function that will query and transfer files from the FTP server, reformat them and return a data.frame in R or save a file to disk  
 * `reformat_GSOD()` - the workhorse, this function takes individual station files on the local disk and reformats them returning a data.frame in R  
@@ -232,7 +232,7 @@ ggplot(data = tbar_temps, aes(x = ymd(YEARMODA), y = value,
 Because the stations provide geospatial location information, it is possible to create a spatial file. [GeoPackage files](http://www.geopackage.org) are a open, standards-based, platform-independent, portable, self-describing compact
 format for transferring geospatial information, which handle vector files much like shapefiles do, but eliminate many of the issues that shapefiles have with field names and the number of files. The `get_GSOD()` function can create a GeoPackage file, which can be used with a GIS for further analysis and mapping with other spatial objects.
 
-After getting weather stations for Australia and creating a GeoPackage file, the rgdal package can import the data into R and the raster package can download an outline of Australia useful for plotting the station locations in this country.
+After getting weather stations for Australia and creating a GeoPackage file, _rgdal_ can import the data into R and _raster_ provides a function, `getData()`, to download an outline of Australia useful for plotting the station locations in this country.
 
 ```r
 get_GSOD(years = 2015, country = "Australia", dsn = "~/", filename = "AUS",

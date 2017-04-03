@@ -26,10 +26,10 @@ The GSOD or [Global Surface Summary of the Day
 (GSOD)](https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod)
 data provided by the US National Centers for Environmental Information
 (NCEI) are a valuable source of weather data with global coverage.
-However, the data files are cumbersome and difficult to work with. The
-GSODR package aims to make it easy to find, transfer and format the data
-you need for use in analysis. The *GSODR* package provides four main
-functions for facilitating this:
+However, the data files are cumbersome and difficult to work with.
+*GSODR* aims to make it easy to find, transfer and format the data you
+need for use in analysis and provides four main functions for
+facilitating this:
 
 -   `get_GSOD()` - queries and transfers files from the FTP server,
     reformats them and returns a `data.frame()` object in R session or
@@ -97,7 +97,7 @@ devtools::install_github("ropensci/GSODR", build_vignettes = TRUE)
 Final data format and contents
 ------------------------------
 
-The *GSODR* package returns data with the following fields/units.
+*GSODR* formatted data include the following fields and units:
 
 -   **STNID** - Station number (WMO/DATSAV3 number) for the location;
 
@@ -412,7 +412,7 @@ devtools::install_github("adamhsparks/GSODdata")
 ##### Working with climate data from *GSODRdata*
 
 Now that the extra data have been installed, take a look at the CHELSA
-data that are one of the data sets included in the *GSODRdata* package.
+data that are one of the data sets included in *GSODRdata*.
 
 CHELSA (Climatologies at high resolution for the earth’s land surface
 areas) are climate data at (30 arc sec) for the earth land surface
@@ -439,7 +439,7 @@ areas.
 See <http://chelsa-climate.org> for more information on these data.
 
 Compare the GSOD weather data from the Philippines with climatic data
-provided by the *GSODRdata* package in the `CHELSA` data set.
+provided by *GSODRdata* in the `CHELSA` data set.
 
 ``` r
 library(GSODRdata)
