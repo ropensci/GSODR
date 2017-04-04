@@ -38,7 +38,7 @@ This vignette details how to find and retrieve weather data for the area that th
 
 ### Retrieve PHL Provincial Data and Select Loop Provinces
 
-As a first step, we'll use the [`raster`](https://cran.r-project.org/package=raster) package to retrieve data from [GADM](http://www.gadm.org/) that will provide the provincial spatial data for the survey area. We will then use this to find the centroid of the area of interest, which will be used to find the nearest stations. Using `raster::getData()` fetch level 0 (national) and 1 (provincial) data for the Philippines.
+As a first step, we'll use the [_raster_](https://cran.r-project.org/package=raster) package to retrieve data from [GADM](http://www.gadm.org/) that will provide the provincial spatial data for the survey area. We will then use this to find the centroid of the area of interest, which will be used to find the nearest stations. Using `raster::getData()` fetch level 0 (national) and 1 (provincial) data for the Philippines.
 
 ```r
 library(raster)
@@ -59,7 +59,7 @@ Central_Luzon <- RP1[RP1@data$NAME_1 == "Pampanga" |
 
 Next, create a map inset showing where the Central Luzon Loop survey takes place.
 
-First we'll use `gSimplify()` from `rgeos` to simplify the map of the Philippines to make the map generation in the next few steps quicker.
+First we'll use `gSimplify()` from _rgeos_ to simplify the map of the Philippines to make the map generation in the next few steps quicker.
 
 ```r
 RP0 <- rgeos::gSimplify(RP0, tol = 0.05)
