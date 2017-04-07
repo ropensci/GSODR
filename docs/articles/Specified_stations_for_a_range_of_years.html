@@ -60,7 +60,7 @@
       <h1>GSODR use case: Specified years/stations vignette</h1>
                         <h4 class="author">Adam H Sparks</h4>
             
-            <h4 class="date">2017-04-03</h4>
+            <h4 class="date">2017-04-07</h4>
           </div>
 
     
@@ -83,7 +83,7 @@
 <div id="retrieve-phl-provincial-data-and-select-loop-provinces" class="section level3">
 <h3 class="hasAnchor">
 <a href="#retrieve-phl-provincial-data-and-select-loop-provinces" class="anchor"></a>Retrieve PHL Provincial Data and Select Loop Provinces</h3>
-<p>As a first step, we’ll use the <a href="https://cran.r-project.org/package=raster"><code>raster</code></a> package to retrieve data from <a href="http://www.gadm.org/">GADM</a> that will provide the provincial spatial data for the survey area. We will then use this to find the centroid of the area of interest, which will be used to find the nearest stations. Using <code>raster::getData()</code> fetch level 0 (national) and 1 (provincial) data for the Philippines.</p>
+<p>As a first step, we’ll use the <a href="https://cran.r-project.org/package=raster"><em>raster</em></a> package to retrieve data from <a href="http://www.gadm.org/">GADM</a> that will provide the provincial spatial data for the survey area. We will then use this to find the centroid of the area of interest, which will be used to find the nearest stations. Using <code>raster::getData()</code> fetch level 0 (national) and 1 (provincial) data for the Philippines.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(raster)
 RP0 &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw">getData</span>(<span class="dt">country =</span> <span class="st">"Philippines"</span>, <span class="dt">level =</span> <span class="dv">0</span>)
 RP1 &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw">getData</span>(<span class="dt">country =</span> <span class="st">"Philippines"</span>, <span class="dt">level =</span> <span class="dv">1</span>)</code></pre></div>
@@ -95,7 +95,7 @@ RP1 &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="k
 <span class="st">                     </span>RP1<span class="op">@</span>data<span class="op">$</span>NAME_<span class="dv">1</span> <span class="op">==</span><span class="st"> "Nueva Ecija"</span> <span class="op">|</span>
 <span class="st">                     </span>RP1<span class="op">@</span>data<span class="op">$</span>NAME_<span class="dv">1</span> <span class="op">==</span><span class="st"> "Bulacan"</span>, ]</code></pre></div>
 <p>Next, create a map inset showing where the Central Luzon Loop survey takes place.</p>
-<p>First we’ll use <code>gSimplify()</code> from <code>rgeos</code> to simplify the map of the Philippines to make the map generation in the next few steps quicker.</p>
+<p>First we’ll use <code>gSimplify()</code> from <em>rgeos</em> to simplify the map of the Philippines to make the map generation in the next few steps quicker.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">RP0 &lt;-<span class="st"> </span>rgeos<span class="op">::</span><span class="kw">gSimplify</span>(RP0, <span class="dt">tol =</span> <span class="fl">0.05</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
 <span class="kw">library</span>(grid)

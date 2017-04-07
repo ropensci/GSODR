@@ -45,7 +45,7 @@ GSOD_stations <- get_station_list()
 Using [ggplot2](https://CRAN.R-project.org/package=ggplot2) and the 
 [ggalt](https://CRAN.R-project.org/package=ggalt) package it is possible to plot the station locations using alpha transparency to see the densest part of the network and use the Robinson projection for the map.
 
-```{r
+```r
 library(ggplot2)
 library(ggalt)
 
