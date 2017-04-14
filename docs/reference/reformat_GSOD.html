@@ -25,7 +25,7 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -90,7 +90,7 @@ the United States National Center for Environmental Information's (NCEI)
 FTP server.</p>
     
 
-    <pre><span class='fu'>reformat_GSOD</span>(<span class='kw'>dsn</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>file_list</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>reformat_GSOD</span>(<span class='kw'>dsn</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>file_list</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -260,16 +260,16 @@ Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># </span>
-<span class='co'># # Reformat station data files in local directory</span>
-<span class='co'># x &lt;- reformat_GSOD(dsn = "~/tmp")</span>
-<span class='co'># </span>
-<span class='co'># # Reformat a list of data files</span>
-<span class='co'># y &lt;- c("~/GSOD/gsod_1960/200490-99999-1960.op.gz",</span>
-<span class='co'>#        "~/GSOD/gsod_1961/200490-99999-1961.op.gz")</span>
-<span class='co'># x &lt;- reformat_GSOD(file_list = y)</span>
-<span class='co'>## ---------------------------------------------</span></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>not_run</span>({
+
+  <span class='co'># Reformat station data files in local directory</span>
+  <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>reformat_GSOD</span>(<span class='kw'>dsn</span> <span class='kw'>=</span> <span class='st'>"~/tmp"</span>)
+
+  <span class='co'># Reformat a list of data files</span>
+  <span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='st'>"~/GSOD/gsod_1960/200490-99999-1960.op.gz"</span>,
+         <span class='st'>"~/GSOD/gsod_1961/200490-99999-1961.op.gz"</span>)
+  <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>reformat_GSOD</span>(<span class='kw'>file_list</span> <span class='kw'>=</span> <span class='no'>y</span>)
+})</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
