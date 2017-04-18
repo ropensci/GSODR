@@ -1,7 +1,7 @@
 Fetch GSOD Country List and Merge with ISO Country Codes
 ================
 Adam H. Sparks
-2017-04-01
+2017-04-18
 
 Introduction
 ============
@@ -156,7 +156,7 @@ Write .rda file to disk.
 devtools::use_data(country_list, overwrite = TRUE, compress = "bzip2")
 ```
 
-    ## Saving country_list as country_list.rda to /Users/asparks/Development/GSODR/data
+    ## Saving country_list as country_list.rda to /Users/U8004755/Development/GSODR/data
 
 Notes
 =====
@@ -172,8 +172,8 @@ R System Information
 --------------------
 
     ## R version 3.3.3 (2017-03-06)
-    ## Platform: x86_64-apple-darwin16.4.0 (64-bit)
-    ## Running under: macOS Sierra 10.12.4
+    ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+    ## Running under: OS X El Capitan 10.11.6
     ## 
     ## locale:
     ## [1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8
@@ -185,12 +185,12 @@ R System Information
     ## [1] countrycode_0.19
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] Rcpp_0.12.10         knitr_1.15.1         magrittr_1.5        
-    ##  [4] hms_0.3              devtools_1.12.0.9000 pkgload_0.0.0.9000  
-    ##  [7] R6_2.2.0             stringr_1.2.0        dplyr_0.5.0         
-    ## [10] tools_3.3.3          pkgbuild_0.0.0.9000  data.table_1.10.4   
-    ## [13] DBI_0.6              withr_1.0.2          htmltools_0.3.5     
-    ## [16] yaml_2.1.14          rprojroot_1.2        digest_0.6.12       
-    ## [19] assertthat_0.1       tibble_1.2           readr_1.1.0         
-    ## [22] curl_2.4             memoise_1.0.0        evaluate_0.10       
-    ## [25] rmarkdown_1.4.0.9000 stringi_1.1.3        backports_1.0.5
+    ##  [1] Rcpp_0.12.10         withr_1.0.2          assertthat_0.2.0    
+    ##  [4] dplyr_0.5.0          digest_0.6.12        rprojroot_1.2       
+    ##  [7] R6_2.2.0             DBI_0.6-1            backports_1.0.5     
+    ## [10] magrittr_1.5         evaluate_0.10        stringi_1.1.5       
+    ## [13] curl_2.5             data.table_1.10.4    rmarkdown_1.4.0.9001
+    ## [16] devtools_1.12.0      tools_3.3.3          stringr_1.2.0       
+    ## [19] readr_1.1.0          hms_0.3              yaml_2.1.14         
+    ## [22] memoise_1.0.0        htmltools_0.3.5      knitr_1.15.1        
+    ## [25] tibble_1.3.0
