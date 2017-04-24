@@ -1,7 +1,7 @@
 Fetch, clean and correct altitude in GSOD isd\_history.csv Data
 ================
 Adam H. Sparks
-2017-04-18
+2017-04-24
 
 Introduction
 ============
@@ -25,6 +25,114 @@ Data Processing
 
 Set up workspace
 ----------------
+
+``` r
+# check for presence of countrycode package and install if needed
+if (!require("countrycode")) {
+  install.packages("countrycode")
+}
+```
+
+    ## Loading required package: countrycode
+
+``` r
+if (!require("data.table")) {
+  install.packages("data.table")
+}
+```
+
+    ## Loading required package: data.table
+
+``` r
+if (!require("dplyr")) {
+  install.packages("dplyr")
+}
+```
+
+    ## Loading required package: dplyr
+
+    ## -------------------------------------------------------------------------
+
+    ## data.table + dplyr code now lives in dtplyr.
+    ## Please library(dtplyr)!
+
+    ## -------------------------------------------------------------------------
+
+    ## 
+    ## Attaching package: 'dplyr'
+
+    ## The following objects are masked from 'package:data.table':
+    ## 
+    ##     between, first, last
+
+    ## The following objects are masked from 'package:stats':
+    ## 
+    ##     filter, lag
+
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     intersect, setdiff, setequal, union
+
+``` r
+if (!require("foreach")) {
+  install.packages("foreach")
+}
+```
+
+    ## Loading required package: foreach
+
+``` r
+if (!require("ggplot2")) {
+  install.packages("ggplot2")
+}
+```
+
+    ## Loading required package: ggplot2
+
+``` r
+if (!require("ggalt")) {
+  install.packages("ggalt")
+}
+```
+
+    ## Loading required package: ggalt
+
+``` r
+if (!require("parallel")) {
+  install.packages("parallel")
+}
+```
+
+    ## Loading required package: parallel
+
+``` r
+if (!require("raster")) {
+  install.packages("raster")
+}
+```
+
+    ## Loading required package: raster
+
+    ## Loading required package: sp
+
+    ## 
+    ## Attaching package: 'raster'
+
+    ## The following object is masked from 'package:dplyr':
+    ## 
+    ##     select
+
+    ## The following object is masked from 'package:data.table':
+    ## 
+    ##     shift
+
+``` r
+if (!require("readr")) {
+  install.packages("readr")
+}
+```
+
+    ## Loading required package: readr
 
 ``` r
 dem_tiles <- list.files(path.expand("~/Data/CGIAR-CSI SRTM"), 
@@ -264,38 +372,42 @@ Users of these data should take into account the following (from the [NCEI websi
 R System Information
 --------------------
 
-    ## R version 3.3.3 (2017-03-06)
+    ## R version 3.4.0 (2017-04-21)
     ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
     ## Running under: OS X El Capitan 10.11.6
+    ## 
+    ## Matrix products: default
+    ## BLAS/LAPACK: /usr/local/Cellar/openblas/0.2.19/lib/libopenblasp-r0.2.19.dylib
     ## 
     ## locale:
     ## [1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8
     ## 
     ## attached base packages:
-    ## [1] stats     graphics  grDevices utils     datasets  methods   base     
+    ## [1] parallel  stats     graphics  grDevices utils     datasets  methods  
+    ## [8] base     
     ## 
     ## other attached packages:
-    ## [1] ggalt_0.4.0   ggplot2_2.2.1 foreach_1.4.3
+    ## [1] readr_1.1.0       raster_2.5-8      sp_1.2-4          ggalt_0.4.0      
+    ## [5] ggplot2_2.2.1     foreach_1.4.3     dplyr_0.5.0       data.table_1.10.4
+    ## [9] countrycode_0.19 
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] Rcpp_0.12.10         highr_0.6            RColorBrewer_1.1-2  
-    ##  [4] compiler_3.3.3       plyr_1.8.4           iterators_1.0.8     
-    ##  [7] tools_3.3.3          extrafont_0.17       digest_0.6.12       
-    ## [10] memoise_1.0.0        evaluate_0.10        tibble_1.3.0        
-    ## [13] gtable_0.2.0         lattice_0.20-35      DBI_0.6-1           
-    ## [16] curl_2.5             yaml_2.1.14          rgdal_1.2-6         
-    ## [19] parallel_3.3.3       Rttf2pt1_1.3.4       withr_1.0.2         
-    ## [22] dplyr_0.5.0          stringr_1.2.0        raster_2.5-8        
-    ## [25] knitr_1.15.1         devtools_1.12.0      maps_3.1.1          
-    ## [28] hms_0.3              rprojroot_1.2        grid_3.3.3          
-    ## [31] data.table_1.10.4    R6_2.2.0             rmarkdown_1.4.0.9001
-    ## [34] sp_1.2-4             extrafontdb_1.0      readr_1.1.0         
-    ## [37] magrittr_1.5         MASS_7.3-45          backports_1.0.5     
-    ## [40] scales_0.4.1         codetools_0.2-15     htmltools_0.3.5     
-    ## [43] proj4_1.0-8          assertthat_0.2.0     countrycode_0.19    
-    ## [46] colorspace_1.3-2     labeling_0.3         ash_1.0-15          
-    ## [49] KernSmooth_2.23-15   stringi_1.1.5        lazyeval_0.2.0      
-    ## [52] doParallel_1.0.10    munsell_0.4.3
+    ##  [1] Rcpp_0.12.10       highr_0.6          compiler_3.4.0    
+    ##  [4] RColorBrewer_1.1-2 plyr_1.8.4         iterators_1.0.8   
+    ##  [7] tools_3.4.0        extrafont_0.17     digest_0.6.12     
+    ## [10] memoise_1.1.0      lattice_0.20-35    evaluate_0.10     
+    ## [13] tibble_1.3.0       gtable_0.2.0       DBI_0.6-1         
+    ## [16] rgdal_1.2-6        curl_2.5           yaml_2.1.14       
+    ## [19] Rttf2pt1_1.3.4     withr_1.0.2        stringr_1.2.0     
+    ## [22] knitr_1.15.1       devtools_1.12.0    hms_0.3           
+    ## [25] maps_3.1.1         rprojroot_1.2      grid_3.4.0        
+    ## [28] R6_2.2.0           rmarkdown_1.4      extrafontdb_1.0   
+    ## [31] magrittr_1.5       backports_1.0.5    scales_0.4.1      
+    ## [34] codetools_0.2-15   htmltools_0.3.5    MASS_7.3-47       
+    ## [37] assertthat_0.2.0   proj4_1.0-8        colorspace_1.3-2  
+    ## [40] labeling_0.3       KernSmooth_2.23-15 ash_1.0-15        
+    ## [43] stringi_1.1.5      doParallel_1.0.10  lazyeval_0.2.0    
+    ## [46] munsell_0.4.3
 
 References
 ==========

@@ -45,6 +45,43 @@ every instance for the 90m column.
 ## Set up workspace
 
 ```{r set up workspace, echo=TRUE, messages=FALSE}
+# check for presence of countrycode package and install if needed
+if (!require("countrycode")) {
+  install.packages("countrycode")
+}
+
+if (!require("data.table")) {
+  install.packages("data.table")
+}
+
+if (!require("dplyr")) {
+  install.packages("dplyr")
+}
+
+if (!require("foreach")) {
+  install.packages("foreach")
+}
+
+if (!require("ggplot2")) {
+  install.packages("ggplot2")
+}
+
+if (!require("ggalt")) {
+  install.packages("ggalt")
+}
+
+if (!require("parallel")) {
+  install.packages("parallel")
+}
+
+if (!require("raster")) {
+  install.packages("raster")
+}
+
+if (!require("readr")) {
+  install.packages("readr")
+}
+
 dem_tiles <- list.files(path.expand("~/Data/CGIAR-CSI SRTM"), 
                         pattern = glob2rx("*.tif"), full.names = TRUE)
 crs <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"

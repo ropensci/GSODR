@@ -1,7 +1,7 @@
 Fetch GSOD Country List and Merge with ISO Country Codes
 ================
 Adam H. Sparks
-2017-04-18
+2017-04-24
 
 Introduction
 ============
@@ -171,9 +171,12 @@ Users of these data should take into account the following (from the [NCEI websi
 R System Information
 --------------------
 
-    ## R version 3.3.3 (2017-03-06)
+    ## R version 3.4.0 (2017-04-21)
     ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
     ## Running under: OS X El Capitan 10.11.6
+    ## 
+    ## Matrix products: default
+    ## BLAS/LAPACK: /usr/local/Cellar/openblas/0.2.19/lib/libopenblasp-r0.2.19.dylib
     ## 
     ## locale:
     ## [1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8
@@ -185,12 +188,12 @@ R System Information
     ## [1] countrycode_0.19
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] Rcpp_0.12.10         withr_1.0.2          assertthat_0.2.0    
-    ##  [4] dplyr_0.5.0          digest_0.6.12        rprojroot_1.2       
-    ##  [7] R6_2.2.0             DBI_0.6-1            backports_1.0.5     
-    ## [10] magrittr_1.5         evaluate_0.10        stringi_1.1.5       
-    ## [13] curl_2.5             data.table_1.10.4    rmarkdown_1.4.0.9001
-    ## [16] devtools_1.12.0      tools_3.3.3          stringr_1.2.0       
-    ## [19] readr_1.1.0          hms_0.3              yaml_2.1.14         
-    ## [22] memoise_1.0.0        htmltools_0.3.5      knitr_1.15.1        
-    ## [25] tibble_1.3.0
+    ##  [1] Rcpp_0.12.10      withr_1.0.2       assertthat_0.2.0 
+    ##  [4] dplyr_0.5.0       digest_0.6.12     rprojroot_1.2    
+    ##  [7] R6_2.2.0          DBI_0.6-1         backports_1.0.5  
+    ## [10] magrittr_1.5      evaluate_0.10     stringi_1.1.5    
+    ## [13] curl_2.5          data.table_1.10.4 rmarkdown_1.4    
+    ## [16] devtools_1.12.0   tools_3.4.0       stringr_1.2.0    
+    ## [19] readr_1.1.0       hms_0.3           yaml_2.1.14      
+    ## [22] compiler_3.4.0    memoise_1.1.0     htmltools_0.3.5  
+    ## [25] knitr_1.15.1      tibble_1.3.0
