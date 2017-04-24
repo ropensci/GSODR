@@ -1,7 +1,7 @@
 Fetch, clean and correct altitude in GSOD isd\_history.csv Data
 ================
 Adam H. Sparks
-2017-04-03
+2017-04-24
 
 Introduction
 ============
@@ -25,6 +25,114 @@ Data Processing
 
 Set up workspace
 ----------------
+
+``` r
+# check for presence of countrycode package and install if needed
+if (!require("countrycode")) {
+  install.packages("countrycode")
+}
+```
+
+    ## Loading required package: countrycode
+
+``` r
+if (!require("data.table")) {
+  install.packages("data.table")
+}
+```
+
+    ## Loading required package: data.table
+
+``` r
+if (!require("dplyr")) {
+  install.packages("dplyr")
+}
+```
+
+    ## Loading required package: dplyr
+
+    ## -------------------------------------------------------------------------
+
+    ## data.table + dplyr code now lives in dtplyr.
+    ## Please library(dtplyr)!
+
+    ## -------------------------------------------------------------------------
+
+    ## 
+    ## Attaching package: 'dplyr'
+
+    ## The following objects are masked from 'package:data.table':
+    ## 
+    ##     between, first, last
+
+    ## The following objects are masked from 'package:stats':
+    ## 
+    ##     filter, lag
+
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     intersect, setdiff, setequal, union
+
+``` r
+if (!require("foreach")) {
+  install.packages("foreach")
+}
+```
+
+    ## Loading required package: foreach
+
+``` r
+if (!require("ggplot2")) {
+  install.packages("ggplot2")
+}
+```
+
+    ## Loading required package: ggplot2
+
+``` r
+if (!require("ggalt")) {
+  install.packages("ggalt")
+}
+```
+
+    ## Loading required package: ggalt
+
+``` r
+if (!require("parallel")) {
+  install.packages("parallel")
+}
+```
+
+    ## Loading required package: parallel
+
+``` r
+if (!require("raster")) {
+  install.packages("raster")
+}
+```
+
+    ## Loading required package: raster
+
+    ## Loading required package: sp
+
+    ## 
+    ## Attaching package: 'raster'
+
+    ## The following object is masked from 'package:dplyr':
+    ## 
+    ##     select
+
+    ## The following object is masked from 'package:data.table':
+    ## 
+    ##     shift
+
+``` r
+if (!require("readr")) {
+  install.packages("readr")
+}
+```
+
+    ## Loading required package: readr
 
 ``` r
 dem_tiles <- list.files(path.expand("~/Data/CGIAR-CSI SRTM"), 
@@ -203,11 +311,11 @@ summary(SRTM_GSOD_elevation)
     ##                                                                           
     ##       LON               ELEV_M           BEGIN               END          
     ##  Min.   :-179.983   Min.   :-350.0   Min.   :19010101   Min.   :19051231  
-    ##  1st Qu.: -83.287   1st Qu.:  23.0   1st Qu.:19570701   1st Qu.:20020421  
+    ##  1st Qu.: -83.287   1st Qu.:  23.0   1st Qu.:19570701   1st Qu.:20020422  
     ##  Median :   6.683   Median : 140.0   Median :19760305   Median :20160421  
-    ##  Mean   :  -3.474   Mean   : 360.8   Mean   :19782535   Mean   :20047780  
-    ##  3rd Qu.:  61.842   3rd Qu.: 435.0   3rd Qu.:20020416   3rd Qu.:20170331  
-    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20170310   Max.   :20170402  
+    ##  Mean   :  -3.474   Mean   : 360.8   Mean   :19782535   Mean   :20047837  
+    ##  3rd Qu.:  61.842   3rd Qu.: 435.0   3rd Qu.:20020416   3rd Qu.:20170412  
+    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20170310   Max.   :20170414  
     ##                     NA's   :218                                           
     ##     STNID           ELEV_M_SRTM_90m 
     ##  Length:28339       Min.   :-361.0  
@@ -235,7 +343,7 @@ ggplot(data = SRTM_GSOD_elevation, aes(x = ELEV_M, y = ELEV_M_SRTM_90m)) +
 
 Buffered versus non-buffered elevation values were previously checked and found not to be different while also not showing any discernible geographic patterns. However, The buffered elevation data are higher than the non-buffered data. To help avoid within cell and between cell variation the buffered values are the values that are included in the final data for distribution with the GSODR package following the approach of Hijmans *et al.* (2005).
 
-Only values for elevation derived from the SRTM data and the STNID, used to join this with the original "isd-history.csv" file data when running `get_GSOD` are included in the final data frame for distribution with the GSODR package.
+Only values for elevation derived from the SRTM data and the STNID, used to join this with the original "isd-history.csv" file data when running `get_GSOD()` are included in the final data frame for distribution with the GSODR package.
 
 ``` r
 # write rda file to disk for use with GSODR package
@@ -264,39 +372,42 @@ Users of these data should take into account the following (from the [NCEI websi
 R System Information
 --------------------
 
-    ## R version 3.3.3 (2017-03-06)
+    ## R version 3.4.0 (2017-04-21)
     ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
     ## Running under: OS X El Capitan 10.11.6
+    ## 
+    ## Matrix products: default
+    ## BLAS/LAPACK: /usr/local/Cellar/openblas/0.2.19/lib/libopenblasp-r0.2.19.dylib
     ## 
     ## locale:
     ## [1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8
     ## 
     ## attached base packages:
-    ## [1] stats     graphics  grDevices utils     datasets  methods   base     
+    ## [1] parallel  stats     graphics  grDevices utils     datasets  methods  
+    ## [8] base     
     ## 
     ## other attached packages:
-    ## [1] ggalt_0.4.0   ggplot2_2.2.1 foreach_1.4.3
+    ## [1] readr_1.1.0       raster_2.5-8      sp_1.2-4          ggalt_0.4.0      
+    ## [5] ggplot2_2.2.1     foreach_1.4.3     dplyr_0.5.0       data.table_1.10.4
+    ## [9] countrycode_0.19 
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] Rcpp_0.12.10         highr_0.6            RColorBrewer_1.1-2  
-    ##  [4] compiler_3.3.3       plyr_1.8.4           iterators_1.0.8     
-    ##  [7] tools_3.3.3          pkgload_0.0.0.9000   pkgbuild_0.0.0.9000 
-    ## [10] extrafont_0.17       digest_0.6.12        memoise_1.0.0       
-    ## [13] evaluate_0.10        tibble_1.2           gtable_0.2.0        
-    ## [16] lattice_0.20-34      DBI_0.6              curl_2.4            
-    ## [19] yaml_2.1.14          rgdal_1.2-5          parallel_3.3.3      
-    ## [22] Rttf2pt1_1.3.4       withr_1.0.2          dplyr_0.5.0         
-    ## [25] stringr_1.2.0        raster_2.5-8         knitr_1.15.1        
-    ## [28] devtools_1.12.0.9000 maps_3.1.1           hms_0.3             
-    ## [31] rprojroot_1.2        grid_3.3.3           data.table_1.10.4   
-    ## [34] R6_2.2.0             rmarkdown_1.4        sp_1.2-4            
-    ## [37] extrafontdb_1.0      readr_1.1.0          magrittr_1.5        
-    ## [40] MASS_7.3-45          backports_1.0.5      scales_0.4.1        
-    ## [43] codetools_0.2-15     htmltools_0.3.5      proj4_1.0-8         
-    ## [46] assertthat_0.1       countrycode_0.19     colorspace_1.3-2    
-    ## [49] labeling_0.3         ash_1.0-15           KernSmooth_2.23-15  
-    ## [52] stringi_1.1.3        lazyeval_0.2.0       doParallel_1.0.10   
-    ## [55] munsell_0.4.3
+    ##  [1] Rcpp_0.12.10       highr_0.6          compiler_3.4.0    
+    ##  [4] RColorBrewer_1.1-2 plyr_1.8.4         iterators_1.0.8   
+    ##  [7] tools_3.4.0        extrafont_0.17     digest_0.6.12     
+    ## [10] memoise_1.1.0      lattice_0.20-35    evaluate_0.10     
+    ## [13] tibble_1.3.0       gtable_0.2.0       DBI_0.6-1         
+    ## [16] rgdal_1.2-6        curl_2.5           yaml_2.1.14       
+    ## [19] Rttf2pt1_1.3.4     withr_1.0.2        stringr_1.2.0     
+    ## [22] knitr_1.15.1       devtools_1.12.0    hms_0.3           
+    ## [25] maps_3.1.1         rprojroot_1.2      grid_3.4.0        
+    ## [28] R6_2.2.0           rmarkdown_1.4      extrafontdb_1.0   
+    ## [31] magrittr_1.5       backports_1.0.5    scales_0.4.1      
+    ## [34] codetools_0.2-15   htmltools_0.3.5    MASS_7.3-47       
+    ## [37] assertthat_0.2.0   proj4_1.0-8        colorspace_1.3-2  
+    ## [40] labeling_0.3       KernSmooth_2.23-15 ash_1.0-15        
+    ## [43] stringi_1.1.5      doParallel_1.0.10  lazyeval_0.2.0    
+    ## [46] munsell_0.4.3
 
 References
 ==========

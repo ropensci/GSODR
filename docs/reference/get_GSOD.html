@@ -25,7 +25,7 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -103,7 +103,7 @@ repository here:
 <a href = 'https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md'>https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md</a>.</p>
     
 
-    <pre><span class='fu'>get_GSOD</span>(<span class='kw'>years</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>station</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>country</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dsn</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+    <pre class="usage"><span class='fu'>get_GSOD</span>(<span class='kw'>years</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>station</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>country</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dsn</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>filename</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>max_missing</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>agroclimatology</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>CSV</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>GPKG</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
@@ -318,26 +318,26 @@ Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># # Download weather station for Toowoomba, Queensland for 2010</span>
-<span class='co'># t &lt;- get_GSOD(years = 2010, station = "955510-99999")</span>
-<span class='co'># </span>
-<span class='co'># # Download data for Philippines for year 2010 and generate a yearly</span>
-<span class='co'># # summary GeoPackage file, Philippines_GSOD-2010.gpkg, file in the user's</span>
-<span class='co'># # home directory with a maximum of five missing days per station allowed.</span>
-<span class='co'># </span>
-<span class='co'># get_GSOD(years = 2010, country = "Philippines", dsn = "~/",</span>
-<span class='co'># filename = "Philippines_GSOD", GPKG = TRUE, max_missing = 5)</span>
-<span class='co'># </span>
-<span class='co'># # Download global GSOD data for agroclimatology work for years 2009 and 2010</span>
-<span class='co'># # and generate yearly summary files, GSOD-agroclimatology-2010.csv and</span>
-<span class='co'># # GSOD-agroclimatology-2011.csv in the user's home directory.</span>
-<span class='co'># </span>
-<span class='co'># get_GSOD(years = 2010:2011, dsn = "~/",</span>
-<span class='co'># filename = "GSOD_agroclimatology_2010-2011", agroclimatology = TRUE,</span>
-<span class='co'># CSV = TRUE)</span>
-<span class='co'># </span>
-<span class='co'>## ---------------------------------------------</span></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>not_run</span>({
+  <span class='co'># Download weather station for Toowoomba, Queensland for 2010</span>
+  <span class='no'>t</span> <span class='kw'>&lt;-</span> <span class='fu'>get_GSOD</span>(<span class='kw'>years</span> <span class='kw'>=</span> <span class='fl'>2010</span>, <span class='kw'>station</span> <span class='kw'>=</span> <span class='st'>"955510-99999"</span>)
+
+  <span class='co'># Download data for Philippines for year 2010 and generate a yearly</span>
+  <span class='co'># summary GeoPackage file, Philippines_GSOD-2010.gpkg, file in the user's</span>
+  <span class='co'># home directory with a maximum of five missing days per station allowed.</span>
+
+  <span class='fu'>get_GSOD</span>(<span class='kw'>years</span> <span class='kw'>=</span> <span class='fl'>2010</span>, <span class='kw'>country</span> <span class='kw'>=</span> <span class='st'>"Philippines"</span>, <span class='kw'>dsn</span> <span class='kw'>=</span> <span class='st'>"~/"</span>,
+  <span class='kw'>filename</span> <span class='kw'>=</span> <span class='st'>"Philippines_GSOD"</span>, <span class='kw'>GPKG</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>max_missing</span> <span class='kw'>=</span> <span class='fl'>5</span>)
+
+  <span class='co'># Download global GSOD data for agroclimatology work for years 2009 and 2010</span>
+  <span class='co'># and generate yearly summary files, GSOD-agroclimatology-2010.csv and</span>
+  <span class='co'># GSOD-agroclimatology-2011.csv in the user's home directory.</span>
+
+  <span class='fu'>get_GSOD</span>(<span class='kw'>years</span> <span class='kw'>=</span> <span class='fl'>2010</span>:<span class='fl'>2011</span>, <span class='kw'>dsn</span> <span class='kw'>=</span> <span class='st'>"~/"</span>,
+  <span class='kw'>filename</span> <span class='kw'>=</span> <span class='st'>"GSOD_agroclimatology_2010-2011"</span>, <span class='kw'>agroclimatology</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>CSV</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+})</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

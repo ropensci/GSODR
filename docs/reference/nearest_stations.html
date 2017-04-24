@@ -25,7 +25,7 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -89,7 +89,7 @@ this function returns a list of STNID values, which can be used in
 <code>station</code> parameter of that function.</p>
     
 
-    <pre><span class='fu'>nearest_stations</span>(<span class='no'>LAT</span>, <span class='no'>LON</span>, <span class='no'>distance</span>)</pre>
+    <pre class="usage"><span class='fu'>nearest_stations</span>(<span class='no'>LAT</span>, <span class='no'>LON</span>, <span class='no'>distance</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -125,11 +125,11 @@ others must provide this same notification.&#8221;</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># # Find stations within a 100km radius of Toowoomba, QLD, AUS</span>
-<span class='co'># </span>
-<span class='co'># n &lt;- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 100)</span>
-<span class='co'>## ---------------------------------------------</span></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>not_run</span>({
+  <span class='co'># Find stations within a 100km radius of Toowoomba, QLD, AUS</span>
+
+  <span class='no'>n</span> <span class='kw'>&lt;-</span> <span class='fu'>nearest_stations</span>(<span class='kw'>LAT</span> <span class='kw'>=</span> -<span class='fl'>27.5598</span>, <span class='kw'>LON</span> <span class='kw'>=</span> <span class='fl'>151.9507</span>, <span class='kw'>distance</span> <span class='kw'>=</span> <span class='fl'>100</span>)
+})</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
