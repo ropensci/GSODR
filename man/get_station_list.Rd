@@ -10,15 +10,22 @@ get_station_list()
 \code{\link[data.table]{data.table}} object of station metadata.
 }
 \description{
-This function downloads the latest station list from the NCEI FTP server.
-This list includes metadata for all stations including unique identifiers,
-country, state (if in US), latitude, longitude, elevation and when weather
-observations begin and end.  Stations with invalid latitude and longitude
-values will not be included.
+This function downloads the latest station list (isd-history.csv) from the
+NCEI FTP server and updates the data distributed with \code{GSODR} so that
+you have the latest list of stations available.  These data provide unique
+identifiers, country, state (if in US), latitude, longitude, elevation and
+when weather observations begin and end.  Stations with invalid latitude and
+longitude values will not be included.
+}
+\details{
+There is no need to use this unless you know that a station exists in the
+GSODR data that is not available in the database distributed with 
+\code{\link{GSODR}} in the \code{\link{isd_history}}
+data.
 }
 \examples{
 \dontrun{
-GSOD_stations <- get_station_list()
+GSOD_station_list <- get_station_list()
 }
 }
 \author{

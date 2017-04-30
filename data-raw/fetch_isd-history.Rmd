@@ -66,10 +66,6 @@ if (!require("ggplot2")) {
   install.packages("ggplot2")
 }
 
-if (!require("ggalt")) {
-  install.packages("ggalt")
-}
-
 if (!require("parallel")) {
   install.packages("parallel")
 }
@@ -181,7 +177,7 @@ point_check <- as.data.frame(point_check)
 stations_discard <- point_check[point_check$FIPS %in% point_check$FIPS_10_ == FALSE, ]
 nrow(stations_discard)
 ```
-Zero observations (rows) in stations_discard, the data look good, no need to
+Zero observations (rows) in `stations_discard`, the data look good, no need to
 remove any
 
 
@@ -249,25 +245,19 @@ stations <- tibble::as_tibble(stations)
 
 # Perform left join to join corrected elevation with original station data,
 # this will include stations below/above -60/60
-SRTM_GSOD_elevation <- dplyr::left_join(stations, corrected_elev)
+isd_history <- dplyr::left_join(stations, corrected_elev)
 
-summary(SRTM_GSOD_elevation)
+summary(isd_history)
 ```
 
 # Figures
 
 ```{r ggplot, echo=FALSE, message=FALSE}
 library(ggplot2)
-library(ggalt)
 ```
 
 ```{r Buffered SRTM 90m vs Reported Elevation, echo=TRUE, fig.cap="GSOD Reported Elevation versus CGIAR-CSI SRTM Buffered Elevation", warning=FALSE}
-if (!require("ggalt"))
-{
-  install.packages("ggalt")
-}
-
-ggplot(data = SRTM_GSOD_elevation, aes(x = ELEV_M, y = ELEV_M_SRTM_90m)) +
+ggplot(data = isd_history, aes(x = ELEV_M, y = ELEV_M_SRTM_90m)) +
   geom_point(alpha = 0.4, size = 0.5)
 ```
 
@@ -285,9 +275,7 @@ are included in the final data frame for distribution with the GSODR package.
 ```{r cleanup and .rda file creation, message=FALSE, echo=TRUE, warning=FALSE, error=FALSE}
 
 # write rda file to disk for use with GSODR package
-data.table::setDT(SRTM_GSOD_elevation)
-SRTM_GSOD_elevation[, c(1:11) := NULL]
-devtools::use_data(SRTM_GSOD_elevation, overwrite = TRUE, compress = "bzip2")
+devtools::use_data(isd_history, overwrite = TRUE, compress = "bzip2")
 
 # clean up Natural Earth data files before we leave
 file.remove(list.files(pattern = glob2rx("ne_10m_admin_0_countries*")))
@@ -308,7 +296,7 @@ Users of these data should take into account the following (from the [NCEI websi
 ## R System Information
 
 ```{r system information, echo=FALSE}
-sessionInfo()
+devtools::session_info()
 ```
 
 # References

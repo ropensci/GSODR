@@ -37,38 +37,37 @@ test_that("invalid stations are handled", {
   expect_length(GSOD_list, 11447)
   expect_type(GSOD_list, "character")
 })
+
 # Check that invalid stations are handled --------------------------------------
 test_that("invalid stations are handled", {
-  skip_on_cran()
-  stations <- get_station_list()
+  utils::data("isd_history", package = "GSODR")
+  stations <- isd_history
   expect_error(.validate_station(years = 2015, station = "aaa-bbbbbb", stations),
                "\naaa-bbbbbb is not a valid station ID number, please check your entry. Station IDs\n      can be found in the 'stations' dataframe in the STNID column.\n")
 })
 
 # Check that station validation for years available on server works properly
 test_that("Station validations are properly handled for years available on server", {
-  skip_on_cran()
-  stations <- get_station_list()
+  utils::data("isd_history", package = "GSODR")
+  stations <- isd_history
   expect_message(.validate_station(station = "949999-00170", stations, years = 2010),
                  "This station, 949999-00170, only provides data for years 1971 to 1984.")
 })
 
 test_that("Station validations are properly handled for years available on server", {
-  skip_on_cran()
-  stations <- get_station_list()
+  utils::data("isd_history", package = "GSODR")
+  stations <- isd_history
   expect_silent(.validate_station(years = 2010, station = "955510-99999", stations = stations))
 })
 
 # Check that GSOD filename is assigned if a user does not specify a name
 test_that("GSOD filename is used when user does not specify a filename", {
-  skip_on_cran()
   expect_equal(.validate_fileout(CSV = TRUE, dsn = "~/", filename =  NULL,
                                  GPKG = NULL), "~/GSOD")
 })
 
 # Check that invalid dsn is handled --------------------------------------------
 test_that("Missing or invalid dsn is handled", {
-  skip_on_cran()
   dsn <- "~/NULL"
   expect_error(
     if (!is.null(dsn)) {
@@ -169,8 +168,9 @@ test_that("The 'max_missing' parameter will not accept values < 1", {
 
 # Check validate country returns a two letter code -----------------------------
 test_that("Check validate country returns a two letter code", {
-
   country <- "Philippines"
+  
+  
   Philippines <- .validate_country(country)
   expect_match(Philippines, "RP")
 
@@ -186,27 +186,26 @@ test_that("Check validate country returns a two letter code", {
 # Check validate country returns an error on invalid entry----------------------
 test_that("Check validate country returns an error on invalid entry when
           mispelled", {
-
             country <- "Philipines"
             expect_error(.validate_country(country),
-                         "\nPlease provide a valid name or 2 or 3 letter ISO country code;\n              you can view the entire list of valid countries in this data by\n              typing, 'country_list'.\n")
+                         "\nPlease provide a valid name or 2 or 3 letter ISO country code")
             })
 
 test_that("Check validate country returns an error on invalid entry when two
           two characters are used that are not in the list", {
             country <- "RP"
             expect_error(.validate_country(country),
-                         "\nPlease provide a valid name or 2 or 3 letter ISO country code;\n              you can view the entire list of valid countries in this data by\n              typing, 'country_list'.\n")
+                         "\nPlease provide a valid name or 2 or 3 letter ISO country code")
             })
 
 test_that("Check validate country returns an error on invalid entry when two
           three characters are used that are not in the list", {
             country <- "RPS"
             expect_error(.validate_country(country),
-                         "\nPlease provide a valid name or 2 or 3 letter ISO country code;\n            you can view the entire list of valid countries in this data by\n            typing, 'country_list'.\n")
+                         "\nPlease provide a valid name or 2 or 3 letter ISO country code")
             })
 
-test_that("Timeout options are reset on nearest_stations() exit", {
+test_that("Timeout options are reset on get_GSOD() exit", {
   skip_on_cran()
   t <- get_GSOD(years = 2010, station = "955510-99999")
   expect_equal(options("timeout")[[1]], 60)

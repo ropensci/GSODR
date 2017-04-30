@@ -28,12 +28,12 @@
 #' @author Adam H Sparks, \email{adamhsparks@gmail.com}
 #' @export
 nearest_stations <- function(LAT, LON, distance) {
-  original_timeout <- options("timeout")[[1]]
-  options(timeout = 300)
-  on.exit(options(timeout = original_timeout), add = TRUE)
-  stations <- as.data.frame(get_station_list())
-  dists <- fields::rdist.earth(as.matrix(stations[c("LAT", "LON")]),
+  # load current local copy of isd_history
+  utils::data("isd_history", package = "GSODR")
+  isd_history <- as.data.frame(isd_history)
+  
+  dists <- fields::rdist.earth(as.matrix(isd_history[c("LAT", "LON")]),
                                matrix(c(LAT, LON), ncol = 2), miles = FALSE)
   nearby <- which(dists[, 1] < distance)
-  return(stations[as.numeric(nearby), ]$STNID)
+  return(isd_history[as.numeric(nearby), ]$STNID)
 }

@@ -1,5 +1,4 @@
 
-
 #' @noRd
 #' @importFrom data.table :=
 .process_gz <- function(gz_file, stations) {

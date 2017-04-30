@@ -83,11 +83,12 @@
     </div>
 
     
-    <p>This function downloads the latest station list from the NCEI FTP server.
-This list includes metadata for all stations including unique identifiers,
-country, state (if in US), latitude, longitude, elevation and when weather
-observations begin and end.  Stations with invalid latitude and longitude
-values will not be included.</p>
+    <p>This function downloads the latest station list (isd-history.csv) from the
+NCEI FTP server and updates the data distributed with <code>GSODR</code> so that
+you have the latest list of stations available.  These data provide unique
+identifiers, country, state (if in US), latitude, longitude, elevation and
+when weather observations begin and end.  Stations with invalid latitude and
+longitude values will not be included.</p>
     
 
     <pre class="usage"><span class='fu'>get_station_list</span>()</pre>
@@ -96,10 +97,17 @@ values will not be included.</p>
 
     <p><code><a href='http://www.rdocumentation.org/packages/data.table/topics/data.table'>data.table</a></code> object of station metadata.</p>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>There is no need to use this unless you know that a station exists in the
+GSODR data that is not available in the database distributed with 
+<code><a href='GSODR.html'>GSODR</a></code> in the <code><a href='isd_history.html'>isd_history</a></code>
+data.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>not_run</span>({
-  <span class='no'>GSOD_stations</span> <span class='kw'>&lt;-</span> <span class='fu'>get_station_list</span>()
+  <span class='no'>GSOD_station_list</span> <span class='kw'>&lt;-</span> <span class='fu'>get_station_list</span>()
 })</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -107,6 +115,8 @@ values will not be included.</p>
     <ul class="nav nav-pills nav-stacked">
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

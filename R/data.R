@@ -1,17 +1,31 @@
-#'SRTM_GSOD_elevation
+#'isd_history
 #'
-#' @format A data frame with 28339 observations of 2 elements:
+#' @format A data frame with 28450 observations of 13 elements:
 #' \describe{
+#'   \item{USAF}{Air Force Datsav3 station number}
+#'   \item{WBAN}{Weather Bureau Army Navy (5 digit identifier)}
+#'   \item{STN_NAME}{Unique station name }
+#'   \item{CTRY}{FIPS country ID}
+#'   \item{STATE}{If applicable, US states only (2 letter code)}
+#'   \item{CALL}{ICAO Identifier, identifiers approved for use under the
+#'   International Civil Aviation Administration plan of identifiers
+#'   (4 letter identifier)}
+#'   \item{LAT}{Latitude in thousandths of decimal degrees}
+#'   \item{LON}{Longitude in thousandths of decimal degrees}
+#'   \item{ELEV_M}{Elevation to tenthts in metres}
+#'   \item{BEGIN}{First available date of data for station, YYYYMMDD format}
+#'   \item{END}{Last available date of data for station, YYYYMMDD format}
 #'   \item{STNID}{Unique station ID, a concatenation of USAF and WBAN number,
 #'   used for merging with station data weather files}
 #'   \item{ELEV_M_SRTM_90m}{Elevation in metres extracted from SRTM data (Jarvis
 #'   \emph{et al}. 2008)}
 #' }
+#' 
 #'
 #' Station elevation information for the US National Centers for Environmental
-#' Information (NCEI) Global Surface Summary of the Day (GSOD) weather data.
+#' Information (NCEI) Global Surface Summary of the Day (GSOD) weather data.  
 #' The original file has missing and incorrect geographic data including
-#' location (LAT/LON) and elevation.  This data frame provides an alternative
+#' location (LAT/LON) and elevation.  These data provide an alternative
 #' set of elevation values with the following changes to the original list of
 #' stations from the NCEI:
 #' \enumerate{
@@ -28,6 +42,7 @@
 #' For more on this, please consult the document available from the GSODR
 #' GitHub repository detailing the process used to generate these data,
 #' \url{https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md}
+#' 
 #' @note Users of these data should take into account the following (from the
 #' NCEI website): \dQuote{The following data and products may have conditions
 #' placed on their international commercial use.  They can be used within the
@@ -35,16 +50,19 @@
 #' non-U.S. data cannot be redistributed for commercial purposes.
 #' Re-distribution of these data by others must provide this same notification.}
 #'
-#' The \code{SRTM_GSOD_elevation} data are automatically loaded with the
-#' \code{GSODR} package and merged with the latest available data from the NCEI
+#' The \code{isd_history} data are automatically loaded with the
+#' \code{\link{GSODR}} package and merged with the latest available data from the NCEI
 #' in the "isd-history.csv" file.
+#' 
+#' To update these data with the latest available, use
+#' \code{\link{get_station_list}}.
 #'
 #' @source \url{ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv}
 #'
 #' @references {Jarvis, A., Reuter, H. I, Nelson, A., Guevara, E. (2008)
 #' Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
 #' 90m Database  \url{http://srtm.csi.cgiar.org}}
-"SRTM_GSOD_elevation"
+"isd_history"
 
 #' country_list
 #' @format A data frame with 293 observations of 4 elements:

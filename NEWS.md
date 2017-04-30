@@ -1,3 +1,14 @@
+# GSODR 1.0.2-9
+## Major changes
+- Data for station locations and unique identifiers is now provided with the package on installation. Previously this was
+fetched each time from the ftp server.
+- The station metadata can now be updated if necessary by using `get_station_list()`, this change overwrites the internal data
+that were originally distributed with the package. This operation will fetch the latest list of stations and corresponding information from the NCEI ftp server. Any changes will be overwritten when the R package is updated, however,
+the package update should have the same or newer data included, so this should not be an issue.
+
+## Minor changes
+- Fix bugs in the vignettes related to formatting and spelling  
+
 # GSODR 1.0.2.1
 
 ## Minor changes  

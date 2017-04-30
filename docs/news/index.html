@@ -84,12 +84,31 @@
     </div>
 
     <div class="contents">
-    <div id="gsodr-1-0-2-1" class="section level1">
+    <div id="gsodr-1-0-2-9" class="section level1">
 <h1 class="hasAnchor">
-<a href="#gsodr-1-0-2-1" class="anchor"></a>GSODR 1.0.2.1</h1>
+<a href="#gsodr-1-0-2-9" class="anchor"></a>GSODR 1.0.2-9</h1>
+<div id="major-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-changes" class="anchor"></a>Major changes</h2>
+<ul>
+<li>Data for station locations and unique identifiers is now provided with the package on installation. Previously this was fetched each time from the ftp server.</li>
+<li>The station metadata can now be updated if necessary by using <code><a href="../reference/get_station_list.html">get_station_list()</a></code>, this change overwrites the internal data that were originally distributed with the package. This operation will fetch the latest list of stations and corresponding information from the NCEI ftp server. Any changes will be overwritten when the R package is updated, however, the package update should have the same or newer data included, so this should not be an issue.</li>
+</ul>
+</div>
 <div id="minor-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-changes" class="anchor"></a>Minor changes</h2>
+<ul>
+<li>Fix bugs in the vignettes related to formatting and spelling</li>
+</ul>
+</div>
+</div>
+    <div id="gsodr-1-0-2-1" class="section level1">
+<h1 class="hasAnchor">
+<a href="#gsodr-1-0-2-1" class="anchor"></a>GSODR 1.0.2.1</h1>
+<div id="minor-changes-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#minor-changes-1" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Correct references to <em>GSODRdata</em> package where incorrectly referred to as <em>GSODdata</em>
 </li>
@@ -99,9 +118,9 @@
     <div id="gsodr-1-0-2" class="section level1">
 <h1 class="hasAnchor">
 <a href="#gsodr-1-0-2" class="anchor"></a>GSODR 1.0.2</h1>
-<div id="minor-changes-1" class="section level2">
+<div id="minor-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-1" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-2" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Improved documentation (i.e., spelling corrections and more descriptive)<br>
 </li>
@@ -119,9 +138,9 @@
     <div id="gsodr-1-0-1" class="section level1">
 <h1 class="hasAnchor">
 <a href="#gsodr-1-0-1" class="anchor"></a>GSODR 1.0.1</h1>
-<div id="minor-changes-2" class="section level2">
+<div id="minor-changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-2" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-3" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Update documentation for <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> when using <code>station</code> parameter<br>
 </li>
@@ -136,9 +155,9 @@
     <div id="gsodr-1-0-0" class="section level1">
 <h1 class="hasAnchor">
 <a href="#gsodr-1-0-0" class="anchor"></a>GSODR 1.0.0</h1>
-<div id="major-changes" class="section level2">
+<div id="major-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes" class="anchor"></a>Major changes</h2>
+<a href="#major-changes-1" class="anchor"></a>Major changes</h2>
 <ul>
 <li>The <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> function returns a <code>data.frame</code> object in the current R session with the option to save data to local disk<br>
 </li>
@@ -191,9 +210,9 @@
 </li>
 </ul>
 </div>
-<div id="minor-changes-3" class="section level2">
+<div id="minor-changes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-3" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-4" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>
 <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> function optimised for speed as best possible after FTPing files from NCDC server<br>
@@ -248,9 +267,9 @@
 <li>Fix bug in precipitation calculation. Documentation states that PRCP is in mm to hundredths. Issues with conversion and missing values meant that this was not the case. Thanks to Gwenael Giboire for reporting and help with fixing this</li>
 </ul>
 </div>
-<div id="minor-changes-4" class="section level2">
+<div id="minor-changes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-4" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-5" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Users can now select to merge output for station queries across multiple years. Previously one year = one file per station. Now were set by user, <code>merge_station_years = TRUE</code> parameter, only one output file is generated<br>
 </li>
@@ -259,9 +278,9 @@
 <li>Updated <code>stations</code> list with latest version from NCDC published 12-07-2016</li>
 </ul>
 </div>
-<div id="major-changes-1" class="section level2">
+<div id="major-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-1" class="anchor"></a>Major changes</h2>
+<a href="#major-changes-2" class="anchor"></a>Major changes</h2>
 <ul>
 <li>Country level, agroclimatology and global data query conversions and calculations are processed in parallel now to reduce runtime<br>
 </li>
@@ -278,9 +297,9 @@
     <div id="gsodr-0-1-8-1-release-date-2016-07-07" class="section level1">
 <h1 class="hasAnchor">
 <a href="#gsodr-0-1-8-1-release-date-2016-07-07" class="anchor"></a>GSODR 0.1.8.1 (Release Date: 2016-07-07)</h1>
-<div id="minor-changes-5" class="section level2">
+<div id="minor-changes-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-5" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-6" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Fix bug where no station is specified, function fails to run</li>
 </ul>
@@ -298,9 +317,9 @@
 <li>Somehow the previously working function that checked country names broke with the <code>toupper()</code> function. A new <a href="http://stackoverflow.com/questions/16516593/convert-from-lowercase-to-uppercase-all-values-in-all-character-variables-in-dat">function from juba</a> fixes this issue and users can now select country again</li>
 </ul>
 </div>
-<div id="major-changes-2" class="section level2">
+<div id="major-changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-2" class="anchor"></a>Major changes</h2>
+<a href="#major-changes-3" class="anchor"></a>Major changes</h2>
 <ul>
 <li>User entered values for a single station are now checked against actual station values for validity<br>
 </li>
@@ -311,9 +330,9 @@
 <li>Set NA or missing values in CSV or shapefile to -9999 from -9999.99 to align with other data sources such as Worldclim</li>
 </ul>
 </div>
-<div id="minor-changes-6" class="section level2">
+<div id="minor-changes-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-6" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-7" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Documentation is more complete and easier to use</li>
 </ul>
@@ -333,9 +352,9 @@
 <li>CITATION file is updated and corrected</li>
 </ul>
 </div>
-<div id="minor-changes-7" class="section level2">
+<div id="minor-changes-8" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-7" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-8" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>User now has the ability to generate a shapefile as well as CSV file output <a href="https://github.com/ropensci/GSODR/issues/3">(Issue 3)</a><br>
 </li>
@@ -355,9 +374,9 @@
 <li>Spelling corrections</li>
 </ul>
 </div>
-<div id="major-changes-3" class="section level2">
+<div id="major-changes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-3" class="anchor"></a>Major changes</h2>
+<a href="#major-changes-4" class="anchor"></a>Major changes</h2>
 <ul>
 <li>Include MIN/MAX flag column</li>
 <li>Station data is now included in package rather than downloading from NCDC every time get_GSOD() is run, this data has some corrections where stations with missing LAT/LON values or elevation are omitted, this is <strong>not</strong> the original complete station list provided by NCDC</li>
@@ -376,9 +395,9 @@
 <li>Likewise, CSV files for agroclimatology now are names with the Station Identifier. Previously named same as global data</li>
 </ul>
 </div>
-<div id="minor-changes-8" class="section level2">
+<div id="minor-changes-9" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-8" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-9" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Set values where MIN &gt; MAX to NA</li>
 <li>Set more MIN/MAX/DEWP values to NA. GSOD README indicates that 999 indicates missing values in these columns, this does not appear to always be true. There are instances where 99 is the value recorded for missing data. While 99F is possible, the vast majority of these recorded values are missing data, thus the function now converts them to NA</li>
@@ -395,9 +414,9 @@
 <li>Fixed bug related to MIN/MAX columns when agroclimatology or all stations are selected where flags were not removed properly from numeric values.</li>
 </ul>
 </div>
-<div id="minor-changes-9" class="section level2">
+<div id="minor-changes-10" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-9" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-10" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Add more detail to DESCRIPTION regarding flags found in original GSOD data.</li>
 </ul>
@@ -414,9 +433,9 @@
 <li>Correct URL in README.md for CRAN to point to CRAN not GitHub</li>
 </ul>
 </div>
-<div id="minor-changes-10" class="section level2">
+<div id="minor-changes-11" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-10" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-11" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Set NA to -9999.99</li>
 </ul>
@@ -436,9 +455,9 @@
 <li>Bug fix for country selection. Some countries did not return proper ISO code.</li>
 </ul>
 </div>
-<div id="minor-changes-11" class="section level2">
+<div id="minor-changes-12" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-11" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-12" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Use write.csv, not readr::write_csv due to issue converting double to string: <a href="https://github.com/hadley/readr/issues/387" class="uri">https://github.com/hadley/readr/issues/387</a>
 </li>
@@ -448,9 +467,9 @@
     <div id="gsodr-0-1-1-release-date-2016-04-21" class="section level1">
 <h1 class="hasAnchor">
 <a href="#gsodr-0-1-1-release-date-2016-04-21" class="anchor"></a>GSODR 0.1.1 (Release date: 2016-04-21)</h1>
-<div id="major-changes-4" class="section level2">
+<div id="major-changes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-4" class="anchor"></a>Major changes</h2>
+<a href="#major-changes-5" class="anchor"></a>Major changes</h2>
 <ul>
 <li>Now available on CRAN</li>
 <li>Add single quotes around possibly misspelled words and spell out comma-separated values and geographic information system rather than just using “CSV” or “GIS” in DESCRIPTION.</li>
@@ -473,6 +492,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#gsodr-1-0-2-9">1.0.2-9</a></li>
         <li><a href="#gsodr-1-0-2-1">1.0.2.1</a></li>
         <li><a href="#gsodr-1-0-2">1.0.2</a></li>
         <li><a href="#gsodr-1-0-1">1.0.1</a></li>
