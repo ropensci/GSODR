@@ -247,7 +247,8 @@ ggplot(GSOD_stations, aes(x = LON, y = LAT)) +
 <p><em>GSODR</em> provides lists of weather station locations and elevation values. Using <a href="https://CRAN.R-project.org/package=dplyr"><em>dplyr</em></a>, we can find all the stations in Australia.</p>
 
 <pre><code class="r">library(dplyr)
-station_locations &lt;- left_join(GSOD_stations, GSODR::country_list,
+data(country_list)
+station_locations &lt;- left_join(GSOD_stations, country_list,
                                by = c(&quot;CTRY&quot; = &quot;FIPS&quot;))
 
 # create data.frame for Australia only

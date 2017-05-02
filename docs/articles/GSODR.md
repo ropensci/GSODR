@@ -1,7 +1,7 @@
 ---
 title: "GSODR"
 author: "Adam H Sparks"
-date: "2017-04-07"
+date: "2017-05-02"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteEngine{knitr::knitr}
@@ -58,7 +58,8 @@ _GSODR_ provides lists of weather station locations and elevation values. Using 
 
 ```r
 library(dplyr)
-station_locations <- left_join(GSOD_stations, GSODR::country_list,
+data(country_list)
+station_locations <- left_join(GSOD_stations, country_list,
                                by = c("CTRY" = "FIPS"))
 
 # create data.frame for Australia only
