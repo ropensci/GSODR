@@ -1,6 +1,6 @@
 #'isd_history
 #'
-#' @format A data frame with 28450 observations of 13 elements:
+#' @format A data frame with 28347 observations of 13 elements:
 #' \describe{
 #'   \item{USAF}{Air Force Datsav3 station number}
 #'   \item{WBAN}{Weather Bureau Army Navy (5 digit identifier)}
@@ -20,10 +20,10 @@
 #'   \item{ELEV_M_SRTM_90m}{Elevation in metres extracted from SRTM data (Jarvis
 #'   \emph{et al}. 2008)}
 #' }
-#' 
+#'
 #'
 #' Station elevation information for the US National Centers for Environmental
-#' Information (NCEI) Global Surface Summary of the Day (GSOD) weather data.  
+#' Information (NCEI) Global Surface Summary of the Day (GSOD) weather data.
 #' The original file has missing and incorrect geographic data including
 #' location (LAT/LON) and elevation.  These data provide an alternative
 #' set of elevation values with the following changes to the original list of
@@ -42,7 +42,7 @@
 #' For more on this, please consult the document available from the GSODR
 #' GitHub repository detailing the process used to generate these data,
 #' \url{https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md}
-#' 
+#'
 #' @note Users of these data should take into account the following (from the
 #' NCEI website): \dQuote{The following data and products may have conditions
 #' placed on their international commercial use.  They can be used within the
@@ -53,7 +53,7 @@
 #' The \code{isd_history} data are automatically loaded with the
 #' \code{\link{GSODR}} package and merged with the latest available data from the NCEI
 #' in the "isd-history.csv" file.
-#' 
+#'
 #' To update these data with the latest available, use
 #' \code{\link{get_station_list}}.
 #'

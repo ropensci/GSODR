@@ -1,7 +1,7 @@
 Fetch, clean and correct altitude in GSOD isd\_history.csv Data
 ================
 Adam H. Sparks
-2017-04-24
+2017-05-04
 
 Introduction
 ============
@@ -90,14 +90,6 @@ if (!require("ggplot2")) {
     ## Loading required package: ggplot2
 
 ``` r
-if (!require("ggalt")) {
-  install.packages("ggalt")
-}
-```
-
-    ## Loading required package: ggalt
-
-``` r
 if (!require("parallel")) {
   install.packages("parallel")
 }
@@ -135,6 +127,14 @@ if (!require("readr")) {
     ## Loading required package: readr
 
 ``` r
+if (!require("rnaturalearth")) {
+  install.packages("rnaturalearth")
+}
+```
+
+    ## Loading required package: rnaturalearth
+
+``` r
 dem_tiles <- list.files(path.expand("~/Data/CGIAR-CSI SRTM"), 
                         pattern = glob2rx("*.tif"), full.names = TRUE)
 crs <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
@@ -147,11 +147,7 @@ Download from Natural Earth and NCEI
 
 ``` r
 # import Natural Earth cultural 1:10m data
-curl::curl_download("http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_0_countries.zip",
-                    destfile = tf)
-NE <- unzip(tf)
-NE <- raster::shapefile("./ne_10m_admin_0_countries.shp")
-unlink(tf)
+NE <- rnaturalearth::ne_countries(scale = 10)
 
 # download data
 stations <- readr::read_csv(
@@ -222,7 +218,7 @@ nrow(stations_discard)
 
     ## [1] 0
 
-Zero observations (rows) in stations\_discard, the data look good, no need to remove any
+Zero observations (rows) in `stations_discard`, the data look good, no need to remove any
 
 ``` r
 # create a spatial object for extracting elevation values using spatial points
@@ -284,17 +280,17 @@ stations <- tibble::as_tibble(stations)
 
 # Perform left join to join corrected elevation with original station data,
 # this will include stations below/above -60/60
-SRTM_GSOD_elevation <- dplyr::left_join(stations, corrected_elev)
+isd_history <- dplyr::left_join(stations, corrected_elev)
 ```
 
     ## Joining, by = c("USAF", "WBAN", "STN_NAME", "CTRY", "STATE", "CALL", "LAT", "LON", "ELEV_M", "BEGIN", "END", "STNID")
 
 ``` r
-summary(SRTM_GSOD_elevation)
+summary(isd_history)
 ```
 
     ##      USAF               WBAN             STN_NAME        
-    ##  Length:28339       Length:28339       Length:28339      
+    ##  Length:28347       Length:28347       Length:28347      
     ##  Class :character   Class :character   Class :character  
     ##  Mode  :character   Mode  :character   Mode  :character  
     ##                                                          
@@ -302,40 +298,35 @@ summary(SRTM_GSOD_elevation)
     ##                                                          
     ##                                                          
     ##      CTRY              STATE               CALL                LAT        
-    ##  Length:28339       Length:28339       Length:28339       Min.   :-89.00  
-    ##  Class :character   Class :character   Class :character   1st Qu.: 22.47  
-    ##  Mode  :character   Mode  :character   Mode  :character   Median : 39.27  
+    ##  Length:28347       Length:28347       Length:28347       Min.   :-89.00  
+    ##  Class :character   Class :character   Class :character   1st Qu.: 22.48  
+    ##  Mode  :character   Mode  :character   Mode  :character   Median : 39.25  
     ##                                                           Mean   : 31.14  
-    ##                                                           3rd Qu.: 49.87  
+    ##                                                           3rd Qu.: 49.85  
     ##                                                           Max.   : 89.37  
     ##                                                                           
     ##       LON               ELEV_M           BEGIN               END          
     ##  Min.   :-179.983   Min.   :-350.0   Min.   :19010101   Min.   :19051231  
-    ##  1st Qu.: -83.287   1st Qu.:  23.0   1st Qu.:19570701   1st Qu.:20020422  
-    ##  Median :   6.683   Median : 140.0   Median :19760305   Median :20160421  
-    ##  Mean   :  -3.474   Mean   : 360.8   Mean   :19782535   Mean   :20047837  
-    ##  3rd Qu.:  61.842   3rd Qu.: 435.0   3rd Qu.:20020416   3rd Qu.:20170412  
-    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20170310   Max.   :20170414  
-    ##                     NA's   :218                                           
-    ##     STNID           ELEV_M_SRTM_90m 
-    ##  Length:28339       Min.   :-361.0  
-    ##  Class :character   1st Qu.:  25.0  
-    ##  Mode  :character   Median : 156.0  
-    ##                     Mean   : 380.1  
-    ##                     3rd Qu.: 462.0  
-    ##                     Max.   :5273.0  
-    ##                     NA's   :3012
+    ##  1st Qu.: -83.316   1st Qu.:  23.0   1st Qu.:19570701   1st Qu.:20020423  
+    ##  Median :   6.667   Median : 140.0   Median :19760305   Median :20160429  
+    ##  Mean   :  -3.509   Mean   : 360.9   Mean   :19782661   Mean   :20048002  
+    ##  3rd Qu.:  61.733   3rd Qu.: 435.0   3rd Qu.:20020419   3rd Qu.:20170501  
+    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20170428   Max.   :20170503  
+    ##                     NA's   :219                                           
+    ##     STNID           ELEV_M_SRTM_90m
+    ##  Length:28347       Min.   :-361   
+    ##  Class :character   1st Qu.:  25   
+    ##  Mode  :character   Median : 156   
+    ##                     Mean   : 380   
+    ##                     3rd Qu.: 462   
+    ##                     Max.   :5273   
+    ##                     NA's   :3013
 
 Figures
 =======
 
 ``` r
-if (!require("ggalt"))
-{
-  install.packages("ggalt")
-}
-
-ggplot(data = SRTM_GSOD_elevation, aes(x = ELEV_M, y = ELEV_M_SRTM_90m)) +
+ggplot(data = isd_history, aes(x = ELEV_M, y = ELEV_M_SRTM_90m)) +
   geom_point(alpha = 0.4, size = 0.5)
 ```
 
@@ -347,15 +338,13 @@ Only values for elevation derived from the SRTM data and the STNID, used to join
 
 ``` r
 # write rda file to disk for use with GSODR package
-data.table::setDT(SRTM_GSOD_elevation)
-SRTM_GSOD_elevation[, c(1:11) := NULL]
-devtools::use_data(SRTM_GSOD_elevation, overwrite = TRUE, compress = "bzip2")
+devtools::use_data(isd_history, overwrite = TRUE, compress = "bzip2")
 
 # clean up Natural Earth data files before we leave
 file.remove(list.files(pattern = glob2rx("ne_10m_admin_0_countries*")))
 ```
 
-    ## [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+    ## logical(0)
 
 The SRTM\_GSOD\_elevation.rda file included in the GSODR package includes the new elevation data as the field; ELEV\_M\_SRTM\_90m.
 
@@ -372,42 +361,67 @@ Users of these data should take into account the following (from the [NCEI websi
 R System Information
 --------------------
 
-    ## R version 3.4.0 (2017-04-21)
-    ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-    ## Running under: OS X El Capitan 10.11.6
-    ## 
-    ## Matrix products: default
-    ## BLAS/LAPACK: /usr/local/Cellar/openblas/0.2.19/lib/libopenblasp-r0.2.19.dylib
-    ## 
-    ## locale:
-    ## [1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8
-    ## 
-    ## attached base packages:
-    ## [1] parallel  stats     graphics  grDevices utils     datasets  methods  
-    ## [8] base     
-    ## 
-    ## other attached packages:
-    ## [1] readr_1.1.0       raster_2.5-8      sp_1.2-4          ggalt_0.4.0      
-    ## [5] ggplot2_2.2.1     foreach_1.4.3     dplyr_0.5.0       data.table_1.10.4
-    ## [9] countrycode_0.19 
-    ## 
-    ## loaded via a namespace (and not attached):
-    ##  [1] Rcpp_0.12.10       highr_0.6          compiler_3.4.0    
-    ##  [4] RColorBrewer_1.1-2 plyr_1.8.4         iterators_1.0.8   
-    ##  [7] tools_3.4.0        extrafont_0.17     digest_0.6.12     
-    ## [10] memoise_1.1.0      lattice_0.20-35    evaluate_0.10     
-    ## [13] tibble_1.3.0       gtable_0.2.0       DBI_0.6-1         
-    ## [16] rgdal_1.2-6        curl_2.5           yaml_2.1.14       
-    ## [19] Rttf2pt1_1.3.4     withr_1.0.2        stringr_1.2.0     
-    ## [22] knitr_1.15.1       devtools_1.12.0    hms_0.3           
-    ## [25] maps_3.1.1         rprojroot_1.2      grid_3.4.0        
-    ## [28] R6_2.2.0           rmarkdown_1.4      extrafontdb_1.0   
-    ## [31] magrittr_1.5       backports_1.0.5    scales_0.4.1      
-    ## [34] codetools_0.2-15   htmltools_0.3.5    MASS_7.3-47       
-    ## [37] assertthat_0.2.0   proj4_1.0-8        colorspace_1.3-2  
-    ## [40] labeling_0.3       KernSmooth_2.23-15 ash_1.0-15        
-    ## [43] stringi_1.1.5      doParallel_1.0.10  lazyeval_0.2.0    
-    ## [46] munsell_0.4.3
+    ## Session info --------------------------------------------------------------
+
+    ##  setting  value                       
+    ##  version  R version 3.4.0 (2017-04-21)
+    ##  system   x86_64, darwin15.6.0        
+    ##  ui       unknown                     
+    ##  language (EN)                        
+    ##  collate  en_AU.UTF-8                 
+    ##  tz       Australia/Brisbane          
+    ##  date     2017-05-04
+
+    ## Packages ------------------------------------------------------------------
+
+    ##  package            * version date       source        
+    ##  assertthat           0.2.0   2017-04-11 CRAN (R 3.4.0)
+    ##  backports            1.0.5   2017-01-18 CRAN (R 3.4.0)
+    ##  codetools            0.2-15  2016-10-05 CRAN (R 3.4.0)
+    ##  colorspace           1.3-2   2016-12-14 CRAN (R 3.4.0)
+    ##  countrycode        * 0.19    2017-02-06 CRAN (R 3.4.0)
+    ##  curl                 2.6     2017-04-27 cran (@2.6)   
+    ##  data.table         * 1.10.4  2017-02-01 CRAN (R 3.4.0)
+    ##  DBI                  0.6-1   2017-04-01 CRAN (R 3.4.0)
+    ##  devtools             1.12.0  2016-12-05 CRAN (R 3.4.0)
+    ##  digest               0.6.12  2017-01-27 CRAN (R 3.4.0)
+    ##  doParallel           1.0.10  2015-10-14 CRAN (R 3.4.0)
+    ##  dplyr              * 0.5.0   2016-06-24 CRAN (R 3.4.0)
+    ##  evaluate             0.10    2016-10-11 CRAN (R 3.4.0)
+    ##  foreach            * 1.4.3   2015-10-13 CRAN (R 3.4.0)
+    ##  ggplot2            * 2.2.1   2016-12-30 CRAN (R 3.4.0)
+    ##  gtable               0.2.0   2016-02-26 CRAN (R 3.4.0)
+    ##  highr                0.6     2016-05-09 CRAN (R 3.4.0)
+    ##  hms                  0.3     2016-11-22 CRAN (R 3.4.0)
+    ##  htmltools            0.3.6   2017-04-28 cran (@0.3.6) 
+    ##  iterators            1.0.8   2015-10-13 CRAN (R 3.4.0)
+    ##  knitr                1.15.1  2016-11-22 CRAN (R 3.4.0)
+    ##  labeling             0.3     2014-08-23 CRAN (R 3.4.0)
+    ##  lattice              0.20-35 2017-03-25 CRAN (R 3.4.0)
+    ##  lazyeval             0.2.0   2016-06-12 CRAN (R 3.4.0)
+    ##  magrittr             1.5     2014-11-22 CRAN (R 3.4.0)
+    ##  memoise              1.1.0   2017-04-21 CRAN (R 3.4.0)
+    ##  munsell              0.4.3   2016-02-13 CRAN (R 3.4.0)
+    ##  plyr                 1.8.4   2016-06-08 CRAN (R 3.4.0)
+    ##  R6                   2.2.0   2016-10-05 CRAN (R 3.4.0)
+    ##  raster             * 2.5-8   2016-06-02 CRAN (R 3.4.0)
+    ##  Rcpp                 0.12.10 2017-03-19 CRAN (R 3.4.0)
+    ##  readr              * 1.1.0   2017-03-22 CRAN (R 3.4.0)
+    ##  rgdal                1.2-7   2017-04-25 cran (@1.2-7) 
+    ##  rmarkdown            1.5     2017-04-26 cran (@1.5)   
+    ##  rnaturalearth      * 0.1.0   2017-03-21 CRAN (R 3.4.0)
+    ##  rnaturalearthhires   0.1.0   2017-05-04 local         
+    ##  rprojroot            1.2     2017-01-16 CRAN (R 3.4.0)
+    ##  scales               0.4.1   2016-11-09 CRAN (R 3.4.0)
+    ##  sf                   0.4-1   2017-03-28 CRAN (R 3.4.0)
+    ##  sp                 * 1.2-4   2016-12-22 CRAN (R 3.4.0)
+    ##  stringi              1.1.5   2017-04-07 CRAN (R 3.4.0)
+    ##  stringr              1.2.0   2017-02-18 CRAN (R 3.4.0)
+    ##  tibble               1.3.0   2017-04-01 CRAN (R 3.4.0)
+    ##  udunits2             0.13    2016-11-17 CRAN (R 3.4.0)
+    ##  units                0.4-4   2017-04-20 CRAN (R 3.4.0)
+    ##  withr                1.0.2   2016-06-20 CRAN (R 3.4.0)
+    ##  yaml                 2.1.14  2016-11-12 CRAN (R 3.4.0)
 
 References
 ==========

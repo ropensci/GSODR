@@ -4,7 +4,7 @@
 \name{isd_history}
 \alias{isd_history}
 \title{isd_history}
-\format{A data frame with 28450 observations of 13 elements:
+\format{A data frame with 28347 observations of 13 elements:
 \describe{
   \item{USAF}{Air Force Datsav3 station number}
   \item{WBAN}{Weather Bureau Army Navy (5 digit identifier)}
@@ -27,7 +27,7 @@
 
 
 Station elevation information for the US National Centers for Environmental
-Information (NCEI) Global Surface Summary of the Day (GSOD) weather data.  
+Information (NCEI) Global Surface Summary of the Day (GSOD) weather data.
 The original file has missing and incorrect geographic data including
 location (LAT/LON) and elevation.  These data provide an alternative
 set of elevation values with the following changes to the original list of
