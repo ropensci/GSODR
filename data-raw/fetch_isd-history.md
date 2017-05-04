@@ -334,17 +334,12 @@ ggplot(data = isd_history, aes(x = ELEV_M, y = ELEV_M_SRTM_90m)) +
 
 Buffered versus non-buffered elevation values were previously checked and found not to be different while also not showing any discernible geographic patterns. However, The buffered elevation data are higher than the non-buffered data. To help avoid within cell and between cell variation the buffered values are the values that are included in the final data for distribution with the GSODR package following the approach of Hijmans *et al.* (2005).
 
-Only values for elevation derived from the SRTM data and the STNID, used to join this with the original "isd-history.csv" file data when running `get_GSOD()` are included in the final data frame for distribution with the GSODR package.
+The final dataframe for distribution with *GSODR* includes the new elevation values along with the cleaned "isd-history.csv" data.
 
 ``` r
 # write rda file to disk for use with GSODR package
 devtools::use_data(isd_history, overwrite = TRUE, compress = "bzip2")
-
-# clean up Natural Earth data files before we leave
-file.remove(list.files(pattern = glob2rx("ne_10m_admin_0_countries*")))
 ```
-
-    ## logical(0)
 
 The SRTM\_GSOD\_elevation.rda file included in the GSODR package includes the new elevation data as the field; ELEV\_M\_SRTM\_90m.
 

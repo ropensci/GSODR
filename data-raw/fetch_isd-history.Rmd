@@ -268,17 +268,13 @@ help avoid within cell and between cell variation the buffered values are the
 values that are included in the final data for distribution with the GSODR
 package following the approach of Hijmans *et al.* (2005).
 
-Only values for elevation derived from the SRTM data and the STNID, used to
-join this with the original "isd-history.csv" file data when running `get_GSOD()`
-are included in the final data frame for distribution with the GSODR package.
+The final dataframe for distribution with _GSODR_ includes the new elevation 
+values along with the cleaned "isd-history.csv" data.
 
 ```{r cleanup and .rda file creation, message=FALSE, echo=TRUE, warning=FALSE, error=FALSE}
 
 # write rda file to disk for use with GSODR package
 devtools::use_data(isd_history, overwrite = TRUE, compress = "bzip2")
-
-# clean up Natural Earth data files before we leave
-file.remove(list.files(pattern = glob2rx("ne_10m_admin_0_countries*")))
 
 ```
 
