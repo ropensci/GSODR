@@ -41,7 +41,8 @@ The GSOD data are comprised of a global set of data from weather stations. To vi
 library(ggplot2)
 library(GSODR)
 
-GSOD_stations <- get_station_list()
+utils::data("isd_history", package = "GSODR")
+GSOD_stations <- as.data.frame(isd_history)
 
 ggplot(GSOD_stations, aes(x = LON, y = LAT)) +
   geom_point(alpha = 0.1) +
