@@ -60,7 +60,7 @@
       <h1>GSODR</h1>
                         <h4 class="author">Adam H Sparks</h4>
             
-            <h4 class="date">2017-05-04</h4>
+            <h4 class="date">2017-05-20</h4>
           </div>
 
     
@@ -201,10 +201,9 @@ Oz &lt;-<span class="st"> </span><span class="kw">filter</span>(station_location
 <p>Using the <code><a href="../reference/nearest_stations.html">nearest_stations()</a></code> function, you can find stations closest to a given point specified by latitude and longitude in decimal degrees. This can be used to generate a vector to pass along to <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> and download the stations of interest.</p>
 <p>There are missing stations in this query. Not all that are listed and queried actually have files on the server.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tbar_stations &lt;-<span class="st"> </span><span class="kw"><a href="../reference/nearest_stations.html">nearest_stations</a></span>(<span class="dt">LAT =</span> <span class="op">-</span><span class="fl">27.5598</span>, <span class="dt">LON =</span> <span class="fl">151.9507</span>, <span class="dt">distance =</span> <span class="dv">50</span>)
-tbar_stations &lt;-<span class="st"> </span>tbar_stations<span class="op">$</span>STNID
 
 <span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> tbar_stations, <span class="dt">dsn =</span> <span class="st">"~/"</span>,
-         <span class="dt">filename =</span> <span class="st">"Toowoomba_50km_2010"</span>)</code></pre></div>
+         <span class="dt">filename =</span> <span class="st">"Toowoomba_50km_2010"</span>, <span class="dt">CSV =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p>If you wished to drop the stations, 949999-00170 and 949999-00183 from the query, you could do this.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remove &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"949999-00170"</span>, <span class="st">"949999-00183"</span>)
 tbar_stations &lt;-<span class="st"> </span>tbar_stations[<span class="op">!</span>tbar_stations <span class="op">%in%</span><span class="st"> </span>remove]

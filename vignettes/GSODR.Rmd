@@ -157,10 +157,9 @@ There are missing stations in this query. Not all that are listed and queried ac
 
 ```r
 tbar_stations <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 50)
-tbar_stations <- tbar_stations$STNID
 
 get_GSOD(years = 2010, station = tbar_stations, dsn = "~/",
-         filename = "Toowoomba_50km_2010")
+         filename = "Toowoomba_50km_2010", CSV = TRUE)
 ```
 If you wished to drop the stations, 949999-00170 and 949999-00183 from the query, you could do this.
 
