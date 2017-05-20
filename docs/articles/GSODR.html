@@ -92,20 +92,16 @@
 <div id="plot-global-station-locations" class="section level2">
 <h2 class="hasAnchor">
 <a href="#plot-global-station-locations" class="anchor"></a>Plot Global Station Locations</h2>
-<p>The GSOD data are comprised of a global set of data from weather stations. To visualise where these stations are located we can fetch the station metadata and plot it in a map. The resulting map shows only stations with valid geo-locations after filtering.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(GSODR)
-GSOD_stations &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_station_list.html">get_station_list</a></span>()</code></pre></div>
-<p>Using <a href="https://CRAN.R-project.org/package=ggplot2">ggplot2</a> and the <a href="https://CRAN.R-project.org/package=ggalt">ggalt</a> package it is possible to plot the station locations using alpha transparency to see the densest part of the network and use the Robinson projection for the map.</p>
+<p>The GSOD data are comprised of a global set of data from weather stations. To visualise where these stations are located we can fetch the station metadata and plot it in a map. Using <a href="https://CRAN.R-project.org/package=ggplot2">ggplot2</a> it is possible to plot the station locations using alpha transparency to see the densest part of the network. The resulting map shows only stations with valid geo-locations after filtering.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
-<span class="kw">library</span>(ggalt)
+<span class="kw">library</span>(GSODR)
+
+GSOD_stations &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_station_list.html">get_station_list</a></span>()
 
 <span class="kw">ggplot</span>(GSOD_stations, <span class="kw">aes</span>(<span class="dt">x =</span> LON, <span class="dt">y =</span> LAT)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">coord_proj</span>(<span class="st">"+proj=robin +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<div class="figure">
-<img src="figure/GSOD_station_locations.png" alt="GSOD Station Locations"><p class="caption">GSOD Station Locations</p>
-</div>
+<p><img src="GSODR_files/figure-html/unnamed-chunk-1-1.png" width="672"></p>
 </div>
 <div id="find-stations-in-australia" class="section level2">
 <h2 class="hasAnchor">
@@ -150,108 +146,50 @@ Oz &lt;-<span class="st"> </span><span class="kw">filter</span>(station_location
 </div>
 <div id="using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and-year" class="section level2">
 <h2 class="hasAnchor">
-<a href="#using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and-year" class="anchor"></a>Using the get_GSOD() Function in <em>GSODR</em> to Download a Single Station and Year</h2>
+<a href="#using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and-year" class="anchor"></a>Using the <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> Function in <em>GSODR</em> to Download a Single Station and Year</h2>
 <p>Now that we’ve seen where the reporting stations are located, we can download weather data from the station Toowoomba, Queensland, Australia for 2010 by using the STNID in the <code>station</code> parameter of <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> <span class="st">"955510-99999"</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(GSODR)
+Tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> <span class="st">"955510-99999"</span>)
 
 <span class="co">#&gt; Downloading the station file(s) now.</span>
 
 <span class="co">#&gt; Finished downloading file. Parsing the station file(s) now.</span>
 
-<span class="kw">head</span>(Tbar)
-<span class="co">#&gt;    USAF  WBAN        STNID          STN_NAME CTRY STATE CALL    LAT     LON</span>
-<span class="co">#&gt;1 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  &lt;NA&gt; &lt;NA&gt; -27.55 151.917</span>
-<span class="co">#&gt;2 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  &lt;NA&gt; &lt;NA&gt; -27.55 151.917</span>
-<span class="co">#&gt;3 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  &lt;NA&gt; &lt;NA&gt; -27.55 151.917</span>
-<span class="co">#&gt;4 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  &lt;NA&gt; &lt;NA&gt; -27.55 151.917</span>
-<span class="co">#&gt;5 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  &lt;NA&gt; &lt;NA&gt; -27.55 151.917</span>
-<span class="co">#&gt;6 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  &lt;NA&gt; &lt;NA&gt; -27.55 151.917</span>
-<span class="co">#&gt;  ELEV_M ELEV_M_SRTM_90m    </span><span class="re">BEGIN</span><span class="co">      </span><span class="re">END</span><span class="co"> YEARMODA YEAR MONTH DAY YDAY TEMP</span>
-<span class="co">#&gt;1    642             635 19980301 20161020 20100101 2010    01  01    1 21.2</span>
-<span class="co">#&gt;2    642             635 19980301 20161020 20100102 2010    01  02    2 23.2</span>
-<span class="co">#&gt;3    642             635 19980301 20161020 20100103 2010    01  03    3 21.4</span>
-<span class="co">#&gt;4    642             635 19980301 20161020 20100104 2010    01  04    4 18.9</span>
-<span class="co">#&gt;5    642             635 19980301 20161020 20100105 2010    01  05    5 20.5</span>
-<span class="co">#&gt;6    642             635 19980301 20161020 20100106 2010    01  06    6 21.9</span>
-<span class="co">#&gt;  TEMP_CNT DEWP DEWP_CNT    SLP SLP_CNT   STP STP_CNT VISIB VISIB_CNT WDSP</span>
-<span class="co">#&gt;1        8 17.9        8 1013.4       8 942.0       8    NA         0  2.2</span>
-<span class="co">#&gt;2        8 19.4        8 1010.5       8 939.3       8    NA         0  1.9</span>
-<span class="co">#&gt;3        8 18.9        8 1012.3       8 940.9       8  14.3         6  3.9</span>
-<span class="co">#&gt;4        8 16.4        8 1015.7       8 944.1       8  23.3         4  4.5</span>
-<span class="co">#&gt;5        8 16.4        8 1015.5       8 944.0       8    NA         0  3.9</span>
-<span class="co">#&gt;6        8 18.7        8 1013.7       8 942.3       8    NA         0  3.2</span>
-<span class="co">#&gt;  WDSP_CNT MXSPD GUST   MAX MAX_FLAG   MIN MIN_FLAG PRCP PRCP_FLAG SNDP I_FOG</span>
-<span class="co">#&gt;1        8   6.7   NA 25.78          17.78           1.5         G   NA     0</span>
-<span class="co">#&gt;2        8   5.1   NA 26.50          19.11           0.3         G   NA     0</span>
-<span class="co">#&gt;3        8  10.3   NA 28.72          19.28        * 19.8         G   NA     1</span>
-<span class="co">#&gt;4        8  10.3   NA 24.11          16.89        *  1.0         G   NA     0</span>
-<span class="co">#&gt;5        8  10.8   NA 24.61          16.72           0.3         G   NA     0</span>
-<span class="co">#&gt;6        8   7.7   NA 26.78          17.50           0.0         G   NA     1</span>
-<span class="co">#&gt;  I_RAIN_DRIZZLE I_SNOW_ICE I_HAIL I_THUNDER I_TORNADO_FUNNEL  EA  ES   RH</span>
-<span class="co">#&gt;1              0          0      0         0                0 2.1 2.5 84.0</span>
-<span class="co">#&gt;2              0          0      0         0                0 2.3 2.8 82.1</span>
-<span class="co">#&gt;3              1          0      0         0                0 2.2 2.5 88.0</span>
-<span class="co">#&gt;4              0          0      0         0                0 1.9 2.2 86.4</span>
-<span class="co">#&gt;5              0          0      0         0                0 1.9 2.4 79.2</span>
-<span class="co">#&gt;6              0          0      0         0                0 2.2 2.6 84.6</span></code></pre></div>
+<span class="kw">head</span>(Tbar)</code></pre></div>
 </div>
 <div id="find-stations-within-a-specified-distance-of-a-point" class="section level2">
 <h2 class="hasAnchor">
 <a href="#find-stations-within-a-specified-distance-of-a-point" class="anchor"></a>Find Stations Within a Specified Distance of a Point</h2>
 <p>Using the <code><a href="../reference/nearest_stations.html">nearest_stations()</a></code> function, you can find stations closest to a given point specified by latitude and longitude in decimal degrees. This can be used to generate a vector to pass along to <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> and download the stations of interest.</p>
 <p>There are missing stations in this query. Not all that are listed and queried actually have files on the server.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tbar_stations &lt;-<span class="st"> </span><span class="kw"><a href="../reference/nearest_stations.html">nearest_stations</a></span>(<span class="dt">LAT =</span> <span class="op">-</span><span class="fl">27.5598</span>, <span class="dt">LON =</span> <span class="fl">151.9507</span>, <span class="dt">distance =</span> <span class="dv">50</span>)
-
-<span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> tbar_stations, <span class="dt">dsn =</span> <span class="st">"~/"</span>,
-         <span class="dt">filename =</span> <span class="st">"Toowoomba_50km_2010"</span>, <span class="dt">CSV =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tbar_stations &lt;-
+<span class="st">  </span><span class="kw"><a href="../reference/nearest_stations.html">nearest_stations</a></span>(<span class="dt">LAT =</span> <span class="op">-</span><span class="fl">27.5598</span>,
+  <span class="dt">LON =</span> <span class="fl">151.9507</span>,
+  <span class="dt">distance =</span> <span class="dv">50</span>)
+  
+  tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(
+  <span class="dt">years =</span> <span class="dv">2010</span>,
+  <span class="dt">station =</span> tbar_stations
+  )</code></pre></div>
 <p>If you wished to drop the stations, 949999-00170 and 949999-00183 from the query, you could do this.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remove &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"949999-00170"</span>, <span class="st">"949999-00183"</span>)
+
 tbar_stations &lt;-<span class="st"> </span>tbar_stations[<span class="op">!</span>tbar_stations <span class="op">%in%</span><span class="st"> </span>remove]
 
-<span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> tbar_stations, <span class="dt">dsn =</span> <span class="st">"~/"</span>,
-         <span class="dt">filename =</span> <span class="st">"Toowoomba_50km"</span>)</code></pre></div>
+tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>,
+                 <span class="dt">station =</span> tbar_stations,
+                 <span class="dt">dsn =</span> <span class="st">"~/"</span>)</code></pre></div>
 </div>
 <div id="plot-maximum-and-miniumum-temperature-values" class="section level2">
 <h2 class="hasAnchor">
 <a href="#plot-maximum-and-miniumum-temperature-values" class="anchor"></a>Plot Maximum and Miniumum Temperature Values</h2>
 <p>Using the first data downloaded for a single station, 955510-99999, plot the temperature for 2010 using <code>read_csv()</code> from Hadley’s <a href="https://CRAN.R-project.org/package=readr"><code>readr</code></a> package.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(lubridate)
-<span class="kw">library</span>(readr)
 <span class="kw">library</span>(tidyr)
-
-<span class="co"># Import the data for Toowoomba previously downloaded and cleaned</span>
-tbar &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">"~/Toowoomba_Airport-2010.csv"</span>)
-
-<span class="co">#&gt; Parsed with column specification:</span>
-<span class="co">#&gt; cols(</span>
-<span class="co">#&gt;   .default = col_double(),</span>
-<span class="co">#&gt;   USAF = col_integer(),</span>
-<span class="co">#&gt;   WBAN = col_integer(),</span>
-<span class="co">#&gt;   STNID = col_character(),</span>
-<span class="co">#&gt;   STN_NAME = col_character(),</span>
-<span class="co">#&gt;   CTRY = col_character(),</span>
-<span class="co">#&gt;   STATE = col_character(),</span>
-<span class="co">#&gt;   CALL = col_character(),</span>
-<span class="co">#&gt;   YEARMODA = col_integer(),</span>
-<span class="co">#&gt;   YEAR = col_integer(),</span>
-<span class="co">#&gt;   MONTH = col_character(),</span>
-<span class="co">#&gt;   DAY = col_character(),</span>
-<span class="co">#&gt;   TEMP_CNT = col_integer(),</span>
-<span class="co">#&gt;   DEWP_CNT = col_integer(),</span>
-<span class="co">#&gt;   SLP_CNT = col_integer(),</span>
-<span class="co">#&gt;   STP_CNT = col_integer(),</span>
-<span class="co">#&gt;   VISIB_CNT = col_integer(),</span>
-<span class="co">#&gt;   WDSP_CNT = col_integer(),</span>
-<span class="co">#&gt;   MAX_FLAG = col_character(),</span>
-<span class="co">#&gt;   MIN_FLAG = col_character(),</span>
-<span class="co">#&gt;   PRCP_FLAG = col_character()</span>
-<span class="co">#&gt;   # ... with 6 more columns</span>
-<span class="co">#&gt; )</span>
-<span class="co">#&gt; See spec(...) for full column specifications.</span>
 
 <span class="co"># Create a dataframe of just the date and temperature values that we want to</span>
 <span class="co"># plot</span>
-tbar_temps &lt;-<span class="st"> </span>tbar[, <span class="kw">c</span>(<span class="dv">14</span>, <span class="dv">19</span>, <span class="dv">33</span>, <span class="dv">35</span>)]
+tbar_temps &lt;-<span class="st"> </span>tbar[, <span class="kw">c</span>(<span class="dv">13</span>, <span class="dv">18</span>, <span class="dv">32</span>, <span class="dv">34</span>)]
 
 <span class="co"># Gather the data from wide to long</span>
 tbar_temps &lt;-<span class="st"> </span><span class="kw">gather</span>(tbar_temps, Measurement, <span class="dt">gather_cols =</span> TEMP<span class="op">:</span>MIN)
@@ -297,7 +235,7 @@ tbar_temps &lt;-<span class="st"> </span><span class="kw">gather</span>(tbar_tem
 <span class="co">#&gt;  Path to PROJ.4 shared files: (autodetected)</span>
 <span class="co">#&gt;  Linking to sp version: 1.2-3 </span>
 
-AUS_stations &lt;-<span class="st"> </span><span class="kw">readOGR</span>(<span class="dt">dsn =</span> <span class="kw">path.expand</span>(<span class="st">"~/AUS-2015.gpkg"</span>), <span class="dt">layer =</span> <span class="st">"GSOD"</span>)
+AUS_stations &lt;-<span class="st"> </span><span class="kw">readOGR</span>(<span class="dt">dsn =</span> <span class="kw">path.expand</span>(<span class="st">"~/AUS.gpkg"</span>), <span class="dt">layer =</span> <span class="st">"GSOD"</span>)
 <span class="co">#&gt; OGR data source with driver: GPKG </span>
 <span class="co">#&gt; Source: "/Users/asparks/AUS-2015.gpkg", layer: "GSOD"</span>
 <span class="co">#&gt; with 165168 features</span>
@@ -309,7 +247,7 @@ AUS_stations &lt;-<span class="st"> </span><span class="kw">readOGR</span>(<span
 <span class="co">#&gt; [1] "sp"</span></code></pre></div>
 <p>Since GeoPackage files are formatted as SQLite databases you can use the existing R tools for SQLite files <a href="https://jsta.github.io/2016/07/14/geopackage-r.html">(J. Stachelek 2016)</a>. One easy way is using <em>dplyr</em>, which we’ve already used to filter the stations.</p>
 <p>This option is much faster to load since it does not load the geometry.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">AUS_sqlite &lt;-<span class="st"> </span><span class="kw">tbl</span>(<span class="kw">src_sqlite</span>(<span class="kw">path.expand</span>(<span class="st">"~/AUS-2015.gpkg"</span>)), <span class="st">"GSOD"</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">AUS_sqlite &lt;-<span class="st"> </span><span class="kw">tbl</span>(<span class="kw">src_sqlite</span>(<span class="kw">path.expand</span>(<span class="st">"~/AUS.gpkg"</span>)), <span class="st">"GSOD"</span>)
 <span class="kw">class</span>(AUS_sqlite)
 <span class="co">#&gt; [1] "tbl_sqlite" "tbl_sql"    "tbl_lazy"   "tbl"       </span>
 
@@ -395,7 +333,7 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 <a href="#retrieving-and-reformatting-data-in-r">Retrieving and Reformatting Data in R</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#plot-global-station-locations">Plot Global Station Locations</a></li>
       <li><a href="#find-stations-in-australia">Find Stations in Australia</a></li>
-      <li><a href="#using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and-year">Using the get_GSOD() Function in <em>GSODR</em> to Download a Single Station and Year</a></li>
+      <li><a href="#using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and-year">Using the <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> Function in <em>GSODR</em> to Download a Single Station and Year</a></li>
       <li><a href="#find-stations-within-a-specified-distance-of-a-point">Find Stations Within a Specified Distance of a Point</a></li>
       <li><a href="#plot-maximum-and-miniumum-temperature-values">Plot Maximum and Miniumum Temperature Values</a></li>
       <li><a href="#creating-spatial-files">Creating Spatial Files</a></li>

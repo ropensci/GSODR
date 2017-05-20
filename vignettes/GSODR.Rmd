@@ -10,7 +10,7 @@ vignette: >
 ---
 
 ```{r check_packages, echo=FALSE, messages=FALSE, warning=FALSE}
-required <- c("ggplot2", "ggalt", "tidyr", "lubridate")
+required <- c("ggplot2", "tidyr", "lubridate")
 
 if (!all(unlist(lapply(required, function(pkg) requireNamespace(pkg, quietly = TRUE)))))
   knitr::opts_chunk$set(eval = FALSE)
@@ -35,27 +35,18 @@ For more information see the description of the data provided by NCEI,
 
 ## Plot Global Station Locations
 
-The GSOD data are comprised of a global set of data from weather stations. To visualise where these stations are located we can fetch the station metadata and plot it in a map. The resulting map shows only stations with valid geo-locations after filtering.
+The GSOD data are comprised of a global set of data from weather stations. To visualise where these stations are located we can fetch the station metadata and plot it in a map. Using [ggplot2](https://CRAN.R-project.org/package=ggplot2) it is possible to plot the station locations using alpha transparency to see the densest part of the network. The resulting map shows only stations with valid geo-locations after filtering.
 
-```r
-library(GSODR)
-GSOD_stations <- get_station_list()
-```
-
-Using [ggplot2](https://CRAN.R-project.org/package=ggplot2) and the 
-[ggalt](https://CRAN.R-project.org/package=ggalt) package it is possible to plot the station locations using alpha transparency to see the densest part of the network and use the Robinson projection for the map.
-
-```r
+```{r, eval = TRUE}
 library(ggplot2)
-library(ggalt)
+library(GSODR)
+
+GSOD_stations <- get_station_list()
 
 ggplot(GSOD_stations, aes(x = LON, y = LAT)) +
   geom_point(alpha = 0.1) +
-  coord_proj("+proj=robin +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs") +
   theme_bw()
 ```
-
-![GSOD Station Locations](./figure/GSOD_station_locations.png)
 
 ## Find Stations in Australia
 
@@ -100,11 +91,12 @@ filter(Oz, STN_NAME == "TOOWOOMBA")
 #> 1 20120503 945510-99999             670    AUSTRALIA    AU   AUS
 ```
 
-## Using the get_GSOD() Function in _GSODR_ to Download a Single Station and Year
+## Using the `get_GSOD()` Function in _GSODR_ to Download a Single Station and Year
 
 Now that we've seen where the reporting stations are located, we can download weather data from the station Toowoomba, Queensland, Australia for 2010 by using the STNID in the `station` parameter of `get_GSOD()`.
 
 ```r
+library(GSODR)
 Tbar <- get_GSOD(years = 2010, station = "955510-99999")
 
 #> Downloading the station file(s) now.
@@ -112,41 +104,6 @@ Tbar <- get_GSOD(years = 2010, station = "955510-99999")
 #> Finished downloading file. Parsing the station file(s) now.
 
 head(Tbar)
-#>    USAF  WBAN        STNID          STN_NAME CTRY STATE CALL    LAT     LON
-#>1 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
-#>2 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
-#>3 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
-#>4 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
-#>5 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
-#>6 955510 99999 955510-99999 TOOWOOMBA AIRPORT   AS  <NA> <NA> -27.55 151.917
-#>  ELEV_M ELEV_M_SRTM_90m    BEGIN      END YEARMODA YEAR MONTH DAY YDAY TEMP
-#>1    642             635 19980301 20161020 20100101 2010    01  01    1 21.2
-#>2    642             635 19980301 20161020 20100102 2010    01  02    2 23.2
-#>3    642             635 19980301 20161020 20100103 2010    01  03    3 21.4
-#>4    642             635 19980301 20161020 20100104 2010    01  04    4 18.9
-#>5    642             635 19980301 20161020 20100105 2010    01  05    5 20.5
-#>6    642             635 19980301 20161020 20100106 2010    01  06    6 21.9
-#>  TEMP_CNT DEWP DEWP_CNT    SLP SLP_CNT   STP STP_CNT VISIB VISIB_CNT WDSP
-#>1        8 17.9        8 1013.4       8 942.0       8    NA         0  2.2
-#>2        8 19.4        8 1010.5       8 939.3       8    NA         0  1.9
-#>3        8 18.9        8 1012.3       8 940.9       8  14.3         6  3.9
-#>4        8 16.4        8 1015.7       8 944.1       8  23.3         4  4.5
-#>5        8 16.4        8 1015.5       8 944.0       8    NA         0  3.9
-#>6        8 18.7        8 1013.7       8 942.3       8    NA         0  3.2
-#>  WDSP_CNT MXSPD GUST   MAX MAX_FLAG   MIN MIN_FLAG PRCP PRCP_FLAG SNDP I_FOG
-#>1        8   6.7   NA 25.78          17.78           1.5         G   NA     0
-#>2        8   5.1   NA 26.50          19.11           0.3         G   NA     0
-#>3        8  10.3   NA 28.72          19.28        * 19.8         G   NA     1
-#>4        8  10.3   NA 24.11          16.89        *  1.0         G   NA     0
-#>5        8  10.8   NA 24.61          16.72           0.3         G   NA     0
-#>6        8   7.7   NA 26.78          17.50           0.0         G   NA     1
-#>  I_RAIN_DRIZZLE I_SNOW_ICE I_HAIL I_THUNDER I_TORNADO_FUNNEL  EA  ES   RH
-#>1              0          0      0         0                0 2.1 2.5 84.0
-#>2              0          0      0         0                0 2.3 2.8 82.1
-#>3              1          0      0         0                0 2.2 2.5 88.0
-#>4              0          0      0         0                0 1.9 2.2 86.4
-#>5              0          0      0         0                0 1.9 2.4 79.2
-#>6              0          0      0         0                0 2.2 2.6 84.6
 ```
 
 ## Find Stations Within a Specified Distance of a Point
@@ -156,19 +113,26 @@ Using the `nearest_stations()` function, you can find stations closest to a give
 There are missing stations in this query. Not all that are listed and queried actually have files on the server.
 
 ```r
-tbar_stations <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 50)
-
-get_GSOD(years = 2010, station = tbar_stations, dsn = "~/",
-         filename = "Toowoomba_50km_2010", CSV = TRUE)
+tbar_stations <-
+  nearest_stations(LAT = -27.5598,
+  LON = 151.9507,
+  distance = 50)
+  
+  tbar <- get_GSOD(
+  years = 2010,
+  station = tbar_stations
+  )
 ```
 If you wished to drop the stations, 949999-00170 and 949999-00183 from the query, you could do this.
 
 ```r
 remove <- c("949999-00170", "949999-00183")
+
 tbar_stations <- tbar_stations[!tbar_stations %in% remove]
 
-get_GSOD(years = 2010, station = tbar_stations, dsn = "~/",
-         filename = "Toowoomba_50km")
+tbar <- get_GSOD(years = 2010,
+                 station = tbar_stations,
+                 dsn = "~/")
 ```
 
 ## Plot Maximum and Miniumum Temperature Values
@@ -177,42 +141,11 @@ Using the first data downloaded for a single station, 955510-99999, plot the tem
 
 ```r
 library(lubridate)
-library(readr)
 library(tidyr)
-
-# Import the data for Toowoomba previously downloaded and cleaned
-tbar <- read_csv("~/Toowoomba_Airport-2010.csv")
-
-#> Parsed with column specification:
-#> cols(
-#>   .default = col_double(),
-#>   USAF = col_integer(),
-#>   WBAN = col_integer(),
-#>   STNID = col_character(),
-#>   STN_NAME = col_character(),
-#>   CTRY = col_character(),
-#>   STATE = col_character(),
-#>   CALL = col_character(),
-#>   YEARMODA = col_integer(),
-#>   YEAR = col_integer(),
-#>   MONTH = col_character(),
-#>   DAY = col_character(),
-#>   TEMP_CNT = col_integer(),
-#>   DEWP_CNT = col_integer(),
-#>   SLP_CNT = col_integer(),
-#>   STP_CNT = col_integer(),
-#>   VISIB_CNT = col_integer(),
-#>   WDSP_CNT = col_integer(),
-#>   MAX_FLAG = col_character(),
-#>   MIN_FLAG = col_character(),
-#>   PRCP_FLAG = col_character()
-#>   # ... with 6 more columns
-#> )
-#> See spec(...) for full column specifications.
 
 # Create a dataframe of just the date and temperature values that we want to
 # plot
-tbar_temps <- tbar[, c(14, 19, 33, 35)]
+tbar_temps <- tbar[, c(13, 18, 32, 34)]
 
 # Gather the data from wide to long
 tbar_temps <- gather(tbar_temps, Measurement, gather_cols = TEMP:MIN)
@@ -265,7 +198,7 @@ library(rgdal)
 #>  Path to PROJ.4 shared files: (autodetected)
 #>  Linking to sp version: 1.2-3 
 
-AUS_stations <- readOGR(dsn = path.expand("~/AUS-2015.gpkg"), layer = "GSOD")
+AUS_stations <- readOGR(dsn = path.expand("~/AUS.gpkg"), layer = "GSOD")
 #> OGR data source with driver: GPKG 
 #> Source: "/Users/asparks/AUS-2015.gpkg", layer: "GSOD"
 #> with 165168 features
@@ -283,7 +216,7 @@ Since GeoPackage files are formatted as SQLite databases you can use the existin
 This option is much faster to load since it does not load the geometry.
 
 ```r
-AUS_sqlite <- tbl(src_sqlite(path.expand("~/AUS-2015.gpkg")), "GSOD")
+AUS_sqlite <- tbl(src_sqlite(path.expand("~/AUS.gpkg")), "GSOD")
 class(AUS_sqlite)
 #> [1] "tbl_sqlite" "tbl_sql"    "tbl_lazy"   "tbl"       
 
