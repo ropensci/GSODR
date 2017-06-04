@@ -180,7 +180,8 @@
 #' 
 reformat_GSOD <- function(dsn = NULL, file_list = NULL) {
 
-    stations <- isd_history
+  stations <- isd_history
+  stations <- data.table::setDT(stations)
 
   # If dsn !NULL, create a list of files to reformat
   if (!is.null(dsn)) {
@@ -191,7 +192,7 @@ reformat_GSOD <- function(dsn = NULL, file_list = NULL) {
   purrr::map(
     .x = file_list,
     .f = .process_gz,
-    stations = stations,
-    .progress = "text"
-  )
+    stations = stations
+  ) %>% 
+    dplyr::bind_rows()
 }
