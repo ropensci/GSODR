@@ -254,6 +254,7 @@ get_GSOD <- function(years = NULL,
   # Load station list
   
   stations <- data.table::setDT(isd_history)
+  
   # Validate user entered stations for existence in stations list from NCEI
   purrr::walk(
     .x = station,

@@ -26,9 +26,7 @@ get_station_list <- function() {
   options(timeout = 300)
   on.exit(options(timeout = original_timeout))
   
-  # load current local copy of isd_history
-  utils::data("isd_history", package = "GSODR")
-  old_isd_history <- data.table::setDT(isd_history)
+  old_isd_history <- isd_history
   
   # fetch new isd_history from NCEI server
   new_isd_history <- readr::read_csv(

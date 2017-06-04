@@ -1,6 +1,6 @@
+
 #'isd_history
 #'
-#' @format A data frame with 28347 observations of 13 elements:
 #' \describe{
 #'   \item{USAF}{Air Force Datsav3 station number}
 #'   \item{WBAN}{Weather Bureau Army Navy (5 digit identifier)}
@@ -65,7 +65,7 @@
 "isd_history"
 
 #' country_list
-#' @format A data frame with 293 observations of 4 elements:
+#'
 #' \describe{
 #' \item{FIPS}{Federal Information Processing Standards (FIPS) code}
 #' \item{COUNTRY_NAME}{English language name}

@@ -177,11 +177,11 @@
 #' @seealso \code{\link{get_GSOD}}
 #'
 #' @export
+#' 
 reformat_GSOD <- function(dsn = NULL, file_list = NULL) {
-  # Fetch latest station metadata from NCDC server
-  if (!exists("stations")) {
-    stations <- get_station_list()
-  }
+
+    stations <- isd_history
+
   # If dsn !NULL, create a list of files to reformat
   if (!is.null(dsn)) {
     file_list <- list.files(path = dsn,
