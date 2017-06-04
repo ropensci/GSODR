@@ -175,7 +175,9 @@
 #' comma-separated value (CSV) or GeoPackage (GPKG) file saved to local disk.
 #'
 #' @seealso \code{\link{get_GSOD}}
-#'
+#' 
+#' @importFrom magrittr %>%
+#' 
 #' @export
 #' 
 reformat_GSOD <- function(dsn = NULL, file_list = NULL) {

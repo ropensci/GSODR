@@ -118,7 +118,7 @@
 #'
 #' @seealso \code{\link{reformat_GSOD}}
 #'
-#' @importFrom dplyr %>%
+#' @importFrom magrittr %>%
 #' @export
 get_GSOD <- function(years = NULL,
                      station = NULL,
