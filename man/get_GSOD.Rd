@@ -81,7 +81,7 @@ Data summarise each year by station, which include vapour pressure and
 relative humidity elements calculated from existing data in GSOD.
 
 If the option to save locally is selected. Output may be saved as comma-
-separated, CSV, files or GeoPackage, GPKG, files in a directory specified by
+separated value (CSV) or GeoPackage (GPKG) files in a directory specified by
 the user, defaulting to the current working directory.
 
 When querying selected stations and electing to write files to disk, all
