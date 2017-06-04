@@ -1,4 +1,5 @@
-#' Clean, Reformat and Generate New Variables From GSOD Weather Data
+
+#' Clean, reformat and generate new variables from GSOD weather data
 #'
 #'This function automates cleaning and reformatting of GSOD,
 #'\url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod},
@@ -187,9 +188,9 @@ reformat_GSOD <- function(dsn = NULL, file_list = NULL) {
                             pattern = "^.*\\.op.gz$",
                             full.names = TRUE)
   }
-  plyr::ldply(
-    .data = file_list,
-    .fun = .process_gz,
+  purrr::map(
+    .x = file_list,
+    .f = .process_gz,
     stations = stations,
     .progress = "text"
   )
