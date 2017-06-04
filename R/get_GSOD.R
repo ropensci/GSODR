@@ -251,13 +251,12 @@ get_GSOD <- function(years = NULL,
     outfile <- .validate_fileout(CSV, dsn, filename, GPKG)
   }
   # Load station list
-  utils::data("isd_history", package = "GSODR")
-  isd_history <- isd_history
+  
   stations <- data.table::setDT(isd_history)
   # Validate user entered stations for existence in stations list from NCEI
-  plyr::l_ply(
-    .data = station,
-    .fun = .validate_station,
+  purrr::walk(
+    .x = station,
+    .f = .validate_station,
     stations = stations,
     years = years
   )

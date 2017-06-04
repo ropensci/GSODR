@@ -37,7 +37,6 @@ Imports:
     data.table,
     dplyr,
     fields,
-    plyr,
     purrr (>= 0.2.0),
     R.utils,
     readr,
