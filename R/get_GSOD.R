@@ -180,14 +180,11 @@ get_GSOD <- function(years = NULL,
   }
   # Clean and reformat list of station files from local disk in tempdir --------
   message("Starting data file processing")
-  GSOD_XY <- as.data.frame(
-    plyr::ldply(
-      .data = GSOD_list,
-      .fun = .process_gz,
-      stations = stations,
-      .progress = "text"
-    )
-  )[, -1]
+  GSOD_XY <- as.data.frame(purrr::map(
+    .x = GSOD_list,
+    .f = .process_gz,
+    stations = stations
+  ))[, -1]
   # Write files to disk --------------------------------------------------------
   if (isTRUE(CSV)) {
     message("\nWriting CSV file to disk.\n")
@@ -286,9 +283,9 @@ get_GSOD <- function(years = NULL,
     )
   }
   BEGIN <-
-    as.numeric(substr(stations[stations[[12]] == station, ]$BEGIN, 1, 4))
+    as.numeric(substr(stations[stations[[12]] == station,]$BEGIN, 1, 4))
   END <-
-    as.numeric(substr(stations[stations[[12]] == station, ]$END, 1, 4))
+    as.numeric(substr(stations[stations[[12]] == station,]$END, 1, 4))
   if (min(years) < BEGIN | max(years) > END) {
     message("This station, ",
             station,
@@ -370,9 +367,9 @@ get_GSOD <- function(years = NULL,
       )
       tar_files <-
         list.files(cache_dir, pattern = "^gsod.*\\.tar$", full.names = TRUE)
-      plyr::ldply(.data = tar_files,
-                  .fun = utils::untar,
-                  exdir = cache_dir)
+      purrr::map(.x = tar_files,
+                 .f = utils::untar,
+                 exdir = cache_dir)
       GSOD_list <-
         list.files(cache_dir, pattern = "^.*\\.op.gz$", full.names = TRUE)
     }
@@ -433,7 +430,7 @@ get_GSOD <- function(years = NULL,
         close(con)
         # sift out only the target stations
         purrr::map(station, ~ grep(., fils, value = TRUE)) %>%
-          purrr::keep(~ length(.) > 0) %>%
+          purrr::keep( ~ length(.) > 0) %>%
           purrr::flatten_chr() -> fils
         # grab the station files
         purrr::walk(paste0(year_url, fils), retry_cfd)
@@ -450,7 +447,7 @@ get_GSOD <- function(years = NULL,
 .agroclimatology_list <-
   function(GSOD_list, stations, cache_dir, years) {
     station_list <- stations[stations$LAT >= -60 &
-                               stations$LAT <= 60, ]$STNID
+                               stations$LAT <= 60,]$STNID
     station_list <- do.call(paste0,
                             c(
                               expand.grid(cache_dir, "/", station_list, "-",
@@ -470,9 +467,9 @@ get_GSOD <- function(years = NULL,
     utils::data("country_list", package = "GSODR")
     country_list <- country_list
     country_FIPS <- unlist(as.character(stats::na.omit
-                                        (country_list[country_list$FIPS == country, ][[1]]),
+                                        (country_list[country_list$FIPS == country,][[1]]),
                                         use.names = FALSE))
-    station_list <- stations[stations$CTRY == country_FIPS, ]$STNID
+    station_list <- stations[stations$CTRY == country_FIPS,]$STNID
     station_list <- do.call(paste0,
                             c(
                               expand.grid(cache_dir,
