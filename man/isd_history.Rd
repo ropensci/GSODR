@@ -4,7 +4,14 @@
 \name{isd_history}
 \alias{isd_history}
 \title{isd_history}
-\format{A data frame with 28347 observations of 13 elements:
+\format{An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 28375 rows and 13 columns.}
+\source{
+\url{ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv}
+}
+\usage{
+isd_history
+}
+\description{
 \describe{
   \item{USAF}{Air Force Datsav3 station number}
   \item{WBAN}{Weather Bureau Army Navy (5 digit identifier)}
@@ -24,8 +31,8 @@
   \item{ELEV_M_SRTM_90m}{Elevation in metres extracted from SRTM data (Jarvis
   \emph{et al}. 2008)}
 }
-
-
+}
+\details{
 Station elevation information for the US National Centers for Environmental
 Information (NCEI) Global Surface Summary of the Day (GSOD) weather data.
 The original file has missing and incorrect geographic data including
@@ -45,15 +52,7 @@ model (Jarvis \emph{et al}. 2008).}
 }
 For more on this, please consult the document available from the GSODR
 GitHub repository detailing the process used to generate these data,
-\url{https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md}}
-\source{
-\url{ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv}
-}
-\usage{
-isd_history
-}
-\description{
-isd_history
+\url{https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md}
 }
 \note{
 Users of these data should take into account the following (from the

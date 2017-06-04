@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_station_list.R
 \name{get_station_list}
 \alias{get_station_list}
-\title{Download the Latest Station List From the NCEI Server}
+\title{Download the latest station list from the NCEI server}
 \usage{
 get_station_list()
 }
