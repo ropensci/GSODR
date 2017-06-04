@@ -15,7 +15,7 @@ test_that("reformat_GSOD file_list parameter reformats data properly", {
   
   y <- list.files(dest, pattern = ".op.gz$", full.names = TRUE)
   x <- reformat_GSOD(file_list = y)
-  expect_equal(nrow(x), 1454)
+  expect_equal(nrow(x), 722)
   expect_equal(ncol(x), 48)
   expect_type(x, "list")
   unlink(destinations)

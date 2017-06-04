@@ -92,5 +92,6 @@ reformat_GSOD <- function(dsn = NULL, file_list = NULL) {
     .f = .process_gz,
     stations = stations
   ) %>% 
-    dplyr::bind_rows()
+    dplyr::bind_rows() %>% 
+    as.data.frame()
 }
