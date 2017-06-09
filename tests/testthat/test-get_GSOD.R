@@ -157,13 +157,13 @@ test_that("missing days check allows stations with permissible days missing,
 test_that("The 'max_missing' parameter will not accept NA values", {
 
   expect_error(get_GSOD(years = 2010, max_missing = NA),
-               "\nThe 'max_missing' parameter must be a positive value larger than\n           1\n")
+               "\nThe 'max_missing' parameter must be a positive value larger than 1\n")
 })
 
 test_that("The 'max_missing' parameter will not accept values < 1", {
 
   expect_error(get_GSOD(years = 2010, max_missing = 0.1),
-               "\nThe 'max_missing' parameter must be a positive value larger than\n           1\n")
+               "\nThe 'max_missing' parameter must be a positive value larger than 1\n")
 })
 
 # Check validate country returns a two letter code -----------------------------
