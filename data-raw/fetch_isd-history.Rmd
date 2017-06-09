@@ -66,10 +66,6 @@ if (!require("ggplot2")) {
   install.packages("ggplot2")
 }
 
-if (!require("ggalt")) {
-  install.packages("ggalt")
-}
-
 if (!require("parallel")) {
   install.packages("parallel")
 }
@@ -80,6 +76,10 @@ if (!require("raster")) {
 
 if (!require("readr")) {
   install.packages("readr")
+}
+
+if (!require("rnaturalearth")) {
+  install.packages("rnaturalearth")
 }
 
 dem_tiles <- list.files(path.expand("~/Data/CGIAR-CSI SRTM"), 
@@ -93,11 +93,7 @@ tf <- tempfile()
 
 ```{r download NE data, echo=TRUE}
 # import Natural Earth cultural 1:10m data
-curl::curl_download("http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_0_countries.zip",
-                    destfile = tf)
-NE <- unzip(tf)
-NE <- raster::shapefile("./ne_10m_admin_0_countries.shp")
-unlink(tf)
+NE <- rnaturalearth::ne_countries(scale = 10)
 
 # download data
 stations <- readr::read_csv(
@@ -181,7 +177,7 @@ point_check <- as.data.frame(point_check)
 stations_discard <- point_check[point_check$FIPS %in% point_check$FIPS_10_ == FALSE, ]
 nrow(stations_discard)
 ```
-Zero observations (rows) in stations_discard, the data look good, no need to
+Zero observations (rows) in `stations_discard`, the data look good, no need to
 remove any
 
 
@@ -249,25 +245,19 @@ stations <- tibble::as_tibble(stations)
 
 # Perform left join to join corrected elevation with original station data,
 # this will include stations below/above -60/60
-SRTM_GSOD_elevation <- dplyr::left_join(stations, corrected_elev)
+isd_history <- dplyr::left_join(stations, corrected_elev)
 
-summary(SRTM_GSOD_elevation)
+summary(isd_history)
 ```
 
 # Figures
 
 ```{r ggplot, echo=FALSE, message=FALSE}
 library(ggplot2)
-library(ggalt)
 ```
 
 ```{r Buffered SRTM 90m vs Reported Elevation, echo=TRUE, fig.cap="GSOD Reported Elevation versus CGIAR-CSI SRTM Buffered Elevation", warning=FALSE}
-if (!require("ggalt"))
-{
-  install.packages("ggalt")
-}
-
-ggplot(data = SRTM_GSOD_elevation, aes(x = ELEV_M, y = ELEV_M_SRTM_90m)) +
+ggplot(data = isd_history, aes(x = ELEV_M, y = ELEV_M_SRTM_90m)) +
   geom_point(alpha = 0.4, size = 0.5)
 ```
 
@@ -278,19 +268,13 @@ help avoid within cell and between cell variation the buffered values are the
 values that are included in the final data for distribution with the GSODR
 package following the approach of Hijmans *et al.* (2005).
 
-Only values for elevation derived from the SRTM data and the STNID, used to
-join this with the original "isd-history.csv" file data when running `get_GSOD()`
-are included in the final data frame for distribution with the GSODR package.
+The final dataframe for distribution with _GSODR_ includes the new elevation 
+values along with the cleaned "isd-history.csv" data.
 
 ```{r cleanup and .rda file creation, message=FALSE, echo=TRUE, warning=FALSE, error=FALSE}
 
 # write rda file to disk for use with GSODR package
-data.table::setDT(SRTM_GSOD_elevation)
-SRTM_GSOD_elevation[, c(1:11) := NULL]
-devtools::use_data(SRTM_GSOD_elevation, overwrite = TRUE, compress = "bzip2")
-
-# clean up Natural Earth data files before we leave
-file.remove(list.files(pattern = glob2rx("ne_10m_admin_0_countries*")))
+devtools::use_data(isd_history, overwrite = TRUE, compress = "bzip2")
 
 ```
 
@@ -308,7 +292,7 @@ Users of these data should take into account the following (from the [NCEI websi
 ## R System Information
 
 ```{r system information, echo=FALSE}
-sessionInfo()
+devtools::session_info()
 ```
 
 # References

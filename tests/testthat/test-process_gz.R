@@ -1,10 +1,12 @@
-context(".process_gz")
+context("get_GSOD")
   # Check that .process_gz works properly and returns a data table.
   test_that(".download_files properly works, subsetting for country and
             agroclimatology works and .process_gz returns a data table", {
               skip_on_cran()
               skip_on_appveyor() # appveyor will not properly untar the file
-              do.call(file.remove, list(list.files(tempdir(), full.names = TRUE)))
+              do.call(file.remove, list(list.files(tempdir(),
+                                                   pattern = ".gz$",
+                                                   full.names = TRUE)))
               years <- 2015
               agroclimatology <- TRUE
               country <- "RP"
@@ -12,14 +14,15 @@ context(".process_gz")
               cache_dir <- tempdir()
               ftp_base <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/%s/"
 
-              stations <- get_station_list()
+              utils::data("isd_history", package = "GSODR")
+              stations <- data.table::setDT(isd_history)
 
               GSOD_list <- .download_files(ftp_base, station, years, cache_dir)
 
-              expect_length(GSOD_list, 12976)
+              expect_length(GSOD_list, 24423)
 
-              agro_list <- .agroclimatology_list(GSOD_list, stations, cache_dir
-                                                 , years)
+              agro_list <- .agroclimatology_list(GSOD_list, stations, cache_dir,
+                                                 years)
               expect_length(agro_list, 11302)
 
               RP_list <- .country_list(country, GSOD_list, stations, cache_dir,
@@ -83,5 +86,5 @@ context(".process_gz")
               expect_is(gz_out$EA, "numeric")
               expect_is(gz_out$ES, "numeric")
               expect_is(gz_out$RH, "numeric")
-
               })
+  

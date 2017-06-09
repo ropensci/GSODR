@@ -53,6 +53,8 @@ Dynamics for Predicting Ecosystem and Biodiversity Distributions.
 \emph{PLoS Biol} \bold{14(3)}: e1002415. doi:10.1371/journal. pbio.1002415
 }
 \seealso{
+\strong{GSODR functions:}
+
 \code{\link{get_GSOD}} Fetch, clean and reformat data from NCEI GSOD
 database
 
@@ -62,14 +64,22 @@ GSOD database
 \code{\link{nearest_stations}} Find stations within a given radius
 expressed in kilometres for a given point using Latitude and Longitude
 
-\code{\link{get_station_list}} Fetch latest list of stations and
-corresponding metadata from the NCEI FTP server
+\code{\link{get_station_list}} Fetch the latest list of stations and
+corresponding metadata from the NCEI FTP server and update the package's
+local copy with these data
 
-\code{\link{SRTM_GSOD_elevation}} GSDOR provides additional
-elevation data derived from SRTM90m data
+\code{\link{isd_history}} GSDOR provides a cleaned, local copy of
+the "isd_history.csv" file to help make some processes faster with
+elevation data derived from SRTM90m data also included in these data
 
 \code{\link{country_list}} GSODR provides a cleaned list of the
 countries which are represented in the GSOD data set
+
+\strong{Useful links:}
+\itemize{
+\item{\url{https://github.com/ropensci/GSODR}}
+\item{Report bugs at \url{https://github.com/ropensci/GSODR/issues}}
+}
 }
 \author{
 Adam Sparks, Tomislav Hengle and Andrew Nelson

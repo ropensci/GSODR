@@ -1,4 +1,5 @@
-#' Download, Clean, Reformat and Generate New Elements From GSOD Weather Data
+
+#' Download, clean, reformat generate new elements and return a tidy data.frame of GSOD weather data
 #'
 #'This function automates downloading, cleaning, reformatting of data from
 #'the Global Surface Summary of the Day (GSOD) data provided by the US National
@@ -59,7 +60,7 @@
 #' relative humidity elements calculated from existing data in GSOD.
 #'
 #' If the option to save locally is selected. Output may be saved as comma-
-#' separated, CSV, files or GeoPackage, GPKG, files in a directory specified by
+#' separated value (CSV) or GeoPackage (GPKG) files in a directory specified by
 #' the user, defaulting to the current working directory.
 #'
 #' When querying selected stations and electing to write files to disk, all
@@ -68,116 +69,11 @@
 #' All missing values in resulting files are represented as NA regardless of
 #' which field they occur in.
 #'
-#'For more information see the description of the data provided by NCEI,
+#' For a complete list of the fields and desciption of the contents and units,
+#' please refer to the \code{vignette("GSODR_output_fields", package = "GSODR")}.
+#'
+#' For more information see the description of the data provided by NCEI,
 #'\url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
-#'
-#' The data returned either in a data.frame object and/or a file written to
-#' local disk that includes the following fields:
-#' \describe{
-#' \item{STNID}{Station number (WMO/DATSAV3 number) for the location}
-#' \item{WBAN}{Number where applicable--this is the historical "Weather Bureau
-#' Air Force Navy" number - with WBAN being the acronym}
-#' \item{STN_NAME}{Unique text identifier}
-#' \item{CTRY}{Country in which the station is located}
-#' \item{LAT}{Latitude. *Station dropped in cases where values are < -90 or
-#'> 90 degrees or Lat = 0 and Lon = 0* (WGS84)}
-#' \item{LON}{Longitude. *Station dropped in cases where values are < -180 or
-#'> 180 degrees or Lat = 0 and Lon = 0* (WGS84)}
-#' \item{ELEV_M}{Elevation in metres}
-#' \item{ELEV_M_SRTM_90m}{Elevation in metres corrected for possible errors,
-#' derived from the CGIAR-CSI SRTM 90m database (Jarvis et al. 2008)}
-#' \item{YEARMODA}{Date in YYYY-mm-dd format}
-#' \item{YEAR}{The year (YYYY)}
-#' \item{MONTH}{The month (mm)}
-#' \item{DAY}{The day (dd)}
-#' \item{YDAY}{Sequential day of year (not in original GSOD)}
-#' \item{TEMP}{Mean daily temperature converted to degrees C to tenths.
-#' Missing = NA}
-#' \item{TEMP_CNT}{Number of observations used in calculating mean daily
-#' temperature}
-#' \item{DEWP}{Mean daily dew point converted to degrees C to tenths. Missing
-#' = NA}
-#' \item{DEWP_CNT}{Number of observations used in calculating mean daily dew
-#' point}
-#' \item{SLP}{Mean sea level pressure in millibars to tenths. Missing = NA}
-#' \item{SLP_CNT}{Number of observations used in calculating mean sea level
-#' pressure}
-#' \item{STP}{Mean station pressure for the day in millibars to tenths.
-#' Missing = NA}
-#' \item{STP_CNT}{Number of observations used in calculating mean station
-#' pressure}
-#' \item{VISIB}{Mean visibility for the day converted to kilometres to
-#' tenths Missing = NA}
-#' \item{VISIB_CNT}{Number of observations used in calculating mean daily
-#' visibility}
-#' \item{WDSP}{Mean daily wind speed value converted to metres/second to
-#' tenths Missing = NA}
-#' \item{WDSP_CNT}{Number of observations used in calculating mean daily
-#' wind speed}
-#' \item{MXSPD}{Maximum sustained wind speed reported for the day converted
-#' to metres/second to tenths. Missing = NA}
-#' \item{GUST}{Maximum wind gust reported for the day converted to
-#' metres/second to tenths. Missing = NA}
-#' \item{MAX}{Maximum temperature reported during the day converted to
-#' Celsius to tenths--time of max temp report varies by country and region,
-#' so this will sometimes not be the max for the calendar day. Missing =
-#' NA}
-#' \item{MAX_FLAG}{Blank indicates max temp was taken from the explicit max
-#' temp report and not from the 'hourly' data. An "*" indicates max temp was
-#' derived from the hourly data (i.e., highest hourly or synoptic-reported
-#' temperature)}
-#' \item{MIN}{Minimum temperature reported during the day converted to
-#' Celsius to tenths--time of min temp report varies by country and region,
-#' so this will sometimes not be the max for the calendar day. Missing =
-#' NA}
-#' \item{MIN_FLAG}{Blank indicates max temp was taken from the explicit max
-#' temp report and not from the 'hourly' data. An "*" indicates min temp was
-#' derived from the hourly data (i.e., highest hourly or synoptic-reported
-#' temperature)}
-#' \item{PRCP}{Total precipitation (rain and/or melted snow) reported during
-#' the day converted to millimetres to hundredths; will usually not end
-#' with the midnight observation, i.e., may include latter part of previous
-#' day. A ".00" value indicates no measurable precipitation (includes a trace).
-#' Missing = NA; *Note: Many stations do not report '0' on days with no
-#' precipitation-- therefore, 'NA' will often appear on these days. For
-#' example, a station may only report a 6-hour amount for the period during
-#' which rain fell.* See FLAGS_PRCP column for source of data}
-#' \item{PRCP_FLAG}{
-#'   \describe{
-#'    \item{A}{1 report of 6-hour precipitation amount}
-#'    \item{B}{Summation of 2 reports of 6-hour precipitation amount}
-#'    \item{C}{Summation of 3 reports of 6-hour precipitation amount}
-#'    \item{D}{Summation of 4 reports of 6-hour precipitation amount}
-#'    \item{E}{1 report of 12-hour precipitation amount}
-#'    \item{F}{Summation of 2 reports of 12-hour precipitation amount}
-#'    \item{G}{1 report of 24-hour precipitation amount}
-#'    \item{H}{Station reported '0' as the amount for the day (e.g., from
-#'    6-hour reports), but also reported at least one occurrence of
-#'    precipitation in hourly observations--this could indicate a trace
-#'    occurred, but should be considered as incomplete data for the day}
-#'    \item{I}{Station did not report any precip data for the day and did not
-#'    report any occurrences of precipitation in its hourly observations--it's
-#'    still possible that precipitation occurred but was not reported}
-#'   }
-#' }
-#' \item{SNDP}{Snow depth in millimetres to tenths. Missing = NA}
-#' \item{I_FOG}{Indicator for fog, (1 = yes, 0 = no/not reported) for the
-#' occurrence during the day}
-#' \item{I_RAIN_DRIZZLE}{Indicator for rain or drizzle, (1 = yes, 0 = no/not
-#' reported) for the occurrence during the day}
-#' \item{I_SNOW_ICE}{Indicator for snow or ice pellets, (1 = yes, 0 = no/not
-#' reported) for the occurrence during the day}
-#' \item{I_HAIL}{Indicator for hail, (1 = yes, 0 = no/not reported) for the
-#' occurrence during the day}
-#' \item{I_THUNDER}{Indicator for thunder, (1 = yes, 0 = no/not reported)
-#' for the occurrence during the day}
-#' \item{I_TORNADO_FUNNEL}{Indicator for tornado or funnel cloud, (1 = yes, 0 =
-#' no/not reported) for the occurrence during the day}
-#'\item{ea}{Mean daily actual vapour pressure}
-#' \item{es}{Mean daily saturation vapour pressure}
-#' \item{RH}{Mean daily relative humidity}
-#' }
-#'
 #'
 #' @note Some of these data are redistributed with this R package.  Originally
 #' from these data come from the US NCEI which states that users of these data
@@ -221,7 +117,7 @@
 #'
 #' @seealso \code{\link{reformat_GSOD}}
 #'
-#' @importFrom dplyr %>%
+#' @importFrom magrittr %>%
 #' @export
 get_GSOD <- function(years = NULL,
                      station = NULL,
@@ -235,7 +131,7 @@ get_GSOD <- function(years = NULL,
   # Create objects for use in retrieving files ---------------------------------
   original_timeout <- options("timeout")[[1]]
   options(timeout = 300)
-  on.exit(options(timeout = original_timeout), add = TRUE)
+  on.exit(options(timeout = original_timeout))
   cache_dir <- tempdir()
   ftp_base <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/%s/"
   # Validate user inputs -------------------------------------------------------
@@ -243,27 +139,28 @@ get_GSOD <- function(years = NULL,
   # Validate stations for missing days -----------------------------------------
   if (!is.null(max_missing)) {
     if (is.na(max_missing) | max_missing < 1) {
-      stop("\nThe 'max_missing' parameter must be a positive value larger than
-           1\n")
+      stop("\nThe 'max_missing' parameter must be a positive value larger than 1\n")
     }
-  }
+    }
   if (!is.null(dsn)) {
     outfile <- .validate_fileout(CSV, dsn, filename, GPKG)
   }
-  # Fetch latest station metadata from NCEI server
-  stations <- get_station_list()
+  # Load station list
+  stations <- isd_history
+  stations <- data.table::setDT(stations)
+  
   # Validate user entered stations for existence in stations list from NCEI
-  plyr::l_ply(
-    .data = station,
-    .fun = .validate_station,
+  purrr::walk(
+    .x = station,
+    .f = .validate_station,
     stations = stations,
     years = years
   )
   country <- .validate_country(country)
-
+  
   # Download files from server -----------------------------------------------
   GSOD_list <- .download_files(ftp_base, station, years, cache_dir)
-
+  
   # Subset GSOD_list for agroclimatology only stations -----------------------
   if (isTRUE(agroclimatology)) {
     GSOD_list <-
@@ -282,12 +179,14 @@ get_GSOD <- function(years = NULL,
   }
   # Clean and reformat list of station files from local disk in tempdir --------
   message("Starting data file processing")
-  GSOD_XY <- as.data.frame(plyr::ldply(
-    .data = GSOD_list,
-    .fun = .process_gz,
-    stations = stations,
-    .progress = "text"
-  ))[, -1]
+  GSOD_XY <- purrr::map(
+    .x = GSOD_list,
+    .f = .process_gz,
+    stations = stations
+  )  %>%
+    dplyr::bind_rows() %>% 
+    as.data.frame()
+  
   # Write files to disk --------------------------------------------------------
   if (isTRUE(CSV)) {
     message("\nWriting CSV file to disk.\n")
@@ -298,23 +197,28 @@ get_GSOD <- function(years = NULL,
   if (isTRUE(GPKG)) {
     message("\nWriting GeoPackage File to Disk.\n")
     outfile <- paste0(outfile, ".gpkg")
-    sp::coordinates(GSOD_XY) <- ~LON+LAT
-    sp::proj4string(GSOD_XY) <- sp::CRS("+proj=longlat +datum=WGS84")
-
+    sp::coordinates(GSOD_XY) <- ~ LON + LAT
+    sp::proj4string(GSOD_XY) <-
+      sp::CRS("+proj=longlat +datum=WGS84")
+    
     # If the filename specified exists, remove it and create new
     if (file.exists(path.expand(outfile))) {
       file.remove(outfile)
     }
     # Create new .gpkg file
-    rgdal::writeOGR(GSOD_XY, dsn = path.expand(outfile), layer = "GSOD",
-                    driver = "GPKG")
+    rgdal::writeOGR(
+      GSOD_XY,
+      dsn = path.expand(outfile),
+      layer = "GSOD",
+      driver = "GPKG"
+    )
   }
   return(GSOD_XY)
   # Cleanup --------------------------------------------------------------------
   do.call(file.remove, list(list.files(cache_dir, full.names = TRUE)))
   rm(cache_dir)
   gc()
-}
+  }
 # Validation functions ---------------------------------------------------------
 #' @noRd
 .validate_years <- function(years) {
@@ -344,7 +248,7 @@ get_GSOD <- function(years = NULL,
     if (is.null(dsn)) {
       dsn <- getwd()
     }
-  dsn <- trimws(dsn)
+    dsn <- trimws(dsn)
   } else {
     if (substr(dsn, nchar(dsn) - 1, nchar(dsn)) == "//") {
       p <- substr(dsn, 1, nchar(dsn) - 2)
@@ -381,9 +285,9 @@ get_GSOD <- function(years = NULL,
     )
   }
   BEGIN <-
-    as.numeric(substr(stations[stations[[12]] == station]$BEGIN, 1, 4))
+    as.numeric(substr(stations[stations[[12]] == station, ]$BEGIN, 1, 4))
   END <-
-    as.numeric(substr(stations[stations[[12]] == station]$END, 1, 4))
+    as.numeric(substr(stations[stations[[12]] == station, ]$END, 1, 4))
   if (min(years) < BEGIN | max(years) > END) {
     message("This station, ",
             station,
@@ -393,48 +297,38 @@ get_GSOD <- function(years = NULL,
             END,
             ".\n")
   }
-}
+  }
 
 #' @noRd
 .validate_country <-
   function(country) {
+    utils::data("country_list", package = "GSODR")
+    country_list <- country_list
     if (!is.null(country)) {
       country <- toupper(trimws(country[1]))
       nc <- nchar(country)
       if (nc == 3) {
-        if (country %in% GSODR::country_list$iso3c) {
-          c <- which(country == GSODR::country_list$iso3c)
-          country <- GSODR::country_list[[c, 1]]
+        if (country %in% country_list$iso3c) {
+          c <- which(country == country_list$iso3c)
+          country <- country_list[[c, 1]]
         } else {
-          stop(
-            "\nPlease provide a valid name or 2 or 3 letter ISO country code;
-            you can view the entire list of valid countries in this data by
-            typing, 'country_list'.\n"
-          )
+          stop("\nPlease provide a valid name or 2 or 3 letter ISO country code")
         }
-        } else if (nc == 2) {
-          if (country %in% GSODR::country_list$iso2c) {
-            c <- which(country == GSODR::country_list$iso2c)
-            country <- GSODR::country_list[[c, 1]]
-          } else {
-            stop(
-              "\nPlease provide a valid name or 2 or 3 letter ISO country code;
-              you can view the entire list of valid countries in this data by
-              typing, 'country_list'.\n"
-            )
-          }
-          } else if (country %in% GSODR::country_list$COUNTRY_NAME) {
-            c <- which(country == GSODR::country_list$COUNTRY_NAME)
-            country <- GSODR::country_list[[c, 1]]
-          } else {
-            stop(
-              "\nPlease provide a valid name or 2 or 3 letter ISO country code;
-              you can view the entire list of valid countries in this data by
-              typing, 'country_list'.\n"
-            )
-          }
-          }
-          }
+      } else if (nc == 2) {
+        if (country %in% country_list$iso2c) {
+          c <- which(country == country_list$iso2c)
+          country <- country_list[[c, 1]]
+        } else {
+          stop("\nPlease provide a valid name or 2 or 3 letter ISO country code")
+        }
+      } else if (country %in% country_list$COUNTRY_NAME) {
+        c <- which(country == country_list$COUNTRY_NAME)
+        country <- country_list[[c, 1]]
+      } else {
+        stop("\nPlease provide a valid name or 2 or 3 letter ISO country code")
+      }
+    }
+  }
 #' @noRd
 .validate_missing_days <-
   function(max_missing, GSOD_list) {
@@ -475,9 +369,9 @@ get_GSOD <- function(years = NULL,
       )
       tar_files <-
         list.files(cache_dir, pattern = "^gsod.*\\.tar$", full.names = TRUE)
-      plyr::ldply(.data = tar_files,
-                  .fun = utils::untar,
-                  exdir = cache_dir)
+      purrr::map(.x = tar_files,
+                 .f = utils::untar,
+                 exdir = cache_dir)
       GSOD_list <-
         list.files(cache_dir, pattern = "^.*\\.op.gz$", full.names = TRUE)
     }
@@ -572,10 +466,10 @@ get_GSOD <- function(years = NULL,
            stations,
            cache_dir,
            years) {
-    country_FIPS <- unlist(
-      as.character(
-        stats::na.omit
-        (GSODR::country_list[GSODR::country_list$FIPS == country, ][[1]]),
+    utils::data("country_list", package = "GSODR")
+    country_list <- country_list
+    country_FIPS <- unlist(as.character(stats::na.omit
+                                        (country_list[country_list$FIPS == country, ][[1]]),
                                         use.names = FALSE))
     station_list <- stations[stations$CTRY == country_FIPS, ]$STNID
     station_list <- do.call(paste0,

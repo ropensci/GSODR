@@ -24,4 +24,6 @@ context("get_station_list")
     expect_is(stations$ELEV_M_SRTM_90m, "numeric")
 
     expect_gt(nrow(stations), 2300)
+    
+    expect_equal(options("timeout")[[1]], 60)
   })

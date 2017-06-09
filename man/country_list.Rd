@@ -4,13 +4,7 @@
 \name{country_list}
 \alias{country_list}
 \title{country_list}
-\format{A data frame with 293 observations of 4 elements:
-\describe{
-\item{FIPS}{Federal Information Processing Standards (FIPS) code}
-\item{COUNTRY_NAME}{English language name}
-\item{iso2c}{ISO 3166-1 alpha-2 – two-letter country codes}
-\item{iso3c}{ISO 3166-1 alpha-3 – three-letter country codes}
-}}
+\format{An object of class \code{data.table} (inherits from \code{data.frame}) with 293 rows and 4 columns.}
 \source{
 \url{ftp://ftp.ncdc.noaa.gov/pub/data/noaa/country-list.txt}
 }
@@ -18,7 +12,12 @@
 country_list
 }
 \description{
-country_list
+\describe{
+\item{FIPS}{Federal Information Processing Standards (FIPS) code}
+\item{COUNTRY_NAME}{English language name}
+\item{iso2c}{ISO 3166-1 alpha-2 – two-letter country codes}
+\item{iso3c}{ISO 3166-1 alpha-3 – three-letter country codes}
+}
 }
 \note{
 Users of these data should take into account the following

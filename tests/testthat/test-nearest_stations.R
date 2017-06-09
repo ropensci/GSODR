@@ -3,8 +3,7 @@
 context("nearest_stations")
 
 test_that("nearest stations returns character value station IDs", {
-  skip_on_cran()
-
+  
   n <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 100)
   expect_length(n, 15)
   expect_type(n, "character")
@@ -27,10 +26,4 @@ test_that("nearest stations returns character value station IDs", {
 
 })
 
-test_that("Timeout options are reset on nearest_stations() exit", {
-  skip_on_cran()
-  n <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 10)
-  expect_equal(options("timeout")[[1]], 60)
-  rm(n)
-})
 
