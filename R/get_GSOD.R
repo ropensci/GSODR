@@ -1,5 +1,4 @@
 
-
 #' Download, clean, reformat generate new elements and return a tidy data.frame of GSOD weather data
 #'
 #'This function automates downloading, cleaning, reformatting of data from
@@ -140,16 +139,15 @@ get_GSOD <- function(years = NULL,
   # Validate stations for missing days -----------------------------------------
   if (!is.null(max_missing)) {
     if (is.na(max_missing) | max_missing < 1) {
-      stop("\nThe 'max_missing' parameter must be a positive value larger than
-           1\n")
+      stop("\nThe 'max_missing' parameter must be a positive value larger than 1\n")
     }
     }
   if (!is.null(dsn)) {
     outfile <- .validate_fileout(CSV, dsn, filename, GPKG)
   }
   # Load station list
-  
-  stations <- data.table::setDT(isd_history)
+  stations <- isd_history
+  stations <- data.table::setDT(stations)
   
   # Validate user entered stations for existence in stations list from NCEI
   purrr::walk(
@@ -181,12 +179,14 @@ get_GSOD <- function(years = NULL,
   }
   # Clean and reformat list of station files from local disk in tempdir --------
   message("Starting data file processing")
-  GSOD_XY <- as.data.frame(purrr::map(
+  GSOD_XY <- purrr::map(
     .x = GSOD_list,
     .f = .process_gz,
     stations = stations
-  ))  %>%
-    dplyr::bind_rows()
+  )  %>%
+    dplyr::bind_rows() %>% 
+    as.data.frame()
+  
   # Write files to disk --------------------------------------------------------
   if (isTRUE(CSV)) {
     message("\nWriting CSV file to disk.\n")

@@ -83,14 +83,7 @@
     </div>
 
     
-    <p>isd_history</p>
-    
-
-    <pre class="usage"><span class='no'>isd_history</span></pre>
-        
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>A data frame with 28347 observations of 13 elements:</p><dl class='dl-horizontal'>
+    <dl class='dl-horizontal'>
   <dt>USAF</dt><dd><p>Air Force Datsav3 station number</p></dd>
   <dt>WBAN</dt><dd><p>Weather Bureau Army Navy (5 digit identifier)</p></dd>
   <dt>STN_NAME</dt><dd><p>Unique station name</p></dd>
@@ -109,6 +102,20 @@
   <dt>ELEV_M_SRTM_90m</dt><dd><p>Elevation in metres extracted from SRTM data (Jarvis
   <em>et al</em>. 2008)</p></dd>
 </dl>
+    
+
+    <pre class="usage"><span class='no'>isd_history</span></pre>
+        
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>An object of class <code>tbl_df</code> (inherits from <code>tbl</code>, <code>data.frame</code>) with 28375 rows and 13 columns.</p>
+    
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+
+    <p><a href = 'ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv'>ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv</a></p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
     <p>Station elevation information for the US National Centers for Environmental
 Information (NCEI) Global Surface Summary of the Day (GSOD) weather data.
 The original file has missing and incorrect geographic data including
@@ -127,10 +134,6 @@ model (Jarvis <em>et al</em>. 2008).</p></li>
 </ol><p>For more on this, please consult the document available from the GSODR
 GitHub repository detailing the process used to generate these data,
 <a href = 'https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md'>https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md</a></p>
-    
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
-
-    <p><a href = 'ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv'>ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv</a></p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
@@ -161,6 +164,8 @@ Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
       <li><a href="#format">Format</a></li>
 
       <li><a href="#source">Source</a></li>
+
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#note">Note</a></li>
 

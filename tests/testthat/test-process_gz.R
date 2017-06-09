@@ -87,3 +87,4 @@ context("get_GSOD")
               expect_is(gz_out$ES, "numeric")
               expect_is(gz_out$RH, "numeric")
               })
+  

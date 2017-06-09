@@ -91,15 +91,22 @@
 <h2 class="hasAnchor">
 <a href="#major-changes" class="anchor"></a>Major changes</h2>
 <ul>
-<li>Data for station locations and unique identifiers is now provided with the package on installation. Previously this was fetched each time from the ftp server.</li>
-<li>The station metadata can now be updated if necessary by using <code><a href="../reference/get_station_list.html">get_station_list()</a></code>, this change overwrites the internal data that were originally distributed with the package. This operation will fetch the latest list of stations and corresponding information from the NCEI ftp server. Any changes will be overwritten when the R package is updated, however, the package update should have the same or newer data included, so this should not be an issue.</li>
+<li>Data for station locations and unique identifiers is now provided with the package on installation. Previously this was fetched each time from the ftp server.<br>
+</li>
+<li>The station metadata can now be updated if necessary by using <code><a href="../reference/get_station_list.html">get_station_list()</a></code>, this change overwrites the internal data<br>
+that were originally distributed with the package. This operation will fetch the latest list of stations and corresponding information from the NCEI ftp server. Any changes will be overwritten when the R package is updated, however, the package update should have the same or newer data included, so this should not be an issue.</li>
 </ul>
 </div>
 <div id="minor-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-changes" class="anchor"></a>Minor changes</h2>
 <ul>
-<li>Fix bugs in the vignettes related to formatting and spelling</li>
+<li>Fix bugs in the vignettes related to formatting and spelling<br>
+</li>
+<li>Replace <em>plyr</em> functions with <em>purrr</em>, <em>plyr</em> is no longer actively developed<br>
+</li>
+<li>
+<em>plyr</em> is no longer an import</li>
 </ul>
 </div>
 </div>
