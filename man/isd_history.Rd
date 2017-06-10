@@ -67,7 +67,7 @@ The \code{isd_history} data are automatically loaded with the
 in the "isd-history.csv" file.
 
 To update these data with the latest available, use
-\code{\link{get_station_list}}.
+\code{\link{update_station_list}}.
 }
 \references{
 {Jarvis, A., Reuter, H. I, Nelson, A., Guevara, E. (2008)

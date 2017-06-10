@@ -27,7 +27,7 @@ analysis and provides four main functions for facilitating this:
 -   `get_GSOD()` - queries and transfers files from the FTP server, reformats them and returns a `data.frame()` object in R session or saves a file to disk with options for a GeoPackage spatially enabled file or comma separated values (CSV) file,  
 -   `reformat_GSOD()` - the workhorse, takes individual station files on the local disk and reformats them, returns a `data.frame()` object in R session or saves a file to disk with options for a GeoPackage spatially enabled file or comma separated values (CSV) file,  
 -   `nearest_stations()` - returns a `vector()` object containing a list of stations and their metadata that fall within the given radius of a point specified by the user,  
--   `get_station_list()` - downloads the latest station list from the NCEI FTP server and returns a `data.table()` object in R session.
+-   `update_station_list()` - downloads the latest station list from the NCEI FTP server updates the package's internal database of stations and their metadata.
 
 When reformatting data either with `get_GSOD()` or `reformat_GSOD()`, all units are converted to International System of Units (SI), e.g., inches to millimetres and Fahrenheit to Celsius. File output can be saved as a Comma Separated Value (CSV) file or in a spatial GeoPackage (GPKG) file, implemented by most major GIS software, summarising each year by
 station, which also includes vapour pressure and relative humidity elements calculated from existing data in GSOD.
