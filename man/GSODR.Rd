@@ -64,9 +64,9 @@ GSOD database
 \code{\link{nearest_stations}} Find stations within a given radius
 expressed in kilometres for a given point using Latitude and Longitude
 
-\code{\link{get_station_list}} Fetch the latest list of stations and
-corresponding metadata from the NCEI FTP server and update the package's
-local copy with these data
+\code{\link{update_station_list}} Download the latest station list from the
+NCEI FTP server updates the package's internal database of stations and their
+metadata.
 
 \code{\link{isd_history}} GSDOR provides a cleaned, local copy of
 the "isd_history.csv" file to help make some processes faster with

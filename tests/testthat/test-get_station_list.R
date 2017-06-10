@@ -1,10 +1,10 @@
-context("get_station_list")
+context("update_station_list")
 
   # Check stations list and associated metadata for validity -------------------
   test_that("stations list and associated metatdata", {
     skip_on_cran()
 
-    stations <- get_station_list()
+    stations <- update_station_list()
 
     expect_length(stations, 13)
 
@@ -22,8 +22,6 @@ context("get_station_list")
     expect_is(stations$END, "numeric")
     expect_is(stations$STNID, "character")
     expect_is(stations$ELEV_M_SRTM_90m, "numeric")
-
-    expect_gt(nrow(stations), 2300)
     
     expect_equal(options("timeout")[[1]], 60)
   })

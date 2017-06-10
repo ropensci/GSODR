@@ -42,8 +42,9 @@ facilitating this:
 -   `nearest_stations()` - returns a `vector()` object containing a list
     of stations and their metadata that fall within the given radius of
     a point specified by the user,  
--   `get_station_list()` - downloads the latest station list from the
-    NCEI FTP server and returns a `data.table()` object in R session.
+-   `update_station_list()` - downloads the latest station list from the
+    NCEI FTP server updates the package's internal database of stations
+    and their metadata.
 
 When reformatting data either with `get_GSOD()` or `reformat_GSOD()`,
 all units are converted to International System of Units (SI), e.g.,

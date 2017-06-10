@@ -55,7 +55,7 @@
 #' in the "isd-history.csv" file.
 #'
 #' To update these data with the latest available, use
-#' \code{\link{get_station_list}}.
+#' \code{\link{update_station_list}}.
 #'
 #' @source \url{ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv}
 #'

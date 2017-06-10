@@ -1,5 +1,5 @@
 
-#' Download the latest station list from the NCEI server
+#' Download the latest station list from the NCEI server and update internal database
 #'
 #' This function downloads the latest station list (isd-history.csv) from the
 #' NCEI FTP server and updates the data distributed with \code{GSODR} so that
@@ -10,18 +10,18 @@
 #' 
 #' There is no need to use this unless you know that a station exists in the
 #' GSODR data that is not available in the database distributed with 
-#' \code{\link{GSODR}} in the \code{\link{isd_history}}
-#' data.
+#' \code{\link{GSODR}} in the \code{\link{isd_history}} data distributed with
+#' \code{\link{GSODR}}.
 #'
 #' @examples
 #' \dontrun{
-#' GSOD_station_list <- get_station_list()
+#' update_station_list()
 #' }
 #' @return \code{\link[data.table]{data.table}} object of station metadata.
 #' @author Adam H Sparks, \email{adamhsparks@gmail.com}
 #' @export
 #'
-get_station_list <- function() {
+update_station_list <- function() {
   original_timeout <- options("timeout")[[1]]
   options(timeout = 300)
   on.exit(options(timeout = original_timeout))
@@ -64,22 +64,23 @@ get_station_list <- function() {
   new_isd_history <- new_isd_history[!is.na(new_isd_history$LON),]
   
   # left join the old and new data
+  
   isd_history <- dplyr::left_join(
-    new_isd_history,
     old_isd_history,
+    new_isd_history,
     by = c(
-      "USAF",
-      "WBAN",
-      "STN_NAME",
-      "CTRY",
-      "STATE",
-      "CALL",
-      "LAT",
-      "LON",
-      "ELEV_M",
-      "BEGIN",
-      "END",
-      "STNID"
+      "USAF" = "USAF",
+      "WBAN" = "WBAN",
+      "STN_NAME" = "STN_NAME",
+      "CTRY" = "CTRY",
+      "STATE" = "STATE",
+      "CALL" = "CALL",
+      "LAT" = "LAT",
+      "LON" = "LON",
+      "ELEV_M" = "ELEV_M",
+      "BEGIN" = "BEGIN",
+      "END" = "END",
+      "STNID" = "STNID"
     )
   )
   
@@ -90,6 +91,5 @@ get_station_list <- function() {
   path <-
     file.path(file.path(pkg, "data"), paste0("isd_history.rda"))
   save(isd_history, file = path, compress = "bzip2")
-  
   return(isd_history)
 }

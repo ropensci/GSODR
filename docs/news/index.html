@@ -93,21 +93,26 @@
 <ul>
 <li>Data for station locations and unique identifiers is now provided with the package on installation. Previously this was fetched each time from the ftp server.<br>
 </li>
-<li>The station metadata can now be updated if necessary by using <code><a href="../reference/get_station_list.html">get_station_list()</a></code>, this change overwrites the internal data<br>
-that were originally distributed with the package. This operation will fetch the latest list of stations and corresponding information from the NCEI ftp server. Any changes will be overwritten when the R package is updated, however, the package update should have the same or newer data included, so this should not be an issue.</li>
-</ul>
-</div>
-<div id="minor-changes" class="section level2">
-<h2 class="hasAnchor">
-<a href="#minor-changes" class="anchor"></a>Minor changes</h2>
-<ul>
-<li>Fix bugs in the vignettes related to formatting and spelling<br>
+<li>The station metadata can now be updated if necessary by using <code><a href="../reference/update_station_list.html">update_station_list()</a></code>, this change overwrites the internal data<br>
+that were originally distributed with the package. This operation will fetch the latest list of stations and corresponding information from the NCEI ftp server. Any changes will be overwritten when the R package is updated, however, the package update should have the same or newer data included, so this should not be an issue.<br>
 </li>
 <li>Replace <em>plyr</em> functions with <em>purrr</em>, <em>plyr</em> is no longer actively developed<br>
 </li>
 <li>
 <em>plyr</em> is no longer an import</li>
 </ul>
+</div>
+<div id="minor-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#minor-changes" class="anchor"></a>Minor changes</h2>
+<ul>
+<li>Fix bugs in the vignettes related to formatting and spelling</li>
+</ul>
+</div>
+<div id="deprecated-and-defunct" class="section level2">
+<h2 class="hasAnchor">
+<a href="#deprecated-and-defunct" class="anchor"></a>Deprecated and defunct</h2>
+<p><code><a href="../reference/GSODR-deprecated.html">get_station_list()</a></code> is no longer supported. Instead use the new <code><a href="../reference/update_station_list.html">update_station_list()</a></code> to update the package’s internal station database.</p>
 </div>
 </div>
     <div id="gsodr-1-0-2-1" class="section level1">
@@ -196,7 +201,7 @@ that were originally distributed with the package. This operation will fetch the
 </li>
 <li>A new <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code> function reformats station files in “WMO-WBAN-YYYY.op.gz” format that have been downloaded from the United States National Climatic Data Center’s (NCDC) FTP server.<br>
 </li>
-<li>A new function, <code><a href="../reference/get_station_list.html">get_station_list()</a></code> allows for fetching latest station list from the FTP server and querying by the user for a specified station or location.<br>
+<li>A new function, <code><a href="../reference/GSODR-deprecated.html">get_station_list()</a></code> allows for fetching latest station list from the FTP server and querying by the user for a specified station or location.<br>
 </li>
 <li>New data layers are provided through a separate package, <a href="https://github.com/adamhsparks/GSODRdata"><code>GSODRdata</code></a>, which provide climate data formatted for use with GSODR.
 <ul>
@@ -248,9 +253,9 @@ that were originally distributed with the package. This operation will fetch the
 <li>Fixed: The stations data frame distributed with the package now include stations that are located above 60 latitude and below -60 latitude</li>
 </ul>
 </div>
-<div id="deprecated-and-defunct" class="section level2">
+<div id="deprecated-and-defunct-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#deprecated-and-defunct" class="anchor"></a>Deprecated and defunct</h2>
+<a href="#deprecated-and-defunct-1" class="anchor"></a>Deprecated and defunct</h2>
 <ul>
 <li>Missing values are reported as NA for use in R, not -9999 as previously<br>
 </li>

@@ -83,7 +83,7 @@
 <code><a href="reference/nearest_stations.html">nearest_stations()</a></code> - returns a <code>vector()</code> object containing a list of stations and their metadata that fall within the given radius of a point specified by the user,<br>
 </li>
 <li>
-<code><a href="reference/get_station_list.html">get_station_list()</a></code> - downloads the latest station list from the NCEI FTP server and returns a <code>data.table()</code> object in R session.</li>
+<code><a href="reference/update_station_list.html">update_station_list()</a></code> - downloads the latest station list from the NCEI FTP server updates the package’s internal database of stations and their metadata.</li>
 </ul>
 <p>When reformatting data either with <code><a href="reference/get_GSOD.html">get_GSOD()</a></code> or <code><a href="reference/reformat_GSOD.html">reformat_GSOD()</a></code>, all units are converted to International System of Units (SI), e.g., inches to millimetres and Fahrenheit to Celsius. File output can be saved as a Comma Separated Value (CSV) file or in a spatial GeoPackage (GPKG) file, implemented by most major GIS software, summarising each year by station, which also includes vapour pressure and relative humidity elements calculated from existing data in GSOD.</p>
 <p>Additional data are calculated by this R package using the original data and included in the final data. These include vapour pressure (ea and es) and relative humidity.</p>
@@ -514,9 +514,12 @@ Adam H Sparks, Tomislav Hengl and Andrew Nelson (2017). GSODR: Global Summary Da
 <p><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE">LICENSE</a></p>
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Adam Sparks <br><small class="roles"> Author, maintainer </small> </li>
-<li>Tomislav Hengl <br><small class="roles"> Author </small> </li>
-<li>Andrew Nelson <br><small class="roles"> Author </small> </li>
+<li>Adam Sparks <br><small class="roles"> Author, maintainer </small> <br><small>(http://orcid.org/0000-0002-0061-8359)</small>
+</li>
+<li>Tomislav Hengl <br><small class="roles"> Author </small> <br><small>(http://orcid.org/0000-0002-9921-5129)</small>
+</li>
+<li>Andrew Nelson <br><small class="roles"> Author </small> <br><small>(http://orcid.org/0000-0002-7249-3778)</small>
+</li>
 </ul>
 <h2>Dev status</h2>
 <ul class="list-unstyled">

@@ -2,14 +2,17 @@
 ## Major changes
 - Data for station locations and unique identifiers is now provided with the package on installation. Previously this was
 fetched each time from the ftp server.  
-- The station metadata can now be updated if necessary by using `get_station_list()`, this change overwrites the internal data  
+- The station metadata can now be updated if necessary by using `update_station_list()`, this change overwrites the internal data  
 that were originally distributed with the package. This operation will fetch the latest list of stations and corresponding information from the NCEI ftp server. Any changes will be overwritten when the R package is updated, however,
 the package update should have the same or newer data included, so this should not be an issue.  
+- Replace _plyr_ functions with _purrr_, _plyr_ is no longer actively developed  
+- _plyr_ is no longer an import  
 
 ## Minor changes
 - Fix bugs in the vignettes related to formatting and spelling  
-- Replace _plyr_ functions with _purrr_, _plyr_ is no longer actively developed  
-- _plyr_ is no longer an import  
+
+## Deprecated and defunct
+`get_station_list()` is no longer supported. Instead use the new `update_station_list()` to update the package's internal station database.  
 
 # GSODR 1.0.2.1
 
