@@ -64,5 +64,5 @@ Users of these data should take into account the following (from the [NCEI websi
 ## R System Information
 
 ```{r system information, echo=FALSE}
-sessionInfo()
+devtools::session_info()
 ```
