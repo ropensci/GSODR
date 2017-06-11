@@ -112,11 +112,6 @@ Tbar <- get_GSOD(years = 2010, station = "955510-99999")
 #> 
 #> Checking requested station file for availability on server.
 #> Starting data file processing
-#> 
-  |                                                                       
-  |                                                                 |   0%
-  |                                                                       
-  |=================================================================| 100%
 
 head(Tbar)
 #>    WBAN        STNID          STN_NAME CTRY STATE CALL    LAT     LON
@@ -511,7 +506,7 @@ where elevation was missing in the reported values as well. In case the
 station reported an elevation and the DEM does not, the station reported
 is taken. For stations beyond -60˚ and 60˚ latitude, the values are
 station reported values in every instance. See
-<https://github.com/ropensci/GSODR/blob/devel/data-raw/fetch_isd-history.md>
+<https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md>
 for more detail on the correction methods.
 
 WMO Resolution 40. NOAA Policy
