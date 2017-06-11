@@ -37,7 +37,7 @@ For more information see the description of the data provided by NCEI,
 
 The GSOD data are comprised of a global set of data from weather stations. To visualise where these stations are located we can fetch the station metadata and plot it in a map. Using [ggplot2](https://CRAN.R-project.org/package=ggplot2) it is possible to plot the station locations using alpha transparency to see the densest part of the network. The resulting map shows only stations with valid geo-locations after filtering.
 
-```{r, eval = TRUE}
+```{r, eval = TRUE, message = FALSE}
 library(ggplot2)
 library(GSODR)
 
@@ -276,7 +276,7 @@ library("GSODRdata")
 
 ## Elevation Values
 
-90 metre (90m) hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was used to identify and correct/remove elevation errors in data for station locations between -60˚ and 60˚ latitude. This applies to cases here where elevation was missing in the reported values as well. In case the station reported an elevation and the DEM does not, the station reported is taken. For stations beyond -60˚ and 60˚ latitude, the values are station reported values in every instance. See <https://github.com/ropensci/GSODR/blob/devel/data-raw/fetch_isd-history.md>
+90 metre (90m) hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was used to identify and correct/remove elevation errors in data for station locations between -60˚ and 60˚ latitude. This applies to cases here where elevation was missing in the reported values as well. In case the station reported an elevation and the DEM does not, the station reported is taken. For stations beyond -60˚ and 60˚ latitude, the values are station reported values in every instance. See <https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md>
 for more detail on the correction methods.
 
 ## WMO Resolution 40. NOAA Policy

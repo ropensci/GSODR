@@ -15,7 +15,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-vignette">
+    <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -55,13 +55,8 @@
 
       
       </header><div class="row">
-  <div class="col-md-9">
+  <div class="contents col-md-9">
     
-
-    
-    
-<div class="contents">
-<!-- README.md is generated from README.Rmd. Please edit that file -->
 <div id="gsodr-global-summary-daily-weather-data-in-r" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#gsodr-global-summary-daily-weather-data-in-r" class="anchor"></a>GSODR: Global Summary Daily Weather Data in R</h1></div>
@@ -128,11 +123,6 @@ Tbar &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_GSOD.
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Checking requested station file for availability on server.</span>
 <span class="co">#&gt; Starting data file processing</span>
-<span class="co">#&gt; </span>
-  <span class="op">|</span><span class="st">                                                                       </span>
-<span class="st">  </span><span class="er">|</span><span class="st">                                                                 </span><span class="er">|</span><span class="st">   </span><span class="dv">0</span>%
-  <span class="op">|</span><span class="st">                                                                       </span>
-<span class="st">  </span><span class="er">|=================================================================|</span><span class="st"> </span><span class="dv">100</span>%
 
 <span class="kw">head</span>(Tbar)
 <span class="co">#&gt;    WBAN        STNID          STN_NAME CTRY STATE CALL    LAT     LON</span>
@@ -353,9 +343,7 @@ df_melt &lt;-<span class="st"> </span><span class="kw">na.omit</span>(<span clas
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">colour =</span> <span class="st">""</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette =</span> <span class="st">"Dark2"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>STNID)</code></pre></div>
-<div class="figure">
-<img src="reference/figures/example_1.2-1.png" alt="Comparison of GSOD daily values and average monthly values with CHELSA climate monthly values"><p class="caption">Comparison of GSOD daily values and average monthly values with CHELSA climate monthly values</p>
-</div>
+<p><img src="reference/figures/example_1.2-1.png" alt="Comparison of GSOD daily values and average monthly values with CHELSA climate monthly values"></p>
 </div>
 </div>
 <div id="example-5---finding-stations-within-a-given-radius-of-a-point" class="section level4">
@@ -464,7 +452,7 @@ Starting data file processing
 <div id="elevation-values" class="section level4">
 <h4 class="hasAnchor">
 <a href="#elevation-values" class="anchor"></a>Elevation Values</h4>
-<p>90m hole-filled SRTM digital elevation (Jarvis <em>et al.</em> 2008) was used to identify and correct/remove elevation errors in data for station locations between -60˚ and 60˚ latitude. This applies to cases here where elevation was missing in the reported values as well. In case the station reported an elevation and the DEM does not, the station reported is taken. For stations beyond -60˚ and 60˚ latitude, the values are station reported values in every instance. See <a href="https://github.com/ropensci/GSODR/blob/devel/data-raw/fetch_isd-history.md" class="uri">https://github.com/ropensci/GSODR/blob/devel/data-raw/fetch_isd-history.md</a> for more detail on the correction methods.</p>
+<p>90m hole-filled SRTM digital elevation (Jarvis <em>et al.</em> 2008) was used to identify and correct/remove elevation errors in data for station locations between -60˚ and 60˚ latitude. This applies to cases here where elevation was missing in the reported values as well. In case the station reported an elevation and the DEM does not, the station reported is taken. For stations beyond -60˚ and 60˚ latitude, the values are station reported values in every instance. See <a href="https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md" class="uri">https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md</a> for more detail on the correction methods.</p>
 </div>
 </div>
 <div id="wmo-resolution-40--noaa-policy" class="section level2">
@@ -497,10 +485,10 @@ Adam H Sparks, Tomislav Hengl and Andrew Nelson (2017). GSODR: Global Summary Da
 <p>Karger, D. N., Conrad, O., Bohner, J., Kawohl, T., Kreft, H., Soria-Auza, R. W., <em>et al</em>. (2016) Climatologies at high resolution for the Earth land surface areas. <em>arXiv preprint</em> <strong>arXiv:1607.00217</strong>. (<a href="http://chelsa-climate.org/" class="uri">http://chelsa-climate.org/</a>)</p>
 <p><a href="https://ropensci.org"><img src="https://ropensci.org/public_images/github_footer.png" alt="ropensci_footer"></a></p>
 </div>
-</div>
+
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3" id="sidebar">
     <h2>Links</h2>
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cran.r-project.org/package=GSODR">https://​cran.r-project.org/​package=GSODR</a>
@@ -534,7 +522,6 @@ Adam H Sparks, Tomislav Hengl and Andrew Nelson (2017). GSODR: Global Summary Da
 <li><a href="http://depsy.org/package/r/GSODR"><img src="http://depsy.org/api/package/cran/GSODR/badge.svg" alt="Research software impact"></a></li>
 </ul>
 </div>
-
 </div>
 
 
