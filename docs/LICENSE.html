@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Download the latest station list from the NCEI server and update internal database — update_station_list • GSODR</title>
+<title>License • GSODR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -20,9 +20,9 @@
 
 
 <!-- pkgdown -->
-<link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
-<script src="../pkgdown.js"></script>
+<link href="pkgdown.css" rel="stylesheet">
+<script src="jquery.sticky-kit.min.js"></script>
+<script src="pkgdown.js"></script>
   
   
 <!-- mathjax -->
@@ -37,7 +37,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-topic">
+    <div class="container template-license">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -47,18 +47,18 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">GSODR</a>
+      <a class="navbar-brand" href="index.html">GSODR</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="articles/index.html">Articles</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="news/index.html">News</a>
 </li>
       </ul>
       
@@ -78,56 +78,19 @@
       </header>
 
       <div class="row">
-  <div class="col-md-9 contents">
+  <div class="contents col-md-12">
     <div class="page-header">
-    <h1>Download the latest station list from the NCEI server and update internal database</h1>
+      <h1>License</h1>
     </div>
 
-    
-    <p>This function downloads the latest station list (isd-history.csv) from the
-NCEI FTP server and updates the data distributed with <code>GSODR</code> so that
-you have the latest list of stations available.  These data provide unique
-identifiers, country, state (if in US), latitude, longitude, elevation and
-when weather observations begin and end.  Stations with invalid latitude and
-longitude values will not be included.</p>
-    
-
-    <pre class="usage"><span class='fu'>update_station_list</span>()</pre>
-        
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p><code><a href='http://www.rdocumentation.org/packages/data.table/topics/data.table'>data.table</a></code> object of station metadata.</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>There is no need to use this unless you know that a station exists in the
-GSODR data that is not available in the database distributed with 
-<code><a href='GSODR.html'>GSODR</a></code> in the <code><a href='isd_history.html'>isd_history</a></code> data distributed with
-<code><a href='GSODR.html'>GSODR</a></code>.</p>
-    
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>not_run</span>({
-  <span class='fu'>update_station_list</span>()
-})</div></pre>
-  </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    
-Adam H Sparks, <a href='mailto:adamhsparks@gmail.com'>adamhsparks@gmail.com</a>
+<pre>YEAR: 2017
+COPYRIGHT HOLDER: Adam Sparks, Tomislav Hengl and Andrew Nelson
+</pre>
 
   </div>
+
 </div>
+
 
       <footer>
       <div class="copyright">
