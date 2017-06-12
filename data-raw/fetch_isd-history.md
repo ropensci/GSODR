@@ -153,15 +153,11 @@ stations[stations == -999.9] <- NA
 stations[stations == -999] <- NA
 
 countries <- readr::read_table(
-  "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/country-list.txt")[-1, c(1, 3)]
+  "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/country-list.txt",
+  col_types = "ccc",
+  col_names = c("FIPS", "ID", "`COUNTRY NAME`"),
+)[-1, c(1, 3)]
 ```
-
-    ## Parsed with column specification:
-    ## cols(
-    ##   FIPS = col_character(),
-    ##   ID = col_character(),
-    ##   `COUNTRY NAME` = col_character()
-    ## )
 
 Reformat and clean station data file from NCEI
 ----------------------------------------------
@@ -262,11 +258,13 @@ corrected_elev <- dplyr::mutate(corrected_elev,
 corrected_elev[, 13] <- round(corrected_elev[, 13], 0)
 ```
 
-Tidy up the `corrected_elev` object by converting any factors to character prior to performing a left-join with the `stations` object. For stations above/below 60/-60 latitude, `ELEV_M_SRTM_90m` will be `NA` as there is no SRTM data for these latitudes.
+Tidy up the `corrected_elev` object by converting any factors to character prior to performing a left-join with the `stations` object and remove duplicate rows. For stations above/below 60/-60 latitude, `ELEV_M_SRTM_90m` will be `NA` as there is no SRTM data for these latitudes.
 
 ``` r
 c <- sapply(corrected_elev, is.factor)
 corrected_elev[c] <- lapply(corrected_elev[c], as.character)
+
+corrected_elev <- dplyr::distinct(corrected_elev)
 
 # convert stations from a spatial object to a tibble for joining
 stations <- tibble::as_tibble(stations)
@@ -283,7 +281,7 @@ summary(isd_history)
 ```
 
     ##      USAF               WBAN             STN_NAME        
-    ##  Length:28378       Length:28378       Length:28378      
+    ##  Length:28330       Length:28330       Length:28330      
     ##  Class :character   Class :character   Class :character  
     ##  Mode  :character   Mode  :character   Mode  :character  
     ##                                                          
@@ -291,26 +289,26 @@ summary(isd_history)
     ##                                                          
     ##                                                          
     ##      CTRY              STATE               CALL                LAT        
-    ##  Length:28378       Length:28378       Length:28378       Min.   :-89.00  
+    ##  Length:28330       Length:28330       Length:28330       Min.   :-89.00  
     ##  Class :character   Class :character   Class :character   1st Qu.: 22.48  
-    ##  Mode  :character   Mode  :character   Mode  :character   Median : 39.22  
-    ##                                                           Mean   : 31.13  
+    ##  Mode  :character   Mode  :character   Mode  :character   Median : 39.23  
+    ##                                                           Mean   : 31.14  
     ##                                                           3rd Qu.: 49.83  
     ##                                                           Max.   : 89.37  
     ##                                                                           
-    ##       LON               ELEV_M         BEGIN               END          
-    ##  Min.   :-179.983   Min.   :-350   Min.   :19010101   Min.   :19051231  
-    ##  1st Qu.: -83.352   1st Qu.:  23   1st Qu.:19570701   1st Qu.:20020426  
-    ##  Median :   6.617   Median : 140   Median :19760310   Median :20160614  
-    ##  Mean   :  -3.581   Mean   : 361   Mean   :19783087   Mean   :20048289  
-    ##  3rd Qu.:  61.654   3rd Qu.: 435   3rd Qu.:20020430   3rd Qu.:20170609  
-    ##  Max.   : 179.750   Max.   :5304   Max.   :20170604   Max.   :20170611  
-    ##                     NA's   :219                                         
+    ##       LON               ELEV_M           BEGIN               END          
+    ##  Min.   :-179.983   Min.   :-350.0   Min.   :19010101   Min.   :19051231  
+    ##  1st Qu.: -83.356   1st Qu.:  23.0   1st Qu.:19570701   1st Qu.:20020429  
+    ##  Median :   6.650   Median : 140.3   Median :19760309   Median :20160614  
+    ##  Mean   :  -3.559   Mean   : 361.2   Mean   :19783044   Mean   :20048312  
+    ##  3rd Qu.:  61.700   3rd Qu.: 435.0   3rd Qu.:20020430   3rd Qu.:20170609  
+    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20170604   Max.   :20170611  
+    ##                     NA's   :219                                           
     ##     STNID           ELEV_M_SRTM_90m 
-    ##  Length:28378       Min.   :-361.0  
+    ##  Length:28330       Min.   :-361.0  
     ##  Class :character   1st Qu.:  25.0  
     ##  Mode  :character   Median : 156.0  
-    ##                     Mean   : 380.1  
+    ##                     Mean   : 380.4  
     ##                     3rd Qu.: 462.0  
     ##                     Max.   :5273.0  
     ##                     NA's   :3013
@@ -320,7 +318,8 @@ Figures
 
 ``` r
 ggplot(data = isd_history, aes(x = ELEV_M, y = ELEV_M_SRTM_90m)) +
-  geom_point(alpha = 0.4, size = 0.5)
+  geom_point(alpha = 0.4, size = 0.5) +
+  geom_abline(slope = 1, colour = "white")
 ```
 
 ![GSOD Reported Elevation versus CGIAR-CSI SRTM Buffered Elevation](fetch_isd-history_files/figure-markdown_github/Buffered%20SRTM%2090m%20vs%20Reported%20Elevation-1.png)

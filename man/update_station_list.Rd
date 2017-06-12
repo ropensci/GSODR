@@ -19,7 +19,7 @@ longitude values will not be included.
 }
 \details{
 There is no need to use this unless you know that a station exists in the
-GSODR data that is not available in the database distributed with 
+GSODR data that is not available in the database distributed with
 \code{\link{GSODR}} in the \code{\link{isd_history}} data distributed with
 \code{\link{GSODR}}.
 }
