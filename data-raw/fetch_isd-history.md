@@ -1,7 +1,7 @@
 Fetch, clean and correct altitude in GSOD isd\_history.csv Data
 ================
 Adam H. Sparks
-2017-06-01
+2017-06-12
 
 Introduction
 ============
@@ -50,13 +50,6 @@ if (!require("dplyr")) {
 ```
 
     ## Loading required package: dplyr
-
-    ## -------------------------------------------------------------------------
-
-    ## data.table + dplyr code now lives in dtplyr.
-    ## Please library(dtplyr)!
-
-    ## -------------------------------------------------------------------------
 
     ## 
     ## Attaching package: 'dplyr'
@@ -148,16 +141,7 @@ Download from Natural Earth and NCEI
 ``` r
 # import Natural Earth cultural 1:10m data
 NE <- rnaturalearth::ne_countries(scale = 10)
-```
 
-    ## The rnaturalearthhires package needs to be installed.
-
-    ## Installing the rnaturalearthhires package.
-
-    ## Installing package into '/usr/local/lib/R/3.4/site-library'
-    ## (as 'lib' is unspecified)
-
-``` r
 # download data
 stations <- readr::read_csv(
   "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
@@ -169,15 +153,11 @@ stations[stations == -999.9] <- NA
 stations[stations == -999] <- NA
 
 countries <- readr::read_table(
-  "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/country-list.txt")[-1, c(1, 3)]
+  "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/country-list.txt",
+  col_types = "ccc",
+  col_names = c("FIPS", "ID", "`COUNTRY NAME`"),
+)[-1, c(1, 3)]
 ```
-
-    ## Parsed with column specification:
-    ## cols(
-    ##   FIPS = col_character(),
-    ##   ID = col_character(),
-    ##   `COUNTRY NAME` = col_character()
-    ## )
 
 Reformat and clean station data file from NCEI
 ----------------------------------------------
@@ -278,11 +258,13 @@ corrected_elev <- dplyr::mutate(corrected_elev,
 corrected_elev[, 13] <- round(corrected_elev[, 13], 0)
 ```
 
-Tidy up the `corrected_elev` object by converting any factors to character prior to performing a left-join with the `stations` object. For stations above/below 60/-60 latitude, `ELEV_M_SRTM_90m` will be `NA` as there is no SRTM data for these latitudes.
+Tidy up the `corrected_elev` object by converting any factors to character prior to performing a left-join with the `stations` object and remove duplicate rows. For stations above/below 60/-60 latitude, `ELEV_M_SRTM_90m` will be `NA` as there is no SRTM data for these latitudes.
 
 ``` r
 c <- sapply(corrected_elev, is.factor)
 corrected_elev[c] <- lapply(corrected_elev[c], as.character)
+
+corrected_elev <- dplyr::distinct(corrected_elev)
 
 # convert stations from a spatial object to a tibble for joining
 stations <- tibble::as_tibble(stations)
@@ -299,7 +281,7 @@ summary(isd_history)
 ```
 
     ##      USAF               WBAN             STN_NAME        
-    ##  Length:28375       Length:28375       Length:28375      
+    ##  Length:28330       Length:28330       Length:28330      
     ##  Class :character   Class :character   Class :character  
     ##  Mode  :character   Mode  :character   Mode  :character  
     ##                                                          
@@ -307,26 +289,26 @@ summary(isd_history)
     ##                                                          
     ##                                                          
     ##      CTRY              STATE               CALL                LAT        
-    ##  Length:28375       Length:28375       Length:28375       Min.   :-89.00  
+    ##  Length:28330       Length:28330       Length:28330       Min.   :-89.00  
     ##  Class :character   Class :character   Class :character   1st Qu.: 22.48  
     ##  Mode  :character   Mode  :character   Mode  :character   Median : 39.23  
     ##                                                           Mean   : 31.14  
-    ##                                                           3rd Qu.: 49.84  
+    ##                                                           3rd Qu.: 49.83  
     ##                                                           Max.   : 89.37  
     ##                                                                           
-    ##       LON               ELEV_M         BEGIN               END          
-    ##  Min.   :-179.983   Min.   :-350   Min.   :19010101   Min.   :19051231  
-    ##  1st Qu.: -83.355   1st Qu.:  23   1st Qu.:19570701   1st Qu.:20020426  
-    ##  Median :   6.617   Median : 140   Median :19760309   Median :20160614  
-    ##  Mean   :  -3.591   Mean   : 361   Mean   :19783046   Mean   :20048227  
-    ##  3rd Qu.:  61.566   3rd Qu.: 435   3rd Qu.:20020430   3rd Qu.:20170529  
-    ##  Max.   : 179.750   Max.   :5304   Max.   :20170523   Max.   :20170531  
-    ##                     NA's   :219                                         
+    ##       LON               ELEV_M           BEGIN               END          
+    ##  Min.   :-179.983   Min.   :-350.0   Min.   :19010101   Min.   :19051231  
+    ##  1st Qu.: -83.356   1st Qu.:  23.0   1st Qu.:19570701   1st Qu.:20020429  
+    ##  Median :   6.650   Median : 140.3   Median :19760309   Median :20160614  
+    ##  Mean   :  -3.559   Mean   : 361.2   Mean   :19783044   Mean   :20048312  
+    ##  3rd Qu.:  61.700   3rd Qu.: 435.0   3rd Qu.:20020430   3rd Qu.:20170609  
+    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20170604   Max.   :20170611  
+    ##                     NA's   :219                                           
     ##     STNID           ELEV_M_SRTM_90m 
-    ##  Length:28375       Min.   :-361.0  
+    ##  Length:28330       Min.   :-361.0  
     ##  Class :character   1st Qu.:  25.0  
     ##  Mode  :character   Median : 156.0  
-    ##                     Mean   : 380.1  
+    ##                     Mean   : 380.4  
     ##                     3rd Qu.: 462.0  
     ##                     Max.   :5273.0  
     ##                     NA's   :3013
@@ -336,7 +318,8 @@ Figures
 
 ``` r
 ggplot(data = isd_history, aes(x = ELEV_M, y = ELEV_M_SRTM_90m)) +
-  geom_point(alpha = 0.4, size = 0.5)
+  geom_point(alpha = 0.4, size = 0.5) +
+  geom_abline(slope = 1, colour = "white")
 ```
 
 ![GSOD Reported Elevation versus CGIAR-CSI SRTM Buffered Elevation](fetch_isd-history_files/figure-markdown_github/Buffered%20SRTM%2090m%20vs%20Reported%20Elevation-1.png)
@@ -374,7 +357,7 @@ R System Information
     ##  language (EN)                        
     ##  collate  en_AU.UTF-8                 
     ##  tz       Australia/Brisbane          
-    ##  date     2017-06-01
+    ##  date     2017-06-12
 
     ## Packages -----------------------------------------------------------------
 
@@ -382,6 +365,8 @@ R System Information
     ##  assertthat           0.2.0      2017-04-11 CRAN (R 3.4.0)               
     ##  backports            1.1.0      2017-05-22 cran (@1.1.0)                
     ##  base               * 3.4.0      2017-05-11 local                        
+    ##  bindr                0.1        2016-11-13 cran (@0.1)                  
+    ##  bindrcpp           * 0.1        2016-12-11 cran (@0.1)                  
     ##  codetools            0.2-15     2016-10-05 CRAN (R 3.4.0)               
     ##  colorspace           1.3-2      2016-12-14 CRAN (R 3.4.0)               
     ##  compiler             3.4.0      2017-05-11 local                        
@@ -390,13 +375,14 @@ R System Information
     ##  data.table         * 1.10.4     2017-02-01 CRAN (R 3.4.0)               
     ##  datasets           * 3.4.0      2017-05-11 local                        
     ##  DBI                  0.6-1      2017-04-01 CRAN (R 3.4.0)               
-    ##  devtools             1.13.1     2017-05-13 cran (@1.13.1)               
+    ##  devtools             1.13.2     2017-06-02 cran (@1.13.2)               
     ##  digest               0.6.12     2017-01-27 CRAN (R 3.4.0)               
     ##  doParallel           1.0.10     2015-10-14 CRAN (R 3.4.0)               
-    ##  dplyr              * 0.5.0      2016-06-24 CRAN (R 3.4.0)               
+    ##  dplyr              * 0.7.0      2017-06-09 cran (@0.7.0)                
     ##  evaluate             0.10       2016-10-11 CRAN (R 3.4.0)               
     ##  foreach            * 1.4.3      2015-10-13 CRAN (R 3.4.0)               
     ##  ggplot2            * 2.2.1      2016-12-30 CRAN (R 3.4.0)               
+    ##  glue                 1.0.0      2017-04-17 cran (@1.0.0)                
     ##  graphics           * 3.4.0      2017-05-11 local                        
     ##  grDevices          * 3.4.0      2017-05-11 local                        
     ##  grid                 3.4.0      2017-05-11 local                        
@@ -414,13 +400,14 @@ R System Information
     ##  methods            * 3.4.0      2017-05-11 local                        
     ##  munsell              0.4.3      2016-02-13 CRAN (R 3.4.0)               
     ##  parallel           * 3.4.0      2017-05-11 local                        
+    ##  pkgconfig            2.0.1      2017-03-21 cran (@2.0.1)                
     ##  plyr                 1.8.4      2016-06-08 CRAN (R 3.4.0)               
     ##  R6                   2.2.1      2017-05-10 cran (@2.2.1)                
     ##  raster             * 2.5-8      2016-06-02 CRAN (R 3.4.0)               
     ##  Rcpp                 0.12.11    2017-05-22 cran (@0.12.11)              
     ##  readr              * 1.1.1      2017-05-16 cran (@1.1.1)                
     ##  rgdal                1.2-7      2017-04-25 CRAN (R 3.4.0)               
-    ##  rlang                0.1.1.9000 2017-05-25 Github (hadley/rlang@c351186)
+    ##  rlang                0.1.1.9000 2017-06-07 Github (hadley/rlang@7f53e56)
     ##  rmarkdown            1.5        2017-04-26 CRAN (R 3.4.0)               
     ##  rnaturalearth      * 0.1.0      2017-03-21 CRAN (R 3.4.0)               
     ##  rnaturalearthhires   0.1.0      2017-06-01 local                        

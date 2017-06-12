@@ -4,7 +4,7 @@
 \name{isd_history}
 \alias{isd_history}
 \title{isd_history}
-\format{An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 28375 rows and 13 columns.}
+\format{An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 28330 rows and 13 columns.}
 \source{
 \url{ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv}
 }

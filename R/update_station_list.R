@@ -7,9 +7,9 @@
 #' identifiers, country, state (if in US), latitude, longitude, elevation and
 #' when weather observations begin and end.  Stations with invalid latitude and
 #' longitude values will not be included.
-#' 
+#'
 #' There is no need to use this unless you know that a station exists in the
-#' GSODR data that is not available in the database distributed with 
+#' GSODR data that is not available in the database distributed with
 #' \code{\link{GSODR}} in the \code{\link{isd_history}} data distributed with
 #' \code{\link{GSODR}}.
 #'
@@ -25,49 +25,30 @@ update_station_list <- function() {
   original_timeout <- options("timeout")[[1]]
   options(timeout = 300)
   on.exit(options(timeout = original_timeout))
-  
+
   old_isd_history <- isd_history
-  
+
   # fetch new isd_history from NCEI server
-  new_isd_history <- readr::read_csv(
+  stations <- readr::read_csv(
     "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
     col_types = "ccccccddddd",
-    col_names = c(
-      "USAF",
-      "WBAN",
-      "STN_NAME",
-      "CTRY",
-      "STATE",
-      "CALL",
-      "LAT",
-      "LON",
-      "ELEV_M",
-      "BEGIN",
-      "END"
-    ),
-    skip = 1
-  )
-  new_isd_history[new_isd_history == -999.9] <- NA
-  new_isd_history[new_isd_history == -999] <- NA
-  new_isd_history <-
-    new_isd_history[new_isd_history$LAT != 0 &
-                      new_isd_history$LON != 0,]
-  new_isd_history <-
-    new_isd_history[new_isd_history$LAT > -90 &
-                      new_isd_history$LAT < 90,]
-  new_isd_history <-
-    new_isd_history[new_isd_history$LON > -180 &
-                      new_isd_history$LON < 180,]
-  new_isd_history$STNID <-
-    as.character(paste(new_isd_history$USAF, new_isd_history$WBAN, sep = "-"))
-  new_isd_history <- new_isd_history[!is.na(new_isd_history$LAT),]
-  new_isd_history <- new_isd_history[!is.na(new_isd_history$LON),]
-  
+    col_names = c("USAF", "WBAN", "STN_NAME", "CTRY", "STATE", "CALL",
+                  "LAT", "LON", "ELEV_M", "BEGIN", "END"), skip = 1)
+
+  stations[stations == -999.9] <- NA
+  stations[stations == -999] <- NA
+
+  # clean data
+  stations <- stations[!is.na(stations$LAT) & !is.na(stations$LON), ]
+  stations <- stations[stations$LAT != 0 & stations$LON != 0, ]
+  stations <- stations[stations$LAT > -90 & stations$LAT < 90, ]
+  stations <- stations[stations$LON > -180 & stations$LON < 180, ]
+  stations$STNID <- as.character(paste(stations$USAF, stations$WBAN, sep = "-"))
+
   # left join the old and new data
-  
   isd_history <- dplyr::left_join(
     old_isd_history,
-    new_isd_history,
+    stations,
     by = c(
       "USAF" = "USAF",
       "WBAN" = "WBAN",
@@ -83,7 +64,7 @@ update_station_list <- function() {
       "STNID" = "STNID"
     )
   )
-  
+
   isd_history <- data.table::setDT(isd_history)
 
   # overwrite the existing isd_history.rda file on disk
