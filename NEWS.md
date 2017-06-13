@@ -19,9 +19,13 @@
 
 - _plyr_ is no longer an import
 
-## Minor changes in 1.0.3
+## Bug fixes in 1.0.3
 
 - Fix bugs in the vignettes related to formatting and spelling
+
+- Fix bugs in citation file
+
+- Reformat NEWS.md to be more markdown standards compliant
 
 ## Deprecated and defunct in 1.0.3
 
