@@ -1,6 +1,7 @@
 
-This is a new minor release that updates GSODR to use newer R resources,
-reduces the necessary to perform some functions and reduces the imports
+This is a new minor release that updates GSODR to use R packages that are
+under active development, removes one package that is not, reduces the 
+time necessary to perform some functions and reduces the imports
 
 ## Test environments  
 
