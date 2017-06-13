@@ -1,315 +1,392 @@
-# GSODR 1.0.3
+# GSODR
 
-## Major changes
+## GSODR 1.0.3
 
-- Data for station locations and unique identifiers is now provided with the package on installation. Previously this was
-fetched each time from the ftp server.  
+### Major changes in 1.0.3
 
-- The station metadata can now be updated if necessary by using `update_station_list()`, this change overwrites the internal data that were originally distributed with the package. This operation will fetch the latest list of stations and corresponding information from the NCEI ftp server. Any changes will be overwritten when the R package is updated, however, the package update should have the same or newer data included, so this should not be an issue.  
+ -Data for station locations and unique identifiers is now provided with the
+  package on installation. Previously this was fetched each time from the FTP
+  server.
 
-- Replace _plyr_ functions with _purrr_; _plyr_ is no longer actively developed  
+ -The station metadata can now be updated if necessary by using
+ `update_station_list()`, this change overwrites the internal data that were
+  originally distributed with the package. This operation will fetch the latest
+  list of stations and corresponding information from the NCEI FTP server. Any
+  changes will be overwritten when the R package is updated, however, the
+  package update should have the same or newer data included, so this should not
+  be an issue.
 
-- _plyr_ is no longer an import  
+ -Replace _plyr_ functions with _purrr_; _plyr_ is no longer actively developed
 
-## Minor changes
+ -_plyr_ is no longer an import
 
-- Fix bugs in the vignettes related to formatting and spelling  
+### Minor changes in 1.0.3
 
-## Deprecated and defunct
+ -Fix bugs in the vignettes related to formatting and spelling
 
-`get_station_list()` is no longer supported. Instead use the new `update_station_list()` to update the package's internal station database.  
+### Deprecated and defunct in 1.0.3
 
-# GSODR 1.0.2.1
+ -`get_station_list()` is no longer supported. Instead use the new
+ `update_station_list()` to update the package's internal station database.
 
-## Minor changes  
+## GSODR 1.0.2.1
 
-- Correct references to _GSODRdata_ package where incorrectly referred to as _GSODdata_
+### Minor changes in 1.0.2.1
 
-# GSODR 1.0.2
+ -Correct references to _GSODRdata_ package where incorrectly referred to as
+ _GSODdata_
 
-## Minor changes  
+## GSODR 1.0.2
 
-- Improved documentation (i.e., spelling corrections and more descriptive)  
+### Minor changes in 1.0.2
 
-- More descriptive vignette for "GSODR use case: Specified years/stations vignette"
+ -Improved documentation (i.e., spelling corrections and more descriptive)
 
-- Round MAX/MIN temp to one decimal place, not two  
+ -More descriptive vignette for "GSODR use case: Specified years/stations
+ ignette"
 
-- Update SRTM elevation data  
+ -Round MAX/MIN temp to one decimal place, not two
 
-- Update country list data  
+  -Update SRTM elevation data
 
-- Fix missing images in README.html on CRAN  
+  -Update country list data
 
-# GSODR 1.0.1
+  -Fix missing images in README.html on CRAN
 
-## Minor changes  
+## GSODR 1.0.1
 
-- Update documentation for `get_GSOD()` when using `station` parameter  
+### Minor changes in 1.0.1
 
-- Edit paper.md for submission to JOSS  
+ -Update documentation for `get_GSOD()` when using `station` parameter
 
-- Remove extra packages listed as dependencies that are no longer necessary  
+ -Edit paper.md for submission to JOSS
 
-- Correct Working_with_spatial_and_climate_data.Rmd where it was missing the first portion of documentation and thus examples did not work  
+ -Remove extra packages listed as dependencies that are no longer necessary
 
-# GSODR 1.0.0
+ -Correct Working_with_spatial_and_climate_data.Rmd where it was missing the
+ first portion of documentation and thus examples did not work
 
-## Major changes
+## GSODR 1.0.0
 
-- The `get_GSOD()` function returns a `data.frame` object in the current R session with the option to save data to local disk  
+### Major changes in 1.0.0
 
-- Multiple stations can be specified for download rather than just downloading a single station or all stations  
+  -The `get_GSOD()` function returns a `data.frame` object in the current R
+  session with the option to save data to local disk
 
-- A new function, `nearest_stations()` is now included to find stations within a user specified radius (in kilometres) of a point given as latitude and longitude in decimal degrees  
+  -Multiple stations can be specified for download rather than just downloading
+  a single station or all stations
 
-- A general use vignette is now included  
+  -A new function, `nearest_stations()` is now included to find stations within
+  a user specified radius (in kilometres) of a point given as latitude and
+  longitude in decimal degrees
 
-- New vignette with a detailed use-case  
+  -A general use vignette is now included
 
-- Output files now include fields for State (US only) and Call (International Civil Aviation Organization (ICAO) Airport Code)  
+  -New vignette with a detailed use-case
 
-- Use FIPS codes in place of ISO3c for file name and in output files because some stations do not have an ISO country code  
+  -Output files now include fields for State (US only) and Call (International
+  Civil Aviation Organization (ICAO) Airport Code)
 
-- Spatial file output is now in GeoPackage format (GPKG). This results in a single file output unlike shapefile and allows for long field names  
+  -Use FIPS codes in place of ISO3c for file name and in output files because
+  some stations do not have an ISO country code
 
-- Users can specify file name of output  
+  -Spatial file output is now in GeoPackage format (GPKG). This results in a
+  single file output unlike shapefile and allows for long field names
 
-- R >= 3.2.0 now required  
+  -Users can specify file name of output
 
-- Field names in output files use "\_" in place of "."  
+  -R >= 3.2.0 now required
 
-- Long field names now used in file outputs  
+  -Field names in output files use "\_" in place of "."
 
-- Country is specified using FIPS codes in file name and output file contents due to stations occurring in some locales that lack ISO 3166 3 letter country codes  
+  -Long field names now used in file outputs
 
-- The `get_GSOD()` function will retrieve the latest station data from NCDC and automatically merge it with the CGIAR-CSI SRTM elevation values provided by this package. Previously, the package provided it's own list of station information, which was difficult to keep up-to-date  
+  -Country is specified using FIPS codes in file name and output file contents
+  due to stations occurring in some locales that lack ISO 3166 3 letter country
+  codes
 
-- A new `reformat_GSOD()` function reformats station files in "WMO-WBAN-YYYY.op.gz" format that have been downloaded from the United States
-  National Climatic Data Center's (NCDC) FTP server.  
+  -The `get_GSOD()` function will retrieve the latest station data from NCDC and
+  automatically merge it with the CGIAR-CSI SRTM elevation values provided by
+  this package. Previously, the package provided it's own list of station
+  information, which was difficult to keep up-to-date
 
-- A new function, `get_station_list()` allows for fetching latest station list from the FTP server and querying by the user for a specified 
-station or location.  
+  -A new `reformat_GSOD()` function reformats station files in
+  "WMO-WBAN-YYYY.op.gz" format that have been downloaded from the United States
+  National Climatic Data Center's (NCDC) FTP server.
 
-- New data layers are provided through a separate package, [`GSODRdata`](https://github.com/adamhsparks/GSODRdata), which provide climate data formatted for use with GSODR. 
+  -A new function, `get_station_list()` allows for fetching latest station list
+  from the FTP server and querying by the user for a specified station or
+  location.
 
-    - CHELSA (climatic surfaces at 1 km resolution), http://chelsa-climate.org/,
+  -New data layers are provided through a separate package,
+  [`GSODRdata`](https://github.com/adamhsparks/GSODRdata),
+  which provide climate
+  data formatted for use with GSODR.
 
-    - MODCF - Remotely sensed high-resolution global cloud dynamics for predicting ecosystem and biodiversity distributions 
-(http://www.earthenv.org/cloud), 
+  -CHELSA (climatic surfaces at 1 km resolution), <http://chelsa-climate.org/>,
 
-    - ESACCI - ESA's CCI-LC snow cover probability (http://maps.elie.ucl.ac.be/CCI/viewer/index.php) and 
+  -MODCF - Remotely sensed high-resolution global cloud dynamics for predicting
+  ecosystem and biodiversity distributions (<http://www.earthenv.org/cloud>
 
-    - CRU CL2.0 (climatic surfaces at 10 minute resolution) (https://crudata.uea.ac.uk/%7Etimm/grid/CRU_CL_2_0.html)  
+  -ESACCI (ESA's CCI-LC snow cover probability)
+  (<http://maps.elie.ucl.ac.be/CCI/viewer/index.php>) and
 
-- Improved file handling for individual station downloads  
+  -CRU CL2.0 (climatic surfaces at 10 minute resolution) (<https://crudata.uea.ac.uk/%7Etimm/grid/CRU_CL_2_0.html>)
 
-- Missing values are handled as `NA` not -9999  
+  -Improved file handling for individual station downloads
 
-- Change from GPL >= 3 to MIT licence to bring into line with ropensci packages  
+  -Missing values are handled as `NA` not -9999
 
-- Now included in ropensci, [ropensci/GSODR](https://github.com/ropensci/GSODR)  
-  
-## Minor changes
+  -Change from GPL >= 3 to MIT licence to bring into line with ropensci packages
 
-- `get_GSOD()` function optimised for speed as best possible after FTPing files from NCDC server  
+  -Now included in ropensci, [ropensci/GSODR](https://github.com/ropensci/GSODR)
 
-- All files are downloaded from server and then locally processed, previously these were sequentially downloaded by year and then processed  
+### Minor changes in 1.0.0
 
-- A progress bar is now shown when processing files locally after downloading  
+  -`get_GSOD()` function optimised for speed as best possible after FTPing files
+  from NCDC server
 
-- Reduced package dependencies  
+  -All files are downloaded from server and then locally processed, previously
+  these were sequentially downloaded by year and then processed
 
-- The `get_GSOD()` function now checks stations to see if the years being queried are provided and returns a message alerting user if the station and years requested are not available  
+  -A progress bar is now shown when processing files locally after downloading
 
-- When stations are specified for retrieval using the `station = ""` parameter, the `get_GSOD()` function now checks to see if the file exists on the server, if it does not, a message is returned and all other stations that have files are processed and returned in output  
+  -Reduced package dependencies
 
-- Documentation has been improved throughout package  
+  -The `get_GSOD()` function now checks stations to see if the years being
+  queried are provided and returns a message alerting user if the station and
+  years requested are not available
 
-- Better testing of internal functions  
-  
-## Bug Fixes
+  -When stations are specified for retrieval using the `station = ""` parameter,
+  the `get_GSOD()` function now checks to see if the file exists on the server,
+  if it does not, a message is returned and all other stations that have files
+  are processed and returned in output
 
-- Fixed: Remove redundant code in `get_GSOD()` function  
+  -Documentation has been improved throughout package
 
-- Fixed: The stations data frame distributed with the package now include stations that are located above 60 latitude and below -60 latitude  
-  
-## Deprecated and defunct
+  -Better testing of internal functions
 
-- Missing values are reported as NA for use in R, not -9999 as previously  
+### Bug Fixes in 1.0.0
 
-- The `path` parameter is now instead called `dsn` to be more inline with other tools like `readOGR()` and `writeOGR()`  
+  -Fixed: Remove redundant code in `get_GSOD()` function
 
-- Shapefile file out is no longer supported. Use GeoPackage (GPKG) instead  
+  -Fixed: The stations data frame distributed with the package now include
+  stations that are located above 60 latitude and below -60 latitude
 
-- The option to remove stations with too many missing days is now optional, it now defaults to including all stations, the user must specify how many missing stations to check for an exclude.  
+### Deprecated and defunct
 
-- The `max_missing` parameter is now user set, defaults to no check, return all stations regardless of missing days  
+  -Missing values are reported as NA for use in R, not -9999 as previously
 
+  -The `path` parameter is now instead called `dsn` to be more inline with other
+  tools like `readOGR()` and `writeOGR()`
 
-# GSODR 0.1.9 (Release Date: 2016-07-15)
+  -Shapefile file out is no longer supported. Use GeoPackage (GPKG) instead
 
-## Bug Fixes
+  -The option to remove stations with too many missing days is now optional, it
+  now defaults to including all stations, the user must specify how many missing
+  stations to check for an exclude.
 
-- Fix bug in precipitation calculation. Documentation states that PRCP is in mm to hundredths. Issues with conversion and missing values meant that this was not the case. Thanks to Gwenael Giboire for reporting and help with fixing this  
+  -The `max_missing` parameter is now user set, defaults to no check, return
+  all stations regardless of missing days
 
-## Minor changes
+## GSODR 0.1.9 (Release Date: 2016-07-15)
 
-- Users can now select to merge output for station queries across multiple years. Previously one year = one file per station. Now were set by user, `merge_station_years = TRUE` parameter, only one output file is generated  
+### Bug Fixes in 0.1.9
 
-- Country list is now included in the package to reduce run time necessary when querying for a specific country. However, this means any time that the country-list.txt file is updated, this package needs to be updated as well  
+  -Fix bug in precipitation calculation. Documentation states that PRCP is in mm
+  to hundredths. Issues with conversion and missing values meant that this was
+  not the case. Thanks to Gwenael Giboire for reporting and help with fixing
+  this
 
-- Updated `stations` list with latest version from NCDC published 12-07-2016  
+### Minor changes in 0.1.9
 
-## Major changes
+  -Users can now select to merge output for station queries across multiple
+  years. Previously one year = one file per station. Now were set by user,
+  `merge_station_years = TRUE` parameter, only one output file is generated
 
-- Country level, agroclimatology and global data query conversions and calculations are processed in parallel now to reduce runtime  
+  -Country list is now included in the package to reduce run time necessary when
+  querying for a specific country. However, this means any time that the
+  country-list.txt file is updated, this package needs to be updated as well
 
-- Improved documentation with spelling fixes, clarification and updates  
+  -Updated `stations` list with latest version from NCDC published 12-07-2016
 
-- Enable `ByteCompile` option upon installation for small increase in speed  
+### Major changes in 0.1.9
 
-- Use `write.csv.raw` from `[iotools]("https://cran.r-project.org/web/packages/iotools/index.html")` to greatly improve runtime by decreasing time used to write CSV files to disk  
+  -Country level, agroclimatology and global data query conversions and
+  calculations are processed in parallel now to reduce runtime
 
-- Use `writeOGR()` from `rgdal`, in place of `raster's` `shapefile` to improve runtime by decreasing time used to write shapefiles to disk  
+  -Improved documentation with spelling fixes, clarification and updates
 
+  -Enable `ByteCompile` option upon installation for small increase in speed
 
-# GSODR 0.1.8.1 (Release Date: 2016-07-07)
+  -Use `write.csv.raw` from
+  `[iotools]("https://cran.r-project.org/web/packages/iotools/index.html")`
+  to greatly improve runtime by decreasing time used to write CSV files to disk
 
-## Minor changes
+  -Use `writeOGR()` from `rgdal`, in place of `raster's` `shapefile` to improve
+  runtime by decreasing time used to write shapefiles to disk
 
-- Fix bug where no station is specified, function fails to run
+## GSODR 0.1.8.1 (Release Date: 2016-07-07)
 
+### Minor changes in 0.1.8.1
 
-# GSODR 0.1.8 (Release Date: 2016-07-04)
+  -Fix bug where no station is specified, function fails to run
 
-## Bug Fixes
+## GSODR 0.1.8 (Release Date: 2016-07-04)
 
-- Fix bug with connection timing out for single station queries commit:  [a126641e00dc7acc21844ff0436e5702f8b6e04a](https://github.com/ropensci/GSODR/commit/a126641e00dc7acc21844ff0436e5702f8b6e04a)  
+### Bug Fixes in 0.1.8
 
-- Somehow the previously working function that checked country names broke with the `toupper()` function. A new [function from juba](http://stackoverflow.com/questions/16516593/convert-from-lowercase-to-uppercase-all-values-in-all-character-variables-in-dat) fixes this issue and users can now select country again  
+  -Fix bug with connection timing out for single station queries commit:
+   [a126641e00dc7acc21844ff0436e5702f8b6e04a](https://github.com/ropensci/GSODR/commit/a126641e00dc7acc21844ff0436e5702f8b6e04a)
 
-## Major changes
+  -Somehow the previously working function that checked country names broke with
+  the `toupper()` function. A new
+  [function from juba](http://stackoverflow.com/questions/16516593/convert-from-lowercase-to-uppercase-all-values-in-all-character-variables-in-dat)
+  fixes this issue and users can now select country
+  again
 
-- User entered values for a single station are now checked against actual station values for validity  
+### Major changes in 0.1.8
 
-- stations.rda is compressed  
+  -User entered values for a single station are now checked against actual
+  station values for validity
 
-- stations.rda now includes a field for "corrected" elevation using hole-filled SRTM data from Jarvis et al. 2008, see
-  [https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md](https://github.com/ropensci/GSODR/blob/devel/data-raw/fetch_isd-history.md) for a description  
+  -stations.rda is compressed
 
-- Set NA or missing values in CSV or shapefile to -9999 from -9999.99 to align with other data sources such as Worldclim
+  -stations.rda now includes a field for "corrected" elevation using hole-filled
+  SRTM data from Jarvis et al. 2008, see
+  [https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md](https://github.com/ropensci/GSODR/blob/devel/data-raw/fetch_isd-history.md)
+  for a description
 
+  -Set NA or missing values in CSV or shapefile to -9999 from -9999.99 to
+  align with other data sources such as Worldclim
 
-## Minor changes
+### Minor changes in 0.1.8
 
-- Documentation is more complete and easier to use  
+ -Documentation is more complete and easier to use
 
+## GSODR 0.1.7 (Release Date: 2016-06-02)
 
-# GSODR 0.1.7 (Release Date: 2016-06-02)
+### Bug Fixes in 0.1.7
 
-## Bug Fixes
+ -Fix issues with MIN/MAX where MIN referred to MAX
+ [(Issue 5)](https://github.com/ropensci/GSODR/issues/5)
 
-- Fix issues with MIN/MAX where MIN referred to MAX [(Issue 5)](https://github.com/ropensci/GSODR/issues/5)  
+ -Fix bug where the `tf` item was incorrectly set as
+ `tf <- "~/tmp/GSOD-2010.tar`, not `tf <- tempfile`, in `get_GSOD()`
+ [(Issue 6)](https://github.com/ropensci/GSODR/issues/6)
 
-- Fix bug where the `tf` item was incorrectly set as `tf <- "~/tmp/GSOD-2010.tar`, not `tf <- tempfile`, in `get_GSOD()` [(Issue 6)](https://github.com/ropensci/GSODR/issues/6)  
+ -CITATION file is updated and corrected
 
-- CITATION file is updated and corrected  
+### Minor changes in 0.1.7
 
-## Minor changes
+ -User now has the ability to generate a shapefile as well as CSV file output
+ [(Issue 3)](https://github.com/ropensci/GSODR/issues/3)
 
-- User now has the ability to generate a shapefile as well as CSV file output [(Issue 3)](https://github.com/ropensci/GSODR/issues/3)  
+  -Documentation is more complete and easier to use
 
-- Documentation is more complete and easier to use  
+## GSODR 0.1.6 (Release date: 2016-05-26)
 
+### Bug Fixes in 0.1.6
 
-# GSODR 0.1.6 (Release date: 2016-05-26)
+ -Fix issue when reading .op files into R where temperature was incorrectly read
+ causing negative values where T >= 100F, this issue caused RH values of >100%
+ and incorrect TEMP values
+ [(Issue 1)](https://github.com/ropensci/GSODR/issues/1)
 
-## Bug Fixes
+ -Spelling corrections
 
-- Fix issue when reading .op files into R where temperature was incorrectly read causing negative values where T >= 100F, this issue caused RH values of >100% and incorrect TEMP values [(Issue 1)](https://github.com/ropensci/GSODR/issues/1)  
+### Major changes in 0.1.6
 
-- Spelling corrections
+ -Include MIN/MAX flag column
 
-## Major changes
+  -Station data is now included in package rather than downloading from NCDC
+  every time get_GSOD() is run, this data has some corrections where stations
+  with missing LAT/LON values or elevation are omitted, this is **not** the
+  original complete station list provided by NCDC
 
-- Include MIN/MAX flag column
+## GSODR 0.1.5 (Release date: 2016-05-16)
 
-- Station data is now included in package rather than downloading from NCDC every time get_GSOD() is run, this data has some corrections where stations with missing LAT/LON values or elevation are omitted, this is **not** the original complete station list provided by NCDC
+### Bug Fixes
 
+ -Fixed bug where YDAY not correctly calculated and reported in CSV file
 
-# GSODR 0.1.5 (Release date: 2016-05-16)
+  -CSV files for station only queries now are names with the Station Identifier.
+  Previously named same as global data
 
-## Bug Fixes
+  -Likewise, CSV files for agroclimatology now are names with the Station
+  Identifier. Previously named same as global data
 
-- Fixed bug where YDAY not correctly calculated and reported in CSV file
+### Minor Changes
 
-- CSV files for station only queries now are names with the Station Identifier. Previously named same as global data
+  -Set values where MIN > MAX to NA
 
-- Likewise, CSV files for agroclimatology now are names with the Station Identifier. Previously named same as global data
+  -Set more MIN/MAX/DEWP values to NA. GSOD README indicates that 999 indicates
+  missing values in these columns, this does not appear to always be true. There
+  are instances where 99 is the value recorded for missing data. While 99F is
+  possible, the vast majority of these recorded values are missing data, thus
+  the function now converts them to NA
 
-## Minor Changes
+## GSODR 0.1.4 (Release date: 2016-05-09)
 
-- Set values where MIN > MAX to NA
+### Bug Fixes in 0.1.4
 
-- Set more MIN/MAX/DEWP values to NA. GSOD README indicates that 999 indicates missing values in these columns, this does not appear to always be true. There are instances where 99 is the value recorded for missing data. While 99F is possible, the vast majority of these recorded values are missing data, thus the function now converts them to NA
+  -Fixed bug related to MIN/MAX columns when agroclimatology or all stations are
+  selected where flags were not removed properly from numeric values.
 
+### Minor Changes in 0.1.4
 
-# GSODR 0.1.4 (Release date: 2016-05-09)
+  -Add more detail to DESCRIPTION regarding flags found in original GSOD data.
 
-## Bug Fixes
+## GSODR 0.1.3 (Release date: 2016-05-06)
 
-- Fixed bug related to MIN/MAX columns when agroclimatology or all stations are selected where flags were not removed properly from numeric values.
+### Bug fixes in 0.1.3
 
-## Minor Changes
+  -Bug fix in MIN/MAX with flags. Some columns have differing widths, which
+  caused a flag to be left attached to some values
 
-- Add more detail to DESCRIPTION regarding flags found in original GSOD data.
+  -Correct URL in README.md for CRAN to point to CRAN not GitHub
 
+### Minor Changes in 0.1.3
 
-# GSODR 0.1.3 (Release date: 2016-05-06)
+  -Set NA to -9999.99
 
-## Bug fixes
+## GSODR 0.1.2 (Release date: 2016-05-05)
 
-- Bug fix in MIN/MAX with flags. Some columns have differing widths, which caused a flag to be left attached to some values
+### Bug Fixes in 0.1.2
 
-- Correct URL in README.md for CRAN to point to CRAN not GitHub
+  -Bug fix in importing isd-history.csv file. Previous issues caused all
+  lat/lon/elev values to be >0.
 
-## Minor Changes
-- Set NA to -9999.99
+  -Bug fix where WDSP was mistyped as WDPS causing the creation of a new column,
+  rather than the conversion of the existing
 
+  -Bug fix if Agroclimatology selected. Previously this resulted in no records.
 
-# GSODR 0.1.2 (Release date: 2016-05-05)
+  -Set the default encoding to UTF8.
 
-## Bug Fixes
+  -Bug fix for country selection. Some countries did not return proper ISO code.
 
-- Bug fix in importing isd-history.csv file. Previous issues caused all lat/lon/elev values to be >0.
+### Minor changes in 0.1.2
 
-- Bug fix where WDSP was mistyped as WDPS causing the creation of a new column, rather than the conversion of the existing
+ -Use write.csv, not readr::write_csv due to issue converting double to string: <https://github.com/hadley/readr/issues/387>
 
-- Bug fix if Agroclimatology selected. Previously this resulted in no records.
+## GSODR 0.1.1 (Release date: 2016-04-21)
 
-- Set the default encoding to UTF8.
+### Major changes in 0.1.1
 
-- Bug fix for country selection. Some countries did not return proper ISO code.
+ -Now available on CRAN
 
-## Minor changes
+ -Add single quotes around possibly misspelled words and spell out
+ comma-separated values and geographic information system rather than just using
+ "CSV" or "GIS" in DESCRIPTION.
 
-* Use write.csv, not readr::write_csv due to issue converting double to string: https://github.com/hadley/readr/issues/387
+ -Add full name of GSOD (Global Surface Summary of the Day) and URL for GSOD,
+ <https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod> to
+ DESCRIPTION as requested by CRAN.
 
+ -Require user to specify directory for resulting .csv file output so that any
+ files written to disk are interactive and with user's permission
 
-# GSODR 0.1.1 (Release date: 2016-04-21)
+## GSODR 0.1 (Release date: 2016-04-18)
 
-## Major changes
-
-- Now available on CRAN
-
-- Add single quotes around possibly misspelled words and spell out comma-separated values and geographic information system rather than just using "CSV" or "GIS" in DESCRIPTION.
-
-- Add full name of GSOD (Global Surface Summary of the Day) and URL for GSOD, https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod to DESCRIPTION as requested by CRAN.
-
-- Require user to specify directory for resulting .csv file output so that any files written to disk are interactive and with user's permission
-
-
-# GSODR 0.1 (Release date: 2016-04-18)
-
-- Initial submission to CRAN
+ -Initial submission to CRAN

@@ -527,14 +527,17 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
 Meta
 ----
 
--   Please [report any issues or
-    bugs](https://github.com/ropensci/GSODR/issues).  
+-   Please [report any issues or bugs](https://github.com/ropensci/GSODR/issues).  
+
 -   License: MIT  
+
 -   To cite *GSODR*, please use:  
+
     Adam H Sparks, Tomislav Hengl and Andrew Nelson (2017). GSODR:
     Global Summary Daily Weather Data in R. *The Journal of Open Source
     Software*, **2(10)**. DOI: 10.21105/joss.00177. URL:
     <https://doi.org/10.21105%2Fjoss.00177>  
+
 -   Please note that this project is released with a [Contributor Code
     of Conduct](CONDUCT.md). By participating in this project you agree
     to abide by its terms.
@@ -550,5 +553,3 @@ Karger, D. N., Conrad, O., Bohner, J., Kawohl, T., Kreft, H.,
 Soria-Auza, R. W., *et al*. (2016) Climatologies at high resolution for
 the Earth land surface areas. *arXiv preprint* **arXiv:1607.00217**.
 (<http://chelsa-climate.org/>)
-
-[![ropensci\_footer](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org)
