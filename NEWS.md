@@ -19,6 +19,9 @@
 
 - _plyr_ is no longer an import
 
+- Move description of functions' output to individual vignettes to shorten help
+  file documentation
+
 ## Bug fixes in 1.0.3
 
 - Fix bugs in the vignettes related to formatting and spelling

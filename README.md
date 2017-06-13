@@ -521,8 +521,7 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
 > non-commercial international activities without restriction. The
 > non-U.S. data cannot be redistributed for commercial purposes.
 > Re-distribution of these data by others must provide this same
-> notification." [WMO Resolution 40. NOAA
-> Policy](https://public.wmo.int/en/our-mandate/what-we-do/data-exchange-and-technology-transfer)
+> notification." [WMO Resolution 40. NOAA Policy](https://public.wmo.int/en/our-mandate/what-we-do/data-exchange-and-technology-transfer)
 
 Meta
 ----

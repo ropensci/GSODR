@@ -38,6 +38,9 @@ This is a new minor release
 
 - _plyr_ is no longer an import
 
+- Move description of functions' output to individual vignettes to shorten help
+  file documentation
+
 ## Bug fixes
 
 - Fix bugs in the vignettes related to formatting and spelling
