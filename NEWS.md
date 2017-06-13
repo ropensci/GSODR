@@ -254,7 +254,7 @@
 
   -stations.rda now includes a field for "corrected" elevation using hole-filled
   SRTM data from Jarvis et al. 2008, see
-  [https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md](https://github.com/ropensci/GSODR/blob/devel/data-raw/fetch_isd-history.md)
+  [https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md](https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md)
   for a description
 
   -Set NA or missing values in CSV or shapefile to -9999 from -9999.99 to
