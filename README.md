@@ -1,6 +1,4 @@
 
-# _GSODR_: Global Summary Daily Weather Data in R
-
 [![Travis-CI Build Status](https://travis-ci.org/ropensci/GSODR.svg?branch=master)](https://travis-ci.org/ropensci/GSODR)
 [![Build status](https://ci.appveyor.com/api/projects/status/s09kh2nj59o35ob1/branch/master?svg=true)](https://ci.appveyor.com/project/ropensci/gsodr/branch/master)
 [![codecov](https://codecov.io/gh/ropensci/GSODR/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/GSODR)
@@ -9,6 +7,8 @@
 [![cran version](http://www.r-pkg.org/badges/version/GSODR)](https://cran.r-project.org/package=GSODR)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.439850.svg)](https://doi.org/10.5281/zenodo.439850)
 [![JOSS](http://joss.theoj.org/papers/10.21105/joss.00177/status.svg)](http://joss.theoj.org/papers/14021f4e4931cdaab4ea41be27df2df6)
+
+# _GSODR_: Global Summary Daily Weather Data in R
 
 ## Introduction to *GSODR*
 
@@ -531,4 +531,4 @@ Soria-Auza, R. W., *et al*. (2016) Climatologies at high resolution for
 the Earth land surface areas. *arXiv preprint* **arXiv:1607.00217**.
 (<http://chelsa-climate.org/>)
 
-[![ropensci](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
+[![ropensci](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org)
