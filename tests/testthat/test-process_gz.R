@@ -19,8 +19,6 @@ context("get_GSOD")
 
               GSOD_list <- .download_files(ftp_base, station, years, cache_dir)
 
-              expect_length(GSOD_list, 24423)
-
               agro_list <- .agroclimatology_list(GSOD_list, stations, cache_dir,
                                                  years)
               expect_length(agro_list, 11302)
