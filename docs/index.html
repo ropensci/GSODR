@@ -80,38 +80,30 @@
       
       </header><div class="row">
   <div class="contents col-md-9">
-    
-<div id="gsodr-global-summary-daily-weather-data-in-r" class="section level1">
+    <div id="gsodr-global-summary-daily-weather-data-in-r" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#gsodr-global-summary-daily-weather-data-in-r" class="anchor"></a>GSODR: Global Summary Daily Weather Data in R</h1></div>
+<a href="#gsodr-global-summary-daily-weather-data-in-r" class="anchor"></a><em>GSODR</em>: Global Summary Daily Weather Data in R</h1></div>
 
-</div>
-<div id="introduction-to-gsodr" class="section level1">
-<h1 class="hasAnchor">
+<div id="introduction-to-gsodr" class="section level2">
+<h2 class="hasAnchor">
 <a href="#introduction-to-gsodr" class="anchor"></a>Introduction to <em>GSODR</em>
-</h1>
+</h2>
 <p>The GSOD or <a href="https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod">Global Surface Summary of the Day (GSOD)</a> data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. <em>GSODR</em> aims to make it easy to find, transfer and format the data you need for use in analysis and provides four main functions for facilitating this:</p>
 <ul>
-<li>
-<code><a href="reference/get_GSOD.html">get_GSOD()</a></code> - queries and transfers files from the FTP server, reformats them and returns a <code>data.frame()</code> object in R session or saves a file to disk with options for a GeoPackage spatially enabled file or comma separated values (CSV) file,<br>
-</li>
-<li>
-<code><a href="reference/reformat_GSOD.html">reformat_GSOD()</a></code> - the workhorse, takes individual station files on the local disk and reformats them, returns a <code>data.frame()</code> object in R session or saves a file to disk with options for a GeoPackage spatially enabled file or comma separated values (CSV) file,<br>
-</li>
-<li>
-<code><a href="reference/nearest_stations.html">nearest_stations()</a></code> - returns a <code>vector()</code> object containing a list of stations and their metadata that fall within the given radius of a point specified by the user,<br>
-</li>
-<li>
-<code><a href="reference/update_station_list.html">update_station_list()</a></code> - downloads the latest station list from the NCEI FTP server updates the package’s internal database of stations and their metadata.</li>
+<li><p><code><a href="reference/get_GSOD.html">get_GSOD()</a></code> - queries and transfers files from the FTP server, reformats them and returns a <code>data.frame()</code> object in R session or saves a file to disk with options for a GeoPackage spatially enabled file or comma separated values (CSV) file,</p></li>
+<li><p><code><a href="reference/reformat_GSOD.html">reformat_GSOD()</a></code> - the workhorse, takes individual station files on the local disk and reformats them, returns a <code>data.frame()</code> object in R session or saves a file to disk with options for a GeoPackage spatially enabled file or comma separated values (CSV) file,</p></li>
+<li><p><code><a href="reference/nearest_stations.html">nearest_stations()</a></code> - returns a <code>vector()</code> object containing a list of stations and their metadata that fall within the given radius of a point specified by the user,</p></li>
+<li><p><code><a href="reference/update_station_list.html">update_station_list()</a></code> - downloads the latest station list from the NCEI FTP server updates the package’s internal database of stations and their metadata.</p></li>
 </ul>
 <p>When reformatting data either with <code><a href="reference/get_GSOD.html">get_GSOD()</a></code> or <code><a href="reference/reformat_GSOD.html">reformat_GSOD()</a></code>, all units are converted to International System of Units (SI), e.g., inches to millimetres and Fahrenheit to Celsius. File output can be saved as a Comma Separated Value (CSV) file or in a spatial GeoPackage (GPKG) file, implemented by most major GIS software, summarising each year by station, which also includes vapour pressure and relative humidity elements calculated from existing data in GSOD.</p>
 <p>Additional data are calculated by this R package using the original data and included in the final data. These include vapour pressure (ea and es) and relative humidity.</p>
 <p>It is recommended that you have a good Internet connection to download the data files as they can be quite large and slow to download.</p>
 <p>For more information see the description of the data provided by NCEI, <a href="http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt" class="uri">http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt</a>.</p>
 </div>
-<div id="quick-start" class="section level1">
-<h1 class="hasAnchor">
-<a href="#quick-start" class="anchor"></a>Quick Start</h1>
+<div id="quick-start" class="section level2">
+<h2 class="hasAnchor">
+<a href="#quick-start" class="anchor"></a>Quick Start</h2>
+</div>
 <div id="install" class="section level2">
 <h2 class="hasAnchor">
 <a href="#install" class="anchor"></a>Install</h2>
@@ -144,7 +136,7 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(GSODR)
 
 Tbar &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> <span class="st">"955510-99999"</span>)
-<span class="co">#&gt; </span>
+<span class="co">#&gt;</span>
 <span class="co">#&gt; Checking requested station file for availability on server.</span>
 <span class="co">#&gt; Starting data file processing</span>
 
@@ -324,9 +316,9 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <span class="co">#&gt; $ CHELSA_temp_8_1979-2013    : num  29.7 14.2 12.2 12.1 14.9 15.8 14 12.2 13.3 12.8 ...</span>
 <span class="co">#&gt; $ CHELSA_temp_9_1979-2013    : num  25.1 11.5 8.6 7.7 11.5 11.6 10.2 7.6 9.9 9.8 ...</span></code></pre></div>
 </div>
-<div id="using-dplyr-functions-join-the-chelsa-and-gsodr-data-for-plotting-" class="section level5">
+<div id="using-dplyr-functions-join-the-chelsa-and-gsodr-data-for-plotting" class="section level5">
 <h5 class="hasAnchor">
-<a href="#using-dplyr-functions-join-the-chelsa-and-gsodr-data-for-plotting-" class="anchor"></a>Using <em>dplyr</em> functions, join the CHELSA and <em>GSODR</em> data for plotting.</h5>
+<a href="#using-dplyr-functions-join-the-chelsa-and-gsodr-data-for-plotting" class="anchor"></a>Using <em>dplyr</em> functions, join the CHELSA and <em>GSODR</em> data for plotting</h5>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Attaching package: 'dplyr'</span>
@@ -449,25 +441,24 @@ Starting data file processing
 <span class="co">#&gt; $ RH              : num  67.7 70 74.1 67.9 74.1 59.3 69.2 70.4 61.3 61.3 ...</span></code></pre></div>
 </div>
 </div>
-</div>
-<div id="other-sources-of-weather-data-in-r" class="section level2">
-<h2 class="hasAnchor">
-<a href="#other-sources-of-weather-data-in-r" class="anchor"></a>Other Sources of Weather Data in R</h2>
+<div id="other-sources-of-weather-data-in-r" class="section level3">
+<h3 class="hasAnchor">
+<a href="#other-sources-of-weather-data-in-r" class="anchor"></a>Other Sources of Weather Data in R</h3>
 <p>There are several other sources of weather data and ways of retrieving them through R. In particular, the excellent <a href="https://CRAN.R-project.org/package=rnoaa"><code>rnoaa</code></a> package also from <a href="https://ropensci.org">rOpenSci</a> offers tools for interacting with and downloading weather data from the United States National Oceanic and Atmospheric Administration but lacks support GSOD data.</p>
 </div>
-<div id="other-sources-for-fetching-gsod-weather-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#other-sources-for-fetching-gsod-weather-data" class="anchor"></a>Other Sources for Fetching GSOD Weather Data</h2>
+<div id="other-sources-for-fetching-gsod-weather-data" class="section level3">
+<h3 class="hasAnchor">
+<a href="#other-sources-for-fetching-gsod-weather-data" class="anchor"></a>Other Sources for Fetching GSOD Weather Data</h3>
 <p>The <a href="https://github.com/environmentalinformatics-marburg/GSODTools"><em>GSODTools</em></a> by <a href="https://github.com/fdetsch">Florian Detsch</a> is an R package that offers similar functionality as <em>GSODR</em> but also has the ability to graph the data and working with data for time series analysis.</p>
 <p>The <a href="https://github.com/ulmo-dev/ulmo"><em>ULMO</em></a> library offers an interface to retrieve GSOD data using Python.</p>
 </div>
 </div>
-<div id="notes" class="section level1">
-<h1 class="hasAnchor">
-<a href="#notes" class="anchor"></a>Notes</h1>
-<div id="data-sources" class="section level2">
+<div id="notes" class="section level2">
 <h2 class="hasAnchor">
-<a href="#data-sources" class="anchor"></a>Data Sources</h2>
+<a href="#notes" class="anchor"></a>Notes</h2>
+<div id="data-sources" class="section level3">
+<h3 class="hasAnchor">
+<a href="#data-sources" class="anchor"></a>Data Sources</h3>
 <div id="chelsa-climate-layers" class="section level4">
 <h4 class="hasAnchor">
 <a href="#chelsa-climate-layers" class="anchor"></a>CHELSA climate layers</h4>
@@ -477,15 +468,16 @@ Starting data file processing
 <h4 class="hasAnchor">
 <a href="#elevation-values" class="anchor"></a>Elevation Values</h4>
 <p>90m hole-filled SRTM digital elevation (Jarvis <em>et al.</em> 2008) was used to identify and correct/remove elevation errors in data for station locations between -60˚ and 60˚ latitude. This applies to cases here where elevation was missing in the reported values as well. In case the station reported an elevation and the DEM does not, the station reported is taken. For stations beyond -60˚ and 60˚ latitude, the values are station reported values in every instance. See <a href="https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md" class="uri">https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md</a> for more detail on the correction methods.</p>
-</div>
-</div>
-<div id="wmo-resolution-40--noaa-policy" class="section level2">
-<h2 class="hasAnchor">
-<a href="#wmo-resolution-40--noaa-policy" class="anchor"></a>WMO Resolution 40. NOAA Policy</h2>
-<p><em>Users of these data should take into account the following (from the <a href="http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&amp;countryabbv=&amp;georegionabbv=">NCEI website</a>):</em></p>
+<div id="wmo-resolution-40--noaa-policy" class="section level5">
+<h5 class="hasAnchor">
+<a href="#wmo-resolution-40--noaa-policy" class="anchor"></a>WMO Resolution 40. NOAA Policy</h5>
+<p><em>Users of these data should take into account the following (from the <a href="http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&amp;countryabbv=&amp;georegionabbv=">NCEI website</a>)</em></p>
 <blockquote>
 <p>“The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification.” <a href="https://public.wmo.int/en/our-mandate/what-we-do/data-exchange-and-technology-transfer">WMO Resolution 40. NOAA Policy</a></p>
 </blockquote>
+</div>
+</div>
+</div>
 </div>
 <div id="meta" class="section level2">
 <h2 class="hasAnchor">
@@ -497,15 +489,14 @@ Starting data file processing
 <li><p>Please note that this project is released with a <a href="CONDUCT.md">Contributor Code of Conduct</a>. By participating in this project you agree to abide by its terms.</p></li>
 </ul>
 </div>
-</div>
-<div id="references" class="section level1">
-<h1 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h1>
+<div id="references" class="section level2">
+<h2 class="hasAnchor">
+<a href="#references" class="anchor"></a>References</h2>
 <p>Jarvis, A., Reuter, H. I., Nelson, A., Guevara, E. (2008) Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database (<a href="http://srtm.csi.cgiar.org" class="uri">http://srtm.csi.cgiar.org</a>)</p>
 <p>Karger, D. N., Conrad, O., Bohner, J., Kawohl, T., Kreft, H., Soria-Auza, R. W., <em>et al</em>. (2016) Climatologies at high resolution for the Earth land surface areas. <em>arXiv preprint</em> <strong>arXiv:1607.00217</strong>. (<a href="http://chelsa-climate.org/" class="uri">http://chelsa-climate.org/</a>)</p>
 <p><a href="http://ropensci.org"><img src="http://ropensci.org/public_images/github_footer.png" alt="ropensci"></a></p>
 </div>
-
+</div>
   </div>
 
   <div class="col-md-3" id="sidebar">
