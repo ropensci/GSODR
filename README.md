@@ -1,7 +1,5 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-GSODR: Global Summary Daily Weather Data in R
-=============================================
+# _GSODR_: Global Summary Daily Weather Data in R
 
 [![Travis-CI Build Status](https://travis-ci.org/ropensci/GSODR.svg?branch=master)](https://travis-ci.org/ropensci/GSODR)
 [![Build status](https://ci.appveyor.com/api/projects/status/s09kh2nj59o35ob1/branch/master?svg=true)](https://ci.appveyor.com/project/ropensci/gsodr/branch/master)
@@ -12,8 +10,7 @@ GSODR: Global Summary Daily Weather Data in R
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.439850.svg)](https://doi.org/10.5281/zenodo.439850)
 [![JOSS](http://joss.theoj.org/papers/10.21105/joss.00177/status.svg)](http://joss.theoj.org/papers/14021f4e4931cdaab4ea41be27df2df6)
 
-Introduction to *GSODR*
-=======================
+## Introduction to *GSODR*
 
 The GSOD or [Global Surface Summary of the Day
 (GSOD)](https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod)
@@ -24,20 +21,23 @@ However, the data files are cumbersome and difficult to work with.
 need for use in analysis and provides four main functions for
 facilitating this:
 
--   `get_GSOD()` - queries and transfers files from the FTP server,
-    reformats them and returns a `data.frame()` object in R session or
-    saves a file to disk with options for a GeoPackage spatially enabled
-    file or comma separated values (CSV) file,  
--   `reformat_GSOD()` - the workhorse, takes individual station files on
-    the local disk and reformats them, returns a `data.frame()` object
-    in R session or saves a file to disk with options for a GeoPackage
-    spatially enabled file or comma separated values (CSV) file,  
--   `nearest_stations()` - returns a `vector()` object containing a list
-    of stations and their metadata that fall within the given radius of
-    a point specified by the user,  
--   `update_station_list()` - downloads the latest station list from the
-    NCEI FTP server updates the package's internal database of stations
-    and their metadata.
+-   `get_GSOD()` - queries and transfers files from the FTP server, reformats
+them and returns a `data.frame()` object in R session or saves a file to disk
+with options for a GeoPackage spatially enabled file or comma separated values
+(CSV) file,
+
+-   `reformat_GSOD()` - the workhorse, takes individual station files on the
+local disk and reformats them, returns a `data.frame()` object in R session or
+saves a file to disk with options for a GeoPackage spatially enabled file or
+comma separated values (CSV) file,
+
+-   `nearest_stations()` - returns a `vector()` object containing a list of
+stations and their metadata that fall within the given radius of a point
+specified by the user,
+
+-   `update_station_list()` - downloads the latest station list from the NCEI
+FTP server updates the package's internal database of stations and their
+metadata.
 
 When reformatting data either with `get_GSOD()` or `reformat_GSOD()`,
 all units are converted to International System of Units (SI), e.g.,
@@ -57,11 +57,9 @@ the data files as they can be quite large and slow to download.
 For more information see the description of the data provided by NCEI,
 <http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
 
-Quick Start
-===========
+## Quick Start
 
-Install
--------
+## Install
 
 ### Stable version
 
@@ -88,8 +86,7 @@ devtools::install_github("ropensci/GSODR", build_vignettes = TRUE)
 
 ------------------------------------------------------------------------
 
-Using *GSODR*
--------------
+## Using *GSODR*
 
 ### Query the NCEI FTP server for GSOD data
 
@@ -102,7 +99,7 @@ from the NCEI server. Following are a few examples of its capabilities.
 library(GSODR)
 
 Tbar <- get_GSOD(years = 2010, station = "955510-99999")
-#> 
+#>
 #> Checking requested station file for availability on server.
 #> Starting data file processing
 
@@ -323,7 +320,7 @@ str(CHELSA)
 #> $ CHELSA_temp_9_1979-2013    : num  25.1 11.5 8.6 7.7 11.5 11.6 10.2 7.6 9.9 9.8 ...
 ```
 
-##### Using *dplyr* functions, join the CHELSA and *GSODR* data for plotting.
+##### Using *dplyr* functions, join the CHELSA and *GSODR* data for plotting
 
 ``` r
 library(dplyr)
@@ -454,8 +451,7 @@ str(toowoomba)
 #> $ RH              : num  67.7 70 74.1 67.9 74.1 59.3 69.2 70.4 61.3 61.3 ...
 ```
 
-Other Sources of Weather Data in R
-----------------------------------
+### Other Sources of Weather Data in R
 
 There are several other sources of weather data and ways of retrieving
 them through R. In particular, the excellent
@@ -464,8 +460,7 @@ them through R. In particular, the excellent
 downloading weather data from the United States National Oceanic and
 Atmospheric Administration but lacks support GSOD data.
 
-Other Sources for Fetching GSOD Weather Data
---------------------------------------------
+### Other Sources for Fetching GSOD Weather Data
 
 The
 [*GSODTools*](https://github.com/environmentalinformatics-marburg/GSODTools)
@@ -476,11 +471,9 @@ graph the data and working with data for time series analysis.
 The [*ULMO*](https://github.com/ulmo-dev/ulmo) library offers an
 interface to retrieve GSOD data using Python.
 
-Notes
-=====
+## Notes
 
-Data Sources
-------------
+### Data Sources
 
 #### CHELSA climate layers
 
@@ -502,12 +495,10 @@ station reported values in every instance. See
 <https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md>
 for more detail on the correction methods.
 
-WMO Resolution 40. NOAA Policy
-------------------------------
+##### WMO Resolution 40. NOAA Policy
 
 *Users of these data should take into account the following (from the
-[NCEI
-website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):*
+[NCEI website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=))*
 
 > "The following data and products may have conditions placed on their
 > international commercial use. They can be used within the U.S. or for
@@ -516,8 +507,7 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
 > Re-distribution of these data by others must provide this same
 > notification." [WMO Resolution 40. NOAA Policy](https://public.wmo.int/en/our-mandate/what-we-do/data-exchange-and-technology-transfer)
 
-Meta
-----
+## Meta
 
 -   Please [report any issues or bugs](https://github.com/ropensci/GSODR/issues).  
 
@@ -530,8 +520,7 @@ Meta
     of Conduct](CONDUCT.md). By participating in this project you agree
     to abide by its terms.
 
-References
-==========
+## References
 
 Jarvis, A., Reuter, H. I., Nelson, A., Guevara, E. (2008) Hole-filled
 SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m
