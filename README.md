@@ -541,3 +541,5 @@ Karger, D. N., Conrad, O., Bohner, J., Kawohl, T., Kreft, H.,
 Soria-Auza, R. W., *et al*. (2016) Climatologies at high resolution for
 the Earth land surface areas. *arXiv preprint* **arXiv:1607.00217**.
 (<http://chelsa-climate.org/>)
+
+[![ropensci](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)

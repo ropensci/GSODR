@@ -29,10 +29,34 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="reference/index.html">Reference</a>
+  <a href="/index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="articles/index.html">Articles</a>
+  <a href="articles/GSODR.html">Get Started</a>
+</li>
+<li>
+  <a href="reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="articles/GSODR_output_fields.html">GSODR Output Fields</a>
+    </li>
+    <li>
+      <a href="articles/Specified_stations_for_a_range_of_years.html">GSODR use case: Specified years/stations vignette</a>
+    </li>
+    <li>
+      <a href="articles/Working_with_spatial_and_climate_data.html">Working with spatial and climate data from GSODR</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="news/index.html">News</a>
@@ -102,7 +126,7 @@
 <a href="#development-version" class="anchor"></a>Development version</h3>
 <p>A development version is available from from GitHub. If you wish to install the development version that may have new features (but also may not work properly), install the <a href="https://CRAN.R-project.org/package=devtools">devtools package</a>, available from CRAN. We strive to keep the master branch on GitHub functional and working properly, although this may not always happen.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages("devtools")</span>
-devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"ropensci/GSODR"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>)</code></pre></div>
+devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"ropensci/GSODR"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <hr>
 </div>
 </div>
@@ -198,8 +222,8 @@ Tbar &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_GSOD.
 <span class="co">#&gt; plotKML version 0.5-6 (2016-05-02)</span>
 <span class="co">#&gt; URL: http://plotkml.r-forge.r-project.org/</span>
 
-layers &lt;-<span class="st"> </span><span class="kw">ogrListLayers</span>(<span class="dt">dsn =</span> <span class="kw">path.expand</span>(<span class="st">"~/PHL-2010.gpkg"</span>))
-pnts &lt;-<span class="st"> </span><span class="kw">readOGR</span>(<span class="dt">dsn =</span> <span class="kw">path.expand</span>(<span class="st">"~/PHL-2010.gpkg"</span>), layers[<span class="dv">1</span>])
+layers &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/rgdal/topics/readOGR">ogrListLayers</a></span>(<span class="dt">dsn =</span> <span class="kw">path.expand</span>(<span class="st">"~/PHL-2010.gpkg"</span>))
+pnts &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/rgdal/topics/readOGR">readOGR</a></span>(<span class="dt">dsn =</span> <span class="kw">path.expand</span>(<span class="st">"~/PHL-2010.gpkg"</span>), layers[<span class="dv">1</span>])
 <span class="co">#&gt; OGR data source with driver: GPKG </span>
 <span class="co">#&gt; Source: "/Users/U8004755/PHL-2010.gpkg", layer: "GSOD"</span>
 <span class="co">#&gt; with 4703 features</span>
@@ -209,14 +233,14 @@ pnts &lt;-<span class="st"> </span><span class="kw">readOGR</span>(<span class="
 pnts<span class="op">$</span>DATE =<span class="st"> </span><span class="kw">as.Date</span>(<span class="kw">paste</span>(pnts<span class="op">$</span>YEAR, pnts<span class="op">$</span>MONTH, pnts<span class="op">$</span>DAY, <span class="dt">sep =</span> <span class="st">"-"</span>))
 <span class="kw">row.names</span>(pnts) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">"point"</span>, <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(pnts), <span class="dt">sep =</span> <span class="st">""</span>)
 
-tmp_ST &lt;-<span class="st"> </span><span class="kw">STIDF</span>(<span class="dt">sp =</span> <span class="kw">as</span>(pnts, <span class="st">"SpatialPoints"</span>),
+tmp_ST &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/spacetime/topics/STIDF-class">STIDF</a></span>(<span class="dt">sp =</span> <span class="kw">as</span>(pnts, <span class="st">"SpatialPoints"</span>),
                 <span class="dt">time =</span> pnts<span class="op">$</span>DATE <span class="op">-</span><span class="st"> </span><span class="fl">0.5</span>,
                 <span class="dt">data =</span> pnts<span class="op">@</span>data[, <span class="kw">c</span>(<span class="st">"TEMP"</span>, <span class="st">"STNID"</span>)],
                 <span class="dt">endTime =</span> pnts<span class="op">$</span>DATE <span class="op">+</span><span class="st"> </span><span class="fl">0.5</span>)
 
 shape =<span class="st"> "http://maps.google.com/mapfiles/kml/pal2/icon18.png"</span>
 
-<span class="kw">kml</span>(tmp_ST, <span class="dt">dtime =</span> <span class="dv">24</span> <span class="op">*</span><span class="st"> </span><span class="dv">3600</span>, <span class="dt">colour =</span> TEMP, <span class="dt">shape =</span> shape, <span class="dt">labels =</span> TEMP,
+<span class="kw"><a href="http://www.rdocumentation.org/packages/plotKML/topics/kml">kml</a></span>(tmp_ST, <span class="dt">dtime =</span> <span class="dv">24</span> <span class="op">*</span><span class="st"> </span><span class="dv">3600</span>, <span class="dt">colour =</span> TEMP, <span class="dt">shape =</span> shape, <span class="dt">labels =</span> TEMP,
     <span class="dt">file.name =</span> <span class="st">"Temperatures_PHL_2010-2010.kml"</span>, <span class="dt">folder.name =</span> <span class="st">"TEMP"</span>)
 <span class="co">#&gt; KML file opened for writing...</span>
 <span class="co">#&gt; Writing to KML...</span>
@@ -234,7 +258,7 @@ shape =<span class="st"> "http://maps.google.com/mapfiles/kml/pal2/icon18.png"</
 <a href="#install-gsodrdata-package" class="anchor"></a>Install <em>GSODRdata</em> package</h5>
 <p>This package is only available from GitHub; due to its large size (&lt;9Mb installed) it is not allowed on CRAN. It provides optional data for use with the <em>GSODR</em> package. See <a href="https://github.com/adamhsparks/GSODRdata" class="uri">https://github.com/adamhsparks/GSODRdata</a> for more.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("devtools")</span>
-devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"adamhsparks/GSODRdata"</span>)</code></pre></div>
+devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"adamhsparks/GSODRdata"</span>)</code></pre></div>
 </div>
 <div id="working-with-climate-data-from-gsodrdata" class="section level5">
 <h5 class="hasAnchor">
@@ -324,25 +348,25 @@ clim_temp_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<s
                            <span class="dt">CHELSA_TEMP =</span> <span class="kw">as.vector</span>(<span class="kw">unlist</span>(clim_temp[, cnames])))
 
 pnts<span class="op">$</span>MONTHC &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">paste</span>(pnts<span class="op">$</span>MONTH))
-temp &lt;-<span class="st"> </span><span class="kw">left_join</span>(pnts<span class="op">@</span>data, clim_temp_df, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">"STNID"</span>, <span class="st">"MONTHC"</span>))
+temp &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(pnts<span class="op">@</span>data, clim_temp_df, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">"STNID"</span>, <span class="st">"MONTHC"</span>))
 <span class="co">#&gt; Warning in left_join_impl(x, y, by$x, by$y, suffix$x, suffix$y): joining</span>
 <span class="co">#&gt; factors with different levels, coercing to character vector</span>
 
 temp &lt;-<span class="st"> </span>temp <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(MONTH) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">AVG_DAILY_TEMP =</span> <span class="kw">round</span>(<span class="kw">mean</span>(TEMP), <span class="dv">1</span>))
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(MONTH) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">AVG_DAILY_TEMP =</span> <span class="kw">round</span>(<span class="kw">mean</span>(TEMP), <span class="dv">1</span>))
 
-df_melt &lt;-<span class="st"> </span><span class="kw">na.omit</span>(<span class="kw">melt</span>(temp[, <span class="kw">c</span>(<span class="st">"STNID"</span>, <span class="st">"DATE"</span>, <span class="st">"CHELSA_TEMP"</span>, <span class="st">"TEMP"</span>, <span class="st">"AVG_DAILY_TEMP"</span>)],
+df_melt &lt;-<span class="st"> </span><span class="kw">na.omit</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/reshape2/topics/melt">melt</a></span>(temp[, <span class="kw">c</span>(<span class="st">"STNID"</span>, <span class="st">"DATE"</span>, <span class="st">"CHELSA_TEMP"</span>, <span class="st">"TEMP"</span>, <span class="st">"AVG_DAILY_TEMP"</span>)],
                         <span class="dt">id =</span> <span class="kw">c</span>(<span class="st">"DATE"</span>, <span class="st">"STNID"</span>)))
 
-<span class="kw">ggplot</span>(df_melt, <span class="kw">aes</span>(<span class="dt">x =</span> DATE, <span class="dt">y =</span> value)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> variable), <span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_x_date</span>(<span class="dt">date_labels =</span> <span class="st">"%b"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Temperature (C)"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">xlab</span>(<span class="st">"Month"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">colour =</span> <span class="st">""</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette =</span> <span class="st">"Dark2"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>STNID)</code></pre></div>
+<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(df_melt, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> DATE, <span class="dt">y =</span> value)) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">color =</span> variable), <span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_date">scale_x_date</a></span>(<span class="dt">date_labels =</span> <span class="st">"%b"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Temperature (C)"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Month"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">labs</a></span>(<span class="dt">colour =</span> <span class="st">""</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_brewer">scale_color_brewer</a></span>(<span class="dt">palette =</span> <span class="st">"Dark2"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>( <span class="op">~</span><span class="st"> </span>STNID)</code></pre></div>
 <p><img src="reference/figures/example_1.2-1.png" alt="Comparison of GSOD daily values and average monthly values with CHELSA climate monthly values"></p>
 </div>
 </div>
@@ -479,6 +503,7 @@ Starting data file processing
 <a href="#references" class="anchor"></a>References</h1>
 <p>Jarvis, A., Reuter, H. I., Nelson, A., Guevara, E. (2008) Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database (<a href="http://srtm.csi.cgiar.org" class="uri">http://srtm.csi.cgiar.org</a>)</p>
 <p>Karger, D. N., Conrad, O., Bohner, J., Kawohl, T., Kreft, H., Soria-Auza, R. W., <em>et al</em>. (2016) Climatologies at high resolution for the Earth land surface areas. <em>arXiv preprint</em> <strong>arXiv:1607.00217</strong>. (<a href="http://chelsa-climate.org/" class="uri">http://chelsa-climate.org/</a>)</p>
+<p><a href="http://ropensci.org"><img src="http://ropensci.org/public_images/github_footer.png" alt="ropensci"></a></p>
 </div>
 
   </div>
@@ -486,7 +511,7 @@ Starting data file processing
   <div class="col-md-3" id="sidebar">
     <h2>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cran.r-project.org/package=GSODR">https://​cran.r-project.org/​package=GSODR</a>
+<li>Download from CRANhttps://cran.r-project.org/package=GSODR at <br><a href="https://cran.r-project.org/package=GSODR">https://​cran.r-project.org/​package=GSODR</a>
 </li>
 <li>Browse source code at <br><a href="https://github.com/ropensci/GSODR">https://​github.com/​ropensci/​GSODR</a>
 </li>

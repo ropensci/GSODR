@@ -52,10 +52,34 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../articles/GSODR.html">Get Started</a>
+</li>
+<li>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/GSODR_output_fields.html">GSODR Output Fields</a>
+    </li>
+    <li>
+      <a href="../articles/Specified_stations_for_a_range_of_years.html">GSODR use case: Specified years/stations vignette</a>
+    </li>
+    <li>
+      <a href="../articles/Working_with_spatial_and_climate_data.html">Working with spatial and climate data from GSODR</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../news/index.html">News</a>
@@ -87,7 +111,7 @@
     <p>This function automates downloading, cleaning, reformatting of data from
 the Global Surface Summary of the Day (GSOD) data provided by the US National
 Centers for Environmental Information (NCEI),
-<a href = 'https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod'>https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod</a>,
+<a href='https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod'>https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod</a>,
 and elements three new variables; saturation vapour pressure (es) – Actual
 vapour pressure (ea) and relative humidity (RH).  Stations reporting a latitude
 of &lt; -90 or &gt; 90 or longitude of &lt; -180 or &gt; 180 are removed.  Stations may be
@@ -101,7 +125,7 @@ group's (CGIAR-CSI) Shuttle Radar Topography Mission 90 metre (SRTM 90m)
 digital elevation data based on NASA's original SRTM 90m data.  Further
 information on these data and methods can be found on GSODR's GitHub
 repository here:
-<a href = 'https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md'>https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md</a>.</p>
+<a href='https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md'>https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md</a>.</p>
     
 
     <pre class="usage"><span class='fu'>get_GSOD</span>(<span class='kw'>years</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>station</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>country</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dsn</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -191,9 +215,9 @@ years queried and stations queried will be merged into one final output file.</p
 <p>All missing values in resulting files are represented as NA regardless of
 which field they occur in.</p>
 <p>For a complete list of the fields and desciption of the contents and units,
-please refer to the <code>NA</code>.</p>
+please refer to the <code><a href='https://cran.rstudio.com/web/packages/GSODR/vignettes/GSODR_output_fields.html'>vignette("GSODR_output_fields", package = "GSODR")</a></code>.</p>
 <p>For more information see the description of the data provided by NCEI,
-<a href = 'http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt'>http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt</a>.</p>
+<a href='http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt'>http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt</a>.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
@@ -210,7 +234,7 @@ provide this same notification.&#8221;</p>
 
     <p>Jarvis, A., Reuter, H. I, Nelson, A., Guevara, E. (2008)
 Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
-90m Database <a href = 'http://srtm.csi.cgiar.org'>http://srtm.csi.cgiar.org</a></p>
+90m Database <a href='http://srtm.csi.cgiar.org'>http://srtm.csi.cgiar.org</a></p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
