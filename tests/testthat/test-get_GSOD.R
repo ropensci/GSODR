@@ -33,8 +33,11 @@ test_that(".download_files works properly", {
   station <- NULL
   years <- 2010
   cache_dir <- tempdir()
+  do.call(file.remove, list(list.files(tempdir(),
+                                       pattern = ".gz$",
+                                       full.names = TRUE)))
   GSOD_list <- .download_files(ftp_base, station, years, cache_dir)
-  expect_length(GSOD_list, 11432)
+  expect_length(GSOD_list, 11430)
   expect_type(GSOD_list, "character")
 })
 
