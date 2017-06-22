@@ -27,14 +27,14 @@ test_that(".validate_years handles valid years", {
 })
 
 # Check that .download_files works properly ------------------------------------
-test_that("invalid stations are handled", {
+test_that(".download_files works properly", {
   skip_on_cran()
   ftp_base <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/%s/"
   station <- NULL
   years <- 2010
   cache_dir <- tempdir()
   GSOD_list <- .download_files(ftp_base, station, years, cache_dir)
-  expect_length(GSOD_list, 11447)
+  expect_length(GSOD_list, 11432)
   expect_type(GSOD_list, "character")
 })
 
