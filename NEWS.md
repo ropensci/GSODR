@@ -203,13 +203,13 @@ stations regardless of missing days
 
 # GSODR 0.1.9 (Release Date: 2016-07-15)
 
-## Bug Fixes
+## Bug Fixes in 0.1.9
 
 - Fix bug in precipitation calculation. Documentation states that PRCP is in mm
 to hundredths. Issues with conversion and missing values meant that this was not
 the case. Thanks to Gwenael Giboire for reporting and help with fixing this
 
-## Minor changes
+## Minor changes in 0.1.9
 
 - Users can now select to merge output for station queries across multiple
 years. Previously one year = one file per station. Now are set by user,
@@ -221,7 +221,9 @@ querying for a specific country. However, this means any time that the
 
 - Updated `stations` list with latest version from NCDC published 12-07-2016
 
-## Major changes
+ - Country list is now included in the package to reduce run time necessary when
+  querying for a specific country. However, this means any time that the
+  country-list.txt file is updated, this package needs to be updated as well
 
 - Country level, agroclimatology and global data query conversions and
 calculations are processed in parallel now to reduce runtime
@@ -239,17 +241,22 @@ runtime by decreasing time used to write shapefiles to disk
 
 --------------------------------------------------------------------------------
 
-# GSODR 0.1.8.1 (Release Date: 2016-07-07)
+ - Country level, agroclimatology and global data query conversions and
+  calculations are processed in parallel now to reduce runtime
 
-## Minor changes
+ - Improved documentation with spelling fixes, clarification and updates
 
-- Fix bug where no station is specified, function fails to run
+ - Enable `ByteCompile` option upon installation for small increase in speed
+
+ - Use `write.csv.raw` from
+  `[iotools]("https://cran.r-project.org/web/packages/iotools/index.html")`
+  to greatly improve runtime by decreasing time used to write CSV files to disk
 
 --------------------------------------------------------------------------------
 
 # GSODR 0.1.8 (Release Date: 2016-07-04)
 
-## Bug Fixes
+## Bug Fixes in 0.1.8
 
 - Fix bug with connection timing out for single station queries commit:  [a126641e00dc7acc21844ff0436e5702f8b6e04a](https://github.com/ropensci/GSODR/commit/a126641e00dc7acc21844ff0436e5702f8b6e04a)
 
@@ -257,7 +264,11 @@ runtime by decreasing time used to write shapefiles to disk
 the `toupper()` function. A new [function from juba](http://stackoverflow.com/questions/16516593/convert-from-lowercase-to-uppercase-all-values-in-all-character-variables-in-dat)
   fixes this issue and users can now select country again
 
-## Major changes
+ - Somehow the previously working function that checked country names broke with
+  the `toupper()` function. A new
+  [function from juba](http://stackoverflow.com/questions/16516593/convert-from-lowercase-to-uppercase-all-values-in-all-character-variables-in-dat)
+  fixes this issue and users can now select country
+  again
 
 - User entered values for a single station are now checked against actual
 station values for validity
@@ -279,7 +290,14 @@ with other data sources such as Worldclim
 
 # GSODR 0.1.7 (Release Date: 2016-06-02)
 
-## Bug Fixes
+## Bug Fixes in 0.1.7
+
+- Fix issues with MIN/MAX where MIN referred to MAX
+ [(Issue 5)](https://github.com/ropensci/GSODR/issues/5)
+
+- Fix bug where the `tf` item was incorrectly set as
+ `tf <- "~/tmp/GSOD-2010.tar`, not `tf <- tempfile`, in `get_GSOD()`
+ [(Issue 6)](https://github.com/ropensci/GSODR/issues/6)
 
 - Fix issues with MIN/MAX where MIN referred to MAX
 [(Issue 5)](https://github.com/ropensci/GSODR/issues/5)
@@ -290,7 +308,7 @@ with other data sources such as Worldclim
 
 - CITATION file is updated and corrected
 
-## Minor changes
+## Minor changes in 0.1.7
 
 - User now has the ability to generate a shapefile as well as CSV file output
 [(Issue 3)](https://github.com/ropensci/GSODR/issues/3)
@@ -301,7 +319,12 @@ with other data sources such as Worldclim
 
 # GSODR 0.1.6 (Release date: 2016-05-26)
 
-## Bug Fixes
+## Bug Fixes in 0.1.6
+
+- Fix issue when reading .op files into R where temperature was incorrectly read
+ causing negative values where T >= 100F, this issue caused RH values of >100%
+ and incorrect TEMP values
+ [(Issue 1)](https://github.com/ropensci/GSODR/issues/1)
 
 - Fix issue when reading .op files into R where temperature was incorrectly read
 causing negative values where T >= 100F, this issue caused RH values of >100%
@@ -310,7 +333,7 @@ and incorrect TEMP values
 
 - Spelling corrections
 
-## Major changes
+## Major changes in 0.1.6
 
 - Include MIN/MAX flag column
 
@@ -347,14 +370,12 @@ function now converts them to NA
 
 # GSODR 0.1.4 (Release date: 2016-05-09)
 
-## Bug Fixes
+## Bug Fixes in 0.1.4
 
 - Fixed bug related to MIN/MAX columns when agroclimatology or all stations are
 selected where flags were not removed properly from numeric values.
 
-## Minor Changes
-
-- Add more detail to DESCRIPTION regarding flags found in original GSOD data.
+## Minor Changes in 0.1.4
 
 --------------------------------------------------------------------------------
 
@@ -389,7 +410,8 @@ rather than the conversion of the existing
 
 - Bug fix for country selection. Some countries did not return proper ISO code.
 
-## Minor changes
+ - Bug fix where WDSP was mistyped as WDPS causing the creation of a new column,
+  rather than the conversion of the existing
 
 - Use write.csv, not readr::write_csv due to issue converting double to string:
 <https://github.com/hadley/readr/issues/387>
@@ -398,7 +420,7 @@ rather than the conversion of the existing
 
 # GSODR 0.1.1 (Release date: 2016-04-21)
 
-## Major changes
+## Major changes in 0.1.1
 
 - Now available on CRAN
 

@@ -1,31 +1,58 @@
 
 ## Test environments  
 
-- OS X 10.11.6 (local install), R version 3.3.3 (2017-03-06)
-- Ubuntu 14.04.5 LTS (on travis-ci), R version 3.3.3 (2017-03-06)
-- Windows (on win-builder), R version 3.3.3 (2017-03-06)
-- Windows (on win-builder), R version 3.4.0 alpha (2017-03-31 r72459)
+- macOS 10.12.5 (local install), R version 3.4.0 (2017-04-21)
 
-## R CMD check results  
+- Ubuntu 14.04.5 LTS (on travis-ci), R version 3.4.0 (2017-04-21)
 
-There were no ERRORs or WARNINGs  
+- Windows (on win-builder), R version 3.4.0 (2017-04-21)
 
-## New minor release  
+- Windows (on win-builder), R Under development (unstable) (2017-06-10 r72776)
+
+## R CMD check results
+
+There were no ERRORs or WARNINGs
+
+## New minor release
 
 This is a new minor release
 
-## Minor changes  
-- This new version supplants v 1.0.2 previously submitted but not yet released on CRAN
-- Correct references to _GSODRdata_ package where incorrectly referred to as _GSODdata_
-- Improved documentation (i.e., spelling corrections and more descriptive)  
-- More descriptive vignette for "GSODR use case: Specified years/stations vignette"
-- Round MAX/MIN temp to one decimal place, not two  
-- Update SRTM elevation data  
-- Update country list data  
-- Fix missing images in README.html on CRAN  
+## Major changes
 
-## Reverse dependencies  
-- There are no reverse dependencies  
+- Data for station locations and unique identifiers is now provided with the
+  package on installation. Previously this was fetched each time from the FTP
+  server.
+
+- The station metadata can now be updated if necessary by using
+ `update_station_list()`, this change overwrites the internal data that were
+  originally distributed with the package. This operation will fetch the latest
+  list of stations and corresponding information from the NCEI FTP server. Any
+  changes will be overwritten when the R package is updated, however, the
+  package update should have the same or newer data included, so this should not
+  be an issue.
+
+- Replace _plyr_ functions with _purrr_; _plyr_ is no longer actively developed
+
+- _plyr_ is no longer an import
+
+- Move description of functions' output to individual vignettes to shorten help
+  file documentation
+
+## Bug fixes
+
+- Fix bugs in the vignettes related to formatting and spelling
+
+- Fix bugs in citation file
+
+- Reformat NEWS.md to be more markdown standards compliant
+
+## Deprecated and defunct
+
+- `get_station_list()` is no longer supported. Instead use the new
+ `update_station_list()` to update the package's internal station database.
+
+## Reverse dependencies
+- There are no reverse dependencies
 
 ## Downstream dependencies
-- There currently are no downstream dependencies for this package  
+- There currently are no downstream dependencies for this package

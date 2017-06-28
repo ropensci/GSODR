@@ -139,7 +139,8 @@ get_GSOD <- function(years = NULL,
   # Validate stations for missing days -----------------------------------------
   if (!is.null(max_missing)) {
     if (is.na(max_missing) | max_missing < 1) {
-      stop("\nThe 'max_missing' parameter must be a positive value larger than 1\n")
+      stop("\nThe 'max_missing' parameter must be a positive",
+           "value larger than 1\n")
     }
     }
   if (!is.null(dsn)) {
@@ -148,7 +149,7 @@ get_GSOD <- function(years = NULL,
   # Load station list
   stations <- isd_history
   stations <- data.table::setDT(stations)
-  
+
   # Validate user entered stations for existence in stations list from NCEI
   purrr::walk(
     .x = station,
@@ -157,10 +158,10 @@ get_GSOD <- function(years = NULL,
     years = years
   )
   country <- .validate_country(country)
-  
+
   # Download files from server -----------------------------------------------
   GSOD_list <- .download_files(ftp_base, station, years, cache_dir)
-  
+
   # Subset GSOD_list for agroclimatology only stations -----------------------
   if (isTRUE(agroclimatology)) {
     GSOD_list <-
@@ -184,9 +185,9 @@ get_GSOD <- function(years = NULL,
     .f = .process_gz,
     stations = stations
   )  %>%
-    dplyr::bind_rows() %>% 
+    dplyr::bind_rows() %>%
     as.data.frame()
-  
+
   # Write files to disk --------------------------------------------------------
   if (isTRUE(CSV)) {
     message("\nWriting CSV file to disk.\n")
@@ -200,7 +201,7 @@ get_GSOD <- function(years = NULL,
     sp::coordinates(GSOD_XY) <- ~ LON + LAT
     sp::proj4string(GSOD_XY) <-
       sp::CRS("+proj=longlat +datum=WGS84")
-    
+
     # If the filename specified exists, remove it and create new
     if (file.exists(path.expand(outfile))) {
       file.remove(outfile)
@@ -312,20 +313,23 @@ get_GSOD <- function(years = NULL,
           c <- which(country == country_list$iso3c)
           country <- country_list[[c, 1]]
         } else {
-          stop("\nPlease provide a valid name or 2 or 3 letter ISO country code")
+          stop("\nPlease provide a valid name or 2 or 3",
+               "letter ISO country code\n")
         }
       } else if (nc == 2) {
         if (country %in% country_list$iso2c) {
           c <- which(country == country_list$iso2c)
           country <- country_list[[c, 1]]
         } else {
-          stop("\nPlease provide a valid name or 2 or 3 letter ISO country code")
+          stop("\nPlease provide a valid name or 2 or 3",
+              "\nletter ISO country code")
         }
       } else if (country %in% country_list$COUNTRY_NAME) {
         c <- which(country == country_list$COUNTRY_NAME)
         country <- country_list[[c, 1]]
       } else {
-        stop("\nPlease provide a valid name or 2 or 3 letter ISO country code")
+        stop("\nPlease provide a valid name or 2 or 3",
+             "letter ISO country code\n")
       }
     }
   }
@@ -350,7 +354,7 @@ get_GSOD <- function(years = NULL,
                                        GSOD_list,
                                        NA))
   }
-# Function to download files from server --------------------------------------
+# Function to download files from server ---------------------------------------
 #' @noRd
 .download_files <-
   function(ftp_base, station, years, cache_dir) {
@@ -378,7 +382,7 @@ get_GSOD <- function(years = NULL,
     if (!is.null(station)) {
       # The remainder of this function is from @hrbrmstr in response to my
       # SO question: http://stackoverflow.com/questions/40715370/
-      message("\nChecking requested station file for availability on server.")
+      message("\nChecking requested station file for availability on server\n")
       MAX_RETRIES <- 6
       dir_list_handle <-
         curl::new_handle(
@@ -398,7 +402,7 @@ get_GSOD <- function(years = NULL,
             if (!is.null(res$result))
               return(res$result)
             if (i == MAX_RETRIES) {
-              stop("Too many retries...server may be under load")
+              stop("\nToo many retries...server may be under load\n")
             }
           }
         }
@@ -468,8 +472,10 @@ get_GSOD <- function(years = NULL,
            years) {
     utils::data("country_list", package = "GSODR")
     country_list <- country_list
-    country_FIPS <- unlist(as.character(stats::na.omit
-                                        (country_list[country_list$FIPS == country, ][[1]]),
+    country_FIPS <- unlist(
+      as.character(
+        stats::na.omit
+                  (country_list[country_list$FIPS == country, ][[1]]),
                                         use.names = FALSE))
     station_list <- stations[stations$CTRY == country_FIPS, ]$STNID
     station_list <- do.call(paste0,

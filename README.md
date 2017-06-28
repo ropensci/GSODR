@@ -6,8 +6,6 @@ status](https://ci.appveyor.com/api/projects/status/s09kh2nj59o35ob1/branch/mast
 [![codecov](https://codecov.io/gh/ropensci/GSODR/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/GSODR)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.439850.svg)](https://doi.org/10.5281/zenodo.439850)
 [![JOSS](http://joss.theoj.org/papers/10.21105/joss.00177/status.svg)](http://joss.theoj.org/papers/14021f4e4931cdaab4ea41be27df2df6)
-[![Research software
-impact](http://depsy.org/api/package/cran/GSODR/badge.svg)](http://depsy.org/package/r/GSODR)
 
 # _GSODR_: Global Summary Daily Weather Data in R
 
@@ -230,4 +228,4 @@ Soria-Auza, R. W., _et al_. (2016) Climatologies at high resolution for
 the Earth land surface areas. _arXiv preprint_ **arXiv:1607.00217**.
 (<http://chelsa-climate.org/>)
 
-[![ropensci\_footer](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org)
+[![ropensci](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org)
