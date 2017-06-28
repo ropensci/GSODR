@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,34 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../articles/GSODR.html">Get Started</a>
+</li>
+<li>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/GSODR_output_fields.html">GSODR Output Fields</a>
+    </li>
+    <li>
+      <a href="../articles/Specified_stations_for_a_range_of_years.html">GSODR use case: Specified years/stations vignette</a>
+    </li>
+    <li>
+      <a href="../articles/Working_with_spatial_and_climate_data.html">Working with spatial and climate data from GSODR</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../news/index.html">News</a>
@@ -94,7 +119,7 @@ the GSODR package.  They may eventually be completely removed.</p>
     
     <table><tr><td>
   <code>get_station_list</code> </td>
-</tr><tr><td> now superceded by <code><a href='update_station_list.html'>update_station_list</a></code></td>
+<td> now superceded by <code><a href='update_station_list.html'>update_station_list</a></code></td>
 </tr></table><p><code>get_station_list</code> was used to download the list of weather stations
 and the corresponding metadata. The station list is no longer fetched 
 on-the-fly. Instead a version is supplied with the GSODR package upon

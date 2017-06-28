@@ -29,10 +29,34 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../articles/GSODR.html">Get Started</a>
+</li>
+<li>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="../articles/GSODR_output_fields.html">GSODR Output Fields</a>
+    </li>
+    <li>
+      <a href="../articles/Specified_stations_for_a_range_of_years.html">GSODR use case: Specified years/stations vignette</a>
+    </li>
+    <li>
+      <a href="../articles/Working_with_spatial_and_climate_data.html">Working with spatial and climate data from GSODR</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../news/index.html">News</a>
@@ -60,7 +84,7 @@
       <h1>GSODR</h1>
                         <h4 class="author">Adam H Sparks</h4>
             
-            <h4 class="date">2017-06-11</h4>
+            <h4 class="date">2017-06-28</h4>
           </div>
 
     
@@ -96,12 +120,12 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
 <span class="kw">library</span>(GSODR)
 
-utils<span class="op">::</span><span class="kw">data</span>(<span class="st">"isd_history"</span>, <span class="dt">package =</span> <span class="st">"GSODR"</span>)
+utils<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"isd_history"</span>, <span class="dt">package =</span> <span class="st">"GSODR"</span>)
 GSOD_stations &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(isd_history)
 
-<span class="kw">ggplot</span>(GSOD_stations, <span class="kw">aes</span>(<span class="dt">x =</span> LON, <span class="dt">y =</span> LAT)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(GSOD_stations, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> LON, <span class="dt">y =</span> LAT)) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>(<span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_bw</a></span>()</code></pre></div>
 <p><img src="GSODR_files/figure-html/unnamed-chunk-1-1.png" width="672"></p>
 </div>
 <div id="find-stations-in-australia" class="section level2">
@@ -110,11 +134,11 @@ GSOD_stations &lt;-<span class="st"> </span><span class="kw">as.data.frame</span
 <p><em>GSODR</em> provides lists of weather station locations and elevation values. Using <a href="https://CRAN.R-project.org/package=dplyr"><em>dplyr</em></a>, we can find all the stations in Australia.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
 <span class="kw">data</span>(country_list)
-station_locations &lt;-<span class="st"> </span><span class="kw">left_join</span>(GSOD_stations, country_list,
+station_locations &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(GSOD_stations, country_list,
                                <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">"CTRY"</span> =<span class="st"> "FIPS"</span>))
 
 <span class="co"># create data.frame for Australia only</span>
-Oz &lt;-<span class="st"> </span><span class="kw">filter</span>(station_locations, COUNTRY_NAME <span class="op">==</span><span class="st"> "AUSTRALIA"</span>)
+Oz &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(station_locations, COUNTRY_NAME <span class="op">==</span><span class="st"> "AUSTRALIA"</span>)
 <span class="kw">head</span>(Oz)
 
 <span class="co">#&gt;     USAF  WBAN                  STN_NAME CTRY STATE CALL     LAT     LON</span>
@@ -139,7 +163,7 @@ Oz &lt;-<span class="st"> </span><span class="kw">filter</span>(station_location
 <span class="co">#&gt; 5   AUS</span>
 <span class="co">#&gt; 6   AUS</span>
 
-<span class="kw">filter</span>(Oz, STN_NAME <span class="op">==</span><span class="st"> "TOOWOOMBA"</span>)
+<span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(Oz, STN_NAME <span class="op">==</span><span class="st"> "TOOWOOMBA"</span>)
 <span class="co">#&gt;     USAF  WBAN  STN_NAME CTRY STATE CALL     LAT     LON ELEV_M    </span><span class="re">BEGIN</span>
 <span class="co">#&gt; 1 945510 99999 TOOWOOMBA   AS  &lt;NA&gt; &lt;NA&gt; -27.583 151.933    676 19561231</span>
 <span class="co">#&gt;        </span><span class="re">END</span><span class="co">        STNID ELEV_M_SRTM_90m COUNTRY_NAME iso2c iso3c</span>
@@ -193,15 +217,15 @@ tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GS
 tbar_temps &lt;-<span class="st"> </span>tbar[, <span class="kw">c</span>(<span class="dv">13</span>, <span class="dv">18</span>, <span class="dv">32</span>, <span class="dv">34</span>)]
 
 <span class="co"># Gather the data from wide to long</span>
-tbar_temps &lt;-<span class="st"> </span><span class="kw">gather</span>(tbar_temps, Measurement, <span class="dt">gather_cols =</span> TEMP<span class="op">:</span>MIN)
+tbar_temps &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/gather">gather</a></span>(tbar_temps, Measurement, <span class="dt">gather_cols =</span> TEMP<span class="op">:</span>MIN)
 
-<span class="kw">ggplot</span>(<span class="dt">data =</span> tbar_temps, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">ymd</span>(YEARMODA), <span class="dt">y =</span> value,
+<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(<span class="dt">data =</span> tbar_temps, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/lubridate/topics/ymd">ymd</a></span>(YEARMODA), <span class="dt">y =</span> value,
                               <span class="dt">colour =</span> Measurement)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">type =</span> <span class="st">"qual"</span>, <span class="dt">na.value =</span> <span class="st">"black"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">name =</span> <span class="st">"Temperature"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_x_date</span>(<span class="dt">name =</span> <span class="st">"Date"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_brewer">scale_color_brewer</a></span>(<span class="dt">type =</span> <span class="st">"qual"</span>, <span class="dt">na.value =</span> <span class="st">"black"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>(<span class="dt">name =</span> <span class="st">"Temperature"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_date">scale_x_date</a></span>(<span class="dt">name =</span> <span class="st">"Date"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_bw</a></span>()</code></pre></div>
 <div class="figure">
 <img src="figure/Toowoomba_temperature.png" alt="GSOD Toowoomba Temperatures"><p class="caption">GSOD Toowoomba Temperatures</p>
 </div>
@@ -236,7 +260,7 @@ tbar_temps &lt;-<span class="st"> </span><span class="kw">gather</span>(tbar_tem
 <span class="co">#&gt;  Path to PROJ.4 shared files: (autodetected)</span>
 <span class="co">#&gt;  Linking to sp version: 1.2-3 </span>
 
-AUS_stations &lt;-<span class="st"> </span><span class="kw">readOGR</span>(<span class="dt">dsn =</span> <span class="kw">path.expand</span>(<span class="st">"~/AUS.gpkg"</span>), <span class="dt">layer =</span> <span class="st">"GSOD"</span>)
+AUS_stations &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/rgdal/topics/readOGR">readOGR</a></span>(<span class="dt">dsn =</span> <span class="kw">path.expand</span>(<span class="st">"~/AUS.gpkg"</span>), <span class="dt">layer =</span> <span class="st">"GSOD"</span>)
 <span class="co">#&gt; OGR data source with driver: GPKG </span>
 <span class="co">#&gt; Source: "/Users/asparks/AUS-2015.gpkg", layer: "GSOD"</span>
 <span class="co">#&gt; with 165168 features</span>
@@ -248,7 +272,7 @@ AUS_stations &lt;-<span class="st"> </span><span class="kw">readOGR</span>(<span
 <span class="co">#&gt; [1] "sp"</span></code></pre></div>
 <p>Since GeoPackage files are formatted as SQLite databases you can use the existing R tools for SQLite files <a href="https://jsta.github.io/2016/07/14/geopackage-r.html">(J. Stachelek 2016)</a>. One easy way is using <em>dplyr</em>, which we’ve already used to filter the stations.</p>
 <p>This option is much faster to load since it does not load the geometry.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">AUS_sqlite &lt;-<span class="st"> </span><span class="kw">tbl</span>(<span class="kw">src_sqlite</span>(<span class="kw">path.expand</span>(<span class="st">"~/AUS.gpkg"</span>)), <span class="st">"GSOD"</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">AUS_sqlite &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="kw"><a href="http://dplyr.tidyverse.org/reference/src_dbi.html">src_sqlite</a></span>(<span class="kw">path.expand</span>(<span class="st">"~/AUS.gpkg"</span>)), <span class="st">"GSOD"</span>)
 <span class="kw">class</span>(AUS_sqlite)
 <span class="co">#&gt; [1] "tbl_sqlite" "tbl_sql"    "tbl_lazy"   "tbl"       </span>
 
@@ -297,7 +321,7 @@ x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reformat_
 <a href="#additional-climate-data" class="anchor"></a>Additional Climate Data</h1>
 <p>Additional climate data, <a href="https://github.com/adamhsparks/GSODRdata"><em>GSODRdata</em></a>, formatted for use with GSOD data provided by <em>GSODR</em> are available as an R package installable through GitHub due to the package size, 5.1Mb, being too large for CRAN.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages("devtools")</span>
-devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"adamhsparks/GSODRdata"</span>)
+devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"adamhsparks/GSODRdata"</span>)
 <span class="kw">library</span>(<span class="st">"GSODRdata"</span>)</code></pre></div>
 </div>
 <div id="notes" class="section level1">
@@ -327,14 +351,15 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
         <div id="tocnav">
-      <h2>Contents</h2>
+      <h2 class="hasAnchor">
+<a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#introduction">Introduction</a></li>
       <li>
 <a href="#retrieving-and-reformatting-data-in-r">Retrieving and Reformatting Data in R</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#plot-global-station-locations">Plot Global Station Locations</a></li>
       <li><a href="#find-stations-in-australia">Find Stations in Australia</a></li>
-      <li><a href="#using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and-year">Using the <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> Function in <em>GSODR</em> to Download a Single Station and Year</a></li>
+      <li><a href="#using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and-year">Using the <code><a href="--/reference/get_GSOD-html">get_GSOD()</a></code> Function in <em>GSODR</em> to Download a Single Station and Year</a></li>
       <li><a href="#find-stations-within-a-specified-distance-of-a-point">Find Stations Within a Specified Distance of a Point</a></li>
       <li><a href="#plot-maximum-and-miniumum-temperature-values">Plot Maximum and Miniumum Temperature Values</a></li>
       <li><a href="#creating-spatial-files">Creating Spatial Files</a></li>
@@ -350,7 +375,7 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
       <li>
 <a href="#notes">Notes</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#elevation-values">Elevation Values</a></li>
-      <li><a href="#wmo-resolution-40.-noaa-policy">WMO Resolution 40. NOAA Policy</a></li>
+      <li><a href="#wmo-resolution-40--noaa-policy">WMO Resolution 40. NOAA Policy</a></li>
       </ul>
 </li>
       <li><a href="#references">References</a></li>
