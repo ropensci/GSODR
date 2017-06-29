@@ -3,7 +3,7 @@
 context("nearest_stations")
 
 test_that("nearest stations returns character value station IDs", {
-  
+
   n <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 100)
   expect_length(n, 15)
   expect_type(n, "character")
@@ -25,5 +25,3 @@ test_that("nearest stations returns character value station IDs", {
   rm(n)
 
 })
-
-

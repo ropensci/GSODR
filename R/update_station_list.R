@@ -51,17 +51,17 @@ update_station_list <- function() {
   new_isd_history[new_isd_history == -999] <- NA
   new_isd_history <-
     new_isd_history[new_isd_history$LAT != 0 &
-                      new_isd_history$LON != 0,]
+                      new_isd_history$LON != 0, ]
   new_isd_history <-
     new_isd_history[new_isd_history$LAT > -90 &
-                      new_isd_history$LAT < 90,]
+                      new_isd_history$LAT < 90, ]
   new_isd_history <-
     new_isd_history[new_isd_history$LON > -180 &
-                      new_isd_history$LON < 180,]
+                      new_isd_history$LON < 180, ]
   new_isd_history$STNID <-
     as.character(paste(new_isd_history$USAF, new_isd_history$WBAN, sep = "-"))
-  new_isd_history <- new_isd_history[!is.na(new_isd_history$LAT),]
-  new_isd_history <- new_isd_history[!is.na(new_isd_history$LON),]
+  new_isd_history <- new_isd_history[!is.na(new_isd_history$LAT), ]
+  new_isd_history <- new_isd_history[!is.na(new_isd_history$LON), ]
 
   # left join the old and new data
 

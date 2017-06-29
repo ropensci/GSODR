@@ -27,7 +27,7 @@ context("get_GSOD")
                                        years)
               expect_length(RP_list, 53)
 
-              # Check that .process_gz returns a properly formated data table-----------------
+              # Check that .process_gz returns a properly formated data table---
               gz_file <- GSOD_list[[10]]
               gz_out <- .process_gz(gz_file, stations)
 
@@ -85,4 +85,3 @@ context("get_GSOD")
               expect_is(gz_out$ES, "numeric")
               expect_is(gz_out$RH, "numeric")
               })
-  

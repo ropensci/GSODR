@@ -22,6 +22,5 @@ context("update_station_list")
     expect_is(stations$END, "numeric")
     expect_is(stations$STNID, "character")
     expect_is(stations$ELEV_M_SRTM_90m, "numeric")
-    
     expect_equal(options("timeout")[[1]], 60)
   })
