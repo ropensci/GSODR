@@ -29,7 +29,7 @@ update_station_list <- function() {
   old_isd_history <- isd_history
 
   # fetch new isd_history from NCEI server
-  stations <- readr::read_csv(
+  new_isd_history <- readr::read_csv(
     "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
     col_types = "ccccccddddd",
     col_names = c(
@@ -67,7 +67,7 @@ update_station_list <- function() {
 
   isd_history <- dplyr::left_join(
     old_isd_history,
-    stations,
+    new_isd_history,
     by = c(
       "USAF" = "USAF",
       "WBAN" = "WBAN",

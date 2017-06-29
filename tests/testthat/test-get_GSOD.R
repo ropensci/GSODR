@@ -158,15 +158,11 @@ test_that("missing days check allows stations with permissible days missing,
 
 # Check that max_missing only accepts positive values --------------------------
 test_that("The 'max_missing' parameter will not accept NA values", {
-
-  expect_error(get_GSOD(years = 2010, max_missing = NA),
-               "\nThe 'max_missing' parameter must be a positive value larger than 1\n")
+  expect_error(get_GSOD(years = 2010, max_missing = NA))
 })
 
 test_that("The 'max_missing' parameter will not accept values < 1", {
-
-  expect_error(get_GSOD(years = 2010, max_missing = 0.1),
-               "\nThe 'max_missing' parameter must be a positive value larger than 1\n")
+  expect_error(get_GSOD(years = 2010, max_missing = 0.1))
 })
 
 # Check validate country returns a two letter code -----------------------------
@@ -190,22 +186,19 @@ test_that("Check validate country returns a two letter code", {
 test_that("Check validate country returns an error on invalid entry when
           mispelled", {
             country <- "Philipines"
-            expect_error(.validate_country(country),
-                         "\nPlease provide a valid name or 2 or 3 letter ISO country code")
+            expect_error(.validate_country(country))
             })
 
 test_that("Check validate country returns an error on invalid entry when two
           two characters are used that are not in the list", {
             country <- "RP"
-            expect_error(.validate_country(country),
-                         "\nPlease provide a valid name or 2 or 3 letter ISO country code")
+            expect_error(.validate_country(country))
             })
 
 test_that("Check validate country returns an error on invalid entry when two
           three characters are used that are not in the list", {
             country <- "RPS"
-            expect_error(.validate_country(country),
-                         "\nPlease provide a valid name or 2 or 3 letter ISO country code")
+            expect_error(.validate_country(country))
             })
 
 test_that("Timeout options are reset on get_GSOD() exit", {
