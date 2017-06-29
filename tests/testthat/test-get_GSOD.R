@@ -168,8 +168,8 @@ test_that("The 'max_missing' parameter will not accept values < 1", {
 # Check validate country returns a two letter code -----------------------------
 test_that("Check validate country returns a two letter code", {
   country <- "Philippines"
-  
-  
+
+
   Philippines <- .validate_country(country)
   expect_match(Philippines, "RP")
 
