@@ -187,7 +187,7 @@ test_that("Check validate country returns a two letter code", {
   # Load country list
   # CRAN NOTE avoidance
   country_list <- NULL
-  load(system.file("extdata", "country_list.Rda", package = "GSODR"))
+  load(system.file("extdata", "country_list.rda", package = "GSODR"))
   
   country <- "Philippines"
   Philippines <- .validate_country(country, country_list)
@@ -205,23 +205,29 @@ test_that("Check validate country returns a two letter code", {
 # Check validate country returns an error on invalid entry----------------------
 test_that("Check validate country returns an error on invalid entry when
           mispelled", {
+            country_list <- NULL
+            load(system.file("extdata", "country_list.rda", package = "GSODR"))
             country <- "Philipines"
-            expect_error(.validate_country(country))
+            expect_error(.validate_country(country, country_list))
           })
 
 test_that(
   "Check validate country returns an error on invalid entry when two
   two characters are used that are not in the list", {
+    country_list <- NULL
+    load(system.file("extdata", "country_list.rda", package = "GSODR"))
     country <- "RP"
-    expect_error(.validate_country(country))
+    expect_error(.validate_country(country, country_list))
   }
 )
 
 test_that(
   "Check validate country returns an error on invalid entry when two
   three characters are used that are not in the list", {
+    country_list <- NULL
+    load(system.file("extdata", "country_list.rda", package = "GSODR"))
     country <- "RPS"
-    expect_error(.validate_country(country))
+    expect_error(.validate_country(country, country_list))
   }
 )
 

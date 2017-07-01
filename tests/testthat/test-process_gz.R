@@ -18,7 +18,7 @@ context("get_GSOD")
               stations <- data.table::setDT(isd_history)
               
               load(system.file("extdata",
-                               "country_list.Rda",
+                               "country_list.rda",
                                package = "GSODR"))
 
               GSOD_list <- .download_files(ftp_base,
