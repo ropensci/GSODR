@@ -31,9 +31,7 @@
 #' silently fail and move on to existing files for download and cleaning from
 #' the FTP server.
 #' @param country Optional. Specify a country for which to retrieve weather
-#' data; full name or ISO codes can be used. See
-#' \code{\link{country_list}} for a full list of country names and ISO
-#' codes available.
+#' data; full name or ISO codes can be used.
 #' @param CSV Optional. Logical. If set to TRUE, create a comma separated value
 #' (CSV) file and save it locally in a user specified location, if \code{dsn} is
 #' not specified by the user, defaults to the current working directory.
@@ -150,6 +148,11 @@ get_GSOD <- function(years = NULL,
   stations <- isd_history
   stations <- data.table::setDT(stations)
 
+  # Load country list
+  # CRAN NOTE avoidance
+  country_list <- NULL
+  load(system.file("extdata", "country_list.Rda", package = "GSODR"))
+  
   # Validate user entered stations for existence in stations list from NCEI
   purrr::walk(
     .x = station,
@@ -157,7 +160,7 @@ get_GSOD <- function(years = NULL,
     stations = stations,
     years = years
   )
-  country <- .validate_country(country)
+  country <- .validate_country(country, country_list)
 
   # Download files from server -----------------------------------------------
   GSOD_list <- .download_files(ftp_base, station, years, cache_dir)
@@ -170,7 +173,12 @@ get_GSOD <- function(years = NULL,
   # Subset GSOD_list for specified country -------------------------------------
   if (!is.null(country)) {
     GSOD_list <-
-      .country_list(country, GSOD_list, stations, cache_dir, years)
+      .subset_country_list(country,
+                           country_list,
+                           GSOD_list,
+                           stations,
+                           cache_dir,
+                           years)
   }
   # Validate stations for missing days -----------------------------------------
   if (!is.null(max_missing)) {
@@ -302,9 +310,7 @@ get_GSOD <- function(years = NULL,
 
 #' @noRd
 .validate_country <-
-  function(country) {
-    utils::data("country_list", package = "GSODR")
-    country_list <- country_list
+  function(country, country_list) {
     if (!is.null(country)) {
       country <- toupper(trimws(country[1]))
       nc <- nchar(country)
@@ -464,14 +470,13 @@ get_GSOD <- function(years = NULL,
     return(GSOD_list)
   }
 # Specified country: subset list of stations to process ------------------------
-.country_list <-
+.subset_country_list <-
   function(country,
+           country_list,
            GSOD_list,
            stations,
            cache_dir,
            years) {
-    utils::data("country_list", package = "GSODR")
-    country_list <- country_list
     country_FIPS <- unlist(
       as.character(
         stats::na.omit

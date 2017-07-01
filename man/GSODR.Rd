@@ -72,9 +72,6 @@ metadata.
 the "isd_history.csv" file to help make some processes faster with
 elevation data derived from SRTM90m data also included in these data
 
-\code{\link{country_list}} GSODR provides a cleaned list of the
-countries which are represented in the GSOD data set
-
 \strong{Useful links:}
 \itemize{
 \item{\url{https://github.com/ropensci/GSODR}}

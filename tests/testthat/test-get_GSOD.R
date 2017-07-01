@@ -184,17 +184,21 @@ test_that("The 'max_missing' parameter will not accept values < 1", {
 
 # Check validate country returns a two letter code -----------------------------
 test_that("Check validate country returns a two letter code", {
+  # Load country list
+  # CRAN NOTE avoidance
+  country_list <- NULL
+  load(system.file("extdata", "country_list.Rda", package = "GSODR"))
+  
   country <- "Philippines"
-
-  Philippines <- .validate_country(country)
+  Philippines <- .validate_country(country, country_list)
   expect_match(Philippines, "RP")
 
   country <- "PHL"
-  PHL <- .validate_country(country)
+  PHL <- .validate_country(country, country_list)
   expect_match(PHL, "RP")
 
   country <- "PH"
-  PH <- .validate_country(country)
+  PH <- .validate_country(country, country_list)
   expect_match(PH, "RP")
 })
 

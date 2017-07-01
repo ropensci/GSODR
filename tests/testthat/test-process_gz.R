@@ -16,15 +16,28 @@ context("get_GSOD")
 
               utils::data("isd_history", package = "GSODR")
               stations <- data.table::setDT(isd_history)
+              
+              load(system.file("extdata",
+                               "country_list.Rda",
+                               package = "GSODR"))
 
-              GSOD_list <- .download_files(ftp_base, station, years, cache_dir)
+              GSOD_list <- .download_files(ftp_base,
+                                           station,
+                                           years,
+                                           cache_dir)
 
-              agro_list <- .agroclimatology_list(GSOD_list, stations, cache_dir,
+              agro_list <- .agroclimatology_list(GSOD_list,
+                                                 stations,
+                                                 cache_dir,
                                                  years)
               expect_length(agro_list, 11302)
 
-              RP_list <- .country_list(country, GSOD_list, stations, cache_dir,
-                                       years)
+              RP_list <- .subset_country_list(country,
+                                              country_list,
+                                              GSOD_list,
+                                              stations,
+                                              cache_dir,
+                                              years)
               expect_length(RP_list, 53)
 
               # Check that .process_gz returns a properly formated data table---

@@ -7,7 +7,6 @@
       utils::globalVariables(c("."))
 
       utils::data(
-        "country_list",
         "isd_history",
         package = pkgname,
         envir = parent.env(environment())

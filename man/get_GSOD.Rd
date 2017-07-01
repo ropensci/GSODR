@@ -22,9 +22,7 @@ silently fail and move on to existing files for download and cleaning from
 the FTP server.}
 
 \item{country}{Optional. Specify a country for which to retrieve weather
-data; full name or ISO codes can be used. See
-\code{\link{country_list}} for a full list of country names and ISO
-codes available.}
+data; full name or ISO codes can be used.}
 
 \item{dsn}{Optional. Local file path to write file out to. Must be specified
 if CSV or GPKG parameters are selected. If unspecified and \code{CSV} or
