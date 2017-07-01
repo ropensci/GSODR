@@ -233,7 +233,6 @@ test_that(
 
 test_that("Timeout options are reset on get_GSOD() exit", {
   skip_on_cran()
-  t <- get_GSOD(years = 2010, station = "955510-99999")
+  get_GSOD(years = 2010, station = "955510-99999")
   expect_equal(options("timeout")[[1]], 60)
-  rm(t)
 })
