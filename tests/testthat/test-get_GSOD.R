@@ -15,28 +15,12 @@ test_that(".validate_years handles valid years", {
   expect_error(.validate_years(years = 2016), regexp = NA)
 })
 
-# Check that .download_files works properly ------------------------------------
-test_that(".download_files works properly", {
-  skip_on_cran()
-  ftp_base <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/%s/"
-  station <- NULL
-  years <- 2010
-  cache_dir <- tempdir()
-  do.call(file.remove, list(list.files(
-    tempdir(),
-    pattern = ".gz$",
-    full.names = TRUE
-  )))
-  GSOD_list <- .download_files(ftp_base, station, years, cache_dir)
-  expect_length(GSOD_list, 11430)
-  expect_type(GSOD_list, "character")
-})
-
 # Check that invalid stations are handled --------------------------------------
 test_that("invalid stations are handled", {
   utils::data("isd_history", package = "GSODR")
   stations <- isd_history
-  expect_error(.validate_station(years = 2015, station = "aaa-bbbbbb",
+  expect_error(.validate_station(years = 2015,
+                                 station = "aaa-bbbbbb",
                                  stations))
 })
 
@@ -44,7 +28,8 @@ test_that("invalid stations are handled", {
 test_that("Station validations are properly handled for years available", {
   utils::data("isd_history", package = "GSODR")
   stations <- isd_history
-  expect_message(.validate_station(station = "949999-00170", stations,
+  expect_message(.validate_station(station = "949999-00170",
+                                   stations,
                                    years = 2010))
 })
 
@@ -136,7 +121,8 @@ test_that("missing days check allows stations with permissible days missing,
                                                            GSOD_list)
             }
             expect_length(GSOD_list, 2)
-            expect_match(basename(GSOD_list_filtered), "just_right_2015.csv.gz")
+            expect_match(basename(GSOD_list_filtered),
+                         "just_right_2015.csv.gz")
             unlink(td)
           })
 
@@ -233,6 +219,5 @@ test_that(
 
 test_that("Timeout options are reset on get_GSOD() exit", {
   skip_on_cran()
-  get_GSOD(years = 2010, station = "955510-99999")
-  expect_equal(options("timeout")[[1]], 60)
+
 })
