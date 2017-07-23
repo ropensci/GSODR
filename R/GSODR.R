@@ -31,7 +31,7 @@
 #'
 #' @name GSODR
 #'
-#' @author Adam Sparks, Tomislav Hengle and Andrew Nelson
+#' @author Adam Sparks, Tomislav Hengl and Andrew Nelson
 #'
 #' @seealso
 #'
