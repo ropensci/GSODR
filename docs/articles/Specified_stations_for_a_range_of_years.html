@@ -190,7 +190,7 @@ centroid &lt;-<span class="st"> </span>rgeos<span class="op">::</span><span clas
 <div class="figure">
 <img src="figure/Central%20Luzon2.png" alt="Centre of survey area in Central Luzon with provincial polygons dissovled"><p class="caption">Centre of survey area in Central Luzon with provincial polygons dissovled</p>
 </div>
-<p>Next, make a list of stations that are within this area. First we need to fetch the station medadata, “isd-history.csv” from the FTP server and then check which stations fall within a 100km radius of the centre of the provinces we’re interested in.</p>
+<p>Next, make a list of stations that are within this area. First we need to fetch the station metadata, “isd-history.csv” from the FTP server and then check which stations fall within a 100km radius of the centre of the provinces we’re interested in.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(GSODR)
 <span class="kw">library</span>(readr)
 <span class="co"># Fetch station list from NCEI</span>
@@ -226,7 +226,7 @@ loop_stations &lt;-<span class="st"> </span>loop_stations[loop_stations<span cla
 ## 8 984320 99999          AMBULONG 14.083 121.050   11.0 19490205 20170324
 ## 9 984330 99999             TANAY 14.583 121.367  651.0 19490101 20170324
 ## # ... with 1 more variables: STNID &lt;chr&gt;</code></pre></div>
-<p>These are all of the stations that are availble within 100km of the centroid of this area and the years for which data are available.</p>
+<p>These are all of the stations that are available within 100km of the centroid of this area and the years for which data are available.</p>
 </div>
 <div id="using-get_gsod-to-fetch-the-requested-station-files" class="section level3">
 <h3 class="hasAnchor">

@@ -18,7 +18,7 @@ when weather observations begin and end.  Stations with invalid latitude and
 longitude values will not be included.
 }
 \details{
-Care should be taken when using this function if reproduciblity is necessary
+Care should be taken when using this function if reproducibility is necessary
 as different machines with the same version of \code{GSODR} can end up with
 different versions of the isd_history.csv file internally.
 

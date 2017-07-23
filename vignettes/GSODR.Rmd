@@ -303,7 +303,7 @@ make the process of querying for weather data faster. This database is created
 and packaged with _GSODR_ for distribution and is updated with new releases.
 Users have the option of updating these databases after installing _GSODR_.
 While this option gives the users the ability to keep the database up-to-date
-and gives _GSODR's_ authors flexibility in maintaning it, this also means that
+and gives _GSODR's_ authors flexibility in maintaining it, this also means that
 reproducibility may be affected since the same version of _GSODR_ may have
 different databases on different machines. If reproducibility is necessary,
 care should be taken to ensure that the version of the databases is the same
