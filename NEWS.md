@@ -1,4 +1,17 @@
 
+# GSODR 1.0.4
+
+## Major changes
+
+- Data distributed with GSODR are now internal to the package and not externally
+exposed to the user
+
+- Vignettes have been updated and improved with an improved order of information
+presented and some have been combined for easier use
+
+## Minor changes
+
+- Clean up in code via linting
 
 # GSODR 1.0.3
 

@@ -31,6 +31,8 @@
 nearest_stations <- function(LAT, LON, distance) {
   # load current local copy of isd_history
 
+  load(system.file("extdata", "isd_history.rda", package = "GSODR"))
+
   isd_history <- as.data.frame(isd_history)
 
   dists <- fields::rdist.earth(as.matrix(isd_history[c("LAT", "LON")]),

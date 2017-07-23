@@ -14,9 +14,9 @@ context("get_GSOD")
               cache_dir <- tempdir()
               ftp_base <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/%s/"
 
-              utils::data("isd_history", package = "GSODR")
+              load(system.file("extdata", "isd_history.rda", package = "GSODR"))
               stations <- data.table::setDT(isd_history)
-              
+
               load(system.file("extdata",
                                "country_list.rda",
                                package = "GSODR"))
@@ -30,7 +30,7 @@ context("get_GSOD")
                                                  stations,
                                                  cache_dir,
                                                  years)
-              expect_length(agro_list, 11302)
+              expect_length(agro_list, 11304)
 
               RP_list <- .subset_country_list(country,
                                               country_list,
@@ -98,3 +98,4 @@ context("get_GSOD")
               expect_is(gz_out$ES, "numeric")
               expect_is(gz_out$RH, "numeric")
               })
+

@@ -50,10 +50,6 @@
 #' NCEI FTP server updates the package's internal database of stations and their
 #' metadata.
 #'
-#' \code{\link{isd_history}} GSDOR provides a cleaned, local copy of
-#' the "isd_history.csv" file to help make some processes faster with
-#' elevation data derived from SRTM90m data also included in these data
-#'
 #' \strong{Useful links:}
 #' \itemize{
 #' \item{\url{https://github.com/ropensci/GSODR}}

@@ -17,7 +17,7 @@ test_that(".validate_years handles valid years", {
 
 # Check that invalid stations are handled --------------------------------------
 test_that("invalid stations are handled", {
-  utils::data("isd_history", package = "GSODR")
+  load(system.file("extdata", "isd_history.rda", package = "GSODR"))
   stations <- isd_history
   expect_error(.validate_station(years = 2015,
                                  station = "aaa-bbbbbb",
@@ -26,7 +26,7 @@ test_that("invalid stations are handled", {
 
 # Check that station validation for years available on server works properly
 test_that("Station validations are properly handled for years available", {
-  utils::data("isd_history", package = "GSODR")
+  load(system.file("extdata", "isd_history.rda", package = "GSODR"))
   stations <- isd_history
   expect_message(.validate_station(station = "949999-00170",
                                    stations,
@@ -34,7 +34,7 @@ test_that("Station validations are properly handled for years available", {
 })
 
 test_that("Station validations are properly handled for years available", {
-  utils::data("isd_history", package = "GSODR")
+  load(system.file("extdata", "isd_history.rda", package = "GSODR"))
   stations <- isd_history
   expect_silent(.validate_station(
     years = 2010,
@@ -174,7 +174,7 @@ test_that("Check validate country returns a two letter code", {
   # CRAN NOTE avoidance
   country_list <- NULL
   load(system.file("extdata", "country_list.rda", package = "GSODR"))
-  
+
   country <- "Philippines"
   Philippines <- .validate_country(country, country_list)
   expect_match(Philippines, "RP")

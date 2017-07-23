@@ -1,11 +1,11 @@
 
 ## Test environments  
 
-- macOS 10.12.5 (local install), R version 3.4.0 (2017-04-21)
+- macOS 10.12.6 (local install), R version 3.4.1 (2017-06-30)
 
-- Ubuntu 14.04.5 LTS (on travis-ci), R version 3.4.0 (2017-04-21)
+- Ubuntu 14.04.5 LTS (on travis-ci), R version 3.4.1 (2017-06-30)
 
-- Windows (on win-builder), R version 3.4.0 (2017-04-21)
+- Windows (on win-builder), R version 3.4.1 (2017-06-30)
 
 - Windows (on win-builder), R Under development (unstable) (2017-06-10 r72776)
 
@@ -38,21 +38,10 @@ This is a new minor release
 - Move description of functions' output to individual vignettes to shorten help
   file documentation
 
-## Bug fixes
-
-- Fix bugs in the vignettes related to formatting and spelling
-
-- Fix bugs in citation file
-
-- Reformat NEWS.md to be more markdown standards compliant
-
-## Deprecated and defunct
-
-- `get_station_list()` is no longer supported. Instead use the new
- `update_station_list()` to update the package's internal station database.
-
 ## Reverse dependencies
+
 - There are no reverse dependencies
 
 ## Downstream dependencies
+
 - There currently are no downstream dependencies for this package

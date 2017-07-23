@@ -5,11 +5,5 @@
     # CRAN Note avoidance
     if (getRversion() >= "2.15.1") {
       utils::globalVariables(c("."))
-
-      utils::data(
-        "isd_history",
-        package = pkgname,
-        envir = parent.env(environment())
-      )
     }
   }

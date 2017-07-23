@@ -89,7 +89,8 @@ All missing values in resulting files are represented as NA regardless of
 which field they occur in.
 
 For a complete list of the fields and desciption of the contents and units,
-please refer to the \code{vignette("GSODR_output_fields", package = "GSODR")}.
+please refer to Appendix 1 in the GSODR vignette,
+\code{vignette("GSODR", package = "GSODR")}.
 
 For more information see the description of the data provided by NCEI,
 \url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.

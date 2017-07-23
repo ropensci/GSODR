@@ -10,7 +10,6 @@
 #'
 #' There is no need to use this unless you know that a station exists in the
 #' GSODR data that is not available in the database distributed with
-#' \code{\link{GSODR}} in the \code{\link{isd_history}} data distributed with
 #' \code{\link{GSODR}}.
 #'
 #' @examples
@@ -26,6 +25,7 @@ update_station_list <- function() {
   options(timeout = 300)
   on.exit(options(timeout = original_timeout))
 
+  load(system.file("extdata", "isd_history.rda", package = "GSODR"))
   old_isd_history <- isd_history
 
   # fetch new isd_history from NCEI server
@@ -87,9 +87,6 @@ update_station_list <- function() {
   isd_history <- data.table::setDT(isd_history)
 
   # overwrite the existing isd_history.rda file on disk
-  pkg <- system.file(package = "GSODR")
-  path <-
-    file.path(file.path(pkg, "data"), "isd_history.rda")
-  save(isd_history, file = path, compress = "bzip2")
-  return(isd_history)
+  fname <- system.file("extdata", "isd_history.rda", package = "GSODR")
+  save(isd_history, file = fname, compress = "bzip2")
 }
