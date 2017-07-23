@@ -1,7 +1,7 @@
 Fetch, clean and correct altitude in GSOD isd\_history.csv Data
 ================
 Adam H. Sparks
-2017-06-28
+2017-07-23
 
 Introduction
 ============
@@ -281,7 +281,7 @@ summary(isd_history)
 ```
 
     ##      USAF               WBAN             STN_NAME        
-    ##  Length:28333       Length:28333       Length:28333      
+    ##  Length:28361       Length:28361       Length:28361      
     ##  Class :character   Class :character   Class :character  
     ##  Mode  :character   Mode  :character   Mode  :character  
     ##                                                          
@@ -289,27 +289,27 @@ summary(isd_history)
     ##                                                          
     ##                                                          
     ##      CTRY              STATE               CALL                LAT        
-    ##  Length:28333       Length:28333       Length:28333       Min.   :-89.00  
-    ##  Class :character   Class :character   Class :character   1st Qu.: 22.48  
-    ##  Mode  :character   Mode  :character   Mode  :character   Median : 39.22  
-    ##                                                           Mean   : 31.13  
+    ##  Length:28361       Length:28361       Length:28361       Min.   :-89.00  
+    ##  Class :character   Class :character   Class :character   1st Qu.: 22.49  
+    ##  Mode  :character   Mode  :character   Mode  :character   Median : 39.24  
+    ##                                                           Mean   : 31.14  
     ##                                                           3rd Qu.: 49.83  
     ##                                                           Max.   : 89.37  
     ##                                                                           
     ##       LON               ELEV_M           BEGIN               END          
     ##  Min.   :-179.983   Min.   :-350.0   Min.   :19010101   Min.   :19051231  
-    ##  1st Qu.: -83.359   1st Qu.:  23.0   1st Qu.:19570701   1st Qu.:20020430  
-    ##  Median :   6.650   Median : 140.2   Median :19760309   Median :20160614  
-    ##  Mean   :  -3.563   Mean   : 361.2   Mean   :19783086   Mean   :20048357  
-    ##  3rd Qu.:  61.700   3rd Qu.: 435.0   3rd Qu.:20020430   3rd Qu.:20170625  
-    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20170624   Max.   :20170627  
-    ##                     NA's   :219                                           
+    ##  1st Qu.: -83.358   1st Qu.:  23.0   1st Qu.:19570702   1st Qu.:20020513  
+    ##  Median :   6.620   Median : 140.0   Median :19760401   Median :20160614  
+    ##  Mean   :  -3.577   Mean   : 361.2   Mean   :19783270   Mean   :20050079  
+    ##  3rd Qu.:  61.583   3rd Qu.: 434.9   3rd Qu.:20020424   3rd Qu.:20170720  
+    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20170712   Max.   :20170722  
+    ##                     NA's   :221                                           
     ##     STNID           ELEV_M_SRTM_90m 
-    ##  Length:28333       Min.   :-361.0  
+    ##  Length:28361       Min.   :-361.0  
     ##  Class :character   1st Qu.:  25.0  
     ##  Mode  :character   Median : 156.0  
-    ##                     Mean   : 380.4  
-    ##                     3rd Qu.: 462.0  
+    ##                     Mean   : 380.3  
+    ##                     3rd Qu.: 461.5  
     ##                     Max.   :5273.0  
     ##                     NA's   :3014
 
@@ -330,7 +330,8 @@ The final dataframe for distribution with *GSODR* includes the new elevation val
 
 ``` r
 # write rda file to disk for use with GSODR package
-devtools::use_data(isd_history, overwrite = TRUE, compress = "bzip2")
+save(isd_history, file = "../inst/extdata/isd_history.rda",
+     compress = "bzip2")
 ```
 
 The SRTM\_GSOD\_elevation.rda file included in the GSODR package includes the new elevation data as the field; ELEV\_M\_SRTM\_90m.
@@ -351,41 +352,41 @@ R System Information
     ## Session info -------------------------------------------------------------
 
     ##  setting  value                       
-    ##  version  R version 3.4.0 (2017-04-21)
+    ##  version  R version 3.4.1 (2017-06-30)
     ##  system   x86_64, darwin16.6.0        
     ##  ui       unknown                     
     ##  language (EN)                        
     ##  collate  en_AU.UTF-8                 
     ##  tz       Australia/Brisbane          
-    ##  date     2017-06-28
+    ##  date     2017-07-23
 
     ## Packages -----------------------------------------------------------------
 
     ##  package            * version    date       source                       
     ##  assertthat           0.2.0      2017-04-11 CRAN (R 3.4.0)               
     ##  backports            1.1.0      2017-05-22 cran (@1.1.0)                
-    ##  base               * 3.4.0      2017-06-26 local                        
+    ##  base               * 3.4.1      2017-07-07 local                        
     ##  bindr                0.1        2016-11-13 cran (@0.1)                  
     ##  bindrcpp           * 0.2        2017-06-17 cran (@0.2)                  
-    ##  codetools            0.2-15     2016-10-05 CRAN (R 3.4.0)               
+    ##  codetools            0.2-15     2016-10-05 CRAN (R 3.4.1)               
     ##  colorspace           1.3-2      2016-12-14 CRAN (R 3.4.0)               
-    ##  compiler             3.4.0      2017-06-26 local                        
+    ##  compiler             3.4.1      2017-07-07 local                        
     ##  countrycode        * 0.19       2017-02-06 CRAN (R 3.4.0)               
-    ##  curl                 2.7        2017-06-26 cran (@2.7)                  
+    ##  curl                 2.8.1      2017-07-21 cran (@2.8.1)                
     ##  data.table         * 1.10.4     2017-02-01 CRAN (R 3.4.0)               
-    ##  datasets           * 3.4.0      2017-06-26 local                        
+    ##  datasets           * 3.4.1      2017-07-07 local                        
     ##  DBI                  0.7        2017-06-18 cran (@0.7)                  
     ##  devtools             1.13.2     2017-06-02 cran (@1.13.2)               
     ##  digest               0.6.12     2017-01-27 CRAN (R 3.4.0)               
     ##  doParallel           1.0.10     2015-10-14 CRAN (R 3.4.0)               
-    ##  dplyr              * 0.7.1      2017-06-22 cran (@0.7.1)                
+    ##  dplyr              * 0.7.2      2017-07-20 cran (@0.7.2)                
     ##  evaluate             0.10.1     2017-06-24 cran (@0.10.1)               
     ##  foreach            * 1.4.3      2015-10-13 CRAN (R 3.4.0)               
     ##  ggplot2            * 2.2.1      2016-12-30 CRAN (R 3.4.0)               
     ##  glue                 1.1.1      2017-06-21 cran (@1.1.1)                
-    ##  graphics           * 3.4.0      2017-06-26 local                        
-    ##  grDevices          * 3.4.0      2017-06-26 local                        
-    ##  grid                 3.4.0      2017-06-26 local                        
+    ##  graphics           * 3.4.1      2017-07-07 local                        
+    ##  grDevices          * 3.4.1      2017-07-07 local                        
+    ##  grid                 3.4.1      2017-07-07 local                        
     ##  gtable               0.2.0      2016-02-26 CRAN (R 3.4.0)               
     ##  highr                0.6        2016-05-09 CRAN (R 3.4.0)               
     ##  hms                  0.3        2016-11-22 CRAN (R 3.4.0)               
@@ -393,36 +394,36 @@ R System Information
     ##  iterators            1.0.8      2015-10-13 CRAN (R 3.4.0)               
     ##  knitr                1.16       2017-05-18 cran (@1.16)                 
     ##  labeling             0.3        2014-08-23 CRAN (R 3.4.0)               
-    ##  lattice              0.20-35    2017-03-25 CRAN (R 3.4.0)               
+    ##  lattice              0.20-35    2017-03-25 CRAN (R 3.4.1)               
     ##  lazyeval             0.2.0      2016-06-12 CRAN (R 3.4.0)               
     ##  magrittr             1.5        2014-11-22 CRAN (R 3.4.0)               
     ##  memoise              1.1.0      2017-04-21 CRAN (R 3.4.0)               
-    ##  methods            * 3.4.0      2017-06-26 local                        
+    ##  methods            * 3.4.1      2017-07-07 local                        
     ##  munsell              0.4.3      2016-02-13 CRAN (R 3.4.0)               
-    ##  parallel           * 3.4.0      2017-06-26 local                        
+    ##  parallel           * 3.4.1      2017-07-07 local                        
     ##  pkgconfig            2.0.1      2017-03-21 cran (@2.0.1)                
     ##  plyr                 1.8.4      2016-06-08 CRAN (R 3.4.0)               
     ##  R6                   2.2.2      2017-06-17 cran (@2.2.2)                
     ##  raster             * 2.5-8      2016-06-02 CRAN (R 3.4.0)               
-    ##  Rcpp                 0.12.11    2017-05-22 cran (@0.12.11)              
+    ##  Rcpp                 0.12.12    2017-07-15 cran (@0.12.12)              
     ##  readr              * 1.1.1      2017-05-16 cran (@1.1.1)                
-    ##  rgdal                1.2-7      2017-04-25 CRAN (R 3.4.0)               
-    ##  rlang                0.1.1.9000 2017-06-27 Github (hadley/rlang@8594edf)
+    ##  rgdal                1.2-8      2017-07-01 cran (@1.2-8)                
+    ##  rlang                0.1.1.9000 2017-07-02 Github (hadley/rlang@ff87439)
     ##  rmarkdown            1.6        2017-06-15 cran (@1.6)                  
     ##  rnaturalearth      * 0.1.0      2017-03-21 CRAN (R 3.4.0)               
     ##  rnaturalearthhires   0.1.0      2017-06-01 local                        
     ##  rprojroot            1.2        2017-01-16 CRAN (R 3.4.0)               
     ##  scales               0.4.1      2016-11-09 CRAN (R 3.4.0)               
-    ##  sf                   0.5-1      2017-06-23 cran (@0.5-1)                
-    ##  sp                 * 1.2-4      2016-12-22 CRAN (R 3.4.0)               
-    ##  stats              * 3.4.0      2017-06-26 local                        
+    ##  sf                   0.5-2      2017-07-12 cran (@0.5-2)                
+    ##  sp                 * 1.2-5      2017-06-29 cran (@1.2-5)                
+    ##  stats              * 3.4.1      2017-07-07 local                        
     ##  stringi              1.1.5      2017-04-07 CRAN (R 3.4.0)               
     ##  stringr              1.2.0      2017-02-18 CRAN (R 3.4.0)               
     ##  tibble               1.3.3      2017-05-28 cran (@1.3.3)                
-    ##  tools                3.4.0      2017-06-26 local                        
+    ##  tools                3.4.1      2017-07-07 local                        
     ##  udunits2             0.13       2016-11-17 CRAN (R 3.4.0)               
     ##  units                0.4-5      2017-06-15 cran (@0.4-5)                
-    ##  utils              * 3.4.0      2017-06-26 local                        
+    ##  utils              * 3.4.1      2017-07-07 local                        
     ##  withr                1.0.2      2016-06-20 CRAN (R 3.4.0)               
     ##  yaml                 2.1.14     2016-11-12 CRAN (R 3.4.0)
 
