@@ -11,7 +11,7 @@ presented and some have been combined for easier use
 
 ## Minor changes
 
-- Clean up in code via linting
+- Clean code using linting
 
 # GSODR 1.0.3
 

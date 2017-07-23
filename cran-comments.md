@@ -7,7 +7,7 @@
 
 - Windows (on win-builder), R version 3.4.1 (2017-06-30)
 
-- Windows (on win-builder), R Under development (unstable) (2017-06-10 r72776)
+- Windows (on win-builder), R Under development (unstable) (2017-07-20 r72935)
 
 ## R CMD check results
 
@@ -19,24 +19,15 @@ This is a new minor release
 
 ## Major changes
 
-- Data for station locations and unique identifiers is now provided with the
-  package on installation. Previously this was fetched each time from the FTP
-  server.
+- Data distributed with GSODR are now internal to the package and not externally
+exposed to the user
 
-- The station metadata can now be updated if necessary by using
- `update_station_list()`, this change overwrites the internal data that were
-  originally distributed with the package. This operation will fetch the latest
-  list of stations and corresponding information from the NCEI FTP server. Any
-  changes will be overwritten when the R package is updated, however, the
-  package update should have the same or newer data included, so this should not
-  be an issue.
+- Vignettes have been updated and improved with an improved order of information
+presented and some have been combined for easier use
 
-- Replace _plyr_ functions with _purrr_; _plyr_ is no longer actively developed
+## Minor changes
 
-- _plyr_ is no longer an import
-
-- Move description of functions' output to individual vignettes to shorten help
-  file documentation
+- Clean up code using linting
 
 ## Reverse dependencies
 

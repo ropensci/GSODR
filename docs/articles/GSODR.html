@@ -92,17 +92,10 @@
 <a href="#introduction" class="anchor"></a>Introduction</h1>
 <p>The GSOD or <a href="https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod">Global Surface Summary of the Day (GSOD)</a> data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. <em>GSODR</em> aims to make it easy to find, transfer and format the data you need for use in analysis and provides four main functions for facilitating this:</p>
 <ul>
-<li>
-<code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> - the main function that will query and transfer files from the FTP server, reformat them and return a data.frame in R or save a file to disk<br>
-</li>
-<li>
-<code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code> - the workhorse, this function takes individual station files on the local disk and reformats them returning a data.frame in R<br>
-</li>
-<li>
-<code><a href="../reference/nearest_stations.html">nearest_stations()</a></code> - this function returns a data frame containing a list of stations and their metadata that fall within the given radius of a point specified by the user<br>
-</li>
-<li>
-<code><a href="../reference/update_station_list.html">update_station_list()</a></code> - this function downloads the latest station list from the NCEI FTP server updates the package’s internal database of stations and their metadata.</li>
+<li><p><code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> - the main function that will query and transfer files from the FTP server, reformat them and return a data.frame in R or save a file to disk</p></li>
+<li><p><code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code> - the workhorse, this function takes individual station files on the local disk and reformats them returning a data.frame in R</p></li>
+<li><p><code><a href="../reference/nearest_stations.html">nearest_stations()</a></code> - this function returns a data frame containing a list of stations and their metadata that fall within the given radius of a point specified by the user</p></li>
+<li><p><code><a href="../reference/update_station_list.html">update_station_list()</a></code> - this function downloads the latest station list from the NCEI FTP server updates the package’s internal database of stations and their metadata.</p></li>
 </ul>
 <p>When reformatting data either with <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> or <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code>, all units are converted to International System of Units (SI), e.g., inches to millimetres and Fahrenheit to Celsius. File output can be saved as a Comma Separated Value (CSV) file or in a spatial GeoPackage (GPKG) file, implemented by most major GIS software, summarising each year by station, which also includes vapour pressure and relative humidity elements calculated from existing data in GSOD.</p>
 <p>For more information see the description of the data provided by NCEI, <a href="http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt" class="uri">http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt</a>.</p>
@@ -302,6 +295,14 @@ x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reformat_
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reformat_GSOD.html">reformat_GSOD</a></span>(<span class="dt">dsn =</span> <span class="st">"~/GSOD/gsod_1960"</span>)</code></pre></div>
 </div>
 </div>
+<div id="updating-gsodrs-internal-database-of-station-locations-and-metadata" class="section level1">
+<h1 class="hasAnchor">
+<a href="#updating-gsodrs-internal-database-of-station-locations-and-metadata" class="anchor"></a>Updating <em>GSODR’s</em> Internal Database of Station Locations and Metadata</h1>
+<p><em>GSODR</em> uses internal databases of station data from the NCEI to provide location and other metadata, e.g. elevation, station names, WMO codes, etc. to make the process of querying for weather data faster. This database is created and packaged with <em>GSODR</em> for distribution and is updated with new releases. Users have the option of updating these databases after installing <em>GSODR</em>. While this option gives the users the ability to keep the database up-to-date and gives <em>GSODR’s</em> authors flexibility in maintaning it, this also means that reproducibility may be affected since the same version of <em>GSODR</em> may have different databases on different machines. If reproducibility is necessary, care should be taken to ensure that the version of the databases is the same across different machines.</p>
+<p>The database file <code>isd_history.rda</code> can be located on your local system by using the following command,</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">paste0</span>(<span class="kw">.libPaths</span>(), <span class="st">"/GSODR/extdata"</span>)[<span class="dv">1</span>]</code></pre></div>
+<p>unless you have specified another location for library installations and installed <em>GSODR</em> there, in which case it would still be in <code>GSODR/extdata</code>.</p>
+</div>
 <div id="additional-climate-data" class="section level1">
 <h1 class="hasAnchor">
 <a href="#additional-climate-data" class="anchor"></a>Additional Climate Data</h1>
@@ -363,7 +364,7 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <li><p><strong>STP_CNT</strong> - Number of observations used in calculating mean station pressure;</p></li>
 <li><p><strong>VISIB</strong> - Mean visibility for the day converted to kilometres to tenths Missing = NA;</p></li>
 <li><p><strong>VISIB_CNT</strong> - Number of observations used in calculating mean daily visibility;</p></li>
-<li><p><strong>WDSP</strong> - Mean daily wind speed value converted to metres/second to tenths Missing = NA;</p></li>
+<li><p><strong>WDSP</strong> - Mean daily wind speed value converted to metres/second to tenths. Missing = NA;</p></li>
 <li><p><strong>WDSP_CNT</strong> - Number of observations used in calculating mean daily wind speed;</p></li>
 <li><p><strong>MXSPD</strong> - Maximum sustained wind speed reported for the day converted to metres/second to tenths. Missing = NA;</p></li>
 <li><p><strong>GUST</strong> - Maximum wind gust reported for the day converted to metres/second to tenths. Missing = NA;</p></li>
@@ -371,7 +372,7 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <li><p><strong>MAX_FLAG</strong> - Blank indicates max temp was taken from the explicit max temp report and not from the ‘hourly’ data. An “*” indicates max temp was derived from the hourly data (i.e., highest hourly or synoptic-reported temperature);</p></li>
 <li><p><strong>MIN</strong> - Minimum temperature reported during the day converted to Celsius to tenths–time of min temp report varies by country and region, so this will sometimes not be the max for the calendar day. Missing = NA;</p></li>
 <li><p><strong>MIN_FLAG</strong> - Blank indicates max temp was taken from the explicit min temp report and not from the ‘hourly’ data. An “*” indicates min temp was derived from the hourly data (i.e., highest hourly or synoptic-reported temperature);</p></li>
-<li><p><strong>PRCP</strong> - Total precipitation (rain and/or melted snow) reported during the day converted to millimetres to hundredths; will usually not end with the midnight observation, i.e., may include latter part of previous day. A value of “.00” indicates no measurable precipitation (includes a trace). Missing = NA; <em>Note: Many stations do not report ‘0’ on days with no precipitation– therefore, ‘NA’ will often appear on these days. For example, a station may only report a 6-hour amount for the period during which rain fell.</em> See FLAGS_PRCP column for source of data;</p></li>
+<li><p><strong>PRCP</strong> - Total precipitation (rain and/or melted snow) reported during the day converted to millimetres to hundredths; will usually not end with the midnight observation, i.e., may include latter part of previous day. A value of “.00” indicates no measurable precipitation (includes a trace). Missing = NA; <em>Note: Many stations do not report ‘0’ on days with no precipitation– therefore, ‘NA’ will often appear on these days. For example, a station may only report a 6-hour amount for the period during which rain fell.</em> See <code>FLAGS_PRCP</code> column for source of data;</p></li>
 <li>
 <p><strong>PRCP_FLAG</strong> -</p>
 <ul>
@@ -401,7 +402,7 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <div id="appendix-2-map-of-gsod-station-locations" class="section level2">
 <h2 class="hasAnchor">
 <a href="#appendix-2-map-of-gsod-station-locations" class="anchor"></a>Appendix 2: Map of GSOD Station Locations</h2>
-<p><img src="GSODR_files/figure-html/unnamed-chunk-1-1.png" width="672"></p>
+<p><img src="GSODR_files/figure-html/unnamed-chunk-13-1.png" width="672"></p>
 </div>
 </div>
 </div>
@@ -429,6 +430,7 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
       <li><a href="#reformat-all-local-files-found-in-directory">Reformat All Local Files Found in Directory</a></li>
       </ul>
 </li>
+      <li><a href="#updating-gsodrs-internal-database-of-station-locations-and-metadata">Updating <em>GSODR’s</em> Internal Database of Station Locations and Metadata</a></li>
       <li><a href="#additional-climate-data">Additional Climate Data</a></li>
       <li>
 <a href="#notes">Notes</a><ul class="nav nav-pills nav-stacked">
