@@ -67,7 +67,7 @@
 #' All missing values in resulting files are represented as NA regardless of
 #' which field they occur in.
 #'
-#' For a complete list of the fields and desciption of the contents and units,
+#' For a complete list of the fields and description of the contents and units,
 #' please refer to Appendix 1 in the GSODR vignette,
 #' \code{vignette("GSODR", package = "GSODR")}.
 #'
