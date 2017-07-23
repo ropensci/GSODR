@@ -9,24 +9,6 @@ test_that(".validate_years handles invalid years", {
   expect_error(.validate_years(years = -1))
 })
 
-# Check that .download_files works properly-------------------------------------
-  test_that(".download_files works properly", {
-    skip_on_cran()
-    ftp_base <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/%s/"
-    station <- NULL
-    years <- 2010
-    cache_dir <- tempdir()
-    do.call(file.remove, list(list.files(
-      tempdir(),
-      pattern = ".gz$",
-      full.names = TRUE
-    )))
-    GSOD_list <-
-      .download_files(ftp_base, station, years, cache_dir)
-    expect_length(GSOD_list, 11430)
-    expect_type(GSOD_list, "character")
-  })
-
 # Check that .validate_years handles valid years -------------------------------
 test_that(".validate_years handles valid years", {
   expect_error(.validate_years(years = 1929:2016), regexp = NA)
