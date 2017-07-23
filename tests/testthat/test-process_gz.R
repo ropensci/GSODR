@@ -14,20 +14,33 @@ context("get_GSOD")
               cache_dir <- tempdir()
               ftp_base <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/%s/"
 
-              utils::data("isd_history", package = "GSODR")
+              load(system.file("extdata", "isd_history.rda", package = "GSODR"))
               stations <- data.table::setDT(isd_history)
 
-              GSOD_list <- .download_files(ftp_base, station, years, cache_dir)
+              load(system.file("extdata",
+                               "country_list.rda",
+                               package = "GSODR"))
 
-              agro_list <- .agroclimatology_list(GSOD_list, stations, cache_dir,
+              GSOD_list <- .download_files(ftp_base,
+                                           station,
+                                           years,
+                                           cache_dir)
+
+              agro_list <- .agroclimatology_list(GSOD_list,
+                                                 stations,
+                                                 cache_dir,
                                                  years)
-              expect_length(agro_list, 11302)
+              expect_length(agro_list, 11304)
 
-              RP_list <- .country_list(country, GSOD_list, stations, cache_dir,
-                                       years)
+              RP_list <- .subset_country_list(country,
+                                              country_list,
+                                              GSOD_list,
+                                              stations,
+                                              cache_dir,
+                                              years)
               expect_length(RP_list, 53)
 
-              # Check that .process_gz returns a properly formated data table-----------------
+              # Check that .process_gz returns a properly formated data table---
               gz_file <- GSOD_list[[10]]
               gz_out <- .process_gz(gz_file, stations)
 
@@ -85,4 +98,4 @@ context("get_GSOD")
               expect_is(gz_out$ES, "numeric")
               expect_is(gz_out$RH, "numeric")
               })
-  
+

@@ -11,7 +11,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introduction
 
-This document details how the GSOD station history data file, ["isd-history.csv"](ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv),
+This document details how the GSOD station history data file,
+["isd-history.csv"](ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv),
 is fetched from the NCEI ftp server, error checked and new elevation values
 generated. The new elevation values are then saved for inclusion in package as
 /data/SRTM_GSOD_elevation.rda. The resulting values are merged with the most
@@ -225,20 +226,19 @@ Some stations occur in areas where DEM has no data, in this case, use original
 station elevation for these stations.
 
 ```{r}
-
 corrected_elev <- dplyr::mutate(corrected_elev,
                                 ELEV_M_SRTM_90m = ifelse(is.na(ELEV_M_SRTM_90m),
                                                 ELEV_M, ELEV_M_SRTM_90m))
 # round SRTM_90m_Buffer field to whole number in cases where station reported
 # data was used and rename column
 corrected_elev[, 13] <- round(corrected_elev[, 13], 0)
-
 ```
 
 Tidy up the `corrected_elev` object by converting any factors to character prior
 to performing a left-join with the `stations` object and remove duplicate rows. 
 For stations above/below 60/-60 latitude, `ELEV_M_SRTM_90m` will be `NA` as
 there is no SRTM data for these latitudes.
+
 ```{r}
 c <- sapply(corrected_elev, is.factor)
 corrected_elev[c] <- lapply(corrected_elev[c], as.character)
@@ -280,8 +280,8 @@ values along with the cleaned "isd-history.csv" data.
 ```{r cleanup and .rda file creation, message=FALSE, echo=TRUE, warning=FALSE, error=FALSE}
 
 # write rda file to disk for use with GSODR package
-devtools::use_data(isd_history, overwrite = TRUE, compress = "bzip2")
-
+save(isd_history, file = "../inst/extdata/isd_history.rda",
+     compress = "bzip2")
 ```
 
 The SRTM_GSOD_elevation.rda file included in the GSODR package includes
@@ -291,9 +291,15 @@ the new elevation data as the field; ELEV\_M\_SRTM\_90m.
 
 ## NOAA Policy
 
-Users of these data should take into account the following (from the [NCEI website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)): 
+Users of these data should take into account the following (from the
+[NCEI website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)): 
 
-> "The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification." [WMO Resolution 40. NOAA Policy](http://www.wmo.int/pages/about/Resolution40.html)
+> "The following data and products may have conditions placed on their
+international commercial use. They can be used within the U.S. or for
+non-commercial international activities without restriction. The non-U.S. data
+cannot be redistributed for commercial purposes. Re-distribution of these data
+by others must provide this same notification."
+[WMO Resolution 40. NOAA Policy](http://www.wmo.int/pages/about/Resolution40.html)
 
 ## R System Information
 
@@ -315,5 +321,6 @@ globe Version 4, available from the CGIAR-CSI SRTM 90m Database
 Jarvis, A, J Rubiano, A Nelson, A Farrow and M Mulligan, 2004, Practical use of
 SRTM Data in the Tropics: Comparisons with Digital Elevation Models Generated
 From Cartographic Data. Working Document no. 198. Cali, CO.
-International Centre for Tropical Agriculture (CIAT): 32. [URL](http://srtm.csi.cgiar.org/PDF/Jarvis4.pdf)
+International Centre for Tropical Agriculture (CIAT): 32.
+[URL](http://srtm.csi.cgiar.org/PDF/Jarvis4.pdf)
 

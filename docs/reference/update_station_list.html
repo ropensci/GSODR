@@ -71,9 +71,6 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/GSODR_output_fields.html">GSODR Output Fields</a>
-    </li>
-    <li>
       <a href="../articles/Specified_stations_for_a_range_of_years.html">GSODR use case: Specified years/stations vignette</a>
     </li>
     <li>
@@ -124,16 +121,18 @@ longitude values will not be included.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>There is no need to use this unless you know that a station exists in the
+    <p>Care should be taken when using this function if reproducibility is necessary
+as different machines with the same version of <code>GSODR</code> can end up with
+different versions of the isd_history.csv file internally.</p>
+<p>There is no need to use this unless you know that a station exists in the
 GSODR data that is not available in the database distributed with
-<code><a href='GSODR.html'>GSODR</a></code> in the <code><a href='isd_history.html'>isd_history</a></code> data distributed with
 <code><a href='GSODR.html'>GSODR</a></code>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>not_run</span>({
-  <span class='fu'>update_station_list</span>()
-})</div></pre>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'>update_station_list</span>()
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

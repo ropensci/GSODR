@@ -18,9 +18,12 @@ when weather observations begin and end.  Stations with invalid latitude and
 longitude values will not be included.
 }
 \details{
+Care should be taken when using this function if reproducibility is necessary
+as different machines with the same version of \code{GSODR} can end up with
+different versions of the isd_history.csv file internally.
+
 There is no need to use this unless you know that a station exists in the
 GSODR data that is not available in the database distributed with
-\code{\link{GSODR}} in the \code{\link{isd_history}} data distributed with
 \code{\link{GSODR}}.
 }
 \examples{

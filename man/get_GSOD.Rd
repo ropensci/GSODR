@@ -22,9 +22,7 @@ silently fail and move on to existing files for download and cleaning from
 the FTP server.}
 
 \item{country}{Optional. Specify a country for which to retrieve weather
-data; full name or ISO codes can be used. See
-\code{\link{country_list}} for a full list of country names and ISO
-codes available.}
+data; full name or ISO codes can be used.}
 
 \item{dsn}{Optional. Local file path to write file out to. Must be specified
 if CSV or GPKG parameters are selected. If unspecified and \code{CSV} or
@@ -91,7 +89,8 @@ All missing values in resulting files are represented as NA regardless of
 which field they occur in.
 
 For a complete list of the fields and desciption of the contents and units,
-please refer to the \code{vignette("GSODR_output_fields", package = "GSODR")}.
+please refer to Appendix 1 in the GSODR vignette,
+\code{vignette("GSODR", package = "GSODR")}.
 
 For more information see the description of the data provided by NCEI,
 \url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.

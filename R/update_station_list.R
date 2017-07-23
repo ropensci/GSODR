@@ -8,9 +8,12 @@
 #' when weather observations begin and end.  Stations with invalid latitude and
 #' longitude values will not be included.
 #'
+#' Care should be taken when using this function if reproducibility is necessary
+#' as different machines with the same version of \code{GSODR} can end up with
+#' different versions of the isd_history.csv file internally.
+#'
 #' There is no need to use this unless you know that a station exists in the
 #' GSODR data that is not available in the database distributed with
-#' \code{\link{GSODR}} in the \code{\link{isd_history}} data distributed with
 #' \code{\link{GSODR}}.
 #'
 #' @examples
@@ -26,29 +29,49 @@ update_station_list <- function() {
   options(timeout = 300)
   on.exit(options(timeout = original_timeout))
 
+  load(system.file("extdata", "isd_history.rda", package = "GSODR"))
   old_isd_history <- isd_history
 
   # fetch new isd_history from NCEI server
-  stations <- readr::read_csv(
+  new_isd_history <- readr::read_csv(
     "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
     col_types = "ccccccddddd",
-    col_names = c("USAF", "WBAN", "STN_NAME", "CTRY", "STATE", "CALL",
-                  "LAT", "LON", "ELEV_M", "BEGIN", "END"), skip = 1)
-
-  stations[stations == -999.9] <- NA
-  stations[stations == -999] <- NA
-
-  # clean data
-  stations <- stations[!is.na(stations$LAT) & !is.na(stations$LON), ]
-  stations <- stations[stations$LAT != 0 & stations$LON != 0, ]
-  stations <- stations[stations$LAT > -90 & stations$LAT < 90, ]
-  stations <- stations[stations$LON > -180 & stations$LON < 180, ]
-  stations$STNID <- as.character(paste(stations$USAF, stations$WBAN, sep = "-"))
+    col_names = c(
+      "USAF",
+      "WBAN",
+      "STN_NAME",
+      "CTRY",
+      "STATE",
+      "CALL",
+      "LAT",
+      "LON",
+      "ELEV_M",
+      "BEGIN",
+      "END"
+    ),
+    skip = 1
+  )
+  new_isd_history[new_isd_history == -999.9] <- NA
+  new_isd_history[new_isd_history == -999] <- NA
+  new_isd_history <-
+    new_isd_history[new_isd_history$LAT != 0 &
+                      new_isd_history$LON != 0, ]
+  new_isd_history <-
+    new_isd_history[new_isd_history$LAT > -90 &
+                      new_isd_history$LAT < 90, ]
+  new_isd_history <-
+    new_isd_history[new_isd_history$LON > -180 &
+                      new_isd_history$LON < 180, ]
+  new_isd_history$STNID <-
+    as.character(paste(new_isd_history$USAF, new_isd_history$WBAN, sep = "-"))
+  new_isd_history <- new_isd_history[!is.na(new_isd_history$LAT), ]
+  new_isd_history <- new_isd_history[!is.na(new_isd_history$LON), ]
 
   # left join the old and new data
+
   isd_history <- dplyr::left_join(
     old_isd_history,
-    stations,
+    new_isd_history,
     by = c(
       "USAF" = "USAF",
       "WBAN" = "WBAN",
@@ -68,9 +91,6 @@ update_station_list <- function() {
   isd_history <- data.table::setDT(isd_history)
 
   # overwrite the existing isd_history.rda file on disk
-  pkg <- system.file(package = "GSODR")
-  path <-
-    file.path(file.path(pkg, "data"), paste0("isd_history.rda"))
-  save(isd_history, file = path, compress = "bzip2")
-  return(isd_history)
+  fname <- system.file("extdata", "isd_history.rda", package = "GSODR")
+  save(isd_history, file = fname, compress = "bzip2")
 }

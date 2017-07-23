@@ -140,7 +140,7 @@ ggplot() +
 
 ![Centre of survey area in Central Luzon with provincial polygons dissovled](figure/Central Luzon2.png)
 
-Next, make a list of stations that are within this area. First we need to fetch the station medadata, "isd-history.csv" from the FTP server and then check which stations fall within a 100km radius of the centre of the provinces we're interested in.
+Next, make a list of stations that are within this area. First we need to fetch the station metadata, "isd-history.csv" from the FTP server and then check which stations fall within a 100km radius of the centre of the provinces we're interested in.
 
 ```r
 library(GSODR)
@@ -183,7 +183,7 @@ print(loop_stations[, c(1:2, 3, 7:12)])
 ## # ... with 1 more variables: STNID <chr>
 ```
 
-These are all of the stations that are availble within 100km of the centroid of this area and the years for which data are available.
+These are all of the stations that are available within 100km of the centroid of this area and the years for which data are available.
 
 ### Using `get_GSOD()` to Fetch the Requested Station Files
 

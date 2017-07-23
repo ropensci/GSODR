@@ -71,9 +71,6 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/GSODR_output_fields.html">GSODR Output Fields</a>
-    </li>
-    <li>
       <a href="../articles/Specified_stations_for_a_range_of_years.html">GSODR use case: Specified years/stations vignette</a>
     </li>
     <li>
@@ -159,7 +156,8 @@ which field they occur in.</p>
 you have downloaded the full annual "gsod_YYYY.tar" file you will need to
 extract the individual station files first to use this function.</p>
 <p>For a complete list of the fields and desciption of the contents and units,
-please refer to the <code><a href='https://cran.rstudio.com/web/packages/GSODR/vignettes/GSODR_output_fields.html'>vignette("GSODR_output_fields", package = "GSODR")</a></code>.</p>
+please refer to Appendix 1 in the GSODR vignette,
+<code><a href='https://cran.rstudio.com/web/packages/GSODR/vignettes/GSODR.html'>vignette("GSODR", package = "GSODR")</a></code>.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
@@ -184,16 +182,16 @@ Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>not_run</span>({
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'># Reformat station data files in local directory</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>reformat_GSOD</span>(<span class='kw'>dsn</span> <span class='kw'>=</span> <span class='st'>"~/tmp"</span>)
 
-  <span class='co'># Reformat station data files in local directory</span>
-  <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>reformat_GSOD</span>(<span class='kw'>dsn</span> <span class='kw'>=</span> <span class='st'>"~/tmp"</span>)
-
-  <span class='co'># Reformat a list of data files</span>
-  <span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='st'>"~/GSOD/gsod_1960/200490-99999-1960.op.gz"</span>,
-         <span class='st'>"~/GSOD/gsod_1961/200490-99999-1961.op.gz"</span>)
-  <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>reformat_GSOD</span>(<span class='kw'>file_list</span> <span class='kw'>=</span> <span class='no'>y</span>)
-})</div></pre>
+<span class='co'># Reformat a list of data files</span>
+<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='st'>"~/GSOD/gsod_1960/200490-99999-1960.op.gz"</span>,
+       <span class='st'>"~/GSOD/gsod_1961/200490-99999-1961.op.gz"</span>)
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>reformat_GSOD</span>(<span class='kw'>file_list</span> <span class='kw'>=</span> <span class='no'>y</span>)
+<span class='co'># }</span><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

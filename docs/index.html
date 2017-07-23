@@ -48,9 +48,6 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/GSODR_output_fields.html">GSODR Output Fields</a>
-    </li>
-    <li>
       <a href="articles/Specified_stations_for_a_range_of_years.html">GSODR use case: Specified years/stations vignette</a>
     </li>
     <li>
@@ -91,23 +88,19 @@
 </h2>
 <p>The GSOD or <a href="https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod">Global Surface Summary of the Day (GSOD)</a> data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. <em>GSODR</em> aims to make it easy to find, transfer and format the data you need for use in analysis and provides four main functions for facilitating this:</p>
 <ul>
-<li><p><code><a href="reference/get_GSOD.html">get_GSOD()</a></code> - queries and transfers files from the FTP server, reformats them and returns a <code>data.frame()</code> object in R session or saves a file to disk with options for a GeoPackage spatially enabled file or comma separated values (CSV) file,</p></li>
-<li><p><code><a href="reference/reformat_GSOD.html">reformat_GSOD()</a></code> - the workhorse, takes individual station files on the local disk and reformats them, returns a <code>data.frame()</code> object in R session or saves a file to disk with options for a GeoPackage spatially enabled file or comma separated values (CSV) file,</p></li>
-<li><p><code><a href="reference/nearest_stations.html">nearest_stations()</a></code> - returns a <code>vector()</code> object containing a list of stations and their metadata that fall within the given radius of a point specified by the user,</p></li>
-<li><p><code><a href="reference/update_station_list.html">update_station_list()</a></code> - downloads the latest station list from the NCEI FTP server updates the package’s internal database of stations and their metadata.</p></li>
+<li><p><code><a href="reference/get_GSOD.html">get_GSOD()</a></code>, queries and transfers files from the FTP server, reformats them and returns a <code>data.frame()</code> object in R session or saves a file to disk with options for a GeoPackage spatially enabled file or comma `separated values (CSV) file,</p></li>
+<li><p><code><a href="reference/reformat_GSOD.html">reformat_GSOD()</a></code>, the workhorse, takes individual station files on the local disk and reformats them, returns a <code>data.frame()</code> object in R session or saves a file to disk with options for a GeoPackage spatially enabled file or comma separated values (CSV) file,</p></li>
+<li><p><code><a href="reference/nearest_stations.html">nearest_stations()</a></code>, returns a <code>vector()</code> object containing a list of stations and their metadata that fall within the given radius of a point specified by the user,</p></li>
+<li><p><code><a href="reference/update_station_list.html">update_station_list()</a></code>, downloads the latest station list from the NCEI FTP server updates the package’s internal database of stations and their metadata.</p></li>
 </ul>
 <p>When reformatting data either with <code><a href="reference/get_GSOD.html">get_GSOD()</a></code> or <code><a href="reference/reformat_GSOD.html">reformat_GSOD()</a></code>, all units are converted to International System of Units (SI), e.g., inches to millimetres and Fahrenheit to Celsius. File output can be saved as a Comma Separated Value (CSV) file or in a spatial GeoPackage (GPKG) file, implemented by most major GIS software, summarising each year by station, which also includes vapour pressure and relative humidity elements calculated from existing data in GSOD.</p>
 <p>Additional data are calculated by this R package using the original data and included in the final data. These include vapour pressure (ea and es) and relative humidity.</p>
 <p>It is recommended that you have a good Internet connection to download the data files as they can be quite large and slow to download.</p>
 <p>For more information see the description of the data provided by NCEI, <a href="http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt" class="uri">http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt</a>.</p>
 </div>
-<div id="quick-start" class="section level2">
+<div id="quick-start-install" class="section level2">
 <h2 class="hasAnchor">
-<a href="#quick-start" class="anchor"></a>Quick Start</h2>
-</div>
-<div id="install" class="section level2">
-<h2 class="hasAnchor">
-<a href="#install" class="anchor"></a>Install</h2>
+<a href="#quick-start-install" class="anchor"></a>Quick Start Install</h2>
 <div id="stable-version" class="section level3">
 <h3 class="hasAnchor">
 <a href="#stable-version" class="anchor"></a>Stable version</h3>
@@ -117,7 +110,7 @@
 <div id="development-version" class="section level3">
 <h3 class="hasAnchor">
 <a href="#development-version" class="anchor"></a>Development version</h3>
-<p>A development version is available from from GitHub. If you wish to install the development version that may have new features (but also may not work properly), install the <a href="https://CRAN.R-project.org/package=devtools">devtools package</a>, available from CRAN. We strive to keep the master branch on GitHub functional and working properly, although this may not always happen.</p>
+<p>A development version is available from from GitHub. If you wish to install the development version that may have new features (but also may not work properly), install the <a href="https://CRAN.R-project.org/package=devtools">devtools package</a>, available from CRAN. We strive to keep the master branch on GitHub functional and working properly.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages("devtools")</span>
 devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"ropensci/GSODR"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <hr>
@@ -131,9 +124,9 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <h3 class="hasAnchor">
 <a href="#query-the-ncei-ftp-server-for-gsod-data" class="anchor"></a>Query the NCEI FTP server for GSOD data</h3>
 <p><em>GSODR’s</em> main function, <code><a href="reference/get_GSOD.html">get_GSOD()</a></code>, downloads and cleans GSOD data from the NCEI server. Following are a few examples of its capabilities.</p>
-<div id="example-1---download-weather-station-data-for-toowoomba-queensland-for-2010" class="section level4">
+<div id="example---download-weather-station-data-for-toowoomba-queensland-for-2010" class="section level4">
 <h4 class="hasAnchor">
-<a href="#example-1---download-weather-station-data-for-toowoomba-queensland-for-2010" class="anchor"></a>Example 1 - Download weather station data for Toowoomba, Queensland for 2010</h4>
+<a href="#example---download-weather-station-data-for-toowoomba-queensland-for-2010" class="anchor"></a>Example - Download weather station data for Toowoomba, Queensland for 2010</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(GSODR)
 
 Tbar &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> <span class="st">"955510-99999"</span>)
@@ -185,274 +178,18 @@ Tbar &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_GSOD.
 <span class="co">#&gt; 5 1.9 2.4 79.2</span>
 <span class="co">#&gt; 6 2.2 2.6 84.6</span></code></pre></div>
 </div>
-<div id="example-2---download-gsod-data-and-generate-agroclimatology-files" class="section level4">
-<h4 class="hasAnchor">
-<a href="#example-2---download-gsod-data-and-generate-agroclimatology-files" class="anchor"></a>Example 2 - Download GSOD data and generate agroclimatology files</h4>
-<p>For years 2010 and 2011, download data and create the files, GSOD-agroclimatology-2010.csv and GSOD-agroclimatology-2011.csv, in the user’s home directory with a maximum of five missing days per weather station allowed.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span><span class="op">:</span><span class="dv">2011</span>, <span class="dt">dsn =</span> <span class="st">"~/"</span>, <span class="dt">filename =</span> <span class="st">"GSOD-agroclimatology"</span>,
-         <span class="dt">agroclimatology =</span> <span class="ot">TRUE</span>, <span class="dt">CSV =</span> <span class="ot">TRUE</span>, <span class="dt">max_missing =</span> <span class="dv">5</span>)</code></pre></div>
-</div>
-<div id="example-3---download-and-plot-data-for-a-single-country" class="section level4">
-<h4 class="hasAnchor">
-<a href="#example-3---download-and-plot-data-for-a-single-country" class="anchor"></a>Example 3 - Download and plot data for a single country</h4>
-<p>Download data for Philippines for year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in the user’s home directory.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">country =</span> <span class="st">"Philippines"</span>, <span class="dt">dsn =</span> <span class="st">"~/"</span>,
-         <span class="dt">filename =</span> <span class="st">"PHL-2010"</span>, <span class="dt">GPKG =</span> <span class="ot">TRUE</span>, <span class="dt">max_missing =</span> <span class="dv">5</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages("spacetime")</span>
-<span class="co">#install.packages("plotKML")</span>
-
-<span class="kw">library</span>(rgdal)
-<span class="co">#&gt; Loading required package: sp</span>
-<span class="co">#&gt; rgdal: version: 1.2-4, (SVN revision 643)</span>
-<span class="co">#&gt;  Geospatial Data Abstraction Library extensions to R successfully loaded</span>
-<span class="co">#&gt;  Loaded GDAL runtime: GDAL 1.11.5, released 2016/07/01</span>
-<span class="co">#&gt;  Path to GDAL shared files: /usr/local/Cellar/gdal/1.11.5_1/share/gdal</span>
-<span class="co">#&gt;  Loaded PROJ.4 runtime: Rel. 4.9.3, 15 August 2016, [PJ_VERSION: 493]</span>
-<span class="co">#&gt;  Path to PROJ.4 shared files: (autodetected)</span>
-<span class="co">#&gt;  Linking to sp version: 1.2-3</span>
-<span class="kw">library</span>(spacetime)
-<span class="kw">library</span>(plotKML)
-<span class="co">#&gt; plotKML version 0.5-6 (2016-05-02)</span>
-<span class="co">#&gt; URL: http://plotkml.r-forge.r-project.org/</span>
-
-layers &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/rgdal/topics/readOGR">ogrListLayers</a></span>(<span class="dt">dsn =</span> <span class="kw">path.expand</span>(<span class="st">"~/PHL-2010.gpkg"</span>))
-pnts &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/rgdal/topics/readOGR">readOGR</a></span>(<span class="dt">dsn =</span> <span class="kw">path.expand</span>(<span class="st">"~/PHL-2010.gpkg"</span>), layers[<span class="dv">1</span>])
-<span class="co">#&gt; OGR data source with driver: GPKG </span>
-<span class="co">#&gt; Source: "/Users/U8004755/PHL-2010.gpkg", layer: "GSOD"</span>
-<span class="co">#&gt; with 4703 features</span>
-<span class="co">#&gt; It has 46 fields</span>
-
-<span class="co"># Plot results in Google Earth as a spacetime object:</span>
-pnts<span class="op">$</span>DATE =<span class="st"> </span><span class="kw">as.Date</span>(<span class="kw">paste</span>(pnts<span class="op">$</span>YEAR, pnts<span class="op">$</span>MONTH, pnts<span class="op">$</span>DAY, <span class="dt">sep =</span> <span class="st">"-"</span>))
-<span class="kw">row.names</span>(pnts) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">"point"</span>, <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(pnts), <span class="dt">sep =</span> <span class="st">""</span>)
-
-tmp_ST &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/spacetime/topics/STIDF-class">STIDF</a></span>(<span class="dt">sp =</span> <span class="kw">as</span>(pnts, <span class="st">"SpatialPoints"</span>),
-                <span class="dt">time =</span> pnts<span class="op">$</span>DATE <span class="op">-</span><span class="st"> </span><span class="fl">0.5</span>,
-                <span class="dt">data =</span> pnts<span class="op">@</span>data[, <span class="kw">c</span>(<span class="st">"TEMP"</span>, <span class="st">"STNID"</span>)],
-                <span class="dt">endTime =</span> pnts<span class="op">$</span>DATE <span class="op">+</span><span class="st"> </span><span class="fl">0.5</span>)
-
-shape =<span class="st"> "http://maps.google.com/mapfiles/kml/pal2/icon18.png"</span>
-
-<span class="kw"><a href="http://www.rdocumentation.org/packages/plotKML/topics/kml">kml</a></span>(tmp_ST, <span class="dt">dtime =</span> <span class="dv">24</span> <span class="op">*</span><span class="st"> </span><span class="dv">3600</span>, <span class="dt">colour =</span> TEMP, <span class="dt">shape =</span> shape, <span class="dt">labels =</span> TEMP,
-    <span class="dt">file.name =</span> <span class="st">"Temperatures_PHL_2010-2010.kml"</span>, <span class="dt">folder.name =</span> <span class="st">"TEMP"</span>)
-<span class="co">#&gt; KML file opened for writing...</span>
-<span class="co">#&gt; Writing to KML...</span>
-<span class="co">#&gt; Closing  Temperatures_PHL_2010-2010.kml</span>
-
-<span class="kw">system</span>(<span class="st">"zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml"</span>)</code></pre></div>
-</div>
-<div id="example-4---working-with-climate-data-from-gsodrdata" class="section level4">
-<h4 class="hasAnchor">
-<a href="#example-4---working-with-climate-data-from-gsodrdata" class="anchor"></a>Example 4 - Working with climate data from <em>GSODRdata</em>
-</h4>
-<p>This example will demonstrate how to download data for Philippines for year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in the user’s home directory and link it with climate data from the <em>GSODRdata</em> package.</p>
-<div id="install-gsodrdata-package" class="section level5">
-<h5 class="hasAnchor">
-<a href="#install-gsodrdata-package" class="anchor"></a>Install <em>GSODRdata</em> package</h5>
-<p>This package is only available from GitHub; due to its large size (&lt;9Mb installed) it is not allowed on CRAN. It provides optional data for use with the <em>GSODR</em> package. See <a href="https://github.com/adamhsparks/GSODRdata" class="uri">https://github.com/adamhsparks/GSODRdata</a> for more.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("devtools")</span>
-devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"adamhsparks/GSODRdata"</span>)</code></pre></div>
-</div>
-<div id="working-with-climate-data-from-gsodrdata" class="section level5">
-<h5 class="hasAnchor">
-<a href="#working-with-climate-data-from-gsodrdata" class="anchor"></a>Working with climate data from <em>GSODRdata</em>
-</h5>
-<p>Now that the extra data have been installed, take a look at the CHELSA data that are one of the data sets included in <em>GSODRdata</em>.</p>
-<p>CHELSA (Climatologies at high resolution for the earth’s land surface areas) are climate data at (30 arc sec) for the earth land surface areas.</p>
-<p><strong>Description of CHELSA data from CHELSA website</strong></p>
-<blockquote>
-<p>CHELSA is a high resolution (30 arc sec) climate data set for the earth land surface areas currently under development in coorporation with the Department of Geography of the University of Hamburg (Prof. Dr. Jürgen Böhner, Dr. Olaf Conrad, Tobias Kawohl), the Swiss Federal Institute for Forest, Snow and Landscape Research WSL (Prof. Dr. Niklaus Zimmermann), the University of Zurich (Dr. Dirk N. Karger, Dr. Michael Kessler), and the University of Göttingen (Prof. Dr. Holger Kreft). It includes monthly mean temperature and precipitation patterns for the time period 1979-2013. CHELSA is based on a quasi-mechanistical statistical downscaling of the ERA interim global circulation model (<a href="http://www.ecmwf.int/en/research/climate-reanalysis/era-interim" class="uri">http://www.ecmwf.int/en/research/climate-reanalysis/era-interim</a>) with a GPCC bias correction (<a href="https://www.dwd.de/EN/ourservices/gpcc/gpcc.html" class="uri">https://www.dwd.de/EN/ourservices/gpcc/gpcc.html</a>) and is freely available in the download section.</p>
-</blockquote>
-<p>See <a href="http://chelsa-climate.org" class="uri">http://chelsa-climate.org</a> for more information on these data.</p>
-<p>Compare the GSOD weather data from the Philippines with climatic data provided by <em>GSODRdata</em> in the <code>CHELSA</code> data set.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(GSODRdata)
-
-<span class="kw">str</span>(CHELSA)
-
-<span class="co">#&gt; 'data.frame':    23927 obs. of  46 variables:</span>
-<span class="co">#&gt;   $ STNID                      : chr  "008268-99999" "010014-99999" "010015-99999" "010882-99999" ...</span>
-<span class="co">#&gt; $ CHELSA_bio10_1979-2013_V1_1: num  30 14.3 12.5 12.6 15.2 16.3 13.9 12.7 13.4 12.9 ...</span>
-<span class="co">#&gt; $ CHELSA_bio11_1979-2013_V1_1: num  5.8 1 -3.2 -7 -0.2 -2.2 -3 -6.9 -2.1 -1.2 ...</span>
-<span class="co">#&gt; $ CHELSA_bio1_1979-2013_V1_1 : num  18.3 7.1 4.2 2.3 7 6.6 4.8 2.4 5 5.2 ...</span>
-<span class="co">#&gt; $ CHELSA_bio12_1979-2013_V1_1: num  214 1889 2209 563 1710 ...</span>
-<span class="co">#&gt; $ CHELSA_bio13_1979-2013_V1_1: num  54.6 223.7 254.7 73 200.6 ...</span>
-<span class="co">#&gt; $ CHELSA_bio14_1979-2013_V1_1: num  0.1 87.7 108.9 26.7 78.5 ...</span>
-<span class="co">#&gt; $ CHELSA_bio15_1979-2013_V1_1: num  104.9 30.3 30.1 30.7 32.1 ...</span>
-<span class="co">#&gt; $ CHELSA_bio16_1979-2013_V1_1: num  155 651 753 216 590 ...</span>
-<span class="co">#&gt; $ CHELSA_bio17_1979-2013_V1_1: num  0.6 273.5 332.6 85.5 244.7 ...</span>
-<span class="co">#&gt; $ CHELSA_bio18_1979-2013_V1_1: num  1.7 433.3 448.3 198.7 330.9 ...</span>
-<span class="co">#&gt; $ CHELSA_bio19_1979-2013_V1_1: num  96.9 490.4 621.1 122 494.4 ...</span>
-<span class="co">#&gt; $ CHELSA_bio2_1979-2013_V1_1 : num  23 12.5 16.7 20.1 15.6 17.1 16.4 18.6 14.8 13.3 ...</span>
-<span class="co">#&gt; $ CHELSA_bio3_1979-2013_V1_1 : num  48.3 44.8 45.3 45.5 45 44.3 43.8 44.6 43.8 43.8 ...</span>
-<span class="co">#&gt; $ CHELSA_bio4_1979-2013_V1_1 : num  884 486 592 734 573 ...</span>
-<span class="co">#&gt; $ CHELSA_bio5_1979-2013_V1_1 : num  40.5 21.5 22.2 23.6 23.9 25.4 23.1 23 21.8 20.4 ...</span>
-<span class="co">#&gt; $ CHELSA_bio6_1979-2013_V1_1 : num  -7.2 -6.5 -14.5 -20.7 -10.7 -13.3 -14.3 -18.7 -11.9 -9.9 ...</span>
-<span class="co">#&gt; $ CHELSA_bio7_1979-2013_V1_1 : num  47.7 28 36.8 44.3 34.7 38.7 37.4 41.7 33.8 30.3 ...</span>
-<span class="co">#&gt; $ CHELSA_bio8_1979-2013_V1_1 : num  10.5 5.7 -1.7 12.5 1.3 8.5 6.8 12.5 7 7.2 ...</span>
-<span class="co">#&gt; $ CHELSA_bio9_1979-2013_V1_1 : num  26.7 7.8 8.4 -0.1 12.2 3.8 9.6 0.1 9.8 9.3 ...</span>
-<span class="co">#&gt; $ CHELSA_prec_10_1979-2013   : num  3.6 230.6 237.5 48.9 192.8 ...</span>
-<span class="co">#&gt; $ CHELSA_prec_11_1979-2013   : num  10.5 219.9 237.8 41.3 189.6 ...</span>
-<span class="co">#&gt; $ CHELSA_prec_1_1979-2013    : num  35.8 198.4 227.7 40.3 189.5 ...</span>
-<span class="co">#&gt; $ CHELSA_prec_12_1979-2013   : num  25.4 215.5 248.3 40.5 201.5 ...</span>
-<span class="co">#&gt; $ CHELSA_prec_1979-2013_land : num  214 1912 2170 559 1720 ...</span>
-<span class="co">#&gt; $ CHELSA_prec_2_1979-2013    : num  46.5 153.3 188.4 32.5 153.7 ...</span>
-<span class="co">#&gt; $ CHELSA_prec_3_1979-2013    : num  54.8 151.9 176.4 31.8 145 ...</span>
-<span class="co">#&gt; $ CHELSA_prec_4_1979-2013    : num  28.3 101.1 114.4 26.6 91.6 ...</span>
-<span class="co">#&gt; $ CHELSA_prec_5_1979-2013    : num  7 90.6 107 38.9 79 72.1 75.6 46.7 91.3 85.1 ...</span>
-<span class="co">#&gt; $ CHELSA_prec_6_1979-2013    : num  1.2 100.5 110.1 58 84 ...</span>
-<span class="co">#&gt; $ CHELSA_prec_7_1979-2013    : num  1 116.7 119.2 69.7 90.1 ...</span>
-<span class="co">#&gt; $ CHELSA_prec_8_1979-2013    : num  0.3 165.6 159.6 72.7 121.6 ...</span>
-<span class="co">#&gt; $ CHELSA_prec_9_1979-2013    : num  0.1 204 229.6 57.9 181.4 ...</span>
-<span class="co">#&gt; $ CHELSA_temp_10_1979-2013   : num  19.2 8 4.3 2.3 7.2 6.7 5.7 2.4 5.6 5.9 ...</span>
-<span class="co">#&gt; $ CHELSA_temp_11_1979-2013   : num  13.2 4.5 0.2 -3 3 2.2 1.2 -2.7 1.6 2.2 ...</span>
-<span class="co">#&gt; $ CHELSA_temp_1_1979-2013    : num  4.9 1.2 -3.4 -7.2 -0.4 -2.4 -2.5 -7 -1.9 -1 ...</span>
-<span class="co">#&gt; $ CHELSA_temp_12_1979-2013   : num  7.7 2.1 -2.7 -6.5 0.3 -1.4 -1.3 -6.3 -0.7 -0.1 ...</span>
-<span class="co">#&gt; $ CHELSA_temp_1979-2013_land : num  18.3 7.1 4.1 2.3 6.9 6.5 5.1 2.5 5 5.2 ...</span>
-<span class="co">#&gt; $ CHELSA_temp_2_1979-2013    : num  7 0.8 -3.2 -6.6 -0.2 -2.2 -2.8 -6.4 -2.1 -1.2 ...</span>
-<span class="co">#&gt; $ CHELSA_temp_3_1979-2013    : num  12.2 2.3 -0.8 -3.3 2.2 0.8 -0.9 -2.7 -0.6 0.1 ...</span>
-<span class="co">#&gt; $ CHELSA_temp_4_1979-2013    : num  18.3 5.1 3 1.5 5.8 5.1 3 1.7 2.9 3.1 ...</span>
-<span class="co">#&gt; $ CHELSA_temp_5_1979-2013    : num  23.5 9 7.6 6.4 10.1 10.7 7.8 6.6 7.3 7.1 ...</span>
-<span class="co">#&gt; $ CHELSA_temp_6_1979-2013    : num  28.2 12 10.9 10.9 13.2 14.7 11.9 11.3 11.1 10.5 ...</span>
-<span class="co">#&gt; $ CHELSA_temp_7_1979-2013    : num  28.2 12 10.9 10.9 13.2 14.7 11.9 11.3 11.1 10.5 ...</span>
-<span class="co">#&gt; $ CHELSA_temp_8_1979-2013    : num  29.7 14.2 12.2 12.1 14.9 15.8 14 12.2 13.3 12.8 ...</span>
-<span class="co">#&gt; $ CHELSA_temp_9_1979-2013    : num  25.1 11.5 8.6 7.7 11.5 11.6 10.2 7.6 9.9 9.8 ...</span></code></pre></div>
-</div>
-<div id="using-dplyr-functions-join-the-chelsa-and-gsodr-data-for-plotting" class="section level5">
-<h5 class="hasAnchor">
-<a href="#using-dplyr-functions-join-the-chelsa-and-gsodr-data-for-plotting" class="anchor"></a>Using <em>dplyr</em> functions, join the CHELSA and <em>GSODR</em> data for plotting</h5>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'dplyr'</span>
-<span class="co">#&gt; The following objects are masked from 'package:stats':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     filter, lag</span>
-<span class="co">#&gt; The following objects are masked from 'package:base':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     intersect, setdiff, setequal, union</span>
-<span class="kw">library</span>(ggplot2)
-<span class="kw">library</span>(reshape2)
-
-cnames &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">"CHELSA_temp_"</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>, <span class="st">"_1979-2013"</span>)
-clim_temp &lt;-<span class="st"> </span>CHELSA[CHELSA<span class="op">$</span>STNID <span class="op">%in%</span><span class="st"> </span>pnts<span class="op">$</span>STNID,
-                       <span class="kw">paste</span>(<span class="kw">c</span>(<span class="st">"STNID"</span>, cnames))]
-clim_temp_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">STNID =</span> <span class="kw">rep</span>(clim_temp<span class="op">$</span>STNID, <span class="dv">12</span>),
-                           <span class="dt">MONTHC =</span> <span class="kw">as.vector</span>(<span class="kw">sapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>, rep,
-                                                    <span class="dt">times =</span> <span class="kw">nrow</span>(clim_temp))), 
-                           <span class="dt">CHELSA_TEMP =</span> <span class="kw">as.vector</span>(<span class="kw">unlist</span>(clim_temp[, cnames])))
-
-pnts<span class="op">$</span>MONTHC &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">paste</span>(pnts<span class="op">$</span>MONTH))
-temp &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(pnts<span class="op">@</span>data, clim_temp_df, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">"STNID"</span>, <span class="st">"MONTHC"</span>))
-<span class="co">#&gt; Warning in left_join_impl(x, y, by$x, by$y, suffix$x, suffix$y): joining</span>
-<span class="co">#&gt; factors with different levels, coercing to character vector</span>
-
-temp &lt;-<span class="st"> </span>temp <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(MONTH) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">AVG_DAILY_TEMP =</span> <span class="kw">round</span>(<span class="kw">mean</span>(TEMP), <span class="dv">1</span>))
-
-df_melt &lt;-<span class="st"> </span><span class="kw">na.omit</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/reshape2/topics/melt">melt</a></span>(temp[, <span class="kw">c</span>(<span class="st">"STNID"</span>, <span class="st">"DATE"</span>, <span class="st">"CHELSA_TEMP"</span>, <span class="st">"TEMP"</span>, <span class="st">"AVG_DAILY_TEMP"</span>)],
-                        <span class="dt">id =</span> <span class="kw">c</span>(<span class="st">"DATE"</span>, <span class="st">"STNID"</span>)))
-
-<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(df_melt, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> DATE, <span class="dt">y =</span> value)) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">color =</span> variable), <span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_date">scale_x_date</a></span>(<span class="dt">date_labels =</span> <span class="st">"%b"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Temperature (C)"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Month"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">labs</a></span>(<span class="dt">colour =</span> <span class="st">""</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_brewer">scale_color_brewer</a></span>(<span class="dt">palette =</span> <span class="st">"Dark2"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>( <span class="op">~</span><span class="st"> </span>STNID)</code></pre></div>
-<p><img src="reference/figures/example_1.2-1.png" alt="Comparison of GSOD daily values and average monthly values with CHELSA climate monthly values"></p>
 </div>
 </div>
-<div id="example-5---finding-stations-within-a-given-radius-of-a-point" class="section level4">
-<h4 class="hasAnchor">
-<a href="#example-5---finding-stations-within-a-given-radius-of-a-point" class="anchor"></a>Example 5 - Finding stations within a given radius of a point</h4>
-<p>Using the <code>nearest_station()</code> function will return a list of stations in the GSOD data set that are within a specified radius (kilometres) of a given point expressed as latitude and longitude in decimal degrees [WGS84].</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Find stations within 50km of Toowoomba, QLD.</span>
-
-n &lt;-<span class="st"> </span><span class="kw"><a href="reference/nearest_stations.html">nearest_stations</a></span>(<span class="dt">LAT =</span> <span class="op">-</span><span class="fl">27.5598</span>, <span class="dt">LON =</span> <span class="fl">151.9507</span>, <span class="dt">distance =</span> <span class="dv">50</span>)
-
-n
-[<span class="dv">1</span>] <span class="st">"945510-99999"</span> <span class="st">"945520-99999"</span> <span class="st">"945620-99999"</span> <span class="st">"949999-00170"</span> <span class="st">"949999-00183"</span> <span class="st">"955510-99999"</span>
-
-toowoomba &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2015</span>, <span class="dt">station =</span> n)
-
-<span class="co">#&gt; This station, 945510-99999, only provides data for years 1956 to 2012.</span>
-
-<span class="co">#&gt; This station, 949999-00170, only provides data for years 1971 to 1984.</span>
-
-<span class="co">#&gt; This station, 949999-00183, only provides data for years 1983 to 1984.</span>
-
-<span class="co">#&gt; Checking requested station file for availability on server.</span>
-
-<span class="co">#&gt; Downloading individual station files.</span>
-
-<span class="op">|</span><span class="er">=============================================================================================================================|</span><span class="dv">100</span>% <span class="op">~</span><span class="dv">0</span> s remaining     
-Starting data file processing
-  <span class="op">|</span><span class="er">=============================================================================================================================================|</span><span class="st"> </span><span class="dv">100</span>%
-
-<span class="kw">str</span>(toowoomba)
-
-<span class="co">#&gt; 'data.frame':    1094 obs. of  47 variables:</span>
-<span class="co">#&gt; $ WBAN            : chr  "99999" "99999" "99999" "99999" ...</span>
-<span class="co">#&gt; $ STNID           : chr  "945520-99999" "945520-99999" "945520-99999" "945520-99999" ...</span>
-<span class="co">#&gt; $ STN_NAME        : chr  "OAKEY" "OAKEY" "OAKEY" "OAKEY" ...</span>
-<span class="co">#&gt; $ CTRY            : chr  "AS" "AS" "AS" "AS" ...</span>
-<span class="co">#&gt; $ STATE           : chr  NA NA NA NA ...</span>
-<span class="co">#&gt; $ CALL            : chr  "YBOK" "YBOK" "YBOK" "YBOK" ...</span>
-<span class="co">#&gt; $ LAT             : num  -27.4 -27.4 -27.4 -27.4 -27.4 ...</span>
-<span class="co">#&gt; $ LON             : num  152 152 152 152 152 ...</span>
-<span class="co">#&gt; $ ELEV_M          : num  407 407 407 407 407 ...</span>
-<span class="co">#&gt; $ ELEV_M_SRTM_90m : num  404 404 404 404 404 404 404 404 404 404 ...</span>
-<span class="co">#&gt; $ </span><span class="re">BEGIN</span><span class="co">           : num  19730430 19730430 19730430 19730430 19730430 ...</span>
-<span class="co">#&gt; $ </span><span class="re">END</span><span class="co">             : num  20170111 20170111 20170111 20170111 20170111 ...</span>
-<span class="co">#&gt; $ YEARMODA        : chr  "20150101" "20150102" "20150103" "20150104" ...</span>
-<span class="co">#&gt; $ YEAR            : chr  "2015" "2015" "2015" "2015" ...</span>
-<span class="co">#&gt; $ MONTH           : chr  "01" "01" "01" "01" ...</span>
-<span class="co">#&gt; $ DAY             : chr  "01" "02" "03" "04" ...</span>
-<span class="co">#&gt; $ YDAY            : num  1 2 3 4 5 6 7 8 9 10 ...</span>
-<span class="co">#&gt; $ TEMP            : num  24.9 24.3 22.3 23 22.5 22.6 21.8 22.6 24.6 24.9 ...</span>
-<span class="co">#&gt; $ TEMP_CNT        : int  24 24 24 24 24 24 24 24 24 24 ...</span>
-<span class="co">#&gt; $ DEWP            : num  18.4 18.2 17.4 16.3 17.7 14.3 15.7 16.4 16.4 16.4 ...</span>
-<span class="co">#&gt; $ DEWP_CNT        : int  24 24 24 24 24 24 24 24 24 24 ...</span>
-<span class="co">#&gt; $ SLP             : num  1014 1017 1017 1014 1015 ...</span>
-<span class="co">#&gt; $ SLP_CNT         : int  16 16 16 16 16 16 16 16 16 16 ...</span>
-<span class="co">#&gt; $ STP             : num  968 971 971 969 969 ...</span>
-<span class="co">#&gt; $ STP_CNT         : int  16 16 16 16 16 16 16 16 16 16 ...</span>
-<span class="co">#&gt; $ VISIB           : num  10 10 10 10 10 10 NA NA 10 NA ...</span>
-<span class="co">#&gt; $ VISIB_CNT       : int  8 8 4 5 7 4 0 0 4 0 ...</span>
-<span class="co">#&gt; $ WDSP            : num  2.3 2.8 2.8 2.3 3 3.5 3.1 2.5 2.9 2.7 ...</span>
-<span class="co">#&gt; $ WDSP_CNT        : int  24 24 24 24 24 24 24 24 24 24 ...</span>
-<span class="co">#&gt; $ MXSPD           : num  8.2 9.8 10.3 7.2 9.8 9.8 9.8 8.8 8.2 8.2 ...</span>
-<span class="co">#&gt; $ GUST            : num  NA NA NA NA NA NA NA NA NA 12.4 ...</span>
-<span class="co">#&gt; $ MAX             : num  31.8 31 27.3 29.3 27.6 ...</span>
-<span class="co">#&gt; $ MAX_FLAG        : chr  "" "" "" "" ...</span>
-<span class="co">#&gt; $ MIN             : num  18.9 18.2 17.7 16.8 16.4 ...</span>
-<span class="co">#&gt; $ MIN_FLAG        : chr  "*" "" "*" "*" ...</span>
-<span class="co">#&gt; $ PRCP            : num  0 0 0 0 0 0 0 0 0 0 ...</span>
-<span class="co">#&gt; $ PRCP_FLAG       : chr  "G" "G" "G" "G" ...</span>
-<span class="co">#&gt; $ SNDP            : num  NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt; $ I_FOG           : int  0 0 0 0 0 0 0 0 0 0 ...</span>
-<span class="co">#&gt; $ I_RAIN_DRIZZLE  : int  0 0 0 0 0 0 0 0 0 0 ...</span>
-<span class="co">#&gt; $ I_SNOW_ICE      : int  0 0 0 0 0 0 0 0 0 0 ...</span>
-<span class="co">#&gt; $ I_HAIL          : int  0 0 0 0 0 0 0 0 0 0 ...</span>
-<span class="co">#&gt; $ I_THUNDER       : int  0 0 0 0 0 0 0 0 0 0 ...</span>
-<span class="co">#&gt; $ I_TORNADO_FUNNEL: int  0 0 0 0 0 0 0 0 0 0 ...</span>
-<span class="co">#&gt; $ EA              : num  2.1 2.1 2 1.9 2 1.6 1.8 1.9 1.9 1.9 ...</span>
-<span class="co">#&gt; $ ES              : num  3.1 3 2.7 2.8 2.7 2.7 2.6 2.7 3.1 3.1 ...</span>
-<span class="co">#&gt; $ RH              : num  67.7 70 74.1 67.9 74.1 59.3 69.2 70.4 61.3 61.3 ...</span></code></pre></div>
-</div>
-</div>
-<div id="other-sources-of-weather-data-in-r" class="section level3">
-<h3 class="hasAnchor">
-<a href="#other-sources-of-weather-data-in-r" class="anchor"></a>Other Sources of Weather Data in R</h3>
+<div id="other-sources-of-weather-data-in-r" class="section level2">
+<h2 class="hasAnchor">
+<a href="#other-sources-of-weather-data-in-r" class="anchor"></a>Other Sources of Weather Data in R</h2>
 <p>There are several other sources of weather data and ways of retrieving them through R. In particular, the excellent <a href="https://CRAN.R-project.org/package=rnoaa"><code>rnoaa</code></a> package also from <a href="https://ropensci.org">rOpenSci</a> offers tools for interacting with and downloading weather data from the United States National Oceanic and Atmospheric Administration but lacks support GSOD data.</p>
 </div>
-<div id="other-sources-for-fetching-gsod-weather-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#other-sources-for-fetching-gsod-weather-data" class="anchor"></a>Other Sources for Fetching GSOD Weather Data</h3>
-<p>The <a href="https://github.com/environmentalinformatics-marburg/GSODTools"><em>GSODTools</em></a> by <a href="https://github.com/fdetsch">Florian Detsch</a> is an R package that offers similar functionality as <em>GSODR</em> but also has the ability to graph the data and working with data for time series analysis.</p>
+<div id="other-sources-for-fetching-gsod-weather-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#other-sources-for-fetching-gsod-weather-data" class="anchor"></a>Other Sources for Fetching GSOD Weather Data</h2>
+<p>The <a href="https://github.com/environmentalinformatics-marburg/GSODTools"><em>GSODTools</em></a> by <a href="https://github.com/fdetsch">Florian Detsch</a> is an R package that offers similar functionality as <em>GSODR</em>, but also has the ability to graph the data and working with data for time series analysis.</p>
 <p>The <a href="https://github.com/ulmo-dev/ulmo"><em>ULMO</em></a> library offers an interface to retrieve GSOD data using Python.</p>
-</div>
 </div>
 <div id="notes" class="section level2">
 <h2 class="hasAnchor">
@@ -469,14 +206,14 @@ Starting data file processing
 <h4 class="hasAnchor">
 <a href="#elevation-values" class="anchor"></a>Elevation Values</h4>
 <p>90m hole-filled SRTM digital elevation (Jarvis <em>et al.</em> 2008) was used to identify and correct/remove elevation errors in data for station locations between -60˚ and 60˚ latitude. This applies to cases here where elevation was missing in the reported values as well. In case the station reported an elevation and the DEM does not, the station reported is taken. For stations beyond -60˚ and 60˚ latitude, the values are station reported values in every instance. See <a href="https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md" class="uri">https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md</a> for more detail on the correction methods.</p>
-<div id="wmo-resolution-40--noaa-policy" class="section level5">
-<h5 class="hasAnchor">
-<a href="#wmo-resolution-40--noaa-policy" class="anchor"></a>WMO Resolution 40. NOAA Policy</h5>
-<p><em>Users of these data should take into account the following (from the <a href="http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&amp;countryabbv=&amp;georegionabbv=">NCEI website</a>)</em></p>
+</div>
+<div id="wmo-resolution-40--noaa-policy" class="section level4">
+<h4 class="hasAnchor">
+<a href="#wmo-resolution-40--noaa-policy" class="anchor"></a>WMO Resolution 40. NOAA Policy</h4>
+<p><em>Users of these data should take into account the following (from the <a href="http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&amp;countryabbv=&amp;georegionabbv=">NCEI website</a>):</em></p>
 <blockquote>
 <p>“The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification.” <a href="https://public.wmo.int/en/our-mandate/what-we-do/data-exchange-and-technology-transfer">WMO Resolution 40. NOAA Policy</a></p>
 </blockquote>
-</div>
 </div>
 </div>
 </div>
@@ -486,7 +223,7 @@ Starting data file processing
 <ul>
 <li><p>Please <a href="https://github.com/ropensci/GSODR/issues">report any issues or bugs</a>.</p></li>
 <li><p>License: MIT</p></li>
-<li><p>Get citation information for <em>getCRUCLdata</em> in R typing <code>citation(package = "GSODR")</code></p></li>
+<li><p>To cite <em>GSODR</em>, please use: Adam H Sparks, Tomislav Hengl and Andrew Nelson (2017). GSODR: Global Summary Daily Weather Data in R. <em>The Journal of Open Source Software</em>, <strong>2(10)</strong>. DOI: 10.21105/joss.00177. URL: <a href="https://doi.org/10.21105%2Fjoss.00177">https://doi.org/10.21105%2Fjoss.00177</a></p></li>
 <li><p>Please note that this project is released with a <a href="CONDUCT.md">Contributor Code of Conduct</a>. By participating in this project you agree to abide by its terms.</p></li>
 </ul>
 </div>
@@ -504,7 +241,7 @@ Starting data file processing
   <div class="col-md-3" id="sidebar">
     <h2>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRANhttps://cran.r-project.org/package=GSODR at <br><a href="https://cran.r-project.org/package=GSODR">https://​cran.r-project.org/​package=GSODR</a>
+<li>Download from CRAN at <br><a href="https://cran.r-project.org/package=GSODR">https://​cran.r-project.org/​package=GSODR</a>
 </li>
 <li>Browse source code at <br><a href="https://github.com/ropensci/GSODR">https://​github.com/​ropensci/​GSODR</a>
 </li>
@@ -531,9 +268,6 @@ Starting data file processing
 <li><a href="https://travis-ci.org/ropensci/GSODR"><img src="https://travis-ci.org/ropensci/GSODR.svg?branch=master" alt="Travis-CI Build Status"></a></li>
 <li><a href="https://ci.appveyor.com/project/ropensci/gsodr/branch/master"><img src="https://ci.appveyor.com/api/projects/status/s09kh2nj59o35ob1/branch/master?svg=true" alt="Build status"></a></li>
 <li><a href="https://codecov.io/gh/ropensci/GSODR"><img src="https://codecov.io/gh/ropensci/GSODR/branch/master/graph/badge.svg" alt="codecov"></a></li>
-<li><a href="https://github.com/metacran/cranlogs.app"><img src="http://cranlogs.r-pkg.org/badges/GSODR?color=blue" alt="rstudio mirror downloads"></a></li>
-<li><a href="https://github.com/metacran/cranlogs.app"><img src="http://cranlogs.r-pkg.org/badges/grand-total/GSODR?color=blue" alt="rstudio mirror downloads"></a></li>
-<li><a href="https://cran.r-project.org/package=GSODR"><img src="http://www.r-pkg.org/badges/version/GSODR" alt="cran version"></a></li>
 <li><a href="https://doi.org/10.5281/zenodo.439850"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.439850.svg" alt="DOI"></a></li>
 <li><a href="http://joss.theoj.org/papers/14021f4e4931cdaab4ea41be27df2df6"><img src="http://joss.theoj.org/papers/10.21105/joss.00177/status.svg" alt="JOSS"></a></li>
 </ul>

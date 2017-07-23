@@ -38,7 +38,8 @@
 #' extract the individual station files first to use this function.
 #'
 #' For a complete list of the fields and desciption of the contents and units,
-#' please refer to the \code{vignette("GSODR_output_fields", package = "GSODR")}.
+#' please refer to Appendix 1 in the GSODR vignette,
+#' \code{vignette("GSODR", package = "GSODR")}.
 #'
 #' @note Some of these data are redistributed with this R package. Originally
 #' from these data come from the US NCEI which states that users of these data
@@ -71,13 +72,17 @@
 #' comma-separated value (CSV) or GeoPackage (GPKG) file saved to local disk.
 #'
 #' @seealso \code{\link{get_GSOD}}
-#' 
+#'
 #' @importFrom magrittr %>%
-#' 
+#'
 #' @export
-#' 
+#'
 reformat_GSOD <- function(dsn = NULL, file_list = NULL) {
 
+  # CRAN NOTE avoidance
+  isd_history <- NULL
+
+  load(system.file("extdata", "isd_history.rda", package = "GSODR"))
   stations <- isd_history
   stations <- data.table::setDT(stations)
 
@@ -91,7 +96,7 @@ reformat_GSOD <- function(dsn = NULL, file_list = NULL) {
     .x = file_list,
     .f = .process_gz,
     stations = stations
-  ) %>% 
-    dplyr::bind_rows() %>% 
+  ) %>%
+    dplyr::bind_rows() %>%
     as.data.frame()
 }

@@ -201,11 +201,11 @@
   # Monteith JL (1973) Principles of environmental physics.
   #   Edward Arnold, London
   # EA derived from dew point
-  tmp[, (EA) := round(0.61078 * exp( (17.2694 * (tmp$DEWP)) /
-                                      ( (tmp$DEWP) + 237.3)), 1)]
+  tmp[, (EA) := round(0.61078 * exp((17.2694 * (tmp$DEWP)) /
+                                      ((tmp$DEWP) + 237.3)), 1)]
   # ES derived from average temperature
   tmp[, (ES) := round(0.61078 * exp( (17.2694 * (tmp$TEMP)) /
-                                      ( (tmp$TEMP) + 237.3)), 1)]
+                                      ((tmp$TEMP) + 237.3)), 1)]
   # Calculate relative humidity
   tmp[, (RH) := round(tmp$EA / tmp$ES * 100, 1)]
   # Join to the station and SRTM data-------------------------------------------
