@@ -75,5 +75,5 @@ metadata.
 }
 }
 \author{
-Adam Sparks, Tomislav Hengle and Andrew Nelson
+Adam Sparks, Tomislav Hengl and Andrew Nelson
 }
