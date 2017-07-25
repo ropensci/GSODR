@@ -6,6 +6,7 @@ status](https://ci.appveyor.com/api/projects/status/s09kh2nj59o35ob1/branch/mast
 [![codecov](https://codecov.io/gh/ropensci/GSODR/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/GSODR)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.439850.svg)](https://doi.org/10.5281/zenodo.439850)
 [![JOSS](http://joss.theoj.org/papers/10.21105/joss.00177/status.svg)](http://joss.theoj.org/papers/14021f4e4931cdaab4ea41be27df2df6)
+[![](https://badges.ropensci.org/79_status.svg)](https://github.com/ropensci/onboarding/issues/79)
 
 # _GSODR_: Global Summary Daily Weather Data in R
 
