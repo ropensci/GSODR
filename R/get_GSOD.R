@@ -157,7 +157,7 @@ get_GSOD <- function(years = NULL,
   # Load country list
   # CRAN NOTE avoidance
   country_list <- NULL
-  load(system.file("extdata", "country_list.Rda", package = "GSODR"))
+  load(system.file("extdata", "country_list.rda", package = "GSODR"))
 
   # Validate user entered stations for existence in stations list from NCEI
   purrr::walk(
@@ -188,12 +188,12 @@ get_GSOD <- function(years = NULL,
   }
   # Validate stations for missing days -----------------------------------------
   if (!is.null(max_missing)) {
-    message("Checking stations against max_missing value")
+    message("\nChecking stations against max_missing value.\n")
     GSOD_list <-
       .validate_missing_days(max_missing, GSOD_list)
   }
   # Clean and reformat list of station files from local disk in tempdir --------
-  message("Starting data file processing")
+  message("\nStarting data file processing.\n")
   GSOD_XY <- purrr::map(
     .x = GSOD_list,
     .f = .process_gz,
@@ -206,7 +206,7 @@ get_GSOD <- function(years = NULL,
   if (isTRUE(CSV)) {
     message("\nWriting CSV file to disk.\n")
     outfile <- paste0(outfile, ".csv")
-    readr::write_csv(GSOD_XY, path = paste0(outfile))
+    readr::write_csv(GSOD_XY, path = outfile)
     rm(outfile)
   }
   if (isTRUE(GPKG)) {
@@ -233,6 +233,7 @@ get_GSOD <- function(years = NULL,
   do.call(file.remove, list(list.files(cache_dir, full.names = TRUE)))
   rm(cache_dir)
   gc()
+  message("\nFinished, your GSOD data is ready to go.")
   }
 # Validation functions ---------------------------------------------------------
 #' @noRd
@@ -304,7 +305,7 @@ get_GSOD <- function(years = NULL,
   END <-
     as.numeric(substr(stations[stations[[12]] == station, ]$END, 1, 4))
   if (min(years) < BEGIN | max(years) > END) {
-    message("This station, ",
+    message("\nThis station, ",
             station,
             ", only provides data for years ",
             BEGIN,

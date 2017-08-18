@@ -7,7 +7,7 @@
 
 - Windows (on win-builder), R version 3.4.1 (2017-06-30)
 
-- Windows (on win-builder), R Under development (unstable) (2017-07-20 r72935)
+- Windows (on win-builder), R Under development (unstable) (2017-08-17 r73106)
 
 ## R CMD check results
 
