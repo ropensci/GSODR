@@ -1,5 +1,5 @@
 ---
-title: "Fetch, clean and correct altitude in GSOD isd_history.csv Data"
+title: "Fetch, clean and correct altitude in GSOD isd_history.csv data"
 author: "Adam H. Sparks"
 date: "`r Sys.Date()`"
 output: github_document
