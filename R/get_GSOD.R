@@ -157,7 +157,7 @@ get_GSOD <- function(years = NULL,
   # Load country list
   # CRAN NOTE avoidance
   country_list <- NULL
-  load(system.file("extdata", "country_list.Rda", package = "GSODR"))
+  load(system.file("extdata", "country_list.rda", package = "GSODR"))
 
   # Validate user entered stations for existence in stations list from NCEI
   purrr::walk(
