@@ -4,9 +4,11 @@
 
 - Add welcome message on startup regarding data use and sharing
 
+- Update internal stations list
+
 ## Minor changes
 
-- Update internal stations list
+- Tidy up informative messages that the package returns while running
 
 ## Bug fixes
 
