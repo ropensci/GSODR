@@ -206,7 +206,7 @@ get_GSOD <- function(years = NULL,
   if (isTRUE(CSV)) {
     message("\nWriting CSV file to disk.\n")
     outfile <- paste0(outfile, ".csv")
-    readr::write_csv(GSOD_XY, path = paste0(outfile))
+    readr::write_csv(GSOD_XY, path = outfile)
     rm(outfile)
   }
   if (isTRUE(GPKG)) {
