@@ -1,3 +1,19 @@
+# GSODR 1.0.5
+
+## Major changes
+
+- Add welcome message on startup regarding data use and sharing
+
+## Minor changes
+
+- Update internal stations list
+
+## Bug fixes
+
+- Fix bug where "Error in read_connection_(con):" when writing to CSV occurs
+
+- Fix typo in line 160 of `get_GSOD()` where "Rda" should be "rda" to properly
+load internal package files
 
 # GSODR 1.0.4
 
