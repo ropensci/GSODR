@@ -1,37 +1,386 @@
 {
-  "@context": "https://raw.githubusercontent.com/mbjones/codemeta/master/codemeta.jsonld",
+  "@context": ["https://raw.githubusercontent.com/mbjones/codemeta/master/codemeta.jsonld", "http://schema.org"],
   "@type": "Code",
   "author": [
     {
-      "@id": "0000-0002-0061-8359",
       "@type": "Person",
+      "givenName": "Adam",
+      "familyName": "Sparks",
       "email": "adamhsparks@gmail.com",
-      "name": "Adam H. Sparks",
-      "affiliation": "Centre for Crop Health, University of Southern Queensland, Toowoomba Queensland 4350, Australia"
+      "@id": "http://orcid.org/0000-0002-0061-8359"
     },
     {
-      "@id": "0000-0002-9921-5129",
       "@type": "Person",
+      "givenName": "Tomislav",
+      "familyName": "Hengl",
       "email": "tom.hengl@isric.org",
-      "name": "Tomislav Hengl",
-      "affiliation": "ISRIC - World Soil Information, P.O. Box 353, 6700 AJ Wageningen, The Netherlands"
+      "@id": "http://orcid.org/0000-0002-9921-5129"
     },
     {
-      "@id": "0000-0002-7249-3778",
       "@type": "Person",
+      "givenName": "Andrew",
+      "familyName": "Nelson",
       "email": "dr.andy.nelson@gmail.com",
-      "name": "Andrew Nelson",
-      "affiliation": "Faculty of Geo-Information and Earth Observation (ITC), University of Twente, Enschede 7500 AE, The Netherlands"
+      "@id": "http://orcid.org/0000-0002-7249-3778"
     }
   ],
-  "identifier": "10.5281/zenodo.25281710.5281/zenodo.252817",
-  "codeRepository": "https://github.com/ropensci/GSODR",
-  "datePublished": "2017-01-21",
+  "identifier": "GSODR",
+  "codeRepository": "https://github.com/ropensci/GSODR.git",
   "dateModified": "2017-01-21",
   "dateCreated": "2017-01-21",
-  "description": "The GSOD or Global Surface Summary of the Day (GSOD) data provided by the US National Climatic Data Center (NCDC) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. The GSODR package aims to make it easy to find, transfer and format the data you need for use in analysis.",
+  "description": "Provides automated downloading, parsing, cleaning, unit conversion\n    and formatting of Global Surface Summary of the Day (GSOD) weather data from\n    the from the USA National Centers for Environmental Information (NCEI) for\n    use in R. Units are converted from from United States Customary System\n    (USCS) units to International System of Units (SI). Stations may be \n    individually checked for number of missing days defined by the user, where\n    stations with too many missing observations are omitted. Only stations with \n    valid reported latitude and longitude values are permitted in the final \n    data. Additional useful elements, saturation vapour pressure (es), actual \n    vapour pressure (ea) and relative humidity are calculated from the original \n    data and included in the final data set. The resulting data include station\n    identification information, state, country, latitude, longitude, elevation,\n    weather observations and associated flags. Data may be automatically saved \n    to disk. File output may be returned as a comma-separated values (CSV) or \n    GeoPackage (GPKG) file. Additional data are included with this R package: a \n    list of elevation values for stations between -60 and 60 degrees latitude \n    derived from the Shuttle Radar Topography Measuring Mission (SRTM). For \n    information on the GSOD data from NCEI, please see the  GSOD readme.txt file\n    available from, <http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt>.",
   "keywords": "weather, data, daily, global, station",
-  "license": "MIT",
+  "license": "https://spdx.org/licenses/MIT",
   "title": "GSODR",
-  "version": "1.0.1"
+  "version": "1.0.5",
+  "name": "GSODR: Global Summary Daily Weather Data in R",
+  "issueTracker": "https://github.com/ropensci/GSODR/issues",
+  "programmingLanguage": {
+    "@type": "ComputerLanguage",
+    "name": "R",
+    "version": "3.4.1",
+    "url": "https://r-project.org"
+  },
+  "runtimePlatform": "R version 3.4.1 (2017-06-30)",
+  "provider": {
+    "@id": "https://cran.r-project.org",
+    "@type": "Organization",
+    "name": "Central R Archive Network (CRAN)",
+    "url": "https://cran.r-project.org"
+  },
+  "maintainer": {
+    "@type": "Person",
+    "givenName": "Adam",
+    "familyName": "Sparks",
+    "email": "adamhsparks@gmail.com",
+    "@id": "http://orcid.org/0000-0002-0061-8359"
+  },
+  "softwareSuggestions": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "ggplot2",
+      "name": "ggplot2",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "knitr",
+      "name": "knitr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "lubridate",
+      "name": "lubridate",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "plotKML",
+      "name": "plotKML",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "raster",
+      "name": "raster",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "reshape2",
+      "name": "reshape2",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "rgeos",
+      "name": "rgeos",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "rmarkdown",
+      "name": "rmarkdown",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "roxygen2",
+      "name": "roxygen2",
+      "version": "6.0.1",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "spacetime",
+      "name": "spacetime",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "testthat",
+      "name": "testthat",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "tibble",
+      "name": "tibble",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "tidyr",
+      "name": "tidyr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "covr",
+      "name": "covr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    }
+  ],
+  "softwareRequirements": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "curl",
+      "name": "curl",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "data.table",
+      "name": "data.table",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "dplyr",
+      "name": "dplyr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "fields",
+      "name": "fields",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "magrittr",
+      "name": "magrittr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "purrr",
+      "name": "purrr",
+      "version": "0.2.0",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "R.utils",
+      "name": "R.utils",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "readr",
+      "name": "readr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "rgdal",
+      "name": "rgdal",
+      "version": "1.1-9",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "sp",
+      "name": "sp",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "stats",
+      "name": "stats"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "utils",
+      "name": "utils"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "R",
+      "name": "R",
+      "version": "3.2.0"
+    }
+  ],
+  "contIntegration": "https://travis-ci.org/ropensci/GSODR",
+  "releaseNotes": "https://github.com/ropensci/GSODR.git/blob/devel/NEWS.md",
+  "readme": "https://github.com/ropensci/GSODR.git/blob/devel/README.md",
+  "fileSize": "1721.787KB",
+  "citation": [
+    {
+      "@type": "ScholarlyArticle",
+      "datePublished": "2017",
+      "author": [
+        {
+          "@type": "Person",
+          "givenName": ["Adam", "H"],
+          "familyName": "Sparks"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Tomislav",
+          "familyName": "Hengl"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Andrew",
+          "familyName": "Nelson"
+        }
+      ],
+      "name": "{GSODR}: Global Summary Daily Weather Data in R",
+      "identifier": "10.21105/joss.00177",
+      "@id": "https://doi.org/10.21105/joss.00177",
+      "sameAs": "https://doi.org/10.21105/joss.00177",
+      "isPartOf": {
+        "@type": "PublicationIssue",
+        "issueNumber": "10",
+        "datePublished": "2017",
+        "isPartOf": {
+          "@type": ["PublicationVolume", "Periodical"],
+          "volumeNumber": "2",
+          "name": "The Journal of Open Source Software"
+        }
+      }
+    }
+  ]
 }
