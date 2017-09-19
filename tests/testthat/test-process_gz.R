@@ -30,7 +30,7 @@ context("get_GSOD")
                                                  stations,
                                                  cache_dir,
                                                  years)
-              expect_length(agro_list, 11304)
+              expect_length(agro_list, 11302)
 
               RP_list <- .subset_country_list(country,
                                               country_list,
