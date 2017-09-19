@@ -1,3 +1,9 @@
+# GSODR 1.0.6
+
+## Bug fixes
+
+- Fix bug where WSPD (mean windspeed) conversion was miscalculated
+
 # GSODR 1.0.5
 
 ## Major changes

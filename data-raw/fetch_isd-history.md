@@ -1,7 +1,7 @@
 Fetch, clean and correct altitude in GSOD isd\_history.csv data
 ================
 Adam H. Sparks
-2017-08-18
+2017-09-19
 
 Introduction
 ============
@@ -281,7 +281,7 @@ summary(isd_history)
 ```
 
     ##      USAF               WBAN             STN_NAME        
-    ##  Length:28375       Length:28375       Length:28375      
+    ##  Length:28387       Length:28387       Length:28387      
     ##  Class :character   Class :character   Class :character  
     ##  Mode  :character   Mode  :character   Mode  :character  
     ##                                                          
@@ -289,7 +289,7 @@ summary(isd_history)
     ##                                                          
     ##                                                          
     ##      CTRY              STATE               CALL                LAT        
-    ##  Length:28375       Length:28375       Length:28375       Min.   :-89.00  
+    ##  Length:28387       Length:28387       Length:28387       Min.   :-89.00  
     ##  Class :character   Class :character   Class :character   1st Qu.: 22.50  
     ##  Mode  :character   Mode  :character   Mode  :character   Median : 39.25  
     ##                                                           Mean   : 31.15  
@@ -298,20 +298,20 @@ summary(isd_history)
     ##                                                                           
     ##       LON               ELEV_M           BEGIN               END          
     ##  Min.   :-179.983   Min.   :-350.0   Min.   :19010101   Min.   :19051231  
-    ##  1st Qu.: -83.388   1st Qu.:  23.0   1st Qu.:19570702   1st Qu.:20020513  
-    ##  Median :   6.617   Median : 140.0   Median :19760401   Median :20160614  
-    ##  Mean   :  -3.601   Mean   : 361.1   Mean   :19783298   Mean   :20050205  
-    ##  3rd Qu.:  61.523   3rd Qu.: 434.0   3rd Qu.:20020430   3rd Qu.:20170815  
-    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20170815   Max.   :20170816  
+    ##  1st Qu.: -83.400   1st Qu.:  23.0   1st Qu.:19570702   1st Qu.:20020513  
+    ##  Median :   6.617   Median : 140.2   Median :19760401   Median :20160805  
+    ##  Mean   :  -3.615   Mean   : 361.1   Mean   :19783503   Mean   :20050413  
+    ##  3rd Qu.:  61.400   3rd Qu.: 434.0   3rd Qu.:20020517   3rd Qu.:20170916  
+    ##  Max.   : 179.750   Max.   :5304.0   Max.   :20170913   Max.   :20170917  
     ##                     NA's   :221                                           
     ##     STNID           ELEV_M_SRTM_90m 
-    ##  Length:28375       Min.   :-361.0  
+    ##  Length:28387       Min.   :-361.0  
     ##  Class :character   1st Qu.:  25.0  
     ##  Mode  :character   Median : 156.0  
     ##                     Mean   : 380.2  
     ##                     3rd Qu.: 461.0  
     ##                     Max.   :5273.0  
-    ##                     NA's   :3015
+    ##                     NA's   :3017
 
 Figures
 =======
@@ -358,35 +358,35 @@ R System Information
     ##  language (EN)                        
     ##  collate  en_AU.UTF-8                 
     ##  tz       Australia/Brisbane          
-    ##  date     2017-08-18
+    ##  date     2017-09-19
 
     ## Packages -----------------------------------------------------------------
 
     ##  package            * version    date      
     ##  assertthat           0.2.0      2017-04-11
     ##  backports            1.1.0      2017-05-22
-    ##  base               * 3.4.1      2017-07-25
+    ##  base               * 3.4.1      2017-08-20
     ##  bindr                0.1        2016-11-13
     ##  bindrcpp           * 0.2        2017-06-17
     ##  codetools            0.2-15     2016-10-05
     ##  colorspace           1.3-2      2016-12-14
-    ##  compiler             3.4.1      2017-07-25
+    ##  compiler             3.4.1      2017-08-20
     ##  countrycode        * 0.19       2017-02-06
     ##  curl                 2.8.1      2017-07-21
     ##  data.table         * 1.10.4     2017-02-01
-    ##  datasets           * 3.4.1      2017-07-25
+    ##  datasets           * 3.4.1      2017-08-20
     ##  DBI                  0.7        2017-06-18
     ##  devtools             1.13.3     2017-08-02
     ##  digest               0.6.12     2017-01-27
     ##  doParallel           1.0.10     2015-10-14
-    ##  dplyr              * 0.7.2      2017-07-20
+    ##  dplyr              * 0.7.3      2017-09-09
     ##  evaluate             0.10.1     2017-06-24
     ##  foreach            * 1.4.3      2015-10-13
-    ##  ggplot2            * 2.2.1      2016-12-30
+    ##  ggplot2            * 2.2.1.9000 2017-09-15
     ##  glue                 1.1.1      2017-06-21
-    ##  graphics           * 3.4.1      2017-07-25
-    ##  grDevices          * 3.4.1      2017-07-25
-    ##  grid                 3.4.1      2017-07-25
+    ##  graphics           * 3.4.1      2017-08-20
+    ##  grDevices          * 3.4.1      2017-08-20
+    ##  grid                 3.4.1      2017-08-20
     ##  gtable               0.2.0      2016-02-26
     ##  highr                0.6        2016-05-09
     ##  hms                  0.3        2016-11-22
@@ -398,97 +398,97 @@ R System Information
     ##  lazyeval             0.2.0      2016-06-12
     ##  magrittr             1.5        2014-11-22
     ##  memoise              1.1.0      2017-04-21
-    ##  methods            * 3.4.1      2017-07-25
+    ##  methods            * 3.4.1      2017-08-20
     ##  munsell              0.4.3      2016-02-13
-    ##  parallel           * 3.4.1      2017-07-25
+    ##  parallel           * 3.4.1      2017-08-20
     ##  pkgconfig            2.0.1      2017-03-21
     ##  plyr                 1.8.4      2016-06-08
     ##  R6                   2.2.2      2017-06-17
     ##  raster             * 2.5-8      2016-06-02
     ##  Rcpp                 0.12.12    2017-07-15
     ##  readr              * 1.1.1      2017-05-16
-    ##  rgdal                1.2-8      2017-07-01
-    ##  rlang                0.1.2.9000 2017-08-15
+    ##  rgdal                1.2-10     2017-09-15
+    ##  rlang                0.1.2.9000 2017-09-13
     ##  rmarkdown            1.6        2017-06-15
     ##  rnaturalearth      * 0.1.0      2017-03-21
     ##  rnaturalearthhires   0.1.0      2017-06-01
     ##  rprojroot            1.2        2017-01-16
-    ##  scales               0.4.1      2016-11-09
-    ##  sf                   0.5-3      2017-07-30
+    ##  scales               0.5.0.9000 2017-09-15
+    ##  sf                   0.5-4      2017-08-28
     ##  sp                 * 1.2-5      2017-06-29
-    ##  stats              * 3.4.1      2017-07-25
+    ##  stats              * 3.4.1      2017-08-20
     ##  stringi              1.1.5      2017-04-07
     ##  stringr              1.2.0      2017-02-18
-    ##  tibble               1.3.3      2017-05-28
-    ##  tools                3.4.1      2017-07-25
+    ##  tibble               1.3.4      2017-08-22
+    ##  tools                3.4.1      2017-08-20
     ##  udunits2             0.13       2016-11-17
-    ##  units                0.4-5      2017-06-15
-    ##  utils              * 3.4.1      2017-07-25
-    ##  withr                2.0.0      2017-07-28
+    ##  units                0.4-6      2017-08-27
+    ##  utils              * 3.4.1      2017-08-20
+    ##  withr                2.0.0      2017-09-17
     ##  yaml                 2.1.14     2016-11-12
-    ##  source                          
-    ##  CRAN (R 3.4.1)                  
-    ##  CRAN (R 3.4.1)                  
-    ##  local                           
-    ##  CRAN (R 3.4.1)                  
-    ##  CRAN (R 3.4.1)                  
-    ##  CRAN (R 3.4.1)                  
-    ##  CRAN (R 3.4.1)                  
-    ##  local                           
-    ##  CRAN (R 3.4.1)                  
-    ##  CRAN (R 3.4.1)                  
-    ##  CRAN (R 3.4.1)                  
-    ##  local                           
-    ##  CRAN (R 3.4.1)                  
-    ##  cran (@1.13.3)                  
-    ##  CRAN (R 3.4.1)                  
-    ##  CRAN (R 3.4.1)                  
-    ##  CRAN (R 3.4.1)                  
-    ##  CRAN (R 3.4.1)                  
-    ##  CRAN (R 3.4.1)                  
-    ##  CRAN (R 3.4.1)                  
-    ##  CRAN (R 3.4.1)                  
-    ##  local                           
-    ##  local                           
-    ##  local                           
-    ##  CRAN (R 3.4.1)                  
-    ##  CRAN (R 3.4.1)                  
-    ##  CRAN (R 3.4.1)                  
-    ##  CRAN (R 3.4.1)                  
-    ##  CRAN (R 3.4.1)                  
-    ##  cran (@1.17)                    
-    ##  CRAN (R 3.4.1)                  
-    ##  CRAN (R 3.4.1)                  
-    ##  CRAN (R 3.4.1)                  
-    ##  CRAN (R 3.4.1)                  
-    ##  CRAN (R 3.4.1)                  
-    ##  local                           
-    ##  CRAN (R 3.4.1)                  
-    ##  local                           
-    ##  CRAN (R 3.4.1)                  
-    ##  CRAN (R 3.4.1)                  
-    ##  CRAN (R 3.4.1)                  
-    ##  CRAN (R 3.4.1)                  
-    ##  CRAN (R 3.4.1)                  
-    ##  CRAN (R 3.4.1)                  
-    ##  CRAN (R 3.4.1)                  
-    ##  Github (tidyverse/rlang@0e62148)
-    ##  CRAN (R 3.4.1)                  
-    ##  CRAN (R 3.4.1)                  
-    ##  local                           
-    ##  CRAN (R 3.4.1)                  
-    ##  CRAN (R 3.4.1)                  
-    ##  cran (@0.5-3)                   
-    ##  CRAN (R 3.4.1)                  
-    ##  local                           
-    ##  CRAN (R 3.4.1)                  
-    ##  CRAN (R 3.4.1)                  
-    ##  CRAN (R 3.4.1)                  
-    ##  local                           
-    ##  CRAN (R 3.4.1)                  
-    ##  CRAN (R 3.4.1)                  
-    ##  local                           
-    ##  cran (@2.0.0)                   
+    ##  source                            
+    ##  CRAN (R 3.4.1)                    
+    ##  CRAN (R 3.4.1)                    
+    ##  local                             
+    ##  CRAN (R 3.4.1)                    
+    ##  CRAN (R 3.4.1)                    
+    ##  CRAN (R 3.4.1)                    
+    ##  CRAN (R 3.4.1)                    
+    ##  local                             
+    ##  CRAN (R 3.4.1)                    
+    ##  CRAN (R 3.4.1)                    
+    ##  CRAN (R 3.4.1)                    
+    ##  local                             
+    ##  CRAN (R 3.4.1)                    
+    ##  CRAN (R 3.4.1)                    
+    ##  CRAN (R 3.4.1)                    
+    ##  CRAN (R 3.4.1)                    
+    ##  cran (@0.7.3)                     
+    ##  CRAN (R 3.4.1)                    
+    ##  CRAN (R 3.4.1)                    
+    ##  Github (tidyverse/ggplot2@c592e32)
+    ##  CRAN (R 3.4.1)                    
+    ##  local                             
+    ##  local                             
+    ##  local                             
+    ##  CRAN (R 3.4.1)                    
+    ##  CRAN (R 3.4.1)                    
+    ##  CRAN (R 3.4.1)                    
+    ##  CRAN (R 3.4.1)                    
+    ##  CRAN (R 3.4.1)                    
+    ##  CRAN (R 3.4.1)                    
+    ##  CRAN (R 3.4.1)                    
+    ##  CRAN (R 3.4.1)                    
+    ##  CRAN (R 3.4.1)                    
+    ##  CRAN (R 3.4.1)                    
+    ##  CRAN (R 3.4.1)                    
+    ##  local                             
+    ##  CRAN (R 3.4.1)                    
+    ##  local                             
+    ##  CRAN (R 3.4.1)                    
+    ##  CRAN (R 3.4.1)                    
+    ##  CRAN (R 3.4.1)                    
+    ##  CRAN (R 3.4.1)                    
+    ##  CRAN (R 3.4.1)                    
+    ##  CRAN (R 3.4.1)                    
+    ##  cran (@1.2-10)                    
+    ##  Github (tidyverse/rlang@ff02f2a)  
+    ##  CRAN (R 3.4.1)                    
+    ##  CRAN (R 3.4.1)                    
+    ##  local                             
+    ##  CRAN (R 3.4.1)                    
+    ##  Github (hadley/scales@d767915)    
+    ##  cran (@0.5-4)                     
+    ##  CRAN (R 3.4.1)                    
+    ##  local                             
+    ##  CRAN (R 3.4.1)                    
+    ##  CRAN (R 3.4.1)                    
+    ##  cran (@1.3.4)                     
+    ##  local                             
+    ##  CRAN (R 3.4.1)                    
+    ##  cran (@0.4-6)                     
+    ##  local                             
+    ##  Github (jimhester/withr@d1f0957)  
     ##  CRAN (R 3.4.1)
 
 References

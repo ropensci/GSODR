@@ -7,7 +7,7 @@
 
 - Windows (on win-builder), R version 3.4.1 (2017-06-30)
 
-- Windows (on win-builder), R Under development (unstable) (2017-08-17 r73106)
+- Windows (on win-builder), R Under development (unstable) (2017-09-12 r73242)
 
 ## R CMD check results
 
@@ -17,17 +17,9 @@ There were no ERRORs or WARNINGs
 
 This is a new minor release
 
-## Major changes
+## Bug fixes
 
-- Data distributed with GSODR are now internal to the package and not externally
-exposed to the user
-
-- Vignettes have been updated and improved with an improved order of information
-presented and some have been combined for easier use
-
-## Minor changes
-
-- Clean up code using linting
+- Fix bug where WSPD (mean windspeed) conversion was miscalculated
 
 ## Reverse dependencies
 
