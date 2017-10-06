@@ -1,7 +1,7 @@
 Fetch GSOD Country List and Merge with ISO Country Codes
 ================
 Adam H. Sparks
-2017-09-19
+2017-10-06
 
 Introduction
 ============
@@ -173,52 +173,52 @@ R System Information
     ## Session info -------------------------------------------------------------
 
     ##  setting  value                       
-    ##  version  R version 3.4.1 (2017-06-30)
-    ##  system   x86_64, darwin16.7.0        
+    ##  version  R version 3.4.2 (2017-09-28)
+    ##  system   x86_64, darwin17.0.0        
     ##  ui       unknown                     
     ##  language (EN)                        
     ##  collate  en_AU.UTF-8                 
     ##  tz       Australia/Brisbane          
-    ##  date     2017-09-19
+    ##  date     2017-10-06
 
     ## Packages -----------------------------------------------------------------
 
     ##  package     * version    date       source                          
-    ##  assertthat    0.2.0      2017-04-11 CRAN (R 3.4.1)                  
-    ##  backports     1.1.0      2017-05-22 CRAN (R 3.4.1)                  
-    ##  base        * 3.4.1      2017-08-20 local                           
-    ##  bindr         0.1        2016-11-13 CRAN (R 3.4.1)                  
-    ##  bindrcpp      0.2        2017-06-17 CRAN (R 3.4.1)                  
-    ##  compiler      3.4.1      2017-08-20 local                           
-    ##  countrycode * 0.19       2017-02-06 CRAN (R 3.4.1)                  
-    ##  curl          2.8.1      2017-07-21 CRAN (R 3.4.1)                  
-    ##  data.table    1.10.4     2017-02-01 CRAN (R 3.4.1)                  
-    ##  datasets    * 3.4.1      2017-08-20 local                           
-    ##  devtools      1.13.3     2017-08-02 CRAN (R 3.4.1)                  
-    ##  digest        0.6.12     2017-01-27 CRAN (R 3.4.1)                  
-    ##  dplyr         0.7.3      2017-09-09 cran (@0.7.3)                   
-    ##  evaluate      0.10.1     2017-06-24 CRAN (R 3.4.1)                  
-    ##  glue          1.1.1      2017-06-21 CRAN (R 3.4.1)                  
-    ##  graphics    * 3.4.1      2017-08-20 local                           
-    ##  grDevices   * 3.4.1      2017-08-20 local                           
-    ##  hms           0.3        2016-11-22 CRAN (R 3.4.1)                  
-    ##  htmltools     0.3.6      2017-04-28 CRAN (R 3.4.1)                  
-    ##  knitr         1.17       2017-08-10 CRAN (R 3.4.1)                  
-    ##  magrittr      1.5        2014-11-22 CRAN (R 3.4.1)                  
-    ##  memoise       1.1.0      2017-04-21 CRAN (R 3.4.1)                  
-    ##  methods     * 3.4.1      2017-08-20 local                           
-    ##  pkgconfig     2.0.1      2017-03-21 CRAN (R 3.4.1)                  
-    ##  R6            2.2.2      2017-06-17 CRAN (R 3.4.1)                  
-    ##  Rcpp          0.12.12    2017-07-15 CRAN (R 3.4.1)                  
-    ##  readr         1.1.1      2017-05-16 CRAN (R 3.4.1)                  
-    ##  rlang         0.1.2.9000 2017-09-13 Github (tidyverse/rlang@ff02f2a)
-    ##  rmarkdown     1.6        2017-06-15 CRAN (R 3.4.1)                  
-    ##  rprojroot     1.2        2017-01-16 CRAN (R 3.4.1)                  
-    ##  stats       * 3.4.1      2017-08-20 local                           
-    ##  stringi       1.1.5      2017-04-07 CRAN (R 3.4.1)                  
-    ##  stringr       1.2.0      2017-02-18 CRAN (R 3.4.1)                  
-    ##  tibble        1.3.4      2017-08-22 cran (@1.3.4)                   
-    ##  tools         3.4.1      2017-08-20 local                           
-    ##  utils       * 3.4.1      2017-08-20 local                           
-    ##  withr         2.0.0      2017-09-17 Github (jimhester/withr@d1f0957)
-    ##  yaml          2.1.14     2016-11-12 CRAN (R 3.4.1)
+    ##  assertthat    0.2.0      2017-04-11 CRAN (R 3.4.2)                  
+    ##  backports     1.1.1      2017-09-25 cran (@1.1.1)                   
+    ##  base        * 3.4.2      2017-09-30 local                           
+    ##  bindr         0.1        2016-11-13 CRAN (R 3.4.2)                  
+    ##  bindrcpp      0.2        2017-06-17 CRAN (R 3.4.2)                  
+    ##  compiler      3.4.2      2017-09-30 local                           
+    ##  countrycode * 0.19       2017-02-06 CRAN (R 3.4.2)                  
+    ##  curl          2.8.1      2017-07-21 CRAN (R 3.4.2)                  
+    ##  data.table    1.10.4     2017-02-01 CRAN (R 3.4.2)                  
+    ##  datasets    * 3.4.2      2017-09-30 local                           
+    ##  devtools      1.13.3     2017-08-02 CRAN (R 3.4.2)                  
+    ##  digest        0.6.12     2017-01-27 CRAN (R 3.4.2)                  
+    ##  dplyr         0.7.4      2017-09-28 CRAN (R 3.4.2)                  
+    ##  evaluate      0.10.1     2017-06-24 cran (@0.10.1)                  
+    ##  glue          1.1.1      2017-06-21 CRAN (R 3.4.2)                  
+    ##  graphics    * 3.4.2      2017-09-30 local                           
+    ##  grDevices   * 3.4.2      2017-09-30 local                           
+    ##  hms           0.3        2016-11-22 CRAN (R 3.4.2)                  
+    ##  htmltools     0.3.6      2017-04-28 cran (@0.3.6)                   
+    ##  knitr         1.17       2017-08-10 cran (@1.17)                    
+    ##  magrittr      1.5        2014-11-22 CRAN (R 3.4.2)                  
+    ##  memoise       1.1.0      2017-04-21 CRAN (R 3.4.2)                  
+    ##  methods     * 3.4.2      2017-09-30 local                           
+    ##  pkgconfig     2.0.1      2017-03-21 CRAN (R 3.4.2)                  
+    ##  R6            2.2.2      2017-06-17 CRAN (R 3.4.2)                  
+    ##  Rcpp          0.12.13    2017-09-28 CRAN (R 3.4.2)                  
+    ##  readr         1.1.1      2017-05-16 CRAN (R 3.4.2)                  
+    ##  rlang         0.1.2.9000 2017-09-30 Github (tidyverse/rlang@c6b038f)
+    ##  rmarkdown     1.6        2017-06-15 cran (@1.6)                     
+    ##  rprojroot     1.2        2017-01-16 cran (@1.2)                     
+    ##  stats       * 3.4.2      2017-09-30 local                           
+    ##  stringi       1.1.5      2017-04-07 CRAN (R 3.4.2)                  
+    ##  stringr       1.2.0      2017-02-18 CRAN (R 3.4.2)                  
+    ##  tibble        1.3.4      2017-08-22 CRAN (R 3.4.2)                  
+    ##  tools         3.4.2      2017-09-30 local                           
+    ##  utils       * 3.4.2      2017-09-30 local                           
+    ##  withr         2.0.0      2017-07-28 CRAN (R 3.4.2)                  
+    ##  yaml          2.1.14     2016-11-12 cran (@2.1.14)
