@@ -60,8 +60,9 @@ stations in Australia.
 
 ```{r, eval=FALSE}
 library(dplyr)
-data(country_list)
-station_locations <- left_join(GSOD_stations, country_list,
+load(system.file("extdata", "country_list.rda", package = "GSODR"))
+load(system.file("extdata", "isd_history.rda", package = "GSODR"))
+station_locations <- left_join(isd_history, country_list,
                                by = c("CTRY" = "FIPS"))
 
 # create data.frame for Australia only
