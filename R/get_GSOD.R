@@ -231,7 +231,7 @@ get_GSOD <- function(years = NULL,
   return(GSOD_XY)
   # Cleanup --------------------------------------------------------------------
   do.call(file.remove, list(list.files(cache_dir, full.names = TRUE)))
-  rm(cache_dir)
+  rm(c(cache_dir, year))
   gc()
   message("\nFinished, your GSOD data is ready to go.")
   }
