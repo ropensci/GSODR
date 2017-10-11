@@ -228,12 +228,23 @@ get_GSOD <- function(years = NULL,
       driver = "GPKG"
     )
   }
-  return(GSOD_XY)
   # Cleanup --------------------------------------------------------------------
-  do.call(file.remove, list(list.files(cache_dir, full.names = TRUE)))
-  rm(c(cache_dir, year))
+
+  files <-
+    list.files(
+      cache_dir,
+      ignore.case = TRUE,
+      include.dirs = TRUE,
+      full.names = TRUE,
+      recursive = TRUE,
+      pattern = ".gz$"
+    )
+  unlink(files, force = TRUE, recursive = TRUE)
+
+  rm(cache_dir)
   gc()
   message("\nFinished, your GSOD data is ready to go.")
+  return(GSOD_XY)
   }
 # Validation functions ---------------------------------------------------------
 #' @noRd
