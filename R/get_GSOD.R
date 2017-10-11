@@ -243,7 +243,6 @@ get_GSOD <- function(years = NULL,
 
   rm(cache_dir)
   gc()
-  message("\nFinished, your GSOD data is ready to go.")
   return(GSOD_XY)
   }
 # Validation functions ---------------------------------------------------------
