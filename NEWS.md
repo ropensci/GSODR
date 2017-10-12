@@ -1,3 +1,18 @@
+# GSODR 1.0.7
+
+## Bug fixes
+
+- Fix documentation in vignette where first example would not run due to changes
+in package data formats
+
+- Fix bug where prior server queries would be pre/appended to subsequent
+queries
+
+## Minor changes
+
+- Update Appendix 2 of GSODR vignette, map of station locations, to be more
+clear and follow same format as that of `bomrang` package
+
 # GSODR 1.0.6
 
 ## Bug fixes
