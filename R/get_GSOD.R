@@ -240,10 +240,8 @@ get_GSOD <- function(years = NULL,
       pattern = ".gz$"
     )
   unlink(files, force = TRUE, recursive = TRUE)
-
   rm(cache_dir)
   gc()
-  message("\nFinished, your GSOD data is ready to go.")
   return(GSOD_XY)
   }
 # Validation functions ---------------------------------------------------------
@@ -303,18 +301,21 @@ get_GSOD <- function(years = NULL,
 }
 #' @noRd
 .validate_station <- function(station, stations, years) {
-  if (!station %in% stations[[12]]) {
+  if (!station %in% stations[, "STNID"]) {
     stop(
       "\n",
       paste0(station),
-      " is not a valid station ID number, please check your entry. Station IDs
-      can be found in the 'stations' dataframe in the STNID column.\n"
+      " is not a valid station ID number, please check your entry.\n",
+      "Valid Station IDs can be found in the isd-history.txt file\n",
+      "available from the US NCEI FTP server by combining the USAF and WBAN\n",
+      "columns, e.g., '007005' '99999' is '007005-99999' from this file \n",
+      "<ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.txt>\n"
     )
   }
   BEGIN <-
-    as.numeric(substr(stations[stations[[12]] == station, ]$BEGIN, 1, 4))
+    as.numeric(substr(stations[stations[, "STNID"] == station, ]$BEGIN, 1, 4))
   END <-
-    as.numeric(substr(stations[stations[[12]] == station, ]$END, 1, 4))
+    as.numeric(substr(stations[stations[, "STNID"] == station, ]$END, 1, 4))
   if (min(years) < BEGIN | max(years) > END) {
     message("\nThis station, ",
             station,
