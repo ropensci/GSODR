@@ -81,7 +81,7 @@
       <h1>GSODR use case: Specified years/stations vignette</h1>
                         <h4 class="author">Adam H Sparks</h4>
             
-            <h4 class="date">2017-09-19</h4>
+            <h4 class="date">2017-10-12</h4>
           </div>
 
     
@@ -104,10 +104,10 @@
 <div id="retrieve-phl-provincial-data-and-select-loop-provinces" class="section level3">
 <h3 class="hasAnchor">
 <a href="#retrieve-phl-provincial-data-and-select-loop-provinces" class="anchor"></a>Retrieve PHL Provincial Data and Select Loop Provinces</h3>
-<p>As a first step, we’ll use the <a href="https://cran.r-project.org/package=raster"><em>raster</em></a> package to retrieve data from <a href="http://www.gadm.org/">GADM</a> that will provide the provincial spatial data for the survey area. We will then use this to find the centroid of the area of interest, which will be used to find the nearest stations. Using <code><a href="http://www.rdocumentation.org/packages/raster/topics/getData">raster::getData()</a></code> fetch level 0 (national) and 1 (provincial) data for the Philippines.</p>
+<p>As a first step, we’ll use the <a href="https://cran.r-project.org/package=raster"><em>raster</em></a> package to retrieve data from <a href="http://www.gadm.org/">GADM</a> that will provide the provincial spatial data for the survey area. We will then use this to find the centroid of the area of interest, which will be used to find the nearest stations. Using <code>raster::getData()</code> fetch level 0 (national) and 1 (provincial) data for the Philippines.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(raster)
-RP0 &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/getData">getData</a></span>(<span class="dt">country =</span> <span class="st">"Philippines"</span>, <span class="dt">level =</span> <span class="dv">0</span>)
-RP1 &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/getData">getData</a></span>(<span class="dt">country =</span> <span class="st">"Philippines"</span>, <span class="dt">level =</span> <span class="dv">1</span>)</code></pre></div>
+RP0 &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw">getData</span>(<span class="dt">country =</span> <span class="st">"Philippines"</span>, <span class="dt">level =</span> <span class="dv">0</span>)
+RP1 &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw">getData</span>(<span class="dt">country =</span> <span class="st">"Philippines"</span>, <span class="dt">level =</span> <span class="dv">1</span>)</code></pre></div>
 <p>Now we will select the provinces involved in the survey and make a new object called <code>Central_Luzon</code> from the provincial level data, <code>RP1</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Central_Luzon &lt;-<span class="st"> </span>RP1[RP1<span class="op">@</span>data<span class="op">$</span>NAME_<span class="dv">1</span> <span class="op">==</span><span class="st"> "Pampanga"</span> <span class="op">|</span><span class="st"> </span>
 <span class="st">                     </span>RP1<span class="op">@</span>data<span class="op">$</span>NAME_<span class="dv">1</span> <span class="op">==</span><span class="st"> "Tarlac"</span> <span class="op">|</span>
@@ -117,7 +117,7 @@ RP1 &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="k
 <span class="st">                     </span>RP1<span class="op">@</span>data<span class="op">$</span>NAME_<span class="dv">1</span> <span class="op">==</span><span class="st"> "Bulacan"</span>, ]</code></pre></div>
 <p>Next, create a map inset showing where the Central Luzon Loop survey takes place.</p>
 <p>First we’ll use <code>gSimplify()</code> from <em>rgeos</em> to simplify the map of the Philippines to make the map generation in the next few steps quicker.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">RP0 &lt;-<span class="st"> </span>rgeos<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/rgeos/topics/topo-unary-gSimplify">gSimplify</a></span>(RP0, <span class="dt">tol =</span> <span class="fl">0.05</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">RP0 &lt;-<span class="st"> </span>rgeos<span class="op">::</span><span class="kw">gSimplify</span>(RP0, <span class="dt">tol =</span> <span class="fl">0.05</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
 <span class="kw">library</span>(grid)
 <span class="kw">library</span>(gridExtra)
@@ -146,10 +146,10 @@ p2 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumenta
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_fixed">coord_equal</a></span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_bw</a></span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">labs</a></span>(<span class="dt">x =</span> <span class="ot">NULL</span>, <span class="dt">y =</span> <span class="ot">NULL</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_tile">geom_rect</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">xmin =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/extent">extent</a></span>(Central_Luzon)[<span class="dv">1</span>],
-                <span class="dt">xmax =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/extent">extent</a></span>(Central_Luzon)[<span class="dv">2</span>],
-                <span class="dt">ymin =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/extent">extent</a></span>(Central_Luzon)[<span class="dv">3</span>],
-                <span class="dt">ymax =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/extent">extent</a></span>(Central_Luzon)[<span class="dv">4</span>]),
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_tile">geom_rect</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">xmin =</span> <span class="kw">extent</span>(Central_Luzon)[<span class="dv">1</span>],
+                <span class="dt">xmax =</span> <span class="kw">extent</span>(Central_Luzon)[<span class="dv">2</span>],
+                <span class="dt">ymin =</span> <span class="kw">extent</span>(Central_Luzon)[<span class="dv">3</span>],
+                <span class="dt">ymax =</span> <span class="kw">extent</span>(Central_Luzon)[<span class="dv">4</span>]),
             <span class="dt">alpha =</span> <span class="dv">0</span>,
             <span class="dt">colour =</span> <span class="st">"red"</span>,
             <span class="dt">size =</span> <span class="fl">0.7</span>,
@@ -174,8 +174,8 @@ v2 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumenta
 <h3 class="hasAnchor">
 <a href="#dissolve-polygons-and-find-centroid-of-loop-survey-area" class="anchor"></a>Dissolve Polygons and Find Centroid of Loop Survey Area</h3>
 <p>Now that we have the provincial data that we want, we will dissolve the polygons that represent the individual provinces in Central Luzon and find the centroid of all of them, which we will use as the central point for querying stations from the GSOD data set.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Central_Luzon &lt;-<span class="st"> </span>rgeos<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/rgeos/topics/topo-bin-gUnion">gUnaryUnion</a></span>(Central_Luzon)
-centroid &lt;-<span class="st"> </span>rgeos<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/rgeos/topics/topo-unary-gCentroid">gCentroid</a></span>(Central_Luzon)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Central_Luzon &lt;-<span class="st"> </span>rgeos<span class="op">::</span><span class="kw">gUnaryUnion</span>(Central_Luzon)
+centroid &lt;-<span class="st"> </span>rgeos<span class="op">::</span><span class="kw">gCentroid</span>(Central_Luzon)
 
 <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_polygon">geom_polygon</a></span>(<span class="dt">data =</span> Central_Luzon, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> long, <span class="dt">y =</span> lat, <span class="dt">group =</span> group),
