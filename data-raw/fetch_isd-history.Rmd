@@ -48,39 +48,39 @@ every instance for the 90m column.
 ```{r set up workspace, echo=TRUE, messages=FALSE, output=FALSE}
 # check for presence of countrycode package and install if needed
 if (!require("countrycode")) {
-  install.packages("countrycode")
+  install.packages("countrycode", repos = "https://cran.rstudio.com/")
 }
 
 if (!require("data.table")) {
-  install.packages("data.table")
+  install.packages("data.table", repos = "https://cran.rstudio.com/")
 }
 
 if (!require("dplyr")) {
-  install.packages("dplyr")
+  install.packages("dplyr", repos = "https://cran.rstudio.com/")
 }
 
 if (!require("foreach")) {
-  install.packages("foreach")
+  install.packages("foreach", repos = "https://cran.rstudio.com/")
 }
 
 if (!require("ggplot2")) {
-  install.packages("ggplot2")
+  install.packages("ggplot2", repos = "https://cran.rstudio.com/")
 }
 
 if (!require("parallel")) {
-  install.packages("parallel")
+  install.packages("parallel", repos = "https://cran.rstudio.com/")
 }
 
 if (!require("raster")) {
-  install.packages("raster")
+  install.packages("raster", repos = "https://cran.rstudio.com/")
 }
 
 if (!require("readr")) {
-  install.packages("readr")
+  install.packages("readr", repos = "https://cran.rstudio.com/")
 }
 
 if (!require("rnaturalearth")) {
-  install.packages("rnaturalearth")
+  install.packages("rnaturalearth", repos = "https://cran.rstudio.com/")
 }
 
 dem_tiles <- list.files(path.expand("~/Data/CGIAR-CSI SRTM"), 
@@ -323,4 +323,3 @@ SRTM Data in the Tropics: Comparisons with Digital Elevation Models Generated
 From Cartographic Data. Working Document no. 198. Cali, CO.
 International Centre for Tropical Agriculture (CIAT): 32.
 [URL](http://srtm.csi.cgiar.org/PDF/Jarvis4.pdf)
-
