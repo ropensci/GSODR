@@ -203,9 +203,8 @@ _Users of these data should take into account the following (from the [NCEI webs
 - To cite _GSODR_, please use:
   > Adam H Sparks, Tomislav Hengl and Andrew Nelson (2017). GSODR:
   Global Summary Daily Weather Data in R. _The Journal of Open Source
-  Software_, **2(10)**. DOI: 10.21105/joss.00177. URL:
-  <https://doi.org/10.21105%2Fjoss.00177>
-
+  Software_, **2(10)**. DOI: 10.21105/joss.00177.
+  
 - Please note that this project is released with a
   [Contributor Code of Conduct](CONDUCT.md). By participating in this project
   you agree to abide by its terms.
