@@ -60,8 +60,9 @@ stations in Australia.
 
 ```{r, eval=FALSE}
 library(dplyr)
-data(country_list)
-station_locations <- left_join(GSOD_stations, country_list,
+load(system.file("extdata", "country_list.rda", package = "GSODR"))
+load(system.file("extdata", "isd_history.rda", package = "GSODR"))
+station_locations <- left_join(isd_history, country_list,
                                by = c("CTRY" = "FIPS"))
 
 # create data.frame for Australia only
@@ -97,7 +98,7 @@ filter(Oz, STN_NAME == "TOOWOOMBA")
 #> 1 20120503 945510-99999             670    AUSTRALIA    AU   AUS
 ```
 
-## Using the `get_GSOD()` Function in _GSODR_ to Download a Single Station and Year
+## Using the get_GSOD() Function in _GSODR_ to Download a Single Station and Year
 
 Now that we've seen where the reporting stations are located, we can download
 weather data from the station Toowoomba, Queensland, Australia for 2010 by using
@@ -114,7 +115,7 @@ Tbar <- get_GSOD(years = 2010, station = "955510-99999")
 head(Tbar)
 ```
 
-## Find Stations Within a Specified Distance of a Point
+## Find Stations Within a Specified Distance of a Given Lat/Lon Value
 
 Using the `nearest_stations()` function, you can find stations closest to a
 given point specified by latitude and longitude in decimal degrees. This can be
@@ -125,16 +126,13 @@ There are missing stations in this query. Not all that are listed and queried
 actually have files on the server.
 
 ```{r, eval=FALSE}
-tbar_stations <-
-  nearest_stations(LAT = -27.5598,
-  LON = 151.9507,
-  distance = 50)
+tbar_stations <- nearest_stations(LAT = -27.5598,
+                                  LON = 151.9507,
+                                  distance = 50)
   
-  tbar <- get_GSOD(
-  years = 2010,
-  station = tbar_stations
-  )
+  tbar <- get_GSOD(years = 2010, station = tbar_stations)
 ```
+
 If you wished to drop the stations, 949999-00170 and 949999-00183 from the
 query, you could do this.
 
@@ -155,12 +153,13 @@ temperature for 2010 using `read_csv()` from Hadley's
 [`readr`](https://CRAN.R-project.org/package=readr) package.
 
 ```{r, eval=FALSE}
+library(ggplot2)
 library(lubridate)
 library(tidyr)
 
 # Create a dataframe of just the date and temperature values that we want to
 # plot
-tbar_temps <- tbar[, c(13, 18, 32, 34)]
+tbar_temps <- tbar[, c("YEARMODA", "TEMP", "MAX", "MIN")]
 
 # Gather the data from wide to long
 tbar_temps <- gather(tbar_temps, Measurement, gather_cols = TEMP:MIN)
@@ -175,7 +174,7 @@ ggplot(data = tbar_temps, aes(x = ymd(YEARMODA), y = value,
 ```
 ![GSOD Toowoomba Temperatures](./figure/Toowoomba_temperature.png)
 
-## Creating Spatial Files
+# Creating Spatial Files
 
 Because the stations provide geospatial location information, it is possible to
 create a spatial file. [GeoPackage files](http://www.geopackage.org) are a open,
@@ -202,10 +201,10 @@ get_GSOD(years = 2015, country = "Australia", dsn = "~/", filename = "AUS",
 
 #> Finished downloading file.
               
-#> Parsing the indivdual station files now.
+#> Starting data file processing.
 
 
-#> Finished parsing files. Writing files to disk now.
+#> Writing GeoPackage file to disk.
 ```
 
 Importing the GeoPackage file can be a bit tricky. The dsn will be the full path
@@ -227,7 +226,7 @@ library(rgdal)
 AUS_stations <- readOGR(dsn = path.expand("~/AUS.gpkg"), layer = "GSOD")
 #> OGR data source with driver: GPKG 
 #> Source: "/Users/asparks/AUS-2015.gpkg", layer: "GSOD"
-#> with 165168 features
+#> with 186977 features
 #> It has 46 fields
 
 class(AUS_stations)
@@ -246,30 +245,25 @@ This option is much faster to load since it does not load the geometry.
 ```{r, eval=FALSE}
 AUS_sqlite <- tbl(src_sqlite(path.expand("~/AUS.gpkg")), "GSOD")
 class(AUS_sqlite)
-#> [1] "tbl_sqlite" "tbl_sql"    "tbl_lazy"   "tbl"       
+#> [1] "tbl_dbi"  "tbl_sql"  "tbl_lazy" "tbl"
 
 print(AUS_sqlite, n = 5)
-#> Source:   query [?? x 48]
-#> Database: sqlite 3.8.6 [/Users/asparks/AUS-2015.gpkg]
-#> 
-#>     fid       geom   USAF  WBAN        STNID          STN_NAME  CTRY STATE
-#>   <int>     <list>  <chr> <chr>        <chr>             <chr> <chr> <chr>
-#> 1     1 <raw [29]> 941030 99999 941030-99999 BROWSE ISLAND AWS    AS -9999
-#> 2     2 <raw [29]> 941030 99999 941030-99999 BROWSE ISLAND AWS    AS -9999
-#> 3     3 <raw [29]> 941030 99999 941030-99999 BROWSE ISLAND AWS    AS -9999
-#> 4     4 <raw [29]> 941030 99999 941030-99999 BROWSE ISLAND AWS    AS -9999
-#> 5     5 <raw [29]> 941030 99999 941030-99999 BROWSE ISLAND AWS    AS -9999
-#> # ... with more rows, and 40 more variables: CALL <chr>, ELEV_M <dbl>,
-#> #   ELEV_M_SRTM_90m <dbl>, BEGIN <dbl>, END <dbl>, YEARMODA <chr>,
-#> #   YEAR <chr>, MONTH <chr>, DAY <chr>, YDAY <dbl>, TEMP <dbl>,
-#> #   TEMP_CNT <int>, DEWP <dbl>, DEWP_CNT <int>, SLP <dbl>, SLP_CNT <int>,
-#> #   STP <dbl>, STP_CNT <int>, VISIB <dbl>, VISIB_CNT <int>, WDSP <dbl>,
-#> #   WDSP_CNT <int>, MXSPD <dbl>, GUST <dbl>, MAX <dbl>, MAX_FLAG <chr>,
-#> #   MIN <dbl>, MIN_FLAG <chr>, PRCP <dbl>, PRCP_FLAG <chr>, SNDP <dbl>,
-#> #   I_FOG <int>, I_RAIN_DRIZZLE <int>, I_SNOW_ICE <int>, I_HAIL <int>,
-#> #   I_THUNDER <int>, I_TORNADO_FUNNEL <int>, EA <dbl>, ES <dbl>, RH <dbl>
-
+#> Source:   table<GSOD> [?? x 48]
+#> Database: sqlite 3.19.3 [/Users/U8004755/AUS.gpkg]
+#>    fid         geom   USAF  WBAN        STNID  STN_NAME  CTRY STATE  CALL ELEV_M ELEV_M_SRTM_90m    BEGIN      END YEARMODA
+#>  <int>       <blob>  <chr> <chr>        <chr>     <chr> <chr> <chr> <chr>  <dbl>           <dbl>    <dbl>    <dbl>    <chr>
+#> 1     1 <blob[29 B]> 941000 99999 941000-99999 KALUMBURU    AS  <NA>  <NA>     24              17 20010912 20170916 20150101
+#> 2     2 <blob[29 B]> 941000 99999 941000-99999 KALUMBURU    AS  <NA>  <NA>     24              17 20010912 20170916 20150102
+#> 3     3 <blob[29 B]> 941000 99999 941000-99999 KALUMBURU    AS  <NA>  <NA>     24              17 20010912 20170916 20150103
+#> 4      4 <blob[29 B]> 941000 99999 941000-99999 KALUMBURU    AS  <NA>  <NA>     24              17 20010912 20170916 20150104
+#> 5     5 <blob[29 B]> 941000 99999 941000-99999 KALUMBURU    AS  <NA>  <NA>     24              17 20010912 20170916 20150105
+#> ... with more rows, and 34 more variables: YEAR <chr>, MONTH <chr>, DAY <chr>, YDAY <dbl>, TEMP <dbl>, TEMP_CNT <int>,
+#>   DEWP <dbl>, DEWP_CNT <int>, SLP <dbl>, SLP_CNT <int>, STP <dbl>, STP_CNT <int>, VISIB <dbl>, VISIB_CNT <int>, WDSP <dbl>,
+#>   WDSP_CNT <int>, MXSPD <dbl>, GUST <dbl>, MAX <dbl>, MAX_FLAG <chr>, MIN <dbl>, MIN_FLAG <chr>, PRCP <dbl>, PRCP_FLAG <chr>,
+#>   SNDP <dbl>, I_FOG <int>, I_RAIN_DRIZZLE <int>, I_SNOW_ICE <int>, I_HAIL <int>, I_THUNDER <int>, I_TORNADO_FUNNEL <int>,
+#>   EA <dbl>, ES <dbl>, RH <dbl>
 ```
+
 # Reformating Local Data Files
 
 You may have already downloaded GSOD data or may just wish to use an FTP client
@@ -281,7 +275,7 @@ There are two ways, you can either provide `reformat_GSOD()` with a list of
 specified station files or you can supply it with a directory containing all of
 the "WBAN-WMO-YYYY.op.gz" station files that you wish to reformat.
 
-## Reformat a List of Local Files
+## Reformat a list of local files
 
 ```{r, eval=FALSE}
 y <- c("~/GSOD/gsod_1960/200490-99999-1960.op.gz",
@@ -289,7 +283,7 @@ y <- c("~/GSOD/gsod_1960/200490-99999-1960.op.gz",
 x <- reformat_GSOD(file_list = y)
 ```
 
-## Reformat All Local Files Found in Directory
+## Reformat all local files found in directory
 
 ```{r, eval=FALSE}
 x <- reformat_GSOD(dsn = "~/GSOD/gsod_1960")
@@ -310,13 +304,7 @@ care should be taken to ensure that the version of the databases is the same
 across different machines.
 
 The database file `isd_history.rda` can be located on your local system by using
-the following command,
-
-```{r, eval=FALSE}
-paste0(.libPaths(), "/GSODR/extdata")[1]
-```
-
-unless you have specified another location for library installations and
+the following command, `paste0(.libPaths(), "/GSODR/extdata")[1]`, unless you have specified another location for library installations and
 installed _GSODR_ there, in which case it would still be in `GSODR/extdata`.
 
 # Additional Climate Data
@@ -330,7 +318,7 @@ GitHub due to the package size, 5.1Mb, being too large for CRAN.
 #install.packages("devtools")
 devtools::install_github("adamhsparks/GSODRdata")
 library("GSODRdata")
-````
+```
 
 # Notes
 
@@ -511,15 +499,41 @@ no/not reported) for the occurrence during the day;
 
 ## Appendix 2: Map of GSOD Station Locations
 
-```{r, eval = TRUE, message = FALSE, echo = FALSE, warning=FALSE}
-library(ggplot2)
-library(GSODR)
-
-load(system.file("extdata", "isd_history.rda", package = "GSODR"))
-
-ggplot(isd_history, aes(x = LON, y = LAT)) +
-  geom_point(alpha = 0.1) +
-  theme_bw() +
-  labs(title = "GSOD Station Locations",
-       caption = "Data: US NCEI isd_history.csv")
+```{r, eval=TRUE, message = FALSE, echo = FALSE, warning=FALSE}
+if (requireNamespace("ggplot2", quietly = TRUE) &&
+    requireNamespace("ggthemes", quietly = TRUE) &&
+    requireNamespace("maps", quietly = TRUE) &&
+    requireNamespace("mapproj", quietly = TRUE) &&
+    requireNamespace("gridExtra", quietly = TRUE) &&
+    requireNamespace("grid", quietly = TRUE)) {
+  library(ggplot2)
+  library(mapproj)
+  library(ggthemes)
+  library(maps)
+  library(data.table)
+  library(grid)
+  library(gridExtra)
+  library(GSODR)
+  load(system.file("extdata", "isd_history.rda", package = "GSODR"))
+  world_map <- map_data("world")
+  
+  GSOD_stations <- ggplot(isd_history, aes(x = LON, y = LAT)) + 
+    geom_polygon(data = world_map, aes(x = long, y = lat, group = group), 
+                 color = grey(0.7),
+                 fill = NA) +
+    geom_point(color = "red",
+               size = 0.05) +
+    coord_map(xlim = c(-180, 180)) +
+    theme_map() + 
+    labs(title = "GSOD Station Locations",
+         caption = "Data: US NCEI GSOD and CIA World DataBank II")
+  
+  # Using the gridExtra and grid packages add a neatline to the map
+  grid.arrange(GSOD_stations, ncol = 1)
+  grid.rect(width = 0.98, 
+            height = 0.98, 
+            gp = grid::gpar(lwd = 0.25, 
+                            col = "black",
+                            fill = NA))
+}
 ```
