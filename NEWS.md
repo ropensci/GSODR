@@ -5,6 +5,9 @@
 - Fix documentation in vignette where first example would not run due to changes
 in package data formats
 
+- Fix bug in GSODR vignette where examples would not run due to libraries not
+being loaded
+
 - Fix bug where prior server queries would be pre/appended to subsequent
 queries
 
@@ -16,6 +19,8 @@ and check if data are available for the years requested.
 
 - Update Appendix 2 of GSODR vignette, map of station locations, to be more
 clear and follow same format as that of `bomrang` package
+
+- Update example output in GSODR vignette where applicable
 
 ## Major changes
 
