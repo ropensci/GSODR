@@ -1,5 +1,8 @@
 {
-  "@context": ["https://raw.githubusercontent.com/mbjones/codemeta/master/codemeta.jsonld", "http://schema.org"],
+  "@context": [
+    "https://raw.githubusercontent.com/mbjones/codemeta/master/codemeta.jsonld",
+    "http://schema.org"
+  ],
   "@type": "Code",
   "author": [
     {
@@ -32,16 +35,16 @@
   "keywords": "weather, data, daily, global, station",
   "license": "https://spdx.org/licenses/MIT",
   "title": "GSODR",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "name": "GSODR: Global Summary Daily Weather Data in R",
   "issueTracker": "https://github.com/ropensci/GSODR/issues",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "3.4.1",
+    "version": "3.4.2",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 3.4.1 (2017-06-30)",
+  "runtimePlatform": "R version 3.4.2 (2017-09-28)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -69,6 +72,28 @@
     },
     {
       "@type": "SoftwareApplication",
+      "identifier": "ggthemes",
+      "name": "ggthemes",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "gridExtra",
+      "name": "gridExtra",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "knitr",
       "name": "knitr",
       "provider": {
@@ -82,6 +107,28 @@
       "@type": "SoftwareApplication",
       "identifier": "lubridate",
       "name": "lubridate",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "mapproj",
+      "name": "mapproj",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "maps",
+      "name": "maps",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -345,7 +392,7 @@
   "contIntegration": "https://travis-ci.org/ropensci/GSODR",
   "releaseNotes": "https://github.com/ropensci/GSODR.git/blob/devel/NEWS.md",
   "readme": "https://github.com/ropensci/GSODR.git/blob/devel/README.md",
-  "fileSize": "1721.787KB",
+  "fileSize": "956.14KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
