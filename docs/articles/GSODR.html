@@ -170,7 +170,7 @@ Tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GS
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tbar_stations &lt;-<span class="st"> </span><span class="kw"><a href="../reference/nearest_stations.html">nearest_stations</a></span>(<span class="dt">LAT =</span> <span class="op">-</span><span class="fl">27.5598</span>,
                                   <span class="dt">LON =</span> <span class="fl">151.9507</span>,
                                   <span class="dt">distance =</span> <span class="dv">50</span>)
-  
+
   tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> tbar_stations)</code></pre></div>
 <p>If you wished to drop the stations, 949999-00170 and 949999-00183 from the query, you could do this.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remove &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"949999-00170"</span>, <span class="st">"949999-00183"</span>)
@@ -222,7 +222,7 @@ tbar_temps &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rd
 
 
 <span class="co">#&gt; Finished downloading file.</span>
-              
+
 <span class="co">#&gt; Starting data file processing.</span>
 
 
@@ -236,10 +236,10 @@ tbar_temps &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rd
 <span class="co">#&gt;  Path to GDAL shared files: /usr/local/Cellar/gdal/1.11.5_1/share/gdal</span>
 <span class="co">#&gt;  Loaded PROJ.4 runtime: Rel. 4.9.3, 15 August 2016, [PJ_VERSION: 493]</span>
 <span class="co">#&gt;  Path to PROJ.4 shared files: (autodetected)</span>
-<span class="co">#&gt;  Linking to sp version: 1.2-3 </span>
+<span class="co">#&gt;  Linking to sp version: 1.2-3</span>
 
 AUS_stations &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/rgdal/topics/readOGR">readOGR</a></span>(<span class="dt">dsn =</span> <span class="kw">path.expand</span>(<span class="st">"~/AUS.gpkg"</span>), <span class="dt">layer =</span> <span class="st">"GSOD"</span>)
-<span class="co">#&gt; OGR data source with driver: GPKG </span>
+<span class="co">#&gt; OGR data source with driver: GPKG</span>
 <span class="co">#&gt; Source: "/Users/asparks/AUS-2015.gpkg", layer: "GSOD"</span>
 <span class="co">#&gt; with 186977 features</span>
 <span class="co">#&gt; It has 46 fields</span>
