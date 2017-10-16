@@ -50,8 +50,12 @@ Imports:
     utils
 Suggests:
     ggplot2,
+    ggthemes,
+    gridExtra,
     knitr,
     lubridate,
+    mapproj,
+    maps,
     plotKML,
     raster,
     reshape2,
