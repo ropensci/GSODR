@@ -193,7 +193,7 @@ get_GSOD <- function(years = NULL,
       .validate_missing_days(max_missing, GSOD_list)
   }
   # Clean and reformat list of station files from local disk in tempdir --------
-  message("\nStarting data file processing.\n")
+
   GSOD_XY <- purrr::map(
     .x = GSOD_list,
     .f = .process_gz,
@@ -210,7 +210,7 @@ get_GSOD <- function(years = NULL,
     rm(outfile)
   }
   if (isTRUE(GPKG)) {
-    message("\nWriting GeoPackage File to Disk.\n")
+    message("\nWriting GeoPackage file to disk.\n")
     outfile <- paste0(outfile, ".gpkg")
     sp::coordinates(GSOD_XY) <- ~ LON + LAT
     sp::proj4string(GSOD_XY) <-

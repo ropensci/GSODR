@@ -17,6 +17,10 @@ and check if data are available for the years requested.
 - Update Appendix 2 of GSODR vignette, map of station locations, to be more
 clear and follow same format as that of `bomrang` package
 
+## Major changes
+
+- Update internal stations list
+
 # GSODR 1.0.6
 
 ## Bug fixes
