@@ -168,15 +168,7 @@ interface to retrieve GSOD data using Python.
 
 ## Notes
 
-### Data Sources
-
-#### CHELSA climate layers
-
-CHELSA (climatic surfaces at 1 km resolution) is based on a
-quasi-mechanistical statistical downscaling of the ERA interim global
-circulation model (Karger et al. 2016). ESA's CCI-LC cloud probability
-monthly averages are based on the MODIS snow products (MOD10A2).
-<http://chelsa-climate.org/>
+### Other Data Sources
 
 #### Elevation Values
 
@@ -209,11 +201,10 @@ _Users of these data should take into account the following (from the [NCEI webs
 - License: MIT
 
 - To cite _GSODR_, please use:
-  Adam H Sparks, Tomislav Hengl and Andrew Nelson (2017). GSODR:
+  > Adam H Sparks, Tomislav Hengl and Andrew Nelson (2017). GSODR:
   Global Summary Daily Weather Data in R. _The Journal of Open Source
-  Software_, **2(10)**. DOI: 10.21105/joss.00177. URL:
-  <https://doi.org/10.21105%2Fjoss.00177>
-
+  Software_, **2(10)**. DOI: 10.21105/joss.00177.
+  
 - Please note that this project is released with a
   [Contributor Code of Conduct](CONDUCT.md). By participating in this project
   you agree to abide by its terms.
@@ -223,10 +214,5 @@ _Users of these data should take into account the following (from the [NCEI webs
 Jarvis, A., Reuter, H. I., Nelson, A., Guevara, E. (2008) Hole-filled
 SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m
 Database (<http://srtm.csi.cgiar.org>)
-
-Karger, D. N., Conrad, O., Bohner, J., Kawohl, T., Kreft, H.,
-Soria-Auza, R. W., _et al_. (2016) Climatologies at high resolution for
-the Earth land surface areas. _arXiv preprint_ **arXiv:1607.00217**.
-(<http://chelsa-climate.org/>)
 
 [![ropensci](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org)
