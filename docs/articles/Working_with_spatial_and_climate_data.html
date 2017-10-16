@@ -81,7 +81,7 @@
       <h1>Working with spatial and climate data from GSODR</h1>
                         <h4 class="author">Tomislav Hengl and Adam H Sparks</h4>
             
-            <h4 class="date">2017-10-12</h4>
+            <h4 class="date">2017-10-16</h4>
           </div>
 
     
@@ -116,14 +116,14 @@ pnts &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumen
 pnts<span class="op">$</span>DATE =<span class="st"> </span><span class="kw">as.Date</span>(<span class="kw">paste</span>(pnts<span class="op">$</span>YEAR, pnts<span class="op">$</span>MONTH, pnts<span class="op">$</span>DAY, <span class="dt">sep =</span> <span class="st">"-"</span>))
 <span class="kw">row.names</span>(pnts) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">"point"</span>, <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(pnts), <span class="dt">sep =</span> <span class="st">""</span>)
 
-tmp_ST &lt;-<span class="st"> </span><span class="kw">STIDF</span>(<span class="dt">sp =</span> <span class="kw">as</span>(pnts, <span class="st">"SpatialPoints"</span>),
+tmp_ST &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/spacetime/topics/STIDF-class">STIDF</a></span>(<span class="dt">sp =</span> <span class="kw">as</span>(pnts, <span class="st">"SpatialPoints"</span>),
                 <span class="dt">time =</span> pnts<span class="op">$</span>DATE <span class="op">-</span><span class="st"> </span><span class="fl">0.5</span>,
                 <span class="dt">data =</span> pnts<span class="op">@</span>data[, <span class="kw">c</span>(<span class="st">"TEMP"</span>, <span class="st">"STNID"</span>)],
                 <span class="dt">endTime =</span> pnts<span class="op">$</span>DATE <span class="op">+</span><span class="st"> </span><span class="fl">0.5</span>)
 
 shape =<span class="st"> "http://maps.google.com/mapfiles/kml/pal2/icon18.png"</span>
 
-<span class="kw">kml</span>(tmp_ST, <span class="dt">dtime =</span> <span class="dv">24</span> <span class="op">*</span><span class="st"> </span><span class="dv">3600</span>, <span class="dt">colour =</span> TEMP, <span class="dt">shape =</span> shape, <span class="dt">labels =</span> TEMP,
+<span class="kw"><a href="http://www.rdocumentation.org/packages/plotKML/topics/kml">kml</a></span>(tmp_ST, <span class="dt">dtime =</span> <span class="dv">24</span> <span class="op">*</span><span class="st"> </span><span class="dv">3600</span>, <span class="dt">colour =</span> TEMP, <span class="dt">shape =</span> shape, <span class="dt">labels =</span> TEMP,
     <span class="dt">file.name =</span> <span class="st">"Temperatures_PHL_2010-2010.kml"</span>, <span class="dt">folder.name =</span> <span class="st">"TEMP"</span>)
 
 <span class="kw">system</span>(<span class="st">"zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml"</span>)</code></pre></div>

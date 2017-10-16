@@ -81,7 +81,7 @@
       <h1>GSODR</h1>
                         <h4 class="author">Adam H Sparks</h4>
             
-            <h4 class="date">2017-10-12</h4>
+            <h4 class="date">2017-10-16</h4>
           </div>
 
     
@@ -112,8 +112,9 @@
 <a href="#find-stations-in-australia" class="anchor"></a>Find Stations in Australia</h2>
 <p><em>GSODR</em> provides lists of weather station locations and elevation values. Using <a href="https://CRAN.R-project.org/package=dplyr"><em>dplyr</em></a>, we can find all the stations in Australia.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
-<span class="kw">data</span>(country_list)
-station_locations &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(GSOD_stations, country_list,
+<span class="kw">load</span>(<span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"country_list.rda"</span>, <span class="dt">package =</span> <span class="st">"GSODR"</span>))
+<span class="kw">load</span>(<span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"isd_history.rda"</span>, <span class="dt">package =</span> <span class="st">"GSODR"</span>))
+station_locations &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(isd_history, country_list,
                                <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">"CTRY"</span> =<span class="st"> "FIPS"</span>))
 
 <span class="co"># create data.frame for Australia only</span>
@@ -150,7 +151,7 @@ Oz &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyvers
 </div>
 <div id="using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and-year" class="section level2">
 <h2 class="hasAnchor">
-<a href="#using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and-year" class="anchor"></a>Using the <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> Function in <em>GSODR</em> to Download a Single Station and Year</h2>
+<a href="#using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and-year" class="anchor"></a>Using the get_GSOD() Function in <em>GSODR</em> to Download a Single Station and Year</h2>
 <p>Now that we’ve seen where the reporting stations are located, we can download weather data from the station Toowoomba, Queensland, Australia for 2010 by using the STNID in the <code>station</code> parameter of <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(GSODR)
 Tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> <span class="st">"955510-99999"</span>)
@@ -161,20 +162,16 @@ Tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GS
 
 <span class="kw">head</span>(Tbar)</code></pre></div>
 </div>
-<div id="find-stations-within-a-specified-distance-of-a-point" class="section level2">
+<div id="find-stations-within-a-specified-distance-of-a-given-latlon-value" class="section level2">
 <h2 class="hasAnchor">
-<a href="#find-stations-within-a-specified-distance-of-a-point" class="anchor"></a>Find Stations Within a Specified Distance of a Point</h2>
+<a href="#find-stations-within-a-specified-distance-of-a-given-latlon-value" class="anchor"></a>Find Stations Within a Specified Distance of a Given Lat/Lon Value</h2>
 <p>Using the <code><a href="../reference/nearest_stations.html">nearest_stations()</a></code> function, you can find stations closest to a given point specified by latitude and longitude in decimal degrees. This can be used to generate a vector to pass along to <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> and download the stations of interest.</p>
 <p>There are missing stations in this query. Not all that are listed and queried actually have files on the server.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tbar_stations &lt;-
-<span class="st">  </span><span class="kw"><a href="../reference/nearest_stations.html">nearest_stations</a></span>(<span class="dt">LAT =</span> <span class="op">-</span><span class="fl">27.5598</span>,
-  <span class="dt">LON =</span> <span class="fl">151.9507</span>,
-  <span class="dt">distance =</span> <span class="dv">50</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tbar_stations &lt;-<span class="st"> </span><span class="kw"><a href="../reference/nearest_stations.html">nearest_stations</a></span>(<span class="dt">LAT =</span> <span class="op">-</span><span class="fl">27.5598</span>,
+                                  <span class="dt">LON =</span> <span class="fl">151.9507</span>,
+                                  <span class="dt">distance =</span> <span class="dv">50</span>)
   
-  tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(
-  <span class="dt">years =</span> <span class="dv">2010</span>,
-  <span class="dt">station =</span> tbar_stations
-  )</code></pre></div>
+  tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> tbar_stations)</code></pre></div>
 <p>If you wished to drop the stations, 949999-00170 and 949999-00183 from the query, you could do this.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remove &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"949999-00170"</span>, <span class="st">"949999-00183"</span>)
 
@@ -188,30 +185,32 @@ tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GS
 <h2 class="hasAnchor">
 <a href="#plot-maximum-and-miniumum-temperature-values" class="anchor"></a>Plot Maximum and Miniumum Temperature Values</h2>
 <p>Using the first data downloaded for a single station, 955510-99999, plot the temperature for 2010 using <code>read_csv()</code> from Hadley’s <a href="https://CRAN.R-project.org/package=readr"><code>readr</code></a> package.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(lubridate)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
+<span class="kw">library</span>(lubridate)
 <span class="kw">library</span>(tidyr)
 
 <span class="co"># Create a dataframe of just the date and temperature values that we want to</span>
 <span class="co"># plot</span>
-tbar_temps &lt;-<span class="st"> </span>tbar[, <span class="kw">c</span>(<span class="dv">13</span>, <span class="dv">18</span>, <span class="dv">32</span>, <span class="dv">34</span>)]
+tbar_temps &lt;-<span class="st"> </span>tbar[, <span class="kw">c</span>(<span class="st">"YEARMODA"</span>, <span class="st">"TEMP"</span>, <span class="st">"MAX"</span>, <span class="st">"MIN"</span>)]
 
 <span class="co"># Gather the data from wide to long</span>
 tbar_temps &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/gather">gather</a></span>(tbar_temps, Measurement, <span class="dt">gather_cols =</span> TEMP<span class="op">:</span>MIN)
 
-<span class="kw">ggplot</span>(<span class="dt">data =</span> tbar_temps, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/lubridate/topics/ymd">ymd</a></span>(YEARMODA), <span class="dt">y =</span> value,
+<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(<span class="dt">data =</span> tbar_temps, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/lubridate/topics/ymd">ymd</a></span>(YEARMODA), <span class="dt">y =</span> value,
                               <span class="dt">colour =</span> Measurement)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">type =</span> <span class="st">"qual"</span>, <span class="dt">na.value =</span> <span class="st">"black"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">name =</span> <span class="st">"Temperature"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_x_date</span>(<span class="dt">name =</span> <span class="st">"Date"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_brewer">scale_color_brewer</a></span>(<span class="dt">type =</span> <span class="st">"qual"</span>, <span class="dt">na.value =</span> <span class="st">"black"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>(<span class="dt">name =</span> <span class="st">"Temperature"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_date">scale_x_date</a></span>(<span class="dt">name =</span> <span class="st">"Date"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_bw</a></span>()</code></pre></div>
 <div class="figure">
 <img src="figure/Toowoomba_temperature.png" alt="GSOD Toowoomba Temperatures"><p class="caption">GSOD Toowoomba Temperatures</p>
 </div>
 </div>
-<div id="creating-spatial-files" class="section level2">
-<h2 class="hasAnchor">
-<a href="#creating-spatial-files" class="anchor"></a>Creating Spatial Files</h2>
+</div>
+<div id="creating-spatial-files" class="section level1">
+<h1 class="hasAnchor">
+<a href="#creating-spatial-files" class="anchor"></a>Creating Spatial Files</h1>
 <p>Because the stations provide geospatial location information, it is possible to create a spatial file. <a href="http://www.geopackage.org">GeoPackage files</a> are a open, standards-based, platform-independent, portable, self-describing compact format for transferring geospatial information, which handle vector files much like shapefiles do, but eliminate many of the issues that shapefiles have with field names and the number of files. The <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> function can create a GeoPackage file, which can be used with a GIS for further analysis and mapping with other spatial objects.</p>
 <p>After getting weather stations for Australia and creating a GeoPackage file, <em>rgdal</em> can import the data into R and <em>raster</em> provides a function, <code>getData()</code>, to download an outline of Australia useful for plotting the station locations in this country.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2015</span>, <span class="dt">country =</span> <span class="st">"Australia"</span>, <span class="dt">dsn =</span> <span class="st">"~/"</span>, <span class="dt">filename =</span> <span class="st">"AUS"</span>,
@@ -224,10 +223,10 @@ tbar_temps &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rd
 
 <span class="co">#&gt; Finished downloading file.</span>
               
-<span class="co">#&gt; Parsing the indivdual station files now.</span>
+<span class="co">#&gt; Starting data file processing.</span>
 
 
-<span class="co">#&gt; Finished parsing files. Writing files to disk now.</span></code></pre></div>
+<span class="co">#&gt; Writing GeoPackage file to disk.</span></code></pre></div>
 <p>Importing the GeoPackage file can be a bit tricky. The dsn will be the full path along with the file name. The layer to be specified is “GSOD”, this is specified in the <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> function and will not change. The file name, specified in the dsn will, but the layer name will not.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rgdal)
 <span class="co">#&gt; Loading required package: sp</span>
@@ -242,7 +241,7 @@ tbar_temps &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rd
 AUS_stations &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/rgdal/topics/readOGR">readOGR</a></span>(<span class="dt">dsn =</span> <span class="kw">path.expand</span>(<span class="st">"~/AUS.gpkg"</span>), <span class="dt">layer =</span> <span class="st">"GSOD"</span>)
 <span class="co">#&gt; OGR data source with driver: GPKG </span>
 <span class="co">#&gt; Source: "/Users/asparks/AUS-2015.gpkg", layer: "GSOD"</span>
-<span class="co">#&gt; with 165168 features</span>
+<span class="co">#&gt; with 186977 features</span>
 <span class="co">#&gt; It has 46 fields</span>
 
 <span class="kw">class</span>(AUS_stations)
@@ -253,29 +252,23 @@ AUS_stations &lt;-<span class="st"> </span><span class="kw"><a href="http://www.
 <p>This option is much faster to load since it does not load the geometry.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">AUS_sqlite &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="kw"><a href="http://dplyr.tidyverse.org/reference/src_dbi.html">src_sqlite</a></span>(<span class="kw">path.expand</span>(<span class="st">"~/AUS.gpkg"</span>)), <span class="st">"GSOD"</span>)
 <span class="kw">class</span>(AUS_sqlite)
-<span class="co">#&gt; [1] "tbl_sqlite" "tbl_sql"    "tbl_lazy"   "tbl"       </span>
+<span class="co">#&gt; [1] "tbl_dbi"  "tbl_sql"  "tbl_lazy" "tbl"</span>
 
 <span class="kw">print</span>(AUS_sqlite, <span class="dt">n =</span> <span class="dv">5</span>)
-<span class="co">#&gt; Source:   query [?? x 48]</span>
-<span class="co">#&gt; Database: sqlite 3.8.6 [/Users/asparks/AUS-2015.gpkg]</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     fid       geom   USAF  WBAN        STNID          STN_NAME  CTRY STATE</span>
-<span class="co">#&gt;   &lt;int&gt;     &lt;list&gt;  &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;             &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;</span>
-<span class="co">#&gt; 1     1 &lt;raw [29]&gt; 941030 99999 941030-99999 BROWSE ISLAND AWS    AS -9999</span>
-<span class="co">#&gt; 2     2 &lt;raw [29]&gt; 941030 99999 941030-99999 BROWSE ISLAND AWS    AS -9999</span>
-<span class="co">#&gt; 3     3 &lt;raw [29]&gt; 941030 99999 941030-99999 BROWSE ISLAND AWS    AS -9999</span>
-<span class="co">#&gt; 4     4 &lt;raw [29]&gt; 941030 99999 941030-99999 BROWSE ISLAND AWS    AS -9999</span>
-<span class="co">#&gt; 5     5 &lt;raw [29]&gt; 941030 99999 941030-99999 BROWSE ISLAND AWS    AS -9999</span>
-<span class="co">#&gt; # ... with more rows, and 40 more variables: CALL &lt;chr&gt;, ELEV_M &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   ELEV_M_SRTM_90m &lt;dbl&gt;, </span><span class="re">BEGIN</span><span class="co"> &lt;dbl&gt;, </span><span class="re">END</span><span class="co"> &lt;dbl&gt;, YEARMODA &lt;chr&gt;,</span>
-<span class="co">#&gt; #   YEAR &lt;chr&gt;, MONTH &lt;chr&gt;, DAY &lt;chr&gt;, YDAY &lt;dbl&gt;, TEMP &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   TEMP_CNT &lt;int&gt;, DEWP &lt;dbl&gt;, DEWP_CNT &lt;int&gt;, SLP &lt;dbl&gt;, SLP_CNT &lt;int&gt;,</span>
-<span class="co">#&gt; #   STP &lt;dbl&gt;, STP_CNT &lt;int&gt;, VISIB &lt;dbl&gt;, VISIB_CNT &lt;int&gt;, WDSP &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   WDSP_CNT &lt;int&gt;, MXSPD &lt;dbl&gt;, GUST &lt;dbl&gt;, MAX &lt;dbl&gt;, MAX_FLAG &lt;chr&gt;,</span>
-<span class="co">#&gt; #   MIN &lt;dbl&gt;, MIN_FLAG &lt;chr&gt;, PRCP &lt;dbl&gt;, PRCP_FLAG &lt;chr&gt;, SNDP &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   I_FOG &lt;int&gt;, I_RAIN_DRIZZLE &lt;int&gt;, I_SNOW_ICE &lt;int&gt;, I_HAIL &lt;int&gt;,</span>
-<span class="co">#&gt; #   I_THUNDER &lt;int&gt;, I_TORNADO_FUNNEL &lt;int&gt;, EA &lt;dbl&gt;, ES &lt;dbl&gt;, RH &lt;dbl&gt;</span></code></pre></div>
-</div>
+<span class="co">#&gt; Source:   table&lt;GSOD&gt; [?? x 48]</span>
+<span class="co">#&gt; Database: sqlite 3.19.3 [/Users/U8004755/AUS.gpkg]</span>
+<span class="co">#&gt;    fid         geom   USAF  WBAN        STNID  STN_NAME  CTRY STATE  CALL ELEV_M ELEV_M_SRTM_90m    </span><span class="re">BEGIN</span><span class="co">      </span><span class="re">END</span><span class="co"> YEARMODA</span>
+<span class="co">#&gt;  &lt;int&gt;       &lt;blob&gt;  &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt;           &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;chr&gt;</span>
+<span class="co">#&gt; 1     1 &lt;blob[29 B]&gt; 941000 99999 941000-99999 KALUMBURU    AS  &lt;NA&gt;  &lt;NA&gt;     24              17 20010912 20170916 20150101</span>
+<span class="co">#&gt; 2     2 &lt;blob[29 B]&gt; 941000 99999 941000-99999 KALUMBURU    AS  &lt;NA&gt;  &lt;NA&gt;     24              17 20010912 20170916 20150102</span>
+<span class="co">#&gt; 3     3 &lt;blob[29 B]&gt; 941000 99999 941000-99999 KALUMBURU    AS  &lt;NA&gt;  &lt;NA&gt;     24              17 20010912 20170916 20150103</span>
+<span class="co">#&gt; 4      4 &lt;blob[29 B]&gt; 941000 99999 941000-99999 KALUMBURU    AS  &lt;NA&gt;  &lt;NA&gt;     24              17 20010912 20170916 20150104</span>
+<span class="co">#&gt; 5     5 &lt;blob[29 B]&gt; 941000 99999 941000-99999 KALUMBURU    AS  &lt;NA&gt;  &lt;NA&gt;     24              17 20010912 20170916 20150105</span>
+<span class="co">#&gt; ... with more rows, and 34 more variables: YEAR &lt;chr&gt;, MONTH &lt;chr&gt;, DAY &lt;chr&gt;, YDAY &lt;dbl&gt;, TEMP &lt;dbl&gt;, TEMP_CNT &lt;int&gt;,</span>
+<span class="co">#&gt;   DEWP &lt;dbl&gt;, DEWP_CNT &lt;int&gt;, SLP &lt;dbl&gt;, SLP_CNT &lt;int&gt;, STP &lt;dbl&gt;, STP_CNT &lt;int&gt;, VISIB &lt;dbl&gt;, VISIB_CNT &lt;int&gt;, WDSP &lt;dbl&gt;,</span>
+<span class="co">#&gt;   WDSP_CNT &lt;int&gt;, MXSPD &lt;dbl&gt;, GUST &lt;dbl&gt;, MAX &lt;dbl&gt;, MAX_FLAG &lt;chr&gt;, MIN &lt;dbl&gt;, MIN_FLAG &lt;chr&gt;, PRCP &lt;dbl&gt;, PRCP_FLAG &lt;chr&gt;,</span>
+<span class="co">#&gt;   SNDP &lt;dbl&gt;, I_FOG &lt;int&gt;, I_RAIN_DRIZZLE &lt;int&gt;, I_SNOW_ICE &lt;int&gt;, I_HAIL &lt;int&gt;, I_THUNDER &lt;int&gt;, I_TORNADO_FUNNEL &lt;int&gt;,</span>
+<span class="co">#&gt;   EA &lt;dbl&gt;, ES &lt;dbl&gt;, RH &lt;dbl&gt;</span></code></pre></div>
 </div>
 <div id="reformating-local-data-files" class="section level1">
 <h1 class="hasAnchor">
@@ -284,14 +277,14 @@ AUS_stations &lt;-<span class="st"> </span><span class="kw"><a href="http://www.
 <p>There are two ways, you can either provide <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code> with a list of specified station files or you can supply it with a directory containing all of the “WBAN-WMO-YYYY.op.gz” station files that you wish to reformat.</p>
 <div id="reformat-a-list-of-local-files" class="section level2">
 <h2 class="hasAnchor">
-<a href="#reformat-a-list-of-local-files" class="anchor"></a>Reformat a List of Local Files</h2>
+<a href="#reformat-a-list-of-local-files" class="anchor"></a>Reformat a list of local files</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"~/GSOD/gsod_1960/200490-99999-1960.op.gz"</span>,
        <span class="st">"~/GSOD/gsod_1961/200490-99999-1961.op.gz"</span>)
 x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reformat_GSOD.html">reformat_GSOD</a></span>(<span class="dt">file_list =</span> y)</code></pre></div>
 </div>
 <div id="reformat-all-local-files-found-in-directory" class="section level2">
 <h2 class="hasAnchor">
-<a href="#reformat-all-local-files-found-in-directory" class="anchor"></a>Reformat All Local Files Found in Directory</h2>
+<a href="#reformat-all-local-files-found-in-directory" class="anchor"></a>Reformat all local files found in directory</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reformat_GSOD.html">reformat_GSOD</a></span>(<span class="dt">dsn =</span> <span class="st">"~/GSOD/gsod_1960"</span>)</code></pre></div>
 </div>
 </div>
@@ -299,9 +292,7 @@ x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reformat_
 <h1 class="hasAnchor">
 <a href="#updating-gsodrs-internal-database-of-station-locations-and-metadata" class="anchor"></a>Updating <em>GSODR’s</em> Internal Database of Station Locations and Metadata</h1>
 <p><em>GSODR</em> uses internal databases of station data from the NCEI to provide location and other metadata, e.g. elevation, station names, WMO codes, etc. to make the process of querying for weather data faster. This database is created and packaged with <em>GSODR</em> for distribution and is updated with new releases. Users have the option of updating these databases after installing <em>GSODR</em>. While this option gives the users the ability to keep the database up-to-date and gives <em>GSODR’s</em> authors flexibility in maintaining it, this also means that reproducibility may be affected since the same version of <em>GSODR</em> may have different databases on different machines. If reproducibility is necessary, care should be taken to ensure that the version of the databases is the same across different machines.</p>
-<p>The database file <code>isd_history.rda</code> can be located on your local system by using the following command,</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">paste0</span>(<span class="kw">.libPaths</span>(), <span class="st">"/GSODR/extdata"</span>)[<span class="dv">1</span>]</code></pre></div>
-<p>unless you have specified another location for library installations and installed <em>GSODR</em> there, in which case it would still be in <code>GSODR/extdata</code>.</p>
+<p>The database file <code>isd_history.rda</code> can be located on your local system by using the following command, <code>paste0(.libPaths(), "/GSODR/extdata")[1]</code>, unless you have specified another location for library installations and installed <em>GSODR</em> there, in which case it would still be in <code>GSODR/extdata</code>.</p>
 </div>
 <div id="additional-climate-data" class="section level1">
 <h1 class="hasAnchor">
@@ -402,7 +393,7 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <div id="appendix-2-map-of-gsod-station-locations" class="section level2">
 <h2 class="hasAnchor">
 <a href="#appendix-2-map-of-gsod-station-locations" class="anchor"></a>Appendix 2: Map of GSOD Station Locations</h2>
-<p><img src="GSODR_files/figure-html/unnamed-chunk-13-1.png" width="672"></p>
+<p><img src="GSODR_files/figure-html/unnamed-chunk-12-1.png" width="672"></p>
 </div>
 </div>
 </div>
@@ -418,16 +409,16 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <a href="#retrieving-and-reformatting-data-in-r">Retrieving and Reformatting Data in R</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#plot-global-station-locations">Plot Global Station Locations</a></li>
       <li><a href="#find-stations-in-australia">Find Stations in Australia</a></li>
-      <li><a href="#using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and-year">Using the <code><a href="--/reference/get_GSOD-html">get_GSOD()</a></code> Function in <em>GSODR</em> to Download a Single Station and Year</a></li>
-      <li><a href="#find-stations-within-a-specified-distance-of-a-point">Find Stations Within a Specified Distance of a Point</a></li>
+      <li><a href="#using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and-year">Using the get_GSOD() Function in <em>GSODR</em> to Download a Single Station and Year</a></li>
+      <li><a href="#find-stations-within-a-specified-distance-of-a-given-latlon-value">Find Stations Within a Specified Distance of a Given Lat/Lon Value</a></li>
       <li><a href="#plot-maximum-and-miniumum-temperature-values">Plot Maximum and Miniumum Temperature Values</a></li>
-      <li><a href="#creating-spatial-files">Creating Spatial Files</a></li>
       </ul>
 </li>
+      <li><a href="#creating-spatial-files">Creating Spatial Files</a></li>
       <li>
 <a href="#reformating-local-data-files">Reformating Local Data Files</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#reformat-a-list-of-local-files">Reformat a List of Local Files</a></li>
-      <li><a href="#reformat-all-local-files-found-in-directory">Reformat All Local Files Found in Directory</a></li>
+<li><a href="#reformat-a-list-of-local-files">Reformat a list of local files</a></li>
+      <li><a href="#reformat-all-local-files-found-in-directory">Reformat all local files found in directory</a></li>
       </ul>
 </li>
       <li><a href="#updating-gsodrs-internal-database-of-station-locations-and-metadata">Updating <em>GSODR’s</em> Internal Database of Station Locations and Metadata</a></li>
