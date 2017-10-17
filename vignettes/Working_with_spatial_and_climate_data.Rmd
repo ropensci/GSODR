@@ -2,7 +2,12 @@
 title: "Working with spatial and climate data from GSODR"
 author: "Tomislav Hengl and Adam H Sparks"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 3
+    theme: spacelab
 vignette: >
   %\VignetteEngine{knitr::knitr}
   %\VignetteIndexEntry{Working with spatial and climate data from GSODR}
