@@ -1,4 +1,9 @@
 
+
+
+
+
+
 #' Download and return a tidy data.frame of GSOD weather station data inventories
 #'
 #' The NCEI maintains a document,
@@ -18,53 +23,59 @@
 #'
 #' @examples
 #' \dontrun{
-#'
 #' inventory <- get_inventory()
 #'}
 #' @return \code{\link[base]{data.frame}} object of station inventories
 #' @author Adam H Sparks, \email{adamhsparks@gmail.com}
+#' @importFrom rlang .data
 #' @export
 #'
-get_inventory <- function(){
-file_in <-
-  curl::curl_download("ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt",
-                      destfile = tempfile(), quiet = FALSE)
+get_inventory <- function() {
+  load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 
-header <- readLines(file_in, n = 5)
+  file_in <-
+    curl::curl_download(
+      "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt",
+      destfile = tempfile(),
+      quiet = TRUE
+    )
 
-header <- paste0(header[3:5], collapse = " ")
+  header <- readLines(file_in, n = 5)
 
-message(paste0("/n", header, "/n"))
+  message(paste0(header[3:5], collapse = " "))
 
-body <-
-  readr::read_fwf(file_in,
-                  skip = 8,
-                  readr::fwf_positions(
-                    c(1, 8, 14, 20, 28, 36, 44, 52, 60, 68, 76, 84, 92, 100, 108),
-                    c(7, 13, 18, 27, 35, 43, 51, 59, 67, 75, 83, 91, 99, 107, 113),
-                    c(
-                      "USAF",
-                      "WBAN",
-                      "YEAR",
-                      "JAN",
-                      "FEB",
-                      "MAR",
-                      "APR",
-                      "MAY",
-                      "JUN",
-                      "JUL",
-                      "AUG",
-                      "SEP",
-                      "OCT",
-                      "NOV",
-                      "DEC"
-                    )
-                  ))
+  body <-
+    readr::read_fwf(
+      file_in,
+      skip = 8,
+      readr::fwf_positions(
+        c(1, 8, 14, 20, 28, 36, 44, 52, 60, 68, 76, 84, 92, 100, 108),
+        c(7, 13, 18, 27, 35, 43, 51, 59, 67, 75, 83, 91, 99, 107, 113),
+        c(
+          "USAF",
+          "WBAN",
+          "YEAR",
+          "JAN",
+          "FEB",
+          "MAR",
+          "APR",
+          "MAY",
+          "JUN",
+          "JUL",
+          "AUG",
+          "SEP",
+          "OCT",
+          "NOV",
+          "DEC"
+        )
+      ),
+      col_types = c("ciiiiiiiiiiiiii")
+    )
 
-body[, "STNID"] <- paste(body$USAF, body$WBAN, sep = "-")
+  body[, "STNID"] <- paste(body$USAF, body$WBAN, sep = "-")
 
-body <- body[, -c(1:2)]
+  body <- body[, -c(1:2)]
 
-body <- dplyr::select(body, STNID, dplyr::everything())
+  body <- dplyr::select(body, .data$STNID, dplyr::everything())
+  return(body)
 }
-

@@ -28,7 +28,6 @@ others must provide this same notification.}
 }
 \examples{
 \dontrun{
-
 inventory <- get_inventory()
 }
 }

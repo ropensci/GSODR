@@ -45,6 +45,7 @@ Imports:
     R.utils,
     readr,
     rgdal (>= 1.1-9),
+    rlang,
     sp,
     stats,
     utils
