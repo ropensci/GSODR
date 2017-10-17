@@ -1,3 +1,10 @@
+# GSODR 1.0.8
+
+## Major changes
+
+- Add new function, `get_inventory()`, which downloads the NCEI's station
+data inventory document
+
 # GSODR 1.0.7
 
 ## Bug fixes
