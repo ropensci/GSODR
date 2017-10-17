@@ -2,7 +2,12 @@
 title: "GSODR use case: Specified years/stations vignette"
 author: "Adam H Sparks"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 3
+    theme: spacelab
 vignette: >
   %\VignetteEngine{knitr::knitr}
   %\VignetteIndexEntry{GSODR use case: Specified years/stations vignette}

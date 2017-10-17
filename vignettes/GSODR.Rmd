@@ -2,7 +2,12 @@
 title: "GSODR"
 author: "Adam H Sparks"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 3
+    theme: spacelab
 vignette: >
   %\VignetteEngine{knitr::knitr}
   %\VignetteIndexEntry{GSODR}
@@ -29,7 +34,7 @@ four main functions for facilitating this:
 FTP server, reformat them and return a data.frame in R or save a file to disk
 
 - `reformat_GSOD()` - the workhorse, this function takes individual station
-files on the local disk and reformats them returning a data.frame in R
+files on the local disk and re-formats them returning a data.frame in R
 
 - `nearest_stations()` - this function returns a data frame containing a list of
 stations and their metadata that fall within the given radius of a point
@@ -307,11 +312,64 @@ The database file `isd_history.rda` can be located on your local system by using
 the following command, `paste0(.libPaths(), "/GSODR/extdata")[1]`, unless you have specified another location for library installations and
 installed _GSODR_ there, in which case it would still be in `GSODR/extdata`.
 
+# Checking NCEI's GSOD Station Data Inventory
+
+_GSODR_ provides a function, `get_inventory()` to retrieve an inventory of the
+number of weather observations by station-year-month for the beginning of record
+through to current.
+
+Following is an example of how to retreive the inventory and check a station in
+Toowoomba, Queensland, Australia, which was used in an earlier example.
+
+```{r, eval=FALSE}
+inventory <- get_inventory()
+
+#> THIS INVENTORY SHOWS THE NUMBER OF WEATHER OBSERVATIONS BY STATION-YEAR-MONTH FOR BEGINNING OF RECORD THROUGH SEPTEMBER 2017.  THE DATABASE CONTINUES TO BE UPDATED AND ENHANCED, AND THIS INVENTORY WILL BE  UPDATED ON A REGULAR BASIS.
+
+head(inventory)
+
+#> # A tibble: 6 x 14
+#>         STNID  YEAR   JAN   FEB   MAR   APR   MAY   JUN   JUL   AUG   SEP   OCT   NOV   DEC
+#>         <chr> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> #><int> <int> <int>
+#>1 007005-99999  2012    18     0     0     0     0     0     0     0     0     0     0     0
+#>2 007011-99999  2012   771     0   183     0     0     0   142    13     9     0     4     0
+#>3 007018-99999  2013     0     0     0     0     0     0   710     0     0     0     0     0
+#>4 007025-99999  2012    21     0     0     0     0     0     0     0     0     0     0     0
+#>5 007026-99999  2012     0     0     0     0     0     0   367     0     0     0     0     7
+#>6 007026-99999  2014     0     0     0     0     0     0   180     0     4     0   552     0
+
+subset(inventory, STNID == "955510-99999")
+
+#> # A tibble: 20 x 14
+#>          STNID  YEAR   JAN   FEB   MAR   APR   MAY   JUN   JUL   AUG   SEP   OCT   NOV   DEC
+#>          <chr> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int>
+#> 1 955510-99999  1998     0     0   222   223   221   211   226   217   222   234   215   230
+#> 2 955510-99999  1999   213   201   235   224   244   229   239   247   236   246   233   243
+#> 3 955510-99999  2000   241   227   247   238   246   237   245   240   236   248   239   248
+#> 4 955510-99999  2001   245   223   246   238   239   236   243   240   237   236   235   246
+#> 5 955510-99999  2002   245   219   246   236   243   229   243   246   227   238   233   246
+#> 6 955510-99999  2003   244   217   220   232   235   233   246   242   218   239   225   245
+#> 7 955510-99999  2004   240   227   241   229   233   224   235   244   235   244   235   245
+#> 8 955510-99999  2005   243   221   243   241   247   242   248   247   234   241   239   246
+#> 9 955510-99999  2006   245   223   246   232   241   238   247   247   239   247   240   247
+#>10 955510-99999  2007   247   222   244   240   248   240   244   244   239   247   237   246
+#>11 955510-99999  2008   247   228   248   239   248   239   248   247   239   247   238   248
+#>12 955510-99999  2009   245   222   246   235   244   237   248   248   239   248   239   248
+#>13 955510-99999  2010   248   223   248   240   244   240   242   247   240   248   240   247
+#>14 955510-99999  2011   247   224   247   240   247   240   248   247   239   248   239   248
+#>15 955510-99999  2012   248   232   248   240   248   240   248   247   240   248   240   245
+#>16 955510-99999  2013   236   220   247   233   248   239   252   246   230   248   239   246
+#>17 955510-99999  2014   243   224   247   240   246   239   241   243   240   247   240   248
+#>18 955510-99999  2015   248   222   248   239   247   240   247   246   239   247   237   247
+#>19 955510-99999  2016   246   228   245   240   246   240   248   248   238   248   231   248
+#>20 955510-99999  2017   240   224   248   240   248   237   248   247   190     0     0     0
+```
+
 # Additional Climate Data
 
 Additional climate data,
 [_GSODRdata_](https://github.com/adamhsparks/GSODRdata), formatted for use with
-GSOD data provided by _GSODR_ are available as an R package installable through
+GSOD data provided by _GSODR_ are available as an R package install able through
 GitHub due to the package size, 5.1Mb, being too large for CRAN.
 
 ```{r, eval=FALSE}

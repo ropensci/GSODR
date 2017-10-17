@@ -15,3 +15,4 @@ vignettes/figure
 ^codecov\.yml$
 ^docs$
 ^codemeta\.json$
+^_pkgdown\.yml$
