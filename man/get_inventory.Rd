@@ -13,9 +13,9 @@ get_inventory()
 The NCEI maintains a document,
 <ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt>, which shows the
 number of weather observations by station-year-month from the beginning of
-the stations' records. This function retrieves that document, prints the
-header to display the last update time and caclulates the percent
-monthly coverage for each station reported.
+the stations' records.  This function retrieves that document, prints the
+header to display the last update time and returns a data frame of the
+inventory information for each station-year-month.
 }
 \note{
 The GSOD data, which are downloaded and manipulated by this R package,
@@ -25,6 +25,8 @@ commercial use.  They can be used within the U.S. or for non-commercial
 international activities without restriction.  The non-U.S. data cannot be
 redistributed for commercial purposes.  Re-distribution of these data by
 others must provide this same notification.}
+
+The download process can take quite some time to complete.
 }
 \examples{
 \dontrun{
