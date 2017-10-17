@@ -74,4 +74,5 @@ get_inventory <- function() {
 
   body <- as.data.frame(dplyr::select(body, .data$STNID, dplyr::everything()))
   return(body)
+  unlink(tempfile())
 }
