@@ -1,0 +1,8 @@
+urls:
+  reference: https://ropensci.github.io/GSODR//reference
+  article: https://ropensci.github.io/GSODR//articles
+articles:
+  GSODR: GSODR.html
+  Specified_stations_for_a_range_of_years: Specified_stations_for_a_range_of_years.html
+  Working_with_spatial_and_climate_data: Working_with_spatial_and_climate_data.html
+

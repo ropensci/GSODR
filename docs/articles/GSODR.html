@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GSODR • GSODR</title>
-<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/spacelab/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -81,7 +81,7 @@
       <h1>GSODR</h1>
                         <h4 class="author">Adam H Sparks</h4>
             
-            <h4 class="date">2017-10-17</h4>
+            <h4 class="date">2017-10-18</h4>
           </div>
 
     
@@ -93,7 +93,7 @@
 <p>The GSOD or <a href="https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod">Global Surface Summary of the Day (GSOD)</a> data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. <em>GSODR</em> aims to make it easy to find, transfer and format the data you need for use in analysis and provides four main functions for facilitating this:</p>
 <ul>
 <li><p><code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> - the main function that will query and transfer files from the FTP server, reformat them and return a data.frame in R or save a file to disk</p></li>
-<li><p><code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code> - the workhorse, this function takes individual station files on the local disk and reformats them returning a data.frame in R</p></li>
+<li><p><code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code> - the workhorse, this function takes individual station files on the local disk and re-formats them returning a data.frame in R</p></li>
 <li><p><code><a href="../reference/nearest_stations.html">nearest_stations()</a></code> - this function returns a data frame containing a list of stations and their metadata that fall within the given radius of a point specified by the user</p></li>
 <li><p><code><a href="../reference/update_station_list.html">update_station_list()</a></code> - this function downloads the latest station list from the NCEI FTP server updates the package’s internal database of stations and their metadata.</p></li>
 </ul>
@@ -294,10 +294,57 @@ x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reformat_
 <p><em>GSODR</em> uses internal databases of station data from the NCEI to provide location and other metadata, e.g. elevation, station names, WMO codes, etc. to make the process of querying for weather data faster. This database is created and packaged with <em>GSODR</em> for distribution and is updated with new releases. Users have the option of updating these databases after installing <em>GSODR</em>. While this option gives the users the ability to keep the database up-to-date and gives <em>GSODR’s</em> authors flexibility in maintaining it, this also means that reproducibility may be affected since the same version of <em>GSODR</em> may have different databases on different machines. If reproducibility is necessary, care should be taken to ensure that the version of the databases is the same across different machines.</p>
 <p>The database file <code>isd_history.rda</code> can be located on your local system by using the following command, <code>paste0(.libPaths(), "/GSODR/extdata")[1]</code>, unless you have specified another location for library installations and installed <em>GSODR</em> there, in which case it would still be in <code>GSODR/extdata</code>.</p>
 </div>
+<div id="checking-nceis-gsod-station-data-inventory" class="section level1">
+<h1 class="hasAnchor">
+<a href="#checking-nceis-gsod-station-data-inventory" class="anchor"></a>Checking NCEI’s GSOD Station Data Inventory</h1>
+<p><em>GSODR</em> provides a function, <code><a href="../reference/get_inventory.html">get_inventory()</a></code> to retrieve an inventory of the number of weather observations by station-year-month for the beginning of record through to current.</p>
+<p>Following is an example of how to retreive the inventory and check a station in Toowoomba, Queensland, Australia, which was used in an earlier example.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">inventory &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_inventory.html">get_inventory</a></span>()
+
+<span class="co">#&gt; THIS INVENTORY SHOWS THE NUMBER OF WEATHER OBSERVATIONS BY STATION-YEAR-MONTH FOR </span><span class="re">BEGIN</span><span class="co">NING OF RECORD THROUGH SEPTEMBER 2017.  THE DATABASE CONTINUES TO BE UPDATED AND ENHANCED, AND THIS INVENTORY WILL BE  UPDATED ON A REGULAR BASIS.</span>
+
+<span class="kw">head</span>(inventory)
+
+<span class="co">#&gt; # A tibble: 6 x 14</span>
+<span class="co">#&gt;         STNID  YEAR   JAN   FEB   MAR   APR   MAY   JUN   JUL   AUG   SEP   OCT   NOV   DEC</span>
+<span class="co">#&gt;         &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; #&gt;&lt;int&gt; &lt;int&gt; &lt;int&gt;</span>
+<span class="co">#&gt;1 007005-99999  2012    18     0     0     0     0     0     0     0     0     0     0     0</span>
+<span class="co">#&gt;2 007011-99999  2012   771     0   183     0     0     0   142    13     9     0     4     0</span>
+<span class="co">#&gt;3 007018-99999  2013     0     0     0     0     0     0   710     0     0     0     0     0</span>
+<span class="co">#&gt;4 007025-99999  2012    21     0     0     0     0     0     0     0     0     0     0     0</span>
+<span class="co">#&gt;5 007026-99999  2012     0     0     0     0     0     0   367     0     0     0     0     7</span>
+<span class="co">#&gt;6 007026-99999  2014     0     0     0     0     0     0   180     0     4     0   552     0</span>
+
+<span class="kw">subset</span>(inventory, STNID <span class="op">==</span><span class="st"> "955510-99999"</span>)
+
+<span class="co">#&gt; # A tibble: 20 x 14</span>
+<span class="co">#&gt;          STNID  YEAR   JAN   FEB   MAR   APR   MAY   JUN   JUL   AUG   SEP   OCT   NOV   DEC</span>
+<span class="co">#&gt;          &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;</span>
+<span class="co">#&gt; 1 955510-99999  1998     0     0   222   223   221   211   226   217   222   234   215   230</span>
+<span class="co">#&gt; 2 955510-99999  1999   213   201   235   224   244   229   239   247   236   246   233   243</span>
+<span class="co">#&gt; 3 955510-99999  2000   241   227   247   238   246   237   245   240   236   248   239   248</span>
+<span class="co">#&gt; 4 955510-99999  2001   245   223   246   238   239   236   243   240   237   236   235   246</span>
+<span class="co">#&gt; 5 955510-99999  2002   245   219   246   236   243   229   243   246   227   238   233   246</span>
+<span class="co">#&gt; 6 955510-99999  2003   244   217   220   232   235   233   246   242   218   239   225   245</span>
+<span class="co">#&gt; 7 955510-99999  2004   240   227   241   229   233   224   235   244   235   244   235   245</span>
+<span class="co">#&gt; 8 955510-99999  2005   243   221   243   241   247   242   248   247   234   241   239   246</span>
+<span class="co">#&gt; 9 955510-99999  2006   245   223   246   232   241   238   247   247   239   247   240   247</span>
+<span class="co">#&gt;10 955510-99999  2007   247   222   244   240   248   240   244   244   239   247   237   246</span>
+<span class="co">#&gt;11 955510-99999  2008   247   228   248   239   248   239   248   247   239   247   238   248</span>
+<span class="co">#&gt;12 955510-99999  2009   245   222   246   235   244   237   248   248   239   248   239   248</span>
+<span class="co">#&gt;13 955510-99999  2010   248   223   248   240   244   240   242   247   240   248   240   247</span>
+<span class="co">#&gt;14 955510-99999  2011   247   224   247   240   247   240   248   247   239   248   239   248</span>
+<span class="co">#&gt;15 955510-99999  2012   248   232   248   240   248   240   248   247   240   248   240   245</span>
+<span class="co">#&gt;16 955510-99999  2013   236   220   247   233   248   239   252   246   230   248   239   246</span>
+<span class="co">#&gt;17 955510-99999  2014   243   224   247   240   246   239   241   243   240   247   240   248</span>
+<span class="co">#&gt;18 955510-99999  2015   248   222   248   239   247   240   247   246   239   247   237   247</span>
+<span class="co">#&gt;19 955510-99999  2016   246   228   245   240   246   240   248   248   238   248   231   248</span>
+<span class="co">#&gt;20 955510-99999  2017   240   224   248   240   248   237   248   247   190     0     0     0</span></code></pre></div>
+</div>
 <div id="additional-climate-data" class="section level1">
 <h1 class="hasAnchor">
 <a href="#additional-climate-data" class="anchor"></a>Additional Climate Data</h1>
-<p>Additional climate data, <a href="https://github.com/adamhsparks/GSODRdata"><em>GSODRdata</em></a>, formatted for use with GSOD data provided by <em>GSODR</em> are available as an R package installable through GitHub due to the package size, 5.1Mb, being too large for CRAN.</p>
+<p>Additional climate data, <a href="https://github.com/adamhsparks/GSODRdata"><em>GSODRdata</em></a>, formatted for use with GSOD data provided by <em>GSODR</em> are available as an R package install able through GitHub due to the package size, 5.1Mb, being too large for CRAN.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages("devtools")</span>
 devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"adamhsparks/GSODRdata"</span>)
 <span class="kw">library</span>(<span class="st">"GSODRdata"</span>)</code></pre></div>
@@ -393,7 +440,7 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <div id="appendix-2-map-of-gsod-station-locations" class="section level2">
 <h2 class="hasAnchor">
 <a href="#appendix-2-map-of-gsod-station-locations" class="anchor"></a>Appendix 2: Map of GSOD Station Locations</h2>
-<p><img src="GSODR_files/figure-html/unnamed-chunk-12-1.png" width="672"></p>
+<p><img src="GSODR_files/figure-html/unnamed-chunk-13-1.png" width="672"></p>
 </div>
 </div>
 </div>
@@ -422,6 +469,7 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
       </ul>
 </li>
       <li><a href="#updating-gsodrs-internal-database-of-station-locations-and-metadata">Updating <em>GSODR’s</em> Internal Database of Station Locations and Metadata</a></li>
+      <li><a href="#checking-nceis-gsod-station-data-inventory">Checking NCEI’s GSOD Station Data Inventory</a></li>
       <li><a href="#additional-climate-data">Additional Climate Data</a></li>
       <li>
 <a href="#notes">Notes</a><ul class="nav nav-pills nav-stacked">
