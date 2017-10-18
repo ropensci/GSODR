@@ -6,9 +6,6 @@
 \usage{
 update_station_list()
 }
-\value{
-\code{\link[data.table]{data.table}} object of station metadata.
-}
 \description{
 This function downloads the latest station list (isd-history.csv) from the
 NCEI FTP server and updates the data distributed with \code{GSODR} so that
@@ -30,6 +27,7 @@ GSODR data that is not available in the database distributed with
 \dontrun{
 update_station_list()
 }
+
 }
 \author{
 Adam H Sparks, \email{adamhsparks@gmail.com}

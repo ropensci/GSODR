@@ -51,7 +51,7 @@ save it locally in a user specified location, if \code{dsn} is not specified
 by the user, defaults to the current working directory.}
 }
 \value{
-A \code{\link[base]{data.frame}} object of weather data or a
+A \code{\link[tibble]{tibble}} object of weather data and/or a
 comma-separated value (CSV) or GeoPackage (GPKG) file saved to local disk.
 }
 \description{

@@ -7,7 +7,7 @@
 get_inventory()
 }
 \value{
-\code{\link[base]{data.frame}} object of station inventories
+\code{\link[tibble]{tibble}} object of station inventories
 }
 \description{
 The NCEI maintains a document,
