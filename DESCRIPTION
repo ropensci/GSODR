@@ -47,7 +47,6 @@ Imports:
     rlang,
     sp,
     stats,
-    tibble,
     utils
 Suggests:
     ggplot2,
