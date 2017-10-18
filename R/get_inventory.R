@@ -20,7 +20,7 @@
 #' \dontrun{
 #' inventory <- get_inventory()
 #'}
-#' @return \code{\link[base]{data.frame}} object of station inventories
+#' @return \code{\link[tibble]{tibble}} object of station inventories
 #' @author Adam H Sparks, \email{adamhsparks@gmail.com}
 #' @note The download process can take quite some time to complete.
 #' @importFrom rlang .data
@@ -72,7 +72,7 @@ get_inventory <- function() {
 
   body <- body[, -c(1:2)]
 
-  body <- as.data.frame(dplyr::select(body, .data$STNID, dplyr::everything()))
+  body <- dplyr::select(body, .data$STNID, dplyr::everything())
   return(body)
   unlink(tempfile())
 }
