@@ -83,8 +83,6 @@ reformat_GSOD <- function(dsn = NULL, file_list = NULL) {
   isd_history <- NULL
 
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))
-  stations <- isd_history
-  stations <- data.table::setDT(stations)
 
   # If dsn !NULL, create a list of files to reformat
   if (!is.null(dsn)) {
@@ -95,7 +93,7 @@ reformat_GSOD <- function(dsn = NULL, file_list = NULL) {
   purrr::map(
     .x = file_list,
     .f = .process_gz,
-    stations = stations
+    isd_history = isd_history
   ) %>%
     dplyr::bind_rows() %>%
     as.data.frame()
