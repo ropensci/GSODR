@@ -150,7 +150,7 @@
 
   # Join to the station and SRTM data-------------------------------------------
 
-  GSOD_XY <- dplyr::left_join(isd_history, tmp, by = "STNID")
+  GSOD_XY <- dplyr::left_join(tmp, isd_history, by = "STNID")
 
   GSOD_XY <- dplyr::select(
     GSOD_XY,
