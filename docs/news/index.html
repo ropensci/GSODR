@@ -106,6 +106,17 @@
     </div>
 
     <div class="contents">
+    <div id="gsodr-1-0-8" class="section level1">
+<h1 class="hasAnchor">
+<a href="#gsodr-1-0-8" class="anchor"></a>GSODR 1.0.8</h1>
+<div id="major-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-changes" class="anchor"></a>Major changes</h2>
+<ul>
+<li>Add new function, <code><a href="../reference/get_inventory.html">get_inventory()</a></code>, which downloads the NCEI’s station data inventory document</li>
+</ul>
+</div>
+</div>
     <div id="gsodr-1-0-7" class="section level1">
 <h1 class="hasAnchor">
 <a href="#gsodr-1-0-7" class="anchor"></a>GSODR 1.0.7</h1>
@@ -127,9 +138,9 @@
 <li><p>Update example output in GSODR vignette where applicable</p></li>
 </ul>
 </div>
-<div id="major-changes" class="section level2">
+<div id="major-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes" class="anchor"></a>Major changes</h2>
+<a href="#major-changes-1" class="anchor"></a>Major changes</h2>
 <ul>
 <li>Update internal stations list</li>
 </ul>
@@ -149,9 +160,9 @@
     <div id="gsodr-1-0-5" class="section level1">
 <h1 class="hasAnchor">
 <a href="#gsodr-1-0-5" class="anchor"></a>GSODR 1.0.5</h1>
-<div id="major-changes-1" class="section level2">
+<div id="major-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-1" class="anchor"></a>Major changes</h2>
+<a href="#major-changes-2" class="anchor"></a>Major changes</h2>
 <ul>
 <li><p>Add welcome message on startup regarding data use and sharing</p></li>
 <li><p>Update internal stations list</p></li>
@@ -176,9 +187,9 @@
     <div id="gsodr-1-0-4" class="section level1">
 <h1 class="hasAnchor">
 <a href="#gsodr-1-0-4" class="anchor"></a>GSODR 1.0.4</h1>
-<div id="major-changes-2" class="section level2">
+<div id="major-changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-2" class="anchor"></a>Major changes</h2>
+<a href="#major-changes-3" class="anchor"></a>Major changes</h2>
 <ul>
 <li><p>Data distributed with GSODR are now internal to the package and not externally exposed to the user</p></li>
 <li><p>Vignettes have been updated and improved with an improved order of information presented and some have been combined for easier use</p></li>
@@ -195,9 +206,9 @@
     <div id="gsodr-1-0-3" class="section level1">
 <h1 class="hasAnchor">
 <a href="#gsodr-1-0-3" class="anchor"></a>GSODR 1.0.3</h1>
-<div id="major-changes-3" class="section level2">
+<div id="major-changes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-3" class="anchor"></a>Major changes</h2>
+<a href="#major-changes-4" class="anchor"></a>Major changes</h2>
 <ul>
 <li><p>Data for station locations and unique identifiers is now provided with the package on installation. Previously this was fetched each time from the ftp server.</p></li>
 <li><p>The station metadata can now be updated if necessary by using <code><a href="../reference/update_station_list.html">update_station_list()</a></code>, this change overwrites the internal data that were originally distributed with the package. This operation will fetch the latest list of stations and corresponding information from the NCEI ftp server. Any changes will be overwritten when the R package is updated, however, the package update should have the same or newer data included, so this should not be an issue.</p></li>
@@ -267,9 +278,9 @@
     <div id="gsodr-1-0-0" class="section level1">
 <h1 class="hasAnchor">
 <a href="#gsodr-1-0-0" class="anchor"></a>GSODR 1.0.0</h1>
-<div id="major-changes-4" class="section level2">
+<div id="major-changes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-4" class="anchor"></a>Major changes</h2>
+<a href="#major-changes-5" class="anchor"></a>Major changes</h2>
 <ul>
 <li><p>The <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> function returns a <code>data.frame</code> object in the current R session with the option to save data to local disk</p></li>
 <li><p>Multiple stations can be specified for download rather than just downloading a single station or all stations</p></li>
@@ -547,6 +558,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#gsodr-1-0-8">1.0.8</a></li>
         <li><a href="#gsodr-1-0-7">1.0.7</a></li>
         <li><a href="#gsodr-1-0-6">1.0.6</a></li>
         <li><a href="#gsodr-1-0-5">1.0.5</a></li>

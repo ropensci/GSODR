@@ -1,0 +1,213 @@
+---
+title: "Working with spatial and climate data from GSODR"
+author: "Tomislav Hengl and Adam H Sparks"
+date: "2017-10-18"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 3
+    theme: spacelab
+vignette: >
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteIndexEntry{Working with spatial and climate data from GSODR}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+
+# Introduction
+
+The _GSODR_ package provides the ability to interact with GSOD data using spatial methods. The `get_GSOD()` function allows for the data to be saved as a GeoPackage file which can be read by most GIS software packages or in R using R's GIS capabilities with contributed packages as well.
+
+Following is an example of how you might download and save GSOD annual data for a given country, Philippines in this example, and convert it into a KML file for viewing in GoogleEarth. The second portion uses the same GeoPackage file to import the data back into R and combine the GSOD data with CHELSA data from the [GSODRdata package](https://github.com/adamhsparks/GSODRdata) available from GitHub and plot the station temperatures for daily GSOD, average monthly GSOD and CHELSA temperatures (1979-2013).
+
+## Example - Download and plot data for a single country
+
+This example will demonstrate how to download data for Philippines for year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in the user's home directory and link it with climate data from the _GSODRdata_ package.
+
+Download data for Philippines for year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in the user's home directory.
+
+```r
+library(GSODR)
+get_GSOD(years = 2010, country = "Philippines", dsn = "~/",
+         filename = "PHL-2010", GPKG = TRUE, max_missing = 5)
+```
+
+## Example - Use the GeoPackage file to create a KML file
+
+Using the GeoPackage that was just created, you can now create a KML file to open with Google Earth and visualise the data spatially and over time.
+
+```r
+library(rgdal)
+library(spacetime)
+library(plotKML)
+
+layers <- ogrListLayers(dsn = path.expand("~/PHL-2010.gpkg"))
+pnts <- readOGR(dsn = path.expand("~/PHL-2010.gpkg"), layers[1])
+
+# Plot results in Google Earth as a spacetime object:
+pnts$DATE = as.Date(paste(pnts$YEAR, pnts$MONTH, pnts$DAY, sep = "-"))
+row.names(pnts) <- paste("point", 1:nrow(pnts), sep = "")
+
+tmp_ST <- STIDF(sp = as(pnts, "SpatialPoints"),
+                time = pnts$DATE - 0.5,
+                data = pnts@data[, c("TEMP", "STNID")],
+                endTime = pnts$DATE + 0.5)
+
+shape = "http://maps.google.com/mapfiles/kml/pal2/icon18.png"
+
+kml(tmp_ST, dtime = 24 * 3600, colour = TEMP, shape = shape, labels = TEMP,
+    file.name = "Temperatures_PHL_2010-2010.kml", folder.name = "TEMP")
+
+system("zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml")
+```
+
+## Example - Compare the GSOD weather data from the Philippines with climate data provided by the _GSODRdata_ package.
+
+The the [`GSODRdata`](https://adamhsparks.github.io/GSODRdata/) package provides climate data from four climate data sets that have been formatted for easy use with the _GSODR_ package. Following is a description how to install the _GSODRdata_ package and use it to visualise the weather data for the Philippines in 2010 against CHELSA data.
+
+CHELSA (Climatologies at high resolution for the earth’s land surface areas) are climate data at 30 arc seconds for the earth land surface areas. 
+
+**Description of CHELSA data from CHELSA website**
+
+> CHELSA is a high resolution (30 arc sec) climate data set for the earth land surface areas currently under development in coorporation with the Department of Geography of the University of Hamburg (Prof. Dr. Jürgen Böhner, Dr. Olaf Conrad, Tobias Kawohl), the Swiss Federal Institute for Forest, Snow and Landscape Research WSL (Prof. Dr. Niklaus Zimmermann), the University of Zurich (Dr. Dirk N. Karger, Dr. Michael Kessler), and the University of Göttingen (Prof. Dr. Holger Kreft).
+It includes monthly mean temperature and precipitation patterns for the time period 1979-2013.
+CHELSA is based on a quasi-mechanistical statistical downscaling of the ERA interim global circulation model (http://www.ecmwf.int/en/research/climate-reanalysis/era-interim) with a GPCC bias correction (https://www.dwd.de/EN/ourservices/gpcc/gpcc.html) and is freely available  in the download section.
+
+See http://chelsa-climate.org for more information on these data.
+
+```r
+# install.packages("devtools")
+devtools::install_github("adamhsparks/GSODRdata")
+````
+
+Now that the extra data have been installed, take a look at the CHELSA data that are one of the data sets included in the _GSODRdata_ package.
+
+```r
+library(GSODRdata)
+
+str(CHELSA)
+
+#> 'data.frame':	23927 obs. of  46 variables:
+#>   $ STNID                      : chr  "008268-99999" "010014-99999" "010015-99999" "010882-99999" ...
+#> $ CHELSA_bio10_1979-2013_V1_1: num  30 14.3 12.5 12.6 15.2 16.3 13.9 12.7 13.4 12.9 ...
+#> $ CHELSA_bio11_1979-2013_V1_1: num  5.8 1 -3.2 -7 -0.2 -2.2 -3 -6.9 -2.1 -1.2 ...
+#> $ CHELSA_bio1_1979-2013_V1_1 : num  18.3 7.1 4.2 2.3 7 6.6 4.8 2.4 5 5.2 ...
+#> $ CHELSA_bio12_1979-2013_V1_1: num  214 1889 2209 563 1710 ...
+#> $ CHELSA_bio13_1979-2013_V1_1: num  54.6 223.7 254.7 73 200.6 ...
+#> $ CHELSA_bio14_1979-2013_V1_1: num  0.1 87.7 108.9 26.7 78.5 ...
+#> $ CHELSA_bio15_1979-2013_V1_1: num  104.9 30.3 30.1 30.7 32.1 ...
+#> $ CHELSA_bio16_1979-2013_V1_1: num  155 651 753 216 590 ...
+#> $ CHELSA_bio17_1979-2013_V1_1: num  0.6 273.5 332.6 85.5 244.7 ...
+#> $ CHELSA_bio18_1979-2013_V1_1: num  1.7 433.3 448.3 198.7 330.9 ...
+#> $ CHELSA_bio19_1979-2013_V1_1: num  96.9 490.4 621.1 122 494.4 ...
+#> $ CHELSA_bio2_1979-2013_V1_1 : num  23 12.5 16.7 20.1 15.6 17.1 16.4 18.6 14.8 13.3 ...
+#> $ CHELSA_bio3_1979-2013_V1_1 : num  48.3 44.8 45.3 45.5 45 44.3 43.8 44.6 43.8 43.8 ...
+#> $ CHELSA_bio4_1979-2013_V1_1 : num  884 486 592 734 573 ...
+#> $ CHELSA_bio5_1979-2013_V1_1 : num  40.5 21.5 22.2 23.6 23.9 25.4 23.1 23 21.8 20.4 ...
+#> $ CHELSA_bio6_1979-2013_V1_1 : num  -7.2 -6.5 -14.5 -20.7 -10.7 -13.3 -14.3 -18.7 -11.9 -9.9 ...
+#> $ CHELSA_bio7_1979-2013_V1_1 : num  47.7 28 36.8 44.3 34.7 38.7 37.4 41.7 33.8 30.3 ...
+#> $ CHELSA_bio8_1979-2013_V1_1 : num  10.5 5.7 -1.7 12.5 1.3 8.5 6.8 12.5 7 7.2 ...
+#> $ CHELSA_bio9_1979-2013_V1_1 : num  26.7 7.8 8.4 -0.1 12.2 3.8 9.6 0.1 9.8 9.3 ...
+#> $ CHELSA_prec_10_1979-2013   : num  3.6 230.6 237.5 48.9 192.8 ...
+#> $ CHELSA_prec_11_1979-2013   : num  10.5 219.9 237.8 41.3 189.6 ...
+#> $ CHELSA_prec_1_1979-2013    : num  35.8 198.4 227.7 40.3 189.5 ...
+#> $ CHELSA_prec_12_1979-2013   : num  25.4 215.5 248.3 40.5 201.5 ...
+#> $ CHELSA_prec_1979-2013_land : num  214 1912 2170 559 1720 ...
+#> $ CHELSA_prec_2_1979-2013    : num  46.5 153.3 188.4 32.5 153.7 ...
+#> $ CHELSA_prec_3_1979-2013    : num  54.8 151.9 176.4 31.8 145 ...
+#> $ CHELSA_prec_4_1979-2013    : num  28.3 101.1 114.4 26.6 91.6 ...
+#> $ CHELSA_prec_5_1979-2013    : num  7 90.6 107 38.9 79 72.1 75.6 46.7 91.3 85.1 ...
+#> $ CHELSA_prec_6_1979-2013    : num  1.2 100.5 110.1 58 84 ...
+#> $ CHELSA_prec_7_1979-2013    : num  1 116.7 119.2 69.7 90.1 ...
+#> $ CHELSA_prec_8_1979-2013    : num  0.3 165.6 159.6 72.7 121.6 ...
+#> $ CHELSA_prec_9_1979-2013    : num  0.1 204 229.6 57.9 181.4 ...
+#> $ CHELSA_temp_10_1979-2013   : num  19.2 8 4.3 2.3 7.2 6.7 5.7 2.4 5.6 5.9 ...
+#> $ CHELSA_temp_11_1979-2013   : num  13.2 4.5 0.2 -3 3 2.2 1.2 -2.7 1.6 2.2 ...
+#> $ CHELSA_temp_1_1979-2013    : num  4.9 1.2 -3.4 -7.2 -0.4 -2.4 -2.5 -7 -1.9 -1 ...
+#> $ CHELSA_temp_12_1979-2013   : num  7.7 2.1 -2.7 -6.5 0.3 -1.4 -1.3 -6.3 -0.7 -0.1 ...
+#> $ CHELSA_temp_1979-2013_land : num  18.3 7.1 4.1 2.3 6.9 6.5 5.1 2.5 5 5.2 ...
+#> $ CHELSA_temp_2_1979-2013    : num  7 0.8 -3.2 -6.6 -0.2 -2.2 -2.8 -6.4 -2.1 -1.2 ...
+#> $ CHELSA_temp_3_1979-2013    : num  12.2 2.3 -0.8 -3.3 2.2 0.8 -0.9 -2.7 -0.6 0.1 ...
+#> $ CHELSA_temp_4_1979-2013    : num  18.3 5.1 3 1.5 5.8 5.1 3 1.7 2.9 3.1 ...
+#> $ CHELSA_temp_5_1979-2013    : num  23.5 9 7.6 6.4 10.1 10.7 7.8 6.6 7.3 7.1 ...
+#> $ CHELSA_temp_6_1979-2013    : num  28.2 12 10.9 10.9 13.2 14.7 11.9 11.3 11.1 10.5 ...
+#> $ CHELSA_temp_7_1979-2013    : num  28.2 12 10.9 10.9 13.2 14.7 11.9 11.3 11.1 10.5 ...
+#> $ CHELSA_temp_8_1979-2013    : num  29.7 14.2 12.2 12.1 14.9 15.8 14 12.2 13.3 12.8 ...
+#> $ CHELSA_temp_9_1979-2013    : num  25.1 11.5 8.6 7.7 11.5 11.6 10.2 7.6 9.9 9.8 ...
+```
+
+Compare the GSOD weather data from the Philippines with climatic data provided by the _GSODR_ package in the `CHELSA` data set using `dplyr` functions to join the CHELSA and _GSODR_ data for plotting.
+
+```r
+library(dplyr)
+#> 
+#> Attaching package: 'dplyr'
+#> The following objects are masked from 'package:stats':
+#> 
+#>     filter, lag
+#> The following objects are masked from 'package:base':
+#> 
+#>     intersect, setdiff, setequal, union
+library(ggplot2)
+library(reshape2)
+
+cnames <- paste0("CHELSA_temp_", 1:12, "_1979-2013")
+clim_temp <- CHELSA[CHELSA$STNID %in% pnts$STNID,
+                       paste(c("STNID", cnames))]
+clim_temp_df <- data.frame(STNID = rep(clim_temp$STNID, 12),
+                           MONTHC = as.vector(sapply(1:12, rep,
+                                                    times = nrow(clim_temp))), 
+                           CHELSA_TEMP = as.vector(unlist(clim_temp[, cnames])))
+
+pnts$MONTHC <- as.numeric(paste(pnts$MONTH))
+temp <- left_join(pnts@data, clim_temp_df, by = c("STNID", "MONTHC"))
+#> Warning in left_join_impl(x, y, by$x, by$y, suffix$x, suffix$y): joining
+#> factors with different levels, coercing to character vector
+
+temp <- temp %>% 
+  group_by(MONTH) %>% 
+  mutate(AVG_DAILY_TEMP = round(mean(TEMP), 1))
+
+df_melt <- na.omit(melt(temp[, c("STNID", "DATE", "CHELSA_TEMP", "TEMP", "AVG_DAILY_TEMP")],
+                        id = c("DATE", "STNID")))
+
+ggplot(df_melt, aes(x = DATE, y = value)) +
+  geom_point(aes(color = variable), alpha = 0.2) +
+  scale_x_date(date_labels = "%b") +
+  ylab("Temperature (C)") +
+  xlab("Month") +
+  labs(colour = "") +
+  scale_color_brewer(palette = "Dark2") +
+  facet_wrap( ~ STNID)
+```
+
+![Comparison of GSOD daily values and average monthly values with CHELSA climate monthly values](figure/example_1.2-1.png)
+
+# Notes
+
+## Sources
+
+#### CHELSA climate layers
+CHELSA (climatic surfaces at 1 km resolution) is based on a quasi-mechanistical statistical downscaling of the ERA interim global circulation model (Karger et al. 2016). ESA's CCI-LC cloud probability monthly averages are based
+on the MODIS snow products (MOD10A2). <http://chelsa-climate.org/>
+
+#### Elevation values
+
+90m hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was used to identify and correct/remove elevation errors in data for station locations between -60˚ and 60˚ latitude. This applies to cases here where elevation was missing in the reported values as well. In case the station reported an elevation and the DEM does not, the station reported is taken. For stations beyond -60˚ and 60˚ latitude, the values are station reported values in every instance. See <https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md> for more detail on the correction methods.
+
+## WMO Resolution 40. NOAA Policy
+
+*Users of these data should take into account the following (from the [NCEI website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):*
+
+> "The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification." [WMO Resolution 40. NOAA Policy](https://public.wmo.int/en/our-mandate/what-we-do/data-exchange-and-technology-transfer)
+
+# References
+
+Jarvis, A., Reuter, H. I., Nelson, A., Guevara, E. (2008) Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database (<http://srtm.csi.cgiar.org>)
+
+Karger, D. N., Conrad, O., Bohner, J., Kawohl, T., Kreft, H., Soria-Auza, R. W., *et al*. (2016) Climatologies at high resolution for the Earth land surface areas. *arXiv preprint* **arXiv:1607.00217**. (<http://chelsa-climate.org/>)
+
+Stachelek, J. (2016) Using the Geopackage Format with R. 
+URL: https://jsta.github.io/2016/07/14/geopackage-r.html
