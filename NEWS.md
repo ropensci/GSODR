@@ -1,9 +1,12 @@
-# GSODR 1.0.8
+# GSODR 1.1
 
 ## Major changes
 
+- _data.table_ no longer used. All internal functions now use _dplyr_ or base R
+functionality, reducing the dependencies of _GSODR_
+
 - Add new function, `get_inventory()`, which downloads the NCEI's station
-data inventory document
+inventory document and returns a `tibble()` object of the data
 
 # GSODR 1.0.7
 

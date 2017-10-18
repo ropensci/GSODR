@@ -106,14 +106,15 @@
     </div>
 
     <div class="contents">
-    <div id="gsodr-1-0-8" class="section level1">
+    <div id="gsodr-1-1" class="section level1">
 <h1 class="hasAnchor">
-<a href="#gsodr-1-0-8" class="anchor"></a>GSODR 1.0.8</h1>
+<a href="#gsodr-1-1" class="anchor"></a>GSODR 1.1</h1>
 <div id="major-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#major-changes" class="anchor"></a>Major changes</h2>
 <ul>
-<li>Add new function, <code><a href="../reference/get_inventory.html">get_inventory()</a></code>, which downloads the NCEI’s station data inventory document</li>
+<li><p><em>data.table</em> no longer used. All internal functions now use <em>dplyr</em> or base R functionality, reducing the dependencies of <em>GSODR</em></p></li>
+<li><p>Add new function, <code><a href="../reference/get_inventory.html">get_inventory()</a></code>, which downloads the NCEI’s station inventory document and returns a <code>tibble()</code> object of the data</p></li>
 </ul>
 </div>
 </div>
@@ -558,7 +559,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#gsodr-1-0-8">1.0.8</a></li>
+        <li><a href="#gsodr-1-1">1.1</a></li>
         <li><a href="#gsodr-1-0-7">1.0.7</a></li>
         <li><a href="#gsodr-1-0-6">1.0.6</a></li>
         <li><a href="#gsodr-1-0-5">1.0.5</a></li>
