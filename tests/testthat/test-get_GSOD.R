@@ -1,5 +1,11 @@
 context("get_GSOD")
 # Check that .validate_years handles invalid years -----------------------------
+
+# get the original timeout value for net connections for last check to be sure
+# get_GSOD() resets on exit.
+
+original_timeout <- options("timeout")[[1]]
+
 test_that(".validate_years handles invalid years", {
   expect_error(.validate_years(years = NULL))
   expect_error(.validate_years(years = "nineteen ninety two"))
@@ -219,5 +225,5 @@ test_that(
 
 test_that("Timeout options are reset on get_GSOD() exit", {
   skip_on_cran()
-
+  expect_equal(options("timeout")[[1]] == original_timeout)
 })
