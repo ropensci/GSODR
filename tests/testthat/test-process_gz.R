@@ -15,10 +15,9 @@ context("get_GSOD")
               ftp_base <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/%s/"
 
               load(system.file("extdata", "isd_history.rda", package = "GSODR"))
-              stations <- data.table::setDT(isd_history)
+              stations <- isd_history
 
-              load(system.file("extdata",
-                               "country_list.rda",
+              load(system.file("extdata", "country_list.rda",
                                package = "GSODR"))
 
               GSOD_list <- .download_files(ftp_base,
@@ -46,7 +45,7 @@ context("get_GSOD")
 
               expect_length(gz_out, 48)
 
-              expect_is(gz_out, "data.table")
+              expect_is(gz_out, "data.frame")
 
               expect_is(gz_out$USAF, "character")
               expect_is(gz_out$WBAN, "character")
