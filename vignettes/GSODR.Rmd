@@ -31,10 +31,10 @@ find, transfer and format the data you need for use in analysis and provides
 four main functions for facilitating this:
 
 - `get_GSOD()` - the main function that will query and transfer files from the
-FTP server, reformat them and return a data.frame in R or save a file to disk
+FTP server, reformat them and return a data frame in R or save a file to disk
 
 - `reformat_GSOD()` - the workhorse, this function takes individual station
-files on the local disk and re-formats them returning a data.frame in R
+files on the local disk and re-formats them returning a data frame in R
 
 - `nearest_stations()` - this function returns a data frame containing a list of
 stations and their metadata that fall within the given radius of a point

@@ -68,8 +68,9 @@
 #' Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
 #' 90m Database \url{http://srtm.csi.cgiar.org}}
 #'
-#' @return A \code{\link[tibble]{tibble}} object of weather data and/or a
-#' comma-separated value (CSV) or GeoPackage (GPKG) file saved to local disk.
+#' @return A data frame as a \code{\link[tibble]{tibble}} object of weather data
+#' and/or a comma-separated value (CSV) or GeoPackage (GPKG) file saved to local
+#' disk.
 #'
 #' @seealso \code{\link{get_GSOD}}
 #'

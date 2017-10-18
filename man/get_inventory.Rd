@@ -2,12 +2,13 @@
 % Please edit documentation in R/get_inventory.R
 \name{get_inventory}
 \alias{get_inventory}
-\title{Download and return a tidy data.frame of GSOD weather station data inventories}
+\title{Download and return a tidy data frame of GSOD weather station data inventories}
 \usage{
 get_inventory()
 }
 \value{
-\code{\link[tibble]{tibble}} object of station inventories
+A data frame as a tibble \code{\link[tibble]{tibble}} object of
+station inventories
 }
 \description{
 The NCEI maintains a document,

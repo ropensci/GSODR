@@ -14,8 +14,9 @@ local disk for reformatting.}
 reformatting.}
 }
 \value{
-A \code{\link[tibble]{tibble}} object of weather data and/or a
-comma-separated value (CSV) or GeoPackage (GPKG) file saved to local disk.
+A data frame as a \code{\link[tibble]{tibble}} object of weather data
+and/or a comma-separated value (CSV) or GeoPackage (GPKG) file saved to local
+disk.
 }
 \description{
 This function automates cleaning and reformatting of GSOD,

@@ -51,8 +51,9 @@ save it locally in a user specified location, if \code{dsn} is not specified
 by the user, defaults to the current working directory.}
 }
 \value{
-A \code{\link[tibble]{tibble}} object of weather data and/or a
-comma-separated value (CSV) or GeoPackage (GPKG) file saved to local disk.
+A data frame as a \code{\link[tibble]{tibble}} object of weather data
+and/or a comma-separated value (CSV) or GeoPackage (GPKG) file saved to local
+disk.
 }
 \description{
 This function automates downloading, cleaning, reformatting of data from

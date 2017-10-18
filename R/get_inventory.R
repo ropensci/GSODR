@@ -1,5 +1,5 @@
 
-#' Download and return a tidy data.frame of GSOD weather station data inventories
+#' Download and return a tidy data frame of GSOD weather station data inventories
 #'
 #' The NCEI maintains a document,
 #' <ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt>, which shows the
@@ -20,7 +20,8 @@
 #' \dontrun{
 #' inventory <- get_inventory()
 #'}
-#' @return \code{\link[tibble]{tibble}} object of station inventories
+#' @return A data frame as a tibble \code{\link[tibble]{tibble}} object of
+#' station inventories
 #' @author Adam H Sparks, \email{adamhsparks@gmail.com}
 #' @note The download process can take quite some time to complete.
 #' @importFrom rlang .data
