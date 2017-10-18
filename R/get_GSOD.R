@@ -151,8 +151,6 @@ get_GSOD <- function(years = NULL,
 
   # Load station list
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))
-  stations <- isd_history
-  stations <- data.table::setDT(stations)
 
   # Load country list
   # CRAN NOTE avoidance
@@ -163,7 +161,7 @@ get_GSOD <- function(years = NULL,
   purrr::walk(
     .x = station,
     .f = .validate_station,
-    stations = stations,
+    isd_history = isd_history,
     years = years
   )
   country <- .validate_country(country, country_list)
@@ -174,7 +172,7 @@ get_GSOD <- function(years = NULL,
   # Subset GSOD_list for agroclimatology only stations -----------------------
   if (isTRUE(agroclimatology)) {
     GSOD_list <-
-      .agroclimatology_list(GSOD_list, stations, cache_dir, years)
+      .agroclimatology_list(GSOD_list, isd_history, cache_dir, years)
   }
   # Subset GSOD_list for specified country -------------------------------------
   if (!is.null(country)) {
@@ -182,7 +180,7 @@ get_GSOD <- function(years = NULL,
       .subset_country_list(country,
                            country_list,
                            GSOD_list,
-                           stations,
+                           isd_history,
                            cache_dir,
                            years)
   }
@@ -197,7 +195,7 @@ get_GSOD <- function(years = NULL,
   GSOD_XY <- purrr::map(
     .x = GSOD_list,
     .f = .process_gz,
-    stations = stations
+    isd_history = isd_history
   )  %>%
     dplyr::bind_rows() %>%
     as.data.frame()
@@ -300,8 +298,8 @@ get_GSOD <- function(years = NULL,
   return(outfile)
 }
 #' @noRd
-.validate_station <- function(station, stations, years) {
-  if (!station %in% stations$STNID) {
+.validate_station <- function(station, isd_history, years) {
+  if (!station %in% isd_history[[12]]) {
     stop(
       "\n",
       paste0(station),
@@ -313,9 +311,9 @@ get_GSOD <- function(years = NULL,
     )
   }
   BEGIN <-
-    as.numeric(substr(stations[stations[, "STNID"] == station, ]$BEGIN, 1, 4))
+    as.numeric(substr(isd_history[isd_history[[12]] == station, ]$BEGIN, 1, 4))
   END <-
-    as.numeric(substr(stations[stations[, "STNID"] == station, ]$END, 1, 4))
+    as.numeric(substr(isd_history[isd_history[[12]] == station, ]$END, 1, 4))
   if (min(years) < BEGIN | max(years) > END) {
     message("\nThis station, ",
             station,
@@ -405,10 +403,9 @@ get_GSOD <- function(years = NULL,
         list.files(cache_dir, pattern = "^.*\\.op.gz$", full.names = TRUE)
     }
     if (!is.null(station)) {
-      # The remainder of this function is from @hrbrmstr in response to my
-      # SO question: http://stackoverflow.com/questions/40715370/
+      # Written by @hrbrmstr
       message("\nChecking requested station file for availability on server\n")
-      MAX_RETRIES <- 6
+      max_retries <- 6
       dir_list_handle <-
         curl::new_handle(
           ftp_use_epsv = FALSE,
@@ -426,7 +423,7 @@ get_GSOD <- function(years = NULL,
             res <- s_curl_fetch_memory(url, handle = handle)
             if (!is.null(res$result))
               return(res$result)
-            if (i == MAX_RETRIES) {
+            if (i == max_retries) {
               stop("\nToo many retries...server may be under load\n")
             }
           }
@@ -476,9 +473,9 @@ get_GSOD <- function(years = NULL,
   }
 # Agroclimatology: subset list of stations to process---------------------------
 .agroclimatology_list <-
-  function(GSOD_list, stations, cache_dir, years) {
-    station_list <- stations[stations$LAT >= -60 &
-                               stations$LAT <= 60, ]$STNID
+  function(GSOD_list, isd_history, cache_dir, years) {
+    station_list <- isd_history[isd_history$LAT >= -60 &
+                               isd_history$LAT <= 60, ]$STNID
     station_list <- do.call(paste0,
                             c(
                               expand.grid(cache_dir, "/", station_list, "-",
@@ -493,7 +490,7 @@ get_GSOD <- function(years = NULL,
   function(country,
            country_list,
            GSOD_list,
-           stations,
+           isd_history,
            cache_dir,
            years) {
     country_FIPS <- unlist(
@@ -501,7 +498,7 @@ get_GSOD <- function(years = NULL,
         stats::na.omit
                   (country_list[country_list$FIPS == country, ][[1]]),
                                         use.names = FALSE))
-    station_list <- stations[stations$CTRY == country_FIPS, ]$STNID
+    station_list <- isd_history[isd_history$CTRY == country_FIPS, ]$STNID
     station_list <- do.call(paste0,
                             c(
                               expand.grid(cache_dir,

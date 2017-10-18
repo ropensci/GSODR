@@ -1,5 +1,4 @@
 
-
 #' @noRd
 .process_gz <- function(gz_file, isd_history) {
   tmp <- readr::read_fwf(
