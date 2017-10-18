@@ -79,9 +79,6 @@
 #'
 reformat_GSOD <- function(dsn = NULL, file_list = NULL) {
 
-  # CRAN NOTE avoidance
-  isd_history <- NULL
-
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 
   # If dsn !NULL, create a list of files to reformat
@@ -95,6 +92,5 @@ reformat_GSOD <- function(dsn = NULL, file_list = NULL) {
     .f = .process_gz,
     isd_history = isd_history
   ) %>%
-    dplyr::bind_rows() %>%
-    as.data.frame()
+    dplyr::bind_rows()
 }
