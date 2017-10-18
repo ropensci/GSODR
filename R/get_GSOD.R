@@ -402,7 +402,7 @@ get_GSOD <- function(years = NULL,
         list.files(cache_dir, pattern = "^.*\\.op.gz$", full.names = TRUE)
     }
     if (!is.null(station)) {
-      # Written by @hrbrmstr
+      # Written by @hrbrmstr on stackoverflow
       message("\nChecking requested station file for availability on server\n")
       max_retries <- 6
       dir_list_handle <-

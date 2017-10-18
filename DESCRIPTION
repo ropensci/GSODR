@@ -10,7 +10,10 @@ Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     comment = "http://orcid.org/0000-0002-9921-5129"),
     person("Andrew", "Nelson", role = "aut",
     email = "dr.andy.nelson@gmail.com",
-    comment = "http://orcid.org/0000-0002-7249-3778"))
+    comment = "http://orcid.org/0000-0002-7249-3778"),
+    person("Bob", "Rudis", email = "bob@rud.is", role = "ctb",
+    comment = "Wrote functionality to interface with NCEI server and cache files
+    for download on stackoverflow"))
 URL: https://github.com/ropensci/GSODR
 BugReports: https://github.com/ropensci/GSODR/issues
 Description: Provides automated downloading, parsing, cleaning, unit conversion
