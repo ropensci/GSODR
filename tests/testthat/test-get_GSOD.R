@@ -2,11 +2,6 @@
 context("get_GSOD")
 # Check that .validate_years handles invalid years -----------------------------
 
-# get the original timeout value for net connections for last check to be sure
-# get_GSOD() resets on exit.
-
-original_timeout <- options("timeout")[[1]]
-
 test_that(".validate_years handles invalid years", {
   expect_error(.validate_years(years = NULL))
   expect_error(.validate_years(years = "nineteen ninety two"))
@@ -42,11 +37,10 @@ test_that("Station validations are properly handled for years available", {
 
 test_that("Station validations are properly handled for years available", {
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))
-  stations <- isd_history
   expect_silent(.validate_station(
     years = 2010,
     station = "955510-99999",
-    stations = stations
+    isd_history = isd_history
   ))
 })
 
@@ -225,6 +219,11 @@ test_that(
 )
 
 test_that("Timeout options are reset on get_GSOD() exit", {
+  # get the original timeout value for net connections for last check to be sure
+  # get_GSOD() resets on exit.
   skip_on_cran()
+  original_timeout <- options("timeout")[[1]]
+  x <- get_GSOD(years = 2010, station = "945510-99999")
   expect_equal(options("timeout")[[1]], original_timeout)
+  rm(x)
 })
