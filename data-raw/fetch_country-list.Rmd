@@ -33,7 +33,6 @@ names(countries)[2] <- "COUNTRY_NAME"
 
 country_list <- dplyr::left_join(countries, countrycode::countrycode_data,
                    by = c(FIPS = "fips105"))
-country_list <- data.table::setDT(country_list)
 
 print(country_list)
 ```
@@ -43,9 +42,9 @@ and ISO codes to function.
 
 ```{r remove_uncessesary, echo=TRUE, messages=FALSE}
 
-country_list[, c(3:14, 17:35) := NULL]
+country_list <- (country_list[, -c(3:14, 17:35)])
 
-print(country_list)
+country_list
 ```
 
 Write .rda file to disk.
