@@ -68,6 +68,7 @@ library(GSODR)
 library(dplyr)
 load(system.file("extdata", "country_list.rda", package = "GSODR"))
 load(system.file("extdata", "isd_history.rda", package = "GSODR"))
+
 station_locations <- left_join(isd_history, country_list,
                                by = c("CTRY" = "FIPS"))
 
@@ -77,7 +78,6 @@ Oz <- filter(station_locations, COUNTRY_NAME == "AUSTRALIA")
 Oz
 
 filter(Oz, STN_NAME == "TOOWOOMBA")
-
 ```
 
 ## Using the get_GSOD() Function in _GSODR_ to Download a Single Station and Year
@@ -116,9 +116,9 @@ query, you could do this.
 ```{r, eval=TRUE}
 remove <- c("949999-00170", "949999-00183")
 
-tbar_stations <- tbar_stations[!tbar_stations %in% remove]
+Tbar_stations <- tbar_stations[!tbar_stations %in% remove]
 
-tbar <- get_GSOD(years = 2010,
+Tbar <- get_GSOD(years = 2010,
                  station = tbar_stations,
                  dsn = "~/")
 ```

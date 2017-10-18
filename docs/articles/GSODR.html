@@ -133,6 +133,7 @@
 ##     intersect, setdiff, setequal, union</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"country_list.rda"</span>, <span class="dt">package =</span> <span class="st">"GSODR"</span>))
 <span class="kw">load</span>(<span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"isd_history.rda"</span>, <span class="dt">package =</span> <span class="st">"GSODR"</span>))
+
 station_locations &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(isd_history, country_list,
                                <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">"CTRY"</span> =<span class="st"> "FIPS"</span>))
 
@@ -197,11 +198,15 @@ tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GS
 <p>If you wished to drop the stations, 949999-00170 and 949999-00183 from the query, you could do this.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remove &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"949999-00170"</span>, <span class="st">"949999-00183"</span>)
 
-tbar_stations &lt;-<span class="st"> </span>tbar_stations[<span class="op">!</span>tbar_stations <span class="op">%in%</span><span class="st"> </span>remove]
+Tbar_stations &lt;-<span class="st"> </span>tbar_stations[<span class="op">!</span>tbar_stations <span class="op">%in%</span><span class="st"> </span>remove]
 
-tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>,
+Tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>,
                  <span class="dt">station =</span> tbar_stations,
                  <span class="dt">dsn =</span> <span class="st">"~/"</span>)</code></pre></div>
+<pre><code>## 
+## This station, 949999-00170, only provides data for years 1971 to 1984.</code></pre>
+<pre><code>## 
+## This station, 949999-00183, only provides data for years 1983 to 1984.</code></pre>
 <pre><code>## 
 ## Checking requested station file for availability on server</code></pre>
 <pre><code>## 
