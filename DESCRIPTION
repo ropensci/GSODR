@@ -37,7 +37,6 @@ Depends:
 License: MIT + file LICENSE
 Imports:
     curl,
-    data.table,
     dplyr,
     fields,
     magrittr,
@@ -48,6 +47,7 @@ Imports:
     rlang,
     sp,
     stats,
+    tibble,
     utils
 Suggests:
     ggplot2,
