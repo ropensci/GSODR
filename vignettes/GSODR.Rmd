@@ -568,7 +568,6 @@ if (requireNamespace("ggplot2", quietly = TRUE) &&
   library(mapproj)
   library(ggthemes)
   library(maps)
-  library(data.table)
   library(grid)
   library(gridExtra)
   library(GSODR)
