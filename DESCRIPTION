@@ -64,7 +64,6 @@ Suggests:
     roxygen2 (>= 6.0.1),
     spacetime,
     testthat,
-    tibble,
     tidyr,
     covr
 RoxygenNote: 6.0.1
