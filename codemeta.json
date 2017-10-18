@@ -35,7 +35,7 @@
   "keywords": "weather, data, daily, global, station",
   "license": "https://spdx.org/licenses/MIT",
   "title": "GSODR",
-  "version": "1.0.7",
+  "version": "1.1",
   "name": "GSODR: Global Summary Daily Weather Data in R",
   "issueTracker": "https://github.com/ropensci/GSODR/issues",
   "programmingLanguage": {
@@ -227,17 +227,6 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "tibble",
-      "name": "tibble",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      }
-    },
-    {
-      "@type": "SoftwareApplication",
       "identifier": "tidyr",
       "name": "tidyr",
       "provider": {
@@ -264,17 +253,6 @@
       "@type": "SoftwareApplication",
       "identifier": "curl",
       "name": "curl",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      }
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "data.table",
-      "name": "data.table",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -363,6 +341,17 @@
     },
     {
       "@type": "SoftwareApplication",
+      "identifier": "rlang",
+      "name": "rlang",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "sp",
       "name": "sp",
       "provider": {
@@ -392,7 +381,7 @@
   "contIntegration": "https://travis-ci.org/ropensci/GSODR",
   "releaseNotes": "https://github.com/ropensci/GSODR.git/blob/devel/NEWS.md",
   "readme": "https://github.com/ropensci/GSODR.git/blob/devel/README.md",
-  "fileSize": "956.14KB",
+  "fileSize": "1410.169KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -428,6 +417,14 @@
           "name": "The Journal of Open Source Software"
         }
       }
+    }
+  ],
+  "contributor": [
+    {
+      "@type": "Person",
+      "givenName": "Bob",
+      "familyName": "Rudis",
+      "email": "bob@rud.is"
     }
   ]
 }
