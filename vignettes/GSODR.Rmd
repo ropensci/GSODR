@@ -63,7 +63,8 @@ For more information see the description of the data provided by NCEI,
 _GSODR_ provides lists of weather station locations and elevation values. Using [_dplyr_](https://CRAN.R-project.org/package=dplyr), we can find all the
 stations in Australia.
 
-```{r, eval=FALSE}
+```{r, eval=TRUE}
+library(GSODR)
 library(dplyr)
 load(system.file("extdata", "country_list.rda", package = "GSODR"))
 load(system.file("extdata", "isd_history.rda", package = "GSODR"))
@@ -72,35 +73,11 @@ station_locations <- left_join(isd_history, country_list,
 
 # create data.frame for Australia only
 Oz <- filter(station_locations, COUNTRY_NAME == "AUSTRALIA")
-head(Oz)
 
-#>     USAF  WBAN                  STN_NAME CTRY STATE CALL     LAT     LON
-#> 1 695023 99999       HORN ISLAND   (HID)   AS  <NA> KQXC -10.583 142.300
-#> 2 749430 99999        AIDELAIDE RIVER SE   AS  <NA> <NA> -13.300 131.133
-#> 3 749432 99999 BATCHELOR FIELD AUSTRALIA   AS  <NA> <NA> -13.049 131.066
-#> 4 749438 99999      IRON RANGE AUSTRALIA   AS  <NA> <NA> -12.700 143.300
-#> 5 749439 99999  MAREEBA AS/HOEVETT FIELD   AS  <NA> <NA> -17.050 145.400
-#> 6 749440 99999                 REID EAST   AS  <NA> <NA> -19.767 146.850
-#>   ELEV_M    BEGIN      END        STNID ELEV_M_SRTM_90m COUNTRY_NAME iso2c
-#> 1     NA 19420804 20030816 695023-99999              24    AUSTRALIA    AU
-#> 2    131 19430228 19440821 749430-99999              96    AUSTRALIA    AU
-#> 3    107 19421231 19430610 749432-99999              83    AUSTRALIA    AU
-#> 4     18 19420917 19440930 749438-99999              63    AUSTRALIA    AU
-#> 5    443 19420630 19440630 749439-99999             449    AUSTRALIA    AU
-#> 6    122 19421012 19430405 749440-99999              75    AUSTRALIA    AU
-#>   iso3c
-#> 1   AUS
-#> 2   AUS
-#> 3   AUS
-#> 4   AUS
-#> 5   AUS
-#> 6   AUS
+Oz
 
 filter(Oz, STN_NAME == "TOOWOOMBA")
-#>     USAF  WBAN  STN_NAME CTRY STATE CALL     LAT     LON ELEV_M    BEGIN
-#> 1 945510 99999 TOOWOOMBA   AS  <NA> <NA> -27.583 151.933    676 19561231
-#>        END        STNID ELEV_M_SRTM_90m COUNTRY_NAME iso2c iso3c
-#> 1 20120503 945510-99999             670    AUSTRALIA    AU   AUS
+
 ```
 
 ## Using the get_GSOD() Function in _GSODR_ to Download a Single Station and Year
@@ -109,15 +86,10 @@ Now that we've seen where the reporting stations are located, we can download
 weather data from the station Toowoomba, Queensland, Australia for 2010 by using
 the STNID in the `station` parameter of `get_GSOD()`.
 
-```{r, eval=FALSE}
-library(GSODR)
-Tbar <- get_GSOD(years = 2010, station = "955510-99999")
+```{r, eval=TRUE}
+tbar <- get_GSOD(years = 2010, station = "945510-99999")
 
-#> Downloading the station file(s) now.
-
-#> Finished downloading file. Parsing the station file(s) now.
-
-head(Tbar)
+tbar
 ```
 
 ## Find Stations Within a Specified Distance of a Given Lat/Lon Value
@@ -130,18 +102,18 @@ stations of interest.
 There are missing stations in this query. Not all that are listed and queried
 actually have files on the server.
 
-```{r, eval=FALSE}
+```{r, eval=TRUE}
 tbar_stations <- nearest_stations(LAT = -27.5598,
                                   LON = 151.9507,
                                   distance = 50)
 
-  tbar <- get_GSOD(years = 2010, station = tbar_stations)
+tbar <- get_GSOD(years = 2010, station = tbar_stations)
 ```
 
 If you wished to drop the stations, 949999-00170 and 949999-00183 from the
 query, you could do this.
 
-```{r, eval=FALSE}
+```{r, eval=TRUE}
 remove <- c("949999-00170", "949999-00183")
 
 tbar_stations <- tbar_stations[!tbar_stations %in% remove]
@@ -157,7 +129,7 @@ Using the first data downloaded for a single station, 955510-99999, plot the
 temperature for 2010 using `read_csv()` from Hadley's
 [`readr`](https://CRAN.R-project.org/package=readr) package.
 
-```{r, eval=FALSE}
+```{r, eval=TRUE}
 library(ggplot2)
 library(lubridate)
 library(tidyr)
@@ -321,48 +293,12 @@ through to current.
 Following is an example of how to retreive the inventory and check a station in
 Toowoomba, Queensland, Australia, which was used in an earlier example.
 
-```{r, eval=FALSE}
+```{r, eval=TRUE}
 inventory <- get_inventory()
 
-#> THIS INVENTORY SHOWS THE NUMBER OF WEATHER OBSERVATIONS BY STATION-YEAR-MONTH FOR BEGINNING OF RECORD THROUGH SEPTEMBER 2017.  THE DATABASE CONTINUES TO BE UPDATED AND ENHANCED, AND THIS INVENTORY WILL BE  UPDATED ON A REGULAR BASIS.
-
-head(inventory)
-
-#> # A tibble: 6 x 14
-#>         STNID  YEAR   JAN   FEB   MAR   APR   MAY   JUN   JUL   AUG   SEP   OCT   NOV   DEC
-#>         <chr> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> #><int> <int> <int>
-#>1 007005-99999  2012    18     0     0     0     0     0     0     0     0     0     0     0
-#>2 007011-99999  2012   771     0   183     0     0     0   142    13     9     0     4     0
-#>3 007018-99999  2013     0     0     0     0     0     0   710     0     0     0     0     0
-#>4 007025-99999  2012    21     0     0     0     0     0     0     0     0     0     0     0
-#>5 007026-99999  2012     0     0     0     0     0     0   367     0     0     0     0     7
-#>6 007026-99999  2014     0     0     0     0     0     0   180     0     4     0   552     0
+inventory
 
 subset(inventory, STNID == "955510-99999")
-
-#> # A tibble: 20 x 14
-#>          STNID  YEAR   JAN   FEB   MAR   APR   MAY   JUN   JUL   AUG   SEP   OCT   NOV   DEC
-#>          <chr> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int>
-#> 1 955510-99999  1998     0     0   222   223   221   211   226   217   222   234   215   230
-#> 2 955510-99999  1999   213   201   235   224   244   229   239   247   236   246   233   243
-#> 3 955510-99999  2000   241   227   247   238   246   237   245   240   236   248   239   248
-#> 4 955510-99999  2001   245   223   246   238   239   236   243   240   237   236   235   246
-#> 5 955510-99999  2002   245   219   246   236   243   229   243   246   227   238   233   246
-#> 6 955510-99999  2003   244   217   220   232   235   233   246   242   218   239   225   245
-#> 7 955510-99999  2004   240   227   241   229   233   224   235   244   235   244   235   245
-#> 8 955510-99999  2005   243   221   243   241   247   242   248   247   234   241   239   246
-#> 9 955510-99999  2006   245   223   246   232   241   238   247   247   239   247   240   247
-#>10 955510-99999  2007   247   222   244   240   248   240   244   244   239   247   237   246
-#>11 955510-99999  2008   247   228   248   239   248   239   248   247   239   247   238   248
-#>12 955510-99999  2009   245   222   246   235   244   237   248   248   239   248   239   248
-#>13 955510-99999  2010   248   223   248   240   244   240   242   247   240   248   240   247
-#>14 955510-99999  2011   247   224   247   240   247   240   248   247   239   248   239   248
-#>15 955510-99999  2012   248   232   248   240   248   240   248   247   240   248   240   245
-#>16 955510-99999  2013   236   220   247   233   248   239   252   246   230   248   239   246
-#>17 955510-99999  2014   243   224   247   240   246   239   241   243   240   247   240   248
-#>18 955510-99999  2015   248   222   248   239   247   240   247   246   239   247   237   247
-#>19 955510-99999  2016   246   228   245   240   246   240   248   248   238   248   231   248
-#>20 955510-99999  2017   240   224   248   240   248   237   248   247   190     0     0     0
 ```
 
 # Additional Climate Data
