@@ -301,7 +301,7 @@ get_GSOD <- function(years = NULL,
 }
 #' @noRd
 .validate_station <- function(station, stations, years) {
-  if (!station %in% stations[, "STNID"]) {
+  if (!station %in% stations$STNID) {
     stop(
       "\n",
       paste0(station),
