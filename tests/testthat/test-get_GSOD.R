@@ -1,3 +1,4 @@
+
 context("get_GSOD")
 # Check that .validate_years handles invalid years -----------------------------
 
@@ -225,5 +226,5 @@ test_that(
 
 test_that("Timeout options are reset on get_GSOD() exit", {
   skip_on_cran()
-  expect_equal(options("timeout")[[1]] == original_timeout)
+  expect_equal(options("timeout")[[1]], original_timeout)
 })
