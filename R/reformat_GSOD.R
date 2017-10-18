@@ -79,6 +79,7 @@
 #'
 reformat_GSOD <- function(dsn = NULL, file_list = NULL) {
 
+  isd_history <- NULL
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 
   # If dsn !NULL, create a list of files to reformat
