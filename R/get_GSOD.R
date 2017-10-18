@@ -197,8 +197,7 @@ get_GSOD <- function(years = NULL,
     .f = .process_gz,
     isd_history = isd_history
   )  %>%
-    dplyr::bind_rows() %>%
-    as.data.frame()
+    dplyr::bind_rows()
 
   # Write files to disk --------------------------------------------------------
   if (isTRUE(CSV)) {
