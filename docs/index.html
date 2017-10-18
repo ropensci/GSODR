@@ -15,7 +15,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-home">
+    <div class="container template-vignette">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -76,8 +76,12 @@
 
       
       </header><div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9">
     
+
+    
+    
+<div class="contents">
 
 <div id="gsodr-global-summary-daily-weather-data-in-r" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
@@ -88,7 +92,7 @@
 </h2>
 <p>The GSOD or <a href="https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod">Global Surface Summary of the Day (GSOD)</a> data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. <em>GSODR</em> aims to make it easy to find, transfer and format the data you need for use in analysis and provides four main functions for facilitating this:</p>
 <ul>
-<li><p><code><a href="reference/get_GSOD.html">get_GSOD()</a></code>, queries and transfers files from the FTP server, reformats them and returns a <code>data.frame()</code> object in R session or saves a file to disk with options for a GeoPackage spatially enabled file or comma `separated values (CSV) file,</p></li>
+<li><p><code><a href="reference/get_GSOD.html">get_GSOD()</a></code>, queries and transfers files from the FTP server, reformats them and returns a <code>tibble()</code> object in R session and/or saves a file to disk with options for a GeoPackage spatially enabled file or comma `separated values (CSV) file,</p></li>
 <li><p><code><a href="reference/reformat_GSOD.html">reformat_GSOD()</a></code>, the workhorse, takes individual station files on the local disk and reformats them, returns a <code>data.frame()</code> object in R session or saves a file to disk with options for a GeoPackage spatially enabled file or comma separated values (CSV) file,</p></li>
 <li><p><code><a href="reference/nearest_stations.html">nearest_stations()</a></code>, returns a <code>vector()</code> object containing a list of stations and their metadata that fall within the given radius of a point specified by the user,</p></li>
 <li><p><code><a href="reference/update_station_list.html">update_station_list()</a></code>, downloads the latest station list from the NCEI FTP server updates the package’s internal database of stations and their metadata.</p></li>
@@ -127,56 +131,45 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <div id="example---download-weather-station-data-for-toowoomba-queensland-for-2010" class="section level4">
 <h4 class="hasAnchor">
 <a href="#example---download-weather-station-data-for-toowoomba-queensland-for-2010" class="anchor"></a>Example - Download weather station data for Toowoomba, Queensland for 2010</h4>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(GSODR)
-
-Tbar &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> <span class="st">"955510-99999"</span>)
-<span class="co">#&gt;</span>
-<span class="co">#&gt; Checking requested station file for availability on server.</span>
-<span class="co">#&gt; Starting data file processing</span>
-
-<span class="kw">head</span>(Tbar)
-<span class="co">#&gt;    WBAN        STNID          STN_NAME CTRY STATE CALL    LAT     LON</span>
-<span class="co">#&gt; 1 99999 955510-99999 TOOWOOMBA AIRPORT   AS  &lt;NA&gt; &lt;NA&gt; -27.55 151.917</span>
-<span class="co">#&gt; 2 99999 955510-99999 TOOWOOMBA AIRPORT   AS  &lt;NA&gt; &lt;NA&gt; -27.55 151.917</span>
-<span class="co">#&gt; 3 99999 955510-99999 TOOWOOMBA AIRPORT   AS  &lt;NA&gt; &lt;NA&gt; -27.55 151.917</span>
-<span class="co">#&gt; 4 99999 955510-99999 TOOWOOMBA AIRPORT   AS  &lt;NA&gt; &lt;NA&gt; -27.55 151.917</span>
-<span class="co">#&gt; 5 99999 955510-99999 TOOWOOMBA AIRPORT   AS  &lt;NA&gt; &lt;NA&gt; -27.55 151.917</span>
-<span class="co">#&gt; 6 99999 955510-99999 TOOWOOMBA AIRPORT   AS  &lt;NA&gt; &lt;NA&gt; -27.55 151.917</span>
-<span class="co">#&gt;   ELEV_M ELEV_M_SRTM_90m    </span><span class="re">BEGIN</span><span class="co">      </span><span class="re">END</span><span class="co"> YEARMODA YEAR MONTH DAY YDAY</span>
-<span class="co">#&gt; 1    642             635 19980301 20161122 20100101 2010    01  01    1</span>
-<span class="co">#&gt; 2    642             635 19980301 20161122 20100102 2010    01  02    2</span>
-<span class="co">#&gt; 3    642             635 19980301 20161122 20100103 2010    01  03    3</span>
-<span class="co">#&gt; 4    642             635 19980301 20161122 20100104 2010    01  04    4</span>
-<span class="co">#&gt; 5    642             635 19980301 20161122 20100105 2010    01  05    5</span>
-<span class="co">#&gt; 6    642             635 19980301 20161122 20100106 2010    01  06    6</span>
-<span class="co">#&gt;   TEMP TEMP_CNT DEWP DEWP_CNT    SLP SLP_CNT   STP STP_CNT VISIB VISIB_CNT</span>
-<span class="co">#&gt; 1 21.2        8 17.9        8 1013.4       8 942.0       8    NA         0</span>
-<span class="co">#&gt; 2 23.2        8 19.4        8 1010.5       8 939.3       8    NA         0</span>
-<span class="co">#&gt; 3 21.4        8 18.9        8 1012.3       8 940.9       8  14.3         6</span>
-<span class="co">#&gt; 4 18.9        8 16.4        8 1015.7       8 944.1       8  23.3         4</span>
-<span class="co">#&gt; 5 20.5        8 16.4        8 1015.5       8 944.0       8    NA         0</span>
-<span class="co">#&gt; 6 21.9        8 18.7        8 1013.7       8 942.3       8    NA         0</span>
-<span class="co">#&gt;   WDSP WDSP_CNT MXSPD GUST   MAX MAX_FLAG   MIN MIN_FLAG PRCP PRCP_FLAG</span>
-<span class="co">#&gt; 1  2.2        8   6.7   NA 25.78          17.78           1.5         G</span>
-<span class="co">#&gt; 2  1.9        8   5.1   NA 26.50          19.11           0.3         G</span>
-<span class="co">#&gt; 3  3.9        8  10.3   NA 28.72          19.28        * 19.8         G</span>
-<span class="co">#&gt; 4  4.5        8  10.3   NA 24.11          16.89        *  1.0         G</span>
-<span class="co">#&gt; 5  3.9        8  10.8   NA 24.61          16.72           0.3         G</span>
-<span class="co">#&gt; 6  3.2        8   7.7   NA 26.78          17.50           0.0         G</span>
-<span class="co">#&gt;   SNDP I_FOG I_RAIN_DRIZZLE I_SNOW_ICE I_HAIL I_THUNDER I_TORNADO_FUNNEL</span>
-<span class="co">#&gt; 1   NA     0              0          0      0         0                0</span>
-<span class="co">#&gt; 2   NA     0              0          0      0         0                0</span>
-<span class="co">#&gt; 3   NA     1              1          0      0         0                0</span>
-<span class="co">#&gt; 4   NA     0              0          0      0         0                0</span>
-<span class="co">#&gt; 5   NA     0              0          0      0         0                0</span>
-<span class="co">#&gt; 6   NA     1              0          0      0         0                0</span>
-<span class="co">#&gt;    EA  ES   RH</span>
-<span class="co">#&gt; 1 2.1 2.5 84.0</span>
-<span class="co">#&gt; 2 2.3 2.8 82.1</span>
-<span class="co">#&gt; 3 2.2 2.5 88.0</span>
-<span class="co">#&gt; 4 1.9 2.2 86.4</span>
-<span class="co">#&gt; 5 1.9 2.4 79.2</span>
-<span class="co">#&gt; 6 2.2 2.6 84.6</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(GSODR)</code></pre></div>
+<pre><code>## 
+## GSOD is distributed free by the US NCEI with the
+## following conditions.
+## 'The following data and products may have conditions placed
+## their international commercial use. They can be used within
+## the U.S. or for non-commercial international activities
+## without restriction. The non-U.S. data cannot be
+## redistributed for commercial purposes. Re-distribution of
+## these data by others must provide this same notification.
+## WMO Resolution 40. NOAA Policy'</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Tbar &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> <span class="st">"955510-99999"</span>)</code></pre></div>
+<pre><code>## 
+## Checking requested station file for availability on server</code></pre>
+<pre><code>## 
+## Downloading individual station files.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Tbar</code></pre></div>
+<pre><code>## # A tibble: 365 x 48
+##      USAF  WBAN        STNID          STN_NAME  CTRY STATE  CALL    LAT
+##     &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;             &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt;
+##  1 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  &lt;NA&gt;  &lt;NA&gt; -27.55
+##  2 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  &lt;NA&gt;  &lt;NA&gt; -27.55
+##  3 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  &lt;NA&gt;  &lt;NA&gt; -27.55
+##  4 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  &lt;NA&gt;  &lt;NA&gt; -27.55
+##  5 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  &lt;NA&gt;  &lt;NA&gt; -27.55
+##  6 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  &lt;NA&gt;  &lt;NA&gt; -27.55
+##  7 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  &lt;NA&gt;  &lt;NA&gt; -27.55
+##  8 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  &lt;NA&gt;  &lt;NA&gt; -27.55
+##  9 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  &lt;NA&gt;  &lt;NA&gt; -27.55
+## 10 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  &lt;NA&gt;  &lt;NA&gt; -27.55
+## # ... with 355 more rows, and 40 more variables: LON &lt;dbl&gt;, ELEV_M &lt;dbl&gt;,
+## #   ELEV_M_SRTM_90m &lt;dbl&gt;, BEGIN &lt;dbl&gt;, END &lt;dbl&gt;, YEARMODA &lt;chr&gt;,
+## #   YEAR &lt;chr&gt;, MONTH &lt;chr&gt;, DAY &lt;chr&gt;, YDAY &lt;dbl&gt;, TEMP &lt;dbl&gt;,
+## #   TEMP_CNT &lt;int&gt;, DEWP &lt;dbl&gt;, DEWP_CNT &lt;int&gt;, SLP &lt;dbl&gt;, SLP_CNT &lt;int&gt;,
+## #   STP &lt;dbl&gt;, STP_CNT &lt;int&gt;, VISIB &lt;dbl&gt;, VISIB_CNT &lt;int&gt;, WDSP &lt;dbl&gt;,
+## #   WDSP_CNT &lt;int&gt;, MXSPD &lt;dbl&gt;, GUST &lt;dbl&gt;, MAX &lt;dbl&gt;, MAX_FLAG &lt;chr&gt;,
+## #   MIN &lt;dbl&gt;, MIN_FLAG &lt;chr&gt;, PRCP &lt;dbl&gt;, PRCP_FLAG &lt;chr&gt;, SNDP &lt;dbl&gt;,
+## #   I_FOG &lt;int&gt;, I_RAIN_DRIZZLE &lt;int&gt;, I_SNOW_ICE &lt;int&gt;, I_HAIL &lt;int&gt;,
+## #   I_THUNDER &lt;int&gt;, I_TORNADO_FUNNEL &lt;int&gt;, EA &lt;dbl&gt;, ES &lt;dbl&gt;, RH &lt;dbl&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -218,12 +211,7 @@ Tbar &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_GSOD.
 <ul>
 <li><p>Please <a href="https://github.com/ropensci/GSODR/issues">report any issues or bugs</a>.</p></li>
 <li><p>License: MIT</p></li>
-<li>
-<p>To cite <em>GSODR</em>, please use:</p>
-<blockquote>
-<p>Adam H Sparks, Tomislav Hengl and Andrew Nelson (2017). GSODR: Global Summary Daily Weather Data in R. <em>The Journal of Open Source Software</em>, <strong>2(10)</strong>. DOI: 10.21105/joss.00177.</p>
-</blockquote>
-</li>
+<li><p>To cite <em>GSODR</em>, please use: &gt; Adam H Sparks, Tomislav Hengl and Andrew Nelson (2017). GSODR: Global Summary Daily Weather Data in R. <em>The Journal of Open Source Software</em>, <strong>2(10)</strong>. DOI: 10.21105/joss.00177.</p></li>
 <li><p>Please note that this project is released with a <a href="CONDUCT.md">Contributor Code of Conduct</a>. By participating in this project you agree to abide by its terms.</p></li>
 </ul>
 </div>
@@ -234,11 +222,12 @@ Tbar &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_GSOD.
 <p><a href="https://ropensci.org"><img src="https://ropensci.org/public_images/github_footer.png" alt="ropensci"></a></p>
 </div>
 </div>
-
+</div>
   </div>
 
-  <div class="col-md-3" id="sidebar">
-    <h2>Links</h2>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2 class="hasAnchor">
+<a href="#sidebar" class="anchor"></a>Links</h2>
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cran.r-project.org/package=GSODR">https://​cran.r-project.org/​package=GSODR</a>
 </li>
@@ -273,6 +262,7 @@ Tbar &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_GSOD.
 <li><a href="https://github.com/ropensci/onboarding/issues/79"><img src="https://badges.ropensci.org/79_status.svg"></a></li>
 </ul>
 </div>
+
 </div>
 
 
