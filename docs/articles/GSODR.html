@@ -111,73 +111,109 @@
 <h2 class="hasAnchor">
 <a href="#find-stations-in-australia" class="anchor"></a>Find Stations in Australia</h2>
 <p><em>GSODR</em> provides lists of weather station locations and elevation values. Using <a href="https://CRAN.R-project.org/package=dplyr"><em>dplyr</em></a>, we can find all the stations in Australia.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
-<span class="kw">load</span>(<span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"country_list.rda"</span>, <span class="dt">package =</span> <span class="st">"GSODR"</span>))
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(GSODR)</code></pre></div>
+<pre><code>## 
+## GSOD is distributed free by the US NCEI with the
+## following conditions.
+## 'The following data and products may have conditions placed
+## their international commercial use. They can be used within
+## the U.S. or for non-commercial international activities
+## without restriction. The non-U.S. data cannot be
+## redistributed for commercial purposes. Re-distribution of
+## these data by others must provide this same notification.
+## WMO Resolution 40. NOAA Policy'</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)</code></pre></div>
+<pre><code>## 
+## Attaching package: 'dplyr'</code></pre>
+<pre><code>## The following objects are masked from 'package:stats':
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"country_list.rda"</span>, <span class="dt">package =</span> <span class="st">"GSODR"</span>))
 <span class="kw">load</span>(<span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"isd_history.rda"</span>, <span class="dt">package =</span> <span class="st">"GSODR"</span>))
+
 station_locations &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(isd_history, country_list,
                                <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">"CTRY"</span> =<span class="st"> "FIPS"</span>))
 
 <span class="co"># create data.frame for Australia only</span>
 Oz &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(station_locations, COUNTRY_NAME <span class="op">==</span><span class="st"> "AUSTRALIA"</span>)
-<span class="kw">head</span>(Oz)
 
-<span class="co">#&gt;     USAF  WBAN                  STN_NAME CTRY STATE CALL     LAT     LON</span>
-<span class="co">#&gt; 1 695023 99999       HORN ISLAND   (HID)   AS  &lt;NA&gt; KQXC -10.583 142.300</span>
-<span class="co">#&gt; 2 749430 99999        AIDELAIDE RIVER SE   AS  &lt;NA&gt; &lt;NA&gt; -13.300 131.133</span>
-<span class="co">#&gt; 3 749432 99999 BATCHELOR FIELD AUSTRALIA   AS  &lt;NA&gt; &lt;NA&gt; -13.049 131.066</span>
-<span class="co">#&gt; 4 749438 99999      IRON RANGE AUSTRALIA   AS  &lt;NA&gt; &lt;NA&gt; -12.700 143.300</span>
-<span class="co">#&gt; 5 749439 99999  MAREEBA AS/HOEVETT FIELD   AS  &lt;NA&gt; &lt;NA&gt; -17.050 145.400</span>
-<span class="co">#&gt; 6 749440 99999                 REID EAST   AS  &lt;NA&gt; &lt;NA&gt; -19.767 146.850</span>
-<span class="co">#&gt;   ELEV_M    </span><span class="re">BEGIN</span><span class="co">      </span><span class="re">END</span><span class="co">        STNID ELEV_M_SRTM_90m COUNTRY_NAME iso2c</span>
-<span class="co">#&gt; 1     NA 19420804 20030816 695023-99999              24    AUSTRALIA    AU</span>
-<span class="co">#&gt; 2    131 19430228 19440821 749430-99999              96    AUSTRALIA    AU</span>
-<span class="co">#&gt; 3    107 19421231 19430610 749432-99999              83    AUSTRALIA    AU</span>
-<span class="co">#&gt; 4     18 19420917 19440930 749438-99999              63    AUSTRALIA    AU</span>
-<span class="co">#&gt; 5    443 19420630 19440630 749439-99999             449    AUSTRALIA    AU</span>
-<span class="co">#&gt; 6    122 19421012 19430405 749440-99999              75    AUSTRALIA    AU</span>
-<span class="co">#&gt;   iso3c</span>
-<span class="co">#&gt; 1   AUS</span>
-<span class="co">#&gt; 2   AUS</span>
-<span class="co">#&gt; 3   AUS</span>
-<span class="co">#&gt; 4   AUS</span>
-<span class="co">#&gt; 5   AUS</span>
-<span class="co">#&gt; 6   AUS</span>
-
-<span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(Oz, STN_NAME <span class="op">==</span><span class="st"> "TOOWOOMBA"</span>)
-<span class="co">#&gt;     USAF  WBAN  STN_NAME CTRY STATE CALL     LAT     LON ELEV_M    </span><span class="re">BEGIN</span>
-<span class="co">#&gt; 1 945510 99999 TOOWOOMBA   AS  &lt;NA&gt; &lt;NA&gt; -27.583 151.933    676 19561231</span>
-<span class="co">#&gt;        </span><span class="re">END</span><span class="co">        STNID ELEV_M_SRTM_90m COUNTRY_NAME iso2c iso3c</span>
-<span class="co">#&gt; 1 20120503 945510-99999             670    AUSTRALIA    AU   AUS</span></code></pre></div>
+Oz</code></pre></div>
+<pre><code>## # A tibble: 1,412 x 16
+##      USAF  WBAN                      STN_NAME  CTRY STATE  CALL     LAT
+##     &lt;chr&gt; &lt;chr&gt;                         &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;
+##  1 695023 99999           HORN ISLAND   (HID)    AS  &lt;NA&gt;  KQXC -10.583
+##  2 749430 99999            AIDELAIDE RIVER SE    AS  &lt;NA&gt;  &lt;NA&gt; -13.300
+##  3 749432 99999     BATCHELOR FIELD AUSTRALIA    AS  &lt;NA&gt;  &lt;NA&gt; -13.049
+##  4 749438 99999          IRON RANGE AUSTRALIA    AS  &lt;NA&gt;  &lt;NA&gt; -12.700
+##  5 749439 99999      MAREEBA AS/HOEVETT FIELD    AS  &lt;NA&gt;  &lt;NA&gt; -17.050
+##  6 749440 99999                     REID EAST    AS  &lt;NA&gt;  &lt;NA&gt; -19.767
+##  7 749441 99999  TOWNSVILLE AUSTRALIA/GARBUTT    AS  &lt;NA&gt;  ABTL -19.249
+##  8 749442 99999                     WOODSTOCK    AS  &lt;NA&gt;  &lt;NA&gt; -19.600
+##  9 749443 99999 JACKY JACKY AUSTRALIA/HIGGINS    AS  &lt;NA&gt;  &lt;NA&gt; -10.933
+## 10 749455 99999            LAKE BUCHANAN WEST    AS  &lt;NA&gt;  &lt;NA&gt; -21.417
+## # ... with 1,402 more rows, and 9 more variables: LON &lt;dbl&gt;, ELEV_M &lt;dbl&gt;,
+## #   BEGIN &lt;dbl&gt;, END &lt;dbl&gt;, STNID &lt;chr&gt;, ELEV_M_SRTM_90m &lt;dbl&gt;,
+## #   COUNTRY_NAME &lt;chr&gt;, iso2c &lt;chr&gt;, iso3c &lt;chr&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(Oz, STN_NAME <span class="op">==</span><span class="st"> "TOOWOOMBA"</span>)</code></pre></div>
+<pre><code>## # A tibble: 1 x 16
+##     USAF  WBAN  STN_NAME  CTRY STATE  CALL     LAT     LON ELEV_M    BEGIN
+##    &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
+## 1 945510 99999 TOOWOOMBA    AS  &lt;NA&gt;  &lt;NA&gt; -27.583 151.933    676 19561231
+## # ... with 6 more variables: END &lt;dbl&gt;, STNID &lt;chr&gt;,
+## #   ELEV_M_SRTM_90m &lt;dbl&gt;, COUNTRY_NAME &lt;chr&gt;, iso2c &lt;chr&gt;, iso3c &lt;chr&gt;</code></pre>
 </div>
 <div id="using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and-year" class="section level2">
 <h2 class="hasAnchor">
 <a href="#using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and-year" class="anchor"></a>Using the get_GSOD() Function in <em>GSODR</em> to Download a Single Station and Year</h2>
 <p>Now that we’ve seen where the reporting stations are located, we can download weather data from the station Toowoomba, Queensland, Australia for 2010 by using the STNID in the <code>station</code> parameter of <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(GSODR)
-Tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> <span class="st">"955510-99999"</span>)
-
-<span class="co">#&gt; Downloading the station file(s) now.</span>
-
-<span class="co">#&gt; Finished downloading file. Parsing the station file(s) now.</span>
-
-<span class="kw">head</span>(Tbar)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> <span class="st">"955510-99999"</span>)</code></pre></div>
+<pre><code>## 
+## Checking requested station file for availability on server</code></pre>
+<pre><code>## 
+## Downloading individual station files.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Tbar</code></pre></div>
+<pre><code>## # A tibble: 365 x 48
+##      USAF  WBAN        STNID          STN_NAME  CTRY STATE  CALL    LAT
+##     &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;             &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt;
+##  1 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  &lt;NA&gt;  &lt;NA&gt; -27.55
+##  2 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  &lt;NA&gt;  &lt;NA&gt; -27.55
+##  3 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  &lt;NA&gt;  &lt;NA&gt; -27.55
+##  4 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  &lt;NA&gt;  &lt;NA&gt; -27.55
+##  5 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  &lt;NA&gt;  &lt;NA&gt; -27.55
+##  6 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  &lt;NA&gt;  &lt;NA&gt; -27.55
+##  7 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  &lt;NA&gt;  &lt;NA&gt; -27.55
+##  8 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  &lt;NA&gt;  &lt;NA&gt; -27.55
+##  9 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  &lt;NA&gt;  &lt;NA&gt; -27.55
+## 10 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  &lt;NA&gt;  &lt;NA&gt; -27.55
+## # ... with 355 more rows, and 40 more variables: LON &lt;dbl&gt;, ELEV_M &lt;dbl&gt;,
+## #   ELEV_M_SRTM_90m &lt;dbl&gt;, BEGIN &lt;dbl&gt;, END &lt;dbl&gt;, YEARMODA &lt;chr&gt;,
+## #   YEAR &lt;chr&gt;, MONTH &lt;chr&gt;, DAY &lt;chr&gt;, YDAY &lt;dbl&gt;, TEMP &lt;dbl&gt;,
+## #   TEMP_CNT &lt;int&gt;, DEWP &lt;dbl&gt;, DEWP_CNT &lt;int&gt;, SLP &lt;dbl&gt;, SLP_CNT &lt;int&gt;,
+## #   STP &lt;dbl&gt;, STP_CNT &lt;int&gt;, VISIB &lt;dbl&gt;, VISIB_CNT &lt;int&gt;, WDSP &lt;dbl&gt;,
+## #   WDSP_CNT &lt;int&gt;, MXSPD &lt;dbl&gt;, GUST &lt;dbl&gt;, MAX &lt;dbl&gt;, MAX_FLAG &lt;chr&gt;,
+## #   MIN &lt;dbl&gt;, MIN_FLAG &lt;chr&gt;, PRCP &lt;dbl&gt;, PRCP_FLAG &lt;chr&gt;, SNDP &lt;dbl&gt;,
+## #   I_FOG &lt;int&gt;, I_RAIN_DRIZZLE &lt;int&gt;, I_SNOW_ICE &lt;int&gt;, I_HAIL &lt;int&gt;,
+## #   I_THUNDER &lt;int&gt;, I_TORNADO_FUNNEL &lt;int&gt;, EA &lt;dbl&gt;, ES &lt;dbl&gt;, RH &lt;dbl&gt;</code></pre>
 </div>
 <div id="find-stations-within-a-specified-distance-of-a-given-latlon-value" class="section level2">
 <h2 class="hasAnchor">
 <a href="#find-stations-within-a-specified-distance-of-a-given-latlon-value" class="anchor"></a>Find Stations Within a Specified Distance of a Given Lat/Lon Value</h2>
 <p>Using the <code><a href="../reference/nearest_stations.html">nearest_stations()</a></code> function, you can find stations closest to a given point specified by latitude and longitude in decimal degrees. This can be used to generate a vector to pass along to <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> and download the stations of interest.</p>
 <p>There are missing stations in this query. Not all that are listed and queried actually have files on the server.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tbar_stations &lt;-<span class="st"> </span><span class="kw"><a href="../reference/nearest_stations.html">nearest_stations</a></span>(<span class="dt">LAT =</span> <span class="op">-</span><span class="fl">27.5598</span>,
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Tbar_stations &lt;-<span class="st"> </span><span class="kw"><a href="../reference/nearest_stations.html">nearest_stations</a></span>(<span class="dt">LAT =</span> <span class="op">-</span><span class="fl">27.5598</span>,
                                   <span class="dt">LON =</span> <span class="fl">151.9507</span>,
                                   <span class="dt">distance =</span> <span class="dv">50</span>)
 
-  tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> tbar_stations)</code></pre></div>
+Tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> tbar_stations)</code></pre></div>
 <p>If you wished to drop the stations, 949999-00170 and 949999-00183 from the query, you could do this.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remove &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"949999-00170"</span>, <span class="st">"949999-00183"</span>)
 
-tbar_stations &lt;-<span class="st"> </span>tbar_stations[<span class="op">!</span>tbar_stations <span class="op">%in%</span><span class="st"> </span>remove]
+Tbar_stations &lt;-<span class="st"> </span>tbar_stations[<span class="op">!</span>tbar_stations <span class="op">%in%</span><span class="st"> </span>remove]
 
-tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>,
+Tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>,
                  <span class="dt">station =</span> tbar_stations,
                  <span class="dt">dsn =</span> <span class="st">"~/"</span>)</code></pre></div>
 </div>
