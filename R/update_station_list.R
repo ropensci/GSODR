@@ -20,7 +20,7 @@
 #' \dontrun{
 #' update_station_list()
 #' }
-#' @return \code{\link[data.table]{data.table}} object of station metadata.
+#'
 #' @author Adam H Sparks, \email{adamhsparks@gmail.com}
 #' @export
 #'
@@ -68,7 +68,6 @@ update_station_list <- function() {
   new_isd_history <- new_isd_history[!is.na(new_isd_history$LON), ]
 
   # left join the old and new data
-
   isd_history <- dplyr::left_join(
     old_isd_history,
     new_isd_history,
@@ -87,8 +86,6 @@ update_station_list <- function() {
       "STNID" = "STNID"
     )
   )
-
-  isd_history <- data.table::setDT(isd_history)
 
   # overwrite the existing isd_history.rda file on disk
   fname <- system.file("extdata", "isd_history.rda", package = "GSODR")
