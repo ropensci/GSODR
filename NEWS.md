@@ -5,8 +5,15 @@
 - _data.table_ no longer used. All internal functions now use _dplyr_ or base R
 functionality, reducing the dependencies of _GSODR_
 
+- Any data frames returned by _GSODR_ functions are returned as a `tibble()`
+object
+
 - Add new function, `get_inventory()`, which downloads the NCEI's station
 inventory document and returns a `tibble()` object of the data
+
+- A new theme is used for the vignettes and documentation website, spacelab,
+which provides a floating table of contents in vignettes and larger images
+
 
 # GSODR 1.0.7
 
