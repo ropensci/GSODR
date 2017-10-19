@@ -56,7 +56,8 @@ test_that("GSOD filename is used when user does not specify a filename", {
 })
 
 # Check that invalid dsn is handled --------------------------------------------
-test_that("Missing or invalid dsn is handled", {
+
+test_that("dsn is checked if specified", {
   dsn <- "~/NULL"
   expect_error(if (!is.null(dsn)) {
     outfile <-
@@ -90,8 +91,23 @@ test_that("If dsn is not specified, defaults to working directory", {
       filename = "test",
       GPKG = FALSE
     )
-  expect_match(outfile, paste0(getwd(), "/", "test"))
+  expect_match(outfile, file.path(getwd(), "test"))
 })
+
+test_that("If dsn is set, it is checked", {
+  dsn <- tempdir()
+  if (!is.null(dsn)) {
+  outfile <-
+    .validate_fileout(
+      CSV = TRUE,
+      dsn = dsn,
+      filename = "test",
+      GPKG = FALSE
+    )
+  }
+  expect_match(outfile, file.path(dsn, "test"))
+})
+
 
 # Check missing days in non-leap years -----------------------------------------
 test_that("missing days check allows stations with permissible days missing,
