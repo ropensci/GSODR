@@ -105,7 +105,7 @@ test_that("If dsn is set, it is checked", {
       GPKG = FALSE
     )
   }
-  expect_match(outfile, file.path(dsn, "test"))
+  expect_match(outfile, paste0(dsn, "/", "test"))
 })
 
 
