@@ -94,21 +94,6 @@ test_that("If dsn is not specified, defaults to working directory", {
   expect_match(outfile, file.path(getwd(), "test"))
 })
 
-test_that("If dsn is set, it is checked", {
-  dsn <- tempdir()
-  if (!is.null(dsn)) {
-  outfile <-
-    .validate_fileout(
-      CSV = TRUE,
-      dsn = dsn,
-      filename = "test",
-      GPKG = FALSE
-    )
-  }
-  expect_match(outfile, paste0(dsn, "/", "test"))
-})
-
-
 # Check missing days in non-leap years -----------------------------------------
 test_that("missing days check allows stations with permissible days missing,
           non-leap year", {
