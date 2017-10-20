@@ -1,5 +1,18 @@
 # GSODR 1.1
 
+## Bug fixes
+
+- Fixes bug reported in [issue 36](https://github.com/ropensci/GSODR/issues/36)
+```r
+> t <- get_GSOD(years = 2010, station = "955510-99999")
+Error in .f(.x[[i]], ...) : 
+955510-99999 is not a valid station ID number, please check your entry.
+Valid Station IDs can be found in the isd-history.txt file
+available from the US NCEI FTP server by combining the USAF and WBAN
+columns, e.g., '007005' '99999' is '007005-99999' from this file 
+<ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.txt>
+```
+
 ## Major changes
 
 - _data.table_ no longer used. All internal functions now use _dplyr_ or base R

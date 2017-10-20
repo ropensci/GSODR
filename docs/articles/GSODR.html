@@ -81,7 +81,7 @@
       <h1>GSODR</h1>
                         <h4 class="author">Adam H Sparks</h4>
             
-            <h4 class="date">2017-10-19</h4>
+            <h4 class="date">2017-10-21</h4>
           </div>
 
     
@@ -334,9 +334,9 @@ x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reformat_
 <p><em>GSODR</em> provides a function, <code><a href="../reference/get_inventory.html">get_inventory()</a></code> to retrieve an inventory of the number of weather observations by station-year-month for the beginning of record through to current.</p>
 <p>Following is an example of how to retreive the inventory and check a station in Toowoomba, Queensland, Australia, which was used in an earlier example.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">inventory &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_inventory.html">get_inventory</a></span>()</code></pre></div>
-<pre><code>## THIS INVENTORY SHOWS THE NUMBER OF WEATHER OBSERVATIONS BY STATION-YEAR-MONTH FOR BEGINNING OF RECORD THROUGH SEPTEMBER 2017.  THE DATABASE CONTINUES TO BE UPDATED AND ENHANCED, AND THIS INVENTORY WILL BE  UPDATED ON A REGULAR BASIS.</code></pre>
+<pre><code>## THIS INVENTORY SHOWS THE NUMBER OF WEATHER OBSERVATIONS BY STATION-YEAR-MONTH FOR BEGINNING OF RECORD THROUGH OCTOBER 2017.  THE DATABASE CONTINUES TO BE UPDATED AND ENHANCED, AND THIS INVENTORY WILL BE  UPDATED ON A REGULAR BASIS.</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">inventory</code></pre></div>
-<pre><code>## # A tibble: 616,555 x 14
+<pre><code>## # A tibble: 616,652 x 14
 ##           STNID  YEAR   JAN   FEB   MAR   APR   MAY   JUN   JUL   AUG
 ##           &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
 ##  1 007005-99999  2012    18     0     0     0     0     0     0     0
@@ -349,7 +349,7 @@ x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reformat_
 ##  8 007026-99999  2017     0   914  2626   380   277   406  1230  1009
 ##  9 007034-99999  2012     0     0     0     0     0     0     0     0
 ## 10 007037-99999  2012     0     0     0     0     0     0   830    35
-## # ... with 616,545 more rows, and 4 more variables: SEP &lt;int&gt;, OCT &lt;int&gt;,
+## # ... with 616,642 more rows, and 4 more variables: SEP &lt;int&gt;, OCT &lt;int&gt;,
 ## #   NOV &lt;int&gt;, DEC &lt;int&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">subset</span>(inventory, STNID <span class="op">==</span><span class="st"> "955510-99999"</span>)</code></pre></div>
 <pre><code>## # A tibble: 20 x 14

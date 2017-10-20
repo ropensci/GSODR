@@ -1,7 +1,7 @@
 ---
 title: "GSODR"
 author: "Adam H Sparks"
-date: "2017-10-18"
+date: "2017-10-19"
 output:
   html_document:
     toc: true
@@ -26,10 +26,10 @@ find, transfer and format the data you need for use in analysis and provides
 four main functions for facilitating this:
 
 - `get_GSOD()` - the main function that will query and transfer files from the
-FTP server, reformat them and return a data.frame in R or save a file to disk
+FTP server, reformat them and return a data frame in R or save a file to disk
 
 - `reformat_GSOD()` - the workhorse, this function takes individual station
-files on the local disk and re-formats them returning a data.frame in R
+files on the local disk and re-formats them returning a data frame in R
 
 - `nearest_stations()` - this function returns a data frame containing a list of
 stations and their metadata that fall within the given radius of a point
@@ -60,43 +60,70 @@ stations in Australia.
 
 
 ```r
+library(GSODR)
 library(dplyr)
+```
+
+```
+## 
+## Attaching package: 'dplyr'
+```
+
+```
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+```
+
+```
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+```
+
+```r
 load(system.file("extdata", "country_list.rda", package = "GSODR"))
 load(system.file("extdata", "isd_history.rda", package = "GSODR"))
+
 station_locations <- left_join(isd_history, country_list,
                                by = c("CTRY" = "FIPS"))
 
 # create data.frame for Australia only
 Oz <- filter(station_locations, COUNTRY_NAME == "AUSTRALIA")
-head(Oz)
 
-#>     USAF  WBAN                  STN_NAME CTRY STATE CALL     LAT     LON
-#> 1 695023 99999       HORN ISLAND   (HID)   AS  <NA> KQXC -10.583 142.300
-#> 2 749430 99999        AIDELAIDE RIVER SE   AS  <NA> <NA> -13.300 131.133
-#> 3 749432 99999 BATCHELOR FIELD AUSTRALIA   AS  <NA> <NA> -13.049 131.066
-#> 4 749438 99999      IRON RANGE AUSTRALIA   AS  <NA> <NA> -12.700 143.300
-#> 5 749439 99999  MAREEBA AS/HOEVETT FIELD   AS  <NA> <NA> -17.050 145.400
-#> 6 749440 99999                 REID EAST   AS  <NA> <NA> -19.767 146.850
-#>   ELEV_M    BEGIN      END        STNID ELEV_M_SRTM_90m COUNTRY_NAME iso2c
-#> 1     NA 19420804 20030816 695023-99999              24    AUSTRALIA    AU
-#> 2    131 19430228 19440821 749430-99999              96    AUSTRALIA    AU
-#> 3    107 19421231 19430610 749432-99999              83    AUSTRALIA    AU
-#> 4     18 19420917 19440930 749438-99999              63    AUSTRALIA    AU
-#> 5    443 19420630 19440630 749439-99999             449    AUSTRALIA    AU
-#> 6    122 19421012 19430405 749440-99999              75    AUSTRALIA    AU
-#>   iso3c
-#> 1   AUS
-#> 2   AUS
-#> 3   AUS
-#> 4   AUS
-#> 5   AUS
-#> 6   AUS
+Oz
+```
 
+```
+## # A tibble: 1,412 x 16
+##      USAF  WBAN                      STN_NAME  CTRY STATE  CALL     LAT
+##     <chr> <chr>                         <chr> <chr> <chr> <chr>   <dbl>
+##  1 695023 99999           HORN ISLAND   (HID)    AS  <NA>  KQXC -10.583
+##  2 749430 99999            AIDELAIDE RIVER SE    AS  <NA>  <NA> -13.300
+##  3 749432 99999     BATCHELOR FIELD AUSTRALIA    AS  <NA>  <NA> -13.049
+##  4 749438 99999          IRON RANGE AUSTRALIA    AS  <NA>  <NA> -12.700
+##  5 749439 99999      MAREEBA AS/HOEVETT FIELD    AS  <NA>  <NA> -17.050
+##  6 749440 99999                     REID EAST    AS  <NA>  <NA> -19.767
+##  7 749441 99999  TOWNSVILLE AUSTRALIA/GARBUTT    AS  <NA>  ABTL -19.249
+##  8 749442 99999                     WOODSTOCK    AS  <NA>  <NA> -19.600
+##  9 749443 99999 JACKY JACKY AUSTRALIA/HIGGINS    AS  <NA>  <NA> -10.933
+## 10 749455 99999            LAKE BUCHANAN WEST    AS  <NA>  <NA> -21.417
+## # ... with 1,402 more rows, and 9 more variables: LON <dbl>, ELEV_M <dbl>,
+## #   BEGIN <dbl>, END <dbl>, STNID <chr>, ELEV_M_SRTM_90m <dbl>,
+## #   COUNTRY_NAME <chr>, iso2c <chr>, iso3c <chr>
+```
+
+```r
 filter(Oz, STN_NAME == "TOOWOOMBA")
-#>     USAF  WBAN  STN_NAME CTRY STATE CALL     LAT     LON ELEV_M    BEGIN
-#> 1 945510 99999 TOOWOOMBA   AS  <NA> <NA> -27.583 151.933    676 19561231
-#>        END        STNID ELEV_M_SRTM_90m COUNTRY_NAME iso2c iso3c
-#> 1 20120503 945510-99999             670    AUSTRALIA    AU   AUS
+```
+
+```
+## # A tibble: 1 x 16
+##     USAF  WBAN  STN_NAME  CTRY STATE  CALL     LAT     LON ELEV_M    BEGIN
+##    <chr> <chr>     <chr> <chr> <chr> <chr>   <dbl>   <dbl>  <dbl>    <dbl>
+## 1 945510 99999 TOOWOOMBA    AS  <NA>  <NA> -27.583 151.933    676 19561231
+## # ... with 6 more variables: END <dbl>, STNID <chr>,
+## #   ELEV_M_SRTM_90m <dbl>, COUNTRY_NAME <chr>, iso2c <chr>, iso3c <chr>
 ```
 
 ## Using the get_GSOD() Function in _GSODR_ to Download a Single Station and Year
@@ -107,14 +134,25 @@ the STNID in the `station` parameter of `get_GSOD()`.
 
 
 ```r
-library(GSODR)
-Tbar <- get_GSOD(years = 2010, station = "955510-99999")
+tbar <- get_GSOD(years = 2010, station = "945510-99999")
+```
 
-#> Downloading the station file(s) now.
+```
+## 
+## Checking requested station file for availability on server
+```
 
-#> Finished downloading file. Parsing the station file(s) now.
+```
+## 
+## Downloading individual station files.
+```
 
-head(Tbar)
+```r
+tbar
+```
+
+```
+## # A tibble: 0 x 0
 ```
 
 ## Find Stations Within a Specified Distance of a Given Lat/Lon Value
@@ -133,7 +171,27 @@ tbar_stations <- nearest_stations(LAT = -27.5598,
                                   LON = 151.9507,
                                   distance = 50)
 
-  tbar <- get_GSOD(years = 2010, station = tbar_stations)
+tbar <- get_GSOD(years = 2010, station = tbar_stations)
+```
+
+```
+## 
+## This station, 949999-00170, only provides data for years 1971 to 1984.
+```
+
+```
+## 
+## This station, 949999-00183, only provides data for years 1983 to 1984.
+```
+
+```
+## 
+## Checking requested station file for availability on server
+```
+
+```
+## 
+## Downloading individual station files.
 ```
 
 If you wished to drop the stations, 949999-00170 and 949999-00183 from the
@@ -143,11 +201,31 @@ query, you could do this.
 ```r
 remove <- c("949999-00170", "949999-00183")
 
-tbar_stations <- tbar_stations[!tbar_stations %in% remove]
+Tbar_stations <- tbar_stations[!tbar_stations %in% remove]
 
-tbar <- get_GSOD(years = 2010,
+Tbar <- get_GSOD(years = 2010,
                  station = tbar_stations,
                  dsn = "~/")
+```
+
+```
+## 
+## This station, 949999-00170, only provides data for years 1971 to 1984.
+```
+
+```
+## 
+## This station, 949999-00183, only provides data for years 1983 to 1984.
+```
+
+```
+## 
+## Checking requested station file for availability on server
+```
+
+```
+## 
+## Downloading individual station files.
 ```
 
 ## Plot Maximum and Miniumum Temperature Values
@@ -160,6 +238,20 @@ temperature for 2010 using `read_csv()` from Hadley's
 ```r
 library(ggplot2)
 library(lubridate)
+```
+
+```
+## 
+## Attaching package: 'lubridate'
+```
+
+```
+## The following object is masked from 'package:base':
+## 
+##     date
+```
+
+```r
 library(tidyr)
 
 # Create a dataframe of just the date and temperature values that we want to
@@ -177,6 +269,8 @@ ggplot(data = tbar_temps, aes(x = ymd(YEARMODA), y = value,
   scale_x_date(name = "Date") +
   theme_bw()
 ```
+
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png)
 ![GSOD Toowoomba Temperatures](./figure/Toowoomba_temperature.png)
 
 # Creating Spatial Files
@@ -329,46 +423,63 @@ Toowoomba, Queensland, Australia, which was used in an earlier example.
 
 ```r
 inventory <- get_inventory()
+```
 
-#> THIS INVENTORY SHOWS THE NUMBER OF WEATHER OBSERVATIONS BY STATION-YEAR-MONTH FOR BEGINNING OF RECORD THROUGH SEPTEMBER 2017.  THE DATABASE CONTINUES TO BE UPDATED AND ENHANCED, AND THIS INVENTORY WILL BE  UPDATED ON A REGULAR BASIS.
+```
+## THIS INVENTORY SHOWS THE NUMBER OF WEATHER OBSERVATIONS BY STATION-YEAR-MONTH FOR BEGINNING OF RECORD THROUGH SEPTEMBER 2017.  THE DATABASE CONTINUES TO BE UPDATED AND ENHANCED, AND THIS INVENTORY WILL BE  UPDATED ON A REGULAR BASIS.
+```
 
-head(inventory)
+```r
+inventory
+```
 
-#> # A tibble: 6 x 14
-#>         STNID  YEAR   JAN   FEB   MAR   APR   MAY   JUN   JUL   AUG   SEP   OCT   NOV   DEC
-#>         <chr> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> #><int> <int> <int>
-#>1 007005-99999  2012    18     0     0     0     0     0     0     0     0     0     0     0
-#>2 007011-99999  2012   771     0   183     0     0     0   142    13     9     0     4     0
-#>3 007018-99999  2013     0     0     0     0     0     0   710     0     0     0     0     0
-#>4 007025-99999  2012    21     0     0     0     0     0     0     0     0     0     0     0
-#>5 007026-99999  2012     0     0     0     0     0     0   367     0     0     0     0     7
-#>6 007026-99999  2014     0     0     0     0     0     0   180     0     4     0   552     0
+```
+## # A tibble: 616,555 x 14
+##           STNID  YEAR   JAN   FEB   MAR   APR   MAY   JUN   JUL   AUG
+##           <chr> <int> <int> <int> <int> <int> <int> <int> <int> <int>
+##  1 007005-99999  2012    18     0     0     0     0     0     0     0
+##  2 007011-99999  2012   771     0   183     0     0     0   142    13
+##  3 007018-99999  2013     0     0     0     0     0     0   710     0
+##  4 007025-99999  2012    21     0     0     0     0     0     0     0
+##  5 007026-99999  2012     0     0     0     0     0     0   367     0
+##  6 007026-99999  2014     0     0     0     0     0     0   180     0
+##  7 007026-99999  2016     0     0     0     0     0   794     0     0
+##  8 007026-99999  2017     0   914  2626   380   277   406  1230  1009
+##  9 007034-99999  2012     0     0     0     0     0     0     0     0
+## 10 007037-99999  2012     0     0     0     0     0     0   830    35
+## # ... with 616,545 more rows, and 4 more variables: SEP <int>, OCT <int>,
+## #   NOV <int>, DEC <int>
+```
 
+```r
 subset(inventory, STNID == "955510-99999")
+```
 
-#> # A tibble: 20 x 14
-#>          STNID  YEAR   JAN   FEB   MAR   APR   MAY   JUN   JUL   AUG   SEP   OCT   NOV   DEC
-#>          <chr> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int>
-#> 1 955510-99999  1998     0     0   222   223   221   211   226   217   222   234   215   230
-#> 2 955510-99999  1999   213   201   235   224   244   229   239   247   236   246   233   243
-#> 3 955510-99999  2000   241   227   247   238   246   237   245   240   236   248   239   248
-#> 4 955510-99999  2001   245   223   246   238   239   236   243   240   237   236   235   246
-#> 5 955510-99999  2002   245   219   246   236   243   229   243   246   227   238   233   246
-#> 6 955510-99999  2003   244   217   220   232   235   233   246   242   218   239   225   245
-#> 7 955510-99999  2004   240   227   241   229   233   224   235   244   235   244   235   245
-#> 8 955510-99999  2005   243   221   243   241   247   242   248   247   234   241   239   246
-#> 9 955510-99999  2006   245   223   246   232   241   238   247   247   239   247   240   247
-#>10 955510-99999  2007   247   222   244   240   248   240   244   244   239   247   237   246
-#>11 955510-99999  2008   247   228   248   239   248   239   248   247   239   247   238   248
-#>12 955510-99999  2009   245   222   246   235   244   237   248   248   239   248   239   248
-#>13 955510-99999  2010   248   223   248   240   244   240   242   247   240   248   240   247
-#>14 955510-99999  2011   247   224   247   240   247   240   248   247   239   248   239   248
-#>15 955510-99999  2012   248   232   248   240   248   240   248   247   240   248   240   245
-#>16 955510-99999  2013   236   220   247   233   248   239   252   246   230   248   239   246
-#>17 955510-99999  2014   243   224   247   240   246   239   241   243   240   247   240   248
-#>18 955510-99999  2015   248   222   248   239   247   240   247   246   239   247   237   247
-#>19 955510-99999  2016   246   228   245   240   246   240   248   248   238   248   231   248
-#>20 955510-99999  2017   240   224   248   240   248   237   248   247   190     0     0     0
+```
+## # A tibble: 20 x 14
+##           STNID  YEAR   JAN   FEB   MAR   APR   MAY   JUN   JUL   AUG
+##           <chr> <int> <int> <int> <int> <int> <int> <int> <int> <int>
+##  1 955510-99999  1998     0     0   222   223   221   211   226   217
+##  2 955510-99999  1999   213   201   235   224   244   229   239   247
+##  3 955510-99999  2000   241   227   247   238   246   237   245   240
+##  4 955510-99999  2001   245   223   246   238   239   236   243   240
+##  5 955510-99999  2002   245   219   246   236   243   229   243   246
+##  6 955510-99999  2003   244   217   220   232   235   233   246   242
+##  7 955510-99999  2004   240   227   241   229   233   224   235   244
+##  8 955510-99999  2005   243   221   243   241   247   242   248   247
+##  9 955510-99999  2006   245   223   246   232   241   238   247   247
+## 10 955510-99999  2007   247   222   244   240   248   240   244   244
+## 11 955510-99999  2008   247   228   248   239   248   239   248   247
+## 12 955510-99999  2009   245   222   246   235   244   237   248   248
+## 13 955510-99999  2010   248   223   248   240   244   240   242   247
+## 14 955510-99999  2011   247   224   247   240   247   240   248   247
+## 15 955510-99999  2012   248   232   248   240   248   240   248   247
+## 16 955510-99999  2013   236   220   247   233   248   239   252   246
+## 17 955510-99999  2014   243   224   247   240   246   239   241   243
+## 18 955510-99999  2015   248   222   248   239   247   240   247   246
+## 19 955510-99999  2016   246   228   245   240   246   240   248   248
+## 20 955510-99999  2017   240   224   248   240   248   237   248   247
+## # ... with 4 more variables: SEP <int>, OCT <int>, NOV <int>, DEC <int>
 ```
 
 # Additional Climate Data
