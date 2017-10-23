@@ -1,7 +1,7 @@
 Fetch GSOD Country List and Merge with ISO Country Codes
 ================
 Adam H. Sparks
-2017-10-18
+2017-10-23
 
 Introduction
 ============
@@ -118,7 +118,7 @@ R System Information
     ##  language (EN)                        
     ##  collate  en_AU.UTF-8                 
     ##  tz       Australia/Brisbane          
-    ##  date     2017-10-18
+    ##  date     2017-10-23
 
     ## Packages -----------------------------------------------------------------
 
@@ -149,7 +149,7 @@ R System Information
     ##  R6            2.2.2      2017-06-17 CRAN (R 3.4.1)                  
     ##  Rcpp          0.12.13    2017-09-28 cran (@0.12.13)                 
     ##  readr         1.1.1      2017-05-16 CRAN (R 3.4.1)                  
-    ##  rlang         0.1.2.9000 2017-10-16 Github (tidyverse/rlang@2aacc28)
+    ##  rlang         0.1.2.9000 2017-10-23 Github (tidyverse/rlang@ee9e97a)
     ##  rmarkdown     1.6        2017-06-15 CRAN (R 3.4.1)                  
     ##  rprojroot     1.2        2017-01-16 CRAN (R 3.4.1)                  
     ##  stats       * 3.4.2      2017-10-03 local                           
