@@ -279,7 +279,7 @@ stations <- dplyr::mutate_if(as.data.frame(stations), is.factor, as.character)
 # this will include stations below/above -60/60
 isd_history <- 
   dplyr::left_join(stations, corrected_elev) %>% 
-  dplyr::as_tibble()
+  tibble::as_tibble()
 ```
 
     ## Joining, by = c("USAF", "WBAN", "STN_NAME", "CTRY", "STATE", "CALL", "LAT", "LON", "ELEV_M", "BEGIN", "END", "STNID")
