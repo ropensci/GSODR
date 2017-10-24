@@ -22,6 +22,9 @@ _GSODR_
 - Any data frames returned by _GSODR_ functions are returned as a `tibble()`
 object
 
+- The `YEARMODA` column is now returned as `Date` without time, rather than
+`Character`
+
 - Add new function, `get_inventory()`, which downloads the NCEI's station
 inventory document and returns a `tibble()` object of the data
 
