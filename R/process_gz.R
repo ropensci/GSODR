@@ -122,6 +122,7 @@
           sep = "-")
   ),
   format = "%j"))
+  tmp[, "YEARMODA"] <- as.Date(as.character(tmp$YEARMODA),format = "%Y%m%d")
 
   # drop unnecessary columns
   tmp <- dplyr::select(tmp, -c(.data$WBAN, .data$STN, .data$MODA))
