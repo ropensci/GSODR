@@ -4,13 +4,13 @@ Title: Global Summary Daily Weather Data in R
 Version: 1.1
 Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     email = "adamhsparks@gmail.com",
-    comment = "http://orcid.org/0000-0002-0061-8359"),
+    comment = "https://orcid.org/0000-0002-0061-8359"),
     person("Tomislav", "Hengl", role = "aut",
     email = "tom.hengl@isric.org",
-    comment = "http://orcid.org/0000-0002-9921-5129"),
+    comment = "https://orcid.org/0000-0002-9921-5129"),
     person("Andrew", "Nelson", role = "aut",
     email = "dr.andy.nelson@gmail.com",
-    comment = "http://orcid.org/0000-0002-7249-3778"),
+    comment = "https://orcid.org/0000-0002-7249-3778"),
     person("Bob", "Rudis", email = "bob@rud.is", role = "ctb",
     comment = "Wrote functionality to interface with NCEI server and cache files
     for download on stackoverflow"))
