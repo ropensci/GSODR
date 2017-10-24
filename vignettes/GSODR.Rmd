@@ -3,13 +3,13 @@ title: "GSODR"
 author: "Adam H Sparks"
 date: "`r Sys.Date()`"
 output:
-    rmarkdown::html_document:
+  html_document:
     toc: true
     toc_float: true
-    toc_depth: 2
+    toc_depth: 3
     theme: spacelab
 vignette: >
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{knitr::knitr}
   %\VignetteIndexEntry{GSODR}
   %\VignetteEncoding{UTF-8}
 ---
