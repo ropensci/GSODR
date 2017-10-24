@@ -101,7 +101,7 @@ tbar
     ##  9 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  <NA>  <NA> -27.55
     ## 10 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  <NA>  <NA> -27.55
     ## # ... with 355 more rows, and 40 more variables: LON <dbl>, ELEV_M <dbl>,
-    ## #   ELEV_M_SRTM_90m <dbl>, BEGIN <dbl>, END <dbl>, YEARMODA <chr>,
+    ## #   ELEV_M_SRTM_90m <dbl>, BEGIN <dbl>, END <dbl>, YEARMODA <date>,
     ## #   YEAR <chr>, MONTH <chr>, DAY <chr>, YDAY <dbl>, TEMP <dbl>,
     ## #   TEMP_CNT <int>, DEWP <dbl>, DEWP_CNT <int>, SLP <dbl>, SLP_CNT <int>,
     ## #   STP <dbl>, STP_CNT <int>, VISIB <dbl>, VISIB_CNT <int>, WDSP <dbl>,
@@ -113,7 +113,17 @@ tbar
 Other Sources of Weather Data in R
 ----------------------------------
 
-There are several other sources of weather data and ways of retrieving them through R. In particular, the excellent [`rnoaa`](https://CRAN.R-project.org/package=rnoaa) package also from [rOpenSci](https://ropensci.org) offers tools for interacting with and downloading weather data from the United States National Oceanic and Atmospheric Administration but lacks support GSOD data.
+There are several other sources of weather data and ways of retrieving them through R. Several are also [rOpenSci](https://ropensci.org) projects.
+
+[*rnoaa*](https://CRAN.R-project.org/package=rnoaa), from [rOpenSci](https://ropensci.org) offers tools for interacting with and downloading weather data from the United States National Oceanic and Atmospheric Administration but lacks support for GSOD data.
+
+[*bomrang*](https://CRAN.R-project.org/package=bomrang), from [rOpenSci](https://ropensci.org) provides functions to interface with Australia Government Bureau of Meteorology (BoM) data, fetching data and returning a tidy data frame of précis forecasts, current weather data from stations, agriculture bulletin data, BoM 0900 or 1500 weather bulletins or a raster stack object of satellite imagery from GeoTIFF files. Data (c) Australian Government Bureau of Meteorology Creative Commons (CC) Attribution 3.0 licence or Public Access Licence (PAL) as appropriate. See <http://www.bom.gov.au/other/copyright.shtml> for further details.
+
+[*riem*](https://CRAN.R-project.org/package=riem) from [rOpenSci](https://ropensci.org) allows to get weather data from Automated Surface Observing System (ASOS) stations (airports) in the whole world thanks to the Iowa Environment Mesonet website.
+
+[*CliFlo*](https://CRAN.R-project.org/package=clifro) from [rOpenSci](https://ropensci.org) is a web portal to the New Zealand National Climate Database and provides public access (via subscription) to around 6,500 various climate stations (see <https://cliflo.niwa.co.nz/> for more information). Collating and manipulating data from CliFlo (hence clifro) and importing into R for further analysis, exploration and visualisation is now straightforward and coherent. The user is required to have an internet connection, and a current CliFlo subscription (free) if data from stations, other than the public Reefton electronic weather station, is sought.
+
+[*weatherData*](https://CRAN.R-project.org/package=weatherData) provides a selection of functions to fetch weather data from Weather Underground and return it as a clean data frame.
 
 Other Sources for Fetching GSOD Weather Data
 --------------------------------------------

@@ -29,7 +29,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="index.html">
+  <a href="/index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -162,7 +162,7 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 ##  9 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  &lt;NA&gt;  &lt;NA&gt; -27.55
 ## 10 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  &lt;NA&gt;  &lt;NA&gt; -27.55
 ## # ... with 355 more rows, and 40 more variables: LON &lt;dbl&gt;, ELEV_M &lt;dbl&gt;,
-## #   ELEV_M_SRTM_90m &lt;dbl&gt;, BEGIN &lt;dbl&gt;, END &lt;dbl&gt;, YEARMODA &lt;chr&gt;,
+## #   ELEV_M_SRTM_90m &lt;dbl&gt;, BEGIN &lt;dbl&gt;, END &lt;dbl&gt;, YEARMODA &lt;date&gt;,
 ## #   YEAR &lt;chr&gt;, MONTH &lt;chr&gt;, DAY &lt;chr&gt;, YDAY &lt;dbl&gt;, TEMP &lt;dbl&gt;,
 ## #   TEMP_CNT &lt;int&gt;, DEWP &lt;dbl&gt;, DEWP_CNT &lt;int&gt;, SLP &lt;dbl&gt;, SLP_CNT &lt;int&gt;,
 ## #   STP &lt;dbl&gt;, STP_CNT &lt;int&gt;, VISIB &lt;dbl&gt;, VISIB_CNT &lt;int&gt;, WDSP &lt;dbl&gt;,
@@ -176,7 +176,12 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <div id="other-sources-of-weather-data-in-r" class="section level2">
 <h2 class="hasAnchor">
 <a href="#other-sources-of-weather-data-in-r" class="anchor"></a>Other Sources of Weather Data in R</h2>
-<p>There are several other sources of weather data and ways of retrieving them through R. In particular, the excellent <a href="https://CRAN.R-project.org/package=rnoaa"><code>rnoaa</code></a> package also from <a href="https://ropensci.org">rOpenSci</a> offers tools for interacting with and downloading weather data from the United States National Oceanic and Atmospheric Administration but lacks support GSOD data.</p>
+<p>There are several other sources of weather data and ways of retrieving them through R. Several are also <a href="https://ropensci.org">rOpenSci</a> projects.</p>
+<p><a href="https://CRAN.R-project.org/package=rnoaa"><em>rnoaa</em></a>, from <a href="https://ropensci.org">rOpenSci</a> offers tools for interacting with and downloading weather data from the United States National Oceanic and Atmospheric Administration but lacks support for GSOD data.</p>
+<p><a href="https://CRAN.R-project.org/package=bomrang"><em>bomrang</em></a>, from <a href="https://ropensci.org">rOpenSci</a> provides functions to interface with Australia Government Bureau of Meteorology (BoM) data, fetching data and returning a tidy data frame of précis forecasts, current weather data from stations, agriculture bulletin data, BoM 0900 or 1500 weather bulletins or a raster stack object of satellite imagery from GeoTIFF files. Data (c) Australian Government Bureau of Meteorology Creative Commons (CC) Attribution 3.0 licence or Public Access Licence (PAL) as appropriate. See <a href="http://www.bom.gov.au/other/copyright.shtml" class="uri">http://www.bom.gov.au/other/copyright.shtml</a> for further details.</p>
+<p><a href="https://CRAN.R-project.org/package=riem"><em>riem</em></a> from <a href="https://ropensci.org">rOpenSci</a> allows to get weather data from Automated Surface Observing System (ASOS) stations (airports) in the whole world thanks to the Iowa Environment Mesonet website.</p>
+<p><a href="https://CRAN.R-project.org/package=clifro"><em>CliFlo</em></a> from <a href="https://ropensci.org">rOpenSci</a> is a web portal to the New Zealand National Climate Database and provides public access (via subscription) to around 6,500 various climate stations (see <a href="https://cliflo.niwa.co.nz/" class="uri">https://cliflo.niwa.co.nz/</a> for more information). Collating and manipulating data from CliFlo (hence clifro) and importing into R for further analysis, exploration and visualisation is now straightforward and coherent. The user is required to have an internet connection, and a current CliFlo subscription (free) if data from stations, other than the public Reefton electronic weather station, is sought.</p>
+<p><a href="https://CRAN.R-project.org/package=weatherData"><em>weatherData</em></a> provides a selection of functions to fetch weather data from Weather Underground and return it as a clean data frame.</p>
 </div>
 <div id="other-sources-for-fetching-gsod-weather-data" class="section level2">
 <h2 class="hasAnchor">
@@ -244,11 +249,11 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 </ul>
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Adam Sparks <br><small class="roles"> Author, maintainer </small> <br><small>(http://orcid.org/0000-0002-0061-8359)</small>
+<li>Adam Sparks <br><small class="roles"> Author, maintainer </small> <br><small>(https://orcid.org/0000-0002-0061-8359)</small>
 </li>
-<li>Tomislav Hengl <br><small class="roles"> Author </small> <br><small>(http://orcid.org/0000-0002-9921-5129)</small>
+<li>Tomislav Hengl <br><small class="roles"> Author </small> <br><small>(https://orcid.org/0000-0002-9921-5129)</small>
 </li>
-<li>Andrew Nelson <br><small class="roles"> Author </small> <br><small>(http://orcid.org/0000-0002-7249-3778)</small>
+<li>Andrew Nelson <br><small class="roles"> Author </small> <br><small>(https://orcid.org/0000-0002-7249-3778)</small>
 </li>
 <li><a href="authors.html">All authors...</a></li>
 </ul>
