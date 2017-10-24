@@ -30,7 +30,7 @@ For more information see the description of the data provided by NCEI, <http://w
 Quick Start Install
 -------------------
 
-### Stable version
+### Stable Version
 
 A stable version of *GSODR* is available from [CRAN](https://cran.r-project.org/package=GSODR).
 
@@ -38,9 +38,9 @@ A stable version of *GSODR* is available from [CRAN](https://cran.r-project.org/
 install.packages("GSODR")
 ```
 
-### Development version
+### Development Version
 
-A development version is available from from GitHub. If you wish to install the development version that may have new features (but also may not work properly), install the [devtools package](https://CRAN.R-project.org/package=devtools), available from CRAN. We strive to keep the master branch on GitHub functional and working properly.
+A development version is available from from GitHub. If you wish to install the development version that may have new features or bug fixes before the CRAN version does (but also may not work properly), please install the [devtools package](https://CRAN.R-project.org/package=devtools), available from CRAN. We strive to keep the master branch on GitHub functional and working properly.
 
 ``` r
 #install.packages("devtools")
