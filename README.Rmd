@@ -100,9 +100,9 @@ from the NCEI server. Following are a few examples of its capabilities.
 ```{r, eval = TRUE}
 library(GSODR)
 
-Tbar <- get_GSOD(years = 2010, station = "955510-99999")
+tbar <- get_GSOD(years = 2010, station = "955510-99999")
 
-Tbar
+tbar
 ```
 
 ## Other Sources of Weather Data in R

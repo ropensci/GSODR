@@ -74,7 +74,7 @@ library(GSODR)
     ## WMO Resolution 40. NOAA Policy'
 
 ``` r
-Tbar <- get_GSOD(years = 2010, station = "955510-99999")
+tbar <- get_GSOD(years = 2010, station = "955510-99999")
 ```
 
     ## 
@@ -84,7 +84,7 @@ Tbar <- get_GSOD(years = 2010, station = "955510-99999")
     ## Downloading individual station files.
 
 ``` r
-Tbar
+tbar
 ```
 
     ## # A tibble: 365 x 48
