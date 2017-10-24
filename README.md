@@ -54,7 +54,7 @@ Using *GSODR*
 
 ### Query the NCEI FTP server for GSOD data
 
-*GSODR's* main function, `get_GSOD()`, downloads and cleans GSOD data from the NCEI server. Following are a few examples of its capabilities.
+*GSODR's* main function, `get_GSOD()`, downloads and cleans GSOD data from the NCEI server. Following is an example of its capabilities, for more detailed examples of its capabilities, please see the [*GSODR* introduction vignette](https://ropensci.github.io/GSODR/articles/GSODR.html).
 
 #### Example - Download weather station data for Toowoomba, Queensland for 2010
 
