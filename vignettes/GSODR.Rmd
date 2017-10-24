@@ -77,7 +77,8 @@ Oz <- filter(station_locations, COUNTRY_NAME == "AUSTRALIA")
 
 Oz
 
-filter(Oz, STN_NAME == "TOOWOOMBA")
+Oz %>%
+  filter(grepl("TOOWOOMBA", STN_NAME))
 ```
 
 ## Using the get_GSOD() Function in _GSODR_ to Download a Single Station and Year
@@ -87,7 +88,7 @@ weather data from the station Toowoomba, Queensland, Australia for 2010 by using
 the STNID in the `station` parameter of `get_GSOD()`.
 
 ```{r, eval=TRUE}
-tbar <- get_GSOD(years = 2010, station = "945510-99999")
+tbar <- get_GSOD(years = 2010, station = "955510-99999")
 
 tbar
 ```
@@ -113,7 +114,7 @@ tbar <- get_GSOD(years = 2010, station = tbar_stations)
 If you wished to drop the stations, 949999-00170 and 949999-00183 from the
 query, you could do this.
 
-```{r, eval=TRUE}
+```{r, eval=TRUE, message=FALSE}
 remove <- c("949999-00170", "949999-00183")
 
 tbar_stations <- tbar_stations[!tbar_stations %in% remove]
@@ -149,7 +150,7 @@ ggplot(data = tbar_temps, aes(x = ymd(YEARMODA), y = value,
   scale_x_date(name = "Date") +
   theme_bw()
 ```
-![GSOD Toowoomba Temperatures](./figure/Toowoomba_temperature.png)
+
 
 # Creating Spatial Files
 
@@ -163,9 +164,7 @@ GeoPackage file, which can be used with a GIS for further analysis and mapping
 with other spatial objects.
 
 After getting weather stations for Australia and creating a GeoPackage file,
-_rgdal_ can import the data into R and _raster_ provides a function,
-`getData()`, to download an outline of Australia useful for plotting the
-station locations in this country.
+_rgdal_ can import the data into R again in a spatial format.
 
 ```{r, eval=FALSE}
 get_GSOD(years = 2015, country = "Australia", dsn = "~/", filename = "AUS",
