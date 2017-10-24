@@ -79,6 +79,8 @@ if (!require("rnaturalearth")) {
   install.packages("rnaturalearth", repos = "https://cran.rstudio.com/")
 }
 
+library(magrittr) # comes with dplyr above
+
 dem_tiles <- list.files(path.expand("~/Data/CGIAR-CSI SRTM"), 
                         pattern = glob2rx("*.tif"), full.names = TRUE)
 crs <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
@@ -131,6 +133,8 @@ xy <- dplyr::left_join(stations, countries, by = c("CTRY" = "FIPS"))
 
 ## Check data for inconsistencies
 
+### Check for country of station location
+
 GSOD data have some inconsistencies in them, some of this has been removed
 above with filtering. Further filtering is used remove stations reporting
 locations in countries that do not match the physical coordinates reported.
@@ -158,11 +162,10 @@ machine with minimal effort but does take some time to loop through all of the
 tiles.
 
 Data can be downloaded from the
-[CGIAR-CSI's](http://csi.cgiar.org/WhtIsCGIAR_CSI.asp)
-ftp server, [srtm.csi.cgiar.org](ftp://srtm.csi.cgiar.org),
-using an FTP client to facilitate this next step.
+[CGIAR-CSI's](http://csi.cgiar.org/WhtIsCGIAR_CSI.asp) ftp server, [srtm.csi.cgiar.org](ftp://srtm.csi.cgiar.org), using an FTP client to
+facilitate this next step.
 
-```{r check station data for errors, echo=TRUE, cache=FALSE}
+```{r check station location, echo=TRUE, cache=FALSE}
 # quality check station locations for reported country and lat/lon position
 # agreement
 
@@ -180,8 +183,12 @@ nrow(stations_discard)
 Zero observations (rows) in `stations_discard`, the data look good, no need to
 remove any
 
+### Elevation data supplement
 
-```{r check elevation errors, echo=TRUE, cache=FALSE}
+Next use the `raster::extract()` function to get the mean elevation data from
+the 90m elevation data and supplement the elevation data from the NCEI.
+
+```{r check and supplement station elevation, echo=TRUE, cache=FALSE}
 # create a spatial object for extracting elevation values using spatial points
 stations <- as.data.frame(stations)
 sp::coordinates(stations) <- ~ LON + LAT
@@ -192,24 +199,30 @@ library(foreach)
 cl <- parallel::makeCluster(parallel::detectCores())
 doParallel::registerDoParallel(cl)
 
-corrected_elev <- dplyr::rbind_list(foreach(i = dem_tiles) %dopar% {
-    
-    # Load the DEM tile
-    dem <- raster::raster(i)
-    sub_stations <- raster::crop(stations, dem)
-    
-    # in some cases the DEM represents areas where there is no station
-    # check for that here and if no stations, go on to next iteration
-    if (!is.null(sub_stations)) {
-      
-      # use a 200m buffer to extract elevation from the DEM
-      sub_stations$ELEV_M_SRTM_90m <- raster::extract(dem, sub_stations,
-                                                      buffer = 200,
-                                                      fun = mean)
-      
-      # convert spatial object back to normal data frame and add new fields
-      sub_stations <- as.data.frame(sub_stations)
-      return(sub_stations)
+corrected_elev <- dplyr::bind_rows(
+foreach(i = dem_tiles, .packages = "magrittr") %dopar% {
+# Load the DEM tile
+dem <- raster::raster(i)
+sub_stations <- raster::crop(stations, dem)
+
+# in some cases the DEM represents areas where there is no station
+# check for that here and if no stations, go on to next iteration
+if (!is.null(sub_stations)) {
+# use a 200m buffer to extract elevation from the DEM
+
+  sub_stations$ELEV_M_SRTM_90m <- 
+  raster::extract(dem, sub_stations,
+                  buffer = 200,
+                  fun = mean)
+  
+# convert spatial object back to normal data frame and add new fields
+sub_stations <- as.data.frame(sub_stations)
+
+# set any factors back to character
+sub_stations <- sub_stations %>%
+  dplyr::mutate_if(is.factor, as.character)
+
+return(sub_stations)
     }
   }
   )
@@ -220,13 +233,19 @@ parallel::stopCluster(cl)
 Some stations occur in areas where DEM has no data, in this case, use original
 station elevation for these stations.
 
-```{r}
+```{r create corrected_elev}
 corrected_elev <- dplyr::mutate(corrected_elev,
                                 ELEV_M_SRTM_90m = ifelse(is.na(ELEV_M_SRTM_90m),
                                                 ELEV_M, ELEV_M_SRTM_90m))
 # round SRTM_90m_Buffer field to whole number in cases where station reported
 # data was used and rename column
 corrected_elev[, 13] <- round(corrected_elev[, 13], 0)
+
+# retain only distinct rows in case of duplicate data
+
+corrected_elev <- corrected_elev %>%
+  dplyr::distinct(corrected_elev)
+
 ```
 
 Tidy up the `corrected_elev` object by converting any factors to character prior
@@ -234,20 +253,20 @@ to performing a left-join with the `stations` object and remove duplicate rows.
 For stations above/below 60/-60 latitude, `ELEV_M_SRTM_90m` will be `NA` as
 there is no SRTM data for these latitudes.
 
-```{r}
-c <- sapply(corrected_elev, is.factor)
-corrected_elev[c] <- lapply(corrected_elev[c], as.character)
+```{r join corrected_elev with station data}
 
-corrected_elev <- dplyr::distinct(corrected_elev)
-
-# convert stations from a spatial object to a tibble for joining
-stations <- tibble::as_tibble(stations)
+# convert any factors in stations object to character for left_join
+stations <- dplyr::mutate_if(as.data.frame(stations), is.factor, as.character)
 
 # Perform left join to join corrected elevation with original station data,
 # this will include stations below/above -60/60
-isd_history <- dplyr::left_join(stations, corrected_elev)
+isd_history <- 
+  dplyr::left_join(stations, corrected_elev) %>% 
+  dplyr::as_tibble()
 
-summary(isd_history)
+str(isd_history)
+
+isd_history
 ```
 
 # Figures
@@ -279,7 +298,7 @@ save(isd_history, file = "../inst/extdata/isd_history.rda",
      compress = "bzip2")
 ```
 
-The SRTM_GSOD_elevation.rda file included in the GSODR package includes
+The `isd_history.rda` file is bundled in the GSODR package and includes
 the new elevation data as the field; ELEV\_M\_SRTM\_90m.
 
 # Notes
