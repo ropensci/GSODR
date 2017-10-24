@@ -13,8 +13,11 @@ test_that("reformat_GSOD file_list parameter reformats data properly", {
   Map(function(u, d) download.file(u, d, mode = "wb"),
       paste0(ftp_base, test_files), destinations)
 
-  y <- list.files(dest, pattern = ".op.gz$", full.names = TRUE)
-  x <- reformat_GSOD(file_list = y)
+  file_list <- list.files(dest, pattern = ".op.gz$", full.names = TRUE)
+  expect_equal(length(file_list), 2)
+  expect_equal(basename(file_list), c("066000-99999-1960.op.gz",
+                                      "066200-99999-1960.op.gz"))
+  x <- reformat_GSOD(file_list = file_list)
   expect_equal(nrow(x), 722)
   expect_length(x, 48)
   expect_is(x, "data.frame")
