@@ -6,7 +6,7 @@ GSODR: Global Surface Summary of the Day (GSOD) Weather Data from R
 Introduction to *GSODR*
 -----------------------
 
-The GSOD or [Global Surface Summary of the Day (GSOD)](https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod) data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. *GSODR* aims to make it easy to find, transfer and format the data you need for use in analysis and provides four main functions for facilitating this:
+The GSOD or [Global Surface Summary of the Day (GSOD)](https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod) data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. *GSODR* aims to make it easy to find, transfer and format the data you need for use in analysis and provides five main functions for facilitating this:
 
 -   `get_GSOD()`, queries and transfers files from the FTP server, reformats them and returns a `tibble()` object in R session and/or saves a file to disk with options for a GeoPackage spatially enabled file or comma separated values (CSV) file,
 
@@ -15,6 +15,8 @@ The GSOD or [Global Surface Summary of the Day (GSOD)](https://data.noaa.gov/dat
 -   `nearest_stations()`, returns a `vector()` object containing a list of stations and their metadata that fall within the given radius of a point specified by the user,
 
 -   `update_station_list()`, downloads the latest station list from the NCEI FTP server updates the package's internal database of stations and their metadata.
+
+-   `get_inventory()`, downloads the latest station inventory information from the NCEI FTP server and returns the header information about the latest version as a message in the console and a `tibble()` of station inventory for each month that it provides data.
 
 When reformatting data either with `get_GSOD()` or `reformat_GSOD()`, all units are converted to International System of Units (SI), e.g., inches to millimetres and Fahrenheit to Celsius. File output can be saved as a Comma Separated Value (CSV) file or in a spatial GeoPackage (GPKG) file, implemented by most major GIS software, summarising each year by station, which also includes vapour pressure and relative humidity elements calculated from existing data in GSOD.
 
