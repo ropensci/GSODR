@@ -1,10 +1,7 @@
-GSODR
+GSODR: Global Surface Summary of the Day (GSOD) Weather Data from R
 ================
 
 [![Travis-CI Build Status](https://travis-ci.org/ropensci/GSODR.svg?branch=master)](https://travis-ci.org/ropensci/GSODR) [![Build status](https://ci.appveyor.com/api/projects/status/s09kh2nj59o35ob1/branch/master?svg=true)](https://ci.appveyor.com/project/ropensci/gsodr/branch/master) [![codecov](https://codecov.io/gh/ropensci/GSODR/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/GSODR) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.439850.svg)](https://doi.org/10.5281/zenodo.439850) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/GSODR)](https://cran.r-project.org/package=GSODR) [![JOSS](http://joss.theoj.org/papers/10.21105/joss.00177/status.svg)](http://joss.theoj.org/papers/14021f4e4931cdaab4ea41be27df2df6) [![](https://badges.ropensci.org/79_status.svg)](https://github.com/ropensci/onboarding/issues/79)
-
-*GSODR*: Global Surface Summary of the Day (GSOD) Weather Data from R
-=====================================================================
 
 Introduction to *GSODR*
 -----------------------
@@ -52,11 +49,9 @@ devtools::install_github("ropensci/GSODR", build_vignettes = TRUE)
 Using *GSODR*
 -------------
 
-### Query the NCEI FTP server for GSOD data
-
 *GSODR's* main function, `get_GSOD()`, downloads and cleans GSOD data from the NCEI server. Following is an example of its capabilities, for more detailed examples of its capabilities, please see the [*GSODR* introduction vignette](https://ropensci.github.io/GSODR/articles/GSODR.html).
 
-#### Example - Download weather station data for Toowoomba, Queensland for 2010
+### Example - Download weather station data for Toowoomba, Queensland for 2010
 
 ``` r
 library(GSODR)
@@ -141,7 +136,7 @@ Notes
 
 90m hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was used to identify and correct/remove elevation errors in data for station locations between -60˚ and 60˚ latitude. This applies to cases here where elevation was missing in the reported values as well. In case the station reported an elevation and the DEM does not, the station reported is taken. For stations beyond -60˚ and 60˚ latitude, the values are station reported values in every instance. See <https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md> for more detail on the correction methods.
 
-#### WMO Resolution 40. NOAA Policy
+### WMO Resolution 40. NOAA Policy
 
 *Users of these data should take into account the following (from the [NCEI website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):*
 
