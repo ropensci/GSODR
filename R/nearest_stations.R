@@ -30,6 +30,8 @@
 #' @export
 nearest_stations <- function(LAT, LON, distance) {
 
+  # CRAN NOTE avoidance
+  isd_history <- NULL
   # load current local copy of isd_history
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 
