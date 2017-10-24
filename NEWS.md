@@ -15,8 +15,9 @@ columns, e.g., '007005' '99999' is '007005-99999' from this file
 
 ## Major changes
 
-- _data.table_ no longer used. All internal functions now use _dplyr_ or base R
-functionality, reducing the dependencies of _GSODR_
+- The _data.table_ and _fields_ packages are no longer imported. All internal
+functions now use _dplyr_ or base R functionality, reducing the dependencies of
+_GSODR_
 
 - Any data frames returned by _GSODR_ functions are returned as a `tibble()`
 object
@@ -27,6 +28,7 @@ inventory document and returns a `tibble()` object of the data
 - A new theme is used for the vignettes and documentation website, spacelab,
 which provides a floating table of contents in vignettes and larger images
 
+- Updated and enhanced introductory vignette
 
 # GSODR 1.0.7
 

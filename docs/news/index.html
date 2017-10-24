@@ -129,10 +129,11 @@ columns, e.g., <span class="st">'007005'</span> <span class="st">'99999'</span> 
 <h2 class="hasAnchor">
 <a href="#major-changes" class="anchor"></a>Major changes</h2>
 <ul>
-<li><p><em>data.table</em> no longer used. All internal functions now use <em>dplyr</em> or base R functionality, reducing the dependencies of <em>GSODR</em></p></li>
+<li><p>The <em>data.table</em> and <em>fields</em> packages are no longer imported. All internal functions now use <em>dplyr</em> or base R functionality, reducing the dependencies of <em>GSODR</em></p></li>
 <li><p>Any data frames returned by <em>GSODR</em> functions are returned as a <code>tibble()</code> object</p></li>
 <li><p>Add new function, <code><a href="../reference/get_inventory.html">get_inventory()</a></code>, which downloads the NCEI’s station inventory document and returns a <code>tibble()</code> object of the data</p></li>
 <li><p>A new theme is used for the vignettes and documentation website, spacelab, which provides a floating table of contents in vignettes and larger images</p></li>
+<li><p>Updated and enhanced introductory vignette</p></li>
 </ul>
 </div>
 </div>
