@@ -35,8 +35,8 @@
   "keywords": "weather, data, daily, global, station",
   "license": "https://spdx.org/licenses/MIT",
   "title": "GSODR",
-  "version": "1.1",
-  "name": "GSODR: Global Summary Daily Weather Data in R",
+  "version": "1.1.0",
+  "name": "GSODR: Global Surface Summary of the Day (GSOD) Weather Data from R",
   "issueTracker": "https://github.com/ropensci/GSODR/issues",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
@@ -382,7 +382,7 @@
   "contIntegration": "https://travis-ci.org/ropensci/GSODR",
   "releaseNotes": "https://github.com/ropensci/GSODR.git/blob/devel/NEWS.md",
   "readme": "https://github.com/ropensci/GSODR.git/blob/devel/README.md",
-  "fileSize": "1496.987KB",
+  "fileSize": "1497.063KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
