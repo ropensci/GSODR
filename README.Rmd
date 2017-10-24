@@ -21,7 +21,7 @@ data provided by the US National Centers for Environmental Information
 (NCEI) are a valuable source of weather data with global coverage.
 However, the data files are cumbersome and difficult to work with.
 _GSODR_ aims to make it easy to find, transfer and format the data you
-need for use in analysis and provides four main functions for
+need for use in analysis and provides five main functions for
 facilitating this:
 
 - `get_GSOD()`, queries and transfers files from the FTP server,
@@ -41,6 +41,11 @@ facilitating this:
 - `update_station_list()`, downloads the latest station list from the
     NCEI FTP server updates the package's internal database of stations
     and their metadata.
+    
+- `get_inventory()`, downloads the latest station inventory information from the
+    NCEI FTP server and returns the header information about the latest version
+    as a message in the console and a `tibble()` of station inventory for
+    each month that it provides data.
 
 When reformatting data either with `get_GSOD()` or `reformat_GSOD()`,
 all units are converted to International System of Units (SI), e.g.,
