@@ -13,33 +13,39 @@
 
 There were no ERRORs or WARNINGs
 
-## New minor release
+## New major release
 
-This is a new minor release, mainly for bug fixes
+This is a new major release with reduced dependencies and new functionality
 
 ## Bug fixes
 
-- Fix documentation in vignette where first example would not run due to changes
-in package data formats
-
-- Fix bug in GSODR vignette where examples would not run due to libraries not
-being loaded
-
-- Fix bug where prior server queries would be pre/appended to subsequent
-queries
-
-- Fix bug where invalid stations would return an empty data frame, should stop
-and return message about checking the `station` value supplied to `get_GSOD()`
-and check if data are available for the years requested
-
-## Minor changes
-
-- Update Appendix 2 of GSODR vignette, map of station locations, to be more
-clear and follow same format as that of `bomrang` package
-
-- Update example output in GSODR vignette where applicable
+- Fixes bug reported in [issue 36](https://github.com/ropensci/GSODR/issues/36)
+```r
+> t <- get_GSOD(years = 2010, station = "955510-99999")
+Error in .f(.x[[i]], ...) : 
+955510-99999 is not a valid station ID number, please check your entry.
+Valid Station IDs can be found in the isd-history.txt file
+available from the US NCEI FTP server by combining the USAF and WBAN
+columns, e.g., '007005' '99999' is '007005-99999' from this file 
+<ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.txt>
+```
 
 ## Major changes
+
+- The _data.table_ and _fields_ packages are no longer imported. All internal
+functions now use _dplyr_ or base R functionality, reducing the dependencies of
+_GSODR_
+
+- Any data frames returned by _GSODR_ functions are returned as a `tibble()`
+object
+
+- Add new function, `get_inventory()`, which downloads the NCEI's station
+inventory document and returns a `tibble()` object of the data
+
+- A new theme is used for the vignettes and documentation website, spacelab,
+which provides a floating table of contents in vignettes and larger images
+
+- Updated and enhanced introductory vignette
 
 - Update internal stations list
 

@@ -29,7 +29,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -81,7 +81,7 @@
       <h1>GSODR</h1>
                         <h4 class="author">Adam H Sparks</h4>
             
-            <h4 class="date">2017-10-21</h4>
+            <h4 class="date">2017-10-24</h4>
           </div>
 
     
@@ -157,25 +157,48 @@ Oz</code></pre></div>
 ## # ... with 1,402 more rows, and 9 more variables: LON &lt;dbl&gt;, ELEV_M &lt;dbl&gt;,
 ## #   BEGIN &lt;dbl&gt;, END &lt;dbl&gt;, STNID &lt;chr&gt;, ELEV_M_SRTM_90m &lt;dbl&gt;,
 ## #   COUNTRY_NAME &lt;chr&gt;, iso2c &lt;chr&gt;, iso3c &lt;chr&gt;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(Oz, STN_NAME <span class="op">==</span><span class="st"> "TOOWOOMBA"</span>)</code></pre></div>
-<pre><code>## # A tibble: 1 x 16
-##     USAF  WBAN  STN_NAME  CTRY STATE  CALL     LAT     LON ELEV_M    BEGIN
-##    &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
-## 1 945510 99999 TOOWOOMBA    AS  &lt;NA&gt;  &lt;NA&gt; -27.583 151.933    676 19561231
-## # ... with 6 more variables: END &lt;dbl&gt;, STNID &lt;chr&gt;,
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Oz <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw">grepl</span>(<span class="st">"TOOWOOMBA"</span>, STN_NAME))</code></pre></div>
+<pre><code>## # A tibble: 2 x 16
+##     USAF  WBAN          STN_NAME  CTRY STATE  CALL     LAT     LON ELEV_M
+##    &lt;chr&gt; &lt;chr&gt;             &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+## 1 945510 99999         TOOWOOMBA    AS  &lt;NA&gt;  &lt;NA&gt; -27.583 151.933    676
+## 2 955510 99999 TOOWOOMBA AIRPORT    AS  &lt;NA&gt;  &lt;NA&gt; -27.550 151.917    642
+## # ... with 7 more variables: BEGIN &lt;dbl&gt;, END &lt;dbl&gt;, STNID &lt;chr&gt;,
 ## #   ELEV_M_SRTM_90m &lt;dbl&gt;, COUNTRY_NAME &lt;chr&gt;, iso2c &lt;chr&gt;, iso3c &lt;chr&gt;</code></pre>
 </div>
 <div id="using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and-year" class="section level2">
 <h2 class="hasAnchor">
 <a href="#using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and-year" class="anchor"></a>Using the get_GSOD() Function in <em>GSODR</em> to Download a Single Station and Year</h2>
 <p>Now that we’ve seen where the reporting stations are located, we can download weather data from the station Toowoomba, Queensland, Australia for 2010 by using the STNID in the <code>station</code> parameter of <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> <span class="st">"945510-99999"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> <span class="st">"955510-99999"</span>)</code></pre></div>
 <pre><code>## 
 ## Checking requested station file for availability on server</code></pre>
 <pre><code>## 
 ## Downloading individual station files.</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tbar</code></pre></div>
-<pre><code>## # A tibble: 0 x 0</code></pre>
+<pre><code>## # A tibble: 365 x 48
+##      USAF  WBAN        STNID          STN_NAME  CTRY STATE  CALL    LAT
+##     &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;             &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt;
+##  1 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  &lt;NA&gt;  &lt;NA&gt; -27.55
+##  2 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  &lt;NA&gt;  &lt;NA&gt; -27.55
+##  3 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  &lt;NA&gt;  &lt;NA&gt; -27.55
+##  4 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  &lt;NA&gt;  &lt;NA&gt; -27.55
+##  5 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  &lt;NA&gt;  &lt;NA&gt; -27.55
+##  6 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  &lt;NA&gt;  &lt;NA&gt; -27.55
+##  7 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  &lt;NA&gt;  &lt;NA&gt; -27.55
+##  8 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  &lt;NA&gt;  &lt;NA&gt; -27.55
+##  9 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  &lt;NA&gt;  &lt;NA&gt; -27.55
+## 10 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  &lt;NA&gt;  &lt;NA&gt; -27.55
+## # ... with 355 more rows, and 40 more variables: LON &lt;dbl&gt;, ELEV_M &lt;dbl&gt;,
+## #   ELEV_M_SRTM_90m &lt;dbl&gt;, BEGIN &lt;dbl&gt;, END &lt;dbl&gt;, YEARMODA &lt;chr&gt;,
+## #   YEAR &lt;chr&gt;, MONTH &lt;chr&gt;, DAY &lt;chr&gt;, YDAY &lt;dbl&gt;, TEMP &lt;dbl&gt;,
+## #   TEMP_CNT &lt;int&gt;, DEWP &lt;dbl&gt;, DEWP_CNT &lt;int&gt;, SLP &lt;dbl&gt;, SLP_CNT &lt;int&gt;,
+## #   STP &lt;dbl&gt;, STP_CNT &lt;int&gt;, VISIB &lt;dbl&gt;, VISIB_CNT &lt;int&gt;, WDSP &lt;dbl&gt;,
+## #   WDSP_CNT &lt;int&gt;, MXSPD &lt;dbl&gt;, GUST &lt;dbl&gt;, MAX &lt;dbl&gt;, MAX_FLAG &lt;chr&gt;,
+## #   MIN &lt;dbl&gt;, MIN_FLAG &lt;chr&gt;, PRCP &lt;dbl&gt;, PRCP_FLAG &lt;chr&gt;, SNDP &lt;dbl&gt;,
+## #   I_FOG &lt;int&gt;, I_RAIN_DRIZZLE &lt;int&gt;, I_SNOW_ICE &lt;int&gt;, I_HAIL &lt;int&gt;,
+## #   I_THUNDER &lt;int&gt;, I_TORNADO_FUNNEL &lt;int&gt;, EA &lt;dbl&gt;, ES &lt;dbl&gt;, RH &lt;dbl&gt;</code></pre>
 </div>
 <div id="find-stations-within-a-specified-distance-of-a-given-latlon-value" class="section level2">
 <h2 class="hasAnchor">
@@ -198,19 +221,11 @@ tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GS
 <p>If you wished to drop the stations, 949999-00170 and 949999-00183 from the query, you could do this.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remove &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"949999-00170"</span>, <span class="st">"949999-00183"</span>)
 
-Tbar_stations &lt;-<span class="st"> </span>tbar_stations[<span class="op">!</span>tbar_stations <span class="op">%in%</span><span class="st"> </span>remove]
+tbar_stations &lt;-<span class="st"> </span>tbar_stations[<span class="op">!</span>tbar_stations <span class="op">%in%</span><span class="st"> </span>remove]
 
-Tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>,
+tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>,
                  <span class="dt">station =</span> tbar_stations,
                  <span class="dt">dsn =</span> <span class="st">"~/"</span>)</code></pre></div>
-<pre><code>## 
-## This station, 949999-00170, only provides data for years 1971 to 1984.</code></pre>
-<pre><code>## 
-## This station, 949999-00183, only provides data for years 1983 to 1984.</code></pre>
-<pre><code>## 
-## Checking requested station file for availability on server</code></pre>
-<pre><code>## 
-## Downloading individual station files.</code></pre>
 </div>
 <div id="plot-maximum-and-miniumum-temperature-values" class="section level2">
 <h2 class="hasAnchor">
@@ -239,14 +254,14 @@ tbar_temps &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rd
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>(<span class="dt">name =</span> <span class="st">"Temperature"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_date">scale_x_date</a></span>(<span class="dt">name =</span> <span class="st">"Date"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_bw</a></span>()</code></pre></div>
-<p><img src="GSODR_files/figure-html/unnamed-chunk-5-1.png" width="672"><img src="figure/Toowoomba_temperature.png" alt="GSOD Toowoomba Temperatures"></p>
+<p><img src="GSODR_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
 </div>
 </div>
 <div id="creating-spatial-files" class="section level1">
 <h1 class="hasAnchor">
 <a href="#creating-spatial-files" class="anchor"></a>Creating Spatial Files</h1>
 <p>Because the stations provide geospatial location information, it is possible to create a spatial file. <a href="http://www.geopackage.org">GeoPackage files</a> are a open, standards-based, platform-independent, portable, self-describing compact format for transferring geospatial information, which handle vector files much like shapefiles do, but eliminate many of the issues that shapefiles have with field names and the number of files. The <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> function can create a GeoPackage file, which can be used with a GIS for further analysis and mapping with other spatial objects.</p>
-<p>After getting weather stations for Australia and creating a GeoPackage file, <em>rgdal</em> can import the data into R and <em>raster</em> provides a function, <code>getData()</code>, to download an outline of Australia useful for plotting the station locations in this country.</p>
+<p>After getting weather stations for Australia and creating a GeoPackage file, <em>rgdal</em> can import the data into R again in a spatial format.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2015</span>, <span class="dt">country =</span> <span class="st">"Australia"</span>, <span class="dt">dsn =</span> <span class="st">"~/"</span>, <span class="dt">filename =</span> <span class="st">"AUS"</span>,
          <span class="dt">CSV =</span> <span class="ot">FALSE</span>, <span class="dt">GPKG =</span> <span class="ot">TRUE</span>)
 <span class="co">#&gt; trying URL 'ftp://ftp.ncdc.noaa.gov/pub/data/gsod/2015/gsod_2015.tar'</span>

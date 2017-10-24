@@ -207,5 +207,6 @@
     )
   )
   rm(tmp)
+  tibble::as_tibble(GSOD_XY)
   return(GSOD_XY)
 }

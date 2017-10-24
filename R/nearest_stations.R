@@ -2,9 +2,9 @@
 #' Find nearest GSOD stations to specified latitude and longitude
 #'
 #'Given a latitude and longitude value entered as decimal degrees (DD),
-#'this function returns a list of STNID values, which can be used in
-#'\code{\link{get_GSOD}} to query for specific stations as an argument in the
-#'\code{station} parameter of that function.
+#'this function returns a list (atomic vector) of STNID values, which can be
+#' used in \code{\link{get_GSOD}} to query for specific stations as an argument
+#' in the \code{station} parameter of that function.
 #'
 #' @param LAT Latitude expressed as decimal degrees (DD) [WGS84]
 #' @param LON Longitude expressed as decimal degrees (DD) [WGS84]
@@ -29,14 +29,34 @@
 #' @author Adam H Sparks, \email{adamhsparks@gmail.com}
 #' @export
 nearest_stations <- function(LAT, LON, distance) {
-  # load current local copy of isd_history
 
+  # CRAN NOTE avoidance
+  isd_history <- NULL
+  # load current local copy of isd_history
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 
-  isd_history <- as.data.frame(isd_history)
+  # Distance over a great circle. Reasonable approximation.
+  # From HughParsonage in our bomrang package,
+  # https://github.com/ropensci/bomrang/blob/master/R/internal_functions.R
+  haversine_distance <- function(lat1, lon1, lat2, lon2) {
+    # to radians
+    lat1 <- lat1 * pi / 180
+    lat2 <- lat2 * pi / 180
+    lon1 <- lon1 * pi / 180
+    lon2 <- lon2 * pi / 180
 
-  dists <- fields::rdist.earth(as.matrix(isd_history[c("LAT", "LON")]),
-                               matrix(c(LAT, LON), ncol = 2), miles = FALSE)
-  nearby <- which(dists[, 1] < distance)
+    delta_lat <- abs(lat1 - lat2)
+    delta_lon <- abs(lon1 - lon2)
+
+    # radius of earth
+    6371 * 2 * asin(sqrt(`+`(
+      (sin(delta_lat / 2)) ^ 2,
+      cos(lat1) * cos(lat2) * (sin(delta_lon / 2)) ^ 2
+    )))
+  }
+
+  nearby <- haversine_distance(isd_history["LAT"], isd_history["LON"], LAT, LON)
+
+  nearby <- which(nearby < distance)
   return(isd_history[as.numeric(nearby), ]$STNID)
 }

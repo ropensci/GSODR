@@ -29,7 +29,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="/index.html">
+  <a href="index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -107,14 +107,14 @@
 <a href="#quick-start-install" class="anchor"></a>Quick Start Install</h2>
 <div id="stable-version" class="section level3">
 <h3 class="hasAnchor">
-<a href="#stable-version" class="anchor"></a>Stable version</h3>
+<a href="#stable-version" class="anchor"></a>Stable Version</h3>
 <p>A stable version of <em>GSODR</em> is available from <a href="https://cran.r-project.org/package=GSODR">CRAN</a>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"GSODR"</span>)</code></pre></div>
 </div>
 <div id="development-version" class="section level3">
 <h3 class="hasAnchor">
-<a href="#development-version" class="anchor"></a>Development version</h3>
-<p>A development version is available from from GitHub. If you wish to install the development version that may have new features (but also may not work properly), install the <a href="https://CRAN.R-project.org/package=devtools">devtools package</a>, available from CRAN. We strive to keep the master branch on GitHub functional and working properly.</p>
+<a href="#development-version" class="anchor"></a>Development Version</h3>
+<p>A development version is available from from GitHub. If you wish to install the development version that may have new features or bug fixes before the CRAN version does (but also may not work properly), please install the <a href="https://CRAN.R-project.org/package=devtools">devtools package</a>, available from CRAN. We strive to keep the master branch on GitHub functional and working properly.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages("devtools")</span>
 devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"ropensci/GSODR"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <hr>
@@ -142,12 +142,12 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 ## redistributed for commercial purposes. Re-distribution of
 ## these data by others must provide this same notification.
 ## WMO Resolution 40. NOAA Policy'</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Tbar &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> <span class="st">"955510-99999"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tbar &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> <span class="st">"955510-99999"</span>)</code></pre></div>
 <pre><code>## 
 ## Checking requested station file for availability on server</code></pre>
 <pre><code>## 
 ## Downloading individual station files.</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Tbar</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tbar</code></pre></div>
 <pre><code>## # A tibble: 365 x 48
 ##      USAF  WBAN        STNID          STN_NAME  CTRY STATE  CALL    LAT
 ##     &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;             &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt;

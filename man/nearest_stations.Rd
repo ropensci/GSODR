@@ -19,9 +19,9 @@ be returned.}
 }
 \description{
 Given a latitude and longitude value entered as decimal degrees (DD),
-this function returns a list of STNID values, which can be used in
-\code{\link{get_GSOD}} to query for specific stations as an argument in the
-\code{station} parameter of that function.
+this function returns a list (atomic vector) of STNID values, which can be
+used in \code{\link{get_GSOD}} to query for specific stations as an argument
+in the \code{station} parameter of that function.
 }
 \note{
 The GSOD data, which are downloaded and manipulated by this R package,
