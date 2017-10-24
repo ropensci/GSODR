@@ -8,7 +8,7 @@ Introduction to *GSODR*
 
 The GSOD or [Global Surface Summary of the Day (GSOD)](https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod) data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. *GSODR* aims to make it easy to find, transfer and format the data you need for use in analysis and provides four main functions for facilitating this:
 
--   `get_GSOD()`, queries and transfers files from the FTP server, reformats them and returns a `tibble()` object in R session and/or saves a file to disk with options for a GeoPackage spatially enabled file or comma \`separated values (CSV) file,
+-   `get_GSOD()`, queries and transfers files from the FTP server, reformats them and returns a `tibble()` object in R session and/or saves a file to disk with options for a GeoPackage spatially enabled file or comma separated values (CSV) file,
 
 -   `reformat_GSOD()`, the workhorse, takes individual station files on the local disk and reformats them, returns a `tibble()` object in R session or saves a file to disk with options for a GeoPackage spatially enabled file or comma separated values (CSV) file,
 

@@ -27,7 +27,7 @@ facilitating this:
 - `get_GSOD()`, queries and transfers files from the FTP server,
     reformats them and returns a `tibble()` object in R session and/or
     saves a file to disk with options for a GeoPackage spatially enabled
-    file or comma `separated values (CSV) file,
+    file or comma separated values (CSV) file,
 
 - `reformat_GSOD()`, the workhorse, takes individual station files on
     the local disk and reformats them, returns a `tibble()` object
