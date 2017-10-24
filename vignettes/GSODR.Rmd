@@ -116,9 +116,9 @@ query, you could do this.
 ```{r, eval=TRUE}
 remove <- c("949999-00170", "949999-00183")
 
-Tbar_stations <- tbar_stations[!tbar_stations %in% remove]
+tbar_stations <- tbar_stations[!tbar_stations %in% remove]
 
-Tbar <- get_GSOD(years = 2010,
+tbar <- get_GSOD(years = 2010,
                  station = tbar_stations,
                  dsn = "~/")
 ```
