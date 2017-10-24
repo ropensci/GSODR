@@ -30,6 +30,8 @@ which provides a floating table of contents in vignettes and larger images
 
 - Updated and enhanced introductory vignette
 
+- Update internal stations list
+
 # GSODR 1.0.7
 
 ## Bug fixes
