@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Working with spatial and climate data from GSODR • GSODR</title>
+<title>Working with spatial and climate data from GSODR and GSODRdata • GSODR</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/spacelab/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
@@ -29,7 +29,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -51,7 +51,7 @@
       <a href="../articles/Specified_stations_for_a_range_of_years.html">GSODR use case: Specified years/stations vignette</a>
     </li>
     <li>
-      <a href="../articles/Working_with_spatial_and_climate_data.html">Working with spatial and climate data from GSODR</a>
+      <a href="../articles/Working_with_spatial_and_climate_data.html">Working with spatial and climate data from GSODR and GSODRdata</a>
     </li>
   </ul>
 </li>
@@ -78,10 +78,10 @@
       </header><div class="row">
   <div class="col-md-9">
     <div class="page-header toc-ignore">
-      <h1>Working with spatial and climate data from GSODR</h1>
+      <h1>Working with spatial and climate data from GSODR and GSODRdata</h1>
                         <h4 class="author">Tomislav Hengl and Adam H Sparks</h4>
             
-            <h4 class="date">2017-10-24</h4>
+            <h4 class="date">2017-10-26</h4>
           </div>
 
     
@@ -94,7 +94,7 @@
 <p>Following is an example of how you might download and save GSOD annual data for a given country, Philippines in this example, and convert it into a KML file for viewing in GoogleEarth. The second portion uses the same GeoPackage file to import the data back into R and combine the GSOD data with CHELSA data from the <a href="https://github.com/adamhsparks/GSODRdata">GSODRdata package</a> available from GitHub and plot the station temperatures for daily GSOD, average monthly GSOD and CHELSA temperatures (1979-2013).</p>
 <div id="example---download-and-plot-data-for-a-single-country" class="section level2">
 <h2 class="hasAnchor">
-<a href="#example---download-and-plot-data-for-a-single-country" class="anchor"></a>Example - Download and plot data for a single country</h2>
+<a href="#example---download-and-plot-data-for-a-single-country" class="anchor"></a>Example - Download and Plot Data for a Single Country</h2>
 <p>This example will demonstrate how to download data for Philippines for year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in the user’s home directory and link it with climate data from the <em>GSODRdata</em> package.</p>
 <p>Download data for Philippines for year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in the user’s home directory.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(GSODR)
@@ -103,7 +103,7 @@
 </div>
 <div id="example---use-the-geopackage-file-to-create-a-kml-file" class="section level2">
 <h2 class="hasAnchor">
-<a href="#example---use-the-geopackage-file-to-create-a-kml-file" class="anchor"></a>Example - Use the GeoPackage file to create a KML file</h2>
+<a href="#example---use-the-geopackage-file-to-create-a-kml-file" class="anchor"></a>Example - Use the GeoPackage File to Create a KML File</h2>
 <p>Using the GeoPackage that was just created, you can now create a KML file to open with Google Earth and visualise the data spatially and over time.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rgdal)
 <span class="kw">library</span>(spacetime)
@@ -130,7 +130,7 @@ shape =<span class="st"> "http://maps.google.com/mapfiles/kml/pal2/icon18.png"</
 </div>
 <div id="example---compare-the-gsod-weather-data-from-the-philippines-with-climate-data-provided-by-the-gsodrdata-package-" class="section level2">
 <h2 class="hasAnchor">
-<a href="#example---compare-the-gsod-weather-data-from-the-philippines-with-climate-data-provided-by-the-gsodrdata-package-" class="anchor"></a>Example - Compare the GSOD weather data from the Philippines with climate data provided by the <em>GSODRdata</em> package.</h2>
+<a href="#example---compare-the-gsod-weather-data-from-the-philippines-with-climate-data-provided-by-the-gsodrdata-package-" class="anchor"></a>Example - Compare the GSOD Weather Data From the Philippines With Climate Data Provided by the <em>GSODRdata</em> Package.</h2>
 <p>The the <a href="https://adamhsparks.github.io/GSODRdata/"><code>GSODRdata</code></a> package provides climate data from four climate data sets that have been formatted for easy use with the <em>GSODR</em> package. Following is a description how to install the <em>GSODRdata</em> package and use it to visualise the weather data for the Philippines in 2010 against CHELSA data.</p>
 <p>CHELSA (Climatologies at high resolution for the earth’s land surface areas) are climate data at 30 arc seconds for the earth land surface areas.</p>
 <p><strong>Description of CHELSA data from CHELSA website</strong></p>
@@ -246,12 +246,12 @@ df_melt &lt;-<span class="st"> </span><span class="kw">na.omit</span>(<span clas
 <a href="#sources" class="anchor"></a>Sources</h2>
 <div id="chelsa-climate-layers" class="section level4">
 <h4 class="hasAnchor">
-<a href="#chelsa-climate-layers" class="anchor"></a>CHELSA climate layers</h4>
+<a href="#chelsa-climate-layers" class="anchor"></a>CHELSA Climate Layers</h4>
 <p>CHELSA (climatic surfaces at 1 km resolution) is based on a quasi-mechanistical statistical downscaling of the ERA interim global circulation model (Karger et al. 2016). ESA’s CCI-LC cloud probability monthly averages are based on the MODIS snow products (MOD10A2). <a href="http://chelsa-climate.org/" class="uri">http://chelsa-climate.org/</a></p>
 </div>
-<div id="elevation-values" class="section level4">
-<h4 class="hasAnchor">
-<a href="#elevation-values" class="anchor"></a>Elevation values</h4>
+<div id="elevation-values" class="section level3">
+<h3 class="hasAnchor">
+<a href="#elevation-values" class="anchor"></a>Elevation Values</h3>
 <p>90m hole-filled SRTM digital elevation (Jarvis <em>et al.</em> 2008) was used to identify and correct/remove elevation errors in data for station locations between -60˚ and 60˚ latitude. This applies to cases here where elevation was missing in the reported values as well. In case the station reported an elevation and the DEM does not, the station reported is taken. For stations beyond -60˚ and 60˚ latitude, the values are station reported values in every instance. See <a href="https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md" class="uri">https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md</a> for more detail on the correction methods.</p>
 </div>
 </div>
@@ -281,9 +281,9 @@ df_melt &lt;-<span class="st"> </span><span class="kw">na.omit</span>(<span clas
       <ul class="nav nav-pills nav-stacked">
 <li>
 <a href="#introduction">Introduction</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#example---download-and-plot-data-for-a-single-country">Example - Download and plot data for a single country</a></li>
-      <li><a href="#example---use-the-geopackage-file-to-create-a-kml-file">Example - Use the GeoPackage file to create a KML file</a></li>
-      <li><a href="#example---compare-the-gsod-weather-data-from-the-philippines-with-climate-data-provided-by-the-gsodrdata-package-">Example - Compare the GSOD weather data from the Philippines with climate data provided by the <em>GSODRdata</em> package.</a></li>
+<li><a href="#example---download-and-plot-data-for-a-single-country">Example - Download and Plot Data for a Single Country</a></li>
+      <li><a href="#example---use-the-geopackage-file-to-create-a-kml-file">Example - Use the GeoPackage File to Create a KML File</a></li>
+      <li><a href="#example---compare-the-gsod-weather-data-from-the-philippines-with-climate-data-provided-by-the-gsodrdata-package-">Example - Compare the GSOD Weather Data From the Philippines With Climate Data Provided by the <em>GSODRdata</em> Package.</a></li>
       </ul>
 </li>
       <li>
