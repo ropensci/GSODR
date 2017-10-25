@@ -39,11 +39,13 @@ _GSODR_
 - Any data frames returned by _GSODR_ functions are returned as a `tibble()`
 object
 
+- The `YEARMODA` column is now returned as `Date` without time, rather than
+`Character`
+
 - Add new function, `get_inventory()`, which downloads the NCEI's station
 inventory document and returns a `tibble()` object of the data
 
-- A new theme is used for the vignettes and documentation website, spacelab,
-which provides a floating table of contents in vignettes and larger images
+- Use larger images and provide a table of contents in vignettes
 
 - Updated and enhanced introductory vignette
 
