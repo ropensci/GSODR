@@ -15,7 +15,7 @@ vignette: >
 required <- c("raster", "rgdal", "rgeos")
 
 if (!all(unlist(lapply(required, function(pkg) requireNamespace(pkg, quietly = TRUE)))))
-    knitr::opts_chunk$set(eval = FALSE, collapse = TRUE, comment = "#>", fig.width = 7, fig.height = 7, fig.align = "center")
+    knitr::opts_chunk$set(eval = FALSE, collapse = TRUE, comment = "#>", fig.align = "center")
 ```
 
 # Gather Data for IRRI Central Luzon Survey Loop
@@ -42,7 +42,7 @@ This vignette details how to find and retrieve weather data for the area that th
 
 As a first step, we'll use the [_raster_](https://cran.r-project.org/package=raster) package to retrieve data from [GADM](http://www.gadm.org/) that will provide the provincial spatial data for the survey area. We will then use this to find the centroid of the area of interest, which will be used to find the nearest stations. Using `raster::getData()` fetch level 0 (national) and 1 (provincial) data for the Philippines.
 
-```r
+```{r, eval=TRUE}
 library(raster)
 RP0 <- raster::getData(country = "Philippines", level = 0)
 RP1 <- raster::getData(country = "Philippines", level = 1)
@@ -50,7 +50,7 @@ RP1 <- raster::getData(country = "Philippines", level = 1)
 
 Now we will select the provinces involved in the survey and make a new object called `Central_Luzon` from the provincial level data, `RP1`.
 
-```r
+```{r, eval=TRUE}
 Central_Luzon <- RP1[RP1@data$NAME_1 == "Pampanga" | 
                      RP1@data$NAME_1 == "Tarlac" |
                      RP1@data$NAME_1 == "Pangasinan" |
@@ -63,11 +63,11 @@ Next, create a map inset showing where the Central Luzon Loop survey takes place
 
 First we'll use `gSimplify()` from _rgeos_ to simplify the map of the Philippines to make the map generation in the next few steps quicker.
 
-```r
+```{r, eval=TRUE}
 RP0 <- rgeos::gSimplify(RP0, tol = 0.05)
 ```
 
-```r
+```{r, eval=TRUE}
 library(ggplot2)
 library(grid)
 library(gridExtra)
@@ -113,18 +113,17 @@ p2 <- ggplot() +
 
 grid.newpage()
 v1 <- viewport(width = 1, height = 1, x = 0.5, y = 0.5) # plot area for the main map
-v2 <- viewport(width = 0.28, height = 0.28, x = 0.76, y = 0.76) # plot area for the inset map
+v2 <- viewport(width = 0.28, height = 0.28, x = 0.67, y = 0.78) # plot area for the inset map
 print(p1, vp = v1) 
 print(p2, vp = v2)
 ```
 
-![Central Luzon provinces surveyed with inset of whole of Philippines for reference](figure/Central Luzon.png)
 
 ### Dissolve Polygons and Find Centroid of Loop Survey Area
 
 Now that we have the provincial data that we want, we will dissolve the polygons that represent the individual provinces in Central Luzon and find the centroid of all of them, which we will use as the central point for querying stations from the GSOD data set.
 
-```r
+```{r, eval=TRUE}
 Central_Luzon <- rgeos::gUnaryUnion(Central_Luzon)
 centroid <- rgeos::gCentroid(Central_Luzon)
 
@@ -140,11 +139,10 @@ ggplot() +
   coord_map()
 ```
 
-![Centre of survey area in Central Luzon with provincial polygons dissovled](figure/Central Luzon2.png)
 
 Next, make a list of stations that are within this area. First we need to fetch the station metadata, "isd-history.csv" from the FTP server and then check which stations fall within a 100km radius of the centre of the provinces we're interested in.
 
-```r
+```{r, eval=TRUE}
 library(GSODR)
 library(readr)
 # Fetch station list from NCEI
@@ -169,29 +167,13 @@ loop_stations <- loop_stations[loop_stations$BEGIN <= 19591231 &
 print(loop_stations[, c(1:2, 3, 7:12)])
 ```
 
-```r
-## # A tibble: 9 × 9
-##     USAF  WBAN          STN_NAME    LAT     LON ELEV_M    BEGIN      END
-##    <chr> <chr>             <chr>  <dbl>   <dbl>  <dbl>    <dbl>    <dbl>
-## 1 983240 99999  IBA/LUZON ISLAND 15.333 119.967    5.0 19490104 20170324
-## 2 983250 99999           DAGUPAN 16.083 120.350    2.0 19450119 20170324
-## 3 983270 99999        CLARK INTL 15.186 120.560  147.5 19450214 20170324
-## 4 983280 99999            BAGUIO 16.375 120.620 1295.7 19490101 20170324
-## 5 984260 41231 SUBIC BAY WEATHER 14.800 120.267   19.0 19450209 20170324
-## 6 984290 99999 NINOY AQUINO INTL 14.509 121.020   22.9 19450331 20170324
-## 7 984300 99999    SCIENCE GARDEN 14.650 121.050   46.0 19450228 20170324
-## 8 984320 99999          AMBULONG 14.083 121.050   11.0 19490205 20170324
-## 9 984330 99999             TANAY 14.583 121.367  651.0 19490101 20170324
-## # ... with 1 more variables: STNID <chr>
-```
-
 These are all of the stations that are available within 100km of the centroid of this area and the years for which data are available.
 
 ### Using `get_GSOD()` to Fetch the Requested Station Files
 
 This example shows how you could construct a query using the `get_GSOD()` function. Be aware that it may result in incomplete data and error from the server if it stops responding. We've done our best to make _GSODR_ handle these errors, but if it does this, see the following option for using the `reformat_GSOD()` function.
 
-```r
+```{r, eval=FALSE}
 PHL <- get_GSOD(station = 
                   eval(parse(text = loop_stations[, 12])), years = 1960:2015)
 ```
@@ -202,7 +184,7 @@ _GSODR_ provides a function for dealing with local files that have been transfer
 
 Using your FTP client (*e.g.*, FileZilla) log into the NCEI FTP server, [<ftp.ncdc.noaa.gov>](ftp.ncdc.noaa.gov) and navigate to /pub/data/gsod/. Manually downloading the files for each station listed above from 1960 to 2015 is possible, but tedious. An easier solution is to simply download the annual files found in each yearly directory, "gsod-YYYY.tar" and untar them locally and then use R to list the available files and select only the files for the stations of interest. Lastly, write the data to disk as a CSV file for saving and later use.
 
-```r
+```{r, eval=FALSE}
 years <- 1960:2015
 
 loop_stations <- eval(parse(text = loop_stations[, 12]))
@@ -217,7 +199,7 @@ local_files <- local_files[basename(local_files) %in% loop_stations]
 
 loop_data <- reformat_GSOD(file_list = local_files)
 
-readr::write_csv(loop_data, file = "Loop_Survey_Weather_1960-2015")
+readr::write_csv(loop_data, file = "Loop_Survey_Weather_1960-2015", path = "./")
 ```
 
 # Notes

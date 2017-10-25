@@ -3,10 +3,10 @@ title: "Working with spatial and climate data from GSODR and GSODRdata"
 author: "Tomislav Hengl and Adam H Sparks"
 date: "`r Sys.Date()`"
 output:
-  rmarkdown::html_vignette:
-    toc: true
+    rmarkdown::html_document:
+      toc: true
 vignette: >
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{knitr::knitr}
   %\VignetteIndexEntry{Working with spatial and climate data from GSODR and GSODRdata}
   %\VignetteEncoding{UTF-8}
 ---
