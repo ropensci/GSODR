@@ -4,10 +4,7 @@ author: "Adam H Sparks"
 date: "`r Sys.Date()`"
 output:
     rmarkdown::html_document:
-    toc: true
-    toc_float: true
-    toc_depth: 3
-    theme: spacelab
+      toc: true
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteIndexEntry{GSODR use case: Specified years/stations vignette}
@@ -18,7 +15,7 @@ vignette: >
 required <- c("raster", "rgdal", "rgeos")
 
 if (!all(unlist(lapply(required, function(pkg) requireNamespace(pkg, quietly = TRUE)))))
-  knitr::opts_chunk$set(eval = FALSE)
+    knitr::opts_chunk$set(eval = FALSE, collapse = TRUE, comment = "#>", fig.width = 7, fig.height = 7, fig.align = "center")
 ```
 
 # Gather Data for IRRI Central Luzon Survey Loop

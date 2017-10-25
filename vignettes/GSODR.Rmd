@@ -3,11 +3,8 @@ title: "GSODR"
 author: "Adam H Sparks"
 date: "`r Sys.Date()`"
 output:
-    rmarkdown::html_document:
+  rmarkdown::html_vignette:
     toc: true
-    toc_float: true
-    toc_depth: 2
-    theme: spacelab
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteIndexEntry{GSODR}
@@ -18,7 +15,8 @@ vignette: >
 required <- c("ggplot2", "tidyr", "lubridate")
 
 if (!all(unlist(lapply(required, function(pkg) requireNamespace(pkg, quietly = TRUE)))))
-  knitr::opts_chunk$set(eval = FALSE)
+
+  knitr::opts_chunk$set(eval = FALSE, collapse = TRUE, comment = "#>", fig.width = 7, fig.height = 7, fig.align = "center")
 ```
 
 # Introduction
@@ -130,7 +128,7 @@ Using the first data downloaded for a single station, 955510-99999, plot the
 temperature for 2010 using `read_csv()` from Hadley's
 [`readr`](https://CRAN.R-project.org/package=readr) package.
 
-```{r, eval=TRUE}
+```{r, eval=TRUE, fig.width = 7, fig.height = 7, fig.align = "center"}
 library(ggplot2)
 library(lubridate)
 library(tidyr)
@@ -492,7 +490,7 @@ no/not reported) for the occurrence during the day;
 
 ## Appendix 2: Map of GSOD Station Locations
 
-```{r, eval=TRUE, message = FALSE, echo = FALSE, warning=FALSE}
+```{r, eval=TRUE, message = FALSE, echo = FALSE, warning=FALSE, fig.width = 7, fig.height = 7, fig.align = "center"}
 if (requireNamespace("ggplot2", quietly = TRUE) &&
     requireNamespace("ggthemes", quietly = TRUE) &&
     requireNamespace("maps", quietly = TRUE) &&
