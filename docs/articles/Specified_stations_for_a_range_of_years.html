@@ -105,8 +105,9 @@
 <h3 class="hasAnchor">
 <a href="#retrieve-phl-provincial-data-and-select-loop-provinces" class="anchor"></a>Retrieve PHL Provincial Data and Select Loop Provinces</h3>
 <p>As a first step, we’ll use the <a href="https://cran.r-project.org/package=raster"><em>raster</em></a> package to retrieve data from <a href="http://www.gadm.org/">GADM</a> that will provide the provincial spatial data for the survey area. We will then use this to find the centroid of the area of interest, which will be used to find the nearest stations. Using <code><a href="http://www.rdocumentation.org/packages/raster/topics/getData">raster::getData()</a></code> fetch level 0 (national) and 1 (provincial) data for the Philippines.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(raster)
-RP0 &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/getData">getData</a></span>(<span class="dt">country =</span> <span class="st">"Philippines"</span>, <span class="dt">level =</span> <span class="dv">0</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(raster)</code></pre></div>
+<pre><code>## Loading required package: sp</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">RP0 &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/getData">getData</a></span>(<span class="dt">country =</span> <span class="st">"Philippines"</span>, <span class="dt">level =</span> <span class="dv">0</span>)
 RP1 &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/getData">getData</a></span>(<span class="dt">country =</span> <span class="st">"Philippines"</span>, <span class="dt">level =</span> <span class="dv">1</span>)</code></pre></div>
 <p>Now we will select the provinces involved in the survey and make a new object called <code>Central_Luzon</code> from the provincial level data, <code>RP1</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Central_Luzon &lt;-<span class="st"> </span>RP1[RP1<span class="op">@</span>data<span class="op">$</span>NAME_<span class="dv">1</span> <span class="op">==</span><span class="st"> "Pampanga"</span> <span class="op">|</span><span class="st"> </span>
@@ -136,9 +137,9 @@ p1 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumenta
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_bw</a></span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Longitude"</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Latitude"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_map">coord_map</a></span>()
-
-<span class="co"># Inset</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_map">coord_map</a></span>()</code></pre></div>
+<pre><code>## Regions defined for each Polygons</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Inset</span>
 p2 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_polygon">geom_polygon</a></span>(<span class="dt">data =</span> RP0, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(long, lat, <span class="dt">group =</span> group),
                <span class="dt">colour =</span> <span class="st">"grey10"</span>,
@@ -163,12 +164,10 @@ p2 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumenta
 
 <span class="kw"><a href="http://www.rdocumentation.org/packages/grid/topics/grid.newpage">grid.newpage</a></span>()
 v1 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/grid/topics/viewport">viewport</a></span>(<span class="dt">width =</span> <span class="dv">1</span>, <span class="dt">height =</span> <span class="dv">1</span>, <span class="dt">x =</span> <span class="fl">0.5</span>, <span class="dt">y =</span> <span class="fl">0.5</span>) <span class="co"># plot area for the main map</span>
-v2 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/grid/topics/viewport">viewport</a></span>(<span class="dt">width =</span> <span class="fl">0.28</span>, <span class="dt">height =</span> <span class="fl">0.28</span>, <span class="dt">x =</span> <span class="fl">0.76</span>, <span class="dt">y =</span> <span class="fl">0.76</span>) <span class="co"># plot area for the inset map</span>
+v2 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/grid/topics/viewport">viewport</a></span>(<span class="dt">width =</span> <span class="fl">0.28</span>, <span class="dt">height =</span> <span class="fl">0.28</span>, <span class="dt">x =</span> <span class="fl">0.67</span>, <span class="dt">y =</span> <span class="fl">0.78</span>) <span class="co"># plot area for the inset map</span>
 <span class="kw">print</span>(p1, <span class="dt">vp =</span> v1) 
 <span class="kw">print</span>(p2, <span class="dt">vp =</span> v2)</code></pre></div>
-<div class="figure">
-<img src="figure/Central%20Luzon.png" alt="Central Luzon provinces surveyed with inset of whole of Philippines for reference"><p class="caption">Central Luzon provinces surveyed with inset of whole of Philippines for reference</p>
-</div>
+<p><img src="Specified_stations_for_a_range_of_years_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
 </div>
 <div id="dissolve-polygons-and-find-centroid-of-loop-survey-area" class="section level3">
 <h3 class="hasAnchor">
@@ -187,12 +186,20 @@ centroid &lt;-<span class="st"> </span>rgeos<span class="op">::</span><span clas
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Longitude"</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Latitude"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_map">coord_map</a></span>()</code></pre></div>
-<div class="figure">
-<img src="figure/Central%20Luzon2.png" alt="Centre of survey area in Central Luzon with provincial polygons dissovled"><p class="caption">Centre of survey area in Central Luzon with provincial polygons dissovled</p>
-</div>
+<p><img src="Specified_stations_for_a_range_of_years_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
 <p>Next, make a list of stations that are within this area. First we need to fetch the station metadata, “isd-history.csv” from the FTP server and then check which stations fall within a 100km radius of the centre of the provinces we’re interested in.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(GSODR)
-<span class="kw">library</span>(readr)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(GSODR)</code></pre></div>
+<pre><code>## 
+## GSOD is distributed free by the US NCEI with the
+## following conditions.
+## 'The following data and products may have conditions placed
+## their international commercial use. They can be used within
+## the U.S. or for non-commercial international activities
+## without restriction. The non-U.S. data cannot be
+## redistributed for commercial purposes. Re-distribution of
+## these data by others must provide this same notification.
+## WMO Resolution 40. NOAA Policy'</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(readr)
 <span class="co"># Fetch station list from NCEI</span>
 station_meta &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/readr/topics/read_delim">read_csv</a></span>(
   <span class="st">"ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv"</span>,
@@ -213,19 +220,14 @@ loop_stations &lt;-<span class="st"> </span>loop_stations[loop_stations<span cla
 <span class="st">                               </span>loop_stations<span class="op">$</span>END <span class="op">&gt;=</span><span class="st"> </span><span class="dv">20151231</span>, ]
 
 <span class="kw">print</span>(loop_stations[, <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">7</span><span class="op">:</span><span class="dv">12</span>)])</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## # A tibble: 9 × 9
-##     USAF  WBAN          STN_NAME    LAT     LON ELEV_M    <span class="re">BEGIN</span>      <span class="re">END</span>
-##    &lt;chr&gt; &lt;chr&gt;             &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-## 1 983240 99999  IBA/LUZON ISLAND 15.333 119.967    5.0 19490104 20170324
-## 2 983250 99999           DAGUPAN 16.083 120.350    2.0 19450119 20170324
-## 3 983270 99999        CLARK INTL 15.186 120.560  147.5 19450214 20170324
-## 4 983280 99999            BAGUIO 16.375 120.620 1295.7 19490101 20170324
-## 5 984260 41231 SUBIC BAY WEATHER 14.800 120.267   19.0 19450209 20170324
-## 6 984290 99999 NINOY AQUINO INTL 14.509 121.020   22.9 19450331 20170324
-## 7 984300 99999    SCIENCE GARDEN 14.650 121.050   46.0 19450228 20170324
-## 8 984320 99999          AMBULONG 14.083 121.050   11.0 19490205 20170324
-## 9 984330 99999             TANAY 14.583 121.367  651.0 19490101 20170324
-## # ... with 1 more variables: STNID &lt;chr&gt;</code></pre></div>
+<pre><code>## # A tibble: 4 x 9
+##     USAF  WBAN         STN_NAME    LAT     LON ELEV_M    BEGIN      END
+##    &lt;chr&gt; &lt;chr&gt;            &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1 983240 99999 IBA/LUZON ISLAND 15.333 119.967    5.0 19490104 20171019
+## 2 983250 99999          DAGUPAN 16.083 120.350    2.0 19450119 20171019
+## 3 983270 99999       CLARK INTL 15.186 120.560  147.5 19450214 20171019
+## 4 983280 99999           BAGUIO 16.375 120.620 1295.7 19490101 20171019
+## # ... with 1 more variables: STNID &lt;chr&gt;</code></pre>
 <p>These are all of the stations that are available within 100km of the centroid of this area and the years for which data are available.</p>
 </div>
 <div id="using-get_gsod-to-fetch-the-requested-station-files" class="section level3">
@@ -255,7 +257,7 @@ local_files &lt;-<span class="st"> </span>local_files[<span class="kw">basename<
 
 loop_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reformat_GSOD.html">reformat_GSOD</a></span>(<span class="dt">file_list =</span> local_files)
 
-readr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/readr/topics/write_delim">write_csv</a></span>(loop_data, <span class="dt">file =</span> <span class="st">"Loop_Survey_Weather_1960-2015"</span>)</code></pre></div>
+readr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/readr/topics/write_delim">write_csv</a></span>(loop_data, <span class="dt">file =</span> <span class="st">"Loop_Survey_Weather_1960-2015"</span>, <span class="dt">path =</span> <span class="st">"./"</span>)</code></pre></div>
 </div>
 </div>
 <div id="notes" class="section level1">

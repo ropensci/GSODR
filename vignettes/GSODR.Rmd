@@ -28,33 +28,37 @@ files are cumbersome and difficult to work with. _GSODR_ aims to make it easy to
 find, transfer and format the data you need for use in analysis and provides
 four main functions for facilitating this:
 
-- `get_GSOD()` - the main function that will query and transfer files from the
-FTP server, reformat them and return a data frame in R or save a file to disk
+- `get_GSOD()` - this function queries and transfers files from the NCEI's
+FTP server, reformats them and returns a tidy data frame in R or saves a file to
+disk
 
-- `reformat_GSOD()` - the workhorse, this function takes individual station
-files on the local disk and re-formats them returning a data frame in R
+- `reformat_GSOD()` - this function takes individual station files from the
+local disk and re-formats them returning a tidy data frame in R
 
-- `nearest_stations()` - this function returns a data frame containing a list of
-stations and their metadata that fall within the given radius of a point
-specified by the user  
+- `nearest_stations()` - this function returns a vector of station IDs that fall
+within the given radius (kilometres) of a point given as latitude and longitude
 
 - `update_station_list()` - this function downloads the latest station list from
-the NCEI FTP server updates the package's internal database of stations and
+the NCEI's FTP server updates the package's internal database of stations and
 their metadata.
 
+- `get_inventory()` - this function downloads the latest station inventory
+information from the NCEI's FTP server and returns the header information about
+the latest version as a message in the console and a tidy data frame of the
+stations' inventory for each month that data are reported.
+
 When reformatting data either with `get_GSOD()` or `reformat_GSOD()`, all units
-are converted to International System of Units (SI), e.g., inches to millimetres
-and Fahrenheit to Celsius. File output can be saved as a Comma Separated Value
-(CSV) file or in a spatial GeoPackage (GPKG) file, implemented by most major
-GIS software, summarising each year by station, which also includes vapour
-pressure and relative humidity elements calculated from existing data in GSOD.
+are converted to International System of Units (SI), _e.g._, inches to
+millimetres and Fahrenheit to Celsius. File output can be used in an R session
+as a `tibble()`, saved as a Comma Separated Value (CSV) file or in a spatial
+GeoPackage (GPKG) file, implemented by most major GIS software, summarising each
+year by station, which also includes vapour pressure and relative humidity
+elements calculated from existing data in GSOD.
 
 For more information see the description of the data provided by NCEI,
 <http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
 
-# Retrieving and Reformatting Data in R
-
-## Plot Global Station Locations
+# Using get_GSOD()
 
 ## Find Stations in Australia
 
@@ -79,7 +83,7 @@ Oz %>%
   filter(grepl("TOOWOOMBA", STN_NAME))
 ```
 
-## Using the get_GSOD() Function in _GSODR_ to Download a Single Station and Year
+## Download a Single Station and Year
 
 Now that we've seen where the reporting stations are located, we can download
 weather data from the station Toowoomba, Queensland, Australia for 2010 by using
@@ -91,7 +95,7 @@ tbar <- get_GSOD(years = 2010, station = "955510-99999")
 tbar
 ```
 
-## Find Stations Within a Specified Distance of a Given Lat/Lon Value
+## Using nearest_stations()
 
 Using the `nearest_stations()` function, you can find stations closest to a
 given point specified by latitude and longitude in decimal degrees. This can be
@@ -150,7 +154,7 @@ ggplot(data = tbar_temps, aes(x = ymd(YEARMODA), y = value,
 ```
 
 
-# Creating Spatial Files
+## Creating Spatial Files
 
 Because the stations provide geospatial location information, it is possible to
 create a spatial file. [GeoPackage files](http://www.geopackage.org) are a open,
@@ -238,7 +242,7 @@ print(AUS_sqlite, n = 5)
 #>   EA <dbl>, ES <dbl>, RH <dbl>
 ```
 
-# Reformating Local Data Files
+# Using reformat_GSOD()
 
 You may have already downloaded GSOD data or may just wish to use an FTP client
 to download the files from the server to you local disk and not use the
@@ -263,10 +267,10 @@ x <- reformat_GSOD(file_list = y)
 x <- reformat_GSOD(dsn = "~/GSOD/gsod_1960")
 ```
 
-# Updating _GSODR's_ Internal Database of Station Locations and Metadata
+# Using update_stations()
 
 _GSODR_ uses internal databases of station data from the NCEI to provide
-location and other metadata, e.g. elevation, station names, WMO codes, etc. to
+location and other metadata, _e.g._ elevation, station names, WMO codes, etc. to
 make the process of querying for weather data faster. This database is created
 and packaged with _GSODR_ for distribution and is updated with new releases.
 Users have the option of updating these databases after installing _GSODR_.
@@ -281,7 +285,10 @@ The database file `isd_history.rda` can be located on your local system by using
 the following command, `paste0(.libPaths(), "/GSODR/extdata")[1]`, unless you have specified another location for library installations and
 installed _GSODR_ there, in which case it would still be in `GSODR/extdata`.
 
-# Checking NCEI's GSOD Station Data Inventory
+To update _GSODR's_ internal database of station locations simply use `update_stations()`, which will update the internal station database according
+to the latest data available from the NCEI.
+
+# Using get_inventory()
 
 _GSODR_ provides a function, `get_inventory()` to retrieve an inventory of the
 number of weather observations by station-year-month for the beginning of record
@@ -298,7 +305,7 @@ inventory
 subset(inventory, STNID == "955510-99999")
 ```
 
-# Additional Climate Data
+# Additional Climate Data Availability
 
 Additional climate data,
 [_GSODRdata_](https://github.com/adamhsparks/GSODRdata), formatted for use with
@@ -334,7 +341,6 @@ for more detail on the correction methods.
 # References
 Stachelek, J. (2016) Using the Geopackage Format with R.
 URL: https://jsta.github.io/2016/07/14/geopackage-r.html
-
 
 # Appendices
 

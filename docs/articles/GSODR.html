@@ -92,21 +92,18 @@
 <a href="#introduction" class="anchor"></a>Introduction</h1>
 <p>The GSOD or <a href="https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod">Global Surface Summary of the Day (GSOD)</a> data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. <em>GSODR</em> aims to make it easy to find, transfer and format the data you need for use in analysis and provides four main functions for facilitating this:</p>
 <ul>
-<li><p><code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> - the main function that will query and transfer files from the FTP server, reformat them and return a data frame in R or save a file to disk</p></li>
-<li><p><code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code> - the workhorse, this function takes individual station files on the local disk and re-formats them returning a data frame in R</p></li>
-<li><p><code><a href="../reference/nearest_stations.html">nearest_stations()</a></code> - this function returns a data frame containing a list of stations and their metadata that fall within the given radius of a point specified by the user</p></li>
-<li><p><code><a href="../reference/update_station_list.html">update_station_list()</a></code> - this function downloads the latest station list from the NCEI FTP server updates the package’s internal database of stations and their metadata.</p></li>
+<li><p><code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> - this function queries and transfers files from the NCEI’s FTP server, reformats them and returns a tidy data frame in R or saves a file to disk</p></li>
+<li><p><code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code> - this function takes individual station files from the local disk and re-formats them returning a tidy data frame in R</p></li>
+<li><p><code><a href="../reference/nearest_stations.html">nearest_stations()</a></code> - this function returns a vector of station IDs that fall within the given radius (kilometres) of a point given as latitude and longitude</p></li>
+<li><p><code><a href="../reference/update_station_list.html">update_station_list()</a></code> - this function downloads the latest station list from the NCEI’s FTP server updates the package’s internal database of stations and their metadata.</p></li>
+<li><p><code><a href="../reference/get_inventory.html">get_inventory()</a></code> - this function downloads the latest station inventory information from the NCEI’s FTP server and returns the header information about the latest version as a message in the console and a tidy data frame of the stations’ inventory for each month that data are reported.</p></li>
 </ul>
-<p>When reformatting data either with <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> or <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code>, all units are converted to International System of Units (SI), e.g., inches to millimetres and Fahrenheit to Celsius. File output can be saved as a Comma Separated Value (CSV) file or in a spatial GeoPackage (GPKG) file, implemented by most major GIS software, summarising each year by station, which also includes vapour pressure and relative humidity elements calculated from existing data in GSOD.</p>
+<p>When reformatting data either with <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> or <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code>, all units are converted to International System of Units (SI), <em>e.g.</em>, inches to millimetres and Fahrenheit to Celsius. File output can be used in an R session as a <code><a href="http://dplyr.tidyverse.org/reference/reexports.html">tibble()</a></code>, saved as a Comma Separated Value (CSV) file or in a spatial GeoPackage (GPKG) file, implemented by most major GIS software, summarising each year by station, which also includes vapour pressure and relative humidity elements calculated from existing data in GSOD.</p>
 <p>For more information see the description of the data provided by NCEI, <a href="http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt" class="uri">http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt</a>.</p>
 </div>
-<div id="retrieving-and-reformatting-data-in-r" class="section level1">
+<div id="using-get_gsod" class="section level1">
 <h1 class="hasAnchor">
-<a href="#retrieving-and-reformatting-data-in-r" class="anchor"></a>Retrieving and Reformatting Data in R</h1>
-<div id="plot-global-station-locations" class="section level2">
-<h2 class="hasAnchor">
-<a href="#plot-global-station-locations" class="anchor"></a>Plot Global Station Locations</h2>
-</div>
+<a href="#using-get_gsod" class="anchor"></a>Using get_GSOD()</h1>
 <div id="find-stations-in-australia" class="section level2">
 <h2 class="hasAnchor">
 <a href="#find-stations-in-australia" class="anchor"></a>Find Stations in Australia</h2>
@@ -167,9 +164,9 @@ Oz</code></pre></div>
 ## # ... with 7 more variables: BEGIN &lt;dbl&gt;, END &lt;dbl&gt;, STNID &lt;chr&gt;,
 ## #   ELEV_M_SRTM_90m &lt;dbl&gt;, COUNTRY_NAME &lt;chr&gt;, iso2c &lt;chr&gt;, iso3c &lt;chr&gt;</code></pre>
 </div>
-<div id="using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and-year" class="section level2">
+<div id="download-a-single-station-and-year" class="section level2">
 <h2 class="hasAnchor">
-<a href="#using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and-year" class="anchor"></a>Using the get_GSOD() Function in <em>GSODR</em> to Download a Single Station and Year</h2>
+<a href="#download-a-single-station-and-year" class="anchor"></a>Download a Single Station and Year</h2>
 <p>Now that we’ve seen where the reporting stations are located, we can download weather data from the station Toowoomba, Queensland, Australia for 2010 by using the STNID in the <code>station</code> parameter of <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> <span class="st">"955510-99999"</span>)</code></pre></div>
 <pre><code>## 
@@ -200,9 +197,9 @@ Oz</code></pre></div>
 ## #   I_FOG &lt;int&gt;, I_RAIN_DRIZZLE &lt;int&gt;, I_SNOW_ICE &lt;int&gt;, I_HAIL &lt;int&gt;,
 ## #   I_THUNDER &lt;int&gt;, I_TORNADO_FUNNEL &lt;int&gt;, EA &lt;dbl&gt;, ES &lt;dbl&gt;, RH &lt;dbl&gt;</code></pre>
 </div>
-<div id="find-stations-within-a-specified-distance-of-a-given-latlon-value" class="section level2">
+<div id="using-nearest_stations" class="section level2">
 <h2 class="hasAnchor">
-<a href="#find-stations-within-a-specified-distance-of-a-given-latlon-value" class="anchor"></a>Find Stations Within a Specified Distance of a Given Lat/Lon Value</h2>
+<a href="#using-nearest_stations" class="anchor"></a>Using nearest_stations()</h2>
 <p>Using the <code><a href="../reference/nearest_stations.html">nearest_stations()</a></code> function, you can find stations closest to a given point specified by latitude and longitude in decimal degrees. This can be used to generate a vector to pass along to <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> and download the stations of interest.</p>
 <p>There are missing stations in this query. Not all that are listed and queried actually have files on the server.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tbar_stations &lt;-<span class="st"> </span><span class="kw"><a href="../reference/nearest_stations.html">nearest_stations</a></span>(<span class="dt">LAT =</span> <span class="op">-</span><span class="fl">27.5598</span>,
@@ -256,10 +253,9 @@ tbar_temps &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rd
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_bw</a></span>()</code></pre></div>
 <p><img src="GSODR_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
-</div>
-<div id="creating-spatial-files" class="section level1">
-<h1 class="hasAnchor">
-<a href="#creating-spatial-files" class="anchor"></a>Creating Spatial Files</h1>
+<div id="creating-spatial-files" class="section level2">
+<h2 class="hasAnchor">
+<a href="#creating-spatial-files" class="anchor"></a>Creating Spatial Files</h2>
 <p>Because the stations provide geospatial location information, it is possible to create a spatial file. <a href="http://www.geopackage.org">GeoPackage files</a> are a open, standards-based, platform-independent, portable, self-describing compact format for transferring geospatial information, which handle vector files much like shapefiles do, but eliminate many of the issues that shapefiles have with field names and the number of files. The <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> function can create a GeoPackage file, which can be used with a GIS for further analysis and mapping with other spatial objects.</p>
 <p>After getting weather stations for Australia and creating a GeoPackage file, <em>rgdal</em> can import the data into R again in a spatial format.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2015</span>, <span class="dt">country =</span> <span class="st">"Australia"</span>, <span class="dt">dsn =</span> <span class="st">"~/"</span>, <span class="dt">filename =</span> <span class="st">"AUS"</span>,
@@ -319,9 +315,10 @@ AUS_stations &lt;-<span class="st"> </span><span class="kw"><a href="http://www.
 <span class="co">#&gt;   SNDP &lt;dbl&gt;, I_FOG &lt;int&gt;, I_RAIN_DRIZZLE &lt;int&gt;, I_SNOW_ICE &lt;int&gt;, I_HAIL &lt;int&gt;, I_THUNDER &lt;int&gt;, I_TORNADO_FUNNEL &lt;int&gt;,</span>
 <span class="co">#&gt;   EA &lt;dbl&gt;, ES &lt;dbl&gt;, RH &lt;dbl&gt;</span></code></pre></div>
 </div>
-<div id="reformating-local-data-files" class="section level1">
+</div>
+<div id="using-reformat_gsod" class="section level1">
 <h1 class="hasAnchor">
-<a href="#reformating-local-data-files" class="anchor"></a>Reformating Local Data Files</h1>
+<a href="#using-reformat_gsod" class="anchor"></a>Using reformat_GSOD()</h1>
 <p>You may have already downloaded GSOD data or may just wish to use an FTP client to download the files from the server to you local disk and not use the capabilities of <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code>. In that case the <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code> function is useful.</p>
 <p>There are two ways, you can either provide <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code> with a list of specified station files or you can supply it with a directory containing all of the “WBAN-WMO-YYYY.op.gz” station files that you wish to reformat.</p>
 <div id="reformat-a-list-of-local-files" class="section level2">
@@ -337,15 +334,16 @@ x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reformat_
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reformat_GSOD.html">reformat_GSOD</a></span>(<span class="dt">dsn =</span> <span class="st">"~/GSOD/gsod_1960"</span>)</code></pre></div>
 </div>
 </div>
-<div id="updating-gsodrs-internal-database-of-station-locations-and-metadata" class="section level1">
+<div id="using-update_stations" class="section level1">
 <h1 class="hasAnchor">
-<a href="#updating-gsodrs-internal-database-of-station-locations-and-metadata" class="anchor"></a>Updating <em>GSODR’s</em> Internal Database of Station Locations and Metadata</h1>
-<p><em>GSODR</em> uses internal databases of station data from the NCEI to provide location and other metadata, e.g. elevation, station names, WMO codes, etc. to make the process of querying for weather data faster. This database is created and packaged with <em>GSODR</em> for distribution and is updated with new releases. Users have the option of updating these databases after installing <em>GSODR</em>. While this option gives the users the ability to keep the database up-to-date and gives <em>GSODR’s</em> authors flexibility in maintaining it, this also means that reproducibility may be affected since the same version of <em>GSODR</em> may have different databases on different machines. If reproducibility is necessary, care should be taken to ensure that the version of the databases is the same across different machines.</p>
+<a href="#using-update_stations" class="anchor"></a>Using update_stations()</h1>
+<p><em>GSODR</em> uses internal databases of station data from the NCEI to provide location and other metadata, <em>e.g.</em> elevation, station names, WMO codes, etc. to make the process of querying for weather data faster. This database is created and packaged with <em>GSODR</em> for distribution and is updated with new releases. Users have the option of updating these databases after installing <em>GSODR</em>. While this option gives the users the ability to keep the database up-to-date and gives <em>GSODR’s</em> authors flexibility in maintaining it, this also means that reproducibility may be affected since the same version of <em>GSODR</em> may have different databases on different machines. If reproducibility is necessary, care should be taken to ensure that the version of the databases is the same across different machines.</p>
 <p>The database file <code>isd_history.rda</code> can be located on your local system by using the following command, <code>paste0(.libPaths(), "/GSODR/extdata")[1]</code>, unless you have specified another location for library installations and installed <em>GSODR</em> there, in which case it would still be in <code>GSODR/extdata</code>.</p>
+<p>To update <em>GSODR’s</em> internal database of station locations simply use <code>update_stations()</code>, which will update the internal station database according to the latest data available from the NCEI.</p>
 </div>
-<div id="checking-nceis-gsod-station-data-inventory" class="section level1">
+<div id="using-get_inventory" class="section level1">
 <h1 class="hasAnchor">
-<a href="#checking-nceis-gsod-station-data-inventory" class="anchor"></a>Checking NCEI’s GSOD Station Data Inventory</h1>
+<a href="#using-get_inventory" class="anchor"></a>Using get_inventory()</h1>
 <p><em>GSODR</em> provides a function, <code><a href="../reference/get_inventory.html">get_inventory()</a></code> to retrieve an inventory of the number of weather observations by station-year-month for the beginning of record through to current.</p>
 <p>Following is an example of how to retreive the inventory and check a station in Toowoomba, Queensland, Australia, which was used in an earlier example.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">inventory &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_inventory.html">get_inventory</a></span>()</code></pre></div>
@@ -392,9 +390,9 @@ x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reformat_
 ## 20 955510-99999  2017   240   224   248   240   248   237   248   247
 ## # ... with 4 more variables: SEP &lt;int&gt;, OCT &lt;int&gt;, NOV &lt;int&gt;, DEC &lt;int&gt;</code></pre>
 </div>
-<div id="additional-climate-data" class="section level1">
+<div id="additional-climate-data-availability" class="section level1">
 <h1 class="hasAnchor">
-<a href="#additional-climate-data" class="anchor"></a>Additional Climate Data</h1>
+<a href="#additional-climate-data-availability" class="anchor"></a>Additional Climate Data Availability</h1>
 <p>Additional climate data, <a href="https://github.com/adamhsparks/GSODRdata"><em>GSODRdata</em></a>, formatted for use with GSOD data provided by <em>GSODR</em> are available as an R package install able through GitHub due to the package size, 5.1Mb, being too large for CRAN.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages("devtools")</span>
 devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"adamhsparks/GSODRdata"</span>)
@@ -504,24 +502,23 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#introduction">Introduction</a></li>
       <li>
-<a href="#retrieving-and-reformatting-data-in-r">Retrieving and Reformatting Data in R</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#plot-global-station-locations">Plot Global Station Locations</a></li>
-      <li><a href="#find-stations-in-australia">Find Stations in Australia</a></li>
-      <li><a href="#using-the-get_gsod-function-in-gsodr-to-download-a-single-station-and-year">Using the get_GSOD() Function in <em>GSODR</em> to Download a Single Station and Year</a></li>
-      <li><a href="#find-stations-within-a-specified-distance-of-a-given-latlon-value">Find Stations Within a Specified Distance of a Given Lat/Lon Value</a></li>
+<a href="#using-get_gsod">Using get_GSOD()</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#find-stations-in-australia">Find Stations in Australia</a></li>
+      <li><a href="#download-a-single-station-and-year">Download a Single Station and Year</a></li>
+      <li><a href="#using-nearest_stations">Using nearest_stations()</a></li>
       <li><a href="#plot-maximum-and-miniumum-temperature-values">Plot Maximum and Miniumum Temperature Values</a></li>
+      <li><a href="#creating-spatial-files">Creating Spatial Files</a></li>
       </ul>
 </li>
-      <li><a href="#creating-spatial-files">Creating Spatial Files</a></li>
       <li>
-<a href="#reformating-local-data-files">Reformating Local Data Files</a><ul class="nav nav-pills nav-stacked">
+<a href="#using-reformat_gsod">Using reformat_GSOD()</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#reformat-a-list-of-local-files">Reformat a list of local files</a></li>
       <li><a href="#reformat-all-local-files-found-in-directory">Reformat all local files found in directory</a></li>
       </ul>
 </li>
-      <li><a href="#updating-gsodrs-internal-database-of-station-locations-and-metadata">Updating <em>GSODR’s</em> Internal Database of Station Locations and Metadata</a></li>
-      <li><a href="#checking-nceis-gsod-station-data-inventory">Checking NCEI’s GSOD Station Data Inventory</a></li>
-      <li><a href="#additional-climate-data">Additional Climate Data</a></li>
+      <li><a href="#using-update_stations">Using update_stations()</a></li>
+      <li><a href="#using-get_inventory">Using get_inventory()</a></li>
+      <li><a href="#additional-climate-data-availability">Additional Climate Data Availability</a></li>
       <li>
 <a href="#notes">Notes</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#elevation-values">Elevation Values</a></li>
