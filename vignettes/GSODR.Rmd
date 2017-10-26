@@ -267,7 +267,7 @@ x <- reformat_GSOD(file_list = y)
 x <- reformat_GSOD(dsn = "~/GSOD/gsod_1960")
 ```
 
-# Using update_stations()
+# Using update_station_list()
 
 _GSODR_ uses internal databases of station data from the NCEI to provide
 location and other metadata, _e.g._ elevation, station names, WMO codes, etc. to
@@ -285,8 +285,7 @@ The database file `isd_history.rda` can be located on your local system by using
 the following command, `paste0(.libPaths(), "/GSODR/extdata")[1]`, unless you have specified another location for library installations and
 installed _GSODR_ there, in which case it would still be in `GSODR/extdata`.
 
-To update _GSODR's_ internal database of station locations simply use `update_stations()`, which will update the internal station database according
-to the latest data available from the NCEI.
+To update _GSODR's_ internal database of station locations simply use `update_station_list()`, which will update the internal station database according to the latest data available from the NCEI.
 
 # Using get_inventory()
 

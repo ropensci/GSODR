@@ -334,12 +334,12 @@ x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reformat_
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reformat_GSOD.html">reformat_GSOD</a></span>(<span class="dt">dsn =</span> <span class="st">"~/GSOD/gsod_1960"</span>)</code></pre></div>
 </div>
 </div>
-<div id="using-update_stations" class="section level1">
+<div id="using-update_station_list" class="section level1">
 <h1 class="hasAnchor">
-<a href="#using-update_stations" class="anchor"></a>Using update_stations()</h1>
+<a href="#using-update_station_list" class="anchor"></a>Using update_station_list()</h1>
 <p><em>GSODR</em> uses internal databases of station data from the NCEI to provide location and other metadata, <em>e.g.</em> elevation, station names, WMO codes, etc. to make the process of querying for weather data faster. This database is created and packaged with <em>GSODR</em> for distribution and is updated with new releases. Users have the option of updating these databases after installing <em>GSODR</em>. While this option gives the users the ability to keep the database up-to-date and gives <em>GSODR’s</em> authors flexibility in maintaining it, this also means that reproducibility may be affected since the same version of <em>GSODR</em> may have different databases on different machines. If reproducibility is necessary, care should be taken to ensure that the version of the databases is the same across different machines.</p>
 <p>The database file <code>isd_history.rda</code> can be located on your local system by using the following command, <code>paste0(.libPaths(), "/GSODR/extdata")[1]</code>, unless you have specified another location for library installations and installed <em>GSODR</em> there, in which case it would still be in <code>GSODR/extdata</code>.</p>
-<p>To update <em>GSODR’s</em> internal database of station locations simply use <code>update_stations()</code>, which will update the internal station database according to the latest data available from the NCEI.</p>
+<p>To update <em>GSODR’s</em> internal database of station locations simply use <code><a href="../reference/update_station_list.html">update_station_list()</a></code>, which will update the internal station database according to the latest data available from the NCEI.</p>
 </div>
 <div id="using-get_inventory" class="section level1">
 <h1 class="hasAnchor">
@@ -516,7 +516,7 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
       <li><a href="#reformat-all-local-files-found-in-directory">Reformat all local files found in directory</a></li>
       </ul>
 </li>
-      <li><a href="#using-update_stations">Using update_stations()</a></li>
+      <li><a href="#using-update_station_list">Using update_station_list()</a></li>
       <li><a href="#using-get_inventory">Using get_inventory()</a></li>
       <li><a href="#additional-climate-data-availability">Additional Climate Data Availability</a></li>
       <li>
