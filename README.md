@@ -151,7 +151,7 @@ Meta
 
 -   License: MIT
 
--   To cite *GSODR*, please use: &gt; Adam H Sparks, Tomislav Hengl and Andrew Nelson (2017). GSODR: Global Summary Daily Weather Data in R. *The Journal of Open Source Software*, **2(10)**. DOI: 10.21105/joss.00177.
+-   To cite *GSODR*, please use: Adam H Sparks, Tomislav Hengl and Andrew Nelson (2017). GSODR: Global Summary Daily Weather Data in R. *The Journal of Open Source Software*, **2(10)**. DOI: 10.21105/joss.00177.
 
 -   Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
 
