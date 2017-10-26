@@ -382,7 +382,7 @@
   "contIntegration": "https://travis-ci.org/ropensci/GSODR",
   "releaseNotes": "https://github.com/ropensci/GSODR.git/blob/devel/NEWS.md",
   "readme": "https://github.com/ropensci/GSODR.git/blob/devel/README.md",
-  "fileSize": "1496.98KB",
+  "fileSize": "1082.229KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -432,7 +432,8 @@
       "@type": "Person",
       "givenName": "Bob",
       "familyName": "Rudis",
-      "email": "bob@rud.is"
+      "email": "bob@rud.is",
+      "@id": "Wrote functionality to interface with NCEI server and cache files\n    for download, https://orcid.org/0000-0001-5670-2640"
     }
   ]
 }
