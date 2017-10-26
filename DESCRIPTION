@@ -11,12 +11,12 @@ Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     person("Andrew", "Nelson", role = "aut",
     email = "dr.andy.nelson@gmail.com",
     comment = "https://orcid.org/0000-0002-7249-3778"),
-    person("Hugh", "Parsonage", role = "ctb",
+    person("Hugh", "Parsonage", role = c("cph", "ctb"),
     email = "hugh.parsonage@gmail.com",
     comment = "Wrote internal function to calcuate distances for 
     nearest_stations() and map code for station location figure, both taken from
     our bomrang package, https://orcid.org/0000-0003-4055-0835"),
-    person("Bob", "Rudis", email = "bob@rud.is", role = "ctb",
+    person("Bob", "Rudis", email = "bob@rud.is", role = c("cph", "ctb"),
     comment = "Wrote functionality to interface with NCEI server and cache files
     for download, https://orcid.org/0000-0001-5670-2640"))
 URL: https://github.com/ropensci/GSODR
