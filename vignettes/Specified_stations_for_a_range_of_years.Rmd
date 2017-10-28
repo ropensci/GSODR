@@ -202,6 +202,11 @@ loop_data <- reformat_GSOD(file_list = local_files)
 readr::write_csv(loop_data, file = "Loop_Survey_Weather_1960-2015", path = "./")
 ```
 
+```{r cleanup GADM files, eval=TRUE, echo=FALSE, message = FALSE}
+unlink("GADM_2.8_PHL_adm0.rds")
+unlink("GADM_2.8_PHL_adm1.rds")
+```
+
 # Notes
 
 ## Sources
