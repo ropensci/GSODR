@@ -1,5 +1,11 @@
 # GSODR 1.1.0.9000
 
+## Minor changes
+
+- Comment for Bob and Hugh in DESCRIPTION now only ORCID url
+
+- dpyr version set to >= 0.7.0 not 0.7 as before
+
 # GSODR 1.1.0
 
 ## Bug fixes
