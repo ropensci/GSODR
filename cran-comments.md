@@ -8,9 +8,9 @@
 
 0 errors | 0 warnings | 1 note
 
-## New major release
+## New minor release
 
-This is a new major release with reduced dependencies and new functionality
+This is a new minor release with reduced dependencies and new functionality
 
 ## Bug fixes
 
