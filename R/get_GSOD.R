@@ -1,5 +1,5 @@
 
-#' Download, clean, reformat generate new elements and return a tidy data.frame of GSOD weather data
+#' Download, Clean, Reformat Generate New Elements and Return a Tidy Data Frame of GSOD Weather Data
 #'
 #'This function automates downloading, cleaning, reformatting of data from
 #'the Global Surface Summary of the Day (GSOD) data provided by the US National

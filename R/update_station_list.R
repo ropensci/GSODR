@@ -1,5 +1,5 @@
 
-#' Download the latest station list from the NCEI server and update internal database
+#' Download the Latest Station List Information and Update GSODR's Internal Database
 #'
 #' This function downloads the latest station list (isd-history.csv) from the
 #' NCEI FTP server and updates the data distributed with \code{GSODR} so that

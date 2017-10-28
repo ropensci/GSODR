@@ -1,5 +1,5 @@
 
-#' GSODR: Global Surface Summary Daily Weather Data in R.
+#' GSODR: Global Surface Summary of the Day (GSOD) Weather Data from R
 #'
 #'Provides automated downloading, parsing, cleaning, unit conversion and
 #'formatting of Global Surface Summary of the Day (GSOD) weather data from
@@ -37,22 +37,25 @@
 #'
 #' \strong{GSODR functions:}
 #'
-#' \code{\link{get_GSOD}} Fetch, clean and reformat data from NCEI GSOD
-#' database
+#' \code{\link{get_GSOD}} Download, Clean, Reformat Generate New Elements and
+#' Return a Tidy Data Frame of GSOD Weather Data
 #'
-#' \code{\link{reformat_GSOD}} Clean and reformat local files from NCEI
-#' GSOD database
+#' \code{\link{reformat_GSOD}} Clean, Reformat Generate New Elements and Return
+#' a Tidy Data Frame of GSOD Weather Data from Local Disk
 #'
-#' \code{\link{nearest_stations}} Find stations within a given radius
-#' expressed in kilometres for a given point using Latitude and Longitude
+#' \code{\link{nearest_stations}} Find Nearest GSOD Stations to Specified
+#' a Latitude and Longitude
 #'
-#' \code{\link{update_station_list}} Download the latest station list from the
-#' NCEI FTP server updates the package's internal database of stations and their
-#' metadata.
+#' \code{\link{update_station_list}} Download the Latest Station List
+#' Information and Update GSODR's Internal Database
+#'
+#' \code{\link{get_inventory}} Download and return a tidy data frame of GSOD
+#' weather station data inventories
 #'
 #' \strong{Useful links:}
 #' \itemize{
-#' \item{\url{https://github.com/ropensci/GSODR}}
+#' \item{Static documentation at \url{https://ropensci.github.io/GSODR/}}
+#' \item{Development repository at \url{https://github.com/ropensci/GSODR}}
 #' \item{Report bugs at \url{https://github.com/ropensci/GSODR/issues}}
 #' }
 #'

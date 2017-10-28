@@ -2,7 +2,7 @@
 % Please edit documentation in R/reformat_GSOD.R
 \name{reformat_GSOD}
 \alias{reformat_GSOD}
-\title{Clean, reformat and generate new variables from GSOD weather data}
+\title{Clean, Reformat Generate New Elements and Return a Tidy Data Frame of GSOD Weather Data from Local Disk}
 \usage{
 reformat_GSOD(dsn = NULL, file_list = NULL)
 }

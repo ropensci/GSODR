@@ -2,7 +2,7 @@
 % Please edit documentation in R/update_station_list.R
 \name{update_station_list}
 \alias{update_station_list}
-\title{Download the latest station list from the NCEI server and update internal database}
+\title{Download the Latest Station List Information and Update GSODR's Internal Database}
 \usage{
 update_station_list()
 }

@@ -1,5 +1,5 @@
 
-#' Download and return a tidy data frame of GSOD weather station data inventories
+#' Download and Return a Tidy Data Frame of GSOD Weather Station Data Inventories
 #'
 #' The NCEI maintains a document,
 #' <ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt>, which shows the

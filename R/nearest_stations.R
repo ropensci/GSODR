@@ -1,5 +1,5 @@
 
-#' Find nearest GSOD stations to specified latitude and longitude
+#' Find Nearest GSOD Stations to a Specified Latitude and Longitude
 #'
 #'Given a latitude and longitude value entered as decimal degrees (DD),
 #'this function returns a list (atomic vector) of STNID values, which can be

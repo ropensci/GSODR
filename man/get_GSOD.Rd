@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_GSOD.R
 \name{get_GSOD}
 \alias{get_GSOD}
-\title{Download, clean, reformat generate new elements and return a tidy data.frame of GSOD weather data}
+\title{Download, Clean, Reformat Generate New Elements and Return a Tidy Data Frame of GSOD Weather Data}
 \usage{
 get_GSOD(years = NULL, station = NULL, country = NULL, dsn = NULL,
   filename = NULL, max_missing = NULL, agroclimatology = FALSE,

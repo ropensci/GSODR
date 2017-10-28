@@ -1,5 +1,5 @@
 
-#' Clean, reformat and generate new variables from GSOD weather data
+#' Clean, Reformat Generate New Elements and Return a Tidy Data Frame of GSOD Weather Data from Local Disk
 #'
 #'This function automates cleaning and reformatting of GSOD,
 #'\url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod},
