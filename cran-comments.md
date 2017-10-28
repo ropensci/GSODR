@@ -1,17 +1,12 @@
-
 ## Test environments  
-
-- macOS 10.12.6 (local install), R version 3.4.2 (2017-09-28)
-
-- Ubuntu 14.04.5 LTS (on travis-ci), R version 3.4.2 (2017-09-28)
-
-- Windows (on win-builder), R version 3.4.2 (2017-09-28)
-
-- Windows (on win-builder), R Under development (unstable) (2017-09-12 r73242)
+* local OS X install, R 3.4.2 (2017-09-28)
+* ubuntu 12.04 (on travis-ci), R 3.4.2 (2017-09-28)
+* win-builder R Under development (unstable) (2017-09-12 r73242)
+* win-builder R version 3.4.2 (2017-09-28)
 
 ## R CMD check results
 
-There were no ERRORs or WARNINGs
+0 errors | 0 warnings | 1 note
 
 ## New major release
 
