@@ -18,6 +18,10 @@
                 "without restriction. The non-U.S. data cannot be\n",
                 "redistributed for commercial purposes. Re-distribution of\n",
                 "these data by others must provide this same notification.\n",
-                "WMO Resolution 40. NOAA Policy'\n")
+                "WMO Resolution 40. NOAA Policy'\n",
+                "\n",
+                "GSODR does not redistibute any weather data itself. It only\n",
+                "provides an interface for R users to download these data,\n",
+                "but it does redistribute station metadata in the package.\n")
   packageStartupMessage(msg)
 }
