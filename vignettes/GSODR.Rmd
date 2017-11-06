@@ -494,7 +494,7 @@ no/not reported) for the occurrence during the day;
 
 ## Appendix 2: Map of GSOD Station Locations
 
-```{r, eval=TRUE, message = FALSE, echo = FALSE, warning=FALSE, fig.width = 7, fig.height = 7, fig.align = "center"}
+```{r, eval=TRUE, message = FALSE, echo = FALSE, warning=FALSE, fig.width = 7, fig.height = 5, fig.align = "center"}
 if (requireNamespace("ggplot2", quietly = TRUE) &&
     requireNamespace("ggthemes", quietly = TRUE) &&
     requireNamespace("maps", quietly = TRUE) &&
