@@ -4,10 +4,12 @@
 
 - Comment for Bob and Hugh in DESCRIPTION now only ORCID url
 
-- dpyr version set to >= 0.7.0 not 0.7 as before
+- dplyr version set to >= 0.7.0 not 0.7 as before
 
-- Startup message statement is more clear in relation to WMO resolution 40, that
+- Start-up message statement is more clear in relation to WMO resolution 40, that
 GSODR does not redistribute any weather data itself
+
+- Remove unnecessary function, .onLoad(), from zzz.R
 
 # GSODR 1.1.0
 
