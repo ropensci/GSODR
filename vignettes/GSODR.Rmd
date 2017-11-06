@@ -308,8 +308,7 @@ subset(inventory, STNID == "955510-99999")
 
 Additional climate data,
 [_GSODRdata_](https://github.com/adamhsparks/GSODRdata), formatted for use with
-GSOD data provided by _GSODR_ are available as an R package install able through
-GitHub due to the package size, 5.1Mb, being too large for CRAN.
+GSOD data provided by _GSODR_ are available as an R package, which can only be installed through GitHub due to the package size, 5.1Mb, being too large for CRAN.
 
 ```{r, eval=FALSE}
 #install.packages("devtools")
