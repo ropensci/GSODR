@@ -6,10 +6,12 @@
 
 - dplyr version set to >= 0.7.0 not 0.7 as before
 
-- Start-up message statement is more clear in relation to WMO resolution 40, that
-GSODR does not redistribute any weather data itself
+- Start-up message statement is more clear in relation to WMO resolution 40,
+that GSODR does not redistribute any weather data itself
 
 - Remove unnecessary function, .onLoad(), from zzz.R
+
+- Function titles in documentation now in title case
 
 # GSODR 1.1.0
 

@@ -81,7 +81,7 @@
       <h1>GSODR use case: Specified years/stations vignette</h1>
                         <h4 class="author">Adam H Sparks</h4>
             
-            <h4 class="date">2017-10-28</h4>
+            <h4 class="date">2017-11-06</h4>
           </div>
 
     
@@ -119,8 +119,13 @@ RP1 &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="k
 <p>Next, create a map inset showing where the Central Luzon Loop survey takes place.</p>
 <p>First we’ll use <code>gSimplify()</code> from <em>rgeos</em> to simplify the map of the Philippines to make the map generation in the next few steps quicker.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">RP0 &lt;-<span class="st"> </span>rgeos<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/rgeos/topics/topo-unary-gSimplify">gSimplify</a></span>(RP0, <span class="dt">tol =</span> <span class="fl">0.05</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
-<span class="kw">library</span>(grid)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)</code></pre></div>
+<pre><code>## 
+## Attaching package: 'ggplot2'</code></pre>
+<pre><code>## The following object is masked from 'package:raster':
+## 
+##     calc</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(grid)
 <span class="kw">library</span>(gridExtra)
 
 CL_names &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">coordinates</span>(Central_Luzon)) <span class="co"># get center coordinates of provinces in Central Luzon</span>
@@ -160,7 +165,7 @@ p2 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumenta
         <span class="dt">axis.ticks =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/element">element_blank</a></span>(),
         <span class="dt">axis.title.x =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/element">element_blank</a></span>(),
         <span class="dt">axis.title.y =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/element">element_blank</a></span>(),
-        <span class="dt">plot.margin =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/reexports">unit</a></span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span> ,<span class="dv">0</span>), <span class="st">"mm"</span>))
+        <span class="dt">plot.margin =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/grid/topics/unit">unit</a></span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span> ,<span class="dv">0</span>), <span class="st">"mm"</span>))
 
 <span class="kw"><a href="http://www.rdocumentation.org/packages/grid/topics/grid.newpage">grid.newpage</a></span>()
 v1 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/grid/topics/viewport">viewport</a></span>(<span class="dt">width =</span> <span class="dv">1</span>, <span class="dt">height =</span> <span class="dv">1</span>, <span class="dt">x =</span> <span class="fl">0.5</span>, <span class="dt">y =</span> <span class="fl">0.5</span>) <span class="co"># plot area for the main map</span>
@@ -223,10 +228,10 @@ loop_stations &lt;-<span class="st"> </span>loop_stations[loop_stations<span cla
 <pre><code>## # A tibble: 4 x 9
 ##     USAF  WBAN         STN_NAME    LAT     LON ELEV_M    BEGIN      END
 ##    &lt;chr&gt; &lt;chr&gt;            &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-## 1 983240 99999 IBA/LUZON ISLAND 15.333 119.967    5.0 19490104 20171019
-## 2 983250 99999          DAGUPAN 16.083 120.350    2.0 19450119 20171019
-## 3 983270 99999       CLARK INTL 15.186 120.560  147.5 19450214 20171019
-## 4 983280 99999           BAGUIO 16.375 120.620 1295.7 19490101 20171019
+## 1 983240 99999 IBA/LUZON ISLAND 15.333 119.967    5.0 19490104 20171103
+## 2 983250 99999          DAGUPAN 16.083 120.350    2.0 19450119 20171103
+## 3 983270 99999       CLARK INTL 15.186 120.560  147.5 19450214 20171103
+## 4 983280 99999           BAGUIO 16.375 120.620 1295.7 19490101 20171103
 ## # ... with 1 more variables: STNID &lt;chr&gt;</code></pre>
 <p>These are all of the stations that are available within 100km of the centroid of this area and the years for which data are available.</p>
 </div>
