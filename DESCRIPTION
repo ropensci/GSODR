@@ -35,7 +35,7 @@ Description: Provides automated downloading, parsing, cleaning, unit conversion
     GeoPackage (GPKG) file.  Additional data are included with this R package: a
     list of elevation values for stations between -60 and 60 degrees latitude 
     derived from the Shuttle Radar Topography Measuring Mission (SRTM).  For
-    information on the GSOD data from NCEI, please see the  GSOD readme.txt file
+    information on the GSOD data from NCEI, please see the GSOD readme.txt file
     available from, <http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt>.
 Depends:
     R (>= 3.2.0)
