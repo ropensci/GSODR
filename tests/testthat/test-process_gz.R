@@ -1,9 +1,9 @@
 
 context("get_GSOD")
-# Check that .process_gz works properly and returns a data table.
+# Check that .process_gz works properly and returns a tibble
 test_that(
   ".download_files properly works, subsetting for country and
-  agroclimatology works and .process_gz returns a data table",
+  agroclimatology works and .process_gz returns a tibble",
   {
     skip_on_cran()
     skip_on_appveyor() # appveyor will not properly untar the file
@@ -45,7 +45,7 @@ test_that(
                                     years)
     expect_length(RP_list, 53)
 
-    # Check that .process_gz returns a properly formated data table---
+    # Check that .process_gz returns a properly formated tibble---
     gz_file <- GSOD_list[[10]]
     gz_out <- .process_gz(gz_file, stations)
 
