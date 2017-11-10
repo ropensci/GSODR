@@ -105,7 +105,7 @@ stations of interest.
 There are missing stations in this query. Not all that are listed and queried
 actually have files on the server.
 
-```{r, eval=TRUE}
+```{r, eval=FALSE}
 tbar_stations <- nearest_stations(LAT = -27.5598,
                                   LON = 151.9507,
                                   distance = 50)
@@ -116,7 +116,7 @@ tbar <- get_GSOD(years = 2010, station = tbar_stations)
 If you wished to drop the stations, 949999-00170 and 949999-00183 from the
 query, you could do this.
 
-```{r, eval=TRUE, message=FALSE}
+```{r, eval=FALSE, message=FALSE}
 remove <- c("949999-00170", "949999-00183")
 
 tbar_stations <- tbar_stations[!tbar_stations %in% remove]
@@ -224,22 +224,6 @@ This option is much faster to load since it does not load the geometry.
 AUS_sqlite <- tbl(src_sqlite(path.expand("~/AUS.gpkg")), "GSOD")
 class(AUS_sqlite)
 #> [1] "tbl_dbi"  "tbl_sql"  "tbl_lazy" "tbl"
-
-print(AUS_sqlite, n = 5)
-#> Source:   table<GSOD> [?? x 48]
-#> Database: sqlite 3.19.3 [/Users/U8004755/AUS.gpkg]
-#>    fid         geom   USAF  WBAN        STNID  STN_NAME  CTRY STATE  CALL ELEV_M ELEV_M_SRTM_90m    BEGIN      END YEARMODA
-#>  <int>       <blob>  <chr> <chr>        <chr>     <chr> <chr> <chr> <chr>  <dbl>           <dbl>    <dbl>    <dbl>    <chr>
-#> 1     1 <blob[29 B]> 941000 99999 941000-99999 KALUMBURU    AS  <NA>  <NA>     24              17 20010912 20170916 20150101
-#> 2     2 <blob[29 B]> 941000 99999 941000-99999 KALUMBURU    AS  <NA>  <NA>     24              17 20010912 20170916 20150102
-#> 3     3 <blob[29 B]> 941000 99999 941000-99999 KALUMBURU    AS  <NA>  <NA>     24              17 20010912 20170916 20150103
-#> 4      4 <blob[29 B]> 941000 99999 941000-99999 KALUMBURU    AS  <NA>  <NA>     24              17 20010912 20170916 20150104
-#> 5     5 <blob[29 B]> 941000 99999 941000-99999 KALUMBURU    AS  <NA>  <NA>     24              17 20010912 20170916 20150105
-#> ... with more rows, and 34 more variables: YEAR <chr>, MONTH <chr>, DAY <chr>, YDAY <dbl>, TEMP <dbl>, TEMP_CNT <int>,
-#>   DEWP <dbl>, DEWP_CNT <int>, SLP <dbl>, SLP_CNT <int>, STP <dbl>, STP_CNT <int>, VISIB <dbl>, VISIB_CNT <int>, WDSP <dbl>,
-#>   WDSP_CNT <int>, MXSPD <dbl>, GUST <dbl>, MAX <dbl>, MAX_FLAG <chr>, MIN <dbl>, MIN_FLAG <chr>, PRCP <dbl>, PRCP_FLAG <chr>,
-#>   SNDP <dbl>, I_FOG <int>, I_RAIN_DRIZZLE <int>, I_SNOW_ICE <int>, I_HAIL <int>, I_THUNDER <int>, I_TORNADO_FUNNEL <int>,
-#>   EA <dbl>, ES <dbl>, RH <dbl>
 ```
 
 # Using reformat_GSOD()
@@ -296,7 +280,7 @@ through to current.
 Following is an example of how to retreive the inventory and check a station in
 Toowoomba, Queensland, Australia, which was used in an earlier example.
 
-```{r, eval=TRUE}
+```{r, eval=FALSE}
 inventory <- get_inventory()
 
 inventory
@@ -492,7 +476,7 @@ no/not reported) for the occurrence during the day;
 
 - **RH** - Mean daily relative humidity.
 
-## Appendix 2: Map of GSOD Station Locations
+## Appendix 2: Map of Current GSOD Station Locations
 
 ```{r, eval=TRUE, message = FALSE, echo = FALSE, warning=FALSE, fig.width = 7, fig.height = 5, fig.align = "center"}
 if (requireNamespace("ggplot2", quietly = TRUE) &&
