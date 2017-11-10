@@ -45,7 +45,7 @@ test_that(
                                     years)
     expect_length(RP_list, 53)
 
-    # Check that .process_gz returns a properly formated tibble---
+    # Check that .process_gz returns a properly formatted tibble---
     gz_file <- GSOD_list[[10]]
     gz_out <- .process_gz(gz_file, stations)
 
