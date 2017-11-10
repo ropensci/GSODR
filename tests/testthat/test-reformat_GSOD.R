@@ -5,6 +5,12 @@ file.remove(file.path(tempdir(), list.files(tempdir(), pattern = ".op.gz$")))
 test_that("reformat_GSOD file_list parameter reformats data properly", {
   skip_on_cran()
 
+  do.call(file.remove, list(list.files(
+    tempdir(),
+    pattern = ".gz$",
+    full.names = TRUE
+  )))
+
   ftp_base <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/1960/"
   test_files <-
     c("066000-99999-1960.op.gz", "066200-99999-1960.op.gz")
@@ -39,6 +45,5 @@ test_that("reformat_GSOD file_list parameter reformats data properly", {
   expect_is(x, "data.frame")
 
   unlink(destinations)
-
 
 })
