@@ -35,7 +35,7 @@ test_that(
                                        stations,
                                        cache_dir,
                                        years)
-    expect_length(agro_list, 11302)
+    expect_length(agro_list, 7556)
 
     RP_list <- .subset_country_list(country,
                                     country_list,
@@ -43,7 +43,7 @@ test_that(
                                     stations,
                                     cache_dir,
                                     years)
-    expect_length(RP_list, 53)
+    expect_length(RP_list, 54)
 
     # Check that .process_gz returns a properly formatted tibble---
     gz_file <- GSOD_list[[10]]
