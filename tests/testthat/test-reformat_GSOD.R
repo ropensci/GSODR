@@ -1,5 +1,4 @@
 
-
 # Check that reformat_GSOD functions properly ----------------------------------
 context("reformat_GSOD")
 file.remove(file.path(tempdir(), list.files(tempdir(), pattern = ".op.gz$")))

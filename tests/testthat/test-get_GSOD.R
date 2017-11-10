@@ -96,7 +96,8 @@ test_that("If dsn is not specified, defaults to working directory", {
 
 # Check missing days in non-leap years -----------------------------------------
 test_that("missing days check allows stations with permissible days missing,
-          non-leap year", {
+          non-leap year",
+          {
             max_missing <- 5
             td <- tempdir()
             just_right_2015 <-
@@ -130,7 +131,8 @@ test_that("missing days check allows stations with permissible days missing,
 
 # Check missing days in leap years ---------------------------------------------
 test_that("missing days check allows stations with permissible days missing,
-          leap year", {
+          leap year",
+          {
             max_missing <- 5
             td <- tempdir()
             just_right_2016 <-
@@ -192,7 +194,8 @@ test_that("Check validate country returns a two letter code", {
 
 # Check validate country returns an error on invalid entry----------------------
 test_that("Check validate country returns an error on invalid entry when
-          mispelled", {
+          mispelled",
+          {
             country_list <- NULL
             load(system.file("extdata", "country_list.rda", package = "GSODR"))
             country <- "Philipines"
@@ -201,7 +204,8 @@ test_that("Check validate country returns an error on invalid entry when
 
 test_that(
   "Check validate country returns an error on invalid entry when two
-  two characters are used that are not in the list", {
+  two characters are used that are not in the list",
+  {
     country_list <- NULL
     load(system.file("extdata", "country_list.rda", package = "GSODR"))
     country <- "RP"
@@ -211,7 +215,8 @@ test_that(
 
 test_that(
   "Check validate country returns an error on invalid entry when two
-  three characters are used that are not in the list", {
+  three characters are used that are not in the list",
+  {
     country_list <- NULL
     load(system.file("extdata", "country_list.rda", package = "GSODR"))
     country <- "RPS"
