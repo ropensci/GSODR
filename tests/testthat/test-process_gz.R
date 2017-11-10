@@ -12,7 +12,7 @@ test_that(
       pattern = ".gz$",
       full.names = TRUE
     )))
-    years <- 2015
+    years <- 1982
     agroclimatology <- TRUE
     country <- "RP"
     station <- NULL
