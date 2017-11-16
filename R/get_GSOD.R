@@ -187,7 +187,6 @@ get_GSOD <- function(years = NULL,
   }
   # Validate stations for missing days -----------------------------------------
   if (!is.null(max_missing)) {
-    message("\nChecking stations against max_missing value.\n")
     GSOD_list <-
       .validate_missing_days(max_missing, GSOD_list)
   }
