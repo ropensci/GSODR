@@ -81,7 +81,7 @@
       <h1>GSODR</h1>
                         <h4 class="author">Adam H Sparks</h4>
             
-            <h4 class="date">2017-11-16</h4>
+            <h4 class="date">2017-11-17</h4>
           </div>
 
     
@@ -112,7 +112,11 @@
 ## without restriction. The non-U.S. data cannot be
 ## redistributed for commercial purposes. Re-distribution of
 ## these data by others must provide this same notification.
-## WMO Resolution 40. NOAA Policy'</code></pre>
+## WMO Resolution 40. NOAA Policy'
+## 
+## GSODR does not redistibute any weather data itself. It only
+## provides an interface for R users to download these data,
+## but it does redistribute station metadata in the package.</code></pre>
 <pre class="sourceCode r" id="cb3"><code class="sourceCode r"><div class="sourceLine" id="cb3-1" data-line-number="1">
 <span class="kw">library</span>(dplyr)</div></code></pre>
 <pre><code>## 
@@ -200,137 +204,110 @@
 <div class="sourceLine" id="cb16-3" data-line-number="3">                                  <span class="dt">distance =</span> <span class="dv">50</span>)</div>
 <div class="sourceLine" id="cb16-4" data-line-number="4"></div>
 <div class="sourceLine" id="cb16-5" data-line-number="5">tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> tbar_stations)</div></code></pre>
-<pre><code>## 
-## This station, 949999-00170, only provides data for years 1971 to 1984.</code></pre>
-<pre><code>## 
-## This station, 949999-00183, only provides data for years 1983 to 1984.</code></pre>
-<pre><code>## 
-## Checking requested station file for availability on server</code></pre>
-<pre><code>## 
-## Downloading individual station files.</code></pre>
 <p>If you wished to drop the stations, 949999-00170 and 949999-00183 from the query, you could do this.</p>
-<pre class="sourceCode r" id="cb21"><code class="sourceCode r"><div class="sourceLine" id="cb21-1" data-line-number="1">remove &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"949999-00170"</span>, <span class="st">"949999-00183"</span>)</div>
-<div class="sourceLine" id="cb21-2" data-line-number="2"></div>
-<div class="sourceLine" id="cb21-3" data-line-number="3">tbar_stations &lt;-<span class="st"> </span>tbar_stations[<span class="op">!</span>tbar_stations <span class="op">%in%</span><span class="st"> </span>remove]</div>
-<div class="sourceLine" id="cb21-4" data-line-number="4"></div>
-<div class="sourceLine" id="cb21-5" data-line-number="5">tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>,</div>
-<div class="sourceLine" id="cb21-6" data-line-number="6">                 <span class="dt">station =</span> tbar_stations,</div>
-<div class="sourceLine" id="cb21-7" data-line-number="7">                 <span class="dt">dsn =</span> <span class="st">"~/"</span>)</div></code></pre>
+<pre class="sourceCode r" id="cb17"><code class="sourceCode r"><div class="sourceLine" id="cb17-1" data-line-number="1">remove &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"949999-00170"</span>, <span class="st">"949999-00183"</span>)</div>
+<div class="sourceLine" id="cb17-2" data-line-number="2"></div>
+<div class="sourceLine" id="cb17-3" data-line-number="3">tbar_stations &lt;-<span class="st"> </span>tbar_stations[<span class="op">!</span>tbar_stations <span class="op">%in%</span><span class="st"> </span>remove]</div>
+<div class="sourceLine" id="cb17-4" data-line-number="4"></div>
+<div class="sourceLine" id="cb17-5" data-line-number="5">tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>,</div>
+<div class="sourceLine" id="cb17-6" data-line-number="6">                 <span class="dt">station =</span> tbar_stations,</div>
+<div class="sourceLine" id="cb17-7" data-line-number="7">                 <span class="dt">dsn =</span> <span class="st">"~/"</span>)</div></code></pre>
 </section><section id="plot-maximum-and-miniumum-temperature-values" class="level2"><h2>Plot Maximum and Miniumum Temperature Values</h2>
 <p>Using the first data downloaded for a single station, 955510-99999, plot the temperature for 2010 using <code>read_csv()</code> from Hadley’s <a href="https://CRAN.R-project.org/package=readr"><code>readr</code></a> package.</p>
-<pre class="sourceCode r" id="cb22"><code class="sourceCode r"><div class="sourceLine" id="cb22-1" data-line-number="1">
+<pre class="sourceCode r" id="cb18"><code class="sourceCode r"><div class="sourceLine" id="cb18-1" data-line-number="1">
 <span class="kw">library</span>(ggplot2)</div>
-<div class="sourceLine" id="cb22-2" data-line-number="2">
+<div class="sourceLine" id="cb18-2" data-line-number="2">
 <span class="kw">library</span>(lubridate)</div></code></pre>
 <pre><code>## 
 ## Attaching package: 'lubridate'</code></pre>
 <pre><code>## The following object is masked from 'package:base':
 ## 
 ##     date</code></pre>
-<pre class="sourceCode r" id="cb25"><code class="sourceCode r"><div class="sourceLine" id="cb25-1" data-line-number="1">
+<pre class="sourceCode r" id="cb21"><code class="sourceCode r"><div class="sourceLine" id="cb21-1" data-line-number="1">
 <span class="kw">library</span>(tidyr)</div>
-<div class="sourceLine" id="cb25-2" data-line-number="2"></div>
-<div class="sourceLine" id="cb25-3" data-line-number="3"><span class="co"># Create a dataframe of just the date and temperature values that we want to</span></div>
-<div class="sourceLine" id="cb25-4" data-line-number="4"><span class="co"># plot</span></div>
-<div class="sourceLine" id="cb25-5" data-line-number="5">tbar_temps &lt;-<span class="st"> </span>tbar[, <span class="kw">c</span>(<span class="st">"YEARMODA"</span>, <span class="st">"TEMP"</span>, <span class="st">"MAX"</span>, <span class="st">"MIN"</span>)]</div>
-<div class="sourceLine" id="cb25-6" data-line-number="6"></div>
-<div class="sourceLine" id="cb25-7" data-line-number="7"><span class="co"># Gather the data from wide to long</span></div>
-<div class="sourceLine" id="cb25-8" data-line-number="8">tbar_temps &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/gather">gather</a></span>(tbar_temps, Measurement, <span class="dt">gather_cols =</span> TEMP<span class="op">:</span>MIN)</div>
-<div class="sourceLine" id="cb25-9" data-line-number="9"></div>
-<div class="sourceLine" id="cb25-10" data-line-number="10">
+<div class="sourceLine" id="cb21-2" data-line-number="2"></div>
+<div class="sourceLine" id="cb21-3" data-line-number="3"><span class="co"># Create a dataframe of just the date and temperature values that we want to</span></div>
+<div class="sourceLine" id="cb21-4" data-line-number="4"><span class="co"># plot</span></div>
+<div class="sourceLine" id="cb21-5" data-line-number="5">tbar_temps &lt;-<span class="st"> </span>tbar[, <span class="kw">c</span>(<span class="st">"YEARMODA"</span>, <span class="st">"TEMP"</span>, <span class="st">"MAX"</span>, <span class="st">"MIN"</span>)]</div>
+<div class="sourceLine" id="cb21-6" data-line-number="6"></div>
+<div class="sourceLine" id="cb21-7" data-line-number="7"><span class="co"># Gather the data from wide to long</span></div>
+<div class="sourceLine" id="cb21-8" data-line-number="8">tbar_temps &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/gather">gather</a></span>(tbar_temps, Measurement, <span class="dt">gather_cols =</span> TEMP<span class="op">:</span>MIN)</div>
+<div class="sourceLine" id="cb21-9" data-line-number="9"></div>
+<div class="sourceLine" id="cb21-10" data-line-number="10">
 <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(<span class="dt">data =</span> tbar_temps, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/lubridate/topics/ymd">ymd</a></span>(YEARMODA), <span class="dt">y =</span> value,</div>
-<div class="sourceLine" id="cb25-11" data-line-number="11">                              <span class="dt">colour =</span> Measurement)) <span class="op">+</span>
+<div class="sourceLine" id="cb21-11" data-line-number="11">                              <span class="dt">colour =</span> Measurement)) <span class="op">+</span>
 </div>
-<div class="sourceLine" id="cb25-12" data-line-number="12">
+<div class="sourceLine" id="cb21-12" data-line-number="12">
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() <span class="op">+</span>
 </div>
-<div class="sourceLine" id="cb25-13" data-line-number="13">
+<div class="sourceLine" id="cb21-13" data-line-number="13">
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_brewer">scale_color_brewer</a></span>(<span class="dt">type =</span> <span class="st">"qual"</span>, <span class="dt">na.value =</span> <span class="st">"black"</span>) <span class="op">+</span>
 </div>
-<div class="sourceLine" id="cb25-14" data-line-number="14">
+<div class="sourceLine" id="cb21-14" data-line-number="14">
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>(<span class="dt">name =</span> <span class="st">"Temperature"</span>) <span class="op">+</span>
 </div>
-<div class="sourceLine" id="cb25-15" data-line-number="15">
+<div class="sourceLine" id="cb21-15" data-line-number="15">
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_date">scale_x_date</a></span>(<span class="dt">name =</span> <span class="st">"Date"</span>) <span class="op">+</span>
 </div>
-<div class="sourceLine" id="cb25-16" data-line-number="16">
+<div class="sourceLine" id="cb21-16" data-line-number="16">
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_bw</a></span>()</div></code></pre>
 <p><img src="GSODR_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;"></p>
 </section><section id="creating-spatial-files" class="level2"><h2>Creating Spatial Files</h2>
 <p>Because the stations provide geospatial location information, it is possible to create a spatial file. <a href="http://www.geopackage.org">GeoPackage files</a> are a open, standards-based, platform-independent, portable, self-describing compact format for transferring geospatial information, which handle vector files much like shapefiles do, but eliminate many of the issues that shapefiles have with field names and the number of files. The <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> function can create a GeoPackage file, which can be used with a GIS for further analysis and mapping with other spatial objects.</p>
 <p>After getting weather stations for Australia and creating a GeoPackage file, <em>rgdal</em> can import the data into R again in a spatial format.</p>
-<pre class="sourceCode r" id="cb26"><code class="sourceCode r"><div class="sourceLine" id="cb26-1" data-line-number="1">
+<pre class="sourceCode r" id="cb22"><code class="sourceCode r"><div class="sourceLine" id="cb22-1" data-line-number="1">
 <span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2015</span>, <span class="dt">country =</span> <span class="st">"Australia"</span>, <span class="dt">dsn =</span> <span class="st">"~/"</span>, <span class="dt">filename =</span> <span class="st">"AUS"</span>,</div>
-<div class="sourceLine" id="cb26-2" data-line-number="2">         <span class="dt">CSV =</span> <span class="ot">FALSE</span>, <span class="dt">GPKG =</span> <span class="ot">TRUE</span>)</div>
-<div class="sourceLine" id="cb26-3" data-line-number="3"><span class="co">#&gt; trying URL 'ftp://ftp.ncdc.noaa.gov/pub/data/gsod/2015/gsod_2015.tar'</span></div>
-<div class="sourceLine" id="cb26-4" data-line-number="4"><span class="co">#&gt; Content type 'unknown' length 106352640 bytes (101.4 MB)</span></div>
-<div class="sourceLine" id="cb26-5" data-line-number="5"><span class="co">#&gt; ==================================================</span></div>
-<div class="sourceLine" id="cb26-6" data-line-number="6"><span class="co">#&gt; downloaded 101.4 MB</span></div>
-<div class="sourceLine" id="cb26-7" data-line-number="7"></div>
-<div class="sourceLine" id="cb26-8" data-line-number="8"></div>
-<div class="sourceLine" id="cb26-9" data-line-number="9"><span class="co">#&gt; Finished downloading file.</span></div>
-<div class="sourceLine" id="cb26-10" data-line-number="10"></div>
-<div class="sourceLine" id="cb26-11" data-line-number="11"><span class="co">#&gt; Starting data file processing.</span></div>
-<div class="sourceLine" id="cb26-12" data-line-number="12"></div>
-<div class="sourceLine" id="cb26-13" data-line-number="13"></div>
-<div class="sourceLine" id="cb26-14" data-line-number="14"><span class="co">#&gt; Writing GeoPackage file to disk.</span></div></code></pre>
+<div class="sourceLine" id="cb22-2" data-line-number="2">         <span class="dt">CSV =</span> <span class="ot">FALSE</span>, <span class="dt">GPKG =</span> <span class="ot">TRUE</span>)</div>
+<div class="sourceLine" id="cb22-3" data-line-number="3"><span class="co">#&gt; trying URL 'ftp://ftp.ncdc.noaa.gov/pub/data/gsod/2015/gsod_2015.tar'</span></div>
+<div class="sourceLine" id="cb22-4" data-line-number="4"><span class="co">#&gt; Content type 'unknown' length 106352640 bytes (101.4 MB)</span></div>
+<div class="sourceLine" id="cb22-5" data-line-number="5"><span class="co">#&gt; ==================================================</span></div>
+<div class="sourceLine" id="cb22-6" data-line-number="6"><span class="co">#&gt; downloaded 101.4 MB</span></div>
+<div class="sourceLine" id="cb22-7" data-line-number="7"></div>
+<div class="sourceLine" id="cb22-8" data-line-number="8"></div>
+<div class="sourceLine" id="cb22-9" data-line-number="9"><span class="co">#&gt; Finished downloading file.</span></div>
+<div class="sourceLine" id="cb22-10" data-line-number="10"></div>
+<div class="sourceLine" id="cb22-11" data-line-number="11"><span class="co">#&gt; Starting data file processing.</span></div>
+<div class="sourceLine" id="cb22-12" data-line-number="12"></div>
+<div class="sourceLine" id="cb22-13" data-line-number="13"></div>
+<div class="sourceLine" id="cb22-14" data-line-number="14"><span class="co">#&gt; Writing GeoPackage file to disk.</span></div></code></pre>
 <p>Importing the GeoPackage file can be a bit tricky. The dsn will be the full path along with the file name. The layer to be specified is “GSOD”, this is specified in the <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> function and will not change. The file name, specified in the dsn will, but the layer name will not.</p>
-<pre class="sourceCode r" id="cb27"><code class="sourceCode r"><div class="sourceLine" id="cb27-1" data-line-number="1">
+<pre class="sourceCode r" id="cb23"><code class="sourceCode r"><div class="sourceLine" id="cb23-1" data-line-number="1">
 <span class="kw">library</span>(rgdal)</div>
-<div class="sourceLine" id="cb27-2" data-line-number="2"><span class="co">#&gt; Loading required package: sp</span></div>
-<div class="sourceLine" id="cb27-3" data-line-number="3"><span class="co">#&gt; rgdal: version: 1.1-10, (SVN revision 622)</span></div>
-<div class="sourceLine" id="cb27-4" data-line-number="4"><span class="co">#&gt;  Geospatial Data Abstraction Library extensions to R successfully loaded</span></div>
-<div class="sourceLine" id="cb27-5" data-line-number="5"><span class="co">#&gt;  Loaded GDAL runtime: GDAL 1.11.5, released 2016/07/01</span></div>
-<div class="sourceLine" id="cb27-6" data-line-number="6"><span class="co">#&gt;  Path to GDAL shared files: /usr/local/Cellar/gdal/1.11.5_1/share/gdal</span></div>
-<div class="sourceLine" id="cb27-7" data-line-number="7"><span class="co">#&gt;  Loaded PROJ.4 runtime: Rel. 4.9.3, 15 August 2016, [PJ_VERSION: 493]</span></div>
-<div class="sourceLine" id="cb27-8" data-line-number="8"><span class="co">#&gt;  Path to PROJ.4 shared files: (autodetected)</span></div>
-<div class="sourceLine" id="cb27-9" data-line-number="9"><span class="co">#&gt;  Linking to sp version: 1.2-3</span></div>
-<div class="sourceLine" id="cb27-10" data-line-number="10"></div>
-<div class="sourceLine" id="cb27-11" data-line-number="11">AUS_stations &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/rgdal/topics/readOGR">readOGR</a></span>(<span class="dt">dsn =</span> <span class="kw">path.expand</span>(<span class="st">"~/AUS.gpkg"</span>), <span class="dt">layer =</span> <span class="st">"GSOD"</span>)</div>
-<div class="sourceLine" id="cb27-12" data-line-number="12"><span class="co">#&gt; OGR data source with driver: GPKG</span></div>
-<div class="sourceLine" id="cb27-13" data-line-number="13"><span class="co">#&gt; Source: "/Users/asparks/AUS-2015.gpkg", layer: "GSOD"</span></div>
-<div class="sourceLine" id="cb27-14" data-line-number="14"><span class="co">#&gt; with 186977 features</span></div>
-<div class="sourceLine" id="cb27-15" data-line-number="15"><span class="co">#&gt; It has 46 fields</span></div>
-<div class="sourceLine" id="cb27-16" data-line-number="16"></div>
-<div class="sourceLine" id="cb27-17" data-line-number="17">
+<div class="sourceLine" id="cb23-2" data-line-number="2"><span class="co">#&gt; Loading required package: sp</span></div>
+<div class="sourceLine" id="cb23-3" data-line-number="3"><span class="co">#&gt; rgdal: version: 1.1-10, (SVN revision 622)</span></div>
+<div class="sourceLine" id="cb23-4" data-line-number="4"><span class="co">#&gt;  Geospatial Data Abstraction Library extensions to R successfully loaded</span></div>
+<div class="sourceLine" id="cb23-5" data-line-number="5"><span class="co">#&gt;  Loaded GDAL runtime: GDAL 1.11.5, released 2016/07/01</span></div>
+<div class="sourceLine" id="cb23-6" data-line-number="6"><span class="co">#&gt;  Path to GDAL shared files: /usr/local/Cellar/gdal/1.11.5_1/share/gdal</span></div>
+<div class="sourceLine" id="cb23-7" data-line-number="7"><span class="co">#&gt;  Loaded PROJ.4 runtime: Rel. 4.9.3, 15 August 2016, [PJ_VERSION: 493]</span></div>
+<div class="sourceLine" id="cb23-8" data-line-number="8"><span class="co">#&gt;  Path to PROJ.4 shared files: (autodetected)</span></div>
+<div class="sourceLine" id="cb23-9" data-line-number="9"><span class="co">#&gt;  Linking to sp version: 1.2-3</span></div>
+<div class="sourceLine" id="cb23-10" data-line-number="10"></div>
+<div class="sourceLine" id="cb23-11" data-line-number="11">AUS_stations &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/rgdal/topics/readOGR">readOGR</a></span>(<span class="dt">dsn =</span> <span class="kw">path.expand</span>(<span class="st">"~/AUS.gpkg"</span>), <span class="dt">layer =</span> <span class="st">"GSOD"</span>)</div>
+<div class="sourceLine" id="cb23-12" data-line-number="12"><span class="co">#&gt; OGR data source with driver: GPKG</span></div>
+<div class="sourceLine" id="cb23-13" data-line-number="13"><span class="co">#&gt; Source: "/Users/asparks/AUS-2015.gpkg", layer: "GSOD"</span></div>
+<div class="sourceLine" id="cb23-14" data-line-number="14"><span class="co">#&gt; with 186977 features</span></div>
+<div class="sourceLine" id="cb23-15" data-line-number="15"><span class="co">#&gt; It has 46 fields</span></div>
+<div class="sourceLine" id="cb23-16" data-line-number="16"></div>
+<div class="sourceLine" id="cb23-17" data-line-number="17">
 <span class="kw">class</span>(AUS_stations)</div>
-<div class="sourceLine" id="cb27-18" data-line-number="18"><span class="co">#&gt; [1] "SpatialPointsDataFrame"</span></div>
-<div class="sourceLine" id="cb27-19" data-line-number="19"><span class="co">#&gt; attr(,"package")</span></div>
-<div class="sourceLine" id="cb27-20" data-line-number="20"><span class="co">#&gt; [1] "sp"</span></div></code></pre>
+<div class="sourceLine" id="cb23-18" data-line-number="18"><span class="co">#&gt; [1] "SpatialPointsDataFrame"</span></div>
+<div class="sourceLine" id="cb23-19" data-line-number="19"><span class="co">#&gt; attr(,"package")</span></div>
+<div class="sourceLine" id="cb23-20" data-line-number="20"><span class="co">#&gt; [1] "sp"</span></div></code></pre>
 <p>Since GeoPackage files are formatted as SQLite databases you can use the existing R tools for SQLite files <a href="https://jsta.github.io/2016/07/14/geopackage-r.html">(J. Stachelek 2016)</a>. One easy way is using <em>dplyr</em>, which we’ve already used to filter the stations.</p>
 <p>This option is much faster to load since it does not load the geometry.</p>
-<pre class="sourceCode r" id="cb28"><code class="sourceCode r"><div class="sourceLine" id="cb28-1" data-line-number="1">AUS_sqlite &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="kw"><a href="http://dplyr.tidyverse.org/reference/src_dbi.html">src_sqlite</a></span>(<span class="kw">path.expand</span>(<span class="st">"~/AUS.gpkg"</span>)), <span class="st">"GSOD"</span>)</div>
-<div class="sourceLine" id="cb28-2" data-line-number="2">
+<pre class="sourceCode r" id="cb24"><code class="sourceCode r"><div class="sourceLine" id="cb24-1" data-line-number="1">AUS_sqlite &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="kw"><a href="http://dplyr.tidyverse.org/reference/src_dbi.html">src_sqlite</a></span>(<span class="kw">path.expand</span>(<span class="st">"~/AUS.gpkg"</span>)), <span class="st">"GSOD"</span>)</div>
+<div class="sourceLine" id="cb24-2" data-line-number="2">
 <span class="kw">class</span>(AUS_sqlite)</div>
-<div class="sourceLine" id="cb28-3" data-line-number="3"><span class="co">#&gt; [1] "tbl_dbi"  "tbl_sql"  "tbl_lazy" "tbl"</span></div>
-<div class="sourceLine" id="cb28-4" data-line-number="4"></div>
-<div class="sourceLine" id="cb28-5" data-line-number="5">
-<span class="kw">print</span>(AUS_sqlite, <span class="dt">n =</span> <span class="dv">5</span>)</div>
-<div class="sourceLine" id="cb28-6" data-line-number="6"><span class="co">#&gt; Source:   table&lt;GSOD&gt; [?? x 48]</span></div>
-<div class="sourceLine" id="cb28-7" data-line-number="7"><span class="co">#&gt; Database: sqlite 3.19.3 [/Users/U8004755/AUS.gpkg]</span></div>
-<div class="sourceLine" id="cb28-8" data-line-number="8">
-<span class="co">#&gt;    fid         geom   USAF  WBAN        STNID  STN_NAME  CTRY STATE  CALL ELEV_M ELEV_M_SRTM_90m    </span><span class="re">BEGIN</span><span class="co">      </span><span class="re">END</span><span class="co"> YEARMODA</span>
-</div>
-<div class="sourceLine" id="cb28-9" data-line-number="9"><span class="co">#&gt;  &lt;int&gt;       &lt;blob&gt;  &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt;           &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;chr&gt;</span></div>
-<div class="sourceLine" id="cb28-10" data-line-number="10"><span class="co">#&gt; 1     1 &lt;blob[29 B]&gt; 941000 99999 941000-99999 KALUMBURU    AS  &lt;NA&gt;  &lt;NA&gt;     24              17 20010912 20170916 20150101</span></div>
-<div class="sourceLine" id="cb28-11" data-line-number="11"><span class="co">#&gt; 2     2 &lt;blob[29 B]&gt; 941000 99999 941000-99999 KALUMBURU    AS  &lt;NA&gt;  &lt;NA&gt;     24              17 20010912 20170916 20150102</span></div>
-<div class="sourceLine" id="cb28-12" data-line-number="12"><span class="co">#&gt; 3     3 &lt;blob[29 B]&gt; 941000 99999 941000-99999 KALUMBURU    AS  &lt;NA&gt;  &lt;NA&gt;     24              17 20010912 20170916 20150103</span></div>
-<div class="sourceLine" id="cb28-13" data-line-number="13"><span class="co">#&gt; 4      4 &lt;blob[29 B]&gt; 941000 99999 941000-99999 KALUMBURU    AS  &lt;NA&gt;  &lt;NA&gt;     24              17 20010912 20170916 20150104</span></div>
-<div class="sourceLine" id="cb28-14" data-line-number="14"><span class="co">#&gt; 5     5 &lt;blob[29 B]&gt; 941000 99999 941000-99999 KALUMBURU    AS  &lt;NA&gt;  &lt;NA&gt;     24              17 20010912 20170916 20150105</span></div>
-<div class="sourceLine" id="cb28-15" data-line-number="15"><span class="co">#&gt; ... with more rows, and 34 more variables: YEAR &lt;chr&gt;, MONTH &lt;chr&gt;, DAY &lt;chr&gt;, YDAY &lt;dbl&gt;, TEMP &lt;dbl&gt;, TEMP_CNT &lt;int&gt;,</span></div>
-<div class="sourceLine" id="cb28-16" data-line-number="16"><span class="co">#&gt;   DEWP &lt;dbl&gt;, DEWP_CNT &lt;int&gt;, SLP &lt;dbl&gt;, SLP_CNT &lt;int&gt;, STP &lt;dbl&gt;, STP_CNT &lt;int&gt;, VISIB &lt;dbl&gt;, VISIB_CNT &lt;int&gt;, WDSP &lt;dbl&gt;,</span></div>
-<div class="sourceLine" id="cb28-17" data-line-number="17"><span class="co">#&gt;   WDSP_CNT &lt;int&gt;, MXSPD &lt;dbl&gt;, GUST &lt;dbl&gt;, MAX &lt;dbl&gt;, MAX_FLAG &lt;chr&gt;, MIN &lt;dbl&gt;, MIN_FLAG &lt;chr&gt;, PRCP &lt;dbl&gt;, PRCP_FLAG &lt;chr&gt;,</span></div>
-<div class="sourceLine" id="cb28-18" data-line-number="18"><span class="co">#&gt;   SNDP &lt;dbl&gt;, I_FOG &lt;int&gt;, I_RAIN_DRIZZLE &lt;int&gt;, I_SNOW_ICE &lt;int&gt;, I_HAIL &lt;int&gt;, I_THUNDER &lt;int&gt;, I_TORNADO_FUNNEL &lt;int&gt;,</span></div>
-<div class="sourceLine" id="cb28-19" data-line-number="19"><span class="co">#&gt;   EA &lt;dbl&gt;, ES &lt;dbl&gt;, RH &lt;dbl&gt;</span></div></code></pre>
+<div class="sourceLine" id="cb24-3" data-line-number="3"><span class="co">#&gt; [1] "tbl_dbi"  "tbl_sql"  "tbl_lazy" "tbl"</span></div></code></pre>
 </section></section><section id="using-reformat_gsod" class="level1"><h1>Using reformat_GSOD()</h1>
 <p>You may have already downloaded GSOD data or may just wish to use an FTP client to download the files from the server to you local disk and not use the capabilities of <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code>. In that case the <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code> function is useful.</p>
 <p>There are two ways, you can either provide <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code> with a list of specified station files or you can supply it with a directory containing all of the “WBAN-WMO-YYYY.op.gz” station files that you wish to reformat.</p>
 <section id="reformat-a-list-of-local-files" class="level2"><h2>Reformat a list of local files</h2>
-<pre class="sourceCode r" id="cb29"><code class="sourceCode r"><div class="sourceLine" id="cb29-1" data-line-number="1">y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"~/GSOD/gsod_1960/200490-99999-1960.op.gz"</span>,</div>
-<div class="sourceLine" id="cb29-2" data-line-number="2">       <span class="st">"~/GSOD/gsod_1961/200490-99999-1961.op.gz"</span>)</div>
-<div class="sourceLine" id="cb29-3" data-line-number="3">x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reformat_GSOD.html">reformat_GSOD</a></span>(<span class="dt">file_list =</span> y)</div></code></pre>
+<pre class="sourceCode r" id="cb25"><code class="sourceCode r"><div class="sourceLine" id="cb25-1" data-line-number="1">y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"~/GSOD/gsod_1960/200490-99999-1960.op.gz"</span>,</div>
+<div class="sourceLine" id="cb25-2" data-line-number="2">       <span class="st">"~/GSOD/gsod_1961/200490-99999-1961.op.gz"</span>)</div>
+<div class="sourceLine" id="cb25-3" data-line-number="3">x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reformat_GSOD.html">reformat_GSOD</a></span>(<span class="dt">file_list =</span> y)</div></code></pre>
 </section><section id="reformat-all-local-files-found-in-directory" class="level2"><h2>Reformat all local files found in directory</h2>
-<pre class="sourceCode r" id="cb30"><code class="sourceCode r"><div class="sourceLine" id="cb30-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reformat_GSOD.html">reformat_GSOD</a></span>(<span class="dt">dsn =</span> <span class="st">"~/GSOD/gsod_1960"</span>)</div></code></pre>
+<pre class="sourceCode r" id="cb26"><code class="sourceCode r"><div class="sourceLine" id="cb26-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reformat_GSOD.html">reformat_GSOD</a></span>(<span class="dt">dsn =</span> <span class="st">"~/GSOD/gsod_1960"</span>)</div></code></pre>
 </section></section><section id="using-update_station_list" class="level1"><h1>Using update_station_list()</h1>
 <p><em>GSODR</em> uses internal databases of station data from the NCEI to provide location and other metadata, <em>e.g.</em> elevation, station names, WMO codes, etc. to make the process of querying for weather data faster. This database is created and packaged with <em>GSODR</em> for distribution and is updated with new releases. Users have the option of updating these databases after installing <em>GSODR</em>. While this option gives the users the ability to keep the database up-to-date and gives <em>GSODR’s</em> authors flexibility in maintaining it, this also means that reproducibility may be affected since the same version of <em>GSODR</em> may have different databases on different machines. If reproducibility is necessary, care should be taken to ensure that the version of the databases is the same across different machines.</p>
 <p>The database file <code>isd_history.rda</code> can be located on your local system by using the following command, <code>paste0(.libPaths(), "/GSODR/extdata")[1]</code>, unless you have specified another location for library installations and installed <em>GSODR</em> there, in which case it would still be in <code>GSODR/extdata</code>.</p>
@@ -338,55 +315,17 @@
 </section><section id="using-get_inventory" class="level1"><h1>Using get_inventory()</h1>
 <p><em>GSODR</em> provides a function, <code><a href="../reference/get_inventory.html">get_inventory()</a></code> to retrieve an inventory of the number of weather observations by station-year-month for the beginning of record through to current.</p>
 <p>Following is an example of how to retreive the inventory and check a station in Toowoomba, Queensland, Australia, which was used in an earlier example.</p>
-<pre class="sourceCode r" id="cb31"><code class="sourceCode r"><div class="sourceLine" id="cb31-1" data-line-number="1">inventory &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_inventory.html">get_inventory</a></span>()</div></code></pre>
-<pre><code>## THIS INVENTORY SHOWS THE NUMBER OF WEATHER OBSERVATIONS BY STATION-YEAR-MONTH FOR BEGINNING OF RECORD THROUGH NOVEMBER 2017.  THE DATABASE CONTINUES TO BE UPDATED AND ENHANCED, AND THIS INVENTORY WILL BE  UPDATED ON A REGULAR BASIS.</code></pre>
-<pre class="sourceCode r" id="cb33"><code class="sourceCode r"><div class="sourceLine" id="cb33-1" data-line-number="1">inventory</div></code></pre>
-<pre><code>## # A tibble: 616,680 x 14
-##           STNID  YEAR   JAN   FEB   MAR   APR   MAY   JUN   JUL   AUG
-##           &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
-##  1 007005-99999  2012    18     0     0     0     0     0     0     0
-##  2 007011-99999  2012   771     0   183     0     0     0   142    13
-##  3 007018-99999  2013     0     0     0     0     0     0   710     0
-##  4 007025-99999  2012    21     0     0     0     0     0     0     0
-##  5 007026-99999  2012     0     0     0     0     0     0   367     0
-##  6 007026-99999  2014     0     0     0     0     0     0   180     0
-##  7 007026-99999  2016     0     0     0     0     0   794     0     0
-##  8 007026-99999  2017     0   914  2626   380   277   406  1230  1009
-##  9 007034-99999  2012     0     0     0     0     0     0     0     0
-## 10 007037-99999  2012     0     0     0     0     0     0   830    35
-## # ... with 616,670 more rows, and 4 more variables: SEP &lt;int&gt;, OCT &lt;int&gt;,
-## #   NOV &lt;int&gt;, DEC &lt;int&gt;</code></pre>
-<pre class="sourceCode r" id="cb35"><code class="sourceCode r"><div class="sourceLine" id="cb35-1" data-line-number="1">
+<pre class="sourceCode r" id="cb27"><code class="sourceCode r"><div class="sourceLine" id="cb27-1" data-line-number="1">inventory &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_inventory.html">get_inventory</a></span>()</div>
+<div class="sourceLine" id="cb27-2" data-line-number="2"></div>
+<div class="sourceLine" id="cb27-3" data-line-number="3">inventory</div>
+<div class="sourceLine" id="cb27-4" data-line-number="4"></div>
+<div class="sourceLine" id="cb27-5" data-line-number="5">
 <span class="kw">subset</span>(inventory, STNID <span class="op">==</span><span class="st"> "955510-99999"</span>)</div></code></pre>
-<pre><code>## # A tibble: 20 x 14
-##           STNID  YEAR   JAN   FEB   MAR   APR   MAY   JUN   JUL   AUG
-##           &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
-##  1 955510-99999  1998     0     0   222   223   221   211   226   217
-##  2 955510-99999  1999   213   201   235   224   244   229   239   247
-##  3 955510-99999  2000   241   227   247   238   246   237   245   240
-##  4 955510-99999  2001   245   223   246   238   239   236   243   240
-##  5 955510-99999  2002   245   219   246   236   243   229   243   246
-##  6 955510-99999  2003   244   217   220   232   235   233   246   242
-##  7 955510-99999  2004   240   227   241   229   233   224   235   244
-##  8 955510-99999  2005   243   221   243   241   247   242   248   247
-##  9 955510-99999  2006   245   223   246   232   241   238   247   247
-## 10 955510-99999  2007   247   222   244   240   248   240   244   244
-## 11 955510-99999  2008   247   228   248   239   248   239   248   247
-## 12 955510-99999  2009   245   222   246   235   244   237   248   248
-## 13 955510-99999  2010   248   223   248   240   244   240   242   247
-## 14 955510-99999  2011   247   224   247   240   247   240   248   247
-## 15 955510-99999  2012   248   232   248   240   248   240   248   247
-## 16 955510-99999  2013   236   220   247   233   248   239   252   246
-## 17 955510-99999  2014   243   224   247   240   246   239   241   243
-## 18 955510-99999  2015   248   222   248   239   247   240   247   246
-## 19 955510-99999  2016   246   228   245   240   246   240   248   248
-## 20 955510-99999  2017   240   224   248   240   248   237   248   247
-## # ... with 4 more variables: SEP &lt;int&gt;, OCT &lt;int&gt;, NOV &lt;int&gt;, DEC &lt;int&gt;</code></pre>
 </section><section id="additional-climate-data-availability" class="level1"><h1>Additional Climate Data Availability</h1>
 <p>Additional climate data, <a href="https://github.com/adamhsparks/GSODRdata"><em>GSODRdata</em></a>, formatted for use with GSOD data provided by <em>GSODR</em> are available as an R package, which can only be installed through GitHub due to the package size, 5.1Mb, being too large for CRAN.</p>
-<pre class="sourceCode r" id="cb37"><code class="sourceCode r"><div class="sourceLine" id="cb37-1" data-line-number="1"><span class="co">#install.packages("devtools")</span></div>
-<div class="sourceLine" id="cb37-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"adamhsparks/GSODRdata"</span>)</div>
-<div class="sourceLine" id="cb37-3" data-line-number="3">
+<pre class="sourceCode r" id="cb28"><code class="sourceCode r"><div class="sourceLine" id="cb28-1" data-line-number="1"><span class="co">#install.packages("devtools")</span></div>
+<div class="sourceLine" id="cb28-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"adamhsparks/GSODRdata"</span>)</div>
+<div class="sourceLine" id="cb28-3" data-line-number="3">
 <span class="kw">library</span>(<span class="st">"GSODRdata"</span>)</div></code></pre>
 </section><section id="notes" class="level1"><h1>Notes</h1>
 <section id="elevation-values" class="level2"><h2>Elevation Values</h2>
@@ -458,7 +397,7 @@
 <li><p><strong>ea</strong> - Mean daily actual vapour pressure;</p></li>
 <li><p><strong>es</strong> - Mean daily saturation vapour pressure;</p></li>
 <li><p><strong>RH</strong> - Mean daily relative humidity.</p></li>
-</ul></section><section id="appendix-2-map-of-gsod-station-locations" class="level2"><h2>Appendix 2: Map of GSOD Station Locations</h2>
+</ul></section><section id="appendix-2-map-of-current-gsod-station-locations" class="level2"><h2>Appendix 2: Map of Current GSOD Station Locations</h2>
 <p><img src="GSODR_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;"></p>
 </section></section>
 </div>
@@ -498,7 +437,7 @@
       <li>
 <a href="#appendices">Appendices</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#appendix-1-gsodr-final-data-format-contents-and-units">Appendix 1: GSODR Final Data Format, Contents and Units</a></li>
-      <li><a href="#appendix-2-map-of-gsod-station-locations">Appendix 2: Map of GSOD Station Locations</a></li>
+      <li><a href="#appendix-2-map-of-current-gsod-station-locations">Appendix 2: Map of Current GSOD Station Locations</a></li>
       </ul>
 </li>
       </ul>

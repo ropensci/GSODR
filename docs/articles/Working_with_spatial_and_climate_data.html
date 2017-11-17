@@ -81,7 +81,7 @@
       <h1>Working with spatial and climate data from GSODR and GSODRdata</h1>
                         <h4 class="author">Tomislav Hengl and Adam H Sparks</h4>
             
-            <h4 class="date">2017-11-16</h4>
+            <h4 class="date">2017-11-17</h4>
           </div>
 
     
@@ -115,7 +115,7 @@
 <div class="sourceLine" id="cb2-10" data-line-number="10">
 <span class="kw">row.names</span>(pnts) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">"point"</span>, <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(pnts), <span class="dt">sep =</span> <span class="st">""</span>)</div>
 <div class="sourceLine" id="cb2-11" data-line-number="11"></div>
-<div class="sourceLine" id="cb2-12" data-line-number="12">tmp_ST &lt;-<span class="st"> </span><span class="kw">STIDF</span>(<span class="dt">sp =</span> <span class="kw">as</span>(pnts, <span class="st">"SpatialPoints"</span>),</div>
+<div class="sourceLine" id="cb2-12" data-line-number="12">tmp_ST &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/spacetime/topics/STIDF-class">STIDF</a></span>(<span class="dt">sp =</span> <span class="kw">as</span>(pnts, <span class="st">"SpatialPoints"</span>),</div>
 <div class="sourceLine" id="cb2-13" data-line-number="13">                <span class="dt">time =</span> pnts<span class="op">$</span>DATE <span class="op">-</span><span class="st"> </span><span class="fl">0.5</span>,</div>
 <div class="sourceLine" id="cb2-14" data-line-number="14">                <span class="dt">data =</span> pnts<span class="op">@</span>data[, <span class="kw">c</span>(<span class="st">"TEMP"</span>, <span class="st">"STNID"</span>)],</div>
 <div class="sourceLine" id="cb2-15" data-line-number="15">                <span class="dt">endTime =</span> pnts<span class="op">$</span>DATE <span class="op">+</span><span class="st"> </span><span class="fl">0.5</span>)</div>
@@ -124,7 +124,7 @@
 </div>
 <div class="sourceLine" id="cb2-18" data-line-number="18"></div>
 <div class="sourceLine" id="cb2-19" data-line-number="19">
-<span class="kw">kml</span>(tmp_ST, <span class="dt">dtime =</span> <span class="dv">24</span> <span class="op">*</span><span class="st"> </span><span class="dv">3600</span>, <span class="dt">colour =</span> TEMP, <span class="dt">shape =</span> shape, <span class="dt">labels =</span> TEMP,</div>
+<span class="kw"><a href="http://www.rdocumentation.org/packages/plotKML/topics/kml">kml</a></span>(tmp_ST, <span class="dt">dtime =</span> <span class="dv">24</span> <span class="op">*</span><span class="st"> </span><span class="dv">3600</span>, <span class="dt">colour =</span> TEMP, <span class="dt">shape =</span> shape, <span class="dt">labels =</span> TEMP,</div>
 <div class="sourceLine" id="cb2-20" data-line-number="20">    <span class="dt">file.name =</span> <span class="st">"Temperatures_PHL_2010-2010.kml"</span>, <span class="dt">folder.name =</span> <span class="st">"TEMP"</span>)</div>
 <div class="sourceLine" id="cb2-21" data-line-number="21"></div>
 <div class="sourceLine" id="cb2-22" data-line-number="22">

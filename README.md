@@ -115,6 +115,10 @@ library(GSODR)
     ## redistributed for commercial purposes. Re-distribution of
     ## these data by others must provide this same notification.
     ## WMO Resolution 40. NOAA Policy'
+    ## 
+    ## GSODR does not redistibute any weather data itself. It only
+    ## provides an interface for R users to download these data,
+    ## but it does redistribute station metadata in the package.
 
 ``` r
 tbar <- get_GSOD(years = 2010, station = "955510-99999")
