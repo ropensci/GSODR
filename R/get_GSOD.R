@@ -201,13 +201,11 @@ get_GSOD <- function(years = NULL,
 
   # Write files to disk --------------------------------------------------------
   if (isTRUE(CSV)) {
-    message("\nWriting CSV file to disk.\n")
     outfile <- paste0(outfile, ".csv")
     readr::write_csv(GSOD_XY, path = outfile)
     rm(outfile)
   }
   if (isTRUE(GPKG)) {
-    message("\nWriting GeoPackage file to disk.\n")
     outfile <- paste0(outfile, ".gpkg")
     sp::coordinates(GSOD_XY) <- ~ LON + LAT
     sp::proj4string(GSOD_XY) <-
@@ -402,8 +400,7 @@ get_GSOD <- function(years = NULL,
         list.files(cache_dir, pattern = "^.*\\.op.gz$", full.names = TRUE)
     }
     if (!is.null(station)) {
-      # Written by @hrbrmstr on stackoverflow
-      message("\nChecking requested station file for availability on server\n")
+      # Written by @hrbrmstr
       max_retries <- 6
       dir_list_handle <-
         curl::new_handle(
@@ -447,7 +444,7 @@ get_GSOD <- function(years = NULL,
               return()
           }
         }
-      message("\nDownloading individual station files.\n")
+
       pb <- dplyr::progress_estimated(length(years))
       purrr::walk(years, function(yr) {
         year_url <- sprintf(ftp_base, yr)
