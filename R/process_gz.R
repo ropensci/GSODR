@@ -209,8 +209,8 @@
   )
   rm(tmp)
 
-  GSOD$MAX_FLAG[GSOD$MAX_FLAG == ""] <- "NA"
-  GSOD$MIN_FLAG[GSOD$MIN_FLAG == ""] <- "NA"
+  GSOD_XY$MAX_FLAG[GSOD_XY$MAX_FLAG == ""] <- NA
+  GSOD_XY$MIN_FLAG[GSOD_XY$MIN_FLAG == ""] <- NA
 
   tibble::as_tibble(GSOD_XY)
   return(GSOD_XY)
