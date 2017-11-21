@@ -1,5 +1,9 @@
 # GSODR 1.1.0.9000
 
+## Bug fixes
+
+- `MAX_FLAG` and `MIN_FLAG` columns now report `NA` when there is no flag
+
 ## Minor changes
 
 - Comment for Bob and Hugh in DESCRIPTION now only ORCID url
