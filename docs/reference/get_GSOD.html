@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Download, Clean, Reformat Generate New Elements and Return a Tidy Data Frame of GSOD Weather Data — get_GSOD • GSODR</title>
+<title>Download and Return a Tidy Data Frame of GSOD Weather Data — get_GSOD • GSODR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -101,7 +101,7 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Download, Clean, Reformat Generate New Elements and Return a Tidy Data Frame of GSOD Weather Data</h1>
+    <h1>Download and Return a Tidy Data Frame of GSOD Weather Data</h1>
     </div>
 
     
@@ -110,18 +110,18 @@ the Global Surface Summary of the Day (GSOD) data provided by the US National
 Centers for Environmental Information (NCEI),
 <a href='https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod'>https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod</a>,
 and elements three new variables; saturation vapour pressure (es) – Actual
-vapour pressure (ea) and relative humidity (RH).  Stations reporting a latitude
-of &lt; -90 or &gt; 90 or longitude of &lt; -180 or &gt; 180 are removed.  Stations may be
-individually checked for number of missing days to assure data quality and
-omitting stations with too many missing observations.  All units are converted
-to International System of Units (SI), e.g., Fahrenheit to Celsius and inches
-to millimetres.  Alternative elevation measurements are supplied for missing
-values or values found to be questionable based on the Consultative Group for
-International Agricultural Research's Consortium for Spatial Information
-group's (CGIAR-CSI) Shuttle Radar Topography Mission 90 metre (SRTM 90m)
-digital elevation data based on NASA's original SRTM 90m data.  Further
-information on these data and methods can be found on GSODR's GitHub
-repository here:
+vapour pressure (ea) and relative humidity (RH).  Stations reporting a
+latitude of &lt; -90 or &gt; 90 or longitude of &lt; -180 or &gt; 180 are removed.
+Stations may be individually checked for number of missing days to assure data
+quality and omitting stations with too many missing observations.  All units
+are converted to International System of Units (SI), <em>e.g.</em>, Fahrenheit
+to Celsius and inches to millimetres.  Alternative elevation measurements are
+supplied for missing values or values found to be questionable based on the
+Consultative Group for International Agricultural Research's Consortium for
+Spatial Information group's (CGIAR-CSI) Shuttle Radar Topography Mission 90
+metre (SRTM 90m) digital elevation data based on NASA's original SRTM 90m
+data.  Further information on these data and methods can be found on GSODR's
+GitHub repository here:
 <a href='https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md'>https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md</a>.</p>
     
 
@@ -142,7 +142,7 @@ repository here:
 retrieve, check and clean weather data using <code>STNID</code>. The NCEI reports
 years for which the data are available. This function checks against these
 years. However, not all cases are properly documented and in some cases files
-may not exist on the ftp server even though it is indicated that data was
+may not exist on the FTP server even though it is indicated that data was
 recorded for the station for a particular year. If a station is specified
 that does not have an existing file on the server, this function will
 silently fail and move on to existing files for download and cleaning from

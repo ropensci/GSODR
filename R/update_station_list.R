@@ -1,12 +1,12 @@
 
-#' Download the Latest Station List Information and Update GSODR's Internal Database
+#' Download Latest Station List Information and Update GSODR's Internal Database
 #'
 #' This function downloads the latest station list (isd-history.csv) from the
-#' NCEI FTP server and updates the data distributed with \code{GSODR} so that
-#' you have the latest list of stations available.  These data provide unique
-#' identifiers, country, state (if in US), latitude, longitude, elevation and
-#' when weather observations begin and end.  Stations with invalid latitude and
-#' longitude values will not be included.
+#' NCEI FTP server and updates the data distributed with \code{GSODR} to the
+#' latest stations available.  These data provide unique identifiers, country,
+#' state (if in US), latitude, longitude, elevation and when weather
+#' observations begin and end.  Stations with invalid latitude and longitude
+#' values will not be included.
 #'
 #' Care should be taken when using this function if reproducibility is necessary
 #' as different machines with the same version of \code{GSODR} can end up with
@@ -15,6 +15,9 @@
 #' There is no need to use this unless you know that a station exists in the
 #' GSODR data that is not available in the database distributed with
 #' \code{\link{GSODR}}.
+#'
+#' To directly access these data, use:
+#' \code{load(system.file("extdata", "isd_history.rda", package = "GSODR"))}
 #'
 #' @examples
 #' \dontrun{

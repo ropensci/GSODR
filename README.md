@@ -122,15 +122,7 @@ library(GSODR)
 
 ``` r
 tbar <- get_GSOD(years = 2010, station = "955510-99999")
-```
 
-    ## 
-    ## Checking requested station file for availability on server
-
-    ## 
-    ## Downloading individual station files.
-
-``` r
 tbar
 ```
 

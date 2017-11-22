@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Clean, Reformat Generate New Elements and Return a Tidy Data Frame of GSOD Weather Data from Local Disk — reformat_GSOD • GSODR</title>
+<title>Tidy and Return a Data Frame of GSOD Weather from Local Data — reformat_GSOD • GSODR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -101,7 +101,7 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Clean, Reformat Generate New Elements and Return a Tidy Data Frame of GSOD Weather Data from Local Disk</h1>
+    <h1>Tidy and Return a Data Frame of GSOD Weather from Local Data</h1>
     </div>
 
     
@@ -119,13 +119,13 @@ FTP server.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>dsn</th>
-      <td><p>User supplied file path to location of station file data on
-local disk for reformatting.</p></td>
+      <td><p>User supplied file path to location of data files on local disk for
+tidying.</p></td>
     </tr>
     <tr>
       <th>file_list</th>
-      <td><p>User supplied list of files of station data on local disk for
-reformatting.</p></td>
+      <td><p>User supplied list of files of data on local disk for
+tidying.</p></td>
     </tr>
     </table>
     
@@ -137,20 +137,19 @@ disk.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>For automated downloading and processing see the <code><a href='get_GSOD.html'>get_GSOD</a></code>
-function which provides expanded functionality for automatically downloading
-and expanding annual GSOD files and cleaning station files.</p>
-<p>This function reformats the data into a more usable form and calculates three
+    <p>This function reformats the data into a more usable form and calculates three
 new elements; saturation vapour pressure (es), actual vapour pressure (ea) and
 relative humidity (RH).  All units are converted to International System of
-Units (SI), e.g., Fahrenheit to Celsius and inches to millimetres.
+Units (SI), <em>e.g.</em>, Fahrenheit to Celsius and inches to millimetres.
 Alternative elevation measurements are supplied for missing values or values
 found to be questionable based on the Consultative Group for International
 Agricultural Research's Consortium for Spatial Information group's (CGIAR-CSI)
 Shuttle Radar Topography Mission 90 metre (SRTM 90m) digital elevation data
 based on NASA's original SRTM 90m data.</p>
-    <p>Data summarise each year by station, which include vapour pressure and
-relative humidity elements calculated from existing data in GSOD.</p>
+    <p>If multiple stations are given, data are summarised for each year by station,
+which include vapour pressure and relative humidity elements calculated from
+existing data in GSOD. Else, single stations are tidied and a data frame is
+returned.</p>
 <p>All missing values in resulting files are represented as NA regardless of
 which field they occur in.</p>
 <p>Only station files in ".op.gz" file format are supported by this function. If
@@ -179,7 +178,10 @@ Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='get_GSOD.html'>get_GSOD</a></code></p>
+    <p>For automated downloading and tidying see the <code><a href='get_GSOD.html'>get_GSOD</a></code>
+function which provides expanded functionality for automatically downloading
+and expanding annual GSOD files and cleaning station files.
+    <code><a href='get_GSOD.html'>get_GSOD</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

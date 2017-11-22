@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Download the Latest Station List Information and Update GSODR's Internal Database — update_station_list • GSODR</title>
+<title>Download Latest Station List Information and Update GSODR's Internal Database — update_station_list • GSODR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -101,16 +101,16 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Download the Latest Station List Information and Update GSODR's Internal Database</h1>
+    <h1>Download Latest Station List Information and Update GSODR's Internal Database</h1>
     </div>
 
     
     <p>This function downloads the latest station list (isd-history.csv) from the
-NCEI FTP server and updates the data distributed with <code>GSODR</code> so that
-you have the latest list of stations available.  These data provide unique
-identifiers, country, state (if in US), latitude, longitude, elevation and
-when weather observations begin and end.  Stations with invalid latitude and
-longitude values will not be included.</p>
+NCEI FTP server and updates the data distributed with <code>GSODR</code> to the
+latest stations available.  These data provide unique identifiers, country,
+state (if in US), latitude, longitude, elevation and when weather
+observations begin and end.  Stations with invalid latitude and longitude
+values will not be included.</p>
     
 
     <pre class="usage"><span class='fu'>update_station_list</span>()</pre>
@@ -123,6 +123,8 @@ different versions of the isd_history.csv file internally.</p>
 <p>There is no need to use this unless you know that a station exists in the
 GSODR data that is not available in the database distributed with
 <code><a href='GSODR.html'>GSODR</a></code>.</p>
+<p>To directly access these data, use:
+<code>load(system.file("extdata", "isd_history.rda", package = "GSODR"))</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

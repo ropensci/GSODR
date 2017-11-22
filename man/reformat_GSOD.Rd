@@ -2,16 +2,16 @@
 % Please edit documentation in R/reformat_GSOD.R
 \name{reformat_GSOD}
 \alias{reformat_GSOD}
-\title{Clean, Reformat Generate New Elements and Return a Tidy Data Frame of GSOD Weather Data from Local Disk}
+\title{Tidy and Return a Data Frame of GSOD Weather from Local Data}
 \usage{
 reformat_GSOD(dsn = NULL, file_list = NULL)
 }
 \arguments{
-\item{dsn}{User supplied file path to location of station file data on
-local disk for reformatting.}
+\item{dsn}{User supplied file path to location of data files on local disk for
+tidying.}
 
-\item{file_list}{User supplied list of files of station data on local disk for
-reformatting.}
+\item{file_list}{User supplied list of files of data on local disk for
+tidying.}
 }
 \value{
 A data frame as a \code{\link[tibble]{tibble}} object of weather data
@@ -26,14 +26,10 @@ the United States National Center for Environmental Information's (NCEI)
 FTP server.
 }
 \details{
-For automated downloading and processing see the \code{\link{get_GSOD}}
-function which provides expanded functionality for automatically downloading
-and expanding annual GSOD files and cleaning station files.
-
 This function reformats the data into a more usable form and calculates three
 new elements; saturation vapour pressure (es), actual vapour pressure (ea) and
 relative humidity (RH).  All units are converted to International System of
-Units (SI), e.g., Fahrenheit to Celsius and inches to millimetres.
+Units (SI), \emph{e.g.}, Fahrenheit to Celsius and inches to millimetres.
 Alternative elevation measurements are supplied for missing values or values
 found to be questionable based on the Consultative Group for International
 Agricultural Research's Consortium for Spatial Information group's (CGIAR-CSI)
@@ -41,8 +37,10 @@ Shuttle Radar Topography Mission 90 metre (SRTM 90m) digital elevation data
 based on NASA's original SRTM 90m data.
 
 
-Data summarise each year by station, which include vapour pressure and
-relative humidity elements calculated from existing data in GSOD.
+If multiple stations are given, data are summarised for each year by station,
+which include vapour pressure and relative humidity elements calculated from
+existing data in GSOD. Else, single stations are tidied and a data frame is
+returned.
 
 All missing values in resulting files are represented as NA regardless of
 which field they occur in.
@@ -84,6 +82,10 @@ Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
 90m Database \url{http://srtm.csi.cgiar.org}}
 }
 \seealso{
+For automated downloading and tidying see the \code{\link{get_GSOD}}
+function which provides expanded functionality for automatically downloading
+and expanding annual GSOD files and cleaning station files.
+
 \code{\link{get_GSOD}}
 }
 \author{
