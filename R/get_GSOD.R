@@ -1,23 +1,23 @@
 
-#' Download, Clean, Reformat Generate New Elements and Return a Tidy Data Frame of GSOD Weather Data
+#' Download and Return a Tidy Data Frame of GSOD Weather Data
 #'
 #'This function automates downloading, cleaning, reformatting of data from
 #'the Global Surface Summary of the Day (GSOD) data provided by the US National
 #'Centers for Environmental Information (NCEI),
 #'\url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod},
 #'and elements three new variables; saturation vapour pressure (es) – Actual
-#'vapour pressure (ea) and relative humidity (RH).  Stations reporting a latitude
-#'of < -90 or > 90 or longitude of < -180 or > 180 are removed.  Stations may be
-#'individually checked for number of missing days to assure data quality and
-#'omitting stations with too many missing observations.  All units are converted
-#'to International System of Units (SI), e.g., Fahrenheit to Celsius and inches
-#'to millimetres.  Alternative elevation measurements are supplied for missing
-#'values or values found to be questionable based on the Consultative Group for
-#'International Agricultural Research's Consortium for Spatial Information
-#'group's (CGIAR-CSI) Shuttle Radar Topography Mission 90 metre (SRTM 90m)
-#'digital elevation data based on NASA's original SRTM 90m data.  Further
-#'information on these data and methods can be found on GSODR's GitHub
-#'repository here:
+#'vapour pressure (ea) and relative humidity (RH).  Stations reporting a
+#'latitude of < -90 or > 90 or longitude of < -180 or > 180 are removed.
+#'Stations may be individually checked for number of missing days to assure data
+#'quality and omitting stations with too many missing observations.  All units
+#'are converted to International System of Units (SI), \emph{e.g.}, Fahrenheit
+#'to Celsius and inches to millimetres.  Alternative elevation measurements are
+#'supplied for missing values or values found to be questionable based on the
+#'Consultative Group for International Agricultural Research's Consortium for
+#'Spatial Information group's (CGIAR-CSI) Shuttle Radar Topography Mission 90
+#'metre (SRTM 90m) digital elevation data based on NASA's original SRTM 90m
+#'data.  Further information on these data and methods can be found on GSODR's
+#'GitHub repository here:
 #'\url{https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md}.
 #'
 #' @param years Year(s) of weather data to download.
@@ -25,7 +25,7 @@
 #' retrieve, check and clean weather data using \code{STNID}. The NCEI reports
 #' years for which the data are available. This function checks against these
 #' years. However, not all cases are properly documented and in some cases files
-#' may not exist on the ftp server even though it is indicated that data was
+#' may not exist on the FTP server even though it is indicated that data was
 #' recorded for the station for a particular year. If a station is specified
 #' that does not have an existing file on the server, this function will
 #' silently fail and move on to existing files for download and cleaning from
