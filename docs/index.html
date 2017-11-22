@@ -83,7 +83,9 @@
     
 <div class="contents">
 
-<section id="introduction-to-gsodr" class="level2"><h2>Introduction to <em>GSODR</em>
+<div id="introduction-to-gsodr" class="section level2">
+<h2 class="hasAnchor">
+<a href="#introduction-to-gsodr" class="anchor"></a>Introduction to <em>GSODR</em>
 </h2>
 <p>The GSOD or <a href="https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod">Global Surface Summary of the Day (GSOD)</a> data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. <em>GSODR</em> aims to make it easy to find, transfer and format the data you need for use in analysis and provides five main functions for facilitating this:</p>
 <ul>
@@ -97,19 +99,34 @@
 <p>Additional data are calculated by this R package using the original data and included in the final data. These include vapour pressure (ea and es) and relative humidity.</p>
 <p>It is recommended that you have a good Internet connection to download the data files as they can be quite large and slow to download.</p>
 <p>For more information see the description of the data provided by NCEI, <a href="http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt" class="uri">http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt</a>.</p>
-</section><section id="quick-start-install" class="level2"><h2>Quick Start Install</h2>
-<section id="stable-version" class="level3"><h3>Stable Version</h3>
+</div>
+<div id="quick-start-install" class="section level2">
+<h2 class="hasAnchor">
+<a href="#quick-start-install" class="anchor"></a>Quick Start Install</h2>
+<div id="stable-version" class="section level3">
+<h3 class="hasAnchor">
+<a href="#stable-version" class="anchor"></a>Stable Version</h3>
 <p>A stable version of <em>GSODR</em> is available from <a href="https://cran.r-project.org/package=GSODR">CRAN</a>.</p>
 <pre class="sourceCode r" id="cb1"><code class="sourceCode r"><div class="sourceLine" id="cb1-1" data-line-number="1">
 <span class="kw">install.packages</span>(<span class="st">"GSODR"</span>)</div></code></pre>
-</section><section id="development-version" class="level3"><h3>Development Version</h3>
+</div>
+<div id="development-version" class="section level3">
+<h3 class="hasAnchor">
+<a href="#development-version" class="anchor"></a>Development Version</h3>
 <p>A development version is available from from GitHub. If you wish to install the development version that may have new features or bug fixes before the CRAN version does (but also may not work properly), please install the <a href="https://CRAN.R-project.org/package=devtools">devtools package</a>, available from CRAN. We strive to keep the master branch on GitHub functional and working properly.</p>
 <pre class="sourceCode r" id="cb2"><code class="sourceCode r"><div class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">#install.packages("devtools")</span></div>
 <div class="sourceLine" id="cb2-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"ropensci/GSODR"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>)</div></code></pre>
-<hr></section></section><section id="using-gsodr" class="level2"><h2>Using <em>GSODR</em>
+<hr>
+</div>
+</div>
+<div id="using-gsodr" class="section level2">
+<h2 class="hasAnchor">
+<a href="#using-gsodr" class="anchor"></a>Using <em>GSODR</em>
 </h2>
 <p><em>GSODR’s</em> main function, <code><a href="reference/get_GSOD.html">get_GSOD()</a></code>, downloads and cleans GSOD data from the NCEI server. Following is an example of its capabilities, for more detailed examples of its capabilities, please see the <a href="https://ropensci.github.io/GSODR/articles/GSODR.html"><em>GSODR</em> introduction vignette</a>.</p>
-<section id="example---download-weather-station-data-for-toowoomba-queensland-for-2010" class="level3"><h3>Example - Download weather station data for Toowoomba, Queensland for 2010</h3>
+<div id="example---download-weather-station-data-for-toowoomba-queensland-for-2010" class="section level3">
+<h3 class="hasAnchor">
+<a href="#example---download-weather-station-data-for-toowoomba-queensland-for-2010" class="anchor"></a>Example - Download weather station data for Toowoomba, Queensland for 2010</h3>
 <pre class="sourceCode r" id="cb3"><code class="sourceCode r"><div class="sourceLine" id="cb3-1" data-line-number="1">
 <span class="kw">library</span>(GSODR)</div></code></pre>
 <pre><code>## 
@@ -151,35 +168,61 @@
 ## #   MIN &lt;dbl&gt;, MIN_FLAG &lt;chr&gt;, PRCP &lt;dbl&gt;, PRCP_FLAG &lt;chr&gt;, SNDP &lt;dbl&gt;,
 ## #   I_FOG &lt;int&gt;, I_RAIN_DRIZZLE &lt;int&gt;, I_SNOW_ICE &lt;int&gt;, I_HAIL &lt;int&gt;,
 ## #   I_THUNDER &lt;int&gt;, I_TORNADO_FUNNEL &lt;int&gt;, EA &lt;dbl&gt;, ES &lt;dbl&gt;, RH &lt;dbl&gt;</code></pre>
-</section></section><section id="other-sources-of-weather-data-in-r" class="level2"><h2>Other Sources of Weather Data in R</h2>
+</div>
+</div>
+<div id="other-sources-of-weather-data-in-r" class="section level2">
+<h2 class="hasAnchor">
+<a href="#other-sources-of-weather-data-in-r" class="anchor"></a>Other Sources of Weather Data in R</h2>
 <p>There are several other sources of weather data and ways of retrieving them through R. Several are also <a href="https://ropensci.org">rOpenSci</a> projects.</p>
 <p><a href="https://CRAN.R-project.org/package=rnoaa"><em>rnoaa</em></a>, from <a href="https://ropensci.org">rOpenSci</a> offers tools for interacting with and downloading weather data from the United States National Oceanic and Atmospheric Administration but lacks support for GSOD data.</p>
 <p><a href="https://CRAN.R-project.org/package=bomrang"><em>bomrang</em></a>, from <a href="https://ropensci.org">rOpenSci</a> provides functions to interface with Australia Government Bureau of Meteorology (BoM) data, fetching data and returning a tidy data frame of précis forecasts, current weather data from stations, agriculture bulletin data, BoM 0900 or 1500 weather bulletins or a raster stack object of satellite imagery from GeoTIFF files. Data (c) Australian Government Bureau of Meteorology Creative Commons (CC) Attribution 3.0 licence or Public Access Licence (PAL) as appropriate. See <a href="http://www.bom.gov.au/other/copyright.shtml" class="uri">http://www.bom.gov.au/other/copyright.shtml</a> for further details.</p>
 <p><a href="https://CRAN.R-project.org/package=riem"><em>riem</em></a> from <a href="https://ropensci.org">rOpenSci</a> allows to get weather data from Automated Surface Observing System (ASOS) stations (airports) in the whole world thanks to the Iowa Environment Mesonet website.</p>
 <p><a href="https://CRAN.R-project.org/package=clifro"><em>CliFlo</em></a> from <a href="https://ropensci.org">rOpenSci</a> is a web portal to the New Zealand National Climate Database and provides public access (via subscription) to around 6,500 various climate stations (see <a href="https://cliflo.niwa.co.nz/" class="uri">https://cliflo.niwa.co.nz/</a> for more information). Collating and manipulating data from CliFlo (hence clifro) and importing into R for further analysis, exploration and visualisation is now straightforward and coherent. The user is required to have an internet connection, and a current CliFlo subscription (free) if data from stations, other than the public Reefton electronic weather station, is sought.</p>
 <p><a href="https://CRAN.R-project.org/package=weatherData"><em>weatherData</em></a> provides a selection of functions to fetch weather data from Weather Underground and return it as a clean data frame.</p>
-</section><section id="other-sources-for-fetching-gsod-weather-data" class="level2"><h2>Other Sources for Fetching GSOD Weather Data</h2>
+</div>
+<div id="other-sources-for-fetching-gsod-weather-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#other-sources-for-fetching-gsod-weather-data" class="anchor"></a>Other Sources for Fetching GSOD Weather Data</h2>
 <p>The <a href="https://github.com/environmentalinformatics-marburg/GSODTools"><em>GSODTools</em></a> by <a href="https://github.com/fdetsch">Florian Detsch</a> is an R package that offers similar functionality as <em>GSODR</em>, but also has the ability to graph the data and working with data for time series analysis.</p>
 <p>The <a href="https://github.com/ulmo-dev/ulmo"><em>ULMO</em></a> library offers an interface to retrieve GSOD data using Python.</p>
-</section><section id="notes" class="level2"><h2>Notes</h2>
-<section id="other-data-sources" class="level3"><h3>Other Data Sources</h3>
-<section id="elevation-values" class="level4"><h4>Elevation Values</h4>
+</div>
+<div id="notes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#notes" class="anchor"></a>Notes</h2>
+<div id="other-data-sources" class="section level3">
+<h3 class="hasAnchor">
+<a href="#other-data-sources" class="anchor"></a>Other Data Sources</h3>
+<div id="elevation-values" class="section level4">
+<h4 class="hasAnchor">
+<a href="#elevation-values" class="anchor"></a>Elevation Values</h4>
 <p>90m hole-filled SRTM digital elevation (Jarvis <em>et al.</em> 2008) was used to identify and correct/remove elevation errors in data for station locations between -60˚ and 60˚ latitude. This applies to cases here where elevation was missing in the reported values as well. In case the station reported an elevation and the DEM does not, the station reported is taken. For stations beyond -60˚ and 60˚ latitude, the values are station reported values in every instance. See <a href="https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md" class="uri">https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md</a> for more detail on the correction methods.</p>
-</section></section><section id="wmo-resolution-40.-noaa-policy" class="level3"><h3>WMO Resolution 40. NOAA Policy</h3>
+</div>
+</div>
+<div id="wmo-resolution-40--noaa-policy" class="section level3">
+<h3 class="hasAnchor">
+<a href="#wmo-resolution-40--noaa-policy" class="anchor"></a>WMO Resolution 40. NOAA Policy</h3>
 <p><em>Users of these data should take into account the following (from the <a href="http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&amp;countryabbv=&amp;georegionabbv=">NCEI website</a>):</em></p>
 <blockquote>
 <p>“The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification.” <a href="https://public.wmo.int/en/our-mandate/what-we-do/data-exchange-and-technology-transfer">WMO Resolution 40. NOAA Policy</a></p>
 </blockquote>
-</section></section><section id="meta" class="level2"><h2>Meta</h2>
+</div>
+</div>
+<div id="meta" class="section level2">
+<h2 class="hasAnchor">
+<a href="#meta" class="anchor"></a>Meta</h2>
 <ul>
 <li><p>Please <a href="https://github.com/ropensci/GSODR/issues">report any issues or bugs</a>.</p></li>
 <li><p>License: MIT</p></li>
 <li><p>To cite <em>GSODR</em>, please use: Adam H Sparks, Tomislav Hengl and Andrew Nelson (2017). GSODR: Global Summary Daily Weather Data in R. <em>The Journal of Open Source Software</em>, <strong>2(10)</strong>. DOI: 10.21105/joss.00177.</p></li>
 <li><p>Please note that this project is released with a <a href="CONDUCT.md">Contributor Code of Conduct</a>. By participating in this project you agree to abide by its terms.</p></li>
-</ul></section><section id="references" class="level2"><h2>References</h2>
+</ul>
+</div>
+<div id="references" class="section level2">
+<h2 class="hasAnchor">
+<a href="#references" class="anchor"></a>References</h2>
 <p>Jarvis, A., Reuter, H. I., Nelson, A., Guevara, E. (2008) Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database (<a href="http://srtm.csi.cgiar.org" class="uri">http://srtm.csi.cgiar.org</a>)</p>
 <p><a href="https://ropensci.org"><img src="https://ropensci.org/public_images/github_footer.png" alt="ropensci"></a></p>
-</section>
+</div>
 </div>
   </div>
 
