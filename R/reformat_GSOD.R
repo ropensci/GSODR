@@ -40,7 +40,7 @@
 #' please refer to Appendix 1 in the GSODR vignette,
 #' \code{vignette("GSODR", package = "GSODR")}.
 #'
-#' @note While \package{GSODR} does not distribute GSOD weather data, users of
+#' @note While \pkg{GSODR} does not distribute GSOD weather data, users of
 #' the data should note the conditions that the U.S. NCEI places upon the GSOD
 #' data.  \dQuote{The following data and products may have conditions placed on
 #' their international commercial use.  They can be used within the U.S. or for

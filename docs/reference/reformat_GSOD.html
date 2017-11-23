@@ -140,7 +140,7 @@ disk.</p>
     <p>This function reformats the data into a more usable form and calculates three
 new elements; saturation vapour pressure (es), actual vapour pressure (ea) and
 relative humidity (RH).  All units are converted to International System of
-Units (SI), <em>e.g.</em>, Fahrenheit to Celsius and inches to millimetres.
+Units (SI), <em>e.g.</em> Fahrenheit to Celsius and inches to millimetres.
 Alternative elevation measurements are supplied for missing values or values
 found to be questionable based on the Consultative Group for International
 Agricultural Research's Consortium for Spatial Information group's (CGIAR-CSI)
@@ -152,23 +152,23 @@ existing data in GSOD. Else, single stations are tidied and a data frame is
 returned.</p>
 <p>All missing values in resulting files are represented as NA regardless of
 which field they occur in.</p>
-<p>Only station files in ".op.gz" file format are supported by this function. If
-you have downloaded the full annual "gsod_YYYY.tar" file you will need to
-extract the individual station files first to use this function.</p>
+<p>Only station files in the original ".op.gz" file format are supported by this
+function.  If you have downloaded the full annual "gsod_YYYY.tar" file you
+will need to extract the individual station files from the tar file first to
+use this function.</p>
 <p>For a complete list of the fields and description of the contents and units,
 please refer to Appendix 1 in the GSODR vignette,
 <code><a href='https://cran.rstudio.com/web/packages/GSODR/vignettes/GSODR.html'>vignette("GSODR", package = "GSODR")</a></code>.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Some of these data are redistributed with this R package. Originally
-from these data come from the US NCEI which states that users of these data
-should take into account the following: &#8220;The following data and
-products may have conditions placed on their international commercial use.
-They can be used within the U.S. or for non-commercial international
-activities without restriction. The non-U.S. data cannot be redistributed for
-commercial purposes. Re-distribution of these data by others must provide
-this same notification.&#8221;</p>
+    <p>While <span class="pkg">GSODR</span> does not distribute GSOD weather data, users of
+the data should note the conditions that the U.S. NCEI places upon the GSOD
+data.  &#8220;The following data and products may have conditions placed on
+their international commercial use.  They can be used within the U.S. or for
+non-commercial international activities without restriction. The non-U.S.
+data cannot be redistributed for commercial purposes. Re-distribution of
+these data by others must provide this same notification.&#8221;</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 

@@ -97,7 +97,7 @@ For more information see the description of the data provided by NCEI,
 \url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
 }
 \note{
-While \package{GSODR} does not distribute GSOD weather data, users of
+While \pkg{GSODR} does not distribute GSOD weather data, users of
 the data should note the conditions that the U.S. NCEI places upon the GSOD
 data.  \dQuote{The following data and products may have conditions placed on
 their international commercial use.  They can be used within the U.S. or for
