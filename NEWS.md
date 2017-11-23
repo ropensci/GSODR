@@ -28,7 +28,7 @@ Error in .f(.x[[i]], ...) :
 955510-99999 is not a valid station ID number, please check your entry.
 Valid Station IDs can be found in the isd-history.txt file
 available from the US NCEI FTP server by combining the USAF and WBAN
-columns, e.g., '007005' '99999' is '007005-99999' from this file 
+columns, e.g. '007005' '99999' is '007005-99999' from this file 
 <ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.txt>
 ```
 

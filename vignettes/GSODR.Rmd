@@ -441,7 +441,7 @@ only report a 6-hour amount for the period during which rain fell.* See
 
     - G = 1 report of 24-hour precipitation amount;
 
-    - H = Station reported '0' as the amount for the day (e.g., from 6-hour
+    - H = Station reported '0' as the amount for the day (e.g. from 6-hour
     reports), but also reported at least one occurrence of precipitation in
     hourly observations--this could indicate a rrace occurred, but should be
     considered as incomplete data for the day;
