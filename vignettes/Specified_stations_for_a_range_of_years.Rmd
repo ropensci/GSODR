@@ -1,7 +1,6 @@
 ---
 title: "GSODR use case: Specified years/stations vignette"
 author: "Adam H Sparks"
-date: "`r Sys.Date()`"
 output:
     rmarkdown::html_document:
       toc: true

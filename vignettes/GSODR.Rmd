@@ -1,7 +1,6 @@
 ---
 title: "GSODR"
 author: "Adam H Sparks"
-date: "`r Sys.Date()`"
 output:
   rmarkdown::html_vignette:
     toc: true

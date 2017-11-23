@@ -1,7 +1,6 @@
 ---
 title: "Working with spatial and climate data from GSODR and GSODRdata"
 author: "Tomislav Hengl and Adam H Sparks"
-date: "`r Sys.Date()`"
 output:
     rmarkdown::html_document:
       toc: true
