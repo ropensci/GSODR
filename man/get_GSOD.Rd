@@ -97,14 +97,14 @@ For more information see the description of the data provided by NCEI,
 \url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
 }
 \note{
-Some of these data are redistributed with this R package.  Originally
-from these data come from the US NCEI which states that users of these data
-should take into account the following: \dQuote{The following data and
-products may have conditions placed on their international commercial use.
-They can be used within the U.S. or for non-commercial international
-activities without restriction.  The non-U.S. data cannot be redistributed
-for commercial purposes.  Re-distribution of these data by others must
-provide this same notification.}
+While \package{GSODR} does not distribute GSOD weather data, users of
+the data should note the conditions that the U.S. NCEI places upon the GSOD
+data.
+\dQuote{The following data and products may have conditions placed on their
+international commercial use.  They can be used within the U.S. or for
+non-commercial international activities without restriction. The non-U.S.
+data cannot be redistributed for commercial purposes. Re-distribution of
+these data by others must provide this same notification.}
 }
 \examples{
 \dontrun{

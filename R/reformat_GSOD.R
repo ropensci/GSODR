@@ -31,22 +31,23 @@
 #' All missing values in resulting files are represented as NA regardless of
 #' which field they occur in.
 #'
-#' Only station files in ".op.gz" file format are supported by this function. If
-#' you have downloaded the full annual "gsod_YYYY.tar" file you will need to
-#' extract the individual station files first to use this function.
+#' Only station files in the original ".op.gz" file format are supported by this
+#' function.  If you have downloaded the full annual "gsod_YYYY.tar" file you
+#' will need to extract the individual station files from the tar file first to
+#' use this function.
 #'
 #' For a complete list of the fields and description of the contents and units,
 #' please refer to Appendix 1 in the GSODR vignette,
 #' \code{vignette("GSODR", package = "GSODR")}.
 #'
-#' @note Some of these data are redistributed with this R package. Originally
-#' from these data come from the US NCEI which states that users of these data
-#' should take into account the following: \dQuote{The following data and
-#' products may have conditions placed on their international commercial use.
-#' They can be used within the U.S. or for non-commercial international
-#' activities without restriction. The non-U.S. data cannot be redistributed for
-#' commercial purposes. Re-distribution of these data by others must provide
-#' this same notification.}
+#' @note While \package{GSODR} does not distribute GSOD weather data, users of
+#' the data should note the conditions that the U.S. NCEI places upon the GSOD
+#' data.
+#' \dQuote{The following data and products may have conditions placed on their
+#' international commercial use.  They can be used within the U.S. or for
+#' non-commercial international activities without restriction. The non-U.S.
+#' data cannot be redistributed for commercial purposes. Re-distribution of
+#' these data by others must provide this same notification.}
 #'
 #' @seealso
 #'For automated downloading and tidying see the \code{\link{get_GSOD}}

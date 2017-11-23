@@ -1,6 +1,6 @@
 
 .onAttach <- function(libname, pkgname) {
-  msg <- paste0("\nGSOD is distributed free by the US NCEI with the\n",
+  msg <- paste0("\nGSOD is distributed free by the U.S. NCEI with the\n",
                 "following conditions.\n",
                 "'The following data and products may have conditions placed\n",
                 "their international commercial use. They can be used within\n",
