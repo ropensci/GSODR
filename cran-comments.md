@@ -10,39 +10,26 @@
 
 ## New minor release
 
-This is a new minor release with reduced dependencies and new functionality
+This is a new minor release
 
 ## Bug fixes
 
-- Fixes bug reported in [issue 36](https://github.com/ropensci/GSODR/issues/36)
-```r
-> t <- get_GSOD(years = 2010, station = "955510-99999")
-Error in .f(.x[[i]], ...) : 
-955510-99999 is not a valid station ID number, please check your entry.
-Valid Station IDs can be found in the isd-history.txt file
-available from the US NCEI FTP server by combining the USAF and WBAN
-columns, e.g. '007005' '99999' is '007005-99999' from this file 
-<ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.txt>
-```
+- `MAX_FLAG` and `MIN_FLAG` columns now report `NA` when there is no flag
 
-## Major changes
+## Minor changes
 
-- The _data.table_ and _fields_ packages are no longer imported. All internal
-functions now use _dplyr_ or base R functionality, reducing the dependencies of
-_GSODR_
+- Comment for Bob and Hugh in DESCRIPTION now only ORCID url
 
-- Any data frames returned by _GSODR_ functions are returned as a `tibble()`
-object
+- dplyr version set to >= 0.7.0 not 0.7 as before
 
-- The `YEARMODA` column is now returned as `Date` without time, rather than
-`Character`
+- Start-up message statement is more clear in relation to WMO resolution 40,
+that GSODR does not redistribute any weather data itself
 
-- Add new function, `get_inventory()`, which downloads the NCEI's station
-inventory document and returns a `tibble()` object of the data
+- Remove unnecessary function, .onLoad(), from zzz.R
 
-- Use larger images and provide a table of contents in vignettes
+- Function titles in documentation now in title case
 
-- Updated and enhanced introductory vignette
+- Correct grammar in documentation
 
 - Update internal stations list
 
