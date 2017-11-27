@@ -10,8 +10,9 @@
                 "these data by others must provide this same notification.\n",
                 "WMO Resolution 40. NOAA Policy'\n",
                 "\n",
-                "GSODR does not redistibute any weather data itself. It only\n",
-                "provides an interface for R users to download these data,\n",
-                "but it does redistribute station metadata in the package.\n")
+                "GSODR does not redistribute any weather data itself. It \n",
+                "only provides an interface for R users to download these\n",
+                "data, but it does redistribute station metadata in the\n
+                package.\n")
   packageStartupMessage(msg)
 }

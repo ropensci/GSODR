@@ -125,7 +125,7 @@ tbar <- get_GSOD(years = 2010,
                  dsn = "~/")
 ```
 
-## Plot Maximum and Miniumum Temperature Values
+## Plot Maximum and Minimum Temperature Values
 
 Using the first data downloaded for a single station, 955510-99999, plot the
 temperature for 2010 using `read_csv()` from Hadley's
@@ -276,7 +276,7 @@ _GSODR_ provides a function, `get_inventory()` to retrieve an inventory of the
 number of weather observations by station-year-month for the beginning of record
 through to current.
 
-Following is an example of how to retreive the inventory and check a station in
+Following is an example of how to retrieve the inventory and check a station in
 Toowoomba, Queensland, Australia, which was used in an earlier example.
 
 ```{r, eval=FALSE}

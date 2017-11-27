@@ -1,3 +1,4 @@
+
 # GSODR 1.1.1
 
 ## Bug fixes
@@ -18,6 +19,8 @@ that GSODR does not redistribute any weather data itself
 - Function titles in documentation now in title case
 
 - Correct grammar in documentation
+
+--------------------------------------------------------------------------------
 
 # GSODR 1.1.0
 
@@ -55,6 +58,7 @@ inventory document and returns a `tibble()` object of the data
 
 - Update internal stations list
 
+--------------------------------------------------------------------------------
 
 # GSODR 1.0.7
 
@@ -83,6 +87,8 @@ clear and follow same format as that of `bomrang` package
 ## Major changes
 
 - Update internal stations list
+
+--------------------------------------------------------------------------------
 
 # GSODR 1.0.6
 
@@ -122,6 +128,8 @@ presented and some have been combined for easier use
 ## Minor changes
 
 - Clean code using linting
+
+--------------------------------------------------------------------------------
 
 # GSODR 1.0.3
 
