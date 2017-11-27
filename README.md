@@ -106,7 +106,7 @@ library(GSODR)
 ```
 
     ## 
-    ## GSOD is distributed free by the US NCEI with the
+    ## GSOD is distributed free by the U.S. NCEI with the
     ## following conditions.
     ## 'The following data and products may have conditions placed
     ## their international commercial use. They can be used within
