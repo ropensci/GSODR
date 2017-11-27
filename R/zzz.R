@@ -12,7 +12,7 @@
                 "\n",
                 "GSODR does not redistribute any weather data itself. It \n",
                 "only provides an interface for R users to download these\n",
-                "data, but it does redistribute station metadata in the\n",
+                "data, however it does redistribute station metadata in the\n",
                 "package.\n")
   packageStartupMessage(msg)
 }
