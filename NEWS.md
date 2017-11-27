@@ -17,6 +17,8 @@ that GSODR does not redistribute any weather data itself
 
 - Function titles in documentation now in title case
 
+- Correct grammar in documentation
+
 # GSODR 1.1.0
 
 ## Bug fixes
