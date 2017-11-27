@@ -1,5 +1,5 @@
 
-# GSODR 1.1.1
+# GSODR 1.1.1 (Release Date 2017-11-27)
 
 ## Bug fixes
 
