@@ -31,11 +31,11 @@
   "codeRepository": "https://github.com/ropensci/GSODR.git",
   "dateModified": "2017-01-21",
   "dateCreated": "2017-01-21",
-  "description": "Provides automated downloading, parsing, cleaning, unit conversion\n    and formatting of Global Surface Summary of the Day (GSOD) weather data from\n    the from the USA National Centers for Environmental Information (NCEI) for\n    use in R.  Units are converted from from United States Customary System\n    (USCS) units to International System of Units (SI).  Stations may be \n    individually checked for number of missing days defined by the user, where\n    stations with too many missing observations are omitted.  Only stations with\n    valid reported latitude and longitude values are permitted in the final \n    data.  Additional useful elements, saturation vapour pressure (es), actual \n    vapour pressure (ea) and relative humidity are calculated from the original \n    data and included in the final data set.  The resulting data include station\n    identification information, state, country, latitude, longitude, elevation,\n    weather observations and associated flags.  Data may be automatically saved \n    to disk. File output may be returned as a comma-separated values (CSV) or\n    GeoPackage (GPKG) file.  Additional data are included with this R package: a\n    list of elevation values for stations between -60 and 60 degrees latitude \n    derived from the Shuttle Radar Topography Measuring Mission (SRTM).  For\n    information on the GSOD data from NCEI, please see the  GSOD readme.txt file\n    available from, <http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt>.",
-  "keywords": "weather, data, daily, global, station",
+  "description": "Provides automated downloading, parsing, cleaning, unit conversion\n    and formatting of Global Surface Summary of the Day (GSOD) weather data from\n    the from the USA National Centers for Environmental Information (NCEI) for\n    use in R.  Units are converted from from United States Customary System\n    (USCS) units to International System of Units (SI).  Stations may be \n    individually checked for number of missing days defined by the user, where\n    stations with too many missing observations are omitted.  Only stations with\n    valid reported latitude and longitude values are permitted in the final \n    data.  Additional useful elements, saturation vapour pressure (es), actual \n    vapour pressure (ea) and relative humidity are calculated from the original \n    data and included in the final data set.  The resulting data include station\n    identification information, state, country, latitude, longitude, elevation,\n    weather observations and associated flags.  Data may be automatically saved \n    to disk. File output may be returned as a comma-separated values (CSV) or\n    GeoPackage (GPKG) file.  Additional data are included with this R package: a\n    list of elevation values for stations between -60 and 60 degrees latitude \n    derived from the Shuttle Radar Topography Measuring Mission (SRTM).  For\n    information on the GSOD data from NCEI, please see the GSOD readme.txt file\n    available from, <http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt>.",
+  "keywords": ["US-NCEI", "meteorological-data", "global-weather", "weather", "weather-data", "meteorology", "station-data", "surface-weather"],
   "license": "https://spdx.org/licenses/MIT",
   "title": "GSODR",
-  "version": "1.1.0",
+  "version": "1.1.1.9000",
   "name": "GSODR: Global Surface Summary of the Day (GSOD) Weather Data from R",
   "issueTracker": "https://github.com/ropensci/GSODR/issues",
   "programmingLanguage": {
@@ -264,7 +264,7 @@
       "@type": "SoftwareApplication",
       "identifier": "dplyr",
       "name": "dplyr",
-      "version": "0.7",
+      "version": "0.7.0",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -382,7 +382,7 @@
   "contIntegration": "https://travis-ci.org/ropensci/GSODR",
   "releaseNotes": "https://github.com/ropensci/GSODR.git/blob/devel/NEWS.md",
   "readme": "https://github.com/ropensci/GSODR.git/blob/devel/README.md",
-  "fileSize": "1082.289KB",
+  "fileSize": "1082.442KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -426,14 +426,14 @@
       "givenName": "Hugh",
       "familyName": "Parsonage",
       "email": "hugh.parsonage@gmail.com",
-      "@id": "Wrote internal function to calcuate distances for \n    nearest_stations() and map code for station location figure, both taken from\n    our bomrang package, https://orcid.org/0000-0003-4055-0835"
+      "@id": "https://orcid.org/0000-0003-4055-0835"
     },
     {
       "@type": "Person",
       "givenName": "Bob",
       "familyName": "Rudis",
       "email": "bob@rud.is",
-      "@id": "Wrote functionality to interface with NCEI server and cache files\n    for download, https://orcid.org/0000-0001-5670-2640"
+      "@id": "https://orcid.org/0000-0001-5670-2640"
     }
   ],
   "copyrightHolder": [
@@ -442,14 +442,16 @@
       "givenName": "Hugh",
       "familyName": "Parsonage",
       "email": "hugh.parsonage@gmail.com",
-      "@id": "Wrote internal function to calcuate distances for \n    nearest_stations() and map code for station location figure, both taken from\n    our bomrang package, https://orcid.org/0000-0003-4055-0835"
+      "@id": "https://orcid.org/0000-0003-4055-0835"
     },
     {
       "@type": "Person",
       "givenName": "Bob",
       "familyName": "Rudis",
       "email": "bob@rud.is",
-      "@id": "Wrote functionality to interface with NCEI server and cache files\n    for download, https://orcid.org/0000-0001-5670-2640"
+      "@id": "https://orcid.org/0000-0001-5670-2640"
     }
-  ]
+  ],
+  "applicationCategory": "Tools",
+  "isPartOf": "https://ropensci.org"
 }
