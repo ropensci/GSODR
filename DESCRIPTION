@@ -80,5 +80,5 @@ LazyLoad: FALSE
 ByteCompile: TRUE
 VignetteBuilder: knitr
 X-schema.org-applicationCategory: Tools
-X-schema.org-keywords: US-NCEI, meteorological-data, global-weather, weather, weather-data, meteorology, station-data, surface-weather
+X-schema.org-keywords: US-NCEI, meteorological-data, global-weather, weather, weather-data, meteorology, station-data, surface-weather, data-access, US-NCDC
 X-schema.org-isPartOf: https://ropensci.org
