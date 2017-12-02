@@ -234,3 +234,9 @@ test_that("Timeout options are reset on get_GSOD() exit", {
   expect_equal(options("timeout")[[1]], original_timeout)
   rm(x)
 })
+
+# Check that max_missing is not allowed for current year -----------------------
+test_that("max_missing is not allowed for current year", {
+  years <- 1983:format(Sys.Date(), "%Y")
+ expect_error(get_GSOD(years = years, max_missing = 5))
+  })

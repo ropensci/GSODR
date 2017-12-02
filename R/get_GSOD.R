@@ -146,6 +146,14 @@ get_GSOD <- function(years = NULL,
     outfile <- .validate_fileout(CSV, dsn, filename, GPKG)
   }
 
+  if (!is.null(max_missing))
+  {
+    if (format(Sys.Date(), "%Y") %in% years)
+    {
+      stop("You cannot use `max_missing` with the current, incomplete year.")
+    }
+  }
+
   # CRAN NOTE avoidance
   isd_history <- NULL
 
