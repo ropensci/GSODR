@@ -41,10 +41,10 @@
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "3.4.2",
+    "version": "3.4.3",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 3.4.2 (2017-09-28)",
+  "runtimePlatform": "R version 3.4.3 (2017-11-30)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -382,7 +382,7 @@
   "contIntegration": "https://travis-ci.org/ropensci/GSODR",
   "releaseNotes": "https://github.com/ropensci/GSODR.git/blob/devel/NEWS.md",
   "readme": "https://github.com/ropensci/GSODR.git/blob/devel/README.md",
-  "fileSize": "1082.442KB",
+  "fileSize": "1083.186KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
