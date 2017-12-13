@@ -96,45 +96,36 @@
 <a href="#example---download-and-plot-data-for-a-single-country" class="anchor"></a>Example - Download and Plot Data for a Single Country</h2>
 <p>This example will demonstrate how to download data for Philippines for year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in the user’s home directory and link it with climate data from the <em>GSODRdata</em> package.</p>
 <p>Download data for Philippines for year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in the user’s home directory.</p>
-<pre class="sourceCode r" id="cb1"><code class="sourceCode r"><div class="sourceLine" id="cb1-1" data-line-number="1">
-<span class="kw">library</span>(GSODR)</div>
-<div class="sourceLine" id="cb1-2" data-line-number="2">
-<span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">country =</span> <span class="st">"Philippines"</span>, <span class="dt">dsn =</span> <span class="st">"~/"</span>,</div>
-<div class="sourceLine" id="cb1-3" data-line-number="3">         <span class="dt">filename =</span> <span class="st">"PHL-2010"</span>, <span class="dt">GPKG =</span> <span class="ot">TRUE</span>, <span class="dt">max_missing =</span> <span class="dv">5</span>)</div></code></pre>
+<pre class="sourceCode r" id="cb1"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(GSODR)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">country =</span> <span class="st">"Philippines"</span>, <span class="dt">dsn =</span> <span class="st">"~/"</span>,</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">         <span class="dt">filename =</span> <span class="st">"PHL-2010"</span>, <span class="dt">GPKG =</span> <span class="ot">TRUE</span>, <span class="dt">max_missing =</span> <span class="dv">5</span>)</a></code></pre>
 </div>
 <div id="example---use-the-geopackage-file-to-create-a-kml-file" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example---use-the-geopackage-file-to-create-a-kml-file" class="anchor"></a>Example - Use the GeoPackage File to Create a KML File</h2>
 <p>Using the GeoPackage that was just created, you can now create a KML file to open with Google Earth and visualise the data spatially and over time.</p>
-<pre class="sourceCode r" id="cb2"><code class="sourceCode r"><div class="sourceLine" id="cb2-1" data-line-number="1">
-<span class="kw">library</span>(rgdal)</div>
-<div class="sourceLine" id="cb2-2" data-line-number="2">
-<span class="kw">library</span>(spacetime)</div>
-<div class="sourceLine" id="cb2-3" data-line-number="3">
-<span class="kw">library</span>(plotKML)</div>
-<div class="sourceLine" id="cb2-4" data-line-number="4"></div>
-<div class="sourceLine" id="cb2-5" data-line-number="5">layers &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/rgdal/topics/readOGR">ogrListLayers</a></span>(<span class="dt">dsn =</span> <span class="kw">path.expand</span>(<span class="st">"~/PHL-2010.gpkg"</span>))</div>
-<div class="sourceLine" id="cb2-6" data-line-number="6">pnts &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/rgdal/topics/readOGR">readOGR</a></span>(<span class="dt">dsn =</span> <span class="kw">path.expand</span>(<span class="st">"~/PHL-2010.gpkg"</span>), layers[<span class="dv">1</span>])</div>
-<div class="sourceLine" id="cb2-7" data-line-number="7"></div>
-<div class="sourceLine" id="cb2-8" data-line-number="8"><span class="co"># Plot results in Google Earth as a spacetime object:</span></div>
-<div class="sourceLine" id="cb2-9" data-line-number="9">pnts<span class="op">$</span>DATE =<span class="st"> </span><span class="kw">as.Date</span>(<span class="kw">paste</span>(pnts<span class="op">$</span>YEAR, pnts<span class="op">$</span>MONTH, pnts<span class="op">$</span>DAY, <span class="dt">sep =</span> <span class="st">"-"</span>))</div>
-<div class="sourceLine" id="cb2-10" data-line-number="10">
-<span class="kw">row.names</span>(pnts) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">"point"</span>, <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(pnts), <span class="dt">sep =</span> <span class="st">""</span>)</div>
-<div class="sourceLine" id="cb2-11" data-line-number="11"></div>
-<div class="sourceLine" id="cb2-12" data-line-number="12">tmp_ST &lt;-<span class="st"> </span><span class="kw">STIDF</span>(<span class="dt">sp =</span> <span class="kw">as</span>(pnts, <span class="st">"SpatialPoints"</span>),</div>
-<div class="sourceLine" id="cb2-13" data-line-number="13">                <span class="dt">time =</span> pnts<span class="op">$</span>DATE <span class="op">-</span><span class="st"> </span><span class="fl">0.5</span>,</div>
-<div class="sourceLine" id="cb2-14" data-line-number="14">                <span class="dt">data =</span> pnts<span class="op">@</span>data[, <span class="kw">c</span>(<span class="st">"TEMP"</span>, <span class="st">"STNID"</span>)],</div>
-<div class="sourceLine" id="cb2-15" data-line-number="15">                <span class="dt">endTime =</span> pnts<span class="op">$</span>DATE <span class="op">+</span><span class="st"> </span><span class="fl">0.5</span>)</div>
-<div class="sourceLine" id="cb2-16" data-line-number="16"></div>
-<div class="sourceLine" id="cb2-17" data-line-number="17">shape =<span class="st"> "http://maps.google.com/mapfiles/kml/pal2/icon18.png"</span>
-</div>
-<div class="sourceLine" id="cb2-18" data-line-number="18"></div>
-<div class="sourceLine" id="cb2-19" data-line-number="19">
-<span class="kw">kml</span>(tmp_ST, <span class="dt">dtime =</span> <span class="dv">24</span> <span class="op">*</span><span class="st"> </span><span class="dv">3600</span>, <span class="dt">colour =</span> TEMP, <span class="dt">shape =</span> shape, <span class="dt">labels =</span> TEMP,</div>
-<div class="sourceLine" id="cb2-20" data-line-number="20">    <span class="dt">file.name =</span> <span class="st">"Temperatures_PHL_2010-2010.kml"</span>, <span class="dt">folder.name =</span> <span class="st">"TEMP"</span>)</div>
-<div class="sourceLine" id="cb2-21" data-line-number="21"></div>
-<div class="sourceLine" id="cb2-22" data-line-number="22">
-<span class="kw">system</span>(<span class="st">"zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml"</span>)</div></code></pre>
+<pre class="sourceCode r" id="cb2"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(rgdal)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">library</span>(spacetime)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw">library</span>(plotKML)</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">layers &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/rgdal/topics/readOGR">ogrListLayers</a></span>(<span class="dt">dsn =</span> <span class="kw">path.expand</span>(<span class="st">"~/PHL-2010.gpkg"</span>))</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">pnts &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/rgdal/topics/readOGR">readOGR</a></span>(<span class="dt">dsn =</span> <span class="kw">path.expand</span>(<span class="st">"~/PHL-2010.gpkg"</span>), layers[<span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co"># Plot results in Google Earth as a spacetime object:</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">pnts<span class="op">$</span>DATE =<span class="st"> </span><span class="kw">as.Date</span>(<span class="kw">paste</span>(pnts<span class="op">$</span>YEAR, pnts<span class="op">$</span>MONTH, pnts<span class="op">$</span>DAY, <span class="dt">sep =</span> <span class="st">"-"</span>))</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="kw">row.names</span>(pnts) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">"point"</span>, <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(pnts), <span class="dt">sep =</span> <span class="st">""</span>)</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">tmp_ST &lt;-<span class="st"> </span><span class="kw">STIDF</span>(<span class="dt">sp =</span> <span class="kw">as</span>(pnts, <span class="st">"SpatialPoints"</span>),</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">                <span class="dt">time =</span> pnts<span class="op">$</span>DATE <span class="op">-</span><span class="st"> </span><span class="fl">0.5</span>,</a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">                <span class="dt">data =</span> pnts<span class="op">@</span>data[, <span class="kw">c</span>(<span class="st">"TEMP"</span>, <span class="st">"STNID"</span>)],</a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">                <span class="dt">endTime =</span> pnts<span class="op">$</span>DATE <span class="op">+</span><span class="st"> </span><span class="fl">0.5</span>)</a>
+<a class="sourceLine" id="cb2-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb2-17" data-line-number="17">shape =<span class="st"> "http://maps.google.com/mapfiles/kml/pal2/icon18.png"</span></a>
+<a class="sourceLine" id="cb2-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="kw">kml</span>(tmp_ST, <span class="dt">dtime =</span> <span class="dv">24</span> <span class="op">*</span><span class="st"> </span><span class="dv">3600</span>, <span class="dt">colour =</span> TEMP, <span class="dt">shape =</span> shape, <span class="dt">labels =</span> TEMP,</a>
+<a class="sourceLine" id="cb2-20" data-line-number="20">    <span class="dt">file.name =</span> <span class="st">"Temperatures_PHL_2010-2010.kml"</span>, <span class="dt">folder.name =</span> <span class="st">"TEMP"</span>)</a>
+<a class="sourceLine" id="cb2-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="kw">system</span>(<span class="st">"zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml"</span>)</a></code></pre>
 </div>
 <div id="example---compare-the-gsod-weather-data-from-the-philippines-with-climate-data-provided-by-the-gsodrdata-package-" class="section level2">
 <h2 class="hasAnchor">
@@ -146,125 +137,101 @@
 <p>CHELSA is a high resolution (30 arc sec) climate data set for the earth land surface areas currently under development in coorporation [<em>sic</em>] with the Department of Geography of the University of Hamburg (Prof. Dr. Jürgen Böhner, Dr. Olaf Conrad, Tobias Kawohl), the Swiss Federal Institute for Forest, Snow and Landscape Research WSL (Prof. Dr. Niklaus Zimmermann), the University of Zurich (Dr. Dirk N. Karger, Dr. Michael Kessler), and the University of Göttingen (Prof. Dr. Holger Kreft). It includes monthly mean temperature and precipitation patterns for the time period 1979-2013. CHELSA is based on a quasi-mechanistical statistical downscaling of the ERA interim global circulation model (<a href="http://www.ecmwf.int/en/research/climate-reanalysis/era-interim" class="uri">http://www.ecmwf.int/en/research/climate-reanalysis/era-interim</a>) with a GPCC bias correction (<a href="https://www.dwd.de/EN/ourservices/gpcc/gpcc.html" class="uri">https://www.dwd.de/EN/ourservices/gpcc/gpcc.html</a>) and is freely available in the download section.</p>
 </blockquote>
 <p>See <a href="http://chelsa-climate.org" class="uri">http://chelsa-climate.org</a> for more information on these data.</p>
-<pre class="sourceCode r" id="cb3"><code class="sourceCode r"><div class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># install.packages("devtools")</span></div>
-<div class="sourceLine" id="cb3-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"adamhsparks/GSODRdata"</span>)</div></code></pre>
+<pre class="sourceCode r" id="cb3"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># install.packages("devtools")</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"adamhsparks/GSODRdata"</span>)</a></code></pre>
 <p>Now that the extra data have been installed, take a look at the CHELSA data that are one of the data sets included in the <em>GSODRdata</em> package.</p>
-<pre class="sourceCode r" id="cb4"><code class="sourceCode r"><div class="sourceLine" id="cb4-1" data-line-number="1">
-<span class="kw">library</span>(GSODRdata)</div>
-<div class="sourceLine" id="cb4-2" data-line-number="2"></div>
-<div class="sourceLine" id="cb4-3" data-line-number="3">
-<span class="kw">str</span>(CHELSA)</div>
-<div class="sourceLine" id="cb4-4" data-line-number="4"></div>
-<div class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; 'data.frame':    23927 obs. of  46 variables:</span></div>
-<div class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt;   $ STNID                      : chr  "008268-99999" "010014-99999" "010015-99999" "010882-99999" ...</span></div>
-<div class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; $ CHELSA_bio10_1979-2013_V1_1: num  30 14.3 12.5 12.6 15.2 16.3 13.9 12.7 13.4 12.9 ...</span></div>
-<div class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; $ CHELSA_bio11_1979-2013_V1_1: num  5.8 1 -3.2 -7 -0.2 -2.2 -3 -6.9 -2.1 -1.2 ...</span></div>
-<div class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; $ CHELSA_bio1_1979-2013_V1_1 : num  18.3 7.1 4.2 2.3 7 6.6 4.8 2.4 5 5.2 ...</span></div>
-<div class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; $ CHELSA_bio12_1979-2013_V1_1: num  214 1889 2209 563 1710 ...</span></div>
-<div class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt; $ CHELSA_bio13_1979-2013_V1_1: num  54.6 223.7 254.7 73 200.6 ...</span></div>
-<div class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt; $ CHELSA_bio14_1979-2013_V1_1: num  0.1 87.7 108.9 26.7 78.5 ...</span></div>
-<div class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt; $ CHELSA_bio15_1979-2013_V1_1: num  104.9 30.3 30.1 30.7 32.1 ...</span></div>
-<div class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt; $ CHELSA_bio16_1979-2013_V1_1: num  155 651 753 216 590 ...</span></div>
-<div class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt; $ CHELSA_bio17_1979-2013_V1_1: num  0.6 273.5 332.6 85.5 244.7 ...</span></div>
-<div class="sourceLine" id="cb4-16" data-line-number="16"><span class="co">#&gt; $ CHELSA_bio18_1979-2013_V1_1: num  1.7 433.3 448.3 198.7 330.9 ...</span></div>
-<div class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">#&gt; $ CHELSA_bio19_1979-2013_V1_1: num  96.9 490.4 621.1 122 494.4 ...</span></div>
-<div class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">#&gt; $ CHELSA_bio2_1979-2013_V1_1 : num  23 12.5 16.7 20.1 15.6 17.1 16.4 18.6 14.8 13.3 ...</span></div>
-<div class="sourceLine" id="cb4-19" data-line-number="19"><span class="co">#&gt; $ CHELSA_bio3_1979-2013_V1_1 : num  48.3 44.8 45.3 45.5 45 44.3 43.8 44.6 43.8 43.8 ...</span></div>
-<div class="sourceLine" id="cb4-20" data-line-number="20"><span class="co">#&gt; $ CHELSA_bio4_1979-2013_V1_1 : num  884 486 592 734 573 ...</span></div>
-<div class="sourceLine" id="cb4-21" data-line-number="21"><span class="co">#&gt; $ CHELSA_bio5_1979-2013_V1_1 : num  40.5 21.5 22.2 23.6 23.9 25.4 23.1 23 21.8 20.4 ...</span></div>
-<div class="sourceLine" id="cb4-22" data-line-number="22"><span class="co">#&gt; $ CHELSA_bio6_1979-2013_V1_1 : num  -7.2 -6.5 -14.5 -20.7 -10.7 -13.3 -14.3 -18.7 -11.9 -9.9 ...</span></div>
-<div class="sourceLine" id="cb4-23" data-line-number="23"><span class="co">#&gt; $ CHELSA_bio7_1979-2013_V1_1 : num  47.7 28 36.8 44.3 34.7 38.7 37.4 41.7 33.8 30.3 ...</span></div>
-<div class="sourceLine" id="cb4-24" data-line-number="24"><span class="co">#&gt; $ CHELSA_bio8_1979-2013_V1_1 : num  10.5 5.7 -1.7 12.5 1.3 8.5 6.8 12.5 7 7.2 ...</span></div>
-<div class="sourceLine" id="cb4-25" data-line-number="25"><span class="co">#&gt; $ CHELSA_bio9_1979-2013_V1_1 : num  26.7 7.8 8.4 -0.1 12.2 3.8 9.6 0.1 9.8 9.3 ...</span></div>
-<div class="sourceLine" id="cb4-26" data-line-number="26"><span class="co">#&gt; $ CHELSA_prec_10_1979-2013   : num  3.6 230.6 237.5 48.9 192.8 ...</span></div>
-<div class="sourceLine" id="cb4-27" data-line-number="27"><span class="co">#&gt; $ CHELSA_prec_11_1979-2013   : num  10.5 219.9 237.8 41.3 189.6 ...</span></div>
-<div class="sourceLine" id="cb4-28" data-line-number="28"><span class="co">#&gt; $ CHELSA_prec_1_1979-2013    : num  35.8 198.4 227.7 40.3 189.5 ...</span></div>
-<div class="sourceLine" id="cb4-29" data-line-number="29"><span class="co">#&gt; $ CHELSA_prec_12_1979-2013   : num  25.4 215.5 248.3 40.5 201.5 ...</span></div>
-<div class="sourceLine" id="cb4-30" data-line-number="30"><span class="co">#&gt; $ CHELSA_prec_1979-2013_land : num  214 1912 2170 559 1720 ...</span></div>
-<div class="sourceLine" id="cb4-31" data-line-number="31"><span class="co">#&gt; $ CHELSA_prec_2_1979-2013    : num  46.5 153.3 188.4 32.5 153.7 ...</span></div>
-<div class="sourceLine" id="cb4-32" data-line-number="32"><span class="co">#&gt; $ CHELSA_prec_3_1979-2013    : num  54.8 151.9 176.4 31.8 145 ...</span></div>
-<div class="sourceLine" id="cb4-33" data-line-number="33"><span class="co">#&gt; $ CHELSA_prec_4_1979-2013    : num  28.3 101.1 114.4 26.6 91.6 ...</span></div>
-<div class="sourceLine" id="cb4-34" data-line-number="34"><span class="co">#&gt; $ CHELSA_prec_5_1979-2013    : num  7 90.6 107 38.9 79 72.1 75.6 46.7 91.3 85.1 ...</span></div>
-<div class="sourceLine" id="cb4-35" data-line-number="35"><span class="co">#&gt; $ CHELSA_prec_6_1979-2013    : num  1.2 100.5 110.1 58 84 ...</span></div>
-<div class="sourceLine" id="cb4-36" data-line-number="36"><span class="co">#&gt; $ CHELSA_prec_7_1979-2013    : num  1 116.7 119.2 69.7 90.1 ...</span></div>
-<div class="sourceLine" id="cb4-37" data-line-number="37"><span class="co">#&gt; $ CHELSA_prec_8_1979-2013    : num  0.3 165.6 159.6 72.7 121.6 ...</span></div>
-<div class="sourceLine" id="cb4-38" data-line-number="38"><span class="co">#&gt; $ CHELSA_prec_9_1979-2013    : num  0.1 204 229.6 57.9 181.4 ...</span></div>
-<div class="sourceLine" id="cb4-39" data-line-number="39"><span class="co">#&gt; $ CHELSA_temp_10_1979-2013   : num  19.2 8 4.3 2.3 7.2 6.7 5.7 2.4 5.6 5.9 ...</span></div>
-<div class="sourceLine" id="cb4-40" data-line-number="40"><span class="co">#&gt; $ CHELSA_temp_11_1979-2013   : num  13.2 4.5 0.2 -3 3 2.2 1.2 -2.7 1.6 2.2 ...</span></div>
-<div class="sourceLine" id="cb4-41" data-line-number="41"><span class="co">#&gt; $ CHELSA_temp_1_1979-2013    : num  4.9 1.2 -3.4 -7.2 -0.4 -2.4 -2.5 -7 -1.9 -1 ...</span></div>
-<div class="sourceLine" id="cb4-42" data-line-number="42"><span class="co">#&gt; $ CHELSA_temp_12_1979-2013   : num  7.7 2.1 -2.7 -6.5 0.3 -1.4 -1.3 -6.3 -0.7 -0.1 ...</span></div>
-<div class="sourceLine" id="cb4-43" data-line-number="43"><span class="co">#&gt; $ CHELSA_temp_1979-2013_land : num  18.3 7.1 4.1 2.3 6.9 6.5 5.1 2.5 5 5.2 ...</span></div>
-<div class="sourceLine" id="cb4-44" data-line-number="44"><span class="co">#&gt; $ CHELSA_temp_2_1979-2013    : num  7 0.8 -3.2 -6.6 -0.2 -2.2 -2.8 -6.4 -2.1 -1.2 ...</span></div>
-<div class="sourceLine" id="cb4-45" data-line-number="45"><span class="co">#&gt; $ CHELSA_temp_3_1979-2013    : num  12.2 2.3 -0.8 -3.3 2.2 0.8 -0.9 -2.7 -0.6 0.1 ...</span></div>
-<div class="sourceLine" id="cb4-46" data-line-number="46"><span class="co">#&gt; $ CHELSA_temp_4_1979-2013    : num  18.3 5.1 3 1.5 5.8 5.1 3 1.7 2.9 3.1 ...</span></div>
-<div class="sourceLine" id="cb4-47" data-line-number="47"><span class="co">#&gt; $ CHELSA_temp_5_1979-2013    : num  23.5 9 7.6 6.4 10.1 10.7 7.8 6.6 7.3 7.1 ...</span></div>
-<div class="sourceLine" id="cb4-48" data-line-number="48"><span class="co">#&gt; $ CHELSA_temp_6_1979-2013    : num  28.2 12 10.9 10.9 13.2 14.7 11.9 11.3 11.1 10.5 ...</span></div>
-<div class="sourceLine" id="cb4-49" data-line-number="49"><span class="co">#&gt; $ CHELSA_temp_7_1979-2013    : num  28.2 12 10.9 10.9 13.2 14.7 11.9 11.3 11.1 10.5 ...</span></div>
-<div class="sourceLine" id="cb4-50" data-line-number="50"><span class="co">#&gt; $ CHELSA_temp_8_1979-2013    : num  29.7 14.2 12.2 12.1 14.9 15.8 14 12.2 13.3 12.8 ...</span></div>
-<div class="sourceLine" id="cb4-51" data-line-number="51"><span class="co">#&gt; $ CHELSA_temp_9_1979-2013    : num  25.1 11.5 8.6 7.7 11.5 11.6 10.2 7.6 9.9 9.8 ...</span></div></code></pre>
+<pre class="sourceCode r" id="cb4"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">library</span>(GSODRdata)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="kw">str</span>(CHELSA)</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; 'data.frame':    23927 obs. of  46 variables:</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt;   $ STNID                      : chr  "008268-99999" "010014-99999" "010015-99999" "010882-99999" ...</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; $ CHELSA_bio10_1979-2013_V1_1: num  30 14.3 12.5 12.6 15.2 16.3 13.9 12.7 13.4 12.9 ...</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; $ CHELSA_bio11_1979-2013_V1_1: num  5.8 1 -3.2 -7 -0.2 -2.2 -3 -6.9 -2.1 -1.2 ...</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; $ CHELSA_bio1_1979-2013_V1_1 : num  18.3 7.1 4.2 2.3 7 6.6 4.8 2.4 5 5.2 ...</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; $ CHELSA_bio12_1979-2013_V1_1: num  214 1889 2209 563 1710 ...</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt; $ CHELSA_bio13_1979-2013_V1_1: num  54.6 223.7 254.7 73 200.6 ...</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt; $ CHELSA_bio14_1979-2013_V1_1: num  0.1 87.7 108.9 26.7 78.5 ...</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt; $ CHELSA_bio15_1979-2013_V1_1: num  104.9 30.3 30.1 30.7 32.1 ...</span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt; $ CHELSA_bio16_1979-2013_V1_1: num  155 651 753 216 590 ...</span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt; $ CHELSA_bio17_1979-2013_V1_1: num  0.6 273.5 332.6 85.5 244.7 ...</span></a>
+<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co">#&gt; $ CHELSA_bio18_1979-2013_V1_1: num  1.7 433.3 448.3 198.7 330.9 ...</span></a>
+<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">#&gt; $ CHELSA_bio19_1979-2013_V1_1: num  96.9 490.4 621.1 122 494.4 ...</span></a>
+<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">#&gt; $ CHELSA_bio2_1979-2013_V1_1 : num  23 12.5 16.7 20.1 15.6 17.1 16.4 18.6 14.8 13.3 ...</span></a>
+<a class="sourceLine" id="cb4-19" data-line-number="19"><span class="co">#&gt; $ CHELSA_bio3_1979-2013_V1_1 : num  48.3 44.8 45.3 45.5 45 44.3 43.8 44.6 43.8 43.8 ...</span></a>
+<a class="sourceLine" id="cb4-20" data-line-number="20"><span class="co">#&gt; $ CHELSA_bio4_1979-2013_V1_1 : num  884 486 592 734 573 ...</span></a>
+<a class="sourceLine" id="cb4-21" data-line-number="21"><span class="co">#&gt; $ CHELSA_bio5_1979-2013_V1_1 : num  40.5 21.5 22.2 23.6 23.9 25.4 23.1 23 21.8 20.4 ...</span></a>
+<a class="sourceLine" id="cb4-22" data-line-number="22"><span class="co">#&gt; $ CHELSA_bio6_1979-2013_V1_1 : num  -7.2 -6.5 -14.5 -20.7 -10.7 -13.3 -14.3 -18.7 -11.9 -9.9 ...</span></a>
+<a class="sourceLine" id="cb4-23" data-line-number="23"><span class="co">#&gt; $ CHELSA_bio7_1979-2013_V1_1 : num  47.7 28 36.8 44.3 34.7 38.7 37.4 41.7 33.8 30.3 ...</span></a>
+<a class="sourceLine" id="cb4-24" data-line-number="24"><span class="co">#&gt; $ CHELSA_bio8_1979-2013_V1_1 : num  10.5 5.7 -1.7 12.5 1.3 8.5 6.8 12.5 7 7.2 ...</span></a>
+<a class="sourceLine" id="cb4-25" data-line-number="25"><span class="co">#&gt; $ CHELSA_bio9_1979-2013_V1_1 : num  26.7 7.8 8.4 -0.1 12.2 3.8 9.6 0.1 9.8 9.3 ...</span></a>
+<a class="sourceLine" id="cb4-26" data-line-number="26"><span class="co">#&gt; $ CHELSA_prec_10_1979-2013   : num  3.6 230.6 237.5 48.9 192.8 ...</span></a>
+<a class="sourceLine" id="cb4-27" data-line-number="27"><span class="co">#&gt; $ CHELSA_prec_11_1979-2013   : num  10.5 219.9 237.8 41.3 189.6 ...</span></a>
+<a class="sourceLine" id="cb4-28" data-line-number="28"><span class="co">#&gt; $ CHELSA_prec_1_1979-2013    : num  35.8 198.4 227.7 40.3 189.5 ...</span></a>
+<a class="sourceLine" id="cb4-29" data-line-number="29"><span class="co">#&gt; $ CHELSA_prec_12_1979-2013   : num  25.4 215.5 248.3 40.5 201.5 ...</span></a>
+<a class="sourceLine" id="cb4-30" data-line-number="30"><span class="co">#&gt; $ CHELSA_prec_1979-2013_land : num  214 1912 2170 559 1720 ...</span></a>
+<a class="sourceLine" id="cb4-31" data-line-number="31"><span class="co">#&gt; $ CHELSA_prec_2_1979-2013    : num  46.5 153.3 188.4 32.5 153.7 ...</span></a>
+<a class="sourceLine" id="cb4-32" data-line-number="32"><span class="co">#&gt; $ CHELSA_prec_3_1979-2013    : num  54.8 151.9 176.4 31.8 145 ...</span></a>
+<a class="sourceLine" id="cb4-33" data-line-number="33"><span class="co">#&gt; $ CHELSA_prec_4_1979-2013    : num  28.3 101.1 114.4 26.6 91.6 ...</span></a>
+<a class="sourceLine" id="cb4-34" data-line-number="34"><span class="co">#&gt; $ CHELSA_prec_5_1979-2013    : num  7 90.6 107 38.9 79 72.1 75.6 46.7 91.3 85.1 ...</span></a>
+<a class="sourceLine" id="cb4-35" data-line-number="35"><span class="co">#&gt; $ CHELSA_prec_6_1979-2013    : num  1.2 100.5 110.1 58 84 ...</span></a>
+<a class="sourceLine" id="cb4-36" data-line-number="36"><span class="co">#&gt; $ CHELSA_prec_7_1979-2013    : num  1 116.7 119.2 69.7 90.1 ...</span></a>
+<a class="sourceLine" id="cb4-37" data-line-number="37"><span class="co">#&gt; $ CHELSA_prec_8_1979-2013    : num  0.3 165.6 159.6 72.7 121.6 ...</span></a>
+<a class="sourceLine" id="cb4-38" data-line-number="38"><span class="co">#&gt; $ CHELSA_prec_9_1979-2013    : num  0.1 204 229.6 57.9 181.4 ...</span></a>
+<a class="sourceLine" id="cb4-39" data-line-number="39"><span class="co">#&gt; $ CHELSA_temp_10_1979-2013   : num  19.2 8 4.3 2.3 7.2 6.7 5.7 2.4 5.6 5.9 ...</span></a>
+<a class="sourceLine" id="cb4-40" data-line-number="40"><span class="co">#&gt; $ CHELSA_temp_11_1979-2013   : num  13.2 4.5 0.2 -3 3 2.2 1.2 -2.7 1.6 2.2 ...</span></a>
+<a class="sourceLine" id="cb4-41" data-line-number="41"><span class="co">#&gt; $ CHELSA_temp_1_1979-2013    : num  4.9 1.2 -3.4 -7.2 -0.4 -2.4 -2.5 -7 -1.9 -1 ...</span></a>
+<a class="sourceLine" id="cb4-42" data-line-number="42"><span class="co">#&gt; $ CHELSA_temp_12_1979-2013   : num  7.7 2.1 -2.7 -6.5 0.3 -1.4 -1.3 -6.3 -0.7 -0.1 ...</span></a>
+<a class="sourceLine" id="cb4-43" data-line-number="43"><span class="co">#&gt; $ CHELSA_temp_1979-2013_land : num  18.3 7.1 4.1 2.3 6.9 6.5 5.1 2.5 5 5.2 ...</span></a>
+<a class="sourceLine" id="cb4-44" data-line-number="44"><span class="co">#&gt; $ CHELSA_temp_2_1979-2013    : num  7 0.8 -3.2 -6.6 -0.2 -2.2 -2.8 -6.4 -2.1 -1.2 ...</span></a>
+<a class="sourceLine" id="cb4-45" data-line-number="45"><span class="co">#&gt; $ CHELSA_temp_3_1979-2013    : num  12.2 2.3 -0.8 -3.3 2.2 0.8 -0.9 -2.7 -0.6 0.1 ...</span></a>
+<a class="sourceLine" id="cb4-46" data-line-number="46"><span class="co">#&gt; $ CHELSA_temp_4_1979-2013    : num  18.3 5.1 3 1.5 5.8 5.1 3 1.7 2.9 3.1 ...</span></a>
+<a class="sourceLine" id="cb4-47" data-line-number="47"><span class="co">#&gt; $ CHELSA_temp_5_1979-2013    : num  23.5 9 7.6 6.4 10.1 10.7 7.8 6.6 7.3 7.1 ...</span></a>
+<a class="sourceLine" id="cb4-48" data-line-number="48"><span class="co">#&gt; $ CHELSA_temp_6_1979-2013    : num  28.2 12 10.9 10.9 13.2 14.7 11.9 11.3 11.1 10.5 ...</span></a>
+<a class="sourceLine" id="cb4-49" data-line-number="49"><span class="co">#&gt; $ CHELSA_temp_7_1979-2013    : num  28.2 12 10.9 10.9 13.2 14.7 11.9 11.3 11.1 10.5 ...</span></a>
+<a class="sourceLine" id="cb4-50" data-line-number="50"><span class="co">#&gt; $ CHELSA_temp_8_1979-2013    : num  29.7 14.2 12.2 12.1 14.9 15.8 14 12.2 13.3 12.8 ...</span></a>
+<a class="sourceLine" id="cb4-51" data-line-number="51"><span class="co">#&gt; $ CHELSA_temp_9_1979-2013    : num  25.1 11.5 8.6 7.7 11.5 11.6 10.2 7.6 9.9 9.8 ...</span></a></code></pre>
 <p>Compare the GSOD weather data from the Philippines with climatic data provided by the <em>GSODR</em> package in the <code>CHELSA</code> data set using <code>dplyr</code> functions to join the CHELSA and <em>GSODR</em> data for plotting.</p>
-<pre class="sourceCode r" id="cb5"><code class="sourceCode r"><div class="sourceLine" id="cb5-1" data-line-number="1">
-<span class="kw">library</span>(dplyr)</div>
-<div class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt; </span></div>
-<div class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; Attaching package: 'dplyr'</span></div>
-<div class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; The following objects are masked from 'package:stats':</span></div>
-<div class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt; </span></div>
-<div class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">#&gt;     filter, lag</span></div>
-<div class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">#&gt; The following objects are masked from 'package:base':</span></div>
-<div class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">#&gt; </span></div>
-<div class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#&gt;     intersect, setdiff, setequal, union</span></div>
-<div class="sourceLine" id="cb5-10" data-line-number="10">
-<span class="kw">library</span>(ggplot2)</div>
-<div class="sourceLine" id="cb5-11" data-line-number="11">
-<span class="kw">library</span>(reshape2)</div>
-<div class="sourceLine" id="cb5-12" data-line-number="12"></div>
-<div class="sourceLine" id="cb5-13" data-line-number="13">cnames &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">"CHELSA_temp_"</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>, <span class="st">"_1979-2013"</span>)</div>
-<div class="sourceLine" id="cb5-14" data-line-number="14">clim_temp &lt;-<span class="st"> </span>CHELSA[CHELSA<span class="op">$</span>STNID <span class="op">%in%</span><span class="st"> </span>pnts<span class="op">$</span>STNID,</div>
-<div class="sourceLine" id="cb5-15" data-line-number="15">                       <span class="kw">paste</span>(<span class="kw">c</span>(<span class="st">"STNID"</span>, cnames))]</div>
-<div class="sourceLine" id="cb5-16" data-line-number="16">clim_temp_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">STNID =</span> <span class="kw">rep</span>(clim_temp<span class="op">$</span>STNID, <span class="dv">12</span>),</div>
-<div class="sourceLine" id="cb5-17" data-line-number="17">                           <span class="dt">MONTHC =</span> <span class="kw">as.vector</span>(<span class="kw">sapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>, rep,</div>
-<div class="sourceLine" id="cb5-18" data-line-number="18">                                                    <span class="dt">times =</span> <span class="kw">nrow</span>(clim_temp))), </div>
-<div class="sourceLine" id="cb5-19" data-line-number="19">                           <span class="dt">CHELSA_TEMP =</span> <span class="kw">as.vector</span>(<span class="kw">unlist</span>(clim_temp[, cnames])))</div>
-<div class="sourceLine" id="cb5-20" data-line-number="20"></div>
-<div class="sourceLine" id="cb5-21" data-line-number="21">pnts<span class="op">$</span>MONTHC &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">paste</span>(pnts<span class="op">$</span>MONTH))</div>
-<div class="sourceLine" id="cb5-22" data-line-number="22">temp &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(pnts<span class="op">@</span>data, clim_temp_df, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">"STNID"</span>, <span class="st">"MONTHC"</span>))</div>
-<div class="sourceLine" id="cb5-23" data-line-number="23"><span class="co">#&gt; Warning in left_join_impl(x, y, by$x, by$y, suffix$x, suffix$y): joining</span></div>
-<div class="sourceLine" id="cb5-24" data-line-number="24"><span class="co">#&gt; factors with different levels, coercing to character vector</span></div>
-<div class="sourceLine" id="cb5-25" data-line-number="25"></div>
-<div class="sourceLine" id="cb5-26" data-line-number="26">temp &lt;-<span class="st"> </span>temp <span class="op">%&gt;%</span><span class="st"> </span>
-</div>
-<div class="sourceLine" id="cb5-27" data-line-number="27">
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(MONTH) <span class="op">%&gt;%</span><span class="st"> </span>
-</div>
-<div class="sourceLine" id="cb5-28" data-line-number="28">
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">AVG_DAILY_TEMP =</span> <span class="kw">round</span>(<span class="kw">mean</span>(TEMP), <span class="dv">1</span>))</div>
-<div class="sourceLine" id="cb5-29" data-line-number="29"></div>
-<div class="sourceLine" id="cb5-30" data-line-number="30">df_melt &lt;-<span class="st"> </span><span class="kw">na.omit</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/reshape2/topics/melt">melt</a></span>(temp[, <span class="kw">c</span>(<span class="st">"STNID"</span>, <span class="st">"DATE"</span>, <span class="st">"CHELSA_TEMP"</span>, <span class="st">"TEMP"</span>, <span class="st">"AVG_DAILY_TEMP"</span>)],</div>
-<div class="sourceLine" id="cb5-31" data-line-number="31">                        <span class="dt">id =</span> <span class="kw">c</span>(<span class="st">"DATE"</span>, <span class="st">"STNID"</span>)))</div>
-<div class="sourceLine" id="cb5-32" data-line-number="32"></div>
-<div class="sourceLine" id="cb5-33" data-line-number="33">
-<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(df_melt, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> DATE, <span class="dt">y =</span> value)) <span class="op">+</span>
-</div>
-<div class="sourceLine" id="cb5-34" data-line-number="34">
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">color =</span> variable), <span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span>
-</div>
-<div class="sourceLine" id="cb5-35" data-line-number="35">
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_date">scale_x_date</a></span>(<span class="dt">date_labels =</span> <span class="st">"%b"</span>) <span class="op">+</span>
-</div>
-<div class="sourceLine" id="cb5-36" data-line-number="36">
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Temperature (C)"</span>) <span class="op">+</span>
-</div>
-<div class="sourceLine" id="cb5-37" data-line-number="37">
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Month"</span>) <span class="op">+</span>
-</div>
-<div class="sourceLine" id="cb5-38" data-line-number="38">
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">labs</a></span>(<span class="dt">colour =</span> <span class="st">""</span>) <span class="op">+</span>
-</div>
-<div class="sourceLine" id="cb5-39" data-line-number="39">
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_brewer">scale_color_brewer</a></span>(<span class="dt">palette =</span> <span class="st">"Dark2"</span>) <span class="op">+</span>
-</div>
-<div class="sourceLine" id="cb5-40" data-line-number="40">
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>( <span class="op">~</span><span class="st"> </span>STNID)</div></code></pre>
+<pre class="sourceCode r" id="cb5"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; Attaching package: 'dplyr'</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; The following objects are masked from 'package:stats':</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">#&gt;     filter, lag</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">#&gt; The following objects are masked from 'package:base':</span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#&gt;     intersect, setdiff, setequal, union</span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="kw">library</span>(reshape2)</a>
+<a class="sourceLine" id="cb5-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb5-13" data-line-number="13">cnames &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">"CHELSA_temp_"</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>, <span class="st">"_1979-2013"</span>)</a>
+<a class="sourceLine" id="cb5-14" data-line-number="14">clim_temp &lt;-<span class="st"> </span>CHELSA[CHELSA<span class="op">$</span>STNID <span class="op">%in%</span><span class="st"> </span>pnts<span class="op">$</span>STNID,</a>
+<a class="sourceLine" id="cb5-15" data-line-number="15">                       <span class="kw">paste</span>(<span class="kw">c</span>(<span class="st">"STNID"</span>, cnames))]</a>
+<a class="sourceLine" id="cb5-16" data-line-number="16">clim_temp_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">STNID =</span> <span class="kw">rep</span>(clim_temp<span class="op">$</span>STNID, <span class="dv">12</span>),</a>
+<a class="sourceLine" id="cb5-17" data-line-number="17">                           <span class="dt">MONTHC =</span> <span class="kw">as.vector</span>(<span class="kw">sapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>, rep,</a>
+<a class="sourceLine" id="cb5-18" data-line-number="18">                                                    <span class="dt">times =</span> <span class="kw">nrow</span>(clim_temp))), </a>
+<a class="sourceLine" id="cb5-19" data-line-number="19">                           <span class="dt">CHELSA_TEMP =</span> <span class="kw">as.vector</span>(<span class="kw">unlist</span>(clim_temp[, cnames])))</a>
+<a class="sourceLine" id="cb5-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb5-21" data-line-number="21">pnts<span class="op">$</span>MONTHC &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">paste</span>(pnts<span class="op">$</span>MONTH))</a>
+<a class="sourceLine" id="cb5-22" data-line-number="22">temp &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(pnts<span class="op">@</span>data, clim_temp_df, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">"STNID"</span>, <span class="st">"MONTHC"</span>))</a>
+<a class="sourceLine" id="cb5-23" data-line-number="23"><span class="co">#&gt; Warning in left_join_impl(x, y, by$x, by$y, suffix$x, suffix$y): joining</span></a>
+<a class="sourceLine" id="cb5-24" data-line-number="24"><span class="co">#&gt; factors with different levels, coercing to character vector</span></a>
+<a class="sourceLine" id="cb5-25" data-line-number="25"></a>
+<a class="sourceLine" id="cb5-26" data-line-number="26">temp &lt;-<span class="st"> </span>temp <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-27" data-line-number="27"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(MONTH) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-28" data-line-number="28"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">AVG_DAILY_TEMP =</span> <span class="kw">round</span>(<span class="kw">mean</span>(TEMP), <span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb5-29" data-line-number="29"></a>
+<a class="sourceLine" id="cb5-30" data-line-number="30">df_melt &lt;-<span class="st"> </span><span class="kw">na.omit</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/reshape2/topics/melt">melt</a></span>(temp[, <span class="kw">c</span>(<span class="st">"STNID"</span>, <span class="st">"DATE"</span>, <span class="st">"CHELSA_TEMP"</span>, <span class="st">"TEMP"</span>, <span class="st">"AVG_DAILY_TEMP"</span>)],</a>
+<a class="sourceLine" id="cb5-31" data-line-number="31">                        <span class="dt">id =</span> <span class="kw">c</span>(<span class="st">"DATE"</span>, <span class="st">"STNID"</span>)))</a>
+<a class="sourceLine" id="cb5-32" data-line-number="32"></a>
+<a class="sourceLine" id="cb5-33" data-line-number="33"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(df_melt, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> DATE, <span class="dt">y =</span> value)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-34" data-line-number="34"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">color =</span> variable), <span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-35" data-line-number="35"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_date">scale_x_date</a></span>(<span class="dt">date_labels =</span> <span class="st">"%b"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-36" data-line-number="36"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Temperature (C)"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-37" data-line-number="37"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Month"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-38" data-line-number="38"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">labs</a></span>(<span class="dt">colour =</span> <span class="st">""</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-39" data-line-number="39"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_brewer">scale_color_brewer</a></span>(<span class="dt">palette =</span> <span class="st">"Dark2"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-40" data-line-number="40"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>( <span class="op">~</span><span class="st"> </span>STNID)</a></code></pre>
 <div class="figure">
 <img src="example_1.2-1.png" alt="Comparison of GSOD daily values and average monthly values with CHELSA climate monthly values"><p class="caption">Comparison of GSOD daily values and average monthly values with CHELSA climate monthly values</p>
 </div>
