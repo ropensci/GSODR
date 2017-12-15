@@ -19,9 +19,9 @@ the authors field in DESCRIPTION
 
 - Correct ORCID comment in author field of DESCRIPTION
 
-- Update internal databases for country list and isd_history
-
 ## Minor changes
+
+- Update internal databases for country list and isd_history
 
 - Add X-schema tags to DESCRIPTION
 
