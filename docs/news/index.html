@@ -106,10 +106,13 @@
     </div>
 
     <div class="contents">
-    <section id="gsodr-1.1.1.9000" class="level1"><h1>GSODR 1.1.1.9000</h1>
+    <section id="gsodr-1.1.2-release-date-2017-12-15" class="level1"><h1>GSODR 1.1.2 (Release Date 2017-12-15)</h1>
 <section id="bug-fixes" class="level2"><h2>Bug fixes</h2>
 <ul>
-<li>Fix startup message formatting</li>
+<li><p>Fix startup message formatting</p></li>
+<li><p>Correct ORCID comment in author field of DESCRIPTION</p></li>
+<li><p>Update internal databases for country list and isd_history</p></li>
+<li><p>Add X-schema tags to DESCRIPTION</p></li>
 </ul></section></section>
     <section id="gsodr-1.1.1-release-date-2017-11-27" class="level1"><h1>GSODR 1.1.1 (Release Date 2017-11-27)</h1>
 <section id="bug-fixes-1" class="level2"><h2>Bug fixes</h2>
@@ -132,13 +135,13 @@
 <li>Fixes bug reported in <a href="https://github.com/ropensci/GSODR/issues/36">issue 36</a>
 </li>
 </ul>
-<pre class="sourceCode r" id="cb1"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span>t &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> <span class="st">"955510-99999"</span>)</a>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span>t &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> <span class="st">"955510-99999"</span>)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">Error <span class="cf">in</span> <span class="kw">.f</span>(.x[[i]], ...) <span class="op">:</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"><span class="dv">955510-99999</span> is not a valid station ID number, please check your entry.</a>
 <a class="sourceLine" id="cb1-4" data-line-number="4">Valid Station IDs can be found <span class="cf">in</span> the isd<span class="op">-</span>history.txt file</a>
 <a class="sourceLine" id="cb1-5" data-line-number="5">available from the US NCEI FTP server by combining the USAF and WBAN</a>
 <a class="sourceLine" id="cb1-6" data-line-number="6">columns, e.g. <span class="st">'007005'</span> <span class="st">'99999'</span> is <span class="st">'007005-99999'</span> from this file </a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="op">&lt;</span>ftp<span class="op">:</span><span class="er">//</span>ftp.ncdc.noaa.gov<span class="op">/</span>pub<span class="op">/</span>data<span class="op">/</span>noaa<span class="op">/</span>isd<span class="op">-</span>history.txt<span class="op">&gt;</span></a></code></pre>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="op">&lt;</span>ftp<span class="op">:</span><span class="er">//</span>ftp.ncdc.noaa.gov<span class="op">/</span>pub<span class="op">/</span>data<span class="op">/</span>noaa<span class="op">/</span>isd<span class="op">-</span>history.txt<span class="op">&gt;</span></a></code></pre></div>
 </section><section id="major-changes" class="level2"><h2>Major changes</h2>
 <ul>
 <li><p>The <em>data.table</em> and <em>fields</em> packages are no longer imported. All internal functions now use <em>dplyr</em> or base R functionality, reducing the dependencies of <em>GSODR</em></p></li>
@@ -414,7 +417,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#gsodr-1.1.1.9000">1.1.1.9000</a></li>
+        <li><a href="#gsodr-1.1.2-release-date-2017-12-15">1.1.2</a></li>
         <li><a href="#gsodr-1.1.1-release-date-2017-11-27">1.1.1</a></li>
         <li><a href="#gsodr-1.1.0">1.1.0</a></li>
         <li><a href="#gsodr-1.0.7">1.0.7</a></li>

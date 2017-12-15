@@ -96,15 +96,15 @@
 <a href="#example---download-and-plot-data-for-a-single-country" class="anchor"></a>Example - Download and Plot Data for a Single Country</h2>
 <p>This example will demonstrate how to download data for Philippines for year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in the user’s home directory and link it with climate data from the <em>GSODRdata</em> package.</p>
 <p>Download data for Philippines for year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in the user’s home directory.</p>
-<pre class="sourceCode r" id="cb1"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(GSODR)</a>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(GSODR)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">country =</span> <span class="st">"Philippines"</span>, <span class="dt">dsn =</span> <span class="st">"~/"</span>,</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">         <span class="dt">filename =</span> <span class="st">"PHL-2010"</span>, <span class="dt">GPKG =</span> <span class="ot">TRUE</span>, <span class="dt">max_missing =</span> <span class="dv">5</span>)</a></code></pre>
+<a class="sourceLine" id="cb1-3" data-line-number="3">         <span class="dt">filename =</span> <span class="st">"PHL-2010"</span>, <span class="dt">GPKG =</span> <span class="ot">TRUE</span>, <span class="dt">max_missing =</span> <span class="dv">5</span>)</a></code></pre></div>
 </div>
 <div id="example---use-the-geopackage-file-to-create-a-kml-file" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example---use-the-geopackage-file-to-create-a-kml-file" class="anchor"></a>Example - Use the GeoPackage File to Create a KML File</h2>
 <p>Using the GeoPackage that was just created, you can now create a KML file to open with Google Earth and visualise the data spatially and over time.</p>
-<pre class="sourceCode r" id="cb2"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(rgdal)</a>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(rgdal)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">library</span>(spacetime)</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw">library</span>(plotKML)</a>
 <a class="sourceLine" id="cb2-4" data-line-number="4"></a>
@@ -125,7 +125,7 @@
 <a class="sourceLine" id="cb2-19" data-line-number="19"><span class="kw">kml</span>(tmp_ST, <span class="dt">dtime =</span> <span class="dv">24</span> <span class="op">*</span><span class="st"> </span><span class="dv">3600</span>, <span class="dt">colour =</span> TEMP, <span class="dt">shape =</span> shape, <span class="dt">labels =</span> TEMP,</a>
 <a class="sourceLine" id="cb2-20" data-line-number="20">    <span class="dt">file.name =</span> <span class="st">"Temperatures_PHL_2010-2010.kml"</span>, <span class="dt">folder.name =</span> <span class="st">"TEMP"</span>)</a>
 <a class="sourceLine" id="cb2-21" data-line-number="21"></a>
-<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="kw">system</span>(<span class="st">"zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml"</span>)</a></code></pre>
+<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="kw">system</span>(<span class="st">"zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml"</span>)</a></code></pre></div>
 </div>
 <div id="example---compare-the-gsod-weather-data-from-the-philippines-with-climate-data-provided-by-the-gsodrdata-package-" class="section level2">
 <h2 class="hasAnchor">
@@ -137,10 +137,10 @@
 <p>CHELSA is a high resolution (30 arc sec) climate data set for the earth land surface areas currently under development in coorporation [<em>sic</em>] with the Department of Geography of the University of Hamburg (Prof. Dr. Jürgen Böhner, Dr. Olaf Conrad, Tobias Kawohl), the Swiss Federal Institute for Forest, Snow and Landscape Research WSL (Prof. Dr. Niklaus Zimmermann), the University of Zurich (Dr. Dirk N. Karger, Dr. Michael Kessler), and the University of Göttingen (Prof. Dr. Holger Kreft). It includes monthly mean temperature and precipitation patterns for the time period 1979-2013. CHELSA is based on a quasi-mechanistical statistical downscaling of the ERA interim global circulation model (<a href="http://www.ecmwf.int/en/research/climate-reanalysis/era-interim" class="uri">http://www.ecmwf.int/en/research/climate-reanalysis/era-interim</a>) with a GPCC bias correction (<a href="https://www.dwd.de/EN/ourservices/gpcc/gpcc.html" class="uri">https://www.dwd.de/EN/ourservices/gpcc/gpcc.html</a>) and is freely available in the download section.</p>
 </blockquote>
 <p>See <a href="http://chelsa-climate.org" class="uri">http://chelsa-climate.org</a> for more information on these data.</p>
-<pre class="sourceCode r" id="cb3"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># install.packages("devtools")</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"adamhsparks/GSODRdata"</span>)</a></code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># install.packages("devtools")</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"adamhsparks/GSODRdata"</span>)</a></code></pre></div>
 <p>Now that the extra data have been installed, take a look at the CHELSA data that are one of the data sets included in the <em>GSODRdata</em> package.</p>
-<pre class="sourceCode r" id="cb4"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">library</span>(GSODRdata)</a>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">library</span>(GSODRdata)</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb4-3" data-line-number="3"><span class="kw">str</span>(CHELSA)</a>
 <a class="sourceLine" id="cb4-4" data-line-number="4"></a>
@@ -190,9 +190,9 @@
 <a class="sourceLine" id="cb4-48" data-line-number="48"><span class="co">#&gt; $ CHELSA_temp_6_1979-2013    : num  28.2 12 10.9 10.9 13.2 14.7 11.9 11.3 11.1 10.5 ...</span></a>
 <a class="sourceLine" id="cb4-49" data-line-number="49"><span class="co">#&gt; $ CHELSA_temp_7_1979-2013    : num  28.2 12 10.9 10.9 13.2 14.7 11.9 11.3 11.1 10.5 ...</span></a>
 <a class="sourceLine" id="cb4-50" data-line-number="50"><span class="co">#&gt; $ CHELSA_temp_8_1979-2013    : num  29.7 14.2 12.2 12.1 14.9 15.8 14 12.2 13.3 12.8 ...</span></a>
-<a class="sourceLine" id="cb4-51" data-line-number="51"><span class="co">#&gt; $ CHELSA_temp_9_1979-2013    : num  25.1 11.5 8.6 7.7 11.5 11.6 10.2 7.6 9.9 9.8 ...</span></a></code></pre>
+<a class="sourceLine" id="cb4-51" data-line-number="51"><span class="co">#&gt; $ CHELSA_temp_9_1979-2013    : num  25.1 11.5 8.6 7.7 11.5 11.6 10.2 7.6 9.9 9.8 ...</span></a></code></pre></div>
 <p>Compare the GSOD weather data from the Philippines with climatic data provided by the <em>GSODR</em> package in the <code>CHELSA</code> data set using <code>dplyr</code> functions to join the CHELSA and <em>GSODR</em> data for plotting.</p>
-<pre class="sourceCode r" id="cb5"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; Attaching package: 'dplyr'</span></a>
 <a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; The following objects are masked from 'package:stats':</span></a>
@@ -231,7 +231,7 @@
 <a class="sourceLine" id="cb5-37" data-line-number="37"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Month"</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb5-38" data-line-number="38"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">labs</a></span>(<span class="dt">colour =</span> <span class="st">""</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb5-39" data-line-number="39"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_brewer">scale_color_brewer</a></span>(<span class="dt">palette =</span> <span class="st">"Dark2"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb5-40" data-line-number="40"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>( <span class="op">~</span><span class="st"> </span>STNID)</a></code></pre>
+<a class="sourceLine" id="cb5-40" data-line-number="40"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>( <span class="op">~</span><span class="st"> </span>STNID)</a></code></pre></div>
 <div class="figure">
 <img src="example_1.2-1.png" alt="Comparison of GSOD daily values and average monthly values with CHELSA climate monthly values"><p class="caption">Comparison of GSOD daily values and average monthly values with CHELSA climate monthly values</p>
 </div>
