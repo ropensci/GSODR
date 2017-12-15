@@ -8,7 +8,11 @@
 
 - Update internal databases for country list and isd_history
 
+## Minor changes
+
 - Add X-schema tags to DESCRIPTION
+
+--------------------------------------------------------------------------------
 
 # GSODR 1.1.1 (Release Date 2017-11-27)
 
