@@ -1,7 +1,7 @@
 Fetch, clean and correct altitude in GSOD isd\_history.csv data
 ================
 Adam H. Sparks
-2017-11-27
+2017-12-15
 
 # Introduction
 
@@ -47,7 +47,11 @@ data:
 if (!require("countrycode")) {
   install.packages("countrycode", repos = "https://cran.rstudio.com/")
 }
+```
 
+    ## Loading required package: countrycode
+
+``` r
 if (!require("dplyr")) {
   install.packages("dplyr", repos = "https://cran.rstudio.com/")
 }
@@ -73,10 +77,6 @@ if (!require("foreach")) {
 ```
 
     ## Loading required package: foreach
-
-    ## foreach: simple, scalable parallel programming from Revolution Analytics
-    ## Use Revolution R for scalability, fault tolerance and more.
-    ## http://www.revolutionanalytics.com
 
 ``` r
 if (!require("ggplot2")) {
@@ -333,39 +333,39 @@ isd_history <-
 str(isd_history)
 ```
 
-    ## Classes 'tbl_df', 'tbl' and 'data.frame':    28464 obs. of  13 variables:
-    ##  $ USAF           : chr  "008268" "010010" "010014" "010015" ...
+    ## Classes 'tbl_df', 'tbl' and 'data.frame':    28469 obs. of  13 variables:
+    ##  $ USAF           : chr  "010010" "010014" "010015" "010016" ...
     ##  $ WBAN           : chr  "99999" "99999" "99999" "99999" ...
-    ##  $ STN_NAME       : chr  "WXPOD8278" "JAN MAYEN(NOR-NAVY)" "SORSTOKKEN" "BRINGELAND" ...
-    ##  $ CTRY           : chr  "AF" "NO" "NO" "NO" ...
+    ##  $ STN_NAME       : chr  "JAN MAYEN(NOR-NAVY)" "SORSTOKKEN" "BRINGELAND" "RORVIK/RYUM" ...
+    ##  $ CTRY           : chr  "NO" "NO" "NO" "NO" ...
     ##  $ STATE          : chr  NA NA NA NA ...
-    ##  $ CALL           : chr  NA "ENJA" "ENSO" NA ...
-    ##  $ LAT            : num  33 70.9 59.8 61.4 64.8 ...
-    ##  $ LON            : num  65.57 -8.67 5.34 5.87 11.23 ...
-    ##  $ ELEV_M         : num  1156.7 9 48.8 327 14 ...
-    ##  $ BEGIN          : num  20120301 19310101 19861120 19870117 19870116 ...
-    ##  $ END            : num  20120323 20171124 20171124 20111020 19910806 ...
-    ##  $ STNID          : chr  "008268-99999" "010010-99999" "010014-99999" "010015-99999" ...
-    ##  $ ELEV_M_SRTM_90m: num  1160 NA 48 NA NA 48 NA NA NA NA ...
+    ##  $ CALL           : chr  "ENJA" "ENSO" NA NA ...
+    ##  $ LAT            : num  70.9 59.8 61.4 64.8 60 ...
+    ##  $ LON            : num  -8.67 5.34 5.87 11.23 2.25 ...
+    ##  $ ELEV_M         : num  9 48.8 327 14 48 8 12 8 9 14 ...
+    ##  $ BEGIN          : num  19310101 19861120 19870117 19870116 19880320 ...
+    ##  $ END            : num  20171212 20171212 20111020 19910806 20050228 ...
+    ##  $ STNID          : chr  "010010-99999" "010014-99999" "010015-99999" "010016-99999" ...
+    ##  $ ELEV_M_SRTM_90m: num  NA 48 NA NA 48 NA NA NA NA NA ...
 
 ``` r
 isd_history
 ```
 
-    ## # A tibble: 28,464 x 13
+    ## # A tibble: 28,469 x 13
     ##      USAF  WBAN            STN_NAME  CTRY STATE  CALL    LAT    LON ELEV_M
     ##     <chr> <chr>               <chr> <chr> <chr> <chr>  <dbl>  <dbl>  <dbl>
-    ##  1 008268 99999           WXPOD8278    AF  <NA>  <NA> 32.950 65.567 1156.7
-    ##  2 010010 99999 JAN MAYEN(NOR-NAVY)    NO  <NA>  ENJA 70.933 -8.667    9.0
-    ##  3 010014 99999          SORSTOKKEN    NO  <NA>  ENSO 59.792  5.341   48.8
-    ##  4 010015 99999          BRINGELAND    NO  <NA>  <NA> 61.383  5.867  327.0
-    ##  5 010016 99999         RORVIK/RYUM    NO  <NA>  <NA> 64.850 11.233   14.0
-    ##  6 010017 99999               FRIGG    NO  <NA>  ENFR 59.980  2.250   48.0
-    ##  7 010020 99999       VERLEGENHUKEN    NO  <NA>  <NA> 80.050 16.250    8.0
-    ##  8 010030 99999            HORNSUND    NO  <NA>  <NA> 77.000 15.500   12.0
-    ##  9 010040 99999       NY-ALESUND II    NO  <NA>  ENAS 78.917 11.933    8.0
-    ## 10 010050 99999       ISFJORD RADIO    SV  <NA>  <NA> 78.067 13.633    9.0
-    ## # ... with 28,454 more rows, and 4 more variables: BEGIN <dbl>, END <dbl>,
+    ##  1 010010 99999 JAN MAYEN(NOR-NAVY)    NO  <NA>  ENJA 70.933 -8.667    9.0
+    ##  2 010014 99999          SORSTOKKEN    NO  <NA>  ENSO 59.792  5.341   48.8
+    ##  3 010015 99999          BRINGELAND    NO  <NA>  <NA> 61.383  5.867  327.0
+    ##  4 010016 99999         RORVIK/RYUM    NO  <NA>  <NA> 64.850 11.233   14.0
+    ##  5 010017 99999               FRIGG    NO  <NA>  ENFR 59.980  2.250   48.0
+    ##  6 010020 99999       VERLEGENHUKEN    NO  <NA>  <NA> 80.050 16.250    8.0
+    ##  7 010030 99999            HORNSUND    NO  <NA>  <NA> 77.000 15.500   12.0
+    ##  8 010040 99999       NY-ALESUND II    NO  <NA>  ENAS 78.917 11.933    8.0
+    ##  9 010050 99999       ISFJORD RADIO    SV  <NA>  <NA> 78.067 13.633    9.0
+    ## 10 010060 99999             EDGEOYA    NO  <NA>  <NA> 78.250 22.817   14.0
+    ## # ... with 28,459 more rows, and 4 more variables: BEGIN <dbl>, END <dbl>,
     ## #   STNID <chr>, ELEV_M_SRTM_90m <dbl>
 
 # Figures
@@ -417,62 +417,50 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
 
 ## R System Information
 
-    ## Session info -------------------------------------------------------------
-
+    ## ─ Session info ──────────────────────────────────────────────────────────
     ##  setting  value                       
-    ##  version  R version 3.4.2 (2017-09-28)
+    ##  version  R version 3.4.3 (2017-11-30)
+    ##  os       macOS Sierra 10.12.6        
     ##  system   x86_64, darwin16.7.0        
     ##  ui       unknown                     
     ##  language (EN)                        
     ##  collate  en_US.UTF-8                 
     ##  tz       Australia/Brisbane          
-    ##  date     2017-11-27
-
-    ## Packages -----------------------------------------------------------------
-
+    ##  date     2017-12-15                  
+    ## 
+    ## ─ Packages ──────────────────────────────────────────────────────────────
     ##  package            * version    date      
     ##  assertthat           0.2.0      2017-04-11
-    ##  backports            1.1.1      2017-09-25
-    ##  base               * 3.4.2      2017-10-03
+    ##  backports            1.1.2      2017-12-13
     ##  bindr                0.1        2016-11-13
     ##  bindrcpp           * 0.2        2017-06-17
     ##  class                7.3-14     2015-08-30
     ##  classInt             0.1-24     2017-04-16
+    ##  clisymbols           1.2.0      2017-11-07
     ##  codetools            0.2-15     2016-10-05
     ##  colorspace           1.3-2      2016-12-14
-    ##  compiler             3.4.2      2017-10-03
     ##  countrycode        * 0.19       2017-02-06
-    ##  curl                 3.0        2017-10-06
-    ##  datasets           * 3.4.2      2017-10-03
+    ##  curl                 3.1        2017-12-12
     ##  DBI                  0.7        2017-06-18
-    ##  devtools             1.13.4     2017-11-09
-    ##  digest               0.6.12     2017-01-27
+    ##  digest               0.6.13     2017-12-14
     ##  doParallel           1.0.11     2017-09-28
     ##  dplyr              * 0.7.4      2017-09-28
     ##  e1071                1.6-8      2017-02-02
     ##  evaluate             0.10.1     2017-06-24
-    ##  foreach            * 1.4.3      2015-10-13
+    ##  foreach            * 1.4.4      2017-12-12
     ##  ggplot2            * 2.2.1      2016-12-30
-    ##  git2r                0.19.0     2017-07-19
     ##  glue                 1.2.0      2017-10-29
-    ##  graphics           * 3.4.2      2017-10-03
-    ##  grDevices          * 3.4.2      2017-10-03
-    ##  grid                 3.4.2      2017-10-03
     ##  gtable               0.2.0      2016-02-26
     ##  highr                0.6        2016-05-09
     ##  hms                  0.4.0      2017-11-23
     ##  htmltools            0.3.6      2017-04-28
-    ##  httr                 1.3.1      2017-08-20
-    ##  iterators            1.0.8      2015-10-13
+    ##  iterators            1.0.9      2017-12-12
     ##  knitr                1.17       2017-08-10
     ##  labeling             0.3        2014-08-23
     ##  lattice              0.20-35    2017-03-25
     ##  lazyeval             0.2.1      2017-10-29
     ##  magrittr           * 1.5        2014-11-22
-    ##  memoise              1.1.0      2017-04-21
-    ##  methods            * 3.4.2      2017-10-03
     ##  munsell              0.4.3      2016-02-13
-    ##  parallel           * 3.4.2      2017-10-03
     ##  pkgconfig            2.0.1      2017-03-21
     ##  plyr                 1.8.4      2016-06-08
     ##  R6                   2.2.2      2017-06-17
@@ -480,94 +468,77 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  Rcpp                 0.12.14    2017-11-23
     ##  readr              * 1.1.1      2017-05-16
     ##  rgdal                1.2-16     2017-11-21
-    ##  rlang                0.1.4.9000 2017-11-26
-    ##  rmarkdown            1.8.3      2017-11-26
+    ##  rlang                0.1.4.9000 2017-12-07
+    ##  rmarkdown            1.8.5      2017-12-13
     ##  rnaturalearth      * 0.1.0      2017-03-21
     ##  rnaturalearthhires   0.1.0      2017-06-01
     ##  rprojroot            1.2        2017-01-16
-    ##  rstudioapi           0.7.0-9000 2017-10-03
     ##  scales               0.5.0.9000 2017-09-15
+    ##  sessioninfo          1.0.0      2017-06-21
     ##  sf                   0.5-5      2017-10-31
     ##  sp                 * 1.2-5      2017-06-29
-    ##  stats              * 3.4.2      2017-10-03
     ##  stringi              1.1.6      2017-11-17
     ##  stringr              1.2.0      2017-02-18
     ##  tibble               1.3.4      2017-08-22
-    ##  tools                3.4.2      2017-10-03
     ##  udunits2             0.13       2016-11-17
     ##  units                0.4-6      2017-08-27
-    ##  utils              * 3.4.2      2017-10-03
     ##  withr                2.1.0.9000 2017-11-26
-    ##  yaml                 2.1.14     2016-11-12
-    ##  source                             
-    ##  CRAN (R 3.4.1)                     
-    ##  cran (@1.1.1)                      
-    ##  local                              
-    ##  CRAN (R 3.4.1)                     
-    ##  CRAN (R 3.4.1)                     
-    ##  CRAN (R 3.4.2)                     
-    ##  CRAN (R 3.4.1)                     
-    ##  CRAN (R 3.4.2)                     
-    ##  CRAN (R 3.4.1)                     
-    ##  local                              
-    ##  CRAN (R 3.4.1)                     
-    ##  cran (@3.0)                        
-    ##  local                              
-    ##  CRAN (R 3.4.1)                     
-    ##  cran (@1.13.4)                     
-    ##  CRAN (R 3.4.1)                     
-    ##  cran (@1.0.11)                     
-    ##  cran (@0.7.4)                      
-    ##  CRAN (R 3.4.1)                     
-    ##  CRAN (R 3.4.1)                     
-    ##  CRAN (R 3.4.1)                     
-    ##  CRAN (R 3.4.2)                     
-    ##  CRAN (R 3.4.1)                     
-    ##  cran (@1.2.0)                      
-    ##  local                              
-    ##  local                              
-    ##  local                              
-    ##  CRAN (R 3.4.1)                     
-    ##  CRAN (R 3.4.1)                     
-    ##  cran (@0.4.0)                      
-    ##  CRAN (R 3.4.1)                     
-    ##  CRAN (R 3.4.1)                     
-    ##  CRAN (R 3.4.1)                     
-    ##  CRAN (R 3.4.2)                     
-    ##  CRAN (R 3.4.1)                     
-    ##  CRAN (R 3.4.2)                     
-    ##  cran (@0.2.1)                      
-    ##  CRAN (R 3.4.1)                     
-    ##  CRAN (R 3.4.1)                     
-    ##  local                              
-    ##  CRAN (R 3.4.1)                     
-    ##  local                              
-    ##  CRAN (R 3.4.1)                     
-    ##  CRAN (R 3.4.1)                     
-    ##  CRAN (R 3.4.1)                     
-    ##  cran (@2.6-7)                      
-    ##  cran (@0.12.14)                    
-    ##  CRAN (R 3.4.1)                     
-    ##  cran (@1.2-16)                     
-    ##  Github (tidyverse/rlang@bd83400)   
-    ##  Github (rstudio/rmarkdown@07f7d8e) 
-    ##  CRAN (R 3.4.1)                     
-    ##  local                              
-    ##  CRAN (R 3.4.1)                     
-    ##  Github (rstudio/rstudioapi@335f257)
-    ##  Github (hadley/scales@d767915)     
-    ##  cran (@0.5-5)                      
-    ##  CRAN (R 3.4.1)                     
-    ##  local                              
-    ##  cran (@1.1.6)                      
-    ##  CRAN (R 3.4.1)                     
-    ##  cran (@1.3.4)                      
-    ##  local                              
-    ##  CRAN (R 3.4.1)                     
-    ##  cran (@0.4-6)                      
-    ##  local                              
-    ##  Github (jimhester/withr@fe81c00)   
-    ##  CRAN (R 3.4.1)
+    ##  yaml                 2.1.16     2017-12-12
+    ##  source                                 
+    ##  CRAN (R 3.4.1)                         
+    ##  cran (@1.1.2)                          
+    ##  CRAN (R 3.4.1)                         
+    ##  CRAN (R 3.4.1)                         
+    ##  CRAN (R 3.4.3)                         
+    ##  CRAN (R 3.4.1)                         
+    ##  Github (gaborcsardi/clisymbols@e49b4f5)
+    ##  CRAN (R 3.4.3)                         
+    ##  CRAN (R 3.4.1)                         
+    ##  CRAN (R 3.4.1)                         
+    ##  cran (@3.1)                            
+    ##  CRAN (R 3.4.1)                         
+    ##  cran (@0.6.13)                         
+    ##  cran (@1.0.11)                         
+    ##  cran (@0.7.4)                          
+    ##  CRAN (R 3.4.1)                         
+    ##  CRAN (R 3.4.1)                         
+    ##  cran (@1.4.4)                          
+    ##  CRAN (R 3.4.2)                         
+    ##  cran (@1.2.0)                          
+    ##  CRAN (R 3.4.1)                         
+    ##  CRAN (R 3.4.1)                         
+    ##  cran (@0.4.0)                          
+    ##  CRAN (R 3.4.1)                         
+    ##  cran (@1.0.9)                          
+    ##  CRAN (R 3.4.2)                         
+    ##  CRAN (R 3.4.1)                         
+    ##  CRAN (R 3.4.3)                         
+    ##  cran (@0.2.1)                          
+    ##  CRAN (R 3.4.1)                         
+    ##  CRAN (R 3.4.1)                         
+    ##  CRAN (R 3.4.1)                         
+    ##  CRAN (R 3.4.1)                         
+    ##  CRAN (R 3.4.1)                         
+    ##  cran (@2.6-7)                          
+    ##  cran (@0.12.14)                        
+    ##  CRAN (R 3.4.1)                         
+    ##  cran (@1.2-16)                         
+    ##  Github (tidyverse/rlang@5ebcf24)       
+    ##  Github (rstudio/rmarkdown@08c7567)     
+    ##  CRAN (R 3.4.1)                         
+    ##  local                                  
+    ##  CRAN (R 3.4.1)                         
+    ##  Github (hadley/scales@d767915)         
+    ##  CRAN (R 3.4.2)                         
+    ##  cran (@0.5-5)                          
+    ##  CRAN (R 3.4.1)                         
+    ##  cran (@1.1.6)                          
+    ##  CRAN (R 3.4.1)                         
+    ##  cran (@1.3.4)                          
+    ##  CRAN (R 3.4.1)                         
+    ##  cran (@0.4-6)                          
+    ##  Github (jimhester/withr@fe81c00)       
+    ##  cran (@2.1.16)
 
 # References
 

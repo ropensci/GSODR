@@ -318,7 +318,7 @@ by others must provide this same notification."
 ## R System Information
 
 ```{r system information, echo=FALSE}
-devtools::session_info()
+sessioninfo::session_info()
 ```
 
 # References
