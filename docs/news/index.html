@@ -112,14 +112,17 @@
 <li><p>Fix startup message formatting</p></li>
 <li><p>Correct ORCID comment in author field of DESCRIPTION</p></li>
 <li><p>Update internal databases for country list and isd_history</p></li>
-<li><p>Add X-schema tags to DESCRIPTION</p></li>
-</ul></section></section>
+</ul></section><section id="minor-changes" class="level2"><h2>Minor changes</h2>
+<ul>
+<li>Add X-schema tags to DESCRIPTION</li>
+</ul>
+<hr></section></section>
     <section id="gsodr-1.1.1-release-date-2017-11-27" class="level1"><h1>GSODR 1.1.1 (Release Date 2017-11-27)</h1>
 <section id="bug-fixes-1" class="level2"><h2>Bug fixes</h2>
 <ul>
 <li>
 <code>MAX_FLAG</code> and <code>MIN_FLAG</code> columns now report <code>NA</code> when there is no flag</li>
-</ul></section><section id="minor-changes" class="level2"><h2>Minor changes</h2>
+</ul></section><section id="minor-changes-1" class="level2"><h2>Minor changes</h2>
 <ul>
 <li><p>Comment for Bob and Hugh in DESCRIPTION now only ORCID url</p></li>
 <li><p>dplyr version set to &gt;= 0.7.0 not 0.7 as before</p></li>
@@ -160,7 +163,7 @@
 <li><p>Fix bug in GSODR vignette where examples would not run due to libraries not being loaded</p></li>
 <li><p>Fix bug where prior server queries would be pre/appended to subsequent queries</p></li>
 <li><p>Fix bug where invalid stations would return an empty dataframe, should stop and return message about checking the <code>station</code> value supplied to <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> and check if data are available for the years requested</p></li>
-</ul></section><section id="minor-changes-1" class="level2"><h2>Minor changes</h2>
+</ul></section><section id="minor-changes-2" class="level2"><h2>Minor changes</h2>
 <ul>
 <li><p>Update Appendix 2 of GSODR vignette, map of station locations, to be more clear and follow same format as that of <code>bomrang</code> package</p></li>
 <li><p>Update example output in GSODR vignette where applicable</p></li>
@@ -179,7 +182,7 @@
 <ul>
 <li><p>Add welcome message on startup regarding data use and sharing</p></li>
 <li><p>Update internal stations list</p></li>
-</ul></section><section id="minor-changes-2" class="level2"><h2>Minor changes</h2>
+</ul></section><section id="minor-changes-3" class="level2"><h2>Minor changes</h2>
 <ul>
 <li>Tidy up informative messages that the package returns while running</li>
 </ul></section><section id="bug-fixes-5" class="level2"><h2>Bug fixes</h2>
@@ -192,7 +195,7 @@
 <ul>
 <li><p>Data distributed with GSODR are now internal to the package and not externally exposed to the user</p></li>
 <li><p>Vignettes have been updated and improved with an improved order of information presented and some have been combined for easier use</p></li>
-</ul></section><section id="minor-changes-3" class="level2"><h2>Minor changes</h2>
+</ul></section><section id="minor-changes-4" class="level2"><h2>Minor changes</h2>
 <ul>
 <li>Clean code using linting</li>
 </ul>
@@ -204,21 +207,21 @@
 <li><p>The station metadata can now be updated if necessary by using <code><a href="../reference/update_station_list.html">update_station_list()</a></code>, this change overwrites the internal data that were originally distributed with the package. This operation will fetch the latest list of stations and corresponding information from the NCEI ftp server. Any changes will be overwritten when the R package is updated, however, the package update should have the same or newer data included, so this should not be an issue.</p></li>
 <li><p>Replace <em>plyr</em> functions with <em>purrr</em>, <em>plyr</em> is no longer actively developed</p></li>
 <li><p><em>plyr</em> is no longer an import</p></li>
-</ul></section><section id="minor-changes-4" class="level2"><h2>Minor changes</h2>
+</ul></section><section id="minor-changes-5" class="level2"><h2>Minor changes</h2>
 <ul>
 <li>Fix bugs in the vignettes related to formatting and spelling</li>
 </ul></section><section id="deprecated-and-defunct" class="level2"><h2>Deprecated and defunct</h2>
 <p><code><a href="../reference/GSODR-deprecated.html">get_station_list()</a></code> is no longer supported. Instead use the new <code><a href="../reference/update_station_list.html">update_station_list()</a></code> to update the package’s internal station database.</p>
 <hr></section></section>
     <section id="gsodr-1.0.2.1" class="level1"><h1>GSODR 1.0.2.1</h1>
-<section id="minor-changes-5" class="level2"><h2>Minor changes</h2>
+<section id="minor-changes-6" class="level2"><h2>Minor changes</h2>
 <ul>
 <li>Correct references to <em>GSODRdata</em> package where incorrectly referred to as <em>GSODdata</em>
 </li>
 </ul>
 <hr></section></section>
     <section id="gsodr-1.0.2" class="level1"><h1>GSODR 1.0.2</h1>
-<section id="minor-changes-6" class="level2"><h2>Minor changes</h2>
+<section id="minor-changes-7" class="level2"><h2>Minor changes</h2>
 <ul>
 <li><p>Improved documentation (i.e., spelling corrections and more descriptive)</p></li>
 <li><p>More descriptive vignette for “GSODR use case: Specified years/stations vignette”</p></li>
@@ -229,7 +232,7 @@
 </ul>
 <hr></section></section>
     <section id="gsodr-1.0.1" class="level1"><h1>GSODR 1.0.1</h1>
-<section id="minor-changes-7" class="level2"><h2>Minor changes</h2>
+<section id="minor-changes-8" class="level2"><h2>Minor changes</h2>
 <ul>
 <li><p>Update documentation for <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> when using <code>station</code> parameter</p></li>
 <li><p>Edit paper.md for submission to JOSS</p></li>
@@ -269,7 +272,7 @@
 <li><p>Missing values are handled as <code>NA</code> not -9999</p></li>
 <li><p>Change from GPL &gt;= 3 to MIT licence to bring into line with ropensci packages</p></li>
 <li><p>Now included in ropensci, <a href="https://github.com/ropensci/GSODR">ropensci/GSODR</a></p></li>
-</ul></section><section id="minor-changes-8" class="level2"><h2>Minor changes</h2>
+</ul></section><section id="minor-changes-9" class="level2"><h2>Minor changes</h2>
 <ul>
 <li><p><code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> function optimised for speed as best possible after FTPing files from NCDC server</p></li>
 <li><p>All files are downloaded from server and then locally processed, previously these were sequentially downloaded by year and then processed</p></li>
@@ -326,7 +329,7 @@
 <li><p>stations.rda is compressed</p></li>
 <li><p>stations.rda now includes a field for “corrected” elevation using hole-filled SRTM data from Jarvis et al. 2008, see <a href="https://github.com/ropensci/GSODR/blob/devel/data-raw/fetch_isd-history.md">https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md</a> for a description</p></li>
 <li><p>Set NA or missing values in CSV or shapefile to -9999 from -9999.99 to align with other data sources such as Worldclim</p></li>
-</ul></section><section id="minor-changes-9" class="level2"><h2>Minor changes</h2>
+</ul></section><section id="minor-changes-10" class="level2"><h2>Minor changes</h2>
 <ul>
 <li>Documentation is more complete and easier to use</li>
 </ul>
@@ -363,7 +366,7 @@
 <li><p>Fixed bug where YDAY not correctly calculated and reported in CSV file</p></li>
 <li><p>CSV files for station only queries now are names with the Station Identifier. Previously named same as global data</p></li>
 <li><p>Likewise, CSV files for agroclimatology now are names with the Station Identifier. Previously named same as global data</p></li>
-</ul></section><section id="minor-changes-10" class="level2"><h2>Minor Changes</h2>
+</ul></section><section id="minor-changes-11" class="level2"><h2>Minor Changes</h2>
 <ul>
 <li><p>Set values where MIN &gt; MAX to NA</p></li>
 <li><p>Set more MIN/MAX/DEWP values to NA. GSOD README indicates that 999 indicates missing values in these columns, this does not appear to always be true. There are instances where 99 is the value recorded for missing data. While 99F is possible, the vast majority of these recorded values are missing data, thus the function now converts them to NA</p></li>
@@ -380,7 +383,7 @@
 <ul>
 <li><p>Bug fix in MIN/MAX with flags. Some columns have differing widths, which caused a flag to be left attached to some values</p></li>
 <li><p>Correct URL in README.md for CRAN to point to CRAN not GitHub</p></li>
-</ul></section><section id="minor-changes-11" class="level2"><h2>Minor Changes</h2>
+</ul></section><section id="minor-changes-12" class="level2"><h2>Minor Changes</h2>
 <ul>
 <li>Set NA to -9999.99</li>
 </ul>
