@@ -10,21 +10,21 @@
       "givenName": "Adam",
       "familyName": "Sparks",
       "email": "adamhsparks@gmail.com",
-      "@id": "https://orcid.org/0000-0002-0061-8359"
+      "@id": "http://orcid.org/0000-0002-0061-8359"
     },
     {
       "@type": "Person",
       "givenName": "Tomislav",
       "familyName": "Hengl",
       "email": "tom.hengl@isric.org",
-      "@id": "https://orcid.org/0000-0002-9921-5129"
+      "@id": "http://orcid.org/0000-0002-9921-5129"
     },
     {
       "@type": "Person",
       "givenName": "Andrew",
       "familyName": "Nelson",
       "email": "dr.andy.nelson@gmail.com",
-      "@id": "https://orcid.org/0000-0002-7249-3778"
+      "@id": "http://orcid.org/0000-0002-7249-3778"
     }
   ],
   "identifier": "GSODR",
@@ -35,7 +35,7 @@
   "keywords": ["US-NCEI", "meteorological-data", "global-weather", "weather", "weather-data", "meteorology", "station-data", "surface-weather", "data-access", "US-NCDC"],
   "license": "https://spdx.org/licenses/MIT",
   "title": "GSODR",
-  "version": "1.1.1.9000",
+  "version": "1.1.2",
   "name": "GSODR: Global Surface Summary of the Day (GSOD) Weather Data from R",
   "issueTracker": "https://github.com/ropensci/GSODR/issues",
   "programmingLanguage": {
@@ -56,7 +56,7 @@
     "givenName": "Adam",
     "familyName": "Sparks",
     "email": "adamhsparks@gmail.com",
-    "@id": "https://orcid.org/0000-0002-0061-8359"
+    "@id": "http://orcid.org/0000-0002-0061-8359"
   },
   "softwareSuggestions": [
     {
@@ -382,7 +382,7 @@
   "contIntegration": "https://travis-ci.org/ropensci/GSODR",
   "releaseNotes": "https://github.com/ropensci/GSODR/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/GSODR/blob/master/README.md",
-  "fileSize": "1083.173KB",
+  "fileSize": "1083.019KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -426,14 +426,14 @@
       "givenName": "Hugh",
       "familyName": "Parsonage",
       "email": "hugh.parsonage@gmail.com",
-      "@id": "https://orcid.org/0000-0003-4055-0835"
+      "@id": "http://orcid.org/0000-0003-4055-0835"
     },
     {
       "@type": "Person",
       "givenName": "Bob",
       "familyName": "Rudis",
       "email": "bob@rud.is",
-      "@id": "https://orcid.org/0000-0001-5670-2640"
+      "@id": "http://orcid.org/0000-0001-5670-2640"
     }
   ],
   "copyrightHolder": [
@@ -442,14 +442,14 @@
       "givenName": "Hugh",
       "familyName": "Parsonage",
       "email": "hugh.parsonage@gmail.com",
-      "@id": "https://orcid.org/0000-0003-4055-0835"
+      "@id": "http://orcid.org/0000-0003-4055-0835"
     },
     {
       "@type": "Person",
       "givenName": "Bob",
       "familyName": "Rudis",
       "email": "bob@rud.is",
-      "@id": "https://orcid.org/0000-0001-5670-2640"
+      "@id": "http://orcid.org/0000-0001-5670-2640"
     }
   ],
   "applicationCategory": "Tools",
