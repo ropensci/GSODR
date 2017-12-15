@@ -4,7 +4,7 @@ Title: Global Surface Summary of the Day (GSOD) Weather Data from R
 Version: 1.1.1.9000
 Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     email = "adamhsparks@gmail.com",
-    comment = "ORCID = /0000-0002-0061-8359"),
+    comment = "ORCID = 0000-0002-0061-8359"),
     person("Tomislav", "Hengl", role = "aut",
     email = "tom.hengl@isric.org",
     comment = "ORCID = 0000-0002-9921-5129"),
