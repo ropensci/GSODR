@@ -118,9 +118,8 @@ library(GSODR)
     ## 
     ## GSODR does not redistribute any weather data itself. It 
     ## only provides an interface for R users to download these
-    ## data, but it does redistribute station metadata in the
-    ## 
-    ##                 package.
+    ## data, however it does redistribute station metadata in the
+    ## package.
 
 ``` r
 tbar <- get_GSOD(years = 2010, station = "955510-99999")
