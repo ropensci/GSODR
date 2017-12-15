@@ -1,8 +1,14 @@
-# GSODR 1.1.1.9000
+# GSODR 1.1.2  (Release Date 2017-12-15)
 
 ## Bug fixes
 
 - Fix startup message formatting
+
+- Correct ORCID comment in author field of DESCRIPTION
+
+- Update internal databases for country list and isd_history
+
+- Add X-schema tags to DESCRIPTION
 
 # GSODR 1.1.1 (Release Date 2017-11-27)
 
