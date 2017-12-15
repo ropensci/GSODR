@@ -59,7 +59,7 @@ disk.
 This function automates downloading, cleaning, reformatting of data from
 the Global Surface Summary of the Day (GSOD) data provided by the US National
 Centers for Environmental Information (NCEI),
-\url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod},
+\url{https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/},
 and elements three new variables; saturation vapour pressure (es) – Actual
 vapour pressure (ea) and relative humidity (RH).  Stations reporting a
 latitude of < -90 or > 90 or longitude of < -180 or > 180 are removed.
