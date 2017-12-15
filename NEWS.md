@@ -570,7 +570,7 @@ rather than the conversion of the existing
 comma-separated values and geographic information system rather than just using
 "CSV" or "GIS" in DESCRIPTION.
 
-- Add full name of GSOD (Global Surface Summary of the Day) and URL for GSOD, <https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod> to
+- Add full name of GSOD (Global Surface Summary of the Day) and URL for GSOD, <https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/> to
 DESCRIPTION as requested by CRAN.
 
 - Require user to specify directory for resulting .csv file output so that any

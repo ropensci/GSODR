@@ -2,7 +2,7 @@
 #' Tidy and Return a Data Frame of GSOD Weather from Local Data
 #'
 #'This function automates cleaning and reformatting of GSOD,
-#'\url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod},
+#'\url{https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/},
 #'station files in "WMO-WBAN-YYYY.op.gz" format that have been downloaded from
 #' the United States National Center for Environmental Information's (NCEI)
 #' FTP server.

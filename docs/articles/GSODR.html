@@ -89,7 +89,7 @@
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
-<p>The GSOD or <a href="https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod">Global Surface Summary of the Day (GSOD)</a> data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. <em>GSODR</em> aims to make it easy to find, transfer and format the data you need for use in analysis and provides four main functions for facilitating this:</p>
+<p>The GSOD or <a href="https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/">Global Surface Summary of the Day (GSOD)</a> data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. <em>GSODR</em> aims to make it easy to find, transfer and format the data you need for use in analysis and provides four main functions for facilitating this:</p>
 <ul>
 <li><p><code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> - this function queries and transfers files from the NCEI’s FTP server, reformats them and returns a tidy data frame in R or saves a file to disk</p></li>
 <li><p><code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code> - this function takes individual station files from the local disk and re-formats them returning a tidy data frame in R</p></li>
@@ -121,8 +121,9 @@
 ## 
 ## GSODR does not redistribute any weather data itself. It 
 ## only provides an interface for R users to download these
-## data, however it does redistribute station metadata in the
-## package.</code></pre>
+## data, but it does redistribute station metadata in the
+## 
+##                 package.</code></pre>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a></code></pre></div>
 <pre><code>## 
 ## Attaching package: 'dplyr'</code></pre>
