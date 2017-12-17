@@ -87,7 +87,7 @@
 <h2 class="hasAnchor">
 <a href="#introduction-to-gsodr" class="anchor"></a>Introduction to <em>GSODR</em>
 </h2>
-<p>The GSOD or [Global Surface Summary of the Day (GSOD)]<a href="https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/" class="uri">https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/</a>) data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. <em>GSODR</em> aims to make it easy to find, transfer and format the data you need for use in analysis and provides five main functions for facilitating this:</p>
+<p><img align="right" src="reference/figures/GSODR-hex.png"> The GSOD or [Global Surface Summary of the Day (GSOD)]<a href="https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/" class="uri">https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/</a>) data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. <em>GSODR</em> aims to make it easy to find, transfer and format the data you need for use in analysis and provides five main functions for facilitating this:</p>
 <ul>
 <li><p><code><a href="reference/get_GSOD.html">get_GSOD()</a></code> - this function queries and transfers files from the NCEI’s FTP server, reformats them and returns a tidy data frame in R or saves a file to disk</p></li>
 <li><p><code><a href="reference/reformat_GSOD.html">reformat_GSOD()</a></code> - this function takes individual station files from the local disk and re-formats them returning a tidy data frame in R</p></li>
@@ -140,9 +140,8 @@
 ## 
 ## GSODR does not redistribute any weather data itself. It 
 ## only provides an interface for R users to download these
-## data, but it does redistribute station metadata in the
-## 
-##                 package.</code></pre>
+## data, however it does redistribute station metadata in the
+## package.</code></pre>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">tbar &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> <span class="st">"955510-99999"</span>)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb5-3" data-line-number="3">tbar</a></code></pre></div>

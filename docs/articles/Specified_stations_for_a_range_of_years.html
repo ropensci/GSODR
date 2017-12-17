@@ -201,9 +201,8 @@
 ## 
 ## GSODR does not redistribute any weather data itself. It 
 ## only provides an interface for R users to download these
-## data, but it does redistribute station metadata in the
-## 
-##                 package.</code></pre>
+## data, however it does redistribute station metadata in the
+## package.</code></pre>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">library</span>(readr)</a>
 <a class="sourceLine" id="cb12-2" data-line-number="2"><span class="co"># Fetch station list from NCEI</span></a>
 <a class="sourceLine" id="cb12-3" data-line-number="3">station_meta &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/readr/topics/read_delim">read_csv</a></span>(</a>
@@ -228,10 +227,10 @@
 <pre><code>## # A tibble: 4 x 9
 ##     USAF  WBAN         STN_NAME    LAT     LON ELEV_M    BEGIN      END
 ##    &lt;chr&gt; &lt;chr&gt;            &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-## 1 983240 99999 IBA/LUZON ISLAND 15.333 119.967    5.0 19490104 20171212
-## 2 983250 99999          DAGUPAN 16.083 120.350    2.0 19450119 20171212
-## 3 983270 99999       CLARK INTL 15.186 120.560  147.5 19450214 20171212
-## 4 983280 99999           BAGUIO 16.375 120.620 1295.7 19490101 20171212
+## 1 983240 99999 IBA/LUZON ISLAND 15.333 119.967    5.0 19490104 20171214
+## 2 983250 99999          DAGUPAN 16.083 120.350    2.0 19450119 20171214
+## 3 983270 99999       CLARK INTL 15.186 120.560  147.5 19450214 20171214
+## 4 983280 99999           BAGUIO 16.375 120.620 1295.7 19490101 20171214
 ## # ... with 1 more variables: STNID &lt;chr&gt;</code></pre>
 <p>These are all of the stations that are available within 100km of the centroid of this area and the years for which data are available.</p>
 </div>
