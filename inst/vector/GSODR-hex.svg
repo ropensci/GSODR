@@ -16,9 +16,9 @@
    inkscape:version="0.92.2 5c3e80d, 2017-08-06"
    width="4.3896785cm"
    height="5.0803719cm"
-   inkscape:export-filename="/Users/asparks/Development/nasapower/man/figures/nasapower-hex.png"
-   inkscape:export-xdpi="90.709999"
-   inkscape:export-ydpi="90.709999">
+   inkscape:export-filename="/Users/adamsparks/Development/GSODR/man/figures/GSODR-hex.png"
+   inkscape:export-xdpi="144.5"
+   inkscape:export-ydpi="144.5">
   <title
      id="title2938">GSODR</title>
   <defs
@@ -78,7 +78,7 @@
        id="g4147"
        style="fill:#004878;fill-opacity:1" />
     <g
-       id="g2886">
+       id="g914">
       <path
          transform="matrix(0.41685327,-0.10822693,0.10790459,0.41809852,-960.39021,-112.62165)"
          d="m -1651.6704,127.84281 -191.0462,52.68823 -141.1525,-139.10676 49.8938,-191.79499 191.0462,-52.68822 141.1524,139.106757 z"
@@ -96,24 +96,23 @@
          style="fill:#0c3580;fill-opacity:1;stroke:#1587cc;stroke-width:17.71653557;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          sodipodi:type="star" />
       <g
-         transform="matrix(1.25,0,0,1.25,427.97709,-3.9553026)"
-         id="g2862">
+         id="g894">
         <rect
-           x="-1738.4471"
-           y="76.672256"
-           width="47.342033"
-           height="3.1682372"
-           style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.31633836;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+           x="-1745.0818"
+           y="91.885017"
+           width="59.177544"
+           height="3.9602966"
+           style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.39542294;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
            id="rect10603" />
         <rect
-           x="-1738.2682"
-           y="55.49308"
-           width="5.1077361"
-           height="20.895725"
-           style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.67414588;stroke-linecap:round;stroke-opacity:1"
+           x="-1744.8475"
+           y="65.421669"
+           width="6.3634253"
+           height="27.54493"
+           style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.86392742;stroke-linecap:round;stroke-opacity:1"
            id="rect12143" />
         <g
-           transform="matrix(0.19414407,0,0,0.19414407,-1752.895,-4.7176367)"
+           transform="matrix(0.24268009,0,0,0.24268009,-1763.1417,-9.8523485)"
            id="g15964"
            style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-opacity:1">
           <path
@@ -171,15 +170,15 @@
              inkscape:connector-curvature="0" />
         </g>
         <rect
-           x="-1696.3917"
-           y="55.467838"
-           width="5.1077361"
-           height="20.895725"
-           style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.67406249;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           x="-1692.5033"
+           y="65.388802"
+           width="6.3660488"
+           height="27.366739"
+           style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.86119944;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
            id="rect12907" />
         <path
-           d="m -1693.8879,55.1708 0.031,-20.678285"
-           style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.67414588;stroke-linecap:round;stroke-opacity:1"
+           d="m -1689.3828,65.008197 0.039,-25.847856"
+           style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.84268236;stroke-linecap:round;stroke-opacity:1"
            id="path13671"
            inkscape:connector-curvature="0" />
         <path
@@ -197,30 +196,30 @@
            inkscape:rounded="0"
            inkscape:flatsided="false"
            sodipodi:sides="3"
-           transform="rotate(1.2522362,-1707.0196,36.468619)" />
+           transform="matrix(1.2497015,0.02731738,-0.02731738,1.2497015,428.46372,42.686889)" />
         <path
            inkscape:connector-curvature="0"
            id="path14439"
-           style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:0.67414588;stroke-opacity:1"
-           d="m -1686.9516,36.603249 14.9977,8.662709 h 5.172 l -2.7161,-8.625821 2.8461,-8.957808 -5.4302,0.128136 z" />
+           style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:0.84268236;stroke-opacity:1"
+           d="m -1680.7124,41.798759 18.7471,10.828386 h 6.465 l -3.3951,-10.782276 3.5576,-11.19726 -6.7877,0.16017 z" />
         <path
            inkscape:connector-curvature="0"
            id="path15199"
-           style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.67414588;stroke-opacity:1"
-           d="m -1685.7231,36.515214 -18.7485,-0.09319" />
-      </g>
-      <text
-         transform="rotate(-29.985264)"
-         id="text2866"
-         y="-719.76825"
-         x="-1560.8561"
-         style="font-style:normal;font-weight:normal;font-size:37.5px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.9375"
-         xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.5px;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';fill:#ffffff;fill-opacity:1;stroke-width:0.9375"
-           y="-719.76825"
+           style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.84268236;stroke-opacity:1"
+           d="m -1679.1768,41.688715 -23.4356,-0.116488" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:37.5px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.9375"
            x="-1560.8561"
-           id="tspan2864"
-           sodipodi:role="line">GSODR</tspan></text>
+           y="-719.76825"
+           id="text2866"
+           transform="rotate(-29.985264)"><tspan
+             sodipodi:role="line"
+             id="tspan2864"
+             x="-1560.8561"
+             y="-719.76825"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.5px;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';fill:#ffffff;fill-opacity:1;stroke-width:0.9375">GSODR</tspan></text>
+      </g>
     </g>
   </g>
   <metadata
