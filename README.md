@@ -13,7 +13,8 @@ status](https://ci.appveyor.com/api/projects/status/s09kh2nj59o35ob1/branch/mast
 
 ## Introduction to *GSODR*
 
-The GSOD or \[Global Surface Summary of the Day
+<img align="right" src="man/figures/GSODR-hex.png"> The GSOD or \[Global
+Surface Summary of the Day
 (GSOD)\]<https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/>)
 data provided by the US National Centers for Environmental Information
 (NCEI) are a valuable source of weather data with global coverage.
@@ -118,9 +119,8 @@ library(GSODR)
     ## 
     ## GSODR does not redistribute any weather data itself. It 
     ## only provides an interface for R users to download these
-    ## data, but it does redistribute station metadata in the
-    ## 
-    ##                 package.
+    ## data, however it does redistribute station metadata in the
+    ## package.
 
 ``` r
 tbar <- get_GSOD(years = 2010, station = "955510-99999")
