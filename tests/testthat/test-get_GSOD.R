@@ -44,56 +44,6 @@ test_that("Station validations are properly handled for years available", {
   ))
 })
 
-# Check that GSOD filename is assigned if a user does not specify a name
-test_that("GSOD filename is used when user does not specify a filename", {
-  expect_equal(.validate_fileout(
-    CSV = TRUE,
-    dsn = "~/",
-    filename =  NULL,
-    GPKG = NULL
-  ),
-  "~/GSOD")
-})
-
-# Check that invalid dsn is handled --------------------------------------------
-
-test_that("dsn is checked if specified", {
-  dsn <- "~/NULL"
-  expect_error(if (!is.null(dsn)) {
-    outfile <-
-      .validate_fileout(
-        CSV = FALSE,
-        dsn = dsn,
-        filename = NULL,
-        GPKG = FALSE
-      )
-  },
-  "\nFile dsn does not exist: ~/NULL.\n")
-
-  expect_error(if (!is.null(dsn)) {
-    outfile <-
-      .validate_fileout(
-        CSV = FALSE,
-        dsn = dsn,
-        filename = "test",
-        GPKG = FALSE
-      )
-  },
-  "\nYou need to specify a filetype, CSV or GPKG.")
-  rm(dsn)
-})
-
-test_that("If dsn is not specified, defaults to working directory", {
-  outfile <-
-    .validate_fileout(
-      CSV = TRUE,
-      dsn = NULL,
-      filename = "test",
-      GPKG = FALSE
-    )
-  expect_match(outfile, file.path(getwd(), "test"))
-})
-
 # Check missing days in non-leap years -----------------------------------------
 test_that("missing days check allows stations with permissible days missing,
           non-leap year",
