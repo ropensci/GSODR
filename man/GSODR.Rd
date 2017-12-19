@@ -22,13 +22,14 @@ elements, saturation vapour pressure (es), actual vapour pressure (ea) and
 relative humidity are calculated from the original data and included in the
 final data set.  The resulting data include station identification
 information, state, country, latitude, longitude, elevation, weather
-observations and associated flags.  Data may be automatically saved to disk.
-File output may be saved as a comma-separated values (CSV) or GeoPackage
-(GPKG) file.  Additional data are included with this R package: a list of
-elevation values for stations between -60 and 60 degrees latitude derived from
-the Shuttle Radar Topography Measuring Mission (SRTM).  For information on the
-GSOD data from NCEI, please see the  GSOD readme.txt file available from,
+observations and associated flags.  Additional data are included with this R
+package: a list of elevation values for stations between -60 and 60 degrees
+latitude derived from the Shuttle Radar Topography Measuring Mission (SRTM).
+For information on the GSOD data from NCEI, please see the  GSOD readme.txt
+file available from,
 \url{http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt}.
+}
+\details{
 For climate data that have been formatted specifically for use with the
 \code{GSODR} package, please see the \code{GSODRdata} package
 (Sparks \emph{et al}.) available on GitHub:
