@@ -32,20 +32,6 @@
 #' the FTP server.
 #' @param country Optional. Specify a country for which to retrieve weather
 #' data; full name or ISO codes can be used.
-#' @param CSV Optional. Logical. If set to TRUE, create a comma separated value
-#' (CSV) file and save it locally in a user specified location, if \code{dsn} is
-#' not specified by the user, defaults to the current working directory.
-#' @param GPKG Optional. Logical. If set to TRUE, create a GeoPackage file and
-#' save it locally in a user specified location, if \code{dsn} is not specified
-#' by the user, defaults to the current working directory.
-#' @param dsn Optional. Local file path to write file out to. Must be specified
-#' if CSV or GPKG parameters are selected. If unspecified and \code{CSV} or
-#' \code{GPKG} are set to TRUE, \code{dsn} will default to the current working
-#' directory.
-#' @param filename Optional. The filename for resulting file(s) to be written
-#' with no file extension. File extension will be automatically appended to file
-#' outputs. If unspecified by the user it will default to "GSOD" followed by
-#' the file extension(s) set using \code{CSV} or \code{GPKG}.
 #' @param max_missing Optional. The maximum number of days allowed to be missing
 #' from a station's data before it is excluded from final file output.
 #' @param agroclimatology Optional. Logical. Only clean data for stations
@@ -56,13 +42,6 @@
 #' @details
 #' Data summarise each year by station, which include vapour pressure and
 #' relative humidity elements calculated from existing data in GSOD.
-#'
-#' If the option to save locally is selected. Output may be saved as comma-
-#' separated value (CSV) or GeoPackage (GPKG) files in a directory specified by
-#' the user, defaulting to the current working directory.
-#'
-#' When querying selected stations and electing to write files to disk, all
-#' years queried and stations queried will be merged into one final output file.
 #'
 #' All missing values in resulting files are represented as NA regardless of
 #' which field they occur in.
@@ -87,21 +66,14 @@
 #' # Download weather station for Toowoomba, Queensland for 2010
 #' t <- get_GSOD(years = 2010, station = "955510-99999")
 #'
-#' # Download data for Philippines for year 2010 and generate a yearly
-#' # summary GeoPackage file, Philippines_GSOD-2010.gpkg, file in the user's
-#' # home directory with a maximum of five missing days per station allowed.
+#' # Download data for Philippines for year 2010 with a maximum of five missing
+#' days per station allowed.
 #'
-#' get_GSOD(years = 2010, country = "Philippines", dsn = "~/",
-#' filename = "Philippines_GSOD", GPKG = TRUE, max_missing = 5)
+#' get_GSOD(years = 2010, country = "Philippines", max_missing = 5)
 #'
 #' # Download global GSOD data for agroclimatology work for years 2009 and 2010
-#' # and generate yearly summary files, GSOD-agroclimatology-2010.csv and
-#' # GSOD-agroclimatology-2011.csv in the user's home directory.
 #'
-#' get_GSOD(years = 2010:2011, dsn = "~/",
-#' filename = "GSOD_agroclimatology_2010-2011", agroclimatology = TRUE,
-#' CSV = TRUE)
-#'
+#' get_GSOD(years = 2010:2011, agroclimatology = TRUE)
 #' }
 #'
 #' @author Adam H Sparks, \email{adamhsparks@gmail.com}
@@ -110,23 +82,19 @@
 #' Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
 #' 90m Database \url{http://srtm.csi.cgiar.org}}
 #'
-#' @return A data frame as a \code{\link[tibble]{tibble}} object of weather data
-#' and/or a comma-separated value (CSV) or GeoPackage (GPKG) file saved to local
-#' disk.
+#' @return A data frame as a \code{\link[tibble]{tibble}} object of weather
+#' data.
 #'
-#' @seealso \code{\link{reformat_GSOD}}
+#' @seealso
+#' \code{\link{reformat_GSOD}}
 #'
 #' @importFrom magrittr %>%
 #' @export
 get_GSOD <- function(years = NULL,
                      station = NULL,
                      country = NULL,
-                     dsn = NULL,
-                     filename = NULL,
                      max_missing = NULL,
-                     agroclimatology = FALSE,
-                     CSV = FALSE,
-                     GPKG = FALSE) {
+                     agroclimatology = FALSE) {
   # Create objects for use in retrieving files ---------------------------------
   original_timeout <- options("timeout")[[1]]
   options(timeout = 300)
@@ -142,9 +110,6 @@ get_GSOD <- function(years = NULL,
            "value larger than 1\n")
     }
     }
-  if (!is.null(dsn)) {
-    outfile <- .validate_fileout(CSV, dsn, filename, GPKG)
-  }
 
   if (!is.null(max_missing))
   {
@@ -182,6 +147,7 @@ get_GSOD <- function(years = NULL,
     GSOD_list <-
       .agroclimatology_list(GSOD_list, isd_history, cache_dir, years)
   }
+
   # Subset GSOD_list for specified country -------------------------------------
   if (!is.null(country)) {
     GSOD_list <-
@@ -192,13 +158,14 @@ get_GSOD <- function(years = NULL,
                            cache_dir,
                            years)
   }
+
   # Validate stations for missing days -----------------------------------------
   if (!is.null(max_missing)) {
     GSOD_list <-
       .validate_missing_days(max_missing, GSOD_list)
   }
-  # Clean and reformat list of station files from local disk in tempdir --------
 
+  # Clean and reformat list of station files from local disk in tempdir --------
   GSOD_XY <- purrr::map(
     .x = GSOD_list,
     .f = .process_gz,
@@ -206,32 +173,7 @@ get_GSOD <- function(years = NULL,
   )  %>%
     dplyr::bind_rows()
 
-  # Write files to disk --------------------------------------------------------
-  if (isTRUE(CSV)) {
-    outfile <- paste0(outfile, ".csv")
-    readr::write_csv(GSOD_XY, path = outfile)
-    rm(outfile)
-  }
-  if (isTRUE(GPKG)) {
-    outfile <- paste0(outfile, ".gpkg")
-    sp::coordinates(GSOD_XY) <- ~ LON + LAT
-    sp::proj4string(GSOD_XY) <-
-      sp::CRS("+proj=longlat +datum=WGS84")
-
-    # If the filename specified exists, remove it and create new
-    if (file.exists(path.expand(outfile))) {
-      file.remove(outfile)
-    }
-    # Create new .gpkg file
-    rgdal::writeOGR(
-      GSOD_XY,
-      dsn = path.expand(outfile),
-      layer = "GSOD",
-      driver = "GPKG"
-    )
-  }
   # Cleanup --------------------------------------------------------------------
-
   files <-
     list.files(
       cache_dir,
@@ -245,7 +187,8 @@ get_GSOD <- function(years = NULL,
   rm(cache_dir)
   gc()
   return(GSOD_XY)
-  }
+}
+
 # Validation functions ---------------------------------------------------------
 #' @noRd
 .validate_years <- function(years) {
@@ -265,42 +208,8 @@ get_GSOD <- function(years = NULL,
       }
     }
     }
-  }
-#' @noRd
-.validate_fileout <- function(CSV, dsn, filename, GPKG) {
-  if (!is.null(filename) & !isTRUE(CSV) & !isTRUE(GPKG)) {
-    stop("\nYou need to specify a filetype, CSV or GPKG.\n")
-  }
-  if (isTRUE(CSV) | isTRUE(GPKG)) {
-    if (is.null(dsn)) {
-      dsn <- getwd()
-    }
-    dsn <- trimws(dsn)
-  } else {
-    if (substr(dsn, nchar(dsn) - 1, nchar(dsn)) == "//") {
-      p <- substr(dsn, 1, nchar(dsn) - 2)
-    } else if (substr(dsn, nchar(dsn), nchar(dsn)) == "/" |
-               substr(dsn, nchar(dsn), nchar(dsn)) == "\\") {
-      p <- substr(dsn, 1, nchar(dsn) - 1)
-    } else {
-      p <- dsn
-    }
-    if (!file.exists(p) & !file.exists(dsn)) {
-      stop("\nFile dsn does not exist: ", dsn, ".\n")
-    }
-  }
-  if (substr(dsn, nchar(dsn), nchar(dsn)) != "/" &
-      substr(dsn, nchar(dsn), nchar(dsn)) != "\\") {
-    dsn <- paste0(dsn, "/")
-  }
-  if (is.null(filename)) {
-    filename_out <- "GSOD"
-  } else {
-    filename_out <- filename
-  }
-  outfile <- paste0(dsn, filename_out)
-  return(outfile)
 }
+
 #' @noRd
 .validate_station <- function(station, isd_history, years) {
   if (!station %in% isd_history[[12]]) {
@@ -360,6 +269,7 @@ get_GSOD <- function(years = NULL,
       }
     }
   }
+
 #' @noRd
 .validate_missing_days <-
   function(max_missing, GSOD_list) {
@@ -381,6 +291,7 @@ get_GSOD <- function(years = NULL,
                                        GSOD_list,
                                        NA))
   }
+
 # Function to download files from server ---------------------------------------
 #' @noRd
 .download_files <-
@@ -474,6 +385,7 @@ get_GSOD <- function(years = NULL,
                  pattern = "^.*\\.op.gz$",
                  full.names = TRUE)
   }
+
 # Agroclimatology: subset list of stations to process---------------------------
 .agroclimatology_list <-
   function(GSOD_list, isd_history, cache_dir, years) {
@@ -488,6 +400,7 @@ get_GSOD <- function(years = NULL,
     rm(station_list)
     return(GSOD_list)
   }
+
 # Specified country: subset list of stations to process ------------------------
 .subset_country_list <-
   function(country,

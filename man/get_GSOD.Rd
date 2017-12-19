@@ -4,9 +4,8 @@
 \alias{get_GSOD}
 \title{Download and Return a Tidy Data Frame of GSOD Weather Data}
 \usage{
-get_GSOD(years = NULL, station = NULL, country = NULL, dsn = NULL,
-  filename = NULL, max_missing = NULL, agroclimatology = FALSE,
-  CSV = FALSE, GPKG = FALSE)
+get_GSOD(years = NULL, station = NULL, country = NULL,
+  max_missing = NULL, agroclimatology = FALSE)
 }
 \arguments{
 \item{years}{Year(s) of weather data to download.}
@@ -24,16 +23,6 @@ the FTP server.}
 \item{country}{Optional. Specify a country for which to retrieve weather
 data; full name or ISO codes can be used.}
 
-\item{dsn}{Optional. Local file path to write file out to. Must be specified
-if CSV or GPKG parameters are selected. If unspecified and \code{CSV} or
-\code{GPKG} are set to TRUE, \code{dsn} will default to the current working
-directory.}
-
-\item{filename}{Optional. The filename for resulting file(s) to be written
-with no file extension. File extension will be automatically appended to file
-outputs. If unspecified by the user it will default to "GSOD" followed by
-the file extension(s) set using \code{CSV} or \code{GPKG}.}
-
 \item{max_missing}{Optional. The maximum number of days allowed to be missing
 from a station's data before it is excluded from final file output.}
 
@@ -41,19 +30,10 @@ from a station's data before it is excluded from final file output.}
 between latitudes 60 and -60 for agroclimatology work, defaults to FALSE.
 Set to TRUE to include only stations within the confines of these
 latitudes.}
-
-\item{CSV}{Optional. Logical. If set to TRUE, create a comma separated value
-(CSV) file and save it locally in a user specified location, if \code{dsn} is
-not specified by the user, defaults to the current working directory.}
-
-\item{GPKG}{Optional. Logical. If set to TRUE, create a GeoPackage file and
-save it locally in a user specified location, if \code{dsn} is not specified
-by the user, defaults to the current working directory.}
 }
 \value{
-A data frame as a \code{\link[tibble]{tibble}} object of weather data
-and/or a comma-separated value (CSV) or GeoPackage (GPKG) file saved to local
-disk.
+A data frame as a \code{\link[tibble]{tibble}} object of weather
+data.
 }
 \description{
 This function automates downloading, cleaning, reformatting of data from
@@ -79,13 +59,6 @@ GitHub repository here:
 Data summarise each year by station, which include vapour pressure and
 relative humidity elements calculated from existing data in GSOD.
 
-If the option to save locally is selected. Output may be saved as comma-
-separated value (CSV) or GeoPackage (GPKG) files in a directory specified by
-the user, defaulting to the current working directory.
-
-When querying selected stations and electing to write files to disk, all
-years queried and stations queried will be merged into one final output file.
-
 All missing values in resulting files are represented as NA regardless of
 which field they occur in.
 
@@ -110,21 +83,14 @@ these data by others must provide this same notification.}
 # Download weather station for Toowoomba, Queensland for 2010
 t <- get_GSOD(years = 2010, station = "955510-99999")
 
-# Download data for Philippines for year 2010 and generate a yearly
-# summary GeoPackage file, Philippines_GSOD-2010.gpkg, file in the user's
-# home directory with a maximum of five missing days per station allowed.
+# Download data for Philippines for year 2010 with a maximum of five missing
+days per station allowed.
 
-get_GSOD(years = 2010, country = "Philippines", dsn = "~/",
-filename = "Philippines_GSOD", GPKG = TRUE, max_missing = 5)
+get_GSOD(years = 2010, country = "Philippines", max_missing = 5)
 
 # Download global GSOD data for agroclimatology work for years 2009 and 2010
-# and generate yearly summary files, GSOD-agroclimatology-2010.csv and
-# GSOD-agroclimatology-2011.csv in the user's home directory.
 
-get_GSOD(years = 2010:2011, dsn = "~/",
-filename = "GSOD_agroclimatology_2010-2011", agroclimatology = TRUE,
-CSV = TRUE)
-
+get_GSOD(years = 2010:2011, agroclimatology = TRUE)
 }
 
 }
