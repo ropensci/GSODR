@@ -9,6 +9,7 @@ addons:
 r_binary_packages:
    - rgdal
    - rgeos
+   - sf
 
 after_failure:
   - ./pkg-build.sh dump_logs
