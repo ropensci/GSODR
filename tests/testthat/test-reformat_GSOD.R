@@ -45,5 +45,12 @@ test_that("reformat_GSOD file_list parameter reformats data properly", {
   expect_is(x, "data.frame")
 
   unlink(destinations)
-
 })
+
+
+# Check that reformat_GSOD stops if no files are found -------------------------
+context("reformat_GSOD")
+test_that("reformat_GSOD stops if no files are found", {
+  expect_error(reformat_GSOD(dsn = "/dev/NULL"))
+})
+
