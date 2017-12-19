@@ -125,9 +125,8 @@ GitHub repository here:
 <a href='https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md'>https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md</a>.</p>
     
 
-    <pre class="usage"><span class='fu'>get_GSOD</span>(<span class='kw'>years</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>station</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>country</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dsn</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>filename</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>max_missing</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>agroclimatology</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>CSV</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>GPKG</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>get_GSOD</span>(<span class='kw'>years</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>station</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>country</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>max_missing</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>agroclimatology</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -154,20 +153,6 @@ the FTP server.</p></td>
 data; full name or ISO codes can be used.</p></td>
     </tr>
     <tr>
-      <th>dsn</th>
-      <td><p>Optional. Local file path to write file out to. Must be specified
-if CSV or GPKG parameters are selected. If unspecified and <code>CSV</code> or
-<code>GPKG</code> are set to TRUE, <code>dsn</code> will default to the current working
-directory.</p></td>
-    </tr>
-    <tr>
-      <th>filename</th>
-      <td><p>Optional. The filename for resulting file(s) to be written
-with no file extension. File extension will be automatically appended to file
-outputs. If unspecified by the user it will default to "GSOD" followed by
-the file extension(s) set using <code>CSV</code> or <code>GPKG</code>.</p></td>
-    </tr>
-    <tr>
       <th>max_missing</th>
       <td><p>Optional. The maximum number of days allowed to be missing
 from a station's data before it is excluded from final file output.</p></td>
@@ -179,35 +164,17 @@ between latitudes 60 and -60 for agroclimatology work, defaults to FALSE.
 Set to TRUE to include only stations within the confines of these
 latitudes.</p></td>
     </tr>
-    <tr>
-      <th>CSV</th>
-      <td><p>Optional. Logical. If set to TRUE, create a comma separated value
-(CSV) file and save it locally in a user specified location, if <code>dsn</code> is
-not specified by the user, defaults to the current working directory.</p></td>
-    </tr>
-    <tr>
-      <th>GPKG</th>
-      <td><p>Optional. Logical. If set to TRUE, create a GeoPackage file and
-save it locally in a user specified location, if <code>dsn</code> is not specified
-by the user, defaults to the current working directory.</p></td>
-    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame as a <code><a href='http://www.rdocumentation.org/packages/tibble/topics/tibble'>tibble</a></code> object of weather data
-and/or a comma-separated value (CSV) or GeoPackage (GPKG) file saved to local
-disk.</p>
+    <p>A data frame as a <code><a href='http://www.rdocumentation.org/packages/tibble/topics/tibble'>tibble</a></code> object of weather
+data.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Data summarise each year by station, which include vapour pressure and
 relative humidity elements calculated from existing data in GSOD.</p>
-<p>If the option to save locally is selected. Output may be saved as comma-
-separated value (CSV) or GeoPackage (GPKG) files in a directory specified by
-the user, defaulting to the current working directory.</p>
-<p>When querying selected stations and electing to write files to disk, all
-years queried and stations queried will be merged into one final output file.</p>
 <p>All missing values in resulting files are represented as NA regardless of
 which field they occur in.</p>
 <p>For a complete list of the fields and description of the contents and units,
@@ -238,26 +205,20 @@ Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'># Download weather station for Toowoomba, Queensland for 2010</span>
-<span class='no'>t</span> <span class='kw'>&lt;-</span> <span class='fu'>get_GSOD</span>(<span class='kw'>years</span> <span class='kw'>=</span> <span class='fl'>2010</span>, <span class='kw'>station</span> <span class='kw'>=</span> <span class='st'>"955510-99999"</span>)
+    <pre class="examples"># NOT RUN {
+# Download weather station for Toowoomba, Queensland for 2010
+t <- get_GSOD(years = 2010, station = "955510-99999")
 
-<span class='co'># Download data for Philippines for year 2010 and generate a yearly</span>
-<span class='co'># summary GeoPackage file, Philippines_GSOD-2010.gpkg, file in the user's</span>
-<span class='co'># home directory with a maximum of five missing days per station allowed.</span>
+# Download data for Philippines for year 2010 with a maximum of five missing
+days per station allowed.
 
-<span class='fu'>get_GSOD</span>(<span class='kw'>years</span> <span class='kw'>=</span> <span class='fl'>2010</span>, <span class='kw'>country</span> <span class='kw'>=</span> <span class='st'>"Philippines"</span>, <span class='kw'>dsn</span> <span class='kw'>=</span> <span class='st'>"~/"</span>,
-<span class='kw'>filename</span> <span class='kw'>=</span> <span class='st'>"Philippines_GSOD"</span>, <span class='kw'>GPKG</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>max_missing</span> <span class='kw'>=</span> <span class='fl'>5</span>)
+get_GSOD(years = 2010, country = "Philippines", max_missing = 5)
 
-<span class='co'># Download global GSOD data for agroclimatology work for years 2009 and 2010</span>
-<span class='co'># and generate yearly summary files, GSOD-agroclimatology-2010.csv and</span>
-<span class='co'># GSOD-agroclimatology-2011.csv in the user's home directory.</span>
+# Download global GSOD data for agroclimatology work for years 2009 and 2010
 
-<span class='fu'>get_GSOD</span>(<span class='kw'>years</span> <span class='kw'>=</span> <span class='fl'>2010</span>:<span class='fl'>2011</span>, <span class='kw'>dsn</span> <span class='kw'>=</span> <span class='st'>"~/"</span>,
-<span class='kw'>filename</span> <span class='kw'>=</span> <span class='st'>"GSOD_agroclimatology_2010-2011"</span>, <span class='kw'>agroclimatology</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-<span class='kw'>CSV</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
-<span class='co'># }</span><div class='input'>
+get_GSOD(years = 2010:2011, agroclimatology = TRUE)
+# }
+<div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -89,7 +89,7 @@
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
-<p>The <em>GSODR</em> package provides the ability to interact with GSOD data using spatial methods. The <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> function allows for the data to be saved as a GeoPackage file which can be read by most GIS software packages or in R using R’s GIS capabilities with contributed packages as well.</p>
+<p>The GSOD data allow for users to use spatial methods with it. Using various R packages such as <em>sf</em>, you can save data as a GeoPackage file which can be read by most GIS software packages or in R using R’s GIS capabilities with other contributed packages as well.</p>
 <p>Following is an example of how you might download and save GSOD annual data for a given country, Philippines in this example, and convert it into a KML file for viewing in GoogleEarth. The second portion uses the same GeoPackage file to import the data back into R and combine the GSOD data with CHELSA data from the <a href="https://github.com/adamhsparks/GSODRdata">GSODRdata package</a> available from GitHub and plot the station temperatures for daily GSOD, average monthly GSOD and CHELSA temperatures (1979-2013).</p>
 <div id="example---download-and-plot-data-for-a-single-country" class="section level2">
 <h2 class="hasAnchor">
@@ -97,8 +97,13 @@
 <p>This example will demonstrate how to download data for Philippines for year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in the user’s home directory and link it with climate data from the <em>GSODRdata</em> package.</p>
 <p>Download data for Philippines for year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in the user’s home directory.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(GSODR)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">country =</span> <span class="st">"Philippines"</span>, <span class="dt">dsn =</span> <span class="st">"~/"</span>,</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">         <span class="dt">filename =</span> <span class="st">"PHL-2010"</span>, <span class="dt">GPKG =</span> <span class="ot">TRUE</span>, <span class="dt">max_missing =</span> <span class="dv">5</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb1-2" data-line-number="2">PHL &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">country =</span> <span class="st">"Philippines"</span>, <span class="dt">max_missing =</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">PHL &lt;-<span class="st"> </span><span class="kw">st_as_sf</span>(<span class="dt">x =</span> PHL, </a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">                        <span class="dt">coords =</span> <span class="kw">c</span>(<span class="st">"LON"</span>, <span class="st">"LAT"</span>),</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">                        <span class="dt">crs =</span> <span class="st">"+proj=longlat +datum=WGS84"</span>)</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">                        </a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="kw">write_sf</span>(PHL, <span class="st">"~/PHL-2010.gpkg"</span>)</a></code></pre></div>
 </div>
 <div id="example---use-the-geopackage-file-to-create-a-kml-file" class="section level2">
 <h2 class="hasAnchor">
@@ -115,14 +120,14 @@
 <a class="sourceLine" id="cb2-9" data-line-number="9">pnts<span class="op">$</span>DATE =<span class="st"> </span><span class="kw">as.Date</span>(<span class="kw">paste</span>(pnts<span class="op">$</span>YEAR, pnts<span class="op">$</span>MONTH, pnts<span class="op">$</span>DAY, <span class="dt">sep =</span> <span class="st">"-"</span>))</a>
 <a class="sourceLine" id="cb2-10" data-line-number="10"><span class="kw">row.names</span>(pnts) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">"point"</span>, <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(pnts), <span class="dt">sep =</span> <span class="st">""</span>)</a>
 <a class="sourceLine" id="cb2-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">tmp_ST &lt;-<span class="st"> </span><span class="kw">STIDF</span>(<span class="dt">sp =</span> <span class="kw">as</span>(pnts, <span class="st">"SpatialPoints"</span>),</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">tmp_ST &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/spacetime/topics/STIDF-class">STIDF</a></span>(<span class="dt">sp =</span> <span class="kw">as</span>(pnts, <span class="st">"SpatialPoints"</span>),</a>
 <a class="sourceLine" id="cb2-13" data-line-number="13">                <span class="dt">time =</span> pnts<span class="op">$</span>DATE <span class="op">-</span><span class="st"> </span><span class="fl">0.5</span>,</a>
 <a class="sourceLine" id="cb2-14" data-line-number="14">                <span class="dt">data =</span> pnts<span class="op">@</span>data[, <span class="kw">c</span>(<span class="st">"TEMP"</span>, <span class="st">"STNID"</span>)],</a>
 <a class="sourceLine" id="cb2-15" data-line-number="15">                <span class="dt">endTime =</span> pnts<span class="op">$</span>DATE <span class="op">+</span><span class="st"> </span><span class="fl">0.5</span>)</a>
 <a class="sourceLine" id="cb2-16" data-line-number="16"></a>
 <a class="sourceLine" id="cb2-17" data-line-number="17">shape =<span class="st"> "http://maps.google.com/mapfiles/kml/pal2/icon18.png"</span></a>
 <a class="sourceLine" id="cb2-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="kw">kml</span>(tmp_ST, <span class="dt">dtime =</span> <span class="dv">24</span> <span class="op">*</span><span class="st"> </span><span class="dv">3600</span>, <span class="dt">colour =</span> TEMP, <span class="dt">shape =</span> shape, <span class="dt">labels =</span> TEMP,</a>
+<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="kw"><a href="http://www.rdocumentation.org/packages/plotKML/topics/kml">kml</a></span>(tmp_ST, <span class="dt">dtime =</span> <span class="dv">24</span> <span class="op">*</span><span class="st"> </span><span class="dv">3600</span>, <span class="dt">colour =</span> TEMP, <span class="dt">shape =</span> shape, <span class="dt">labels =</span> TEMP,</a>
 <a class="sourceLine" id="cb2-20" data-line-number="20">    <span class="dt">file.name =</span> <span class="st">"Temperatures_PHL_2010-2010.kml"</span>, <span class="dt">folder.name =</span> <span class="st">"TEMP"</span>)</a>
 <a class="sourceLine" id="cb2-21" data-line-number="21"></a>
 <a class="sourceLine" id="cb2-22" data-line-number="22"><span class="kw">system</span>(<span class="st">"zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml"</span>)</a></code></pre></div>
