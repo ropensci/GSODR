@@ -106,16 +106,27 @@
     </div>
 
     <div class="contents">
+    <section id="gsodr-1.1.2.9000" class="level1"><h1>GSODR 1.1.2.9000</h1>
+<section id="major-changes" class="level2"><h2>Major changes</h2>
+<ul>
+<li>Remove ability to export files from <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> to slim down the package dependencies and this functions parameters. Examples of how to convert to a spatial object (both <em>sp</em> and <em>sf</em> are shown) and export ESRI Shapefiles and GeoPackage files are now included in the vignette.</li>
+</ul></section><section id="bug-fixes" class="level2"><h2>Bug fixes</h2>
+<ul>
+<li>Correct documentation for <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code>
+</li>
+</ul>
+<hr></section></section>
     <section id="gsodr-1.1.2-release-date-2017-12-15" class="level1"><h1>GSODR 1.1.2 (Release Date 2017-12-15)</h1>
-<section id="bug-fixes" class="level2"><h2>Bug fixes</h2>
+<section id="bug-fixes-1" class="level2"><h2>Bug fixes</h2>
 <ul>
 <li><p>Fix startup message formatting</p></li>
 <li><p>Correct ORCID comment in author field of DESCRIPTION</p></li>
 <li><p>Update internal databases for country list and isd_history</p></li>
 <li><p>Add X-schema tags to DESCRIPTION</p></li>
-</ul></section></section>
+</ul>
+<hr></section></section>
     <section id="gsodr-1.1.1-release-date-2017-11-27" class="level1"><h1>GSODR 1.1.1 (Release Date 2017-11-27)</h1>
-<section id="bug-fixes-1" class="level2"><h2>Bug fixes</h2>
+<section id="bug-fixes-2" class="level2"><h2>Bug fixes</h2>
 <ul>
 <li>
 <code>MAX_FLAG</code> and <code>MIN_FLAG</code> columns now report <code>NA</code> when there is no flag</li>
@@ -130,7 +141,7 @@
 </ul>
 <hr></section></section>
     <section id="gsodr-1.1.0" class="level1"><h1>GSODR 1.1.0</h1>
-<section id="bug-fixes-2" class="level2"><h2>Bug fixes</h2>
+<section id="bug-fixes-3" class="level2"><h2>Bug fixes</h2>
 <ul>
 <li>Fixes bug reported in <a href="https://github.com/ropensci/GSODR/issues/36">issue 36</a>
 </li>
@@ -142,7 +153,7 @@
 <a class="sourceLine" id="cb1-5" data-line-number="5">available from the US NCEI FTP server by combining the USAF and WBAN</a>
 <a class="sourceLine" id="cb1-6" data-line-number="6">columns, e.g. <span class="st">'007005'</span> <span class="st">'99999'</span> is <span class="st">'007005-99999'</span> from this file </a>
 <a class="sourceLine" id="cb1-7" data-line-number="7"><span class="op">&lt;</span>ftp<span class="op">:</span><span class="er">//</span>ftp.ncdc.noaa.gov<span class="op">/</span>pub<span class="op">/</span>data<span class="op">/</span>noaa<span class="op">/</span>isd<span class="op">-</span>history.txt<span class="op">&gt;</span></a></code></pre></div>
-</section><section id="major-changes" class="level2"><h2>Major changes</h2>
+</section><section id="major-changes-1" class="level2"><h2>Major changes</h2>
 <ul>
 <li><p>The <em>data.table</em> and <em>fields</em> packages are no longer imported. All internal functions now use <em>dplyr</em> or base R functionality, reducing the dependencies of <em>GSODR</em></p></li>
 <li><p>Any data frames returned by <em>GSODR</em> functions are returned as a <code>tibble()</code> object</p></li>
@@ -154,7 +165,7 @@
 </ul>
 <hr></section></section>
     <section id="gsodr-1.0.7" class="level1"><h1>GSODR 1.0.7</h1>
-<section id="bug-fixes-3" class="level2"><h2>Bug fixes</h2>
+<section id="bug-fixes-4" class="level2"><h2>Bug fixes</h2>
 <ul>
 <li><p>Fix documentation in vignette where first example would not run due to changes in package data formats</p></li>
 <li><p>Fix bug in GSODR vignette where examples would not run due to libraries not being loaded</p></li>
@@ -164,31 +175,31 @@
 <ul>
 <li><p>Update Appendix 2 of GSODR vignette, map of station locations, to be more clear and follow same format as that of <code>bomrang</code> package</p></li>
 <li><p>Update example output in GSODR vignette where applicable</p></li>
-</ul></section><section id="major-changes-1" class="level2"><h2>Major changes</h2>
+</ul></section><section id="major-changes-2" class="level2"><h2>Major changes</h2>
 <ul>
 <li>Update internal stations list</li>
 </ul>
 <hr></section></section>
     <section id="gsodr-1.0.6" class="level1"><h1>GSODR 1.0.6</h1>
-<section id="bug-fixes-4" class="level2"><h2>Bug fixes</h2>
+<section id="bug-fixes-5" class="level2"><h2>Bug fixes</h2>
 <ul>
 <li>Fix bug where WSPD (mean windspeed) conversion was miscalculated</li>
 </ul></section></section>
     <section id="gsodr-1.0.5" class="level1"><h1>GSODR 1.0.5</h1>
-<section id="major-changes-2" class="level2"><h2>Major changes</h2>
+<section id="major-changes-3" class="level2"><h2>Major changes</h2>
 <ul>
 <li><p>Add welcome message on startup regarding data use and sharing</p></li>
 <li><p>Update internal stations list</p></li>
 </ul></section><section id="minor-changes-2" class="level2"><h2>Minor changes</h2>
 <ul>
 <li>Tidy up informative messages that the package returns while running</li>
-</ul></section><section id="bug-fixes-5" class="level2"><h2>Bug fixes</h2>
+</ul></section><section id="bug-fixes-6" class="level2"><h2>Bug fixes</h2>
 <ul>
 <li><p>Fix bug where “Error in read_connection_(con):” when writing to CSV occurs</p></li>
 <li><p>Fix typo in line 160 of <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> where “Rda” should be “rda” to properly load internal package files</p></li>
 </ul></section></section>
     <section id="gsodr-1.0.4" class="level1"><h1>GSODR 1.0.4</h1>
-<section id="major-changes-3" class="level2"><h2>Major changes</h2>
+<section id="major-changes-4" class="level2"><h2>Major changes</h2>
 <ul>
 <li><p>Data distributed with GSODR are now internal to the package and not externally exposed to the user</p></li>
 <li><p>Vignettes have been updated and improved with an improved order of information presented and some have been combined for easier use</p></li>
@@ -198,7 +209,7 @@
 </ul>
 <hr></section></section>
     <section id="gsodr-1.0.3" class="level1"><h1>GSODR 1.0.3</h1>
-<section id="major-changes-4" class="level2"><h2>Major changes</h2>
+<section id="major-changes-5" class="level2"><h2>Major changes</h2>
 <ul>
 <li><p>Data for station locations and unique identifiers is now provided with the package on installation. Previously this was fetched each time from the ftp server.</p></li>
 <li><p>The station metadata can now be updated if necessary by using <code><a href="../reference/update_station_list.html">update_station_list()</a></code>, this change overwrites the internal data that were originally distributed with the package. This operation will fetch the latest list of stations and corresponding information from the NCEI ftp server. Any changes will be overwritten when the R package is updated, however, the package update should have the same or newer data included, so this should not be an issue.</p></li>
@@ -238,7 +249,7 @@
 </ul>
 <hr></section></section>
     <section id="gsodr-1.0.0" class="level1"><h1>GSODR 1.0.0</h1>
-<section id="major-changes-5" class="level2"><h2>Major changes</h2>
+<section id="major-changes-6" class="level2"><h2>Major changes</h2>
 <ul>
 <li><p>The <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> function returns a <code>data.frame</code> object in the current R session with the option to save data to local disk</p></li>
 <li><p>Multiple stations can be specified for download rather than just downloading a single station or all stations</p></li>
@@ -279,7 +290,7 @@
 <li><p>When stations are specified for retrieval using the <code>station = ""</code> parameter, the <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> function now checks to see if the file exists on the server, if it does not, a message is returned and all other stations that have files are processed and returned in output</p></li>
 <li><p>Documentation has been improved throughout package</p></li>
 <li><p>Better testing of internal functions</p></li>
-</ul></section><section id="bug-fixes-6" class="level2"><h2>Bug Fixes</h2>
+</ul></section><section id="bug-fixes-7" class="level2"><h2>Bug Fixes</h2>
 <ul>
 <li><p>Fixed: Remove redundant code in <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> function</p></li>
 <li><p>Fixed: The stations data frame distributed with the package now include stations that are located above 60 latitude and below -60 latitude</p></li>
@@ -358,7 +369,7 @@
 </ul>
 <hr></section></section>
     <section id="gsodr-0.1.5-release-date-2016-05-16" class="level1"><h1>GSODR 0.1.5 (Release date: 2016-05-16)</h1>
-<section id="bug-fixes-7" class="level2"><h2>Bug Fixes</h2>
+<section id="bug-fixes-8" class="level2"><h2>Bug Fixes</h2>
 <ul>
 <li><p>Fixed bug where YDAY not correctly calculated and reported in CSV file</p></li>
 <li><p>CSV files for station only queries now are names with the Station Identifier. Previously named same as global data</p></li>
@@ -376,7 +387,7 @@
 </ul></section><section id="minor-changes-in-0.1.4" class="level2"><h2>Minor Changes in 0.1.4</h2>
 <hr></section></section>
     <section id="gsodr-0.1.3-release-date-2016-05-06" class="level1"><h1>GSODR 0.1.3 (Release date: 2016-05-06)</h1>
-<section id="bug-fixes-8" class="level2"><h2>Bug fixes</h2>
+<section id="bug-fixes-9" class="level2"><h2>Bug fixes</h2>
 <ul>
 <li><p>Bug fix in MIN/MAX with flags. Some columns have differing widths, which caused a flag to be left attached to some values</p></li>
 <li><p>Correct URL in README.md for CRAN to point to CRAN not GitHub</p></li>
@@ -386,7 +397,7 @@
 </ul>
 <hr></section></section>
     <section id="gsodr-0.1.2-release-date-2016-05-05" class="level1"><h1>GSODR 0.1.2 (Release date: 2016-05-05)</h1>
-<section id="bug-fixes-9" class="level2"><h2>Bug Fixes</h2>
+<section id="bug-fixes-10" class="level2"><h2>Bug Fixes</h2>
 <ul>
 <li><p>Bug fix in importing isd-history.csv file. Previous issues caused all lat/lon/elev values to be &gt;0.</p></li>
 <li><p>Bug fix where WDSP was mistyped as WDPS causing the creation of a new column, rather than the conversion of the existing</p></li>
@@ -417,6 +428,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#gsodr-1.1.2.9000">1.1.2.9000</a></li>
         <li><a href="#gsodr-1.1.2-release-date-2017-12-15">1.1.2</a></li>
         <li><a href="#gsodr-1.1.1-release-date-2017-11-27">1.1.1</a></li>
         <li><a href="#gsodr-1.1.0">1.1.0</a></li>
