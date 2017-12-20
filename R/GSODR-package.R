@@ -60,7 +60,7 @@
 #' }
 #'
 #' @source
-#' \url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod}
+#' \url{https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/}
 #'
 #' @references
 #' Karger, D. N., Conrad, O., Bohner, J., Kawohl, T., Kreft, H., Soria-Auza,

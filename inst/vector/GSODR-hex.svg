@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2"
+   sodipodi:docname="GSODR-hex.svg"
+   viewBox="0 0 155.53979 180.01316"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   width="4.3896785cm"
+   height="5.0803719cm"
+   inkscape:export-filename="/Users/adamsparks/Development/GSODR/man/figures/GSODR-hex.png"
+   inkscape:export-xdpi="144.5"
+   inkscape:export-ydpi="144.5">
+  <title
+     id="title2938">GSODR</title>
+  <defs
+     id="defs4">
+    <style
+       id="style22186">.cls-1{fill:none;}.cls-2{fill:#ba6f38;}.cls-3{clip-path:url(#clip-path);}.cls-4{fill:#ed7d15;}.cls-5{opacity:0.25;fill:url(#linear-gradient);}.cls-6{fill:#ac5d12;}.cls-7{clip-path:url(#clip-path-2);}.cls-8{fill:#36a85d;}.cls-9{fill:#e6b35a;}.cls-10{fill:#fff;}.cls-11{opacity:0.94;}</style>
+    <clipPath
+       id="clip-path">
+      <polygon
+         id="polygon22189"
+         points="369.5,845 2.8,636.6 2.8,214.5 369.5,7.4 369.5,7.4 728.2,214.5 728.2,636.6 "
+         class="cls-1"
+         style="fill:none" />
+    </clipPath>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     bordercolor="#666666"
+     inkscape:pageshadow="2"
+     inkscape:window-y="1"
+     pagecolor="#ffffff"
+     inkscape:window-height="1031"
+     inkscape:window-maximized="1"
+     inkscape:zoom="2.5924294"
+     inkscape:window-x="0"
+     showgrid="false"
+     borderopacity="1.0"
+     inkscape:current-layer="layer1"
+     inkscape:cx="21.434988"
+     inkscape:cy="70.026619"
+     inkscape:window-width="1920"
+     inkscape:pageopacity="0.0"
+     inkscape:document-units="px"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     units="cm" />
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     transform="translate(1786.7196,13.305957)">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="-1128.9001"
+       y="-11.74138"
+       id="text5476"><tspan
+         sodipodi:role="line"
+         id="tspan5478"
+         x="-1128.9001"
+         y="-11.74138"
+         style="font-size:40px;line-height:1.25"> </tspan></text>
+    <g
+       transform="matrix(0.72484839,1.2953625,-1.2953626,0.72484843,-671.26984,-964.12141)"
+       id="g4147"
+       style="fill:#004878;fill-opacity:1" />
+    <g
+       id="g4276">
+      <path
+         transform="matrix(0.41685327,-0.10822693,0.10790459,0.41809852,-960.39021,-112.62165)"
+         d="m -1651.6704,127.84281 -191.0462,52.68823 -141.1525,-139.10676 49.8938,-191.79499 191.0462,-52.68822 141.1524,139.106757 z"
+         inkscape:randomized="0"
+         inkscape:rounded="0"
+         inkscape:flatsided="true"
+         sodipodi:arg2="1.3016978"
+         sodipodi:arg1="0.77809902"
+         sodipodi:r2="99.089233"
+         sodipodi:r1="198.17847"
+         sodipodi:cy="-11.263947"
+         sodipodi:cx="-1792.8229"
+         sodipodi:sides="6"
+         id="path2709"
+         style="fill:#0c3580;fill-opacity:1;stroke:#1587cc;stroke-width:17.71653557;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         sodipodi:type="star" />
+      <rect
+         id="rect10603"
+         style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.39542294;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+         height="3.9602966"
+         width="59.177544"
+         y="91.885017"
+         x="-1745.0818" />
+      <rect
+         id="rect12143"
+         style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.86392742;stroke-linecap:round;stroke-opacity:1;stroke-linejoin:round"
+         height="27.54493"
+         width="6.3634253"
+         y="65.421669"
+         x="-1744.8475" />
+      <path
+         sodipodi:start="0.0085070285"
+         sodipodi:end="0.0058982928"
+         sodipodi:cx="-1756.3895"
+         sodipodi:cy="56.39106"
+         sodipodi:open="true"
+         d="m -1750.2178,56.441991 a 6.1719255,5.9870129 0 0 1 -6.2202,5.935897 6.1719255,5.9870129 0 0 1 -6.1233,-6.02995 6.1719255,5.9870129 0 0 1 6.2122,-5.943763 6.1719255,5.9870129 0 0 1 6.1314,6.022198"
+         sodipodi:type="arc"
+         style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:1.16053236;stroke-opacity:1"
+         sodipodi:ry="5.9870129"
+         sodipodi:rx="6.1719255"
+         id="path11375" />
+      <path
+         sodipodi:start="0.0085070285"
+         sodipodi:end="0.0058982928"
+         sodipodi:cx="-1726.8993"
+         sodipodi:cy="56.39106"
+         sodipodi:open="true"
+         d="m -1720.7276,56.441991 a 6.1719255,5.9870129 0 0 1 -6.2202,5.935897 6.1719255,5.9870129 0 0 1 -6.1233,-6.02995 6.1719255,5.9870129 0 0 1 6.2122,-5.943763 6.1719255,5.9870129 0 0 1 6.1314,6.022198"
+         sodipodi:type="arc"
+         style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:1.16053236;stroke-opacity:1"
+         sodipodi:ry="5.9870129"
+         sodipodi:rx="6.1719255"
+         id="path11377" />
+      <path
+         sodipodi:start="1.5769313"
+         sodipodi:end="4.6879632"
+         sodipodi:cx="-1741.6445"
+         sodipodi:cy="56.627186"
+         d="m -1741.6824,62.614086 a 6.1719255,5.9870129 0 0 1 -6.1338,-5.932147 6.1719255,5.9870129 0 0 1 6.0209,-6.03998 l 0.1508,5.985227 z"
+         sodipodi:type="arc"
+         style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:1.16053236;stroke-opacity:1"
+         sodipodi:ry="5.9870129"
+         sodipodi:rx="6.1719255"
+         id="path11379" />
+      <path
+         d="m -1741.7914,56.542181 8.7469,0"
+         style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:1.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="path11381"
+         inkscape:connector-curvature="0" />
+      <path
+         d="m -1749.7751,56.542181 2.2986,0"
+         style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:1.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="path12141"
+         inkscape:connector-curvature="0" />
+      <path
+         d="m -1740.7067,65.740551 -3.0741,-7.061991"
+         style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:1.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="path12145"
+         inkscape:connector-curvature="0" />
+      <rect
+         id="rect12907"
+         style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.86119944;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         height="27.366739"
+         width="6.3660488"
+         y="65.388802"
+         x="-1692.5033" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path13671"
+         style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:3;stroke-linecap:round;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+         d="m -1689.3828,65.008197 0.039,-25.847856" />
+      <path
+         transform="matrix(1.2497015,0.02731738,-0.02731738,1.2497015,428.46372,42.686889)"
+         sodipodi:sides="3"
+         inkscape:flatsided="false"
+         inkscape:rounded="0"
+         sodipodi:cx="-1706.152"
+         sodipodi:cy="36.517773"
+         inkscape:randomized="0"
+         sodipodi:arg2="-0.18369775"
+         sodipodi:arg1="-1.0739558"
+         sodipodi:r2="1.5467046"
+         sodipodi:r1="2.9838295"
+         d="m -1704.7297,33.894709 0.098,2.340533 0.04,2.825762 -2.0761,-1.085017 -2.4671,-1.378382 1.9777,-1.255516 z"
+         sodipodi:type="star"
+         style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.67414588;stroke-opacity:1"
+         id="path12911" />
+      <path
+         d="m -1680.7124,41.798759 18.7471,10.828386 6.465,0 -3.3951,-10.782276 3.5576,-11.19726 -6.7877,0.16017 z"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:0.84268236;stroke-opacity:1"
+         id="path14439"
+         inkscape:connector-curvature="0" />
+      <path
+         d="m -1679.1768,41.688715 -23.4356,-0.116488"
+         style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:1.5;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+         id="path15199"
+         inkscape:connector-curvature="0" />
+      <text
+         transform="matrix(0.86615397,-0.49977725,0.49977725,0.86615397,0,0)"
+         id="text2866"
+         y="-719.76825"
+         x="-1560.8561"
+         style="font-style:normal;font-weight:normal;font-size:37.5px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.9375"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.5px;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';fill:#ffffff;fill-opacity:1;stroke-width:0.9375"
+           y="-719.76825"
+           x="-1560.8561"
+           id="tspan2864"
+           sodipodi:role="line">GSODR</tspan></text>
+    </g>
+  </g>
+  <metadata
+     id="metadata207">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <cc:license
+           rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/" />
+        <dc:publisher>
+          <cc:Agent
+             rdf:about="http://openclipart.org/">
+            <dc:title />
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title>GSODR</dc:title>
+        <dc:date>2017-12-12</dc:date>
+        <dc:description>R GSODR package hex sticker, https://ropensci.github.io/GSODR/</dc:description>
+        <dc:source>https://ropensci.github.io/GSODR/inst/vector/</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>adamhsparks</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>R</rdf:li>
+            <rdf:li>hexsticker</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>CC0</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title>kubitus</dc:title>
+          </cc:Agent>
+        </dc:contributor>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/publicdomain/zero/1.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>

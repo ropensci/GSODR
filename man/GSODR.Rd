@@ -6,7 +6,7 @@
 \alias{GSODR-package}
 \title{GSODR: Global Surface Summary of the Day (GSOD) Weather Data from R}
 \source{
-\url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod}
+\url{https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/}
 }
 \description{
 Provides automated downloading, parsing, cleaning, unit conversion and
