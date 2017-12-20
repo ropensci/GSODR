@@ -47,10 +47,8 @@ facilitating this:
 
 When reformatting data either with `get_GSOD()` or `reformat_GSOD()`,
 all units are converted to International System of Units (SI), *e.g.*,
-inches to millimetres and Fahrenheit to Celsius. File output can be used
-in an R session as a `tibble()`, saved as a Comma Separated Value (CSV)
-file or in a spatial GeoPackage (GPKG) file, implemented by most major
-GIS software, summarising each year by station, which also includes
+inches to millimetres and Fahrenheit to Celsius. Data are returned in a
+`tibble::tibble` summarising each year by station, which also includes
 vapour pressure and relative humidity elements calculated from existing
 data in GSOD.
 
