@@ -124,27 +124,27 @@ tbar
 ```
 
     ## # A tibble: 365 x 48
-    ##      USAF  WBAN        STNID          STN_NAME  CTRY STATE  CALL    LAT
-    ##     <chr> <chr>        <chr>             <chr> <chr> <chr> <chr>  <dbl>
-    ##  1 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  <NA>  <NA> -27.55
-    ##  2 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  <NA>  <NA> -27.55
-    ##  3 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  <NA>  <NA> -27.55
-    ##  4 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  <NA>  <NA> -27.55
-    ##  5 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  <NA>  <NA> -27.55
-    ##  6 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  <NA>  <NA> -27.55
-    ##  7 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  <NA>  <NA> -27.55
-    ##  8 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  <NA>  <NA> -27.55
-    ##  9 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  <NA>  <NA> -27.55
-    ## 10 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  <NA>  <NA> -27.55
-    ## # ... with 355 more rows, and 40 more variables: LON <dbl>, ELEV_M <dbl>,
-    ## #   ELEV_M_SRTM_90m <dbl>, BEGIN <dbl>, END <dbl>, YEARMODA <date>,
-    ## #   YEAR <chr>, MONTH <chr>, DAY <chr>, YDAY <dbl>, TEMP <dbl>,
-    ## #   TEMP_CNT <int>, DEWP <dbl>, DEWP_CNT <int>, SLP <dbl>, SLP_CNT <int>,
-    ## #   STP <dbl>, STP_CNT <int>, VISIB <dbl>, VISIB_CNT <int>, WDSP <dbl>,
-    ## #   WDSP_CNT <int>, MXSPD <dbl>, GUST <dbl>, MAX <dbl>, MAX_FLAG <chr>,
-    ## #   MIN <dbl>, MIN_FLAG <chr>, PRCP <dbl>, PRCP_FLAG <chr>, SNDP <dbl>,
-    ## #   I_FOG <int>, I_RAIN_DRIZZLE <int>, I_SNOW_ICE <int>, I_HAIL <int>,
-    ## #   I_THUNDER <int>, I_TORNADO_FUNNEL <int>, EA <dbl>, ES <dbl>, RH <dbl>
+    ##    USAF   WBAN  STNID    STN_NAME     CTRY  STATE CALL    LAT   LON ELEV_M
+    ##    <chr>  <chr> <chr>    <chr>        <chr> <chr> <chr> <dbl> <dbl>  <dbl>
+    ##  1 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6   152    642
+    ##  2 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6   152    642
+    ##  3 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6   152    642
+    ##  4 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6   152    642
+    ##  5 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6   152    642
+    ##  6 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6   152    642
+    ##  7 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6   152    642
+    ##  8 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6   152    642
+    ##  9 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6   152    642
+    ## 10 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6   152    642
+    ## # ... with 355 more rows, and 38 more variables: ELEV_M_SRTM_90m <dbl>,
+    ## #   BEGIN <dbl>, END <dbl>, YEARMODA <date>, YEAR <chr>, MONTH <chr>, DAY
+    ## #   <chr>, YDAY <dbl>, TEMP <dbl>, TEMP_CNT <int>, DEWP <dbl>, DEWP_CNT
+    ## #   <int>, SLP <dbl>, SLP_CNT <int>, STP <dbl>, STP_CNT <int>, VISIB
+    ## #   <dbl>, VISIB_CNT <int>, WDSP <dbl>, WDSP_CNT <int>, MXSPD <dbl>, GUST
+    ## #   <dbl>, MAX <dbl>, MAX_FLAG <chr>, MIN <dbl>, MIN_FLAG <chr>, PRCP
+    ## #   <dbl>, PRCP_FLAG <chr>, SNDP <dbl>, I_FOG <int>, I_RAIN_DRIZZLE <int>,
+    ## #   I_SNOW_ICE <int>, I_HAIL <int>, I_THUNDER <int>, I_TORNADO_FUNNEL
+    ## #   <int>, EA <dbl>, ES <dbl>, RH <dbl>
 
 ## Other Sources of Weather Data in R
 

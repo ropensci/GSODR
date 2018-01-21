@@ -38,7 +38,7 @@ Description: Provides automated downloading, parsing, cleaning, unit conversion
     information on the GSOD data from NCEI, please see the GSOD readme.txt file
     available from, <http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt>.
 Depends:
-    R (>= 3.2.0)
+    R (>= 3.3.0)
 License: MIT + file LICENSE
 Imports:
     curl,
