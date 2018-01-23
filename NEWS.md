@@ -7,9 +7,6 @@ dependencies and this functions parameters. Examples of how to convert to a
 spatial object (both _sp_ and _sf_ are shown) and export ESRI Shapefiles and
 GeoPackage files are now included in the vignette.
 
-- The _sp_ and _rgdal_ packages are no longer imported but are now in Suggests
-along with _sf_ for examples in the GSOD vignette.
-
 ## Bug fixes
 
 - Correct documentation for `reformat_GSOD()`

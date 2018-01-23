@@ -1,10 +1,10 @@
 
 #' Find Nearest GSOD Stations to a Specified Latitude and Longitude
 #'
-#'Given latitude and longitude values entered as decimal degrees (DD), this
-#'function returns a list (atomic vector) of STNID values, which can be used in
-#'\code{\link{get_GSOD}} to query for specific stations as an argument in the
-#'\code{station} parameter of that function.
+#' Given latitude and longitude values entered as decimal degrees (DD), this
+#' function returns a list (atomic vector) of STNID values, which can be used in
+#' \code{\link{get_GSOD}} to query for specific stations as an argument in the
+#' \code{station} parameter of that function.
 #'
 #' @param LAT Latitude expressed as decimal degrees (DD) [WGS84]
 #' @param LON Longitude expressed as decimal degrees (DD) [WGS84]
