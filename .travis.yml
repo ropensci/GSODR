@@ -1,6 +1,7 @@
 language: r
 warnings_are_errors: true
 sudo: required
+group: deprecated-2017Q4
 cache: packages
 
 matrix:
