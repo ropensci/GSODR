@@ -4,17 +4,15 @@
 \alias{nearest_stations}
 \title{Find Nearest GSOD Stations to a Specified Latitude and Longitude}
 \usage{
-nearest_stations(LAT, LON, radius)
+nearest_stations(LAT, LON, distance)
 }
 \arguments{
-\item{radius}{Distance in kilometres from point for which stations are to
+\item{LAT}{Latitude expressed as decimal degrees (DD) [WGS84]}
+
+\item{LON}{Longitude expressed as decimal degrees (DD) [WGS84]}
+
+\item{distance}{Distance in kilometres from point for which stations are to
 be returned.}
-
-\item{lat}{Latitude expressed as decimal degrees (DD) [WGS84]. Southern
-latitudes should be given as negative values.}
-
-\item{lon}{Longitude expressed as decimal degrees (DD) [WGS84]. Western
-longitudes should be given as negative values.}
 }
 \value{
 \code{\link[base]{vector}} object of station identification numbers

@@ -111,25 +111,23 @@ function returns a list (atomic vector) of STNID values, which can be used in
 <code>station</code> parameter of that function.</p>
     
 
-    <pre class="usage"><span class='fu'>nearest_stations</span>(<span class='no'>LAT</span>, <span class='no'>LON</span>, <span class='no'>radius</span>)</pre>
+    <pre class="usage"><span class='fu'>nearest_stations</span>(<span class='no'>LAT</span>, <span class='no'>LON</span>, <span class='no'>distance</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>radius</th>
+      <th>LAT</th>
+      <td><p>Latitude expressed as decimal degrees (DD) [WGS84]</p></td>
+    </tr>
+    <tr>
+      <th>LON</th>
+      <td><p>Longitude expressed as decimal degrees (DD) [WGS84]</p></td>
+    </tr>
+    <tr>
+      <th>distance</th>
       <td><p>Distance in kilometres from point for which stations are to
 be returned.</p></td>
-    </tr>
-    <tr>
-      <th>lat</th>
-      <td><p>Latitude expressed as decimal degrees (DD) [WGS84]. Southern
-latitudes should be given as negative values.</p></td>
-    </tr>
-    <tr>
-      <th>lon</th>
-      <td><p>Longitude expressed as decimal degrees (DD) [WGS84]. Western
-longitudes should be given as negative values.</p></td>
     </tr>
     </table>
     
