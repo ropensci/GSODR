@@ -86,9 +86,7 @@
     
     
 <div class="contents">
-<div id="gather-data-for-irri-central-luzon-survey-loop" class="section level1">
-<h1 class="hasAnchor">
-<a href="#gather-data-for-irri-central-luzon-survey-loop" class="anchor"></a>Gather Data for IRRI Central Luzon Survey Loop</h1>
+<section id="gather-data-for-irri-central-luzon-survey-loop" class="level1"><h1>Gather Data for IRRI Central Luzon Survey Loop</h1>
 <p>The IRRI (International Rice Research Institute) survey loop in Central Luzon is a study that aims to monitor the changes in rice farming in the major rice producing area of the Philippines - the Central Luzon region, which is called as the “rice bowl of the Philippines”. Data have been collected in this project since the 1960s. See, <a href="http://ricestat.irri.org/fhsd/php/panel.php?page=1&amp;sortBy=title&amp;sortOrder=ascending#" class="uri">http://ricestat.irri.org/fhsd/php/panel.php?page=1&amp;sortBy=title&amp;sortOrder=ascending#</a> for the panel data.</p>
 <p>This vignette details how to find and retrieve weather data for the area that this survey covers for the time period of 1960-2016. Methods that are detailed include:</p>
 <ul>
@@ -100,9 +98,7 @@
 <li><p>determining which stations provide data for the specified time-period, 1960-2015; and</p></li>
 <li><p>downloading the station files and creating a single CSV file of the data for analysis.</p></li>
 </ul>
-<div id="retrieve-phl-provincial-data-and-select-loop-provinces" class="section level3">
-<h3 class="hasAnchor">
-<a href="#retrieve-phl-provincial-data-and-select-loop-provinces" class="anchor"></a>Retrieve PHL Provincial Data and Select Loop Provinces</h3>
+<section id="retrieve-phl-provincial-data-and-select-loop-provinces" class="level3"><h3>Retrieve PHL Provincial Data and Select Loop Provinces</h3>
 <p>As a first step, we’ll use the <a href="https://cran.r-project.org/package=raster"><em>raster</em></a> package to retrieve data from <a href="http://www.gadm.org/">GADM</a> that will provide the provincial spatial data for the survey area. We will then use this to find the centroid of the area of interest, which will be used to find the nearest stations. Using <code><a href="http://www.rdocumentation.org/packages/raster/topics/getData">raster::getData()</a></code> fetch level 0 (national) and 1 (provincial) data for the Philippines.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(raster)</a></code></pre></div>
 <pre><code>## Loading required package: sp</code></pre>
@@ -172,10 +168,7 @@
 <a class="sourceLine" id="cb11-27" data-line-number="27"><span class="kw">print</span>(p1, <span class="dt">vp =</span> v1) </a>
 <a class="sourceLine" id="cb11-28" data-line-number="28"><span class="kw">print</span>(p2, <span class="dt">vp =</span> v2)</a></code></pre></div>
 <p><img src="Specified_stations_for_a_range_of_years_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
-</div>
-<div id="dissolve-polygons-and-find-centroid-of-loop-survey-area" class="section level3">
-<h3 class="hasAnchor">
-<a href="#dissolve-polygons-and-find-centroid-of-loop-survey-area" class="anchor"></a>Dissolve Polygons and Find Centroid of Loop Survey Area</h3>
+</section><section id="dissolve-polygons-and-find-centroid-of-loop-survey-area" class="level3"><h3>Dissolve Polygons and Find Centroid of Loop Survey Area</h3>
 <p>Now that we have the provincial data that we want, we will dissolve the polygons that represent the individual provinces in Central Luzon and find the centroid of all of them, which we will use as the central point for querying stations from the GSOD data set.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">Central_Luzon &lt;-<span class="st"> </span>rgeos<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/rgeos/topics/topo-bin-gUnion">gUnaryUnion</a></span>(Central_Luzon)</a>
 <a class="sourceLine" id="cb12-2" data-line-number="2">centroid &lt;-<span class="st"> </span>rgeos<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/rgeos/topics/topo-unary-gCentroid">gCentroid</a></span>(Central_Luzon)</a>
@@ -237,17 +230,11 @@
 ## 3 983270 99999 CLARK INTL        15.2   121  148    19450214  2.02e⁷ 9832…
 ## 4 983280 99999 BAGUIO            16.4   121 1296    19490101  2.02e⁷ 9832…</code></pre>
 <p>These are all of the stations that are available within 100km of the centroid of this area and the years for which data are available.</p>
-</div>
-<div id="using-get_gsod-to-fetch-the-requested-station-files" class="section level3">
-<h3 class="hasAnchor">
-<a href="#using-get_gsod-to-fetch-the-requested-station-files" class="anchor"></a>Using <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> to Fetch the Requested Station Files</h3>
+</section><section id="using-get_gsod-to-fetch-the-requested-station-files" class="level3"><h3>Using <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> to Fetch the Requested Station Files</h3>
 <p>This example shows how you could construct a query using the <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> function. Be aware that it may result in incomplete data and error from the server if it stops responding. We’ve done our best to make <em>GSODR</em> handle these errors, but if it does this, see the following option for using the <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code> function.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">PHL &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">station =</span> </a>
 <a class="sourceLine" id="cb17-2" data-line-number="2">                  <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text =</span> loop_stations[, <span class="dv">12</span>])), <span class="dt">years =</span> <span class="dv">1960</span><span class="op">:</span><span class="dv">2015</span>)</a></code></pre></div>
-</div>
-<div id="another-option-using-reformat_gsod" class="section level3">
-<h3 class="hasAnchor">
-<a href="#another-option-using-reformat_gsod" class="anchor"></a>Another Option, Using <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code>
+</section><section id="another-option-using-reformat_gsod" class="level3"><h3>Another Option, Using <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code>
 </h3>
 <p><em>GSODR</em> provides a function for dealing with local files that have been transferred from the server already as well, <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code>. If the previous example with <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> does not work, this is a good alternative that takes a bit more intervention but gives the same results.</p>
 <p>Using your FTP client (<em>e.g.</em>, FileZilla) log into the NCEI FTP server, <a href="ftp.ncdc.noaa.gov">&lt;ftp.ncdc.noaa.gov&gt;</a> and navigate to /pub/data/gsod/. Manually downloading the files for each station listed above from 1960 to 2015 is possible, but tedious. An easier solution is to simply download the annual files found in each yearly directory, “gsod-YYYY.tar” and untar them locally and then use R to list the available files and select only the files for the stations of interest. Lastly, write the data to disk as a CSV file for saving and later use.</p>
@@ -266,34 +253,18 @@
 <a class="sourceLine" id="cb18-13" data-line-number="13">loop_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reformat_GSOD.html">reformat_GSOD</a></span>(<span class="dt">file_list =</span> local_files)</a>
 <a class="sourceLine" id="cb18-14" data-line-number="14"></a>
 <a class="sourceLine" id="cb18-15" data-line-number="15">readr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/readr/topics/write_delim">write_csv</a></span>(loop_data, <span class="dt">file =</span> <span class="st">"Loop_Survey_Weather_1960-2015"</span>, <span class="dt">path =</span> <span class="st">"./"</span>)</a></code></pre></div>
-</div>
-</div>
-<div id="notes" class="section level1">
-<h1 class="hasAnchor">
-<a href="#notes" class="anchor"></a>Notes</h1>
-<div id="sources" class="section level2">
-<h2 class="hasAnchor">
-<a href="#sources" class="anchor"></a>Sources</h2>
-<div id="elevation-values" class="section level4">
-<h4 class="hasAnchor">
-<a href="#elevation-values" class="anchor"></a>Elevation Values</h4>
+</section></section><section id="notes" class="level1"><h1>Notes</h1>
+<section id="sources" class="level2"><h2>Sources</h2>
+<section id="elevation-values" class="level4"><h4>Elevation Values</h4>
 <p>90m hole-filled SRTM digital elevation (Jarvis <em>et al.</em> 2008) was used to identify and correct/remove elevation errors in data for station locations between -60˚ and 60˚ latitude. This applies to cases here where elevation was missing in the reported values as well. In case the station reported an elevation and the DEM does not, the station reported is taken. For stations beyond -60˚ and 60˚ latitude, the values are station reported values in every instance. See <a href="https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md" class="uri">https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md</a> for more detail on the correction methods.</p>
-</div>
-</div>
-<div id="wmo-resolution-40--noaa-policy" class="section level2">
-<h2 class="hasAnchor">
-<a href="#wmo-resolution-40--noaa-policy" class="anchor"></a>WMO Resolution 40. NOAA Policy</h2>
+</section></section><section id="wmo-resolution-40.-noaa-policy" class="level2"><h2>WMO Resolution 40. NOAA Policy</h2>
 <p><em>Users of these data should take into account the following (from the <a href="http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&amp;countryabbv=&amp;georegionabbv=">NCEI website</a>):</em></p>
 <blockquote>
 <p>“The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification.” <a href="https://public.wmo.int/en/our-mandate/what-we-do/data-exchange-and-technology-transfer">WMO Resolution 40. NOAA Policy</a></p>
 </blockquote>
-</div>
-</div>
-<div id="references" class="section level1">
-<h1 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h1>
+</section></section><section id="references" class="level1"><h1>References</h1>
 <p>Jarvis, A., Reuter, H.I., Nelson, A., Guevara, E. (2008) Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database (<a href="http://srtm.csi.cgiar.org" class="uri">http://srtm.csi.cgiar.org</a>)</p>
-</div>
+</section>
 </div>
   </div>
 

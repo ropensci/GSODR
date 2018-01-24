@@ -137,14 +137,14 @@ tbar
     ##  9 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6   152    642
     ## 10 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6   152    642
     ## # ... with 355 more rows, and 38 more variables: ELEV_M_SRTM_90m <dbl>,
-    ## #   BEGIN <dbl>, END <dbl>, YEARMODA <date>, YEAR <chr>, MONTH <chr>, DAY
-    ## #   <chr>, YDAY <dbl>, TEMP <dbl>, TEMP_CNT <int>, DEWP <dbl>, DEWP_CNT
-    ## #   <int>, SLP <dbl>, SLP_CNT <int>, STP <dbl>, STP_CNT <int>, VISIB
-    ## #   <dbl>, VISIB_CNT <int>, WDSP <dbl>, WDSP_CNT <int>, MXSPD <dbl>, GUST
-    ## #   <dbl>, MAX <dbl>, MAX_FLAG <chr>, MIN <dbl>, MIN_FLAG <chr>, PRCP
-    ## #   <dbl>, PRCP_FLAG <chr>, SNDP <dbl>, I_FOG <int>, I_RAIN_DRIZZLE <int>,
-    ## #   I_SNOW_ICE <int>, I_HAIL <int>, I_THUNDER <int>, I_TORNADO_FUNNEL
-    ## #   <int>, EA <dbl>, ES <dbl>, RH <dbl>
+    ## #   BEGIN <dbl>, END <dbl>, YEARMODA <date>, YEAR <chr>, MONTH <chr>,
+    ## #   DAY <chr>, YDAY <dbl>, TEMP <dbl>, TEMP_CNT <int>, DEWP <dbl>,
+    ## #   DEWP_CNT <int>, SLP <dbl>, SLP_CNT <int>, STP <dbl>, STP_CNT <int>,
+    ## #   VISIB <dbl>, VISIB_CNT <int>, WDSP <dbl>, WDSP_CNT <int>, MXSPD <dbl>,
+    ## #   GUST <dbl>, MAX <dbl>, MAX_FLAG <chr>, MIN <dbl>, MIN_FLAG <chr>,
+    ## #   PRCP <dbl>, PRCP_FLAG <chr>, SNDP <dbl>, I_FOG <int>,
+    ## #   I_RAIN_DRIZZLE <int>, I_SNOW_ICE <int>, I_HAIL <int>, I_THUNDER <int>,
+    ## #   I_TORNADO_FUNNEL <int>, EA <dbl>, ES <dbl>, RH <dbl>
 
 ## Other Sources of Weather Data in R
 
