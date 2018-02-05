@@ -15,7 +15,12 @@ Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     email = "hugh.parsonage@gmail.com",
     comment = c(ORCID = "0000-0003-4055-0835")),
     person("Bob", "Rudis", email = "bob@rud.is", role = c("cph", "ctb"),
-    comment = c(ORCID = "0000-0001-5670-2640")))
+    comment = c(ORCID = "0000-0001-5670-2640")),
+    person("Gwenael", "Giboire", email = "gwenael.giboire@oda-groupe.com",
+    role = "ctb",
+    comment = "Several bug reports in early versions and testing feedback"),
+    person("Łukasz","Pawlik", email = "lukpawlik@gmail.com", role = "ctb",
+    comment = "Reported bug in windspeed conversion calculation"))
 URL: https://github.com/ropensci/GSODR
 BugReports: https://github.com/ropensci/GSODR/issues
 Description: Provides automated downloading, parsing, cleaning, unit conversion
