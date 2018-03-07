@@ -123,8 +123,8 @@ stations <- stations[stations$LON > -180 & stations$LON < 180, ]
 stations$STNID <- as.character(paste(stations$USAF, stations$WBAN, sep = "-"))
 
 # join countries with countrycode data
-countries <- dplyr::left_join(countries, countrycode::countrycode_data,
-                              by = c(FIPS = "fips105"))
+countries <- dplyr::left_join(countries, countrycode::codelist,
+                              by = c("FIPS" = "fips"))
 
 # create xy object to check for geographic location agreement with reported
 xy <- dplyr::left_join(stations, countries, by = c("CTRY" = "FIPS"))
