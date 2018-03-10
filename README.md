@@ -126,16 +126,16 @@ tbar
     ## # A tibble: 365 x 48
     ##    USAF   WBAN  STNID    STN_NAME     CTRY  STATE CALL    LAT   LON ELEV_M
     ##    <chr>  <chr> <chr>    <chr>        <chr> <chr> <chr> <dbl> <dbl>  <dbl>
-    ##  1 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6   152    642
-    ##  2 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6   152    642
-    ##  3 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6   152    642
-    ##  4 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6   152    642
-    ##  5 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6   152    642
-    ##  6 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6   152    642
-    ##  7 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6   152    642
-    ##  8 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6   152    642
-    ##  9 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6   152    642
-    ## 10 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6   152    642
+    ##  1 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.   642.
+    ##  2 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.   642.
+    ##  3 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.   642.
+    ##  4 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.   642.
+    ##  5 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.   642.
+    ##  6 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.   642.
+    ##  7 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.   642.
+    ##  8 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.   642.
+    ##  9 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.   642.
+    ## 10 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.   642.
     ## # ... with 355 more rows, and 38 more variables: ELEV_M_SRTM_90m <dbl>,
     ## #   BEGIN <dbl>, END <dbl>, YEARMODA <date>, YEAR <chr>, MONTH <chr>,
     ## #   DAY <chr>, YDAY <dbl>, TEMP <dbl>, TEMP_CNT <int>, DEWP <dbl>,
