@@ -42,7 +42,7 @@ and ISO codes to function.
 
 ```{r remove_uncessesary, echo=TRUE, messages=FALSE}
 
-country_list <- (country_list[, -c(3:14, 17:35)])
+country_list <- country_list[, c(1:2, 34:35)]
 
 country_list
 ```
