@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Citation and Authors • GSODR</title>
+<title>/Users/adamsparks/Development/GSODR/cran-comments.md • GSODR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -27,7 +27,7 @@
 <script src="pkgdown.js"></script>
   
   
-<meta property="og:title" content="Citation and Authors" />
+<meta property="og:title" content="/Users/adamsparks/Development/GSODR/cran-comments.md" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -40,7 +40,7 @@
   </head>
 
   <body>
-    <div class="container template-citation-authors">
+    <div class="container template-title-body">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -102,62 +102,61 @@
       </header>
 
       <div class="row">
-  <div class="contents col-md-9">
-
+  <div class="contents col-md-12">
     <div class="page-header">
-      <h1>Citation</h1>
+      <h1>/Users/adamsparks/Development/GSODR/cran-comments.md</h1>
     </div>
 
-    <p>Sparks AH, Hengl T and Nelson A (2017).
-&ldquo;GSODR: Global Summary Daily Weather Data in R.&rdquo;
-<em>The Journal of Open Source Software</em>, <b>2</b>(10).
-doi: <a href="http://doi.org/10.21105/joss.00177">10.21105/joss.00177</a>. 
-</p>
-    <pre>@Article{,
-  author = {Adam H Sparks and Tomislav Hengl and Andrew Nelson},
-  title = {{GSODR}: Global Summary Daily Weather Data in R},
-  doi = {10.21105/joss.00177},
-  year = {2017},
-  month = {feb},
-  publisher = {The Open Journal},
-  volume = {2},
-  number = {10},
-  journal = {The Journal of Open Source Software},
-}</pre>
-    <div class="page-header">
-      <h1>Authors</h1>
-    </div>
 
-    <ul class="list-unstyled">
-      <li>
-        <p><strong>Adam Sparks</strong>. Author, maintainer. <a href='https://orcid.org/0000-0002-0061-8359' target='orcid.widget'><img src='https://members.orcid.org/sites/default/files/vector_iD_icon.svg' class='orcid'></a>
-        </p>
-      </li>
-      <li>
-        <p><strong>Tomislav Hengl</strong>. Author. <a href='https://orcid.org/0000-0002-9921-5129' target='orcid.widget'><img src='https://members.orcid.org/sites/default/files/vector_iD_icon.svg' class='orcid'></a>
-        </p>
-      </li>
-      <li>
-        <p><strong>Andrew Nelson</strong>. Author. <a href='https://orcid.org/0000-0002-7249-3778' target='orcid.widget'><img src='https://members.orcid.org/sites/default/files/vector_iD_icon.svg' class='orcid'></a>
-        </p>
-      </li>
-      <li>
-        <p><strong>Hugh Parsonage</strong>. Copyright holder, contributor. <a href='https://orcid.org/0000-0003-4055-0835' target='orcid.widget'><img src='https://members.orcid.org/sites/default/files/vector_iD_icon.svg' class='orcid'></a>
-        </p>
-      </li>
-      <li>
-        <p><strong>Bob Rudis</strong>. Copyright holder, contributor. <a href='https://orcid.org/0000-0001-5670-2640' target='orcid.widget'><img src='https://members.orcid.org/sites/default/files/vector_iD_icon.svg' class='orcid'></a>
-        </p>
-      </li>
-      <li>
-        <p><strong>Gwenael Giboire</strong>. Contributor. 
-        <br /><small>Several bug reports in early versions and testing feedback</small></p>
-      </li>
-      <li>
-        <p><strong>Łukasz Pawlik</strong>. Contributor. 
-        <br /><small>Reported bug in windspeed conversion calculation</small></p>
-      </li>
-    </ul>
+<div class="section level2">
+<h2>Test environments</h2>
+<ul>
+<li>local OS X install, R 3.4.2 (2017-09-28)</li>
+<li>ubuntu 12.04 (on travis-ci), R 3.4.2 (2017-09-28)</li>
+<li>win-builder R Under development (unstable) (2017-09-12 r73242)</li>
+<li>win-builder R version 3.4.2 (2017-09-28)</li>
+</ul>
+</div>
+<div class="section level2">
+<h2>R CMD check results</h2>
+<p>0 errors | 0 warnings | 1 note</p>
+</div>
+<div class="section level2">
+<h2>New minor release</h2>
+<p>This is a new minor release</p>
+</div>
+<div class="section level2">
+<h2>Bug fixes</h2>
+<ul>
+<li>
+<code>MAX_FLAG</code> and <code>MIN_FLAG</code> columns now report <code>NA</code> when there is no flag</li>
+</ul>
+</div>
+<div class="section level2">
+<h2>Minor changes</h2>
+<ul>
+<li><p>Comment for Bob and Hugh in DESCRIPTION now only ORCID url</p></li>
+<li><p>dplyr version set to &gt;= 0.7.0 not 0.7 as before</p></li>
+<li><p>Start-up message statement is more clear in relation to WMO resolution 40, that GSODR does not redistribute any weather data itself</p></li>
+<li><p>Remove unnecessary function, .onLoad(), from zzz.R</p></li>
+<li><p>Function titles in documentation now in title case</p></li>
+<li><p>Correct grammar in documentation</p></li>
+<li><p>Update internal stations list</p></li>
+</ul>
+</div>
+<div class="section level2">
+<h2>Reverse dependencies</h2>
+<ul>
+<li>No ERRORs or WARNINGs found</li>
+</ul>
+</div>
+<div class="section level2">
+<h2>Downstream dependencies</h2>
+<ul>
+<li>There currently are no downstream dependencies for this package</li>
+</ul>
+</div>
+
 
   </div>
 
