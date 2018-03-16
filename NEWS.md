@@ -16,7 +16,7 @@ along with _sf_ for examples in the GSOD vignette.
 
 - Correct options in "GSODR use case: Specified years/stations vignette" on line
 201 where `file` was incorrectly used in place of `path`. Thanks to Ross Darnell,
-CSIRO for reporting this.
+CSIRO, for reporting this.
 
 --------------------------------------------------------------------------------
 
