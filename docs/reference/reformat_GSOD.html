@@ -18,13 +18,21 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="Tidy and Return a Data Frame of GSOD Weather from Local Data — reformat_GSOD" />
+
+<meta property="og:description" content="This function automates cleaning and reformatting of GSOD,
+https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/,
+station files in "WMO-WBAN-YYYY.op.gz" format that have been downloaded from
+the United States National Center for Environmental Information's (NCEI)
+FTP server." />
+<meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -157,7 +165,7 @@ will need to extract the individual station files from the tar file first to
 use this function.</p>
 <p>For a complete list of the fields and description of the contents and units,
 please refer to Appendix 1 in the GSODR vignette,
-<code><a href='https://cran.rstudio.com/web/packages/GSODR/vignettes/GSODR.html'>vignette("GSODR", package = "GSODR")</a></code>.</p>
+<code><a href='../articles/GSODR.html'>vignette("GSODR", package = "GSODR")</a></code>.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
@@ -179,8 +187,8 @@ Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
 
     <p>For automated downloading and tidying see the <code><a href='get_GSOD.html'>get_GSOD</a></code>
 function which provides expanded functionality for automatically downloading
-and expanding annual GSOD files and cleaning station files.
-    <code><a href='get_GSOD.html'>get_GSOD</a></code></p>
+and expanding annual GSOD files and cleaning station files.</p>
+<p><code><a href='get_GSOD.html'>get_GSOD</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -226,7 +234,7 @@ Adam H Sparks, <a href='mailto:adamhsparks@gmail.com'>adamhsparks@gmail.com</a>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
@@ -234,3 +242,4 @@ Adam H Sparks, <a href='mailto:adamhsparks@gmail.com'>adamhsparks@gmail.com</a>
 
   </body>
 </html>
+

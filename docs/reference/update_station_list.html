@@ -18,13 +18,22 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="Download Latest Station List Information and Update GSODR's Internal Database — update_station_list" />
+
+<meta property="og:description" content="This function downloads the latest station list (isd-history.csv) from the
+NCEI FTP server and updates the data distributed with GSODR to the
+latest stations available.  These data provide unique identifiers, country,
+state (if in US), latitude, longitude, elevation and when weather
+observations begin and end.  Stations with invalid latitude and longitude
+values will not be included." />
+<meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -155,7 +164,7 @@ Adam H Sparks, <a href='mailto:adamhsparks@gmail.com'>adamhsparks@gmail.com</a>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
@@ -163,3 +172,4 @@ Adam H Sparks, <a href='mailto:adamhsparks@gmail.com'>adamhsparks@gmail.com</a>
 
   </body>
 </html>
+
