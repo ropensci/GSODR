@@ -14,6 +14,10 @@ along with _sf_ for examples in the GSOD vignette.
 
 - Correct documentation for `reformat_GSOD()`
 
+- Correct options in "GSODR use case: Specified years/stations vignette" on line
+201 where `file` was incorrectly used in place of `path`. Thanks to Ross Darnell,
+CSIRO for reporting this.
+
 --------------------------------------------------------------------------------
 
 # GSODR 1.1.2  (Release Date 2017-12-15)
