@@ -39,31 +39,41 @@ This vignette details how to find and retrieve weather data for the area that th
 
 ### Retrieve PHL Provincial Data and Select Loop Provinces
 
-As a first step, we'll use the [_raster_](https://cran.r-project.org/package=raster) package to retrieve data from [GADM](http://www.gadm.org/) that will provide the provincial spatial data for the survey area. We will then use this to find the centroid of the area of interest, which will be used to find the nearest stations. Using `raster::getData()` fetch level 0 (national) and 1 (provincial) data for the Philippines.
+As a first step, we'll use the [_raster_](https://cran.r-project.org/package=raster) package to retrieve data from [GADM](http://www.gadm.org/) that will provide the provincial spatial data for the survey area. We will then use this to find the centroid of the area of interest, which will be used to find the nearest stations. Using `raster::getData()` fetch level 0 (national) and 1 (provincial) data for the Philippines. While fetching them, convert them to `sf` objects using `sf::st_as_sf()` from the [_sf_](https://r-spatial.github.io/sf/index.html) package.
 
 ```{r, eval=TRUE}
 library(raster)
-RP0 <- raster::getData(country = "Philippines", level = 0)
-RP1 <- raster::getData(country = "Philippines", level = 1)
+library(sf)
+
+RP0 <- st_as_sf(getData(country = "Philippines", level = 0))
+RP1 <- st_as_sf(getData(country = "Philippines", level = 1))
 ```
 
-Now we will select the provinces involved in the survey and make a new object called `Central_Luzon` from the provincial level data, `RP1`.
+Now we will select the provinces involved in the survey and make a new object called `Central_Luzon` from the provincial level data, `RP1`. To do this, we will use the [_dplyr_]() package to filter the values we want.
 
-```{r, eval=TRUE}
-Central_Luzon <- RP1[RP1@data$NAME_1 == "Pampanga" | 
-                     RP1@data$NAME_1 == "Tarlac" |
-                     RP1@data$NAME_1 == "Pangasinan" |
-                     RP1@data$NAME_1 == "La Union" |
-                     RP1@data$NAME_1 == "Nueva Ecija" |
-                     RP1@data$NAME_1 == "Bulacan", ]
+```{r, eval=TRUE, message=FALSE}
+
+library(dplyr)
+
+Central_Luzon <- st_as_sf(RP1)
+
+Central_Luzon <- filter(RP1, NAME_1 %in% c("Pampanga", 
+                                           "Tarlac",
+                                           "Pangasinan",
+                                           "La Union",
+                                           "Nueva Ecija",
+                                           "Bulacan"))
 ```
 
 Next, create a map inset showing where the Central Luzon Loop survey takes place.
 
-First we'll use `gSimplify()` from _rgeos_ to simplify the map of the Philippines to make the map generation in the next few steps quicker.
+First we'll use `ms_simplify()` from [_rmapshaper_](https://github.com/ateucher/rmapshaper) to simplify the map of the Philippines to make the map generation in the next few steps quicker, and then convert it to an `sf` object as well.
 
 ```{r, eval=TRUE}
-RP0 <- rgeos::gSimplify(RP0, tol = 0.05)
+library(rmapshaper)
+
+RP0 <- ms_simplify(RP0, keep = 0.05)
+
 ```
 
 ```{r, eval=TRUE}
@@ -71,28 +81,37 @@ library(ggplot2)
 library(grid)
 library(gridExtra)
 
-CL_names <- data.frame(coordinates(Central_Luzon)) # get center coordinates of provinces in Central Luzon
-CL_names$label <- Central_Luzon@data$NAME_1
+CL_names <- st_transform(Central_Luzon, 25393) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry() %>%
+  st_coordinates() %>% 
+  data.frame()
+
+CL_names$label <- Central_Luzon$NAME_1
 
 # Main Map
 p1 <- ggplot() + 
-  geom_polygon(data = Central_Luzon, aes(x = long, y = lat, group = group),
-               colour = "grey10", fill = "#fff7bc") +
-  geom_text(data = CL_names, aes(x = X1, y = X2, label = label), 
-            size = 2, colour = "grey20") +
+  geom_sf(data = Central_Luzon,
+          colour = "grey10",
+          fill = "#fff7bc") +
+  geom_label(data = CL_names, aes(x = X, y = Y, label = label), 
+             size = 3,
+             colour = "grey20") +
   theme(axis.text.y = element_text(angle = 90, hjust = 0.5)) +
   ggtitle("Central Luzon Provinces Surveyed") +
   theme_bw() + 
   xlab("Longitude") + 
   ylab("Latitude") +
-  coord_map()
+  coord_sf()
 
 # Inset
 p2 <- ggplot() + 
-  geom_polygon(data = RP0, aes(long, lat, group = group),
+  geom_sf(data = RP0,
                colour = "grey10",
                fill = "#fff7bc") +
-  coord_equal() +
   theme_bw() + 
   labs(x = NULL, y = NULL) +
   geom_rect(aes(xmin = extent(Central_Luzon)[1],
@@ -112,7 +131,7 @@ p2 <- ggplot() +
 
 grid.newpage()
 v1 <- viewport(width = 1, height = 1, x = 0.5, y = 0.5) # plot area for the main map
-v2 <- viewport(width = 0.28, height = 0.28, x = 0.67, y = 0.78) # plot area for the inset map
+v2 <- viewport(width = 0.28, height = 0.28, x = 0.68, y = 0.78) # plot area for the inset map
 print(p1, vp = v1) 
 print(p2, vp = v2)
 ```
