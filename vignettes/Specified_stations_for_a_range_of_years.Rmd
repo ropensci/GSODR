@@ -198,7 +198,7 @@ local_files <- local_files[basename(local_files) %in% loop_stations]
 
 loop_data <- reformat_GSOD(file_list = local_files)
 
-readr::write_csv(loop_data, file = "Loop_Survey_Weather_1960-2015", path = "./")
+readr::write_csv(loop_data, path = "Loop_Survey_Weather_1960-2015", path = "./")
 ```
 
 ```{r cleanup GADM files, eval=TRUE, echo=FALSE, message = FALSE}
