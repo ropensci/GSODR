@@ -1,8 +1,18 @@
+pandoc: 2.1.2
+pkgdown: 0.1.0.9000
+pkgdown_sha: 17f683717d0a1547f13a08a259b34c58927452d6
+articles:
+  GSODR.R: GSODR.R
+  GSODR: GSODR.html
+  GSODR.html: GSODR.html
+  Specified_stations_for_a_range_of_years.R: Specified_stations_for_a_range_of_years.R
+  Specified_stations_for_a_range_of_years: Specified_stations_for_a_range_of_years.html
+  Specified_stations_for_a_range_of_years.html: Specified_stations_for_a_range_of_years.html
+  Working_with_spatial_and_climate_data.R: Working_with_spatial_and_climate_data.R
+  Working_with_spatial_and_climate_data: Working_with_spatial_and_climate_data.html
+  Working_with_spatial_and_climate_data.html: Working_with_spatial_and_climate_data.html
+  example_1.2-1.png: example_1.2-1.png
 urls:
   reference: https://ropensci.github.io/GSODR//reference
   article: https://ropensci.github.io/GSODR//articles
-articles:
-  GSODR: GSODR.html
-  Specified_stations_for_a_range_of_years: Specified_stations_for_a_range_of_years.html
-  Working_with_spatial_and_climate_data: Working_with_spatial_and_climate_data.html
 
