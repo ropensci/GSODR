@@ -45,8 +45,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">GSODR</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="index.html">GSODR</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.2.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
@@ -56,7 +60,7 @@
   </a>
 </li>
 <li>
-  <a href="articles/GSODR.html">Get Started</a>
+  <a href="articles/GSODR.html">Get started</a>
 </li>
 <li>
   <a href="reference/index.html">Reference</a>
@@ -108,9 +112,9 @@
 <h2 class="hasAnchor">
 <a href="#introduction-to-gsodr" class="anchor"></a>Introduction to <em>GSODR</em>
 </h2>
-<p>The GSOD or <a href="https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod">Global Surface Summary of the Day (GSOD)</a> data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. <em>GSODR</em> aims to make it easy to find, transfer and format the data you need for use in analysis and provides five main functions for facilitating this:</p>
+<p>The GSOD or <a href="https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod">Global Surface Summary of the Day (GSOD)</a> data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. <em>GSODR</em> aims to make it easy to find, transfer and format the data you need for use in analysis and provides five main functions for facilitating this:</p>
 <ul>
-<li><p><code><a href="reference/get_GSOD.html">get_GSOD()</a></code> - this function queries and transfers files from the NCEI’s FTP server, reformats them and returns a tidy data frame in R or saves a file to disk</p></li>
+<li><p><code><a href="reference/get_GSOD.html">get_GSOD()</a></code> - this function queries and transfers files from the NCEI’s FTP server, reformats them and returns a tidy data frame in R</p></li>
 <li><p><code><a href="reference/reformat_GSOD.html">reformat_GSOD()</a></code> - this function takes individual station files from the local disk and re-formats them returning a tidy data frame in R</p></li>
 <li><p><code><a href="reference/nearest_stations.html">nearest_stations()</a></code> - this function returns a vector of station IDs that fall within the given radius (kilometres) of a point given as latitude and longitude</p></li>
 <li><p><code><a href="reference/update_station_list.html">update_station_list()</a></code> - this function downloads the latest station list from the NCEI’s FTP server updates the package’s internal database of stations and their metadata.</p></li>
@@ -246,29 +250,42 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2 class="hasAnchor">
-<a href="#sidebar" class="anchor"></a>Links</h2>
+    <div class="links">
+<h2>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cran.r-project.org/package=GSODR">https://​cran.r-project.org/​package=GSODR</a>
+<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=GSODR">https://​cloud.r-project.org/​package=GSODR</a>
 </li>
 <li>Browse source code at <br><a href="https://github.com/ropensci/GSODR">https://​github.com/​ropensci/​GSODR</a>
 </li>
 <li>Report a bug at <br><a href="https://github.com/ropensci/GSODR/issues">https://​github.com/​ropensci/​GSODR/​issues</a>
 </li>
 </ul>
+</div>
+<div class="license">
 <h2>License</h2>
-<p><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></p>
+<ul class="list-unstyled">
+<li>
+<a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a>
+</li>
+</ul>
+</div>
+<div class="citation">
 <h2>Citation</h2>
 <ul class="list-unstyled">
 <li><a href="authors.html">Citing GSODR</a></li>
 </ul>
+</div>
+<div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Adam Sparks <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-0061-8359" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid"></a> </li>
-<li>Tomislav Hengl <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-9921-5129" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid"></a> </li>
-<li>Andrew Nelson <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-7249-3778" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid"></a> </li>
+<li>Adam Sparks <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-0061-8359" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" height="16"></a> </li>
+<li>Tomislav Hengl <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-9921-5129" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" height="16"></a> </li>
+<li>Andrew Nelson <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-7249-3778" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" height="16"></a> </li>
 <li><a href="authors.html">All authors...</a></li>
 </ul>
+</div>
+
+      <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://travis-ci.org/ropensci/GSODR"><img src="https://travis-ci.org/ropensci/GSODR.svg?branch=master" alt="Travis-CI Build Status"></a></li>
@@ -279,6 +296,7 @@
 <li><a href="http://joss.theoj.org/papers/14021f4e4931cdaab4ea41be27df2df6"><img src="http://joss.theoj.org/papers/10.21105/joss.00177/status.svg" alt="JOSS"></a></li>
 <li><a href="https://github.com/ropensci/onboarding/issues/79"><img src="https://badges.ropensci.org/79_status.svg"></a></li>
 </ul>
+</div>
 </div>
 
 </div>
@@ -294,6 +312,8 @@
 
       </footer>
 </div>
+
+  
 
   </body>
 </html>

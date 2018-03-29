@@ -27,8 +27,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">GSODR</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">GSODR</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.2.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
@@ -38,7 +42,7 @@
   </a>
 </li>
 <li>
-  <a href="../articles/GSODR.html">Get Started</a>
+  <a href="../articles/GSODR.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -85,7 +89,7 @@
                         <h4 class="author">Adam H Sparks</h4>
             
       
-      <small>Source: <a href="https:/github.com/ropensci/GSODR/blob/master/vignettes/GSODR.Rmd"><code>vignettes/GSODR.Rmd</code></a></small>
+      <small>Source: <a href="https://github.com/ropensci/GSODR/blob/master/vignettes/GSODR.Rmd"><code>vignettes/GSODR.Rmd</code></a></small>
 
     </div>
 
@@ -103,7 +107,7 @@
 <li><p><code><a href="../reference/update_station_list.html">update_station_list()</a></code> - this function downloads the latest station list from the NCEI’s FTP server updates the package’s internal database of stations and their metadata.</p></li>
 <li><p><code><a href="../reference/get_inventory.html">get_inventory()</a></code> - this function downloads the latest station inventory information from the NCEI’s FTP server and returns the header information about the latest version as a message in the console and a tidy data frame of the stations’ inventory for each month that data are reported.</p></li>
 </ul>
-<p>When reformatting data either with <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> or <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code>, all units are converted to International System of Units (SI), <em>e.g.</em>, inches to millimetres and Fahrenheit to Celsius. File output can be used in an R session as a <code><a href="http://dplyr.tidyverse.org/reference/reexports.html">tibble()</a></code>, saved as a Comma Separated Value (CSV) file or in a spatial GeoPackage (GPKG) file, implemented by most major GIS software, summarising each year by station, which also includes vapour pressure and relative humidity elements calculated from existing data in GSOD.</p>
+<p>When reformatting data either with <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> or <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code>, all units are converted to International System of Units (SI), <em>e.g.</em>, inches to millimetres and Fahrenheit to Celsius. File output can be used in an R session as a <code><a href="http://www.rdocumentation.org/packages/sf/topics/tibble">tibble()</a></code>, saved as a Comma Separated Value (CSV) file or in a spatial GeoPackage (GPKG) file, implemented by most major GIS software, summarising each year by station, which also includes vapour pressure and relative humidity elements calculated from existing data in GSOD.</p>
 <p>For more information see the description of the data provided by NCEI, <a href="http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt" class="uri">http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt</a>.</p>
 </div>
 <div id="using-get_gsod" class="section level1">
@@ -145,7 +149,7 @@
 <a class="sourceLine" id="cb7-5" data-line-number="5">                               <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">"CTRY"</span> =<span class="st"> "FIPS"</span>))</a>
 <a class="sourceLine" id="cb7-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co"># create data.frame for Australia only</span></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">Oz &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(station_locations, COUNTRY_NAME <span class="op">==</span><span class="st"> "AUSTRALIA"</span>)</a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">Oz &lt;-<span class="st"> </span><span class="kw">subset</span>(station_locations, COUNTRY_NAME <span class="op">==</span><span class="st"> "AUSTRALIA"</span>)</a>
 <a class="sourceLine" id="cb7-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb7-10" data-line-number="10">Oz</a></code></pre></div>
 <pre><code>## # A tibble: 1,412 x 16
@@ -163,8 +167,7 @@
 ## 10 7494… 99999 LAKE BU… AS    &lt;NA&gt;  &lt;NA&gt;  -21.4  145.   396. 1.94e7 1.94e7
 ## # ... with 1,402 more rows, and 5 more variables: STNID &lt;chr&gt;,
 ## #   ELEV_M_SRTM_90m &lt;dbl&gt;, COUNTRY_NAME &lt;chr&gt;, iso2c &lt;chr&gt;, iso3c &lt;chr&gt;</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">Oz <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw">grepl</span>(<span class="st">"TOOWOOMBA"</span>, STN_NAME))</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">subset</span>(Oz, <span class="kw">grepl</span>(<span class="st">"TOOWOOMBA"</span>, STN_NAME))</a></code></pre></div>
 <pre><code>## # A tibble: 2 x 16
 ##   USAF   WBAN  STN_NAME CTRY  STATE CALL    LAT   LON ELEV_M  BEGIN    END
 ##   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
@@ -266,13 +269,14 @@
 <a href="#convert-to-an-sp-spatialpointsdataframe" class="anchor"></a>Convert to an <em>sp</em> SpatialPointsDataFrame</h2>
 <p>For this example we convert the data to a <em>sp</em> object. You might use this one to save GeoPackage or ESRI shapefiles for sharing or analysis in another GIS program.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="co"># get GSOD data</span></a>
-<a class="sourceLine" id="cb19-2" data-line-number="2">GSOD &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2015</span>, <span class="dt">country =</span> <span class="st">"Australia"</span>)</a>
-<a class="sourceLine" id="cb19-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="co"># convert to SpatialPointsDataFrame</span></a>
-<a class="sourceLine" id="cb19-5" data-line-number="5">sp<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/sp/topics/coordinates">coordinates</a></span>(GSOD_sp) &lt;-<span class="st"> </span><span class="er">~</span><span class="st"> </span>LON <span class="op">+</span><span class="st"> </span>LAT</a>
-<a class="sourceLine" id="cb19-6" data-line-number="6">sp<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/sp/topics/is.projected">proj4string</a></span>(GSOD_sp) &lt;-<span class="st"> </span>sp<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/sp/topics/CRS-class">CRS</a></span>(<span class="st">"+proj=longlat +datum=WGS84"</span>)</a>
-<a class="sourceLine" id="cb19-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb19-8" data-line-number="8"><span class="kw">str</span>(GSOD_sp)</a></code></pre></div>
+<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="kw">library</span>(sp)</a>
+<a class="sourceLine" id="cb19-3" data-line-number="3">GSOD &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2015</span>, <span class="dt">country =</span> <span class="st">"Australia"</span>)</a>
+<a class="sourceLine" id="cb19-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb19-5" data-line-number="5"><span class="co"># convert to SpatialPointsDataFrame</span></a>
+<a class="sourceLine" id="cb19-6" data-line-number="6"><span class="kw"><a href="http://www.rdocumentation.org/packages/sp/topics/coordinates">coordinates</a></span>(GSOD_sp) &lt;-<span class="st"> </span><span class="er">~</span><span class="st"> </span>LON <span class="op">+</span><span class="st"> </span>LAT</a>
+<a class="sourceLine" id="cb19-7" data-line-number="7"><span class="kw"><a href="http://www.rdocumentation.org/packages/sp/topics/is.projected">proj4string</a></span>(GSOD_sp) &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/sp/topics/CRS-class">CRS</a></span>(<span class="st">"+proj=longlat +datum=WGS84"</span>)</a>
+<a class="sourceLine" id="cb19-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb19-9" data-line-number="9"><span class="kw">str</span>(GSOD_sp)</a></code></pre></div>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="co">#&gt; Formal class 'SpatialPointsDataFrame' [package "sp"] with 5 slots</span></a>
 <a class="sourceLine" id="cb20-2" data-line-number="2"><span class="co">#&gt;   ..@ data       :Classes ‘tbl_df’, ‘tbl’ and 'data.frame':  186977 obs. of  46 variables:</span></a>
 <a class="sourceLine" id="cb20-3" data-line-number="3"><span class="co">#&gt;   .. ..$ USAF            : chr [1:186977] "941000" "941000" "941000" "941000" ...</span></a>
@@ -336,15 +340,17 @@
 <div id="saving-sp-objects" class="section level2">
 <h2 class="hasAnchor">
 <a href="#saving-sp-objects" class="anchor"></a>Saving <em>sp</em> objects</h2>
-<p>Using <code><a href="http://www.rdocumentation.org/packages/rgdal/topics/writeOGR">rgdal::writeOGR()</a></code> it is simple to save as a GeoPackage file.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">  rgdal<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/rgdal/topics/writeOGR">writeOGR</a></span>(</a>
-<a class="sourceLine" id="cb21-2" data-line-number="2">    GSOD_sp,</a>
-<a class="sourceLine" id="cb21-3" data-line-number="3">    <span class="dt">dsn =</span> <span class="kw">path.expand</span>(<span class="st">"~/"</span>),</a>
-<a class="sourceLine" id="cb21-4" data-line-number="4">    <span class="dt">layer =</span> <span class="st">"GSOD"</span>,</a>
-<a class="sourceLine" id="cb21-5" data-line-number="5">    <span class="dt">driver =</span> <span class="st">"GPKG"</span></a>
-<a class="sourceLine" id="cb21-6" data-line-number="6">  )</a></code></pre></div>
-<p>Using <code><a href="http://www.rdocumentation.org/packages/rgdal/topics/writeOGR">rgdal::writeOGR()</a></code> it is simple to save as an ESRI shapefile.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">  rgdal<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/rgdal/topics/writeOGR">writeOGR</a></span>(</a>
+<p>Using <code><a href="http://www.rdocumentation.org/packages/rgdal/topics/writeOGR">writeOGR()</a></code> it is simple to save as a GeoPackage file.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw">library</span>(rgdal)</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb21-3" data-line-number="3">  <span class="kw"><a href="http://www.rdocumentation.org/packages/rgdal/topics/writeOGR">writeOGR</a></span>(</a>
+<a class="sourceLine" id="cb21-4" data-line-number="4">    GSOD_sp,</a>
+<a class="sourceLine" id="cb21-5" data-line-number="5">    <span class="dt">dsn =</span> <span class="kw">path.expand</span>(<span class="st">"~/"</span>),</a>
+<a class="sourceLine" id="cb21-6" data-line-number="6">    <span class="dt">layer =</span> <span class="st">"GSOD"</span>,</a>
+<a class="sourceLine" id="cb21-7" data-line-number="7">    <span class="dt">driver =</span> <span class="st">"GPKG"</span></a>
+<a class="sourceLine" id="cb21-8" data-line-number="8">  )</a></code></pre></div>
+<p>Using <code><a href="http://www.rdocumentation.org/packages/rgdal/topics/writeOGR">writeOGR()</a></code> it is simple to save as an ESRI shapefile.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">  <span class="kw"><a href="http://www.rdocumentation.org/packages/rgdal/topics/writeOGR">writeOGR</a></span>(</a>
 <a class="sourceLine" id="cb22-2" data-line-number="2">    GSOD_sp,</a>
 <a class="sourceLine" id="cb22-3" data-line-number="3">    <span class="dt">dsn =</span> <span class="kw">path.expand</span>(<span class="st">"~/"</span>),</a>
 <a class="sourceLine" id="cb22-4" data-line-number="4">    <span class="dt">layer =</span> <span class="st">"GSOD"</span>,</a>
@@ -359,11 +365,12 @@
 <p>Simple features or simple feature access refers to a formal standard (ISO 19125-1:2004) that describes how objects in the real world can be represented in computers, with emphasis on the spatial geometry of these objects. It also describes how such objects can be stored in and retrieved from databases, and which geometrical operations should be defined for them. The standard is widely implemented in spatial databases (such as PostGIS), commercial GIS (e.g., ESRI ArcGIS) and forms the vector data basis for libraries such as GDAL. A subset of simple features forms the GeoJSON standard.</p>
 </blockquote>
 <p>For this example, we convert the GSOD data to an <em>sf</em> object.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">GSOD_SF &lt;-<span class="st"> </span><span class="kw">st_as_sf</span>(<span class="dt">x =</span> GSOD, </a>
-<a class="sourceLine" id="cb23-2" data-line-number="2">                        <span class="dt">coords =</span> <span class="kw">c</span>(<span class="st">"LON"</span>, <span class="st">"LAT"</span>),</a>
-<a class="sourceLine" id="cb23-3" data-line-number="3">                        <span class="dt">crs =</span> <span class="st">"+proj=longlat +datum=WGS84"</span>)</a>
-<a class="sourceLine" id="cb23-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb23-5" data-line-number="5"><span class="kw">str</span>(GSOD_SF)</a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">library</span>(sf)</a>
+<a class="sourceLine" id="cb23-2" data-line-number="2">GSOD_SF &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/st_as_sf">st_as_sf</a></span>(<span class="dt">x =</span> GSOD, </a>
+<a class="sourceLine" id="cb23-3" data-line-number="3">                        <span class="dt">coords =</span> <span class="kw">c</span>(<span class="st">"LON"</span>, <span class="st">"LAT"</span>),</a>
+<a class="sourceLine" id="cb23-4" data-line-number="4">                        <span class="dt">crs =</span> <span class="st">"+proj=longlat +datum=WGS84"</span>)</a>
+<a class="sourceLine" id="cb23-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb23-6" data-line-number="6"><span class="kw">str</span>(GSOD_SF)</a></code></pre></div>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="co">#&gt; Classes ‘sf’ and 'data.frame':   186977 obs. of  47 variables:</span></a>
 <a class="sourceLine" id="cb24-2" data-line-number="2"><span class="co">#&gt;  $ USAF            : chr  "941000" "941000" "941000" "941000" ...</span></a>
 <a class="sourceLine" id="cb24-3" data-line-number="3"><span class="co">#&gt;  $ WBAN            : chr  "99999" "99999" "99999" "99999" ...</span></a>
@@ -420,9 +427,9 @@
 <h2 class="hasAnchor">
 <a href="#saving-sf-objects" class="anchor"></a>Saving <em>sf</em> objects</h2>
 <p>Writing a shapefile is a simple matter.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw">write_sf</span>(GSOD_SF, <span class="st">"GSOD.shp"</span>) <span class="co"># silently overwrites</span></a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/st_write">write_sf</a></span>(GSOD_SF, <span class="st">"GSOD.shp"</span>) <span class="co"># silently overwrites</span></a></code></pre></div>
 <p>As is writing a GeoPackage from the <em>sf</em> object.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="kw">write_sf</span>(GSOD_SF, <span class="st">"~/GSOD.gpkg"</span>) <span class="co"># silently overwrites</span></a></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/st_write">write_sf</a></span>(GSOD_SF, <span class="st">"~/GSOD.gpkg"</span>) <span class="co"># silently overwrites</span></a></code></pre></div>
 <p>After getting weather stations for Australia and creating a GeoPackage file, <em>rgdal</em> can import the data into R again in a spatial format.</p>
 <p>Importing a GeoPackage file can be a bit tricky. The dsn will be the full path along with the file name. The layer to be specified is “GSOD”, this is specified in the <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> function and will not change. The file name, specified in the dsn will, but the layer name will not.</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw">library</span>(rgdal)</a>
@@ -445,8 +452,7 @@
 <a class="sourceLine" id="cb27-18" data-line-number="18"><span class="co">#&gt; [1] "SpatialPointsDataFrame"</span></a>
 <a class="sourceLine" id="cb27-19" data-line-number="19"><span class="co">#&gt; attr(,"package")</span></a>
 <a class="sourceLine" id="cb27-20" data-line-number="20"><span class="co">#&gt; [1] "sp"</span></a></code></pre></div>
-<p>Since GeoPackage files are formatted as SQLite databases you can use the existing R tools for SQLite files <a href="https://jsta.github.io/2016/07/14/geopackage-r.html">(J. Stachelek 2016)</a>. One easy way is using <em>dplyr</em>, which we’ve already used to filter the stations.</p>
-<p>This option is much faster to load since it does not load the geometry.</p>
+<p>Since GeoPackage files are formatted as SQLite databases you can use the existing R tools for SQLite files <a href="https://jsta.github.io/2016/07/14/geopackage-r.html">(J. Stachelek 2016)</a>. One easy way is using <em>dplyr</em>. This option is much faster to load since it does not load the geometry.</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">AUS_sqlite &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="kw"><a href="http://dplyr.tidyverse.org/reference/src_dbi.html">src_sqlite</a></span>(<span class="kw">path.expand</span>(<span class="st">"~/GSOD.gpkg"</span>)), <span class="st">"GSOD"</span>)</a>
 <a class="sourceLine" id="cb28-2" data-line-number="2"><span class="kw">class</span>(AUS_sqlite)</a>
 <a class="sourceLine" id="cb28-3" data-line-number="3"><span class="co">#&gt; [1] "tbl_dbi"  "tbl_sql"  "tbl_lazy" "tbl"</span></a></code></pre></div>
@@ -655,6 +661,8 @@
 
       </footer>
 </div>
+
+  
 
   </body>
 </html>
