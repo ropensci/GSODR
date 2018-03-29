@@ -1,7 +1,7 @@
 Fetch GSOD Country List and Merge with ISO Country Codes
 ================
 Adam H. Sparks
-2017-12-15
+2018-03-10
 
 # Introduction
 
@@ -41,57 +41,78 @@ countries <- readr::read_table(
 ``` r
 names(countries)[2] <- "COUNTRY_NAME"
 
-country_list <- dplyr::left_join(countries, countrycode::countrycode_data,
-                   by = c(FIPS = "fips105"))
+country_list <- dplyr::left_join(countries, countrycode::codelist,
+                   by = c("FIPS" = "fips"))
 
 print(country_list)
 ```
 
-    ## # A tibble: 293 x 35
-    ##     FIPS        COUNTRY_NAME      ar5 continent  cowc  cown  eu28
-    ##    <chr>               <chr>    <chr>     <chr> <chr> <int> <chr>
-    ##  1    AA               ARUBA      LAM  Americas  <NA>    NA  <NA>
-    ##  2    AC ANTIGUA AND BARBUDA      LAM  Americas   AAB    58  <NA>
-    ##  3    AF         AFGHANISTAN     ASIA      Asia   AFG   700  <NA>
-    ##  4    AG             ALGERIA      MAF    Africa   ALG   615  <NA>
-    ##  5    AI    ASCENSION ISLAND     <NA>      <NA>  <NA>    NA  <NA>
-    ##  6    AJ          AZERBAIJAN      EIT      Asia   AZE   373  <NA>
-    ##  7    AL             ALBANIA      EIT    Europe   ALB   339  <NA>
-    ##  8    AM             ARMENIA      EIT      Asia   ARM   371  <NA>
-    ##  9    AN             ANDORRA OECD1990    Europe   AND   232  <NA>
-    ## 10    AO              ANGOLA      MAF    Africa   ANG   540  <NA>
-    ## # ... with 283 more rows, and 28 more variables: eurocontrol_pru <chr>,
-    ## #   eurocontrol_statfor <chr>, fao <int>, icao <chr>, icao_region <chr>,
-    ## #   imf <int>, ioc <chr>, iso2c <chr>, iso3c <chr>, iso3n <int>,
-    ## #   region <chr>, un <int>, wb <chr>, country.name.ar <chr>,
-    ## #   country.name.de <chr>, country.name.de.regex <chr>,
-    ## #   country.name.en <chr>, country.name.en.regex <chr>,
-    ## #   country.name.es <chr>, country.name.fr <chr>, country.name.ru <chr>,
-    ## #   country.name.zh <chr>, eurostat <chr>, wb_api2c <chr>, wb_api3c <chr>,
-    ## #   p4_scode <chr>, p4_ccode <dbl>, wvs <int>
+    ## # A tibble: 293 x 678
+    ##    FIPS  COUNTRY_NAME   ar5    continent country.name.de country.name.de.…
+    ##    <chr> <chr>          <chr>  <chr>     <chr>           <chr>            
+    ##  1 AA    ARUBA          LAM    Americas  Aruba           "^(?!.*bonaire).…
+    ##  2 AC    ANTIGUA AND B… LAM    Americas  Antigua und Ba… antigua          
+    ##  3 AF    AFGHANISTAN    ASIA   Asia      Afghanistan     afghan           
+    ##  4 AG    ALGERIA        MAF    Africa    Algerien        algerien         
+    ##  5 AI    ASCENSION ISL… <NA>   <NA>      <NA>            <NA>             
+    ##  6 AJ    AZERBAIJAN     EIT    Asia      Aserbaidschan   aserbaidsch      
+    ##  7 AL    ALBANIA        EIT    Europe    Albanien        albanien         
+    ##  8 AM    ARMENIA        EIT    Asia      Armenien        armenien         
+    ##  9 AN    ANDORRA        OECD1… Europe    Andorra         andorra          
+    ## 10 AO    ANGOLA         MAF    Africa    Angola          angola           
+    ## # ... with 283 more rows, and 672 more variables: country.name.en <chr>,
+    ## #   country.name.en.regex <chr>, cow.name <chr>, cowc <chr>, cown <int>,
+    ## #   ecb <chr>, ecb.name <chr>, eu28 <chr>, eurocontrol_pru <chr>,
+    ## #   eurocontrol_statfor <chr>, eurostat <chr>, eurostat.name <chr>,
+    ## #   fao <int>, fao.name <chr>, fips.name <chr>, gaul <int>,
+    ## #   genc.name <chr>, genc2c <chr>, genc3c <chr>, genc3n <chr>, icao <chr>,
+    ## #   icao_region <chr>, imf <int>, ioc <chr>, ioc.name <chr>,
+    ## #   iso.name.en <chr>, iso.name.fr <chr>, iso2c <chr>, iso3c <chr>,
+    ## #   iso3n <int>, p4.name <chr>, p4c <chr>, p4n <int>, region <chr>,
+    ## #   un <int>, un.name.ar <chr>, un.name.en <chr>, un.name.es <chr>,
+    ## #   un.name.fr <chr>, un.name.ru <chr>, un.name.zh <chr>, unpd <int>,
+    ## #   unpd.name <chr>, wb <chr>, wb_api.name <chr>, wb_api2c <chr>,
+    ## #   wb_api3c <chr>, wb.name <chr>, wvs <int>, wvs.name <chr>,
+    ## #   cldr.name.af <chr>, cldr.name.agq <chr>, cldr.name.ak <chr>,
+    ## #   cldr.name.am <chr>, cldr.name.ar <chr>, cldr.name.ar_ly <chr>,
+    ## #   cldr.name.ar_sa <chr>, cldr.name.as <chr>, cldr.name.asa <chr>,
+    ## #   cldr.name.ast <chr>, cldr.name.az <chr>, cldr.name.az_cyrl <chr>,
+    ## #   cldr.name.bas <chr>, cldr.name.be <chr>, cldr.name.bem <chr>,
+    ## #   cldr.name.bez <chr>, cldr.name.bg <chr>, cldr.name.bm <chr>,
+    ## #   cldr.name.bn <chr>, cldr.name.bn_in <chr>, cldr.name.bo <chr>,
+    ## #   cldr.name.br <chr>, cldr.name.brx <chr>, cldr.name.bs <chr>,
+    ## #   cldr.name.bs_cyrl <chr>, cldr.name.ca <chr>, cldr.name.ce <chr>,
+    ## #   cldr.name.cgg <chr>, cldr.name.chr <chr>, cldr.name.ckb <chr>,
+    ## #   cldr.name.cs <chr>, cldr.name.cu <chr>, cldr.name.cy <chr>,
+    ## #   cldr.name.da <chr>, cldr.name.dav <chr>, cldr.name.de <chr>,
+    ## #   cldr.name.de_at <chr>, cldr.name.de_ch <chr>, cldr.name.dje <chr>,
+    ## #   cldr.name.dsb <chr>, cldr.name.dua <chr>, cldr.name.dyo <chr>,
+    ## #   cldr.name.dz <chr>, cldr.name.ee <chr>, cldr.name.el <chr>,
+    ## #   cldr.name.en <chr>, cldr.name.eo <chr>, cldr.name.es <chr>,
+    ## #   cldr.name.es_419 <chr>, cldr.name.es_ar <chr>, …
 
 There are unnecessary data in several columns. *GSODR* only requires
 FIPS, name, and ISO codes to function.
 
 ``` r
-country_list <- (country_list[, -c(3:14, 17:35)])
+country_list <- country_list[, c(1:2, 34:35)]
 
 country_list
 ```
 
     ## # A tibble: 293 x 4
-    ##     FIPS        COUNTRY_NAME iso2c iso3c
-    ##    <chr>               <chr> <chr> <chr>
-    ##  1    AA               ARUBA    AW   ABW
-    ##  2    AC ANTIGUA AND BARBUDA    AG   ATG
-    ##  3    AF         AFGHANISTAN    AF   AFG
-    ##  4    AG             ALGERIA    DZ   DZA
-    ##  5    AI    ASCENSION ISLAND  <NA>  <NA>
-    ##  6    AJ          AZERBAIJAN    AZ   AZE
-    ##  7    AL             ALBANIA    AL   ALB
-    ##  8    AM             ARMENIA    AM   ARM
-    ##  9    AN             ANDORRA    AD   AND
-    ## 10    AO              ANGOLA    AO   AGO
+    ##    FIPS  COUNTRY_NAME        iso2c iso3c
+    ##    <chr> <chr>               <chr> <chr>
+    ##  1 AA    ARUBA               AW    ABW  
+    ##  2 AC    ANTIGUA AND BARBUDA AG    ATG  
+    ##  3 AF    AFGHANISTAN         AF    AFG  
+    ##  4 AG    ALGERIA             DZ    DZA  
+    ##  5 AI    ASCENSION ISLAND    <NA>  <NA> 
+    ##  6 AJ    AZERBAIJAN          AZ    AZE  
+    ##  7 AL    ALBANIA             AL    ALB  
+    ##  8 AM    ARMENIA             AM    ARM  
+    ##  9 AN    ANDORRA             AD    AND  
+    ## 10 AO    ANGOLA              AO    AGO  
     ## # ... with 283 more rows
 
 Write .rda file to disk.
@@ -122,70 +143,88 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ## ─ Session info ──────────────────────────────────────────────────────────
     ##  setting  value                       
     ##  version  R version 3.4.3 (2017-11-30)
-    ##  os       macOS Sierra 10.12.6        
-    ##  system   x86_64, darwin16.7.0        
+    ##  os       macOS High Sierra 10.13.3   
+    ##  system   x86_64, darwin17.3.0        
     ##  ui       unknown                     
     ##  language (EN)                        
     ##  collate  en_AU.UTF-8                 
     ##  tz       Australia/Brisbane          
-    ##  date     2017-12-15                  
+    ##  date     2018-03-10                  
     ## 
     ## ─ Packages ──────────────────────────────────────────────────────────────
     ##  package     * version    date      
+    ##  ansistrings   1.0.0.9000 2018-02-27
     ##  assertthat    0.2.0      2017-04-11
     ##  backports     1.1.2      2017-12-13
     ##  bindr         0.1        2016-11-13
     ##  bindrcpp      0.2        2017-06-17
-    ##  clisymbols    1.2.0      2017-11-07
-    ##  countrycode * 0.19       2017-02-06
+    ##  cli           1.0.0.9001 2018-02-03
+    ##  clisymbols    1.2.0      2018-01-30
+    ##  countrycode * 1.00.0     2018-02-11
+    ##  crayon        1.3.4      2017-09-16
     ##  curl          3.1        2017-12-12
-    ##  digest        0.6.13     2017-12-14
+    ##  digest        0.6.15     2018-01-28
     ##  dplyr         0.7.4      2017-09-28
     ##  evaluate      0.10.1     2017-06-24
     ##  glue          1.2.0      2017-10-29
-    ##  hms           0.4.0      2017-11-23
+    ##  hms           0.4.1      2018-01-24
     ##  htmltools     0.3.6      2017-04-28
-    ##  knitr         1.17       2017-08-10
+    ##  knitr         1.20       2018-02-20
     ##  magrittr      1.5        2014-11-22
+    ##  pillar        1.2.1      2018-02-27
     ##  pkgconfig     2.0.1      2017-03-21
+    ##  prettyunits   1.0.2      2015-07-13
+    ##  progress      1.1.2.9002 2018-02-22
     ##  R6            2.2.2      2017-06-17
-    ##  Rcpp          0.12.14    2017-11-23
+    ##  Rcpp          0.12.15    2018-01-20
     ##  readr         1.1.1      2017-05-16
-    ##  rlang         0.1.4.9000 2017-12-07
-    ##  rmarkdown     1.8.5      2017-12-13
-    ##  rprojroot     1.2        2017-01-16
+    ##  rlang         0.2.0.9000 2018-03-08
+    ##  rmarkdown     1.9        2018-03-01
+    ##  rprojroot     1.3-2      2018-01-03
+    ##  selectr       0.3-2      2018-03-05
     ##  sessioninfo   1.0.0      2017-06-21
     ##  stringi       1.1.6      2017-11-17
-    ##  stringr       1.2.0      2017-02-18
-    ##  tibble        1.3.4      2017-08-22
-    ##  withr         2.1.0.9000 2017-11-26
-    ##  yaml          2.1.16     2017-12-12
+    ##  stringr       1.3.0      2018-02-19
+    ##  tibble        1.4.2      2018-01-22
+    ##  utf8          1.1.3      2018-01-03
+    ##  withr         2.1.1.9000 2018-02-22
+    ##  xml2          1.2.0      2018-01-24
+    ##  yaml          2.1.17     2018-02-27
     ##  source                                 
-    ##  CRAN (R 3.4.1)                         
-    ##  cran (@1.1.2)                          
-    ##  CRAN (R 3.4.1)                         
-    ##  CRAN (R 3.4.1)                         
-    ##  Github (gaborcsardi/clisymbols@e49b4f5)
-    ##  CRAN (R 3.4.1)                         
-    ##  cran (@3.1)                            
-    ##  cran (@0.6.13)                         
-    ##  cran (@0.7.4)                          
-    ##  CRAN (R 3.4.1)                         
-    ##  cran (@1.2.0)                          
-    ##  cran (@0.4.0)                          
-    ##  CRAN (R 3.4.1)                         
+    ##  Github (r-lib/ansistrings@4e4d309)     
     ##  CRAN (R 3.4.2)                         
-    ##  CRAN (R 3.4.1)                         
-    ##  CRAN (R 3.4.1)                         
-    ##  CRAN (R 3.4.1)                         
-    ##  cran (@0.12.14)                        
-    ##  CRAN (R 3.4.1)                         
-    ##  Github (tidyverse/rlang@5ebcf24)       
-    ##  Github (rstudio/rmarkdown@08c7567)     
-    ##  CRAN (R 3.4.1)                         
+    ##  cran (@1.1.2)                          
+    ##  CRAN (R 3.4.2)                         
+    ##  CRAN (R 3.4.2)                         
+    ##  Github (r-lib/cli@1b58269)             
+    ##  Github (gaborcsardi/clisymbols@e49b4f5)
+    ##  cran (@1.00.0)                         
+    ##  cran (@1.3.4)                          
+    ##  cran (@3.1)                            
+    ##  cran (@0.6.15)                         
+    ##  CRAN (R 3.4.2)                         
+    ##  cran (@0.10.1)                         
+    ##  cran (@1.2.0)                          
+    ##  cran (@0.4.1)                          
+    ##  cran (@0.3.6)                          
+    ##  cran (@1.20)                           
+    ##  CRAN (R 3.4.2)                         
+    ##  cran (@1.2.1)                          
+    ##  CRAN (R 3.4.2)                         
+    ##  cran (@1.0.2)                          
+    ##  Github (r-lib/progress@72c9873)        
+    ##  CRAN (R 3.4.2)                         
+    ##  cran (@0.12.15)                        
+    ##  CRAN (R 3.4.2)                         
+    ##  Github (tidyverse/rlang@05786ad)       
+    ##  cran (@1.9)                            
+    ##  cran (@1.3-2)                          
+    ##  cran (@0.3-2)                          
     ##  CRAN (R 3.4.2)                         
     ##  cran (@1.1.6)                          
-    ##  CRAN (R 3.4.1)                         
-    ##  cran (@1.3.4)                          
-    ##  Github (jimhester/withr@fe81c00)       
-    ##  cran (@2.1.16)
+    ##  cran (@1.3.0)                          
+    ##  cran (@1.4.2)                          
+    ##  cran (@1.1.3)                          
+    ##  Github (jimhester/withr@5d05571)       
+    ##  cran (@1.2.0)                          
+    ##  cran (@2.1.17)
