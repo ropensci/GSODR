@@ -149,7 +149,7 @@
 <a class="sourceLine" id="cb7-5" data-line-number="5">                               <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">"CTRY"</span> =<span class="st"> "FIPS"</span>))</a>
 <a class="sourceLine" id="cb7-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co"># create data.frame for Australia only</span></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">Oz &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(station_locations, COUNTRY_NAME <span class="op">==</span><span class="st"> "AUSTRALIA"</span>)</a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">Oz &lt;-<span class="st"> </span><span class="kw">subset</span>(station_locations, COUNTRY_NAME <span class="op">==</span><span class="st"> "AUSTRALIA"</span>)</a>
 <a class="sourceLine" id="cb7-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb7-10" data-line-number="10">Oz</a></code></pre></div>
 <pre><code>## # A tibble: 1,412 x 16
@@ -167,8 +167,7 @@
 ## 10 7494… 99999 LAKE BU… AS    &lt;NA&gt;  &lt;NA&gt;  -21.4  145.   396. 1.94e7 1.94e7
 ## # ... with 1,402 more rows, and 5 more variables: STNID &lt;chr&gt;,
 ## #   ELEV_M_SRTM_90m &lt;dbl&gt;, COUNTRY_NAME &lt;chr&gt;, iso2c &lt;chr&gt;, iso3c &lt;chr&gt;</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">Oz <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw">grepl</span>(<span class="st">"TOOWOOMBA"</span>, STN_NAME))</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">subset</span>(Oz, <span class="kw">grepl</span>(<span class="st">"TOOWOOMBA"</span>, STN_NAME))</a></code></pre></div>
 <pre><code>## # A tibble: 2 x 16
 ##   USAF   WBAN  STN_NAME CTRY  STATE CALL    LAT   LON ELEV_M  BEGIN    END
 ##   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
@@ -453,8 +452,7 @@
 <a class="sourceLine" id="cb27-18" data-line-number="18"><span class="co">#&gt; [1] "SpatialPointsDataFrame"</span></a>
 <a class="sourceLine" id="cb27-19" data-line-number="19"><span class="co">#&gt; attr(,"package")</span></a>
 <a class="sourceLine" id="cb27-20" data-line-number="20"><span class="co">#&gt; [1] "sp"</span></a></code></pre></div>
-<p>Since GeoPackage files are formatted as SQLite databases you can use the existing R tools for SQLite files <a href="https://jsta.github.io/2016/07/14/geopackage-r.html">(J. Stachelek 2016)</a>. One easy way is using <em>dplyr</em>, which we’ve already used to filter the stations.</p>
-<p>This option is much faster to load since it does not load the geometry.</p>
+<p>Since GeoPackage files are formatted as SQLite databases you can use the existing R tools for SQLite files <a href="https://jsta.github.io/2016/07/14/geopackage-r.html">(J. Stachelek 2016)</a>. One easy way is using <em>dplyr</em>. This option is much faster to load since it does not load the geometry.</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">AUS_sqlite &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="kw"><a href="http://dplyr.tidyverse.org/reference/src_dbi.html">src_sqlite</a></span>(<span class="kw">path.expand</span>(<span class="st">"~/GSOD.gpkg"</span>)), <span class="st">"GSOD"</span>)</a>
 <a class="sourceLine" id="cb28-2" data-line-number="2"><span class="kw">class</span>(AUS_sqlite)</a>
 <a class="sourceLine" id="cb28-3" data-line-number="3"><span class="co">#&gt; [1] "tbl_dbi"  "tbl_sql"  "tbl_lazy" "tbl"</span></a></code></pre></div>
