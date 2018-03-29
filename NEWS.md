@@ -18,10 +18,14 @@ properly. This caused the `get_GSOD()` function to fail. Thanks to Ross Darnell,
 CSIRO, for reporting this.
 
 - Correct options in "GSODR use case: Specified years/stations vignette" on line
-201 where `file` was incorrectly used in place of `path`. Thanks to Ross Darnell,
-CSIRO, for reporting this.
+201 where `file` was incorrectly used in place of `path`. Thanks to Ross
+Darnell, CSIRO, for reporting this.
 
 - Correct documentation for `reformat_GSOD()`
+
+## Minor changes
+
+- Update internal databases of station metadata
 
 --------------------------------------------------------------------------------
 
