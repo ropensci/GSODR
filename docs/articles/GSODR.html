@@ -107,7 +107,7 @@
 <li><p><code><a href="../reference/update_station_list.html">update_station_list()</a></code> - this function downloads the latest station list from the NCEI’s FTP server updates the package’s internal database of stations and their metadata.</p></li>
 <li><p><code><a href="../reference/get_inventory.html">get_inventory()</a></code> - this function downloads the latest station inventory information from the NCEI’s FTP server and returns the header information about the latest version as a message in the console and a tidy data frame of the stations’ inventory for each month that data are reported.</p></li>
 </ul>
-<p>When reformatting data either with <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> or <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code>, all units are converted to International System of Units (SI), <em>e.g.</em>, inches to millimetres and Fahrenheit to Celsius. File output can be used in an R session as a <code><a href="http://www.rdocumentation.org/packages/sf/topics/tibble">tibble()</a></code>, saved as a Comma Separated Value (CSV) file or in a spatial GeoPackage (GPKG) file, implemented by most major GIS software, summarising each year by station, which also includes vapour pressure and relative humidity elements calculated from existing data in GSOD.</p>
+<p>When reformatting data either with <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> or <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code>, all units are converted to International System of Units (SI), <em>e.g.</em>, inches to millimetres and Fahrenheit to Celsius. Data in the R session summarise each year by station, which also includes vapour pressure and relative humidity elements calculated from existing data in GSOD.</p>
 <p>For more information see the description of the data provided by NCEI, <a href="http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt" class="uri">http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt</a>.</p>
 </div>
 <div id="using-get_gsod" class="section level1">
@@ -228,7 +228,7 @@
 <div id="plot-maximum-and-minimum-temperature-values" class="section level2">
 <h2 class="hasAnchor">
 <a href="#plot-maximum-and-minimum-temperature-values" class="anchor"></a>Plot Maximum and Minimum Temperature Values</h2>
-<p>Using the first data downloaded for a single station, 955510-99999, plot the temperature for 2010 using <code>read_csv()</code> from Hadley’s <a href="https://CRAN.R-project.org/package=readr"><code>readr</code></a> package.</p>
+<p>Using the first data downloaded for a single station, 955510-99999, plot the temperature for 2010.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
 <a class="sourceLine" id="cb15-2" data-line-number="2"><span class="kw">library</span>(lubridate)</a></code></pre></div>
 <pre><code>## 
@@ -257,7 +257,7 @@
 <div id="creating-spatial-files" class="section level2">
 <h2 class="hasAnchor">
 <a href="#creating-spatial-files" class="anchor"></a>Creating Spatial Files</h2>
-<p>Because the stations provide geospatial location information, it is possible to create a spatial file. <a href="http://www.geopackage.org">GeoPackage files</a> are a open, standards-based, platform-independent, portable, self-describing compact format for transferring geospatial information, which handle vector files much like shapefiles do, but eliminate many of the issues that shapefiles have with field names and the number of files. The <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> function can create a GeoPackage file, which can be used with a GIS for further analysis and mapping with other spatial objects.</p>
+<p>Because the stations provide geospatial location information, it is possible to create a spatial file. <a href="http://www.geopackage.org">GeoPackage files</a> are a open, standards-based, platform-independent, portable, self-describing compact format for transferring geospatial information, which handle vector files much like shapefiles do, but eliminate many of the issues that shapefiles have with field names and the number of files.</p>
 </div>
 </div>
 <div id="converting-gsod-data-to-a-spatial-objects-and-saving" class="section level1">

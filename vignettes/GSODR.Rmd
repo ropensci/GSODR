@@ -47,9 +47,7 @@ stations' inventory for each month that data are reported.
 
 When reformatting data either with `get_GSOD()` or `reformat_GSOD()`, all units
 are converted to International System of Units (SI), _e.g._, inches to
-millimetres and Fahrenheit to Celsius. File output can be used in an R session
-as a `tibble()`, saved as a Comma Separated Value (CSV) file or in a spatial
-GeoPackage (GPKG) file, implemented by most major GIS software, summarising each
+millimetres and Fahrenheit to Celsius. Data in the R session summarise each
 year by station, which also includes vapour pressure and relative humidity
 elements calculated from existing data in GSOD.
 
@@ -126,8 +124,7 @@ tbar <- get_GSOD(years = 2010,
 ## Plot Maximum and Minimum Temperature Values
 
 Using the first data downloaded for a single station, 955510-99999, plot the
-temperature for 2010 using `read_csv()` from Hadley's
-[`readr`](https://CRAN.R-project.org/package=readr) package.
+temperature for 2010.
 
 ```{r, eval=TRUE, fig.width = 7, fig.height = 7, fig.align = "center"}
 library(ggplot2)
@@ -158,9 +155,7 @@ create a spatial file. [GeoPackage files](http://www.geopackage.org) are a open,
 standards-based, platform-independent, portable, self-describing compact
 format for transferring geospatial information, which handle vector files much
 like shapefiles do, but eliminate many of the issues that shapefiles have with
-field names and the number of files. The `get_GSOD()` function can create a
-GeoPackage file, which can be used with a GIS for further analysis and mapping
-with other spatial objects.
+field names and the number of files.
 
 # Converting GSOD Data to a Spatial Objects and Saving
 
