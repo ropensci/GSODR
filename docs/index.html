@@ -45,8 +45,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">GSODR</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="index.html">GSODR</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.2.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
@@ -56,7 +60,7 @@
   </a>
 </li>
 <li>
-  <a href="articles/GSODR.html">Get Started</a>
+  <a href="articles/GSODR.html">Get started</a>
 </li>
 <li>
   <a href="reference/index.html">Reference</a>
@@ -246,29 +250,42 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2 class="hasAnchor">
-<a href="#sidebar" class="anchor"></a>Links</h2>
+    <div class="links">
+<h2>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cran.r-project.org/package=GSODR">https://​cran.r-project.org/​package=GSODR</a>
+<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=GSODR">https://​cloud.r-project.org/​package=GSODR</a>
 </li>
 <li>Browse source code at <br><a href="https://github.com/ropensci/GSODR">https://​github.com/​ropensci/​GSODR</a>
 </li>
 <li>Report a bug at <br><a href="https://github.com/ropensci/GSODR/issues">https://​github.com/​ropensci/​GSODR/​issues</a>
 </li>
 </ul>
+</div>
+<div class="license">
 <h2>License</h2>
-<p><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></p>
+<ul class="list-unstyled">
+<li>
+<a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a>
+</li>
+</ul>
+</div>
+<div class="citation">
 <h2>Citation</h2>
 <ul class="list-unstyled">
 <li><a href="authors.html">Citing GSODR</a></li>
 </ul>
+</div>
+<div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Adam Sparks <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-0061-8359" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid"></a> </li>
-<li>Tomislav Hengl <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-9921-5129" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid"></a> </li>
-<li>Andrew Nelson <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-7249-3778" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid"></a> </li>
+<li>Adam Sparks <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-0061-8359" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" height="16"></a> </li>
+<li>Tomislav Hengl <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-9921-5129" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" height="16"></a> </li>
+<li>Andrew Nelson <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-7249-3778" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" height="16"></a> </li>
 <li><a href="authors.html">All authors...</a></li>
 </ul>
+</div>
+
+      <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://travis-ci.org/ropensci/GSODR"><img src="https://travis-ci.org/ropensci/GSODR.svg?branch=master" alt="Travis-CI Build Status"></a></li>
@@ -279,6 +296,7 @@
 <li><a href="http://joss.theoj.org/papers/14021f4e4931cdaab4ea41be27df2df6"><img src="http://joss.theoj.org/papers/10.21105/joss.00177/status.svg" alt="JOSS"></a></li>
 <li><a href="https://github.com/ropensci/onboarding/issues/79"><img src="https://badges.ropensci.org/79_status.svg"></a></li>
 </ul>
+</div>
 </div>
 
 </div>
@@ -294,6 +312,8 @@
 
       </footer>
 </div>
+
+  
 
   </body>
 </html>

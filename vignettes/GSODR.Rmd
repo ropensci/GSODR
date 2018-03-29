@@ -178,11 +178,12 @@ program.
 
 ```{r spatial_convert, eval = FALSE}
 # get GSOD data
+library(sp)
 GSOD <- get_GSOD(years = 2015, country = "Australia")
 
 # convert to SpatialPointsDataFrame
-sp::coordinates(GSOD_sp) <- ~ LON + LAT
-sp::proj4string(GSOD_sp) <- sp::CRS("+proj=longlat +datum=WGS84")
+coordinates(GSOD_sp) <- ~ LON + LAT
+proj4string(GSOD_sp) <- CRS("+proj=longlat +datum=WGS84")
 
 str(GSOD_sp)
 ```
@@ -251,10 +252,12 @@ str(GSOD_sp)
 
 ## Saving _sp_ objects
 
-Using `rgdal::writeOGR()` it is simple to save as a GeoPackage file.
+Using `writeOGR()` it is simple to save as a GeoPackage file.
 
 ```{r sp_save_gpkg, eval=FALSE}
-  rgdal::writeOGR(
+library(rgdal)
+
+  writeOGR(
     GSOD_sp,
     dsn = path.expand("~/"),
     layer = "GSOD",
@@ -262,10 +265,10 @@ Using `rgdal::writeOGR()` it is simple to save as a GeoPackage file.
   )
 ```
 
-Using `rgdal::writeOGR()` it is simple to save as an ESRI shapefile.
+Using `writeOGR()` it is simple to save as an ESRI shapefile.
 
 ```{r sp_save_shp, eval=FALSE}
-  rgdal::writeOGR(
+  writeOGR(
     GSOD_sp,
     dsn = path.expand("~/"),
     layer = "GSOD",
@@ -290,6 +293,7 @@ such as GDAL. A subset of simple features forms the GeoJSON standard.
 For this example, we convert the GSOD data to an _sf_ object.
 
 ```{r convert_sf, eval=FALSE}
+library(sf)
 GSOD_SF <- st_as_sf(x = GSOD, 
                         coords = c("LON", "LAT"),
                         crs = "+proj=longlat +datum=WGS84")

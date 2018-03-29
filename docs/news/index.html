@@ -26,6 +26,8 @@
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 <meta property="og:title" content="Changelog" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -33,6 +35,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 
 
   </head>
@@ -48,8 +52,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">GSODR</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">GSODR</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.2.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -59,7 +67,7 @@
   </a>
 </li>
 <li>
-  <a href="../articles/GSODR.html">Get Started</a>
+  <a href="../articles/GSODR.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -92,6 +100,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -103,29 +112,30 @@
 
   <div class="col-md-9">
     <div class="page-header">
-      <h1>Change log <small></small></h1>
-      <small>Source: <a href='https:/github.com/ropensci/GSODR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+      <h1>Changelog <small></small></h1>
+      <small>Source: <a href='https://github.com/ropensci/GSODR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
     <div class="contents">
-    <div id="gsodr-1-1-2-9000" class="section level1">
+    <div id="gsodr-1-2-0" class="section level1">
 <h1 class="page-header">
-<a href="#gsodr-1-1-2-9000" class="anchor"></a>GSODR 1.1.2.9000<small> Unreleased </small>
+<a href="#gsodr-1-2-0" class="anchor"></a>GSODR 1.2.0<small> Unreleased </small>
 </h1>
 <div id="major-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#major-changes" class="anchor"></a>Major changes</h2>
 <ul>
 <li><p>Remove ability to export files from <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> to slim down the package dependencies and this functions parameters. Examples of how to convert to a spatial object (both <em>sp</em> and <em>sf</em> are shown) and export ESRI Shapefiles and GeoPackage files are now included in the vignette.</p></li>
-<li><p>The <em>sp</em> and <em>rgdal</em> packages are no longer imported but are now in Suggests along with <em>sf</em> for examples in the GSOD vignette.</p></li>
+<li><p>As a result of the previous point, the <em>sp</em> and <em>rgdal</em> packages are no longer Imports but are now in Suggests along with <em>sf</em> for examples in the GSOD vignette.</p></li>
 </ul>
 </div>
 <div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li><p>Correct documentation for <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code></p></li>
+<li><p>Fix a nasty bug where GSOD files downloaded using Windows would not untar properly. This caused the <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> function to fail. Thanks to Ross Darnell, CSIRO, for reporting this.</p></li>
 <li><p>Correct options in “GSODR use case: Specified years/stations vignette” on line 201 where <code>file</code> was incorrectly used in place of <code>path</code>. Thanks to Ross Darnell, CSIRO, for reporting this.</p></li>
+<li><p>Correct documentation for <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code></p></li>
 </ul>
 <hr>
 </div>
@@ -674,7 +684,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#gsodr-1-1-2-9000">1.1.2.9000</a></li>
+        <li><a href="#gsodr-1-2-0">1.2.0</a></li>
         <li><a href="#gsodr-1-1-2-release-date-2017-12-15">1.1.2</a></li>
         <li><a href="#gsodr-1-1-1-release-date-2017-11-27">1.1.1</a></li>
         <li><a href="#gsodr-1-1-0">1.1.0</a></li>
@@ -714,6 +724,8 @@
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>
