@@ -14,7 +14,7 @@ status](https://ci.appveyor.com/api/projects/status/s09kh2nj59o35ob1/branch/mast
 ## Introduction to *GSODR*
 
 The GSOD or [Global Surface Summary of the Day
-(GSOD)](https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod)
+(GSOD)](https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod)
 data provided by the US National Centers for Environmental Information
 (NCEI) are a valuable source of weather data with global coverage.
 However, the data files are cumbersome and difficult to work with.
@@ -24,7 +24,6 @@ facilitating this:
 
   - `get_GSOD()` - this function queries and transfers files from the
     NCEI’s FTP server, reformats them and returns a tidy data frame in R
-    or saves a file to disk
 
   - `reformat_GSOD()` - this function takes individual station files
     from the local disk and re-formats them returning a tidy data frame
