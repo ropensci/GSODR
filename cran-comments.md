@@ -37,6 +37,9 @@ properly. This caused the `get_GSOD()` function to fail.
 
 - Update internal databases of station metadata
 
+- Faster installation by including figures for vignettes rather than building
+on-the fly
+
 ## Reverse dependencies
 
 - No ERRORs or WARNINGs found
