@@ -18,7 +18,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-vignette">
+    <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -83,7 +83,7 @@
 
       
       </header><div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>GSODR</h1>
                         <h4 class="author">Adam H Sparks</h4>
@@ -95,13 +95,12 @@
 
     
     
-<div class="contents">
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
 <p>The GSOD or <a href="https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/">Global Surface Summary of the Day (GSOD)</a> data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. <em>GSODR</em> aims to make it easy to find, transfer and format the data you need for use in analysis and provides four main functions for facilitating this:</p>
 <ul>
-<li><p><code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> - this function queries and transfers files from the NCEI’s FTP server, reformats them and returns a tidy data frame in R or saves a file to disk</p></li>
+<li><p><code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> - this function queries and transfers files from the NCEI’s FTP server, reformats them and returns a tidy data frame in R</p></li>
 <li><p><code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code> - this function takes individual station files from the local disk and re-formats them returning a tidy data frame in R</p></li>
 <li><p><code><a href="../reference/nearest_stations.html">nearest_stations()</a></code> - this function returns a vector of station IDs that fall within the given radius (kilometres) of a point given as latitude and longitude</p></li>
 <li><p><code><a href="../reference/update_station_list.html">update_station_list()</a></code> - this function downloads the latest station list from the NCEI’s FTP server updates the package’s internal database of stations and their metadata.</p></li>
@@ -594,7 +593,6 @@
 <h2 class="hasAnchor">
 <a href="#appendix-2-map-of-current-gsod-station-locations" class="anchor"></a>Appendix 2: Map of Current GSOD Station Locations</h2>
 <p><img src="GSODR_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;"></p>
-</div>
 </div>
 </div>
   </div>
