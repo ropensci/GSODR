@@ -9,6 +9,13 @@ r_binary_packages:
    - purrr
    - tibble
    - ggplot2
+   - Rcpp
+   - rgdal
+   - rgeos
+   - raster
+   - tidyr
+   - purrr
+   - xml2
 
 ## Set up the matrix of different runs
 env:
