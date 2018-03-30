@@ -27,6 +27,9 @@ Darnell, CSIRO, for reporting this.
 
 - Update internal databases of station metadata
 
+- Vignettes contain pre-built figures for faster package installation when
+building vignettes
+
 --------------------------------------------------------------------------------
 
 # GSODR 1.1.2  (Release Date 2017-12-15)
