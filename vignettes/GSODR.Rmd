@@ -27,8 +27,7 @@ find, transfer and format the data you need for use in analysis and provides
 four main functions for facilitating this:
 
 - `get_GSOD()` - this function queries and transfers files from the NCEI's
-FTP server, reformats them and returns a tidy data frame in R or saves a file to
-disk
+FTP server, reformats them and returns a tidy data frame in R
 
 - `reformat_GSOD()` - this function takes individual station files from the
 local disk and re-formats them returning a tidy data frame in R
