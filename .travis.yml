@@ -9,6 +9,9 @@ r_binary_packages:
    - purrr
    - tibble
    - ggplot2
+   - git2r
+   - mapproj
+   - data.table
    - Rcpp
    - stringi
    - dplyr
