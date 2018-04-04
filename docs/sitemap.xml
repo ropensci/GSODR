@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://ropensci.github.io/GSODR//reference/GSODR-deprecated.html</loc>
+  </url>
+  <url>
+    <loc>https://ropensci.github.io/GSODR//reference/GSODR.html</loc>
+  </url>
+  <url>
+    <loc>https://ropensci.github.io/GSODR//reference/get_GSOD.html</loc>
+  </url>
+  <url>
+    <loc>https://ropensci.github.io/GSODR//reference/get_inventory.html</loc>
+  </url>
+  <url>
+    <loc>https://ropensci.github.io/GSODR//reference/nearest_stations.html</loc>
+  </url>
+  <url>
+    <loc>https://ropensci.github.io/GSODR//reference/reformat_GSOD.html</loc>
+  </url>
+  <url>
+    <loc>https://ropensci.github.io/GSODR//reference/update_station_list.html</loc>
+  </url>
+  <url>
+    <loc>https://ropensci.github.io/GSODR//articles/GSODR.html</loc>
+  </url>
+  <url>
+    <loc>https://ropensci.github.io/GSODR//articles/Specified_stations_for_a_range_of_years.html</loc>
+  </url>
+  <url>
+    <loc>https://ropensci.github.io/GSODR//articles/Working_with_spatial_and_climate_data.html</loc>
+  </url>
+</urlset>

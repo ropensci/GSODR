@@ -46,6 +46,8 @@ data.  Further information on these data and methods can be found on GSODR's
 GitHub repository here:
 https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md." />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,6 +55,8 @@ https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md." />
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 
 
   </head>
@@ -68,8 +72,12 @@ https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">GSODR</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">GSODR</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.2.0.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -79,7 +87,7 @@ https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md." />
   </a>
 </li>
 <li>
-  <a href="../articles/GSODR.html">Get Started</a>
+  <a href="../articles/GSODR.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -112,6 +120,7 @@ https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -119,11 +128,12 @@ https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Download and Return a Tidy Data Frame of GSOD Weather Data</h1>
-    <small>Source: <a href='https:/github.com/ropensci/GSODR/blob/master/R/get_GSOD.R'><code>R/get_GSOD.R</code></a></small>
+    <small>Source: <a href='https://github.com/ropensci/GSODR/blob/master/R/get_GSOD.R'><code>R/get_GSOD.R</code></a></small>
+    <p class="hidden name"><code>get_GSOD.Rd</code></p>
     </div>
 
     
@@ -150,7 +160,7 @@ GitHub repository here:
     <pre class="usage"><span class='fu'>get_GSOD</span>(<span class='kw'>years</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>station</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>country</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>max_missing</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>agroclimatology</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -223,7 +233,7 @@ Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='reformat_GSOD.html'>reformat_GSOD</a></code></p>
+    <div class='dont-index'><p><code><a href='reformat_GSOD.html'>reformat_GSOD</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -279,6 +289,8 @@ Adam H Sparks, <a href='mailto:adamhsparks@gmail.com'>adamhsparks@gmail.com</a>
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

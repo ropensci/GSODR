@@ -47,6 +47,8 @@ For information on the GSOD data from NCEI, please see the  GSOD readme.txt
 file available from,
 http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt." />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -54,6 +56,8 @@ http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt." />
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 
 
   </head>
@@ -69,8 +73,12 @@ http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">GSODR</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">GSODR</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.2.0.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -80,7 +88,7 @@ http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt." />
   </a>
 </li>
 <li>
-  <a href="../articles/GSODR.html">Get Started</a>
+  <a href="../articles/GSODR.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -113,6 +121,7 @@ http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -120,11 +129,12 @@ http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>GSODR: Global Surface Summary of the Day (GSOD) Weather Data from R</h1>
-    <small>Source: <a href='https:/github.com/ropensci/GSODR/blob/master/R/GSODR-package.R'><code>R/GSODR-package.R</code></a></small>
+    <small>Source: <a href='https://github.com/ropensci/GSODR/blob/master/R/GSODR-package.R'><code>R/GSODR-package.R</code></a></small>
+    <p class="hidden name"><code>GSODR.Rd</code></p>
     </div>
 
     
@@ -179,7 +189,7 @@ Dynamics for Predicting Ecosystem and Biodiversity Distributions.
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><strong>GSODR functions:</strong></p>
+    <div class='dont-index'><p><strong>GSODR functions:</strong></p>
 <p><code><a href='get_GSOD.html'>get_GSOD</a></code> Download, Clean, Reformat Generate New Elements and
 Return a Tidy Data Frame of GSOD Weather Data</p>
 <p><code><a href='reformat_GSOD.html'>reformat_GSOD</a></code> Clean, Reformat Generate New Elements and Return
@@ -194,7 +204,7 @@ weather station data inventories</p>
 <li><p>Static documentation at <a href='https://ropensci.github.io/GSODR/'>https://ropensci.github.io/GSODR/</a></p></li>
 <li><p>Development repository at <a href='https://github.com/ropensci/GSODR'>https://github.com/ropensci/GSODR</a></p></li>
 <li><p>Report bugs at <a href='https://github.com/ropensci/GSODR/issues'>https://github.com/ropensci/GSODR/issues</a></p></li>
-</ul>
+</ul></div>
     
 
   </div>
@@ -229,6 +239,8 @@ Adam Sparks, Tomislav Hengl and Andrew Nelson
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>
