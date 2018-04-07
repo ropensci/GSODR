@@ -1,25 +1,17 @@
 language: r
-sudo: required
 dist: trusty
+sudo: required
+cache: packages
 
 apt_packages:
 - libudunits2-dev
 
-r_binary_packages:
+r_packages:
    - dplyr
-   - readr
-   - roxygen2
-   - rlang
-   - purrr
-   - tibble
-   - ggplot2
    - Rcpp
    - rgdal
    - rgeos
    - raster
-   - tidyr
-   - purrr
-   - xml2
 
 before_install:
   - sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable --yes
