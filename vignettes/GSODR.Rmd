@@ -14,8 +14,7 @@ vignette: >
 required <- c("ggplot2", "tidyr", "lubridate")
 
 if (!all(unlist(lapply(required, function(pkg) requireNamespace(pkg, quietly = TRUE)))))
-
-  knitr::opts_chunk$set(eval = FALSE, collapse = TRUE, comment = "#>", fig.width = 7, fig.height = 7, fig.align = "center")
+knitr::opts_chunk$set(eval = FALSE, collapse = TRUE, comment = "#>", fig.width = 7, fig.height = 7, fig.align = "center")
 ```
 
 # Introduction
@@ -28,8 +27,7 @@ find, transfer and format the data you need for use in analysis and provides
 four main functions for facilitating this:
 
 - `get_GSOD()` - this function queries and transfers files from the NCEI's
-FTP server, reformats them and returns a tidy data frame in R or saves a file to
-disk
+FTP server, reformats them and returns a tidy data frame in R
 
 - `reformat_GSOD()` - this function takes individual station files from the
 local disk and re-formats them returning a tidy data frame in R
@@ -48,9 +46,7 @@ stations' inventory for each month that data are reported.
 
 When reformatting data either with `get_GSOD()` or `reformat_GSOD()`, all units
 are converted to International System of Units (SI), _e.g._, inches to
-millimetres and Fahrenheit to Celsius. File output can be used in an R session
-as a `tibble()`, saved as a Comma Separated Value (CSV) file or in a spatial
-GeoPackage (GPKG) file, implemented by most major GIS software, summarising each
+millimetres and Fahrenheit to Celsius. Data in the R session summarise each
 year by station, which also includes vapour pressure and relative humidity
 elements calculated from existing data in GSOD.
 
@@ -74,12 +70,11 @@ station_locations <- left_join(isd_history, country_list,
                                by = c("CTRY" = "FIPS"))
 
 # create data.frame for Australia only
-Oz <- filter(station_locations, COUNTRY_NAME == "AUSTRALIA")
+Oz <- subset(station_locations, COUNTRY_NAME == "AUSTRALIA")
 
 Oz
 
-Oz %>%
-  filter(grepl("TOOWOOMBA", STN_NAME))
+subset(Oz, grepl("TOOWOOMBA", STN_NAME))
 ```
 
 ## Download a Single Station and Year
@@ -128,8 +123,7 @@ tbar <- get_GSOD(years = 2010,
 ## Plot Maximum and Minimum Temperature Values
 
 Using the first data downloaded for a single station, 955510-99999, plot the
-temperature for 2010 using `read_csv()` from Hadley's
-[`readr`](https://CRAN.R-project.org/package=readr) package.
+temperature for 2010.
 
 ```{r, eval=TRUE, fig.width = 7, fig.height = 7, fig.align = "center"}
 library(ggplot2)
@@ -160,9 +154,7 @@ create a spatial file. [GeoPackage files](http://www.geopackage.org) are a open,
 standards-based, platform-independent, portable, self-describing compact
 format for transferring geospatial information, which handle vector files much
 like shapefiles do, but eliminate many of the issues that shapefiles have with
-field names and the number of files. The `get_GSOD()` function can create a
-GeoPackage file, which can be used with a GIS for further analysis and mapping
-with other spatial objects.
+field names and the number of files.
 
 # Converting GSOD Data to a Spatial Objects and Saving
 
@@ -178,11 +170,12 @@ program.
 
 ```{r spatial_convert, eval = FALSE}
 # get GSOD data
+library(sp)
 GSOD <- get_GSOD(years = 2015, country = "Australia")
 
 # convert to SpatialPointsDataFrame
-sp::coordinates(GSOD_sp) <- ~ LON + LAT
-sp::proj4string(GSOD_sp) <- sp::CRS("+proj=longlat +datum=WGS84")
+coordinates(GSOD_sp) <- ~ LON + LAT
+proj4string(GSOD_sp) <- CRS("+proj=longlat +datum=WGS84")
 
 str(GSOD_sp)
 ```
@@ -251,10 +244,12 @@ str(GSOD_sp)
 
 ## Saving _sp_ objects
 
-Using `rgdal::writeOGR()` it is simple to save as a GeoPackage file.
+Using `writeOGR()` it is simple to save as a GeoPackage file.
 
 ```{r sp_save_gpkg, eval=FALSE}
-  rgdal::writeOGR(
+library(rgdal)
+
+  writeOGR(
     GSOD_sp,
     dsn = path.expand("~/"),
     layer = "GSOD",
@@ -262,10 +257,10 @@ Using `rgdal::writeOGR()` it is simple to save as a GeoPackage file.
   )
 ```
 
-Using `rgdal::writeOGR()` it is simple to save as an ESRI shapefile.
+Using `writeOGR()` it is simple to save as an ESRI shapefile.
 
 ```{r sp_save_shp, eval=FALSE}
-  rgdal::writeOGR(
+  writeOGR(
     GSOD_sp,
     dsn = path.expand("~/"),
     layer = "GSOD",
@@ -290,6 +285,7 @@ such as GDAL. A subset of simple features forms the GeoJSON standard.
 For this example, we convert the GSOD data to an _sf_ object.
 
 ```{r convert_sf, eval=FALSE}
+library(sf)
 GSOD_SF <- st_as_sf(x = GSOD, 
                         coords = c("LON", "LAT"),
                         crs = "+proj=longlat +datum=WGS84")
@@ -399,9 +395,8 @@ class(AUS_stations)
 Since GeoPackage files are formatted as SQLite databases you can use the
 existing R tools for SQLite files
 [(J. Stachelek 2016)](https://jsta.github.io/2016/07/14/geopackage-r.html). One
-easy way is using _dplyr_, which we've already used to filter the stations.
-
-This option is much faster to load since it does not load the geometry.
+easy way is using _dplyr_. This option is much faster to load since it does not
+load the geometry.
 
 ```{r, eval=FALSE}
 AUS_sqlite <- tbl(src_sqlite(path.expand("~/GSOD.gpkg")), "GSOD")
@@ -449,10 +444,13 @@ care should be taken to ensure that the version of the databases is the same
 across different machines.
 
 The database file `isd_history.rda` can be located on your local system by using
-the following command, `paste0(.libPaths(), "/GSODR/extdata")[1]`, unless you have specified another location for library installations and
+the following command, `paste0(.libPaths(), "/GSODR/extdata")[1]`, unless you
+have specified another location for library installations and
 installed _GSODR_ there, in which case it would still be in `GSODR/extdata`.
 
-To update _GSODR's_ internal database of station locations simply use `update_station_list()`, which will update the internal station database according to the latest data available from the NCEI.
+To update _GSODR's_ internal database of station locations simply use
+`update_station_list()`, which will update the internal station database
+according to the latest data available from the NCEI.
 
 # Using get_inventory()
 
@@ -475,7 +473,9 @@ subset(inventory, STNID == "955510-99999")
 
 Additional climate data,
 [_GSODRdata_](https://github.com/adamhsparks/GSODRdata), formatted for use with
-GSOD data provided by _GSODR_ are available as an R package, which can only be installed through GitHub due to the package size, 5.1Mb, being too large for CRAN.
+GSOD data provided by _GSODR_ are available as an R package, which can only be
+installed through GitHub due to the package size, 5.1Mb, being too large for
+CRAN.
 
 ```{r, eval=FALSE}
 #install.packages("devtools")

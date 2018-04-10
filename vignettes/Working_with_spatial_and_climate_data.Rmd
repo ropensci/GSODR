@@ -24,13 +24,22 @@ R packages such as _sf_, you can save data as a GeoPackage file which can be
 read by most GIS software packages or in R using R's GIS capabilities with
 other contributed packages as well.
 
-Following is an example of how you might download and save GSOD annual data for a given country, Philippines in this example, and convert it into a KML file for viewing in GoogleEarth. The second portion uses the same GeoPackage file to import the data back into R and combine the GSOD data with CHELSA data from the [GSODRdata package](https://github.com/adamhsparks/GSODRdata) available from GitHub and plot the station temperatures for daily GSOD, average monthly GSOD and CHELSA temperatures (1979-2013).
+Following is an example of how you might download and save GSOD annual data for
+a given country, Philippines in this example, and convert it into a KML file for
+viewing in GoogleEarth. The second portion uses the same GeoPackage file to
+import the data back into R and combine the GSOD data with CHELSA data from the
+[GSODRdata package](https://github.com/adamhsparks/GSODRdata) available from
+GitHub and plot the station temperatures for daily GSOD, average monthly GSOD
+and CHELSA temperatures (1979-2013).
 
 ## Example - Download and Plot Data for a Single Country
 
-This example will demonstrate how to download data for Philippines for year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in the user's home directory and link it with climate data from the _GSODRdata_ package.
+This example will demonstrate how to download data for Philippines for year 2010
+and generate a spatial, year summary file, PHL-2010.gpkg, in the user's home
+directory and link it with climate data from the _GSODRdata_ package.
 
-Download data for Philippines for year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in the user's home directory.
+Download data for Philippines for year 2010 and generate a spatial, year summary
+file, PHL-2010.gpkg, in the user's home directory.
 
 ```r
 library(GSODR)
@@ -45,7 +54,8 @@ write_sf(PHL, "~/PHL-2010.gpkg")
 
 ## Example - Use the GeoPackage File to Create a KML File
 
-Using the GeoPackage that was just created, you can now create a KML file to open with Google Earth and visualise the data spatially and over time.
+Using the GeoPackage that was just created, you can now create a KML file to
+open with Google Earth and visualise the data spatially and over time.
 
 ```r
 library(rgdal)
@@ -72,11 +82,17 @@ kml(tmp_ST, dtime = 24 * 3600, colour = TEMP, shape = shape, labels = TEMP,
 system("zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml")
 ```
 
-## Example - Compare the GSOD Weather Data From the Philippines With Climate Data Provided by the _GSODRdata_ Package.
+## Example - Compare the GSOD Weather Data From the Philippines With Climate
+Data Provided by the _GSODRdata_ Package.
 
-The the [`GSODRdata`](https://adamhsparks.github.io/GSODRdata/) package provides climate data from four climate data sets that have been formatted for easy use with the _GSODR_ package. Following is a description how to install the _GSODRdata_ package and use it to visualise the weather data for the Philippines in 2010 against CHELSA data.
+The the [`GSODRdata`](https://adamhsparks.github.io/GSODRdata/) package provides
+climate data from four climate data sets that have been formatted for easy use
+with the _GSODR_ package. Following is a description how to install the
+_GSODRdata_ package and use it to visualise the weather data for the Philippines
+in 2010 against CHELSA data.
 
-CHELSA (Climatologies at high resolution for the earth’s land surface areas) are climate data at 30 arc seconds for the earth land surface areas. 
+CHELSA (Climatologies at high resolution for the earth’s land surface areas) are
+climate data at 30 arc seconds for the earth land surface areas.
 
 **Description of CHELSA data from CHELSA website**
 
@@ -91,7 +107,8 @@ See http://chelsa-climate.org for more information on these data.
 devtools::install_github("adamhsparks/GSODRdata")
 ````
 
-Now that the extra data have been installed, take a look at the CHELSA data that are one of the data sets included in the _GSODRdata_ package.
+Now that the extra data have been installed, take a look at the CHELSA data that
+are one of the data sets included in the _GSODRdata_ package.
 
 ```r
 library(GSODRdata)
@@ -147,7 +164,9 @@ str(CHELSA)
 #> $ CHELSA_temp_9_1979-2013    : num  25.1 11.5 8.6 7.7 11.5 11.6 10.2 7.6 9.9 9.8 ...
 ```
 
-Compare the GSOD weather data from the Philippines with climatic data provided by the _GSODR_ package in the `CHELSA` data set using `dplyr` functions to join the CHELSA and _GSODR_ data for plotting.
+Compare the GSOD weather data from the Philippines with climatic data provided
+by the _GSODR_ package in the `CHELSA` data set using `dplyr` functions to join
+the CHELSA and _GSODR_ data for plotting.
 
 ```r
 library(dplyr)
@@ -199,12 +218,22 @@ ggplot(df_melt, aes(x = DATE, y = value)) +
 ## Sources
 
 #### CHELSA Climate Layers
-CHELSA (climatic surfaces at 1 km resolution) is based on a quasi-mechanistical statistical downscaling of the ERA interim global circulation model (Karger et al. 2016). ESA's CCI-LC cloud probability monthly averages are based
+CHELSA (climatic surfaces at 1 km resolution) is based on a quasi-mechanistical
+statistical downscaling of the ERA interim global circulation model (Karger et
+al. 2016). ESA's CCI-LC cloud probability monthly averages are based
 on the MODIS snow products (MOD10A2). <http://chelsa-climate.org/>
 
 ### Elevation Values
 
-90m hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was used to identify and correct/remove elevation errors in data for station locations between -60˚ and 60˚ latitude. This applies to cases here where elevation was missing in the reported values as well. In case the station reported an elevation and the DEM does not, the station reported is taken. For stations beyond -60˚ and 60˚ latitude, the values are station reported values in every instance. See <https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md> for more detail on the correction methods.
+90m hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was used to
+identify and correct/remove elevation errors in data for station locations
+between -60˚ and 60˚ latitude. This applies to cases here where elevation was
+missing in the reported values as well. In case the station reported an
+elevation and the DEM does not, the station reported is taken. For stations
+beyond -60˚ and 60˚ latitude, the values are station reported values in every
+instance. See
+<https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md>
+for more detail on the correction methods.
 
 ## WMO Resolution 40. NOAA Policy
 
@@ -214,9 +243,13 @@ on the MODIS snow products (MOD10A2). <http://chelsa-climate.org/>
 
 # References
 
-Jarvis, A., Reuter, H. I., Nelson, A., Guevara, E. (2008) Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database (<http://srtm.csi.cgiar.org>)
+Jarvis, A., Reuter, H. I., Nelson, A., Guevara, E. (2008) Hole-filled SRTM for
+the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
+(<http://srtm.csi.cgiar.org>)
 
-Karger, D. N., Conrad, O., Bohner, J., Kawohl, T., Kreft, H., Soria-Auza, R. W., *et al*. (2016) Climatologies at high resolution for the Earth land surface areas. *arXiv preprint* **arXiv:1607.00217**. (<http://chelsa-climate.org/>)
+Karger, D. N., Conrad, O., Bohner, J., Kawohl, T., Kreft, H., Soria-Auza, R. W.,
+*et al*. (2016) Climatologies at high resolution for the Earth land surface
+areas. *arXiv preprint* **arXiv:1607.00217**. (<http://chelsa-climate.org/>)
 
 Stachelek, J. (2016) Using the Geopackage Format with R. 
 URL: https://jsta.github.io/2016/07/14/geopackage-r.html
