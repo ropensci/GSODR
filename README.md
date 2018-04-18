@@ -13,7 +13,8 @@ status](https://ci.appveyor.com/api/projects/status/s09kh2nj59o35ob1/branch/mast
 
 ## Introduction to *GSODR*
 
-The GSOD or [Global Surface Summary of the Day
+<img align="right" src="man/figures/GSODR-hex.png"> The GSOD or [Global
+Surface Summary of the Day
 (GSOD)](https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod)
 data provided by the US National Centers for Environmental Information
 (NCEI) are a valuable source of weather data with global coverage.
