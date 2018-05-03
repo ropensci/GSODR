@@ -1,5 +1,14 @@
 # GSODR 1.2.0.9000
 
+## Bug fixes
+
+- Introduce a message if a station ID is requested but files are not found on
+the server. This is in response to an inquiry from John Paul Bigouette where
+a station is reported as having data in the inventory but the files do not exist
+on the server.
+
+--------------------------------------------------------------------------------
+
 # GSODR 1.2.0
 
 ## Major changes
