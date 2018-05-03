@@ -183,10 +183,17 @@
         purrr::map(station, ~ grep(., fils, value = TRUE)) %>%
           purrr::keep(~ length(.) > 0) %>%
           purrr::flatten_chr() -> fils
-        # grab the station files
-        purrr::walk(paste0(year_url, fils), retry_cfd)
-        # progress bar
-        pb$tick()$print()
+
+        if (length(fils) > 0) {
+          # grab the station files
+          purrr::walk(paste0(year_url, fils), retry_cfd)
+          # progress bar
+          pb$tick()$print()
+        }
+        else {
+          message("\nThere are no files for station ID ", station, " in ",
+                  yr, ".\n")
+        }
       })
     }
     GSOD_list <-
