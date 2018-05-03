@@ -55,6 +55,10 @@ if (!require("dplyr")) {
   install.packages("dplyr", repos = "https://cran.rstudio.com/")
 }
 
+if (!require("doParallel")) {
+  install.packages("doParallel", repos = "https://cran.rstudio.com/")
+}
+
 if (!require("foreach")) {
   install.packages("foreach", repos = "https://cran.rstudio.com/")
 }
