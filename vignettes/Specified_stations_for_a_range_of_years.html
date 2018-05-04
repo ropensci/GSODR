@@ -347,6 +347,9 @@ $(document).ready(function () {
 <pre><code>## The following object is masked from 'package:tidyr':
 ## 
 ##     extract</code></pre>
+<pre><code>## The following object is masked from 'package:ggplot2':
+## 
+##     calc</code></pre>
 <pre><code>## The following object is masked from 'package:dplyr':
 ## 
 ##     select</code></pre>
@@ -453,13 +456,12 @@ loop_stations &lt;- loop_stations[loop_stations$BEGIN &lt;= 19591231 &amp;
 
 print(loop_stations[, c(1:2, 3, 7:12)])</code></pre>
 <pre><code>## # A tibble: 4 x 9
-##     USAF  WBAN         STN_NAME    LAT     LON ELEV_M    BEGIN      END
-##    &lt;chr&gt; &lt;chr&gt;            &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-## 1 983240 99999 IBA/LUZON ISLAND 15.333 119.967    5.0 19490104 20171217
-## 2 983250 99999          DAGUPAN 16.083 120.350    2.0 19450119 20171217
-## 3 983270 99999       CLARK INTL 15.186 120.560  147.5 19450214 20171217
-## 4 983280 99999           BAGUIO 16.375 120.620 1295.7 19490101 20171217
-## # ... with 1 more variables: STNID &lt;chr&gt;</code></pre>
+##   USAF   WBAN  STN_NAME           LAT   LON  ELEV_M     BEGIN    END STNID
+##   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;            &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;
+## 1 983240 99999 IBA/LUZON ISLAND  15.3  120.    5.00 19490104. 2.02e7 9832…
+## 2 983250 99999 DAGUPAN           16.1  120.    2.00 19450119. 2.02e7 9832…
+## 3 983270 99999 CLARK INTL        15.2  121.  148.   19450214. 2.02e7 9832…
+## 4 983280 99999 BAGUIO            16.4  121. 1296.   19490101. 2.02e7 9832…</code></pre>
 <p>These are all of the stations that are available within 100km of the centroid of this area and the years for which data are available.</p>
 </div>
 <div id="using-get_gsod-to-fetch-the-requested-station-files" class="section level3">
