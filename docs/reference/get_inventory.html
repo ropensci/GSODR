@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Download and Return a Tidy Data Frame of GSOD Weather Station Data Inventories — get_inventory" />
 
 <meta property="og:description" content="The NCEI maintains a document,
@@ -43,8 +46,6 @@ inventory information for each station-year-month." />
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-
-
 
 
   </head>
@@ -120,10 +121,11 @@ inventory information for each station-year-month." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Download and Return a Tidy Data Frame of GSOD Weather Station Data Inventories</h1>
-    <small>Source: <a href='https://github.com/ropensci/GSODR/blob/master/R/get_inventory.R'><code>R/get_inventory.R</code></a></small>
-    <p class="hidden name"><code>get_inventory.Rd</code></p>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/GSODR/blob/master/R/get_inventory.R'><code>R/get_inventory.R</code></a></small>
+    <div class="hidden name"><code>get_inventory.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>The NCEI maintains a document,
 &lt;ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt&gt;, which shows the
@@ -132,6 +134,7 @@ the stations' records.  This function retrieves that document, prints the
 header to display the last update time and returns a data frame of the
 inventory information for each station-year-month.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>get_inventory</span>()</pre>
         

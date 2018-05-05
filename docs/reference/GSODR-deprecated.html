@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Deprecated function(s) in the GSODR package — GSODR-deprecated" />
 
 <meta property="og:description" content="These functions are provided for compatibility with older version of
@@ -39,8 +42,6 @@ the GSODR package.  They may eventually be completely removed." />
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-
-
 
 
   </head>
@@ -116,24 +117,26 @@ the GSODR package.  They may eventually be completely removed." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Deprecated function(s) in the GSODR package</h1>
-    <small>Source: <a href='https://github.com/ropensci/GSODR/blob/master/R/deprecated_functions.R'><code>R/deprecated_functions.R</code></a></small>
-    <p class="hidden name"><code>GSODR-deprecated.Rd</code></p>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/GSODR/blob/master/R/deprecated_functions.R'><code>R/deprecated_functions.R</code></a></small>
+    <div class="hidden name"><code>GSODR-deprecated.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>These functions are provided for compatibility with older version of
 the GSODR package.  They may eventually be completely removed.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>get_station_list</span>()</pre>
         
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     
-    <table><tr><td>
-  <code>get_station_list</code> </td>
-<td> now superceded by <code><a href='update_station_list.html'>update_station_list</a></code></td>
-</tr></table><p><code>get_station_list</code> was used to download the list of weather stations
+    <table class='table'>
+<tr><td><code>get_station_list</code></td><td>now superceded by <code><a href='update_station_list.html'>update_station_list</a></code></td></tr>
+</table>
+<p><code>get_station_list</code> was used to download the list of weather stations
 and the corresponding metadata. The station list is no longer fetched 
 on-the-fly. Instead a version is supplied with the GSODR package upon
 installation. To update the internal database, please use
