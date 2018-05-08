@@ -134,8 +134,7 @@
           ftp_use_epsv = FALSE,
           dirlistonly = TRUE,
           crlf = TRUE,
-          ssl_verifypeer = FALSE,
-          ftp_response_timeout = 30
+          ssl_verifypeer = FALSE
         )
       s_curl_fetch_memory <- purrr::safely(curl::curl_fetch_memory)
       retry_cfm <-
