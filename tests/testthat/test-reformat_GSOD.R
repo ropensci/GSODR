@@ -10,7 +10,7 @@ test_that("reformat_GSOD file_list parameter reformats data properly", {
   )))
 
   # set up options for curl
-  dir_list_handle <-
+  ftp_handle <-
     curl::new_handle(
       ftp_use_epsv = FALSE,
       crlf = TRUE,
@@ -27,7 +27,7 @@ test_that("reformat_GSOD file_list parameter reformats data properly", {
   Map(
     function(u, d)
       curl::curl_download(u, d,
-                          handle = dir_list_handle,
+                          handle = ftp_handle,
                           mode = "wb",
                           quiet = TRUE),
     paste0(ftp_base, test_files),
