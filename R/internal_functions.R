@@ -128,7 +128,7 @@
     }
     if (!is.null(station)) {
       # Written by @hrbrmstr
-      max_retries <- 6
+      max_retries <- 10
       dir_list_handle <-
         curl::new_handle(
           ftp_use_epsv = FALSE,
