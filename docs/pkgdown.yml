@@ -1,6 +1,6 @@
-pandoc: 2.1.3
-pkgdown: 0.1.0.9000
-pkgdown_sha: cc081c30e20c69ad54a4f9fc9d4d42faba0bf1e5
+pandoc: '2.2'
+pkgdown: 1.0.0.9000
+pkgdown_sha: d7c658122bfbd143552cd28585f867dd344302ad
 articles:
   GSODR: GSODR.html
   Specified_stations_for_a_range_of_years: Specified_stations_for_a_range_of_years.html

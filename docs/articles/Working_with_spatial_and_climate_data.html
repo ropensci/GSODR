@@ -18,7 +18,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-vignette">
+    <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -27,8 +27,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">GSODR</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">GSODR</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.2.0.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
@@ -38,7 +42,7 @@
   </a>
 </li>
 <li>
-  <a href="../articles/GSODR.html">Get Started</a>
+  <a href="../articles/GSODR.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -79,19 +83,19 @@
 
       
       </header><div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Working with spatial and climate data from GSODR and GSODRdata</h1>
                         <h4 class="author">Tomislav Hengl and Adam H Sparks</h4>
             
       
-      <small>Source: <a href="https:/github.com/ropensci/GSODR/blob/master/vignettes/Working_with_spatial_and_climate_data.Rmd"><code>vignettes/Working_with_spatial_and_climate_data.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ropensci/GSODR/blob/master/vignettes/Working_with_spatial_and_climate_data.Rmd"><code>vignettes/Working_with_spatial_and_climate_data.Rmd</code></a></small>
+      <div class="hidden name"><code>Working_with_spatial_and_climate_data.Rmd</code></div>
 
     </div>
 
     
     
-<div class="contents">
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
@@ -138,9 +142,10 @@
 <a class="sourceLine" id="cb2-21" data-line-number="21"></a>
 <a class="sourceLine" id="cb2-22" data-line-number="22"><span class="kw">system</span>(<span class="st">"zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml"</span>)</a></code></pre></div>
 </div>
-<div id="example---compare-the-gsod-weather-data-from-the-philippines-with-climate-data-provided-by-the-gsodrdata-package-" class="section level2">
+<div id="example---compare-the-gsod-weather-data-from-the-philippines-with-climate" class="section level2">
 <h2 class="hasAnchor">
-<a href="#example---compare-the-gsod-weather-data-from-the-philippines-with-climate-data-provided-by-the-gsodrdata-package-" class="anchor"></a>Example - Compare the GSOD Weather Data From the Philippines With Climate Data Provided by the <em>GSODRdata</em> Package.</h2>
+<a href="#example---compare-the-gsod-weather-data-from-the-philippines-with-climate" class="anchor"></a>Example - Compare the GSOD Weather Data From the Philippines With Climate</h2>
+<p>Data Provided by the <em>GSODRdata</em> Package.</p>
 <p>The the <a href="https://adamhsparks.github.io/GSODRdata/"><code>GSODRdata</code></a> package provides climate data from four climate data sets that have been formatted for easy use with the <em>GSODR</em> package. Following is a description how to install the <em>GSODRdata</em> package and use it to visualise the weather data for the Philippines in 2010 against CHELSA data.</p>
 <p>CHELSA (Climatologies at high resolution for the earth’s land surface areas) are climate data at 30 arc seconds for the earth land surface areas.</p>
 <p><strong>Description of CHELSA data from CHELSA website</strong></p>
@@ -244,7 +249,7 @@
 <a class="sourceLine" id="cb5-39" data-line-number="39"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_brewer">scale_color_brewer</a></span>(<span class="dt">palette =</span> <span class="st">"Dark2"</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb5-40" data-line-number="40"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>( <span class="op">~</span><span class="st"> </span>STNID)</a></code></pre></div>
 <div class="figure">
-<img src="/Users/adamsparks/Development/GSODR/vignettes/example_1.2-1.png" alt="Comparison of GSOD daily values and average monthly values with CHELSA climate monthly values"><p class="caption">Comparison of GSOD daily values and average monthly values with CHELSA climate monthly values</p>
+<img src="example_1.2-1.png" alt="Comparison of GSOD daily values and average monthly values with CHELSA climate monthly values"><p class="caption">Comparison of GSOD daily values and average monthly values with CHELSA climate monthly values</p>
 </div>
 </div>
 </div>
@@ -281,7 +286,6 @@
 <p>Karger, D. N., Conrad, O., Bohner, J., Kawohl, T., Kreft, H., Soria-Auza, R. W., <em>et al</em>. (2016) Climatologies at high resolution for the Earth land surface areas. <em>arXiv preprint</em> <strong>arXiv:1607.00217</strong>. (<a href="http://chelsa-climate.org/" class="uri">http://chelsa-climate.org/</a>)</p>
 <p>Stachelek, J. (2016) Using the Geopackage Format with R. URL: <a href="https://jsta.github.io/2016/07/14/geopackage-r.html" class="uri">https://jsta.github.io/2016/07/14/geopackage-r.html</a></p>
 </div>
-</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -293,7 +297,7 @@
 <a href="#introduction">Introduction</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#example---download-and-plot-data-for-a-single-country">Example - Download and Plot Data for a Single Country</a></li>
       <li><a href="#example---use-the-geopackage-file-to-create-a-kml-file">Example - Use the GeoPackage File to Create a KML File</a></li>
-      <li><a href="#example---compare-the-gsod-weather-data-from-the-philippines-with-climate-data-provided-by-the-gsodrdata-package-">Example - Compare the GSOD Weather Data From the Philippines With Climate Data Provided by the <em>GSODRdata</em> Package.</a></li>
+      <li><a href="#example---compare-the-gsod-weather-data-from-the-philippines-with-climate">Example - Compare the GSOD Weather Data From the Philippines With Climate</a></li>
       </ul>
 </li>
       <li>
@@ -320,6 +324,8 @@
 
       </footer>
 </div>
+
+  
 
   </body>
 </html>

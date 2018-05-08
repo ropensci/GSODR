@@ -106,14 +106,14 @@
 
     
     
-<p><a href="https://travis-ci.org/ropensci/GSODR"><img src="https://travis-ci.org/ropensci/GSODR.svg?branch=master" alt="Travis-CI Build Status"></a> <a href="https://ci.appveyor.com/project/ropensci/gsodr/branch/master"><img src="https://ci.appveyor.com/api/projects/status/s09kh2nj59o35ob1/branch/master?svg=true" alt="Build status"></a> <a href="https://codecov.io/gh/ropensci/GSODR"><img src="https://codecov.io/gh/ropensci/GSODR/branch/master/graph/badge.svg" alt="codecov"></a> <a href="https://doi.org/10.5281/zenodo.439850"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.439850.svg" alt="DOI"></a> <a href="https://cran.r-project.org/package=GSODR"><img src="http://www.r-pkg.org/badges/version/GSODR" alt="CRAN_Status_Badge"></a> <a href="http://joss.theoj.org/papers/14021f4e4931cdaab4ea41be27df2df6"><img src="http://joss.theoj.org/papers/10.21105/joss.00177/status.svg" alt="JOSS"></a> <a href="https://github.com/ropensci/onboarding/issues/79"><img src="https://badges.ropensci.org/79_status.svg"></a></p>
+
 <div id="introduction-to-gsodr" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction-to-gsodr" class="anchor"></a>Introduction to <em>GSODR</em>
 </h2>
-<p>The GSOD or <a href="https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod">Global Surface Summary of the Day (GSOD)</a> data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. <em>GSODR</em> aims to make it easy to find, transfer and format the data you need for use in analysis and provides five main functions for facilitating this:</p>
+<p>The GSOD or <a href="https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod">Global Surface Summary of the Day (GSOD)</a> data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage. However, the data files are cumbersome and difficult to work with. <em>GSODR</em> aims to make it easy to find, transfer and format the data you need for use in analysis and provides five main functions for facilitating this:</p>
 <ul>
-<li><p><code><a href="reference/get_GSOD.html">get_GSOD()</a></code> - this function queries and transfers files from the NCEI’s FTP server, reformats them and returns a tidy data frame in R or saves a file to disk</p></li>
+<li><p><code><a href="reference/get_GSOD.html">get_GSOD()</a></code> - this function queries and transfers files from the NCEI’s FTP server, reformats them and returns a tidy data frame in R. <strong>NOTE</strong> If you have used file exporting capabilities in versions prior to 1.2.0, these have been removed now in the latest version. This means less dependencies when installing. Examples of how to export the data are found in the GSODR vignette.</p></li>
 <li><p><code><a href="reference/reformat_GSOD.html">reformat_GSOD()</a></code> - this function takes individual station files from the local disk and re-formats them returning a tidy data frame in R</p></li>
 <li><p><code><a href="reference/nearest_stations.html">nearest_stations()</a></code> - this function returns a vector of station IDs that fall within the given radius (kilometres) of a point given as latitude and longitude</p></li>
 <li><p><code><a href="reference/update_station_list.html">update_station_list()</a></code> - this function downloads the latest station list from the NCEI’s FTP server updates the package’s internal database of stations and their metadata.</p></li>
@@ -171,16 +171,16 @@
 <pre><code>## # A tibble: 365 x 48
 ##    USAF   WBAN  STNID    STN_NAME     CTRY  STATE CALL    LAT   LON ELEV_M
 ##    &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;        &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
-##  1 955510 99999 955510-… TOOWOOMBA A… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.   642.
-##  2 955510 99999 955510-… TOOWOOMBA A… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.   642.
-##  3 955510 99999 955510-… TOOWOOMBA A… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.   642.
-##  4 955510 99999 955510-… TOOWOOMBA A… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.   642.
-##  5 955510 99999 955510-… TOOWOOMBA A… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.   642.
-##  6 955510 99999 955510-… TOOWOOMBA A… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.   642.
-##  7 955510 99999 955510-… TOOWOOMBA A… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.   642.
-##  8 955510 99999 955510-… TOOWOOMBA A… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.   642.
-##  9 955510 99999 955510-… TOOWOOMBA A… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.   642.
-## 10 955510 99999 955510-… TOOWOOMBA A… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.   642.
+##  1 955510 99999 955510-… TOOWOOMBA A… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
+##  2 955510 99999 955510-… TOOWOOMBA A… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
+##  3 955510 99999 955510-… TOOWOOMBA A… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
+##  4 955510 99999 955510-… TOOWOOMBA A… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
+##  5 955510 99999 955510-… TOOWOOMBA A… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
+##  6 955510 99999 955510-… TOOWOOMBA A… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
+##  7 955510 99999 955510-… TOOWOOMBA A… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
+##  8 955510 99999 955510-… TOOWOOMBA A… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
+##  9 955510 99999 955510-… TOOWOOMBA A… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
+## 10 955510 99999 955510-… TOOWOOMBA A… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
 ## # ... with 355 more rows, and 38 more variables: ELEV_M_SRTM_90m &lt;dbl&gt;,
 ## #   BEGIN &lt;dbl&gt;, END &lt;dbl&gt;, YEARMODA &lt;date&gt;, YEAR &lt;chr&gt;, MONTH &lt;chr&gt;,
 ## #   DAY &lt;chr&gt;, YDAY &lt;dbl&gt;, TEMP &lt;dbl&gt;, TEMP_CNT &lt;int&gt;, DEWP &lt;dbl&gt;,
@@ -283,7 +283,20 @@
 </ul>
 </div>
 
-      </div>
+      <div class="dev-status">
+<h2>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://travis-ci.org/ropensci/GSODR"><img src="https://travis-ci.org/ropensci/GSODR.svg?branch=master" alt="Travis-CI Build Status"></a></li>
+<li><a href="https://ci.appveyor.com/project/ropensci/gsodr/branch/master"><img src="https://ci.appveyor.com/api/projects/status/s09kh2nj59o35ob1/branch/master?svg=true" alt="Build status"></a></li>
+<li><a href="https://codecov.io/gh/ropensci/GSODR"><img src="https://codecov.io/gh/ropensci/GSODR/branch/master/graph/badge.svg" alt="codecov"></a></li>
+<li><a href="https://doi.org/10.5281/zenodo.439850"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.439850.svg" alt="DOI"></a></li>
+<li><a href="https://cran.r-project.org/package=GSODR"><img src="https://www.r-pkg.org/badges/version/GSODR" alt="CRAN_Status_Badge"></a></li>
+<li><a href="http://www.repostatus.org/#active"><img src="http://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active – The project has reached a stable, usable state and is being actively developed."></a></li>
+<li><a href="http://joss.theoj.org/papers/14021f4e4931cdaab4ea41be27df2df6"><img src="http://joss.theoj.org/papers/10.21105/joss.00177/status.svg" alt="JOSS"></a></li>
+<li><a href="https://github.com/ropensci/onboarding/issues/79"><img src="https://badges.ropensci.org/79_status.svg"></a></li>
+</ul>
+</div>
+</div>
 
 </div>
 
