@@ -19,7 +19,7 @@ the GSODR package.  They may eventually be completely removed.
   \code{get_station_list} \tab now superceded by \code{\link{update_station_list}}\cr
 }
 \code{get_station_list} was used to download the list of weather stations
-and the corresponding metadata. The station list is no longer fetched 
+and the corresponding metadata. The station list is no longer fetched
 on-the-fly. Instead a version is supplied with the GSODR package upon
 installation. To update the internal database, please use
 \code{\link{update_station_list}}.
