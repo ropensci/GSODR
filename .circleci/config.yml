@@ -30,9 +30,12 @@ defaults: &steps
         name: Build package
         command: R CMD build .
 
-    - run:
+    - run: # run once as cran
         name: Check package
         command: R CMD check "${PKG_TARBALL}" --as-cran --no-manual
+    - run: # run once not as cran for coverage
+        name: Check package
+        command: R CMD check "${PKG_TARBALL}" --no-manual
     - run:
         name: Check failures
         command: |
