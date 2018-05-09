@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     working_directory: ~/main
-    environment: "NOT_CRAN='true'"
+    environment: NOT_CRAN='true'
     docker:
       - image: rocker/geospatial:latest
     steps:
@@ -18,7 +18,7 @@ jobs:
             R -e "devtools::install_github('MangoTheCat/goodpractice')"
       - run:
           command: |
-            R -e "devtools::check(cran = FALSE)"
+            R -e "devtools::check()"
       - save_cache:
           key: deps1-{{ .Branch }}-{{ checksum "DESCRIPTION" }}-{{ checksum ".circleci/config.yml" }}
           paths:
