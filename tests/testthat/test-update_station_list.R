@@ -3,7 +3,7 @@ context("get_stations_list")
 
 # get_stations_list() is deprecated, should emit warning when used
 test_that("A warning is emitted when using deprecated functionality", {
-  expect_warning(get_stations_list())
+  expect_warning(get_station_list())
 })
 
 
