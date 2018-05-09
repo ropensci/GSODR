@@ -41,7 +41,7 @@ defaults: &steps
           # - run: if grep -q -R "WARNING" "${RCHECK_DIR}/00check.log"; then exit 1; fi
     - run:
         name: Coverage
-        command: R -e 'covr::coveralls()'
+        command: R -e 'covr::codecov()'
 
     ## store artifacts -----------------
 
