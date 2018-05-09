@@ -59,12 +59,12 @@ version: 2
 jobs:
   "r-release":
      docker:
-       - image: rocker/tidyverse:latest
+       - image: rocker/geospatial:latest
      <<: *steps
 
   "r-devel":
      docker:
-       - image: rocker/tidyverse:devel
+       - image: rocker/geospatial:devel
      <<: *steps
 
 workflows:
