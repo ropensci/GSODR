@@ -1,27 +1,75 @@
+
+
+defaults: &steps
+  steps:
+    - checkout
+
+    ## setup -------------------------------
+
+    - run:
+        name: Set environmental variables
+        command: |
+          Rscript --vanilla \
+            -e 'dsc <- read.dcf("DESCRIPTION")' \
+            -e 'cat(sprintf("export PKG_TARBALL=%s_%s.tar.gz\n", dsc[,"Package"], dsc[,"Version"]))' \
+            -e 'cat(sprintf("export RCHECK_DIR=%s.Rcheck\n", dsc[,"Package"]))' \
+            >> ${BASH_ENV}
+
+    ## install dependencies ------------------
+
+    - run:
+        name: Install devtools and dependencies
+        command: |
+          Rscript \
+            -e 'if (!requireNamespace("devtools", quietly = TRUE)) install.packages("devtools")' \
+            -e 'devtools::install_deps(dependencies = TRUE)'
+
+    ## build and test -----------------
+
+    - run:
+        name: Build package
+        command: R CMD build .
+
+    - run:
+        name: Check package
+        command: R CMD check "${PKG_TARBALL}" --as-cran --no-manual
+    - run:
+        name: Check failures
+        command: |
+          Rscript -e "message(devtools::check_failures(path = '${RCHECK_DIR}'))"
+          # warnings are errors
+          # - run: if grep -q -R "WARNING" "${RCHECK_DIR}/00check.log"; then exit 1; fi
+    - run:
+        name: Coverage
+        command: R -e 'covr::codecov(cran = FALSE)'
+
+    ## store artifacts -----------------
+
+    - run:
+        command: mv ${RCHECK_DIR} /tmp/Rcheck
+        when: always
+    - store_test_results:
+        path: /tmp/Rcheck/tests/
+        when: always
+    - store_artifacts:
+        path: /tmp/Rcheck
+        when: always
+
 version: 2
 jobs:
-  build:
-    working_directory: ~/main
-    docker:
-      - image: rocker/tidyverse:latest
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - deps1-{{ .Branch }}-{{ checksum "DESCRIPTION" }}
-            - deps1-{{ .Branch }}
-            - deps1-
-      - run:
-          command: |
-            R -e 'devtools::install_deps(dependencies = TRUE)'
-      - save_cache:
-          key: deps1-{{ .Branch }}-{{ checksum "DESCRIPTION" }}
-          paths:
-            - "/usr/local/lib/R/site-library"
-      - run:
-          command: |
-            R -e 'devtools::check()'
-      - store_artifacts:
-          path: man/
-          destination: man
+  "r-release":
+     docker:
+       - image: rocker/geospatial:latest
+     <<: *steps
 
+  "r-devel":
+     docker:
+       - image: rocker/geospatial:devel
+     <<: *steps
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - "r-release"
+      - "r-devel"
