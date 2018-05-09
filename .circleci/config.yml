@@ -2,6 +2,7 @@ version: 2
 jobs:
   build:
     working_directory: ~/main
+    environment: "NOT_CRAN='true'"
     docker:
       - image: rocker/geospatial:latest
     steps:
