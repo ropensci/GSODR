@@ -25,4 +25,7 @@ jobs:
       - store_artifacts:
           path: man/
           destination: man
+      - run:
+	  command: |
+	    R -e 'covr::codecov()'
 
