@@ -29,13 +29,9 @@ defaults: &steps
     - run:
         name: Build package
         command: R CMD build .
-
-    - run: # run once as cran
+    - run:
         name: Check package
         command: R CMD check "${PKG_TARBALL}" --as-cran --no-manual
-    - run: # run once not as cran for coverage
-        name: Check package
-        command: R CMD check "${PKG_TARBALL}" --no-manual
     - run:
         name: Check failures
         command: |
@@ -60,6 +56,10 @@ defaults: &steps
 
 version: 2
 jobs:
+   build:
+     environment:
+       - NOT_CRAN: 'true'
+
   "r-release":
      docker:
        - image: rocker/geospatial:latest
