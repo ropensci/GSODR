@@ -27,7 +27,7 @@ jobs:
             mkdir /root/main/artifacts
             R -e "devtools::install()"
             R -e "goodpractice::gp(checks = grep('(rcmdcheck|covr)', goodpractice::all_checks(), invert=TRUE, value=TRUE))"
-            R -e "Sys.setenv(NOT_CRAN = "true")"
+            R -e "Sys.setenv(NOT_CRAN=TRUE)"
             R -e "cv <- covr::package_coverage(); print(cv); covr::report(x = cv, file = '/root/main/artifacts/cites-coverage.html', browse=FALSE)"
             R CMD Rd2pdf --force --output='/root/main/artifacts/cites-manual.pdf' .
       - store_artifacts:
