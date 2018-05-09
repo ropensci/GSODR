@@ -6,7 +6,6 @@ test_that(
   agroclimatology works and .process_gz returns a tibble",
   {
     skip_on_cran()
-    skip_on_appveyor() # appveyor will not properly untar the file
     do.call(file.remove, list(list.files(
       tempdir(),
       pattern = ".gz$",
