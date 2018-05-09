@@ -1,8 +1,8 @@
 GSODR: Global Surface Summary of the Day (GSOD) Weather Data from R
 ================
 
-[![Circle-CI Build
-Status](https://circleci.com/gh/ropensci/GSODR.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/ropensci/GSODR)
+[![CircleCI Build
+Status](https://circleci.com/gh/ropensci/GSODR.svg?style=shield)](https://circleci.com/gh/ropensci/GSODR)
 [![Appveyor Build
 Status](https://ci.appveyor.com/api/projects/status/s09kh2nj59o35ob1/branch/master?svg=true)](https://ci.appveyor.com/project/ropensci/gsodr/branch/master)
 [![codecov](https://codecov.io/gh/ropensci/GSODR/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/GSODR)
