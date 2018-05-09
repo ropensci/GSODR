@@ -1,74 +1,34 @@
-
-
-defaults: &steps
-  steps:
-    - checkout
-
-    ## setup -------------------------------
-
-    - run:
-        name: Set environmental variables
-        command: |
-          Rscript --vanilla \
-            -e 'dsc <- read.dcf("DESCRIPTION")' \
-            -e 'cat(sprintf("export PKG_TARBALL=%s_%s.tar.gz\n", dsc[,"Package"], dsc[,"Version"]))' \
-            -e 'cat(sprintf("export RCHECK_DIR=%s.Rcheck\n", dsc[,"Package"]))' \
-            >> ${BASH_ENV}
-
-    ## install dependencies ------------------
-
-    - run:
-        name: Install devtools and dependencies
-        command: |
-          Rscript \
-            -e 'if (!requireNamespace("devtools", quietly = TRUE)) install.packages("devtools")' \
-            -e 'devtools::install_deps(dependencies = TRUE)'
-
-    ## build and test -----------------
-
-    - run:
-        name: Build package
-        command: R CMD build .
-
-    - run:
-        name: Check package
-        command: R CMD check "${PKG_TARBALL}" --as-cran --no-manual
-    - run:
-        name: Check failures
-        command: |
-          Rscript -e "message(devtools::check_failures(path = '${RCHECK_DIR}'))"
-          # warnings are errors
-          # - run: if grep -q -R "WARNING" "${RCHECK_DIR}/00check.log"; then exit 1; fi
-    - run:
-        name: Coverage
-        command: R -e 'covr::codecov()'
-
-    ## store artifacts -----------------
-
-    - run:
-        command: mv ${RCHECK_DIR} /tmp/Rcheck
-        when: always
-    - store_test_results:
-        path: /tmp/Rcheck/tests/
-        when: always
-    - store_artifacts:
-        path: /tmp/Rcheck
-        when: always
-
 version: 2
-  "r-release":
-     docker:
-       - image: rocker/geospatial:latest
-     <<: *steps
-
-  "r-devel":
-     docker:
-       - image: rocker/geospatial:devel
-     <<: *steps
-
-workflows:
-  version: 2
-  build_and_test:
-    jobs:
-      - "r-release"
-      - "r-devel"
+jobs:
+  build:
+    working_directory: ~/main
+    docker:
+      - image: rocker/verse:latest
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - deps1-{{ .Branch }}-{{ checksum "DESCRIPTION" }}-{{ checksum ".circleci/config.yml" }}
+            - deps1-{{ .Branch }}
+            - deps1-
+      - run:
+          command: |
+            R -e "devtools::install_deps(dependencies = TRUE)"
+            R -e "devtools::install_github('MangoTheCat/goodpractice')"
+      - run:
+          command: |
+            R -e 'devtools::check()'
+      - save_cache:
+          key: deps1-{{ .Branch }}-{{ checksum "DESCRIPTION" }}-{{ checksum ".circleci/config.yml" }}
+          paths:
+            - "/usr/local/lib/R/site-library"
+      - run:
+          command: |
+            mkdir /root/main/artifacts
+            R -e "devtools::install()"
+            R -e "goodpractice::gp(checks = grep('(rcmdcheck|covr)', goodpractice::all_checks(), invert=TRUE, value=TRUE))"
+            R -e "cv <- covr::package_coverage(); print(cv); covr::report(x = cv, file = '/root/main/artifacts/cites-coverage.html', browse=FALSE)"
+            R CMD Rd2pdf --force --output='/root/main/artifacts/cites-manual.pdf' .
+      - store_artifacts:
+          path: /root/main/artifacts/
+          destination: artifacts
