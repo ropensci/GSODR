@@ -1,14 +1,22 @@
 
+context("get_stations_list")
+
+# get_stations_list() is deprecated, should emit warning when used
+test_that("A warning is emitted when using deprecated functionality", {
+  expect_warning(get_stations_list())
+})
+
+
 context("update_station_list")
 
-# Timeout options are reset on update_station_list() exit ---------------
+# Timeout options are reset on update_station_list() exit ----------------------
 test_that("Timeout options are reset on update_station_list() exit", {
   skip_on_cran()
   update_station_list()
   expect_equal(options("timeout")[[1]], 60)
 })
 
-# update_forecast_locations() downloads and imports the proper file -----------
+# update_forecast_locations() downloads and imports the proper file ------------
 test_that("update_station_list() downloads and imports proper file", {
   skip_on_cran()
   update_station_list()
