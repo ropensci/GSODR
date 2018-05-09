@@ -26,6 +26,9 @@ defaults: &steps
 
     ## build and test -----------------
 
+    - build:
+        environment: NOT_CRAN: 'true'
+
     - run:
         name: Build package
         command: R CMD build .
