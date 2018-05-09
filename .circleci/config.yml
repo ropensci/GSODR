@@ -29,9 +29,10 @@ defaults: &steps
     - run:
         name: Build package
         command: R CMD build .
+
     - run:
         name: Check package
-        command: R CMD check "${PKG_TARBALL}" --as-cran --no-manual
+        command: R CMD check "${PKG_TARBALL}"
     - run:
         name: Check failures
         command: |
@@ -40,7 +41,7 @@ defaults: &steps
           # - run: if grep -q -R "WARNING" "${RCHECK_DIR}/00check.log"; then exit 1; fi
     - run:
         name: Coverage
-        command: R -e 'covr::coveralls()'
+        command: R -e 'covr::coveralls()
 
     ## store artifacts -----------------
 
@@ -56,10 +57,6 @@ defaults: &steps
 
 version: 2
 jobs:
-   build:
-     environment:
-       - NOT_CRAN: 'true'
-
   "r-release":
      docker:
        - image: rocker/geospatial:latest
