@@ -26,6 +26,6 @@ jobs:
           path: man/
           destination: man
       - run:
-	  command: |
-	    R -e 'covr::codecov()'
+          command: |
+            R -e 'covr::codecov()'
 
