@@ -27,5 +27,4 @@ jobs:
           destination: man
       - run:
           command: |
-            R -e 'covr::codecov()'
-
+            R -e 'covr::codecov(cran = FALSE)'
