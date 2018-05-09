@@ -13,6 +13,7 @@ defaults: &steps
             -e 'dsc <- read.dcf("DESCRIPTION")' \
             -e 'cat(sprintf("export PKG_TARBALL=%s_%s.tar.gz\n", dsc[,"Package"], dsc[,"Version"]))' \
             -e 'cat(sprintf("export RCHECK_DIR=%s.Rcheck\n", dsc[,"Package"]))' \
+            -e 'cat(sprintf("export NOT_CRAN=%TRUE\n"))'
             >> ${BASH_ENV}
 
     ## install dependencies ------------------
@@ -70,7 +71,5 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-      - build:
-          environment: NOT_CRAN: 'true'
       - "r-release"
       - "r-devel"
