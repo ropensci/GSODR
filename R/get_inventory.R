@@ -34,7 +34,9 @@ get_inventory <- function() {
     curl::new_handle(
       ftp_use_epsv = FALSE,
       crlf = TRUE,
-      ssl_verifypeer = FALSE
+      ssl_verifypeer = FALSE,
+      ftp_response_timeout = 30,
+      ftp_skip_pasv_ip = TRUE
     )
 
   file_in <-

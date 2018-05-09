@@ -14,8 +14,9 @@ test_that("reformat_GSOD file_list parameter reformats data properly", {
     curl::new_handle(
       ftp_use_epsv = FALSE,
       crlf = TRUE,
-      ssl_verifypeer = TRUE,
-      ftp_response_timeout = 30
+      ssl_verifypeer = FALSE,
+      ftp_response_timeout = 30,
+      ftp_skip_pasv_ip = TRUE
     )
 
   ftp_base <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/1960/"

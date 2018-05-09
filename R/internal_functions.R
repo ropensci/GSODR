@@ -16,8 +16,8 @@
         stop("\nThe year cannot be greater than current year.\n")
       }
     }
-    }
   }
+}
 
 #' @noRd
 .validate_station <- function(station, isd_history, years) {
@@ -128,13 +128,15 @@
     }
     if (!is.null(station)) {
       # Written by @hrbrmstr
-      max_retries <- 10
+      max_retries <- 6
       dir_list_handle <-
         curl::new_handle(
           ftp_use_epsv = FALSE,
-          dirlistonly = TRUE,
           crlf = TRUE,
-          ssl_verifypeer = FALSE
+          dirlistonly = TRUE,
+          ssl_verifypeer = FALSE,
+          ftp_response_timeout = 30,
+          ftp_skip_pasv_ip = TRUE
         )
       s_curl_fetch_memory <- purrr::safely(curl::curl_fetch_memory)
       retry_cfm <-
@@ -162,7 +164,7 @@
           i <- 0
           repeat {
             i <- i + 1
-            if (i == 6) {
+            if (i == max_retries) {
               stop("Too many retries...server may be under load")
             }
             res <- s_curl_fetch_disk(url, cache_file)
