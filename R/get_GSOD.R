@@ -120,15 +120,15 @@ get_GSOD <- function(years = NULL,
   }
 
   # CRAN NOTE avoidance
-  isd_history <- NULL
+  isd_history <- NULL # nocov
 
   # Load station list
-  load(system.file("extdata", "isd_history.rda", package = "GSODR"))
+  load(system.file("extdata", "isd_history.rda", package = "GSODR")) # nocov
 
   # Load country list
   # CRAN NOTE avoidance
-  country_list <- NULL
-  load(system.file("extdata", "country_list.rda", package = "GSODR"))
+  country_list <- NULL # nocov
+  load(system.file("extdata", "country_list.rda", package = "GSODR")) # nocov
 
   # Validate user entered stations for existence in stations list from NCEI
   purrr::walk(
