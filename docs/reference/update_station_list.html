@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Download Latest Station List Information and Update GSODR's Internal Database — update_station_list" />
 
 <meta property="og:description" content="This function downloads the latest station list (isd-history.csv) from the
@@ -43,8 +46,6 @@ values will not be included." />
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-
-
 
 
   </head>
@@ -120,10 +121,11 @@ values will not be included." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Download Latest Station List Information and Update GSODR's Internal Database</h1>
-    <small>Source: <a href='https://github.com/ropensci/GSODR/blob/master/R/update_station_list.R'><code>R/update_station_list.R</code></a></small>
-    <p class="hidden name"><code>update_station_list.Rd</code></p>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/GSODR/blob/master/R/update_station_list.R'><code>R/update_station_list.R</code></a></small>
+    <div class="hidden name"><code>update_station_list.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>This function downloads the latest station list (isd-history.csv) from the
 NCEI FTP server and updates the data distributed with <code>GSODR</code> to the
@@ -132,6 +134,7 @@ state (if in US), latitude, longitude, elevation and when weather
 observations begin and end.  Stations with invalid latitude and longitude
 values will not be included.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>update_station_list</span>()</pre>
         

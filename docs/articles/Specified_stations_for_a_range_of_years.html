@@ -18,7 +18,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-vignette">
+    <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -27,8 +27,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">GSODR</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">GSODR</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.2.0.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
@@ -38,7 +42,7 @@
   </a>
 </li>
 <li>
-  <a href="../articles/GSODR.html">Get Started</a>
+  <a href="../articles/GSODR.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -79,19 +83,19 @@
 
       
       </header><div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>GSODR use case: Specified years/stations vignette</h1>
                         <h4 class="author">Adam H Sparks</h4>
             
       
-      <small>Source: <a href="https:/github.com/ropensci/GSODR/blob/master/vignettes/Specified_stations_for_a_range_of_years.Rmd"><code>vignettes/Specified_stations_for_a_range_of_years.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ropensci/GSODR/blob/master/vignettes/Specified_stations_for_a_range_of_years.Rmd"><code>vignettes/Specified_stations_for_a_range_of_years.Rmd</code></a></small>
+      <div class="hidden name"><code>Specified_stations_for_a_range_of_years.Rmd</code></div>
 
     </div>
 
     
     
-<div class="contents">
 <div id="gather-data-for-irri-central-luzon-survey-loop" class="section level1">
 <h1 class="hasAnchor">
 <a href="#gather-data-for-irri-central-luzon-survey-loop" class="anchor"></a>Gather Data for IRRI Central Luzon Survey Loop</h1>
@@ -110,141 +114,129 @@
 <h3 class="hasAnchor">
 <a href="#retrieve-phl-provincial-data-and-select-loop-provinces" class="anchor"></a>Retrieve PHL Provincial Data and Select Loop Provinces</h3>
 <p>As a first step, we’ll use the <a href="https://cran.r-project.org/package=raster"><em>raster</em></a> package to retrieve data from <a href="http://www.gadm.org/">GADM</a> that will provide the provincial spatial data for the survey area. We will then use this to find the centroid of the area of interest, which will be used to find the nearest stations. Using <code><a href="http://www.rdocumentation.org/packages/raster/topics/getData">raster::getData()</a></code> fetch level 0 (national) and 1 (provincial) data for the Philippines.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(raster)</a></code></pre></div>
-<pre><code>## Loading required package: sp</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">RP0 &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/getData">getData</a></span>(<span class="dt">country =</span> <span class="st">"Philippines"</span>, <span class="dt">level =</span> <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">RP1 &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/getData">getData</a></span>(<span class="dt">country =</span> <span class="st">"Philippines"</span>, <span class="dt">level =</span> <span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(raster)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">RP0 &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/getData">getData</a></span>(<span class="dt">country =</span> <span class="st">"Philippines"</span>, <span class="dt">level =</span> <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">RP1 &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/getData">getData</a></span>(<span class="dt">country =</span> <span class="st">"Philippines"</span>, <span class="dt">level =</span> <span class="dv">1</span>)</a></code></pre></div>
 <p>Now we will select the provinces involved in the survey and make a new object called <code>Central_Luzon</code> from the provincial level data, <code>RP1</code>.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">Central_Luzon &lt;-<span class="st"> </span>RP1[RP1<span class="op">@</span>data<span class="op">$</span>NAME_<span class="dv">1</span> <span class="op">==</span><span class="st"> "Pampanga"</span> <span class="op">|</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="st">                     </span>RP1<span class="op">@</span>data<span class="op">$</span>NAME_<span class="dv">1</span> <span class="op">==</span><span class="st"> "Tarlac"</span> <span class="op">|</span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">                     </span>RP1<span class="op">@</span>data<span class="op">$</span>NAME_<span class="dv">1</span> <span class="op">==</span><span class="st"> "Pangasinan"</span> <span class="op">|</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">                     </span>RP1<span class="op">@</span>data<span class="op">$</span>NAME_<span class="dv">1</span> <span class="op">==</span><span class="st"> "La Union"</span> <span class="op">|</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="st">                     </span>RP1<span class="op">@</span>data<span class="op">$</span>NAME_<span class="dv">1</span> <span class="op">==</span><span class="st"> "Nueva Ecija"</span> <span class="op">|</span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="st">                     </span>RP1<span class="op">@</span>data<span class="op">$</span>NAME_<span class="dv">1</span> <span class="op">==</span><span class="st"> "Bulacan"</span>, ]</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">Central_Luzon &lt;-<span class="st"> </span>RP1[RP1<span class="op">@</span>data<span class="op">$</span>NAME_<span class="dv">1</span> <span class="op">==</span><span class="st"> "Pampanga"</span> <span class="op">|</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="st">                     </span>RP1<span class="op">@</span>data<span class="op">$</span>NAME_<span class="dv">1</span> <span class="op">==</span><span class="st"> "Tarlac"</span> <span class="op">|</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="st">                     </span>RP1<span class="op">@</span>data<span class="op">$</span>NAME_<span class="dv">1</span> <span class="op">==</span><span class="st"> "Pangasinan"</span> <span class="op">|</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="st">                     </span>RP1<span class="op">@</span>data<span class="op">$</span>NAME_<span class="dv">1</span> <span class="op">==</span><span class="st"> "La Union"</span> <span class="op">|</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="st">                     </span>RP1<span class="op">@</span>data<span class="op">$</span>NAME_<span class="dv">1</span> <span class="op">==</span><span class="st"> "Nueva Ecija"</span> <span class="op">|</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="st">                     </span>RP1<span class="op">@</span>data<span class="op">$</span>NAME_<span class="dv">1</span> <span class="op">==</span><span class="st"> "Bulacan"</span>, ]</a></code></pre></div>
 <p>Next, create a map inset showing where the Central Luzon Loop survey takes place.</p>
 <p>First we’ll use <code>gSimplify()</code> from <em>rgeos</em> to simplify the map of the Philippines to make the map generation in the next few steps quicker.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">RP0 &lt;-<span class="st"> </span>rgeos<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/rgeos/topics/topo-unary-gSimplify">gSimplify</a></span>(RP0, <span class="dt">tol =</span> <span class="fl">0.05</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw">library</span>(grid)</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="kw">library</span>(gridExtra)</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5">CL_names &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">coordinates</span>(Central_Luzon)) <span class="co"># get center coordinates of provinces in Central Luzon</span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6">CL_names<span class="op">$</span>label &lt;-<span class="st"> </span>Central_Luzon<span class="op">@</span>data<span class="op">$</span>NAME_<span class="dv">1</span></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co"># Main Map</span></a>
-<a class="sourceLine" id="cb6-9" data-line-number="9">p1 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_polygon">geom_polygon</a></span>(<span class="dt">data =</span> Central_Luzon, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> long, <span class="dt">y =</span> lat, <span class="dt">group =</span> group),</a>
-<a class="sourceLine" id="cb6-11" data-line-number="11">               <span class="dt">colour =</span> <span class="st">"grey10"</span>, <span class="dt">fill =</span> <span class="st">"#fff7bc"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_text">geom_text</a></span>(<span class="dt">data =</span> CL_names, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> X1, <span class="dt">y =</span> X2, <span class="dt">label =</span> label), </a>
-<a class="sourceLine" id="cb6-13" data-line-number="13">            <span class="dt">size =</span> <span class="dv">2</span>, <span class="dt">colour =</span> <span class="st">"grey20"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">axis.text.y =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/element">element_text</a></span>(<span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">hjust =</span> <span class="fl">0.5</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"Central Luzon Provinces Surveyed"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-16" data-line-number="16"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_bw</a></span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-17" data-line-number="17"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Longitude"</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-18" data-line-number="18"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Latitude"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-19" data-line-number="19"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_map">coord_map</a></span>()</a></code></pre></div>
-<pre><code>## Regions defined for each Polygons</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># Inset</span></a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">p2 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_polygon">geom_polygon</a></span>(<span class="dt">data =</span> RP0, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(long, lat, <span class="dt">group =</span> group),</a>
-<a class="sourceLine" id="cb8-4" data-line-number="4">               <span class="dt">colour =</span> <span class="st">"grey10"</span>,</a>
-<a class="sourceLine" id="cb8-5" data-line-number="5">               <span class="dt">fill =</span> <span class="st">"#fff7bc"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_fixed">coord_equal</a></span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_bw</a></span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">labs</a></span>(<span class="dt">x =</span> <span class="ot">NULL</span>, <span class="dt">y =</span> <span class="ot">NULL</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_tile">geom_rect</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">xmin =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/extent">extent</a></span>(Central_Luzon)[<span class="dv">1</span>],</a>
-<a class="sourceLine" id="cb8-10" data-line-number="10">                <span class="dt">xmax =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/extent">extent</a></span>(Central_Luzon)[<span class="dv">2</span>],</a>
-<a class="sourceLine" id="cb8-11" data-line-number="11">                <span class="dt">ymin =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/extent">extent</a></span>(Central_Luzon)[<span class="dv">3</span>],</a>
-<a class="sourceLine" id="cb8-12" data-line-number="12">                <span class="dt">ymax =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/extent">extent</a></span>(Central_Luzon)[<span class="dv">4</span>]),</a>
-<a class="sourceLine" id="cb8-13" data-line-number="13">            <span class="dt">alpha =</span> <span class="dv">0</span>,</a>
-<a class="sourceLine" id="cb8-14" data-line-number="14">            <span class="dt">colour =</span> <span class="st">"red"</span>,</a>
-<a class="sourceLine" id="cb8-15" data-line-number="15">            <span class="dt">size =</span> <span class="fl">0.7</span>,</a>
-<a class="sourceLine" id="cb8-16" data-line-number="16">            <span class="dt">linetype =</span> <span class="dv">1</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">axis.text.x =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/element">element_blank</a></span>(),</a>
-<a class="sourceLine" id="cb8-18" data-line-number="18">        <span class="dt">axis.text.y =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/element">element_blank</a></span>(),</a>
-<a class="sourceLine" id="cb8-19" data-line-number="19">        <span class="dt">axis.ticks =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/element">element_blank</a></span>(),</a>
-<a class="sourceLine" id="cb8-20" data-line-number="20">        <span class="dt">axis.title.x =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/element">element_blank</a></span>(),</a>
-<a class="sourceLine" id="cb8-21" data-line-number="21">        <span class="dt">axis.title.y =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/element">element_blank</a></span>(),</a>
-<a class="sourceLine" id="cb8-22" data-line-number="22">        <span class="dt">plot.margin =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/reexports">unit</a></span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span> ,<span class="dv">0</span>), <span class="st">"mm"</span>))</a>
-<a class="sourceLine" id="cb8-23" data-line-number="23"></a>
-<a class="sourceLine" id="cb8-24" data-line-number="24"><span class="kw"><a href="http://www.rdocumentation.org/packages/grid/topics/grid.newpage">grid.newpage</a></span>()</a>
-<a class="sourceLine" id="cb8-25" data-line-number="25">v1 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/grid/topics/viewport">viewport</a></span>(<span class="dt">width =</span> <span class="dv">1</span>, <span class="dt">height =</span> <span class="dv">1</span>, <span class="dt">x =</span> <span class="fl">0.5</span>, <span class="dt">y =</span> <span class="fl">0.5</span>) <span class="co"># plot area for the main map</span></a>
-<a class="sourceLine" id="cb8-26" data-line-number="26">v2 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/grid/topics/viewport">viewport</a></span>(<span class="dt">width =</span> <span class="fl">0.28</span>, <span class="dt">height =</span> <span class="fl">0.28</span>, <span class="dt">x =</span> <span class="fl">0.67</span>, <span class="dt">y =</span> <span class="fl">0.78</span>) <span class="co"># plot area for the inset map</span></a>
-<a class="sourceLine" id="cb8-27" data-line-number="27"><span class="kw">print</span>(p1, <span class="dt">vp =</span> v1) </a>
-<a class="sourceLine" id="cb8-28" data-line-number="28"><span class="kw">print</span>(p2, <span class="dt">vp =</span> v2)</a></code></pre></div>
-<p><img src="Specified_stations_for_a_range_of_years_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">RP0 &lt;-<span class="st"> </span>rgeos<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/rgeos/topics/topo-unary-gSimplify">gSimplify</a></span>(RP0, <span class="dt">tol =</span> <span class="fl">0.05</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw">library</span>(grid)</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="kw">library</span>(gridExtra)</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">CL_names &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">coordinates</span>(Central_Luzon)) <span class="co"># get center coordinates of provinces in Central Luzon</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">CL_names<span class="op">$</span>label &lt;-<span class="st"> </span>Central_Luzon<span class="op">@</span>data<span class="op">$</span>NAME_<span class="dv">1</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co"># Main Map</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9">p1 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_polygon">geom_polygon</a></span>(<span class="dt">data =</span> Central_Luzon, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> long, <span class="dt">y =</span> lat, <span class="dt">group =</span> group),</a>
+<a class="sourceLine" id="cb4-11" data-line-number="11">               <span class="dt">colour =</span> <span class="st">"grey10"</span>, <span class="dt">fill =</span> <span class="st">"#fff7bc"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_text">geom_text</a></span>(<span class="dt">data =</span> CL_names, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> X1, <span class="dt">y =</span> X2, <span class="dt">label =</span> label), </a>
+<a class="sourceLine" id="cb4-13" data-line-number="13">            <span class="dt">size =</span> <span class="dv">2</span>, <span class="dt">colour =</span> <span class="st">"grey20"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">axis.text.y =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/element">element_text</a></span>(<span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">hjust =</span> <span class="fl">0.5</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"Central Luzon Provinces Surveyed"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_bw</a></span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Longitude"</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Latitude"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb4-19" data-line-number="19"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_map">coord_map</a></span>()</a>
+<a class="sourceLine" id="cb4-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb4-21" data-line-number="21"><span class="co"># Inset</span></a>
+<a class="sourceLine" id="cb4-22" data-line-number="22">p2 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-23" data-line-number="23"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_polygon">geom_polygon</a></span>(<span class="dt">data =</span> RP0, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(long, lat, <span class="dt">group =</span> group),</a>
+<a class="sourceLine" id="cb4-24" data-line-number="24">               <span class="dt">colour =</span> <span class="st">"grey10"</span>,</a>
+<a class="sourceLine" id="cb4-25" data-line-number="25">               <span class="dt">fill =</span> <span class="st">"#fff7bc"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb4-26" data-line-number="26"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_fixed">coord_equal</a></span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb4-27" data-line-number="27"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_bw</a></span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-28" data-line-number="28"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">labs</a></span>(<span class="dt">x =</span> <span class="ot">NULL</span>, <span class="dt">y =</span> <span class="ot">NULL</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb4-29" data-line-number="29"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_tile">geom_rect</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">xmin =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/extent">extent</a></span>(Central_Luzon)[<span class="dv">1</span>],</a>
+<a class="sourceLine" id="cb4-30" data-line-number="30">                <span class="dt">xmax =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/extent">extent</a></span>(Central_Luzon)[<span class="dv">2</span>],</a>
+<a class="sourceLine" id="cb4-31" data-line-number="31">                <span class="dt">ymin =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/extent">extent</a></span>(Central_Luzon)[<span class="dv">3</span>],</a>
+<a class="sourceLine" id="cb4-32" data-line-number="32">                <span class="dt">ymax =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/extent">extent</a></span>(Central_Luzon)[<span class="dv">4</span>]),</a>
+<a class="sourceLine" id="cb4-33" data-line-number="33">            <span class="dt">alpha =</span> <span class="dv">0</span>,</a>
+<a class="sourceLine" id="cb4-34" data-line-number="34">            <span class="dt">colour =</span> <span class="st">"red"</span>,</a>
+<a class="sourceLine" id="cb4-35" data-line-number="35">            <span class="dt">size =</span> <span class="fl">0.7</span>,</a>
+<a class="sourceLine" id="cb4-36" data-line-number="36">            <span class="dt">linetype =</span> <span class="dv">1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb4-37" data-line-number="37"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">axis.text.x =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/element">element_blank</a></span>(),</a>
+<a class="sourceLine" id="cb4-38" data-line-number="38">        <span class="dt">axis.text.y =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/element">element_blank</a></span>(),</a>
+<a class="sourceLine" id="cb4-39" data-line-number="39">        <span class="dt">axis.ticks =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/element">element_blank</a></span>(),</a>
+<a class="sourceLine" id="cb4-40" data-line-number="40">        <span class="dt">axis.title.x =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/element">element_blank</a></span>(),</a>
+<a class="sourceLine" id="cb4-41" data-line-number="41">        <span class="dt">axis.title.y =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/element">element_blank</a></span>(),</a>
+<a class="sourceLine" id="cb4-42" data-line-number="42">        <span class="dt">plot.margin =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/reexports">unit</a></span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span> ,<span class="dv">0</span>), <span class="st">"mm"</span>))</a>
+<a class="sourceLine" id="cb4-43" data-line-number="43"></a>
+<a class="sourceLine" id="cb4-44" data-line-number="44"><span class="kw"><a href="http://www.rdocumentation.org/packages/grid/topics/grid.newpage">grid.newpage</a></span>()</a>
+<a class="sourceLine" id="cb4-45" data-line-number="45">v1 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/grid/topics/viewport">viewport</a></span>(<span class="dt">width =</span> <span class="dv">1</span>, <span class="dt">height =</span> <span class="dv">1</span>, <span class="dt">x =</span> <span class="fl">0.5</span>, <span class="dt">y =</span> <span class="fl">0.5</span>) <span class="co"># plot area for the main map</span></a>
+<a class="sourceLine" id="cb4-46" data-line-number="46">v2 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/grid/topics/viewport">viewport</a></span>(<span class="dt">width =</span> <span class="fl">0.28</span>, <span class="dt">height =</span> <span class="fl">0.28</span>, <span class="dt">x =</span> <span class="fl">0.74</span>, <span class="dt">y =</span> <span class="fl">0.79</span>) <span class="co"># plot area for the inset map</span></a>
+<a class="sourceLine" id="cb4-47" data-line-number="47"><span class="kw">print</span>(p1, <span class="dt">vp =</span> v1) </a>
+<a class="sourceLine" id="cb4-48" data-line-number="48"><span class="kw">print</span>(p2, <span class="dt">vp =</span> v2)</a></code></pre></div>
+<div class="figure">
+<img src="Loop-Figure-1.png" alt="Map of provinces surveyed"><p class="caption">Map of provinces surveyed</p>
+</div>
 </div>
 <div id="dissolve-polygons-and-find-centroid-of-loop-survey-area" class="section level3">
 <h3 class="hasAnchor">
 <a href="#dissolve-polygons-and-find-centroid-of-loop-survey-area" class="anchor"></a>Dissolve Polygons and Find Centroid of Loop Survey Area</h3>
 <p>Now that we have the provincial data that we want, we will dissolve the polygons that represent the individual provinces in Central Luzon and find the centroid of all of them, which we will use as the central point for querying stations from the GSOD data set.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">Central_Luzon &lt;-<span class="st"> </span>rgeos<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/rgeos/topics/topo-bin-gUnion">gUnaryUnion</a></span>(Central_Luzon)</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">centroid &lt;-<span class="st"> </span>rgeos<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/rgeos/topics/topo-unary-gCentroid">gCentroid</a></span>(Central_Luzon)</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_polygon">geom_polygon</a></span>(<span class="dt">data =</span> Central_Luzon, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> long, <span class="dt">y =</span> lat, <span class="dt">group =</span> group),</a>
-<a class="sourceLine" id="cb9-6" data-line-number="6">               <span class="dt">colour =</span> <span class="st">"grey10"</span>, <span class="dt">fill =</span> <span class="st">"#fff7bc"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> centroid<span class="op">@</span>coords[<span class="dv">1</span>], <span class="dt">y =</span> centroid<span class="op">@</span>coords[<span class="dv">2</span>])) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">axis.text.y =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/element">element_text</a></span>(<span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">hjust =</span> <span class="fl">0.5</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"Centre of Survey</span><span class="ch">\n</span><span class="st">Area"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_bw</a></span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Longitude"</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-12" data-line-number="12"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Latitude"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-13" data-line-number="13"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_map">coord_map</a></span>()</a></code></pre></div>
-<p><img src="Specified_stations_for_a_range_of_years_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
-<p>Next, make a list of stations that are within this area. First we need to fetch the station metadata, “isd-history.csv” from the FTP server and then check which stations fall within a 100km radius of the centre of the provinces we’re interested in.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">library</span>(GSODR)</a></code></pre></div>
-<pre><code>## 
-## GSOD is distributed free by the U.S. NCEI with the
-## following conditions.
-## 'The following data and products may have conditions placed
-## their international commercial use. They can be used within
-## the U.S. or for non-commercial international activities
-## without restriction. The non-U.S. data cannot be
-## redistributed for commercial purposes. Re-distribution of
-## these data by others must provide this same notification.
-## WMO Resolution 40. NOAA Policy'
-## 
-## GSODR does not redistribute any weather data itself. It 
-## only provides an interface for R users to download these
-## data, however it does redistribute station metadata in the
-## package.</code></pre>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">library</span>(readr)</a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="co"># Fetch station list from NCEI</span></a>
-<a class="sourceLine" id="cb12-3" data-line-number="3">station_meta &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/readr/topics/read_delim">read_csv</a></span>(</a>
-<a class="sourceLine" id="cb12-4" data-line-number="4">  <span class="st">"ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv"</span>,</a>
-<a class="sourceLine" id="cb12-5" data-line-number="5">  <span class="dt">col_types =</span> <span class="st">"ccccccddddd"</span>,</a>
-<a class="sourceLine" id="cb12-6" data-line-number="6">  <span class="dt">col_names =</span> <span class="kw">c</span>(<span class="st">"USAF"</span>, <span class="st">"WBAN"</span>, <span class="st">"STN_NAME"</span>, <span class="st">"CTRY"</span>, <span class="st">"STATE"</span>, <span class="st">"CALL"</span>, <span class="st">"LAT"</span>,</a>
-<a class="sourceLine" id="cb12-7" data-line-number="7">                <span class="st">"LON"</span>, <span class="st">"ELEV_M"</span>, <span class="st">"BEGIN"</span>, <span class="st">"END"</span>), <span class="dt">skip =</span> <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb12-8" data-line-number="8">station_meta<span class="op">$</span>STNID &lt;-<span class="st"> </span><span class="kw">as.character</span>(<span class="kw">paste</span>(station_meta<span class="op">$</span>USAF,</a>
-<a class="sourceLine" id="cb12-9" data-line-number="9">                                         station_meta<span class="op">$</span>WBAN,</a>
-<a class="sourceLine" id="cb12-10" data-line-number="10">                                         <span class="dt">sep =</span> <span class="st">"-"</span>))</a>
-<a class="sourceLine" id="cb12-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb12-12" data-line-number="12">loop_stations &lt;-<span class="st"> </span><span class="kw"><a href="../reference/nearest_stations.html">nearest_stations</a></span>(<span class="dt">LAT =</span> centroid<span class="op">@</span>coords[<span class="dv">2</span>],</a>
-<a class="sourceLine" id="cb12-13" data-line-number="13">                                  <span class="dt">LON =</span> centroid<span class="op">@</span>coords[<span class="dv">1</span>], </a>
-<a class="sourceLine" id="cb12-14" data-line-number="14">                                  <span class="dt">distance =</span> <span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb12-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb12-16" data-line-number="16">loop_stations &lt;-<span class="st"> </span>station_meta[station_meta<span class="op">$</span>STNID <span class="op">%in%</span><span class="st"> </span>loop_stations, ]</a>
-<a class="sourceLine" id="cb12-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb12-18" data-line-number="18">loop_stations &lt;-<span class="st"> </span>loop_stations[loop_stations<span class="op">$</span>BEGIN <span class="op">&lt;=</span><span class="st"> </span><span class="dv">19591231</span> <span class="op">&amp;</span></a>
-<a class="sourceLine" id="cb12-19" data-line-number="19"><span class="st">                               </span>loop_stations<span class="op">$</span>END <span class="op">&gt;=</span><span class="st"> </span><span class="dv">20151231</span>, ]</a>
-<a class="sourceLine" id="cb12-20" data-line-number="20"></a>
-<a class="sourceLine" id="cb12-21" data-line-number="21"><span class="kw">print</span>(loop_stations[, <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">7</span><span class="op">:</span><span class="dv">12</span>)])</a></code></pre></div>
-<pre><code>## # A tibble: 4 x 9
-##   USAF   WBAN  STN_NAME           LAT   LON  ELEV_M     BEGIN    END STNID
-##   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;            &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;
-## 1 983240 99999 IBA/LUZON ISLAND  15.3  120.    5.00 19490104. 2.02e7 9832…
-## 2 983250 99999 DAGUPAN           16.1  120.    2.00 19450119. 2.02e7 9832…
-## 3 983270 99999 CLARK INTL        15.2  121.  148.   19450214. 2.02e7 9832…
-## 4 983280 99999 BAGUIO            16.4  121. 1296.   19490101. 2.02e7 9832…</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">Central_Luzon &lt;-<span class="st"> </span>rgeos<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/rgeos/topics/topo-bin-gUnion">gUnaryUnion</a></span>(Central_Luzon)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">centroid &lt;-<span class="st"> </span>rgeos<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/rgeos/topics/topo-unary-gCentroid">gCentroid</a></span>(Central_Luzon)</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_polygon">geom_polygon</a></span>(<span class="dt">data =</span> Central_Luzon, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> long, <span class="dt">y =</span> lat, <span class="dt">group =</span> group),</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">               <span class="dt">colour =</span> <span class="st">"grey10"</span>, <span class="dt">fill =</span> <span class="st">"#fff7bc"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> centroid<span class="op">@</span>coords[<span class="dv">1</span>], <span class="dt">y =</span> centroid<span class="op">@</span>coords[<span class="dv">2</span>])) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">axis.text.y =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/element">element_text</a></span>(<span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">hjust =</span> <span class="fl">0.5</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"Centre of Survey Area"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_bw</a></span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Longitude"</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Latitude"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_map">coord_map</a></span>()</a></code></pre></div>
+<div class="figure">
+<img src="Loop-Figure-2.png" alt="Map of disolved polygons with centroid point"><p class="caption">Map of disolved polygons with centroid point</p>
+</div>
+<p>Next, make a list of stations that are within this area. First we need to fetch the station metadata, “isd-history.csv” from the FTP server and then check which stations fall within a 100km radius of the centre of the provinces we are interested in.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">library</span>(GSODR)</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw">library</span>(readr)</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co"># Fetch station list from NCEI</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">station_meta &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/readr/topics/read_delim">read_csv</a></span>(</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">  <span class="st">"ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv"</span>,</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">  <span class="dt">col_types =</span> <span class="st">"ccccccddddd"</span>,</a>
+<a class="sourceLine" id="cb6-7" data-line-number="7">  <span class="dt">col_names =</span> <span class="kw">c</span>(<span class="st">"USAF"</span>, <span class="st">"WBAN"</span>, <span class="st">"STN_NAME"</span>, <span class="st">"CTRY"</span>, <span class="st">"STATE"</span>, <span class="st">"CALL"</span>, <span class="st">"LAT"</span>,</a>
+<a class="sourceLine" id="cb6-8" data-line-number="8">                <span class="st">"LON"</span>, <span class="st">"ELEV_M"</span>, <span class="st">"BEGIN"</span>, <span class="st">"END"</span>), <span class="dt">skip =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb6-9" data-line-number="9">station_meta<span class="op">$</span>STNID &lt;-<span class="st"> </span><span class="kw">as.character</span>(<span class="kw">paste</span>(station_meta<span class="op">$</span>USAF,</a>
+<a class="sourceLine" id="cb6-10" data-line-number="10">                                         station_meta<span class="op">$</span>WBAN,</a>
+<a class="sourceLine" id="cb6-11" data-line-number="11">                                         <span class="dt">sep =</span> <span class="st">"-"</span>))</a>
+<a class="sourceLine" id="cb6-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb6-13" data-line-number="13">loop_stations &lt;-<span class="st"> </span><span class="kw"><a href="../reference/nearest_stations.html">nearest_stations</a></span>(<span class="dt">LAT =</span> centroid<span class="op">@</span>coords[<span class="dv">2</span>],</a>
+<a class="sourceLine" id="cb6-14" data-line-number="14">                                  <span class="dt">LON =</span> centroid<span class="op">@</span>coords[<span class="dv">1</span>], </a>
+<a class="sourceLine" id="cb6-15" data-line-number="15">                                  <span class="dt">distance =</span> <span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb6-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb6-17" data-line-number="17">loop_stations &lt;-<span class="st"> </span>station_meta[station_meta<span class="op">$</span>STNID <span class="op">%in%</span><span class="st"> </span>loop_stations, ]</a>
+<a class="sourceLine" id="cb6-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb6-19" data-line-number="19">loop_stations &lt;-<span class="st"> </span>loop_stations[loop_stations<span class="op">$</span>BEGIN <span class="op">&lt;=</span><span class="st"> </span><span class="dv">19591231</span> <span class="op">&amp;</span></a>
+<a class="sourceLine" id="cb6-20" data-line-number="20"><span class="st">                               </span>loop_stations<span class="op">$</span>END <span class="op">&gt;=</span><span class="st"> </span><span class="dv">20151231</span>, ]</a>
+<a class="sourceLine" id="cb6-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb6-22" data-line-number="22"><span class="kw">print</span>(loop_stations[, <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">7</span><span class="op">:</span><span class="dv">12</span>)])</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># A tibble: 4 x 9</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">  USAF   WBAN  STN_NAME           LAT   LON  ELEV_M     BEGIN       END STNID       </a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">  <span class="op">&lt;</span>chr<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st">            </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">   </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">     </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">     </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st">       </span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="dv">1</span> <span class="dv">983240</span> <span class="dv">99999</span> IBA<span class="op">/</span>LUZON ISLAND  <span class="fl">15.3</span>  <span class="fl">120.</span>    <span class="fl">5.00</span> <span class="fl">19490104.</span> <span class="fl">20180327.</span> <span class="dv">983240-99999</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="dv">2</span> <span class="dv">983250</span> <span class="dv">99999</span> DAGUPAN           <span class="fl">16.1</span>  <span class="fl">120.</span>    <span class="fl">2.00</span> <span class="fl">19450119.</span> <span class="fl">20180327.</span> <span class="dv">983250-99999</span></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="dv">3</span> <span class="dv">983270</span> <span class="dv">99999</span> CLARK INTL        <span class="fl">15.2</span>  <span class="fl">121.</span>  <span class="fl">148.</span>   <span class="fl">19450214.</span> <span class="fl">20180327.</span> <span class="dv">983270-99999</span></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="dv">4</span> <span class="dv">983280</span> <span class="dv">99999</span> BAGUIO            <span class="fl">16.4</span>  <span class="fl">121.</span> <span class="fl">1296.</span>   <span class="fl">19490101.</span> <span class="fl">20180327.</span> <span class="dv">983280-99999</span></a></code></pre></div>
 <p>These are all of the stations that are available within 100km of the centroid of this area and the years for which data are available.</p>
 </div>
 <div id="using-get_gsod-to-fetch-the-requested-station-files" class="section level3">
 <h3 class="hasAnchor">
 <a href="#using-get_gsod-to-fetch-the-requested-station-files" class="anchor"></a>Using <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> to Fetch the Requested Station Files</h3>
 <p>This example shows how you could construct a query using the <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> function. Be aware that it may result in incomplete data and error from the server if it stops responding. We’ve done our best to make <em>GSODR</em> handle these errors, but if it does this, see the following option for using the <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code> function.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">PHL &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">station =</span> </a>
-<a class="sourceLine" id="cb14-2" data-line-number="2">                  <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text =</span> loop_stations[, <span class="dv">12</span>])), <span class="dt">years =</span> <span class="dv">1960</span><span class="op">:</span><span class="dv">2015</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">PHL &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">station =</span> </a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">                  <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text =</span> loop_stations[, <span class="dv">12</span>])), <span class="dt">years =</span> <span class="dv">1960</span><span class="op">:</span><span class="dv">2015</span>)</a></code></pre></div>
 </div>
 <div id="another-option-using-reformat_gsod" class="section level3">
 <h3 class="hasAnchor">
@@ -252,21 +244,21 @@
 </h3>
 <p><em>GSODR</em> provides a function for dealing with local files that have been transferred from the server already as well, <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code>. If the previous example with <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> does not work, this is a good alternative that takes a bit more intervention but gives the same results.</p>
 <p>Using your FTP client (<em>e.g.</em>, FileZilla) log into the NCEI FTP server, <a href="ftp.ncdc.noaa.gov">&lt;ftp.ncdc.noaa.gov&gt;</a> and navigate to /pub/data/gsod/. Manually downloading the files for each station listed above from 1960 to 2015 is possible, but tedious. An easier solution is to simply download the annual files found in each yearly directory, “gsod-YYYY.tar” and untar them locally and then use R to list the available files and select only the files for the stations of interest. Lastly, write the data to disk as a CSV file for saving and later use.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">years &lt;-<span class="st"> </span><span class="dv">1960</span><span class="op">:</span><span class="dv">2015</span></a>
-<a class="sourceLine" id="cb15-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb15-3" data-line-number="3">loop_stations &lt;-<span class="st"> </span><span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text =</span> loop_stations[, <span class="dv">12</span>]))</a>
-<a class="sourceLine" id="cb15-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="co"># create file list</span></a>
-<a class="sourceLine" id="cb15-6" data-line-number="6">loop_stations &lt;-<span class="st"> </span><span class="kw">do.call</span>(</a>
-<a class="sourceLine" id="cb15-7" data-line-number="7">  paste0, <span class="kw">c</span>(<span class="kw">expand.grid</span>(loop_stations, <span class="st">"-"</span>, years, <span class="st">".op.gz"</span>))</a>
-<a class="sourceLine" id="cb15-8" data-line-number="8">  )</a>
-<a class="sourceLine" id="cb15-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb15-10" data-line-number="10">local_files &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="dt">path =</span> <span class="st">"./GSOD"</span>, <span class="dt">full.names =</span> <span class="ot">TRUE</span>, <span class="dt">recursive =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb15-11" data-line-number="11">local_files &lt;-<span class="st"> </span>local_files[<span class="kw">basename</span>(local_files) <span class="op">%in%</span><span class="st"> </span>loop_stations]</a>
-<a class="sourceLine" id="cb15-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb15-13" data-line-number="13">loop_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reformat_GSOD.html">reformat_GSOD</a></span>(<span class="dt">file_list =</span> local_files)</a>
-<a class="sourceLine" id="cb15-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb15-15" data-line-number="15">readr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/readr/topics/write_delim">write_csv</a></span>(loop_data, <span class="dt">file =</span> <span class="st">"Loop_Survey_Weather_1960-2015"</span>, <span class="dt">path =</span> <span class="st">"./"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">years &lt;-<span class="st"> </span><span class="dv">1960</span><span class="op">:</span><span class="dv">2015</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">loop_stations &lt;-<span class="st"> </span><span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text =</span> loop_stations[, <span class="dv">12</span>]))</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co"># create file list</span></a>
+<a class="sourceLine" id="cb9-6" data-line-number="6">loop_stations &lt;-<span class="st"> </span><span class="kw">do.call</span>(</a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">  paste0, <span class="kw">c</span>(<span class="kw">expand.grid</span>(loop_stations, <span class="st">"-"</span>, years, <span class="st">".op.gz"</span>))</a>
+<a class="sourceLine" id="cb9-8" data-line-number="8">  )</a>
+<a class="sourceLine" id="cb9-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb9-10" data-line-number="10">local_files &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="dt">path =</span> <span class="st">"./GSOD"</span>, <span class="dt">full.names =</span> <span class="ot">TRUE</span>, <span class="dt">recursive =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb9-11" data-line-number="11">local_files &lt;-<span class="st"> </span>local_files[<span class="kw">basename</span>(local_files) <span class="op">%in%</span><span class="st"> </span>loop_stations]</a>
+<a class="sourceLine" id="cb9-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb9-13" data-line-number="13">loop_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reformat_GSOD.html">reformat_GSOD</a></span>(<span class="dt">file_list =</span> local_files)</a>
+<a class="sourceLine" id="cb9-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb9-15" data-line-number="15">readr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/readr/topics/write_delim">write_csv</a></span>(loop_data, <span class="dt">path =</span> <span class="st">"Loop_Survey_Weather_1960-2015"</span>, <span class="dt">path =</span> <span class="st">"./"</span>)</a></code></pre></div>
 </div>
 </div>
 <div id="notes" class="section level1">
@@ -278,7 +270,7 @@
 <div id="elevation-values" class="section level4">
 <h4 class="hasAnchor">
 <a href="#elevation-values" class="anchor"></a>Elevation Values</h4>
-<p>90m hole-filled SRTM digital elevation (Jarvis <em>et al.</em> 2008) was used to identify and correct/remove elevation errors in data for station locations between -60˚ and 60˚ latitude. This applies to cases here where elevation was missing in the reported values as well. In case the station reported an elevation and the DEM does not, the station reported is taken. For stations beyond -60˚ and 60˚ latitude, the values are station reported values in every instance. See <a href="https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.html" class="uri">https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md</a> for more detail on the correction methods.</p>
+<p>90m hole-filled SRTM digital elevation (Jarvis <em>et al.</em> 2008) was used t o identify and correct/remove elevation errors in data for station locations between -60˚ and 60˚ latitude. This applies to cases here where elevation was missing in the reported values as well. In case the station reported an elevation and the DEM does not, the station reported is taken. For stations beyond -60˚ and 60˚ latitude, the values are station reported values in every instance. See <a href="https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.html" class="uri">https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md</a> for more detail on the correction methods.</p>
 </div>
 </div>
 <div id="wmo-resolution-40--noaa-policy" class="section level2">
@@ -294,7 +286,6 @@
 <h1 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h1>
 <p>Jarvis, A., Reuter, H.I., Nelson, A., Guevara, E. (2008) Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database (<a href="http://srtm.csi.cgiar.org" class="uri">http://srtm.csi.cgiar.org</a>)</p>
-</div>
 </div>
   </div>
 
@@ -328,6 +319,8 @@
 
       </footer>
 </div>
+
+  
 
   </body>
 </html>
