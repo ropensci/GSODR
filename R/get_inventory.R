@@ -30,16 +30,26 @@
 get_inventory <- function() {
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 
+  ftp_handle <-
+    curl::new_handle(
+      ftp_use_epsv = FALSE,
+      crlf = TRUE,
+      ssl_verifypeer = FALSE,
+      ftp_response_timeout = 30,
+      ftp_skip_pasv_ip = TRUE
+    )
+
   file_in <-
     curl::curl_download(
       "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt",
       destfile = tempfile(),
-      quiet = FALSE
+      quiet = FALSE,
+      handle = ftp_handle
     )
 
   header <- readLines(file_in, n = 5)
 
-  message(paste0(header[3:5], collapse = " "))
+  message("\n", paste(header[3:5], collapse = " "), "\n")
 
   body <-
     readr::read_fwf(

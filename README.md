@@ -1,13 +1,16 @@
 GSODR: Global Surface Summary of the Day (GSOD) Weather Data from R
 ================
 
-[![Travis-CI Build
-Status](https://travis-ci.org/ropensci/GSODR.svg?branch=master)](https://travis-ci.org/ropensci/GSODR)
-[![Build
-status](https://ci.appveyor.com/api/projects/status/s09kh2nj59o35ob1/branch/master?svg=true)](https://ci.appveyor.com/project/ropensci/gsodr/branch/master)
+[![CircleCI Build
+Status](https://circleci.com/gh/ropensci/GSODR.svg?style=shield)](https://circleci.com/gh/ropensci/GSODR)
+[![Appveyor Build
+Status](https://ci.appveyor.com/api/projects/status/s09kh2nj59o35ob1/branch/master?svg=true)](https://ci.appveyor.com/project/ropensci/gsodr/branch/master)
 [![codecov](https://codecov.io/gh/ropensci/GSODR/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/GSODR)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.439850.svg)](https://doi.org/10.5281/zenodo.439850)
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/GSODR)](https://cran.r-project.org/package=GSODR)
+[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/GSODR)](https://cran.r-project.org/package=GSODR)
+[![Project Status: Active – The project has reached a stable, usable
+state and is being actively
+developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![JOSS](http://joss.theoj.org/papers/10.21105/joss.00177/status.svg)](http://joss.theoj.org/papers/14021f4e4931cdaab4ea41be27df2df6)
 [![](https://badges.ropensci.org/79_status.svg)](https://github.com/ropensci/onboarding/issues/79)
 
@@ -129,16 +132,16 @@ tbar
     ## # A tibble: 365 x 48
     ##    USAF   WBAN  STNID    STN_NAME     CTRY  STATE CALL    LAT   LON ELEV_M
     ##    <chr>  <chr> <chr>    <chr>        <chr> <chr> <chr> <dbl> <dbl>  <dbl>
-    ##  1 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.   642.
-    ##  2 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.   642.
-    ##  3 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.   642.
-    ##  4 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.   642.
-    ##  5 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.   642.
-    ##  6 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.   642.
-    ##  7 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.   642.
-    ##  8 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.   642.
-    ##  9 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.   642.
-    ## 10 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.   642.
+    ##  1 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.    642
+    ##  2 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.    642
+    ##  3 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.    642
+    ##  4 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.    642
+    ##  5 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.    642
+    ##  6 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.    642
+    ##  7 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.    642
+    ##  8 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.    642
+    ##  9 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.    642
+    ## 10 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.    642
     ## # ... with 355 more rows, and 38 more variables: ELEV_M_SRTM_90m <dbl>,
     ## #   BEGIN <dbl>, END <dbl>, YEARMODA <date>, YEAR <chr>, MONTH <chr>,
     ## #   DAY <chr>, YDAY <dbl>, TEMP <dbl>, TEMP_CNT <int>, DEWP <dbl>,

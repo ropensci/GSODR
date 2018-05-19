@@ -3,25 +3,26 @@ context("get_GSOD")
 # Check that .validate_years handles invalid years -----------------------------
 
 test_that(".validate_years handles invalid years", {
-  expect_error(.validate_years(years = NULL))
-  expect_error(.validate_years(years = "nineteen ninety two"))
-  expect_error(.validate_years(years = 1923))
-  expect_error(.validate_years(years = 1901 + as.POSIXlt(Sys.Date())$year))
-  expect_error(.validate_years(years = 0))
-  expect_error(.validate_years(years = -1))
+  expect_error(GSODR:::.validate_years(years = NULL))
+  expect_error(GSODR:::.validate_years(years = "nineteen ninety two"))
+  expect_error(GSODR:::.validate_years(years = 1923))
+  expect_error(GSODR:::.validate_years(years = 1901 +
+                                         as.POSIXlt(Sys.Date())$year))
+  expect_error(GSODR:::.validate_years(years = 0))
+  expect_error(GSODR:::.validate_years(years = -1))
 })
 
 # Check that .validate_years handles valid years -------------------------------
 test_that(".validate_years handles valid years", {
-  expect_error(.validate_years(years = 1929:2016), regexp = NA)
-  expect_error(.validate_years(years = 2016), regexp = NA)
+  expect_error(GSODR:::.validate_years(years = 1929:2016), regexp = NA)
+  expect_error(GSODR:::.validate_years(years = 2016), regexp = NA)
 })
 
 # Check that invalid stations are handled --------------------------------------
 test_that("invalid stations are handled", {
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))
   stations <- isd_history
-  expect_error(.validate_station(years = 2015,
+  expect_error(GSODR:::.validate_station(years = 2015,
                                  station = "aaa-bbbbbb",
                                  stations))
 })
@@ -30,14 +31,14 @@ test_that("invalid stations are handled", {
 test_that("Station validations are properly handled for years available", {
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))
   stations <- isd_history
-  expect_message(.validate_station(station = "949999-00170",
+  expect_message(GSODR:::.validate_station(station = "949999-00170",
                                    stations,
                                    years = 2010))
 })
 
 test_that("Station validations are properly handled for years available", {
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))
-  expect_silent(.validate_station(
+  expect_silent(GSODR:::.validate_station(
     years = 2010,
     station = "955510-99999",
     isd_history = isd_history
@@ -70,7 +71,7 @@ test_that("missing days check allows stations with permissible days missing,
                          full.names = TRUE)
 
             if (!is.null(max_missing)) {
-              GSOD_list_filtered <- .validate_missing_days(max_missing,
+              GSOD_list_filtered <- GSODR:::.validate_missing_days(max_missing,
                                                            GSOD_list)
             }
             expect_length(GSOD_list, 2)
@@ -104,7 +105,7 @@ test_that("missing days check allows stations with permissible days missing,
                          pattern = ".2016.csv.gz$",
                          full.names = TRUE)
             if (!is.null(max_missing)) {
-              GSOD_list_filtered <- .validate_missing_days(max_missing,
+              GSOD_list_filtered <- GSODR:::.validate_missing_days(max_missing,
                                                            GSOD_list)
             }
 
@@ -130,15 +131,15 @@ test_that("Check validate country returns a two letter code", {
   load(system.file("extdata", "country_list.rda", package = "GSODR"))
 
   country <- "Philippines"
-  Philippines <- .validate_country(country, country_list)
+  Philippines <- GSODR:::.validate_country(country, country_list)
   expect_match(Philippines, "RP")
 
   country <- "PHL"
-  PHL <- .validate_country(country, country_list)
+  PHL <- GSODR:::.validate_country(country, country_list)
   expect_match(PHL, "RP")
 
   country <- "PH"
-  PH <- .validate_country(country, country_list)
+  PH <- GSODR:::.validate_country(country, country_list)
   expect_match(PH, "RP")
 })
 
@@ -149,7 +150,7 @@ test_that("Check validate country returns an error on invalid entry when
             country_list <- NULL
             load(system.file("extdata", "country_list.rda", package = "GSODR"))
             country <- "Philipines"
-            expect_error(.validate_country(country, country_list))
+            expect_error(GSODR:::.validate_country(country, country_list))
           })
 
 test_that(
@@ -159,7 +160,7 @@ test_that(
     country_list <- NULL
     load(system.file("extdata", "country_list.rda", package = "GSODR"))
     country <- "RP"
-    expect_error(.validate_country(country, country_list))
+    expect_error(GSODR:::.validate_country(country, country_list))
   }
 )
 
@@ -170,7 +171,7 @@ test_that(
     country_list <- NULL
     load(system.file("extdata", "country_list.rda", package = "GSODR"))
     country <- "RPS"
-    expect_error(.validate_country(country, country_list))
+    expect_error(GSODR:::.validate_country(country, country_list))
   }
 )
 

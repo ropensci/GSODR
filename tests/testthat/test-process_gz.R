@@ -6,7 +6,6 @@ test_that(
   agroclimatology works and .process_gz returns a tibble",
   {
     skip_on_cran()
-    skip_on_appveyor() # appveyor will not properly untar the file
     do.call(file.remove, list(list.files(
       tempdir(),
       pattern = ".gz$",
@@ -26,18 +25,18 @@ test_that(
     load(system.file("extdata", "country_list.rda",
                      package = "GSODR"))
 
-    GSOD_list <- .download_files(ftp_base,
+    GSOD_list <- GSODR:::.download_files(ftp_base,
                                  station,
                                  years,
                                  cache_dir)
 
-    agro_list <- .agroclimatology_list(GSOD_list,
+    agro_list <- GSODR:::.agroclimatology_list(GSOD_list,
                                        stations,
                                        cache_dir,
                                        years)
     expect_length(agro_list, 7556)
 
-    RP_list <- .subset_country_list(country,
+    RP_list <- GSODR:::.subset_country_list(country,
                                     country_list,
                                     GSOD_list,
                                     stations,
@@ -47,7 +46,7 @@ test_that(
 
     # Check that .process_gz returns a properly formatted tibble---
     gz_file <- GSOD_list[[10]]
-    gz_out <- .process_gz(gz_file, stations)
+    gz_out <- GSODR:::.process_gz(gz_file, stations)
 
     expect_length(gz_out, 48)
 

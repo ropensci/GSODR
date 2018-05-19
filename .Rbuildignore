@@ -16,3 +16,4 @@ vignettes/figure
 ^docs$
 ^codemeta\.json$
 ^_pkgdown\.yml$
+^\.circleci$
