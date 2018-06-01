@@ -24,7 +24,8 @@ data.
 ```{r download_merge_inspect, echo=TRUE, messages=FALSE}
 if (!require("countrycode"))
 {
-  install.packages("countrycode")
+  install.packages("countrycode",
+                   repos = c(CRAN = "https://cran.rstudio.com"))
 }
 
 countries <- readr::read_table(
