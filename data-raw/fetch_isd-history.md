@@ -1,7 +1,7 @@
 Fetch, clean and correct altitude in GSOD isd\_history.csv data
 ================
 Adam H. Sparks
-2018-05-03
+2018-06-01
 
 # Introduction
 
@@ -77,17 +77,23 @@ if (!require("doParallel")) {
 
     ## Loading required package: doParallel
 
-    ## Loading required package: foreach
+    ## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+    ## logical.return = TRUE, : there is no package called 'doParallel'
 
-    ## Loading required package: iterators
+    ## Installing package into '/Users/U8004755/Library/R/3.x/library'
+    ## (as 'lib' is unspecified)
 
-    ## Loading required package: parallel
+    ## also installing the dependencies 'foreach', 'iterators'
 
 ``` r
 if (!require("foreach")) {
   install.packages("foreach", repos = "https://cran.rstudio.com/")
 }
+```
 
+    ## Loading required package: foreach
+
+``` r
 if (!require("ggplot2")) {
   install.packages("ggplot2", repos = "https://cran.rstudio.com/")
 }
@@ -99,7 +105,11 @@ if (!require("ggplot2")) {
 if (!require("parallel")) {
   install.packages("parallel", repos = "https://cran.rstudio.com/")
 }
+```
 
+    ## Loading required package: parallel
+
+``` r
 if (!require("raster")) {
   install.packages("raster", repos = "https://cran.rstudio.com/")
 }
@@ -131,6 +141,12 @@ if (!require("rnaturalearth")) {
 ```
 
     ## Loading required package: rnaturalearth
+
+    ## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+    ## logical.return = TRUE, : there is no package called 'rnaturalearth'
+
+    ## Installing package into '/Users/U8004755/Library/R/3.x/library'
+    ## (as 'lib' is unspecified)
 
 ``` r
 library(magrittr) # comes with dplyr above
@@ -315,6 +331,11 @@ corrected_elev <- corrected_elev %>%
   dplyr::distinct(corrected_elev)
 ```
 
+    ## Warning: Trying to compute distinct() for variables not found in the data:
+    ## - `corrected_elev`
+    ## This is an error, but only a warning is raised for compatibility reasons.
+    ## The operation will return the input unchanged.
+
 Tidy up the `corrected_elev` object by converting any factors to
 character prior to performing a left-join with the `stations` object and
 remove duplicate rows. For stations above/below 60/-60 latitude,
@@ -338,7 +359,7 @@ isd_history <-
 str(isd_history)
 ```
 
-    ## Classes 'tbl_df', 'tbl' and 'data.frame':    28477 obs. of  13 variables:
+    ## Classes 'tbl_df', 'tbl' and 'data.frame':    28519 obs. of  13 variables:
     ##  $ USAF           : chr  "010010" "010014" "010015" "010016" ...
     ##  $ WBAN           : chr  "99999" "99999" "99999" "99999" ...
     ##  $ STN_NAME       : chr  "JAN MAYEN(NOR-NAVY)" "SORSTOKKEN" "BRINGELAND" "RORVIK/RYUM" ...
@@ -349,7 +370,7 @@ str(isd_history)
     ##  $ LON            : num  -8.67 5.34 5.87 11.23 2.25 ...
     ##  $ ELEV_M         : num  9 48.8 327 14 48 8 12 8 9 14 ...
     ##  $ BEGIN          : num  19310101 19861120 19870117 19870116 19880320 ...
-    ##  $ END            : num  20180430 20180430 20111020 19910806 20050228 ...
+    ##  $ END            : num  20180528 20180528 20111020 19910806 20050228 ...
     ##  $ STNID          : chr  "010010-99999" "010014-99999" "010015-99999" "010016-99999" ...
     ##  $ ELEV_M_SRTM_90m: num  NA 48 NA NA 48 NA NA NA NA NA ...
 
@@ -357,7 +378,7 @@ str(isd_history)
 isd_history
 ```
 
-    ## # A tibble: 28,477 x 13
+    ## # A tibble: 28,519 x 13
     ##    USAF   WBAN  STN_NAME      CTRY  STATE CALL    LAT    LON ELEV_M  BEGIN
     ##    <chr>  <chr> <chr>         <chr> <chr> <chr> <dbl>  <dbl>  <dbl>  <dbl>
     ##  1 010010 99999 JAN MAYEN(NO… NO    <NA>  ENJA   70.9  -8.67    9   1.93e7
@@ -370,7 +391,7 @@ isd_history
     ##  8 010040 99999 NY-ALESUND II NO    <NA>  ENAS   78.9  11.9     8   1.97e7
     ##  9 010050 99999 ISFJORD RADIO SV    <NA>  <NA>   78.1  13.6     9   1.93e7
     ## 10 010060 99999 EDGEOYA       NO    <NA>  <NA>   78.2  22.8    14   1.97e7
-    ## # ... with 28,467 more rows, and 3 more variables: END <dbl>, STNID <chr>,
+    ## # ... with 28,509 more rows, and 3 more variables: END <dbl>, STNID <chr>,
     ## #   ELEV_M_SRTM_90m <dbl>
 
 # Figures
@@ -427,11 +448,11 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  version  R version 3.5.0 (2018-04-23)
     ##  os       macOS Sierra 10.12.6        
     ##  system   x86_64, darwin16.7.0        
-    ##  ui       unknown                     
+    ##  ui       X11                         
     ##  language (EN)                        
     ##  collate  en_AU.UTF-8                 
     ##  tz       Australia/Brisbane          
-    ##  date     2018-05-03                  
+    ##  date     2018-06-01                  
     ## 
     ## ─ Packages ──────────────────────────────────────────────────────────────
     ##  package            * version date       source        
@@ -448,10 +469,10 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  countrycode        * 1.00.0  2018-02-11 CRAN (R 3.5.0)
     ##  crayon               1.3.4   2017-09-16 CRAN (R 3.5.0)
     ##  curl                 3.2     2018-03-28 CRAN (R 3.5.0)
-    ##  DBI                  1.0.0   2018-05-02 cran (@1.0.0) 
+    ##  DBI                  1.0.0   2018-05-02 CRAN (R 3.5.0)
     ##  digest               0.6.15  2018-01-28 CRAN (R 3.5.0)
-    ##  doParallel         * 1.0.11  2017-09-28 CRAN (R 3.5.0)
-    ##  dplyr              * 0.7.4   2017-09-28 CRAN (R 3.5.0)
+    ##  doParallel           1.0.11  2017-09-28 CRAN (R 3.5.0)
+    ##  dplyr              * 0.7.5   2018-05-19 CRAN (R 3.5.0)
     ##  e1071                1.6-8   2017-02-02 CRAN (R 3.5.0)
     ##  evaluate             0.10.1  2017-06-24 CRAN (R 3.5.0)
     ##  foreach            * 1.4.4   2017-12-12 CRAN (R 3.5.0)
@@ -461,40 +482,41 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  highr                0.6     2016-05-09 CRAN (R 3.5.0)
     ##  hms                  0.4.2   2018-03-10 CRAN (R 3.5.0)
     ##  htmltools            0.3.6   2017-04-28 CRAN (R 3.5.0)
-    ##  iterators          * 1.0.9   2017-12-12 CRAN (R 3.5.0)
+    ##  iterators            1.0.9   2017-12-12 CRAN (R 3.5.0)
     ##  knitr                1.20    2018-02-20 CRAN (R 3.5.0)
     ##  labeling             0.3     2014-08-23 CRAN (R 3.5.0)
     ##  lattice              0.20-35 2017-03-25 CRAN (R 3.5.0)
     ##  lazyeval             0.2.1   2017-10-29 CRAN (R 3.5.0)
     ##  magrittr           * 1.5     2014-11-22 CRAN (R 3.5.0)
     ##  munsell              0.4.3   2016-02-13 CRAN (R 3.5.0)
-    ##  pillar               1.2.2   2018-04-26 cran (@1.2.2) 
+    ##  pillar               1.2.3   2018-05-25 CRAN (R 3.5.0)
     ##  pkgconfig            2.0.1   2017-03-21 CRAN (R 3.5.0)
     ##  plyr                 1.8.4   2016-06-08 CRAN (R 3.5.0)
+    ##  purrr                0.2.5   2018-05-29 cran (@0.2.5) 
     ##  R6                   2.2.2   2017-06-17 CRAN (R 3.5.0)
     ##  raster             * 2.6-7   2017-11-13 CRAN (R 3.5.0)
-    ##  Rcpp                 0.12.16 2018-03-13 CRAN (R 3.5.0)
+    ##  Rcpp                 0.12.17 2018-05-18 CRAN (R 3.5.0)
     ##  readr              * 1.1.1   2017-05-16 CRAN (R 3.5.0)
-    ##  rgdal                1.2-18  2018-03-17 CRAN (R 3.5.0)
-    ##  rlang                0.2.0   2018-02-20 CRAN (R 3.5.0)
+    ##  rgdal                1.2-20  2018-05-07 CRAN (R 3.5.0)
+    ##  rlang                0.2.1   2018-05-30 cran (@0.2.1) 
     ##  rmarkdown            1.9     2018-03-01 CRAN (R 3.5.0)
-    ##  rnaturalearth      * 0.1.0   2017-03-21 CRAN (R 3.5.0)
-    ##  rnaturalearthhires   0.1.0   2018-05-03 local         
-    ##  RPostgreSQL          0.6-2   2017-06-24 CRAN (R 3.5.0)
+    ##  rnaturalearth        0.1.0   2017-03-21 CRAN (R 3.5.0)
+    ##  rnaturalearthhires   0.1.0   2018-06-01 local         
     ##  rprojroot            1.3-2   2018-01-03 CRAN (R 3.5.0)
     ##  scales               0.5.0   2017-08-24 CRAN (R 3.5.0)
     ##  sessioninfo          1.0.0   2017-06-21 CRAN (R 3.5.0)
-    ##  sf                   0.6-2   2018-04-25 cran (@0.6-2) 
+    ##  sf                   0.6-3   2018-05-17 CRAN (R 3.5.0)
     ##  sp                 * 1.2-7   2018-01-19 CRAN (R 3.5.0)
     ##  spData               0.2.8.3 2018-03-25 CRAN (R 3.5.0)
-    ##  stringi              1.2.2   2018-05-02 cran (@1.2.2) 
-    ##  stringr              1.3.0   2018-02-19 CRAN (R 3.5.0)
+    ##  stringi              1.2.2   2018-05-02 CRAN (R 3.5.0)
+    ##  stringr              1.3.1   2018-05-10 CRAN (R 3.5.0)
     ##  tibble               1.4.2   2018-01-22 CRAN (R 3.5.0)
+    ##  tidyselect           0.2.4   2018-02-26 CRAN (R 3.5.0)
     ##  udunits2             0.13    2016-11-17 CRAN (R 3.5.0)
     ##  units                0.5-1   2018-01-08 CRAN (R 3.5.0)
-    ##  utf8                 1.1.3   2018-01-03 CRAN (R 3.5.0)
+    ##  utf8                 1.1.4   2018-05-24 CRAN (R 3.5.0)
     ##  withr                2.1.2   2018-03-15 CRAN (R 3.5.0)
-    ##  yaml                 2.1.19  2018-05-01 cran (@2.1.19)
+    ##  yaml                 2.1.19  2018-05-01 CRAN (R 3.5.0)
 
 # References
 
