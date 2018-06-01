@@ -7,6 +7,10 @@ the server. This is in response to an inquiry from John Paul Bigouette where
 a station is reported as having data in the inventory but the files do not exist
 on the server.
 
+## Minor changes
+
+- Update internal databases of station metadata
+
 --------------------------------------------------------------------------------
 
 # GSODR 1.2.0
