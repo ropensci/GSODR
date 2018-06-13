@@ -1,7 +1,7 @@
 Fetch GSOD Country List and Merge with ISO Country Codes
 ================
 Adam H. Sparks
-2018-06-01
+2018-06-13
 
 # Introduction
 
@@ -150,7 +150,7 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  language (EN)                        
     ##  collate  en_AU.UTF-8                 
     ##  tz       Australia/Brisbane          
-    ##  date     2018-06-01                  
+    ##  date     2018-06-13                  
     ## 
     ## ─ Packages ──────────────────────────────────────────────────────────────
     ##  package     * version date       source        
@@ -173,15 +173,15 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  magrittr      1.5     2014-11-22 CRAN (R 3.5.0)
     ##  pillar        1.2.3   2018-05-25 CRAN (R 3.5.0)
     ##  pkgconfig     2.0.1   2017-03-21 CRAN (R 3.5.0)
-    ##  purrr         0.2.5   2018-05-29 cran (@0.2.5) 
+    ##  purrr         0.2.5   2018-05-29 CRAN (R 3.5.0)
     ##  R6            2.2.2   2017-06-17 CRAN (R 3.5.0)
     ##  Rcpp          0.12.17 2018-05-18 CRAN (R 3.5.0)
     ##  readr         1.1.1   2017-05-16 CRAN (R 3.5.0)
-    ##  rlang         0.2.1   2018-05-30 cran (@0.2.1) 
-    ##  rmarkdown     1.9     2018-03-01 CRAN (R 3.5.0)
+    ##  rlang         0.2.1   2018-05-30 CRAN (R 3.5.0)
+    ##  rmarkdown     1.10    2018-06-11 CRAN (R 3.5.0)
     ##  rprojroot     1.3-2   2018-01-03 CRAN (R 3.5.0)
     ##  sessioninfo   1.0.0   2017-06-21 CRAN (R 3.5.0)
-    ##  stringi       1.2.2   2018-05-02 CRAN (R 3.5.0)
+    ##  stringi       1.2.3   2018-06-12 cran (@1.2.3) 
     ##  stringr       1.3.1   2018-05-10 CRAN (R 3.5.0)
     ##  tibble        1.4.2   2018-01-22 CRAN (R 3.5.0)
     ##  tidyselect    0.2.4   2018-02-26 CRAN (R 3.5.0)
