@@ -110,10 +110,7 @@ stations[stations == -999] <- NA
 
 countries <- readr::read_table(
   "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/country-list.txt",
-  col_types = "ccc",
-  col_names = c("FIPS", "ID", "`COUNTRY NAME`"),
-)[-1, c(1, 3)]
-
+  col_types = "ccc")[-1, ]
 ```
 
 ## Reformat and clean station data file from NCEI
