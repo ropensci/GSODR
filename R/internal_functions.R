@@ -3,17 +3,20 @@
 .validate_years <- function(years) {
   this_year <- 1900 + as.POSIXlt(Sys.Date())$year
   if (is.null(years) | is.character(years)) {
-    stop("\nYou must provide at least one year of data to download in a numeric
+    stop(call. = FALSE,
+         "\nYou must provide at least one year of data to download in a numeric
          format.\n")
   } else {
     for (i in years) {
       if (i <= 0) {
         stop("\nThis is not a valid year.\n")
       } else if (i < 1929) {
-        stop("\nThe GSOD data files start at 1929, you have entered a year prior
+        stop(call. = FALSE,
+             "\nThe GSOD data files start at 1929, you have entered a year prior
              to 1929.\n")
       } else if (i > this_year) {
-        stop("\nThe year cannot be greater than current year.\n")
+        stop(call. = FALSE,
+             "\nThe year cannot be greater than current year.\n")
       }
     }
   }
@@ -22,14 +25,14 @@
 #' @noRd
 .validate_station <- function(station, isd_history, years) {
   if (!station %in% isd_history[[12]]) {
-    stop(
-      "\n",
-      paste0(station),
-      " is not a valid station ID number, please check your entry.\n",
-      "Valid Station IDs can be found in the isd-history.txt file\n",
-      "available from the US NCEI FTP server by combining the USAF and WBAN\n",
-      "columns, e.g. '007005' '99999' is '007005-99999' from this file \n",
-      "<ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.txt>\n"
+    stop(call. = FALSE,
+         "\n",
+         paste0(station),
+         " is not a valid station ID number, please check your entry.\n",
+         "Valid Station IDs can be found in the isd-history.txt file\n",
+         "available from the US NCEI FTP server by combining the USAF and\n",
+         "WBAN columns, e.g. '007005' '99999' is '007005-99999' from this\n",
+         "file <ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.txt>\n"
     )
   }
   BEGIN <-
@@ -58,7 +61,8 @@
           c <- which(country == country_list$iso3c)
           country <- country_list[[c, 1]]
         } else {
-          stop("\nPlease provide a valid name or 2 or 3",
+          stop(call. = FALSE,
+               "\nPlease provide a valid name or 2 or 3",
                "letter ISO country code\n")
         }
       } else if (nc == 2) {
@@ -66,14 +70,16 @@
           c <- which(country == country_list$iso2c)
           country <- country_list[[c, 1]]
         } else {
-          stop("\nPlease provide a valid name or 2 or 3",
+          stop(call. = FALSE,
+               "\nPlease provide a valid name or 2 or 3",
                "\nletter ISO country code")
         }
       } else if (country %in% country_list$COUNTRY_NAME) {
         c <- which(country == country_list$COUNTRY_NAME)
         country <- country_list[[c, 1]]
       } else {
-        stop("\nPlease provide a valid name or 2 or 3",
+        stop(call. = FALSE,
+             "\nPlease provide a valid name or 2 or 3",
              "letter ISO country code\n")
       }
     }
@@ -116,7 +122,8 @@
           file.path(cache_dir, basename(file_list))
         ),
         error = function(x)
-          stop("\nThe file downloads have failed. Please restart.\n")
+          stop(call. = FALSE,
+               "\nThe file downloads have failed. Please restart.\n")
       )
       tar_files <-
         list.files(cache_dir, pattern = "^gsod.*\\.tar$", full.names = TRUE)
@@ -148,7 +155,10 @@
             if (!is.null(res$result))
               return(res$result)
             if (i == max_retries) {
-              stop("\nToo many retries...server may be under load\n")
+              stop(call. = FALSE,
+                   "\nWe've tried to get the file you requested six times.\n",
+                   "The server is not server may be under load and is not\n",
+                   "currently responding. Please try again later.\n")
             }
           }
         }
@@ -165,7 +175,10 @@
           repeat {
             i <- i + 1
             if (i == max_retries) {
-              stop("Too many retries...server may be under load")
+              stop(call. = FALSE,
+                   "\nWe've tried to get the file you requested six times.\n",
+                   "The server is not server may be under load and is not\n",
+                   "currently responding. Please try again later.\n")
             }
             res <- s_curl_fetch_disk(url, cache_file)
             if (!is.null(res$result))

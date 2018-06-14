@@ -106,7 +106,8 @@ get_GSOD <- function(years = NULL,
   # Validate stations for missing days -----------------------------------------
   if (!is.null(max_missing)) {
     if (is.na(max_missing) | max_missing < 1) {
-      stop("\nThe 'max_missing' parameter must be a positive",
+      stop(call. = FALSE,
+           "\nThe 'max_missing' parameter must be a positive",
            "value larger than 1\n")
     }
     }
@@ -115,7 +116,8 @@ get_GSOD <- function(years = NULL,
   {
     if (format(Sys.Date(), "%Y") %in% years)
     {
-      stop("You cannot use `max_missing` with the current, incomplete year.")
+      stop(call. = FALSE,
+           "You cannot use `max_missing` with the current, incomplete year.")
     }
   }
 
