@@ -110,7 +110,7 @@ tbar <- get_GSOD(years = 2010, station = tbar_stations)
 If you wished to drop the stations, 949999-00170 and 949999-00183 from the
 query, you could do this.
 
-```{r, eval=FALSE, message=FALSE}
+```{r, eval=FALSE}
 remove <- c("949999-00170", "949999-00183")
 
 tbar_stations <- tbar_stations[!tbar_stations %in% remove]
