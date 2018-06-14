@@ -117,7 +117,7 @@
 <h2 class="hasAnchor">
 <a href="#find-stations-in-australia" class="anchor"></a>Find Stations in Australia</h2>
 <p><em>GSODR</em> provides lists of weather station locations and elevation values. Using <a href="https://CRAN.R-project.org/package=dplyr"><em>dplyr</em></a>, we can find all the stations in Australia.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(GSODR)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(GSODR)</code></pre></div>
 <pre><code>## 
 ## GSOD is distributed free by the U.S. NCEI with the
 ## following conditions.
@@ -133,7 +133,7 @@
 ## only provides an interface for R users to download these
 ## data, however it does redistribute station metadata in the
 ## package.</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)</code></pre></div>
 <pre><code>## 
 ## Attaching package: 'dplyr'</code></pre>
 <pre><code>## The following objects are masked from 'package:stats':
@@ -142,32 +142,32 @@
 <pre><code>## The following objects are masked from 'package:base':
 ## 
 ##     intersect, setdiff, setequal, union</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">load</span>(<span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"country_list.rda"</span>, <span class="dt">package =</span> <span class="st">"GSODR"</span>))</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw">load</span>(<span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"isd_history.rda"</span>, <span class="dt">package =</span> <span class="st">"GSODR"</span>))</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">station_locations &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(isd_history, country_list,</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">                               <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">"CTRY"</span> =<span class="st"> "FIPS"</span>))</a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co"># create data.frame for Australia only</span></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">Oz &lt;-<span class="st"> </span><span class="kw">subset</span>(station_locations, COUNTRY_NAME <span class="op">==</span><span class="st"> "AUSTRALIA"</span>)</a>
-<a class="sourceLine" id="cb7-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb7-10" data-line-number="10">Oz</a></code></pre></div>
-<pre><code>## # A tibble: 1,396 x 16
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"country_list.rda"</span>, <span class="dt">package =</span> <span class="st">"GSODR"</span>))
+<span class="kw">load</span>(<span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"isd_history.rda"</span>, <span class="dt">package =</span> <span class="st">"GSODR"</span>))
+
+station_locations &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(isd_history, country_list,
+                               <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">"CTRY"</span> =<span class="st"> "FIPS"</span>))
+
+<span class="co"># create data.frame for Australia only</span>
+Oz &lt;-<span class="st"> </span><span class="kw">subset</span>(station_locations, COUNTRY_NAME <span class="op">==</span><span class="st"> "AUSTRALIA"</span>)
+
+Oz</code></pre></div>
+<pre><code>## # A tibble: 1,412 x 16
 ##    USAF  WBAN  STN_NAME CTRY  STATE CALL    LAT   LON ELEV_M  BEGIN    END
 ##    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-##  1 6950… 99999 HORN IS… AS    &lt;NA&gt;  KQXC  -10.6  142.     NA 2.00e7 2.00e7
+##  1 6950… 99999 HORN IS… AS    &lt;NA&gt;  KQXC  -10.6  142.     NA 1.94e7 2.00e7
 ##  2 7494… 99999 AIDELAI… AS    &lt;NA&gt;  &lt;NA&gt;  -13.3  131.    131 1.94e7 1.94e7
-##  3 7494… 99999 REID EA… AS    &lt;NA&gt;  &lt;NA&gt;  -19.8  147.    122 1.94e7 1.94e7
-##  4 7494… 99999 WOODSTO… AS    &lt;NA&gt;  &lt;NA&gt;  -19.6  147.     64 1.94e7 1.94e7
-##  5 7494… 99999 LAKE BU… AS    &lt;NA&gt;  &lt;NA&gt;  -21.4  145.    396 1.94e7 1.94e7
-##  6 7494… 99999 DALBY S… AS    &lt;NA&gt;  &lt;NA&gt;  -27.2  151.    413 1.94e7 1.94e7
-##  7 7494… 99999 NORTH P… AS    &lt;NA&gt;  &lt;NA&gt;  -33.8  151      19 1.94e7 1.94e7
-##  8 9142… 99999 MIDDLE … AS    &lt;NA&gt;  &lt;NA&gt;  -12.6  131.     10 2.00e7 2.00e7
-##  9 9210… 99999 BROOSE … AS    &lt;NA&gt;  &lt;NA&gt;  -14.1  124.      5 2.00e7 2.00e7
-## 10 9212… 99999 DARWIN … AS    &lt;NA&gt;  &lt;NA&gt;  -12.4  131.     29 2.00e7 2.00e7
-## # ... with 1,386 more rows, and 5 more variables: STNID &lt;chr&gt;,
+##  3 7494… 99999 BATCHEL… AS    &lt;NA&gt;  &lt;NA&gt;  -13.0  131.    107 1.94e7 1.94e7
+##  4 7494… 99999 IRON RA… AS    &lt;NA&gt;  &lt;NA&gt;  -12.7  143.     18 1.94e7 1.94e7
+##  5 7494… 99999 MAREEBA… AS    &lt;NA&gt;  &lt;NA&gt;  -17.0  145.    443 1.94e7 1.94e7
+##  6 7494… 99999 REID EA… AS    &lt;NA&gt;  &lt;NA&gt;  -19.8  147.    122 1.94e7 1.94e7
+##  7 7494… 99999 TOWNSVI… AS    &lt;NA&gt;  ABTL  -19.2  147.      6 1.94e7 1.95e7
+##  8 7494… 99999 WOODSTO… AS    &lt;NA&gt;  &lt;NA&gt;  -19.6  147.     64 1.94e7 1.94e7
+##  9 7494… 99999 JACKY J… AS    &lt;NA&gt;  &lt;NA&gt;  -10.9  142.     14 1.94e7 1.94e7
+## 10 7494… 99999 LAKE BU… AS    &lt;NA&gt;  &lt;NA&gt;  -21.4  145.    396 1.94e7 1.94e7
+## # ... with 1,402 more rows, and 5 more variables: STNID &lt;chr&gt;,
 ## #   ELEV_M_SRTM_90m &lt;dbl&gt;, COUNTRY_NAME &lt;chr&gt;, iso2c &lt;chr&gt;, iso3c &lt;chr&gt;</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">subset</span>(Oz, <span class="kw">grepl</span>(<span class="st">"TOOWOOMBA"</span>, STN_NAME))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">subset</span>(Oz, <span class="kw">grepl</span>(<span class="st">"TOOWOOMBA"</span>, STN_NAME))</code></pre></div>
 <pre><code>## # A tibble: 2 x 16
 ##   USAF   WBAN  STN_NAME CTRY  STATE CALL    LAT   LON ELEV_M  BEGIN    END
 ##   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
@@ -180,9 +180,9 @@
 <h2 class="hasAnchor">
 <a href="#download-a-single-station-and-year" class="anchor"></a>Download a Single Station and Year</h2>
 <p>Now that we’ve seen where the reporting stations are located, we can download weather data from the station Toowoomba, Queensland, Australia for 2010 by using the STNID in the <code>station</code> parameter of <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code>.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> <span class="st">"955510-99999"</span>)</a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb11-3" data-line-number="3">tbar</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> <span class="st">"955510-99999"</span>)
+
+tbar</code></pre></div>
 <pre><code>## # A tibble: 365 x 48
 ##    USAF   WBAN  STNID    STN_NAME     CTRY  STATE CALL    LAT   LON ELEV_M
 ##    &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;        &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
@@ -211,47 +211,47 @@
 <a href="#using-nearest_stations" class="anchor"></a>Using nearest_stations()</h2>
 <p>Using the <code><a href="../reference/nearest_stations.html">nearest_stations()</a></code> function, you can find stations closest to a given point specified by latitude and longitude in decimal degrees. This can be used to generate a vector to pass along to <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> and download the stations of interest.</p>
 <p>There are missing stations in this query. Not all that are listed and queried actually have files on the server.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">tbar_stations &lt;-<span class="st"> </span><span class="kw"><a href="../reference/nearest_stations.html">nearest_stations</a></span>(<span class="dt">LAT =</span> <span class="fl">-27.5598</span>,</a>
-<a class="sourceLine" id="cb13-2" data-line-number="2">                                  <span class="dt">LON =</span> <span class="fl">151.9507</span>,</a>
-<a class="sourceLine" id="cb13-3" data-line-number="3">                                  <span class="dt">distance =</span> <span class="dv">50</span>)</a>
-<a class="sourceLine" id="cb13-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb13-5" data-line-number="5">tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> tbar_stations)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tbar_stations &lt;-<span class="st"> </span><span class="kw"><a href="../reference/nearest_stations.html">nearest_stations</a></span>(<span class="dt">LAT =</span> <span class="op">-</span><span class="fl">27.5598</span>,
+                                  <span class="dt">LON =</span> <span class="fl">151.9507</span>,
+                                  <span class="dt">distance =</span> <span class="dv">50</span>)
+
+tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> tbar_stations)</code></pre></div>
 <p>If you wished to drop the stations, 949999-00170 and 949999-00183 from the query, you could do this.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">remove &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"949999-00170"</span>, <span class="st">"949999-00183"</span>)</a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb14-3" data-line-number="3">tbar_stations &lt;-<span class="st"> </span>tbar_stations[<span class="op">!</span>tbar_stations <span class="op">%in%</span><span class="st"> </span>remove]</a>
-<a class="sourceLine" id="cb14-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb14-5" data-line-number="5">tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>,</a>
-<a class="sourceLine" id="cb14-6" data-line-number="6">                 <span class="dt">station =</span> tbar_stations,</a>
-<a class="sourceLine" id="cb14-7" data-line-number="7">                 <span class="dt">dsn =</span> <span class="st">"~/"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remove &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"949999-00170"</span>, <span class="st">"949999-00183"</span>)
+
+tbar_stations &lt;-<span class="st"> </span>tbar_stations[<span class="op">!</span>tbar_stations <span class="op">%in%</span><span class="st"> </span>remove]
+
+tbar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>,
+                 <span class="dt">station =</span> tbar_stations,
+                 <span class="dt">dsn =</span> <span class="st">"~/"</span>)</code></pre></div>
 </div>
 <div id="plot-maximum-and-minimum-temperature-values" class="section level2">
 <h2 class="hasAnchor">
 <a href="#plot-maximum-and-minimum-temperature-values" class="anchor"></a>Plot Maximum and Minimum Temperature Values</h2>
 <p>Using the first data downloaded for a single station, 955510-99999, plot the temperature for 2010.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="kw">library</span>(lubridate)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
+<span class="kw">library</span>(lubridate)</code></pre></div>
 <pre><code>## 
 ## Attaching package: 'lubridate'</code></pre>
 <pre><code>## The following object is masked from 'package:base':
 ## 
 ##     date</code></pre>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">library</span>(tidyr)</a>
-<a class="sourceLine" id="cb18-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="co"># Create a dataframe of just the date and temperature values that we want to</span></a>
-<a class="sourceLine" id="cb18-4" data-line-number="4"><span class="co"># plot</span></a>
-<a class="sourceLine" id="cb18-5" data-line-number="5">tbar_temps &lt;-<span class="st"> </span>tbar[, <span class="kw">c</span>(<span class="st">"YEARMODA"</span>, <span class="st">"TEMP"</span>, <span class="st">"MAX"</span>, <span class="st">"MIN"</span>)]</a>
-<a class="sourceLine" id="cb18-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb18-7" data-line-number="7"><span class="co"># Gather the data from wide to long</span></a>
-<a class="sourceLine" id="cb18-8" data-line-number="8">tbar_temps &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/gather">gather</a></span>(tbar_temps, Measurement, <span class="dt">gather_cols =</span> TEMP<span class="op">:</span>MIN)</a>
-<a class="sourceLine" id="cb18-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb18-10" data-line-number="10"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(<span class="dt">data =</span> tbar_temps, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> <span class="kw"><a href="http://lubridate.tidyverse.org/reference/ymd.html">ymd</a></span>(YEARMODA), <span class="dt">y =</span> value,</a>
-<a class="sourceLine" id="cb18-11" data-line-number="11">                              <span class="dt">colour =</span> Measurement)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb18-12" data-line-number="12"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb18-13" data-line-number="13"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_brewer">scale_color_brewer</a></span>(<span class="dt">type =</span> <span class="st">"qual"</span>, <span class="dt">na.value =</span> <span class="st">"black"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb18-14" data-line-number="14"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>(<span class="dt">name =</span> <span class="st">"Temperature"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb18-15" data-line-number="15"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_date">scale_x_date</a></span>(<span class="dt">name =</span> <span class="st">"Date"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb18-16" data-line-number="16"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_bw</a></span>()</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyr)
+
+<span class="co"># Create a dataframe of just the date and temperature values that we want to</span>
+<span class="co"># plot</span>
+tbar_temps &lt;-<span class="st"> </span>tbar[, <span class="kw">c</span>(<span class="st">"YEARMODA"</span>, <span class="st">"TEMP"</span>, <span class="st">"MAX"</span>, <span class="st">"MIN"</span>)]
+
+<span class="co"># Gather the data from wide to long</span>
+tbar_temps &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/gather">gather</a></span>(tbar_temps, Measurement, <span class="dt">gather_cols =</span> TEMP<span class="op">:</span>MIN)
+
+<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(<span class="dt">data =</span> tbar_temps, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> <span class="kw"><a href="http://lubridate.tidyverse.org/reference/ymd.html">ymd</a></span>(YEARMODA), <span class="dt">y =</span> value,
+                              <span class="dt">colour =</span> Measurement)) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_brewer">scale_color_brewer</a></span>(<span class="dt">type =</span> <span class="st">"qual"</span>, <span class="dt">na.value =</span> <span class="st">"black"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>(<span class="dt">name =</span> <span class="st">"Temperature"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_date">scale_x_date</a></span>(<span class="dt">name =</span> <span class="st">"Date"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_bw</a></span>()</code></pre></div>
 <p><img src="GSODR_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
 <div id="creating-spatial-files" class="section level2">
@@ -268,94 +268,94 @@
 <h2 class="hasAnchor">
 <a href="#convert-to-an-sp-spatialpointsdataframe" class="anchor"></a>Convert to an <em>sp</em> SpatialPointsDataFrame</h2>
 <p>For this example we convert the data to a <em>sp</em> object. You might use this one to save GeoPackage or ESRI shapefiles for sharing or analysis in another GIS program.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="co"># get GSOD data</span></a>
-<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="kw">library</span>(sp)</a>
-<a class="sourceLine" id="cb19-3" data-line-number="3">GSOD &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2015</span>, <span class="dt">country =</span> <span class="st">"Australia"</span>)</a>
-<a class="sourceLine" id="cb19-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb19-5" data-line-number="5"><span class="co"># convert to SpatialPointsDataFrame</span></a>
-<a class="sourceLine" id="cb19-6" data-line-number="6"><span class="kw"><a href="http://www.rdocumentation.org/packages/sp/topics/coordinates">coordinates</a></span>(GSOD_sp) &lt;-<span class="st"> </span><span class="er">~</span><span class="st"> </span>LON <span class="op">+</span><span class="st"> </span>LAT</a>
-<a class="sourceLine" id="cb19-7" data-line-number="7"><span class="kw"><a href="http://www.rdocumentation.org/packages/sp/topics/is.projected">proj4string</a></span>(GSOD_sp) &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/sp/topics/CRS-class">CRS</a></span>(<span class="st">"+proj=longlat +datum=WGS84"</span>)</a>
-<a class="sourceLine" id="cb19-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb19-9" data-line-number="9"><span class="kw">str</span>(GSOD_sp)</a></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="co">#&gt; Formal class 'SpatialPointsDataFrame' [package "sp"] with 5 slots</span></a>
-<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="co">#&gt;   ..@ data       :Classes ‘tbl_df’, ‘tbl’ and 'data.frame':  186977 obs. of  46 variables:</span></a>
-<a class="sourceLine" id="cb20-3" data-line-number="3"><span class="co">#&gt;   .. ..$ USAF            : chr [1:186977] "941000" "941000" "941000" "941000" ...</span></a>
-<a class="sourceLine" id="cb20-4" data-line-number="4"><span class="co">#&gt;   .. ..$ WBAN            : chr [1:186977] "99999" "99999" "99999" "99999" ...</span></a>
-<a class="sourceLine" id="cb20-5" data-line-number="5"><span class="co">#&gt;   .. ..$ STNID           : chr [1:186977] "941000-99999" "941000-99999" "941000-99999" "941000-99999" ...</span></a>
-<a class="sourceLine" id="cb20-6" data-line-number="6"><span class="co">#&gt;   .. ..$ STN_NAME        : chr [1:186977] "KALUMBURU" "KALUMBURU" "KALUMBURU" "KALUMBURU" ...</span></a>
-<a class="sourceLine" id="cb20-7" data-line-number="7"><span class="co">#&gt;   .. ..$ CTRY            : chr [1:186977] "AS" "AS" "AS" "AS" ...</span></a>
-<a class="sourceLine" id="cb20-8" data-line-number="8"><span class="co">#&gt;   .. ..$ STATE           : chr [1:186977] NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb20-9" data-line-number="9"><span class="co">#&gt;   .. ..$ CALL            : chr [1:186977] NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb20-10" data-line-number="10"><span class="co">#&gt;   .. ..$ ELEV_M          : num [1:186977] 24 24 24 24 24 24 24 24 24 24 ...</span></a>
-<a class="sourceLine" id="cb20-11" data-line-number="11"><span class="co">#&gt;   .. ..$ ELEV_M_SRTM_90m : num [1:186977] 17 17 17 17 17 17 17 17 17 17 ...</span></a>
-<a class="sourceLine" id="cb20-12" data-line-number="12"><span class="co">#&gt;   .. ..$ </span><span class="re">BEGIN</span><span class="co">           : num [1:186977] 2e+07 2e+07 2e+07 2e+07 2e+07 ...</span></a>
-<a class="sourceLine" id="cb20-13" data-line-number="13"><span class="co">#&gt;   .. ..$ </span><span class="re">END</span><span class="co">             : num [1:186977] 20171212 20171212 20171212 20171212 20171212 ...</span></a>
-<a class="sourceLine" id="cb20-14" data-line-number="14"><span class="co">#&gt;   .. ..$ YEARMODA        : Date[1:186977], format: "2015-01-01" "2015-01-02" "2015-01-03" ...</span></a>
-<a class="sourceLine" id="cb20-15" data-line-number="15"><span class="co">#&gt;   .. ..$ YEAR            : chr [1:186977] "2015" "2015" "2015" "2015" ...</span></a>
-<a class="sourceLine" id="cb20-16" data-line-number="16"><span class="co">#&gt;   .. ..$ MONTH           : chr [1:186977] "01" "01" "01" "01" ...</span></a>
-<a class="sourceLine" id="cb20-17" data-line-number="17"><span class="co">#&gt;   .. ..$ DAY             : chr [1:186977] "01" "02" "03" "04" ...</span></a>
-<a class="sourceLine" id="cb20-18" data-line-number="18"><span class="co">#&gt;   .. ..$ YDAY            : num [1:186977] 1 2 3 4 5 6 7 8 9 10 ...</span></a>
-<a class="sourceLine" id="cb20-19" data-line-number="19"><span class="co">#&gt;   .. ..$ TEMP            : num [1:186977] 26.9 27.2 26.3 27.3 27.3 26.7 28.1 28.7 27.6 27.8 ...</span></a>
-<a class="sourceLine" id="cb20-20" data-line-number="20"><span class="co">#&gt;   .. ..$ TEMP_CNT        : int [1:186977] 16 16 16 16 16 16 16 16 16 16 ...</span></a>
-<a class="sourceLine" id="cb20-21" data-line-number="21"><span class="co">#&gt;   .. ..$ DEWP            : num [1:186977] 23.2 23.3 23.8 24.1 24.3 24 23.6 23.3 21.9 22.3 ...</span></a>
-<a class="sourceLine" id="cb20-22" data-line-number="22"><span class="co">#&gt;   .. ..$ DEWP_CNT        : int [1:186977] 16 16 16 16 16 16 16 16 16 16 ...</span></a>
-<a class="sourceLine" id="cb20-23" data-line-number="23"><span class="co">#&gt;   .. ..$ SLP             : num [1:186977] 1004 1003 1003 1002 1001 ...</span></a>
-<a class="sourceLine" id="cb20-24" data-line-number="24"><span class="co">#&gt;   .. ..$ SLP_CNT         : int [1:186977] 16 16 16 16 16 16 16 16 16 16 ...</span></a>
-<a class="sourceLine" id="cb20-25" data-line-number="25"><span class="co">#&gt;   .. ..$ STP             : num [1:186977] 1002 1000 NA 999 998 ...</span></a>
-<a class="sourceLine" id="cb20-26" data-line-number="26"><span class="co">#&gt;   .. ..$ STP_CNT         : int [1:186977] 16 16 16 16 16 16 16 16 16 16 ...</span></a>
-<a class="sourceLine" id="cb20-27" data-line-number="27"><span class="co">#&gt;   .. ..$ VISIB           : num [1:186977] NA NA NA NA NA NA NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb20-28" data-line-number="28"><span class="co">#&gt;   .. ..$ VISIB_CNT       : int [1:186977] 0 0 0 0 0 0 0 0 0 0 ...</span></a>
-<a class="sourceLine" id="cb20-29" data-line-number="29"><span class="co">#&gt;   .. ..$ WDSP            : num [1:186977] 1.7 2.2 1.7 2 2.6 3.4 4.5 5.9 4.4 2.4 ...</span></a>
-<a class="sourceLine" id="cb20-30" data-line-number="30"><span class="co">#&gt;   .. ..$ WDSP_CNT        : int [1:186977] 16 16 16 16 16 16 16 16 16 16 ...</span></a>
-<a class="sourceLine" id="cb20-31" data-line-number="31"><span class="co">#&gt;   .. ..$ MXSPD           : num [1:186977] 4.1 4.1 4.1 4.1 5.7 5.7 6.7 9.3 7.7 4.6 ...</span></a>
-<a class="sourceLine" id="cb20-32" data-line-number="32"><span class="co">#&gt;   .. ..$ GUST            : num [1:186977] NA NA NA NA NA NA NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb20-33" data-line-number="33"><span class="co">#&gt;   .. ..$ MAX             : num [1:186977] 31.5 31.3 29.2 32.1 31.4 28.6 30.2 31 32.7 32.9 ...</span></a>
-<a class="sourceLine" id="cb20-34" data-line-number="34"><span class="co">#&gt;   .. ..$ MAX_FLAG        : chr [1:186977] NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb20-35" data-line-number="35"><span class="co">#&gt;   .. ..$ MIN             : num [1:186977] 25 24.9 24.4 24.3 24.6 25.1 24.5 26.3 22.8 22.6 ...</span></a>
-<a class="sourceLine" id="cb20-36" data-line-number="36"><span class="co">#&gt;   .. ..$ MIN_FLAG        : chr [1:186977] NA "*" "*" NA ...</span></a>
-<a class="sourceLine" id="cb20-37" data-line-number="37"><span class="co">#&gt;   .. ..$ PRCP            : num [1:186977] 16.5 12.4 5.1 20.3 41.1 20.1 82.3 2.3 6.1 27.4 ...</span></a>
-<a class="sourceLine" id="cb20-38" data-line-number="38"><span class="co">#&gt;   .. ..$ PRCP_FLAG       : chr [1:186977] "G" "G" "G" "G" ...</span></a>
-<a class="sourceLine" id="cb20-39" data-line-number="39"><span class="co">#&gt;   .. ..$ SNDP            : num [1:186977] NA NA NA NA NA NA NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb20-40" data-line-number="40"><span class="co">#&gt;   .. ..$ I_FOG           : int [1:186977] 0 0 0 0 0 0 0 0 0 0 ...</span></a>
-<a class="sourceLine" id="cb20-41" data-line-number="41"><span class="co">#&gt;   .. ..$ I_RAIN_DRIZZLE  : int [1:186977] 1 1 1 1 1 1 1 1 1 0 ...</span></a>
-<a class="sourceLine" id="cb20-42" data-line-number="42"><span class="co">#&gt;   .. ..$ I_SNOW_ICE      : int [1:186977] 0 0 0 0 0 0 0 0 0 0 ...</span></a>
-<a class="sourceLine" id="cb20-43" data-line-number="43"><span class="co">#&gt;   .. ..$ I_HAIL          : int [1:186977] 0 0 0 0 0 0 0 0 0 0 ...</span></a>
-<a class="sourceLine" id="cb20-44" data-line-number="44"><span class="co">#&gt;   .. ..$ I_THUNDER       : int [1:186977] 0 0 0 0 0 0 0 0 0 0 ...</span></a>
-<a class="sourceLine" id="cb20-45" data-line-number="45"><span class="co">#&gt;   .. ..$ I_TORNADO_FUNNEL: int [1:186977] 0 0 0 0 0 0 0 0 0 0 ...</span></a>
-<a class="sourceLine" id="cb20-46" data-line-number="46"><span class="co">#&gt;   .. ..$ EA              : num [1:186977] 2.8 2.9 2.9 3 3 3 2.9 2.9 2.6 2.7 ...</span></a>
-<a class="sourceLine" id="cb20-47" data-line-number="47"><span class="co">#&gt;   .. ..$ ES              : num [1:186977] 3.5 3.6 3.4 3.6 3.6 3.5 3.8 3.9 3.7 3.7 ...</span></a>
-<a class="sourceLine" id="cb20-48" data-line-number="48"><span class="co">#&gt;   .. ..$ RH              : num [1:186977] 80 80.6 85.3 83.3 83.3 85.7 76.3 74.4 70.3 73 ...</span></a>
-<a class="sourceLine" id="cb20-49" data-line-number="49"><span class="co">#&gt;   ..@ coords.nrs : int [1:2] 9 8</span></a>
-<a class="sourceLine" id="cb20-50" data-line-number="50"><span class="co">#&gt;   ..@ coords     : num [1:186977, 1:2] 127 127 127 127 127 ...</span></a>
-<a class="sourceLine" id="cb20-51" data-line-number="51"><span class="co">#&gt;   .. ..- attr(*, "dimnames")=List of 2</span></a>
-<a class="sourceLine" id="cb20-52" data-line-number="52"><span class="co">#&gt;   .. .. ..$ : chr [1:186977] "1" "2" "3" "4" ...</span></a>
-<a class="sourceLine" id="cb20-53" data-line-number="53"><span class="co">#&gt;   .. .. ..$ : chr [1:2] "LON" "LAT"</span></a>
-<a class="sourceLine" id="cb20-54" data-line-number="54"><span class="co">#&gt;   ..@ bbox       : num [1:2, 1:2] 73.7 -54.5 159.1 -10.1</span></a>
-<a class="sourceLine" id="cb20-55" data-line-number="55"><span class="co">#&gt;   .. ..- attr(*, "dimnames")=List of 2</span></a>
-<a class="sourceLine" id="cb20-56" data-line-number="56"><span class="co">#&gt;   .. .. ..$ : chr [1:2] "LON" "LAT"</span></a>
-<a class="sourceLine" id="cb20-57" data-line-number="57"><span class="co">#&gt;   .. .. ..$ : chr [1:2] "min" "max"</span></a>
-<a class="sourceLine" id="cb20-58" data-line-number="58"><span class="co">#&gt;   ..@ proj4string:Formal class 'CRS' [package "sp"] with 1 slot</span></a>
-<a class="sourceLine" id="cb20-59" data-line-number="59"><span class="co">#&gt;   .. .. ..@ projargs: chr "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"</span></a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># get GSOD data</span>
+<span class="kw">library</span>(sp)
+GSOD &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2015</span>, <span class="dt">country =</span> <span class="st">"Australia"</span>)
+
+<span class="co"># convert to SpatialPointsDataFrame</span>
+<span class="kw"><a href="http://www.rdocumentation.org/packages/sp/topics/coordinates">coordinates</a></span>(GSOD_sp) &lt;-<span class="st"> </span><span class="er">~</span><span class="st"> </span>LON <span class="op">+</span><span class="st"> </span>LAT
+<span class="kw"><a href="http://www.rdocumentation.org/packages/sp/topics/is.projected">proj4string</a></span>(GSOD_sp) &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/sp/topics/CRS-class">CRS</a></span>(<span class="st">"+proj=longlat +datum=WGS84"</span>)
+
+<span class="kw">str</span>(GSOD_sp)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#&gt; Formal class 'SpatialPointsDataFrame' [package "sp"] with 5 slots</span>
+<span class="co">#&gt;   ..@ data       :Classes ‘tbl_df’, ‘tbl’ and 'data.frame':  186977 obs. of  46 variables:</span>
+<span class="co">#&gt;   .. ..$ USAF            : chr [1:186977] "941000" "941000" "941000" "941000" ...</span>
+<span class="co">#&gt;   .. ..$ WBAN            : chr [1:186977] "99999" "99999" "99999" "99999" ...</span>
+<span class="co">#&gt;   .. ..$ STNID           : chr [1:186977] "941000-99999" "941000-99999" "941000-99999" "941000-99999" ...</span>
+<span class="co">#&gt;   .. ..$ STN_NAME        : chr [1:186977] "KALUMBURU" "KALUMBURU" "KALUMBURU" "KALUMBURU" ...</span>
+<span class="co">#&gt;   .. ..$ CTRY            : chr [1:186977] "AS" "AS" "AS" "AS" ...</span>
+<span class="co">#&gt;   .. ..$ STATE           : chr [1:186977] NA NA NA NA ...</span>
+<span class="co">#&gt;   .. ..$ CALL            : chr [1:186977] NA NA NA NA ...</span>
+<span class="co">#&gt;   .. ..$ ELEV_M          : num [1:186977] 24 24 24 24 24 24 24 24 24 24 ...</span>
+<span class="co">#&gt;   .. ..$ ELEV_M_SRTM_90m : num [1:186977] 17 17 17 17 17 17 17 17 17 17 ...</span>
+<span class="co">#&gt;   .. ..$ </span><span class="re">BEGIN</span><span class="co">           : num [1:186977] 2e+07 2e+07 2e+07 2e+07 2e+07 ...</span>
+<span class="co">#&gt;   .. ..$ </span><span class="re">END</span><span class="co">             : num [1:186977] 20171212 20171212 20171212 20171212 20171212 ...</span>
+<span class="co">#&gt;   .. ..$ YEARMODA        : Date[1:186977], format: "2015-01-01" "2015-01-02" "2015-01-03" ...</span>
+<span class="co">#&gt;   .. ..$ YEAR            : chr [1:186977] "2015" "2015" "2015" "2015" ...</span>
+<span class="co">#&gt;   .. ..$ MONTH           : chr [1:186977] "01" "01" "01" "01" ...</span>
+<span class="co">#&gt;   .. ..$ DAY             : chr [1:186977] "01" "02" "03" "04" ...</span>
+<span class="co">#&gt;   .. ..$ YDAY            : num [1:186977] 1 2 3 4 5 6 7 8 9 10 ...</span>
+<span class="co">#&gt;   .. ..$ TEMP            : num [1:186977] 26.9 27.2 26.3 27.3 27.3 26.7 28.1 28.7 27.6 27.8 ...</span>
+<span class="co">#&gt;   .. ..$ TEMP_CNT        : int [1:186977] 16 16 16 16 16 16 16 16 16 16 ...</span>
+<span class="co">#&gt;   .. ..$ DEWP            : num [1:186977] 23.2 23.3 23.8 24.1 24.3 24 23.6 23.3 21.9 22.3 ...</span>
+<span class="co">#&gt;   .. ..$ DEWP_CNT        : int [1:186977] 16 16 16 16 16 16 16 16 16 16 ...</span>
+<span class="co">#&gt;   .. ..$ SLP             : num [1:186977] 1004 1003 1003 1002 1001 ...</span>
+<span class="co">#&gt;   .. ..$ SLP_CNT         : int [1:186977] 16 16 16 16 16 16 16 16 16 16 ...</span>
+<span class="co">#&gt;   .. ..$ STP             : num [1:186977] 1002 1000 NA 999 998 ...</span>
+<span class="co">#&gt;   .. ..$ STP_CNT         : int [1:186977] 16 16 16 16 16 16 16 16 16 16 ...</span>
+<span class="co">#&gt;   .. ..$ VISIB           : num [1:186977] NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;   .. ..$ VISIB_CNT       : int [1:186977] 0 0 0 0 0 0 0 0 0 0 ...</span>
+<span class="co">#&gt;   .. ..$ WDSP            : num [1:186977] 1.7 2.2 1.7 2 2.6 3.4 4.5 5.9 4.4 2.4 ...</span>
+<span class="co">#&gt;   .. ..$ WDSP_CNT        : int [1:186977] 16 16 16 16 16 16 16 16 16 16 ...</span>
+<span class="co">#&gt;   .. ..$ MXSPD           : num [1:186977] 4.1 4.1 4.1 4.1 5.7 5.7 6.7 9.3 7.7 4.6 ...</span>
+<span class="co">#&gt;   .. ..$ GUST            : num [1:186977] NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;   .. ..$ MAX             : num [1:186977] 31.5 31.3 29.2 32.1 31.4 28.6 30.2 31 32.7 32.9 ...</span>
+<span class="co">#&gt;   .. ..$ MAX_FLAG        : chr [1:186977] NA NA NA NA ...</span>
+<span class="co">#&gt;   .. ..$ MIN             : num [1:186977] 25 24.9 24.4 24.3 24.6 25.1 24.5 26.3 22.8 22.6 ...</span>
+<span class="co">#&gt;   .. ..$ MIN_FLAG        : chr [1:186977] NA "*" "*" NA ...</span>
+<span class="co">#&gt;   .. ..$ PRCP            : num [1:186977] 16.5 12.4 5.1 20.3 41.1 20.1 82.3 2.3 6.1 27.4 ...</span>
+<span class="co">#&gt;   .. ..$ PRCP_FLAG       : chr [1:186977] "G" "G" "G" "G" ...</span>
+<span class="co">#&gt;   .. ..$ SNDP            : num [1:186977] NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;   .. ..$ I_FOG           : int [1:186977] 0 0 0 0 0 0 0 0 0 0 ...</span>
+<span class="co">#&gt;   .. ..$ I_RAIN_DRIZZLE  : int [1:186977] 1 1 1 1 1 1 1 1 1 0 ...</span>
+<span class="co">#&gt;   .. ..$ I_SNOW_ICE      : int [1:186977] 0 0 0 0 0 0 0 0 0 0 ...</span>
+<span class="co">#&gt;   .. ..$ I_HAIL          : int [1:186977] 0 0 0 0 0 0 0 0 0 0 ...</span>
+<span class="co">#&gt;   .. ..$ I_THUNDER       : int [1:186977] 0 0 0 0 0 0 0 0 0 0 ...</span>
+<span class="co">#&gt;   .. ..$ I_TORNADO_FUNNEL: int [1:186977] 0 0 0 0 0 0 0 0 0 0 ...</span>
+<span class="co">#&gt;   .. ..$ EA              : num [1:186977] 2.8 2.9 2.9 3 3 3 2.9 2.9 2.6 2.7 ...</span>
+<span class="co">#&gt;   .. ..$ ES              : num [1:186977] 3.5 3.6 3.4 3.6 3.6 3.5 3.8 3.9 3.7 3.7 ...</span>
+<span class="co">#&gt;   .. ..$ RH              : num [1:186977] 80 80.6 85.3 83.3 83.3 85.7 76.3 74.4 70.3 73 ...</span>
+<span class="co">#&gt;   ..@ coords.nrs : int [1:2] 9 8</span>
+<span class="co">#&gt;   ..@ coords     : num [1:186977, 1:2] 127 127 127 127 127 ...</span>
+<span class="co">#&gt;   .. ..- attr(*, "dimnames")=List of 2</span>
+<span class="co">#&gt;   .. .. ..$ : chr [1:186977] "1" "2" "3" "4" ...</span>
+<span class="co">#&gt;   .. .. ..$ : chr [1:2] "LON" "LAT"</span>
+<span class="co">#&gt;   ..@ bbox       : num [1:2, 1:2] 73.7 -54.5 159.1 -10.1</span>
+<span class="co">#&gt;   .. ..- attr(*, "dimnames")=List of 2</span>
+<span class="co">#&gt;   .. .. ..$ : chr [1:2] "LON" "LAT"</span>
+<span class="co">#&gt;   .. .. ..$ : chr [1:2] "min" "max"</span>
+<span class="co">#&gt;   ..@ proj4string:Formal class 'CRS' [package "sp"] with 1 slot</span>
+<span class="co">#&gt;   .. .. ..@ projargs: chr "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"</span></code></pre></div>
 </div>
 <div id="saving-sp-objects" class="section level2">
 <h2 class="hasAnchor">
 <a href="#saving-sp-objects" class="anchor"></a>Saving <em>sp</em> objects</h2>
 <p>Using <code><a href="http://www.rdocumentation.org/packages/rgdal/topics/writeOGR">writeOGR()</a></code> it is simple to save as a GeoPackage file.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw">library</span>(rgdal)</a>
-<a class="sourceLine" id="cb21-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb21-3" data-line-number="3">  <span class="kw"><a href="http://www.rdocumentation.org/packages/rgdal/topics/writeOGR">writeOGR</a></span>(</a>
-<a class="sourceLine" id="cb21-4" data-line-number="4">    GSOD_sp,</a>
-<a class="sourceLine" id="cb21-5" data-line-number="5">    <span class="dt">dsn =</span> <span class="kw">path.expand</span>(<span class="st">"~/"</span>),</a>
-<a class="sourceLine" id="cb21-6" data-line-number="6">    <span class="dt">layer =</span> <span class="st">"GSOD"</span>,</a>
-<a class="sourceLine" id="cb21-7" data-line-number="7">    <span class="dt">driver =</span> <span class="st">"GPKG"</span></a>
-<a class="sourceLine" id="cb21-8" data-line-number="8">  )</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rgdal)
+
+  <span class="kw"><a href="http://www.rdocumentation.org/packages/rgdal/topics/writeOGR">writeOGR</a></span>(
+    GSOD_sp,
+    <span class="dt">dsn =</span> <span class="kw">path.expand</span>(<span class="st">"~/"</span>),
+    <span class="dt">layer =</span> <span class="st">"GSOD"</span>,
+    <span class="dt">driver =</span> <span class="st">"GPKG"</span>
+  )</code></pre></div>
 <p>Using <code><a href="http://www.rdocumentation.org/packages/rgdal/topics/writeOGR">writeOGR()</a></code> it is simple to save as an ESRI shapefile.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">  <span class="kw"><a href="http://www.rdocumentation.org/packages/rgdal/topics/writeOGR">writeOGR</a></span>(</a>
-<a class="sourceLine" id="cb22-2" data-line-number="2">    GSOD_sp,</a>
-<a class="sourceLine" id="cb22-3" data-line-number="3">    <span class="dt">dsn =</span> <span class="kw">path.expand</span>(<span class="st">"~/"</span>),</a>
-<a class="sourceLine" id="cb22-4" data-line-number="4">    <span class="dt">layer =</span> <span class="st">"GSOD"</span>,</a>
-<a class="sourceLine" id="cb22-5" data-line-number="5">    <span class="dt">driver =</span> <span class="st">"ESRI Shapefile"</span></a>
-<a class="sourceLine" id="cb22-6" data-line-number="6">  )</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  <span class="kw"><a href="http://www.rdocumentation.org/packages/rgdal/topics/writeOGR">writeOGR</a></span>(
+    GSOD_sp,
+    <span class="dt">dsn =</span> <span class="kw">path.expand</span>(<span class="st">"~/"</span>),
+    <span class="dt">layer =</span> <span class="st">"GSOD"</span>,
+    <span class="dt">driver =</span> <span class="st">"ESRI Shapefile"</span>
+  )</code></pre></div>
 </div>
 <div id="converting-to-an-sf-object" class="section level2">
 <h2 class="hasAnchor">
@@ -365,97 +365,97 @@
 <p>Simple features or simple feature access refers to a formal standard (ISO 19125-1:2004) that describes how objects in the real world can be represented in computers, with emphasis on the spatial geometry of these objects. It also describes how such objects can be stored in and retrieved from databases, and which geometrical operations should be defined for them. The standard is widely implemented in spatial databases (such as PostGIS), commercial GIS (e.g., ESRI ArcGIS) and forms the vector data basis for libraries such as GDAL. A subset of simple features forms the GeoJSON standard.</p>
 </blockquote>
 <p>For this example, we convert the GSOD data to an <em>sf</em> object.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">library</span>(sf)</a>
-<a class="sourceLine" id="cb23-2" data-line-number="2">GSOD_SF &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/st_as_sf">st_as_sf</a></span>(<span class="dt">x =</span> GSOD, </a>
-<a class="sourceLine" id="cb23-3" data-line-number="3">                        <span class="dt">coords =</span> <span class="kw">c</span>(<span class="st">"LON"</span>, <span class="st">"LAT"</span>),</a>
-<a class="sourceLine" id="cb23-4" data-line-number="4">                        <span class="dt">crs =</span> <span class="st">"+proj=longlat +datum=WGS84"</span>)</a>
-<a class="sourceLine" id="cb23-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb23-6" data-line-number="6"><span class="kw">str</span>(GSOD_SF)</a></code></pre></div>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="co">#&gt; Classes ‘sf’ and 'data.frame':   186977 obs. of  47 variables:</span></a>
-<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="co">#&gt;  $ USAF            : chr  "941000" "941000" "941000" "941000" ...</span></a>
-<a class="sourceLine" id="cb24-3" data-line-number="3"><span class="co">#&gt;  $ WBAN            : chr  "99999" "99999" "99999" "99999" ...</span></a>
-<a class="sourceLine" id="cb24-4" data-line-number="4"><span class="co">#&gt;  $ STNID           : chr  "941000-99999" "941000-99999" "941000-99999" "941000-99999" ...</span></a>
-<a class="sourceLine" id="cb24-5" data-line-number="5"><span class="co">#&gt;  $ STN_NAME        : chr  "KALUMBURU" "KALUMBURU" "KALUMBURU" "KALUMBURU" ...</span></a>
-<a class="sourceLine" id="cb24-6" data-line-number="6"><span class="co">#&gt;  $ CTRY            : chr  "AS" "AS" "AS" "AS" ...</span></a>
-<a class="sourceLine" id="cb24-7" data-line-number="7"><span class="co">#&gt;  $ STATE           : chr  NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb24-8" data-line-number="8"><span class="co">#&gt;  $ CALL            : chr  NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb24-9" data-line-number="9"><span class="co">#&gt;  $ ELEV_M          : num  24 24 24 24 24 24 24 24 24 24 ...</span></a>
-<a class="sourceLine" id="cb24-10" data-line-number="10"><span class="co">#&gt;  $ ELEV_M_SRTM_90m : num  17 17 17 17 17 17 17 17 17 17 ...</span></a>
-<a class="sourceLine" id="cb24-11" data-line-number="11"><span class="co">#&gt;  $ </span><span class="re">BEGIN</span><span class="co">           : num  2e+07 2e+07 2e+07 2e+07 2e+07 ...</span></a>
-<a class="sourceLine" id="cb24-12" data-line-number="12"><span class="co">#&gt;  $ </span><span class="re">END</span><span class="co">             : num  20171212 20171212 20171212 20171212 20171212 ...</span></a>
-<a class="sourceLine" id="cb24-13" data-line-number="13"><span class="co">#&gt;  $ YEARMODA        : Date, format: "2015-01-01" "2015-01-02" ...</span></a>
-<a class="sourceLine" id="cb24-14" data-line-number="14"><span class="co">#&gt;  $ YEAR            : chr  "2015" "2015" "2015" "2015" ...</span></a>
-<a class="sourceLine" id="cb24-15" data-line-number="15"><span class="co">#&gt;  $ MONTH           : chr  "01" "01" "01" "01" ...</span></a>
-<a class="sourceLine" id="cb24-16" data-line-number="16"><span class="co">#&gt;  $ DAY             : chr  "01" "02" "03" "04" ...</span></a>
-<a class="sourceLine" id="cb24-17" data-line-number="17"><span class="co">#&gt;  $ YDAY            : num  1 2 3 4 5 6 7 8 9 10 ...</span></a>
-<a class="sourceLine" id="cb24-18" data-line-number="18"><span class="co">#&gt;  $ TEMP            : num  26.9 27.2 26.3 27.3 27.3 26.7 28.1 28.7 27.6 27.8 ...</span></a>
-<a class="sourceLine" id="cb24-19" data-line-number="19"><span class="co">#&gt;  $ TEMP_CNT        : int  16 16 16 16 16 16 16 16 16 16 ...</span></a>
-<a class="sourceLine" id="cb24-20" data-line-number="20"><span class="co">#&gt;  $ DEWP            : num  23.2 23.3 23.8 24.1 24.3 24 23.6 23.3 21.9 22.3 ...</span></a>
-<a class="sourceLine" id="cb24-21" data-line-number="21"><span class="co">#&gt;  $ DEWP_CNT        : int  16 16 16 16 16 16 16 16 16 16 ...</span></a>
-<a class="sourceLine" id="cb24-22" data-line-number="22"><span class="co">#&gt;  $ SLP             : num  1004 1003 1003 1002 1001 ...</span></a>
-<a class="sourceLine" id="cb24-23" data-line-number="23"><span class="co">#&gt;  $ SLP_CNT         : int  16 16 16 16 16 16 16 16 16 16 ...</span></a>
-<a class="sourceLine" id="cb24-24" data-line-number="24"><span class="co">#&gt;  $ STP             : num  1002 1000 NA 999 998 ...</span></a>
-<a class="sourceLine" id="cb24-25" data-line-number="25"><span class="co">#&gt;  $ STP_CNT         : int  16 16 16 16 16 16 16 16 16 16 ...</span></a>
-<a class="sourceLine" id="cb24-26" data-line-number="26"><span class="co">#&gt;  $ VISIB           : num  NA NA NA NA NA NA NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb24-27" data-line-number="27"><span class="co">#&gt;  $ VISIB_CNT       : int  0 0 0 0 0 0 0 0 0 0 ...</span></a>
-<a class="sourceLine" id="cb24-28" data-line-number="28"><span class="co">#&gt;  $ WDSP            : num  1.7 2.2 1.7 2 2.6 3.4 4.5 5.9 4.4 2.4 ...</span></a>
-<a class="sourceLine" id="cb24-29" data-line-number="29"><span class="co">#&gt;  $ WDSP_CNT        : int  16 16 16 16 16 16 16 16 16 16 ...</span></a>
-<a class="sourceLine" id="cb24-30" data-line-number="30"><span class="co">#&gt;  $ MXSPD           : num  4.1 4.1 4.1 4.1 5.7 5.7 6.7 9.3 7.7 4.6 ...</span></a>
-<a class="sourceLine" id="cb24-31" data-line-number="31"><span class="co">#&gt;  $ GUST            : num  NA NA NA NA NA NA NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb24-32" data-line-number="32"><span class="co">#&gt;  $ MAX             : num  31.5 31.3 29.2 32.1 31.4 28.6 30.2 31 32.7 32.9 ...</span></a>
-<a class="sourceLine" id="cb24-33" data-line-number="33"><span class="co">#&gt;  $ MAX_FLAG        : chr  NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb24-34" data-line-number="34"><span class="co">#&gt;  $ MIN             : num  25 24.9 24.4 24.3 24.6 25.1 24.5 26.3 22.8 22.6 ...</span></a>
-<a class="sourceLine" id="cb24-35" data-line-number="35"><span class="co">#&gt;  $ MIN_FLAG        : chr  NA "*" "*" NA ...</span></a>
-<a class="sourceLine" id="cb24-36" data-line-number="36"><span class="co">#&gt;  $ PRCP            : num  16.5 12.4 5.1 20.3 41.1 20.1 82.3 2.3 6.1 27.4 ...</span></a>
-<a class="sourceLine" id="cb24-37" data-line-number="37"><span class="co">#&gt;  $ PRCP_FLAG       : chr  "G" "G" "G" "G" ...</span></a>
-<a class="sourceLine" id="cb24-38" data-line-number="38"><span class="co">#&gt;  $ SNDP            : num  NA NA NA NA NA NA NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb24-39" data-line-number="39"><span class="co">#&gt;  $ I_FOG           : int  0 0 0 0 0 0 0 0 0 0 ...</span></a>
-<a class="sourceLine" id="cb24-40" data-line-number="40"><span class="co">#&gt;  $ I_RAIN_DRIZZLE  : int  1 1 1 1 1 1 1 1 1 0 ...</span></a>
-<a class="sourceLine" id="cb24-41" data-line-number="41"><span class="co">#&gt;  $ I_SNOW_ICE      : int  0 0 0 0 0 0 0 0 0 0 ...</span></a>
-<a class="sourceLine" id="cb24-42" data-line-number="42"><span class="co">#&gt;  $ I_HAIL          : int  0 0 0 0 0 0 0 0 0 0 ...</span></a>
-<a class="sourceLine" id="cb24-43" data-line-number="43"><span class="co">#&gt;  $ I_THUNDER       : int  0 0 0 0 0 0 0 0 0 0 ...</span></a>
-<a class="sourceLine" id="cb24-44" data-line-number="44"><span class="co">#&gt;  $ I_TORNADO_FUNNEL: int  0 0 0 0 0 0 0 0 0 0 ...</span></a>
-<a class="sourceLine" id="cb24-45" data-line-number="45"><span class="co">#&gt;  $ EA              : num  2.8 2.9 2.9 3 3 3 2.9 2.9 2.6 2.7 ...</span></a>
-<a class="sourceLine" id="cb24-46" data-line-number="46"><span class="co">#&gt;  $ ES              : num  3.5 3.6 3.4 3.6 3.6 3.5 3.8 3.9 3.7 3.7 ...</span></a>
-<a class="sourceLine" id="cb24-47" data-line-number="47"><span class="co">#&gt;  $ RH              : num  80 80.6 85.3 83.3 83.3 85.7 76.3 74.4 70.3 73 ...</span></a>
-<a class="sourceLine" id="cb24-48" data-line-number="48"><span class="co">#&gt;  $ geometry        :sfc_POINT of length 186977; first list element: Classes 'XY', 'POINT', 'sfg'  num [1:2] 126.6 -14.3</span></a>
-<a class="sourceLine" id="cb24-49" data-line-number="49"><span class="co">#&gt;  - attr(*, "sf_column")= chr "geometry"</span></a>
-<a class="sourceLine" id="cb24-50" data-line-number="50"><span class="co">#&gt;  - attr(*, "agr")= Factor w/ 3 levels "constant","aggregate",..: NA NA NA NA NA NA NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb24-51" data-line-number="51"><span class="co">#&gt;   ..- attr(*, "names")= chr  "USAF" "WBAN" "STNID" "STN_NAME" ...</span></a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sf)
+GSOD_SF &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/st_as_sf">st_as_sf</a></span>(<span class="dt">x =</span> GSOD, 
+                        <span class="dt">coords =</span> <span class="kw">c</span>(<span class="st">"LON"</span>, <span class="st">"LAT"</span>),
+                        <span class="dt">crs =</span> <span class="st">"+proj=longlat +datum=WGS84"</span>)
+
+<span class="kw">str</span>(GSOD_SF)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#&gt; Classes ‘sf’ and 'data.frame':   186977 obs. of  47 variables:</span>
+<span class="co">#&gt;  $ USAF            : chr  "941000" "941000" "941000" "941000" ...</span>
+<span class="co">#&gt;  $ WBAN            : chr  "99999" "99999" "99999" "99999" ...</span>
+<span class="co">#&gt;  $ STNID           : chr  "941000-99999" "941000-99999" "941000-99999" "941000-99999" ...</span>
+<span class="co">#&gt;  $ STN_NAME        : chr  "KALUMBURU" "KALUMBURU" "KALUMBURU" "KALUMBURU" ...</span>
+<span class="co">#&gt;  $ CTRY            : chr  "AS" "AS" "AS" "AS" ...</span>
+<span class="co">#&gt;  $ STATE           : chr  NA NA NA NA ...</span>
+<span class="co">#&gt;  $ CALL            : chr  NA NA NA NA ...</span>
+<span class="co">#&gt;  $ ELEV_M          : num  24 24 24 24 24 24 24 24 24 24 ...</span>
+<span class="co">#&gt;  $ ELEV_M_SRTM_90m : num  17 17 17 17 17 17 17 17 17 17 ...</span>
+<span class="co">#&gt;  $ </span><span class="re">BEGIN</span><span class="co">           : num  2e+07 2e+07 2e+07 2e+07 2e+07 ...</span>
+<span class="co">#&gt;  $ </span><span class="re">END</span><span class="co">             : num  20171212 20171212 20171212 20171212 20171212 ...</span>
+<span class="co">#&gt;  $ YEARMODA        : Date, format: "2015-01-01" "2015-01-02" ...</span>
+<span class="co">#&gt;  $ YEAR            : chr  "2015" "2015" "2015" "2015" ...</span>
+<span class="co">#&gt;  $ MONTH           : chr  "01" "01" "01" "01" ...</span>
+<span class="co">#&gt;  $ DAY             : chr  "01" "02" "03" "04" ...</span>
+<span class="co">#&gt;  $ YDAY            : num  1 2 3 4 5 6 7 8 9 10 ...</span>
+<span class="co">#&gt;  $ TEMP            : num  26.9 27.2 26.3 27.3 27.3 26.7 28.1 28.7 27.6 27.8 ...</span>
+<span class="co">#&gt;  $ TEMP_CNT        : int  16 16 16 16 16 16 16 16 16 16 ...</span>
+<span class="co">#&gt;  $ DEWP            : num  23.2 23.3 23.8 24.1 24.3 24 23.6 23.3 21.9 22.3 ...</span>
+<span class="co">#&gt;  $ DEWP_CNT        : int  16 16 16 16 16 16 16 16 16 16 ...</span>
+<span class="co">#&gt;  $ SLP             : num  1004 1003 1003 1002 1001 ...</span>
+<span class="co">#&gt;  $ SLP_CNT         : int  16 16 16 16 16 16 16 16 16 16 ...</span>
+<span class="co">#&gt;  $ STP             : num  1002 1000 NA 999 998 ...</span>
+<span class="co">#&gt;  $ STP_CNT         : int  16 16 16 16 16 16 16 16 16 16 ...</span>
+<span class="co">#&gt;  $ VISIB           : num  NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ VISIB_CNT       : int  0 0 0 0 0 0 0 0 0 0 ...</span>
+<span class="co">#&gt;  $ WDSP            : num  1.7 2.2 1.7 2 2.6 3.4 4.5 5.9 4.4 2.4 ...</span>
+<span class="co">#&gt;  $ WDSP_CNT        : int  16 16 16 16 16 16 16 16 16 16 ...</span>
+<span class="co">#&gt;  $ MXSPD           : num  4.1 4.1 4.1 4.1 5.7 5.7 6.7 9.3 7.7 4.6 ...</span>
+<span class="co">#&gt;  $ GUST            : num  NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ MAX             : num  31.5 31.3 29.2 32.1 31.4 28.6 30.2 31 32.7 32.9 ...</span>
+<span class="co">#&gt;  $ MAX_FLAG        : chr  NA NA NA NA ...</span>
+<span class="co">#&gt;  $ MIN             : num  25 24.9 24.4 24.3 24.6 25.1 24.5 26.3 22.8 22.6 ...</span>
+<span class="co">#&gt;  $ MIN_FLAG        : chr  NA "*" "*" NA ...</span>
+<span class="co">#&gt;  $ PRCP            : num  16.5 12.4 5.1 20.3 41.1 20.1 82.3 2.3 6.1 27.4 ...</span>
+<span class="co">#&gt;  $ PRCP_FLAG       : chr  "G" "G" "G" "G" ...</span>
+<span class="co">#&gt;  $ SNDP            : num  NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ I_FOG           : int  0 0 0 0 0 0 0 0 0 0 ...</span>
+<span class="co">#&gt;  $ I_RAIN_DRIZZLE  : int  1 1 1 1 1 1 1 1 1 0 ...</span>
+<span class="co">#&gt;  $ I_SNOW_ICE      : int  0 0 0 0 0 0 0 0 0 0 ...</span>
+<span class="co">#&gt;  $ I_HAIL          : int  0 0 0 0 0 0 0 0 0 0 ...</span>
+<span class="co">#&gt;  $ I_THUNDER       : int  0 0 0 0 0 0 0 0 0 0 ...</span>
+<span class="co">#&gt;  $ I_TORNADO_FUNNEL: int  0 0 0 0 0 0 0 0 0 0 ...</span>
+<span class="co">#&gt;  $ EA              : num  2.8 2.9 2.9 3 3 3 2.9 2.9 2.6 2.7 ...</span>
+<span class="co">#&gt;  $ ES              : num  3.5 3.6 3.4 3.6 3.6 3.5 3.8 3.9 3.7 3.7 ...</span>
+<span class="co">#&gt;  $ RH              : num  80 80.6 85.3 83.3 83.3 85.7 76.3 74.4 70.3 73 ...</span>
+<span class="co">#&gt;  $ geometry        :sfc_POINT of length 186977; first list element: Classes 'XY', 'POINT', 'sfg'  num [1:2] 126.6 -14.3</span>
+<span class="co">#&gt;  - attr(*, "sf_column")= chr "geometry"</span>
+<span class="co">#&gt;  - attr(*, "agr")= Factor w/ 3 levels "constant","aggregate",..: NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;   ..- attr(*, "names")= chr  "USAF" "WBAN" "STNID" "STN_NAME" ...</span></code></pre></div>
 </div>
 <div id="saving-sf-objects" class="section level2">
 <h2 class="hasAnchor">
 <a href="#saving-sf-objects" class="anchor"></a>Saving <em>sf</em> objects</h2>
 <p>Writing a shapefile is a simple matter.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/st_write">write_sf</a></span>(GSOD_SF, <span class="st">"GSOD.shp"</span>) <span class="co"># silently overwrites</span></a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/st_write">write_sf</a></span>(GSOD_SF, <span class="st">"GSOD.shp"</span>) <span class="co"># silently overwrites</span></code></pre></div>
 <p>As is writing a GeoPackage from the <em>sf</em> object.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/st_write">write_sf</a></span>(GSOD_SF, <span class="st">"~/GSOD.gpkg"</span>) <span class="co"># silently overwrites</span></a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/st_write">write_sf</a></span>(GSOD_SF, <span class="st">"~/GSOD.gpkg"</span>) <span class="co"># silently overwrites</span></code></pre></div>
 <p>After getting weather stations for Australia and creating a GeoPackage file, <em>rgdal</em> can import the data into R again in a spatial format.</p>
 <p>Importing a GeoPackage file can be a bit tricky. The dsn will be the full path along with the file name. The layer to be specified is “GSOD”, this is specified in the <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> function and will not change. The file name, specified in the dsn will, but the layer name will not.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw">library</span>(rgdal)</a>
-<a class="sourceLine" id="cb27-2" data-line-number="2"><span class="co">#&gt; Loading required package: sp</span></a>
-<a class="sourceLine" id="cb27-3" data-line-number="3"><span class="co">#&gt; rgdal: version: 1.1-10, (SVN revision 622)</span></a>
-<a class="sourceLine" id="cb27-4" data-line-number="4"><span class="co">#&gt;  Geospatial Data Abstraction Library extensions to R successfully loaded</span></a>
-<a class="sourceLine" id="cb27-5" data-line-number="5"><span class="co">#&gt;  Loaded GDAL runtime: GDAL 1.11.5, released 2016/07/01</span></a>
-<a class="sourceLine" id="cb27-6" data-line-number="6"><span class="co">#&gt;  Path to GDAL shared files: /usr/local/Cellar/gdal/1.11.5_1/share/gdal</span></a>
-<a class="sourceLine" id="cb27-7" data-line-number="7"><span class="co">#&gt;  Loaded PROJ.4 runtime: Rel. 4.9.3, 15 August 2016, [PJ_VERSION: 493]</span></a>
-<a class="sourceLine" id="cb27-8" data-line-number="8"><span class="co">#&gt;  Path to PROJ.4 shared files: (autodetected)</span></a>
-<a class="sourceLine" id="cb27-9" data-line-number="9"><span class="co">#&gt;  Linking to sp version: 1.2-3</span></a>
-<a class="sourceLine" id="cb27-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb27-11" data-line-number="11">AUS_stations &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/rgdal/topics/readOGR">readOGR</a></span>(<span class="dt">dsn =</span> <span class="kw">path.expand</span>(<span class="st">"~/GSOD.gpkg"</span>), <span class="dt">layer =</span> <span class="st">"GSOD"</span>)</a>
-<a class="sourceLine" id="cb27-12" data-line-number="12"><span class="co">#&gt; OGR data source with driver: GPKG</span></a>
-<a class="sourceLine" id="cb27-13" data-line-number="13"><span class="co">#&gt; Source: "/Users/asparks/AUS-2015.gpkg", layer: "GSOD"</span></a>
-<a class="sourceLine" id="cb27-14" data-line-number="14"><span class="co">#&gt; with 186977 features</span></a>
-<a class="sourceLine" id="cb27-15" data-line-number="15"><span class="co">#&gt; It has 46 fields</span></a>
-<a class="sourceLine" id="cb27-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb27-17" data-line-number="17"><span class="kw">class</span>(AUS_stations)</a>
-<a class="sourceLine" id="cb27-18" data-line-number="18"><span class="co">#&gt; [1] "SpatialPointsDataFrame"</span></a>
-<a class="sourceLine" id="cb27-19" data-line-number="19"><span class="co">#&gt; attr(,"package")</span></a>
-<a class="sourceLine" id="cb27-20" data-line-number="20"><span class="co">#&gt; [1] "sp"</span></a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rgdal)
+<span class="co">#&gt; Loading required package: sp</span>
+<span class="co">#&gt; rgdal: version: 1.1-10, (SVN revision 622)</span>
+<span class="co">#&gt;  Geospatial Data Abstraction Library extensions to R successfully loaded</span>
+<span class="co">#&gt;  Loaded GDAL runtime: GDAL 1.11.5, released 2016/07/01</span>
+<span class="co">#&gt;  Path to GDAL shared files: /usr/local/Cellar/gdal/1.11.5_1/share/gdal</span>
+<span class="co">#&gt;  Loaded PROJ.4 runtime: Rel. 4.9.3, 15 August 2016, [PJ_VERSION: 493]</span>
+<span class="co">#&gt;  Path to PROJ.4 shared files: (autodetected)</span>
+<span class="co">#&gt;  Linking to sp version: 1.2-3</span>
+
+AUS_stations &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/rgdal/topics/readOGR">readOGR</a></span>(<span class="dt">dsn =</span> <span class="kw">path.expand</span>(<span class="st">"~/GSOD.gpkg"</span>), <span class="dt">layer =</span> <span class="st">"GSOD"</span>)
+<span class="co">#&gt; OGR data source with driver: GPKG</span>
+<span class="co">#&gt; Source: "/Users/asparks/AUS-2015.gpkg", layer: "GSOD"</span>
+<span class="co">#&gt; with 186977 features</span>
+<span class="co">#&gt; It has 46 fields</span>
+
+<span class="kw">class</span>(AUS_stations)
+<span class="co">#&gt; [1] "SpatialPointsDataFrame"</span>
+<span class="co">#&gt; attr(,"package")</span>
+<span class="co">#&gt; [1] "sp"</span></code></pre></div>
 <p>Since GeoPackage files are formatted as SQLite databases you can use the existing R tools for SQLite files <a href="https://jsta.github.io/2016/07/14/geopackage-r.html">(J. Stachelek 2016)</a>. One easy way is using <em>dplyr</em>. This option is much faster to load since it does not load the geometry.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">AUS_sqlite &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="kw"><a href="http://dplyr.tidyverse.org/reference/src_dbi.html">src_sqlite</a></span>(<span class="kw">path.expand</span>(<span class="st">"~/GSOD.gpkg"</span>)), <span class="st">"GSOD"</span>)</a>
-<a class="sourceLine" id="cb28-2" data-line-number="2"><span class="kw">class</span>(AUS_sqlite)</a>
-<a class="sourceLine" id="cb28-3" data-line-number="3"><span class="co">#&gt; [1] "tbl_dbi"  "tbl_sql"  "tbl_lazy" "tbl"</span></a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">AUS_sqlite &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="kw"><a href="http://dplyr.tidyverse.org/reference/src_dbi.html">src_sqlite</a></span>(<span class="kw">path.expand</span>(<span class="st">"~/GSOD.gpkg"</span>)), <span class="st">"GSOD"</span>)
+<span class="kw">class</span>(AUS_sqlite)
+<span class="co">#&gt; [1] "tbl_dbi"  "tbl_sql"  "tbl_lazy" "tbl"</span></code></pre></div>
 </div>
 </div>
 <div id="using-reformat_gsod" class="section level1">
@@ -466,14 +466,14 @@
 <div id="reformat-a-list-of-local-files" class="section level2">
 <h2 class="hasAnchor">
 <a href="#reformat-a-list-of-local-files" class="anchor"></a>Reformat a list of local files</h2>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"~/GSOD/gsod_1960/200490-99999-1960.op.gz"</span>,</a>
-<a class="sourceLine" id="cb29-2" data-line-number="2">       <span class="st">"~/GSOD/gsod_1961/200490-99999-1961.op.gz"</span>)</a>
-<a class="sourceLine" id="cb29-3" data-line-number="3">x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reformat_GSOD.html">reformat_GSOD</a></span>(<span class="dt">file_list =</span> y)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"~/GSOD/gsod_1960/200490-99999-1960.op.gz"</span>,
+       <span class="st">"~/GSOD/gsod_1961/200490-99999-1961.op.gz"</span>)
+x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reformat_GSOD.html">reformat_GSOD</a></span>(<span class="dt">file_list =</span> y)</code></pre></div>
 </div>
 <div id="reformat-all-local-files-found-in-directory" class="section level2">
 <h2 class="hasAnchor">
 <a href="#reformat-all-local-files-found-in-directory" class="anchor"></a>Reformat all local files found in directory</h2>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reformat_GSOD.html">reformat_GSOD</a></span>(<span class="dt">dsn =</span> <span class="st">"~/GSOD/gsod_1960"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reformat_GSOD.html">reformat_GSOD</a></span>(<span class="dt">dsn =</span> <span class="st">"~/GSOD/gsod_1960"</span>)</code></pre></div>
 </div>
 </div>
 <div id="using-update_station_list" class="section level1">
@@ -488,19 +488,19 @@
 <a href="#using-get_inventory" class="anchor"></a>Using get_inventory()</h1>
 <p><em>GSODR</em> provides a function, <code><a href="../reference/get_inventory.html">get_inventory()</a></code> to retrieve an inventory of the number of weather observations by station-year-month for the beginning of record through to current.</p>
 <p>Following is an example of how to retrieve the inventory and check a station in Toowoomba, Queensland, Australia, which was used in an earlier example.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">inventory &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_inventory.html">get_inventory</a></span>()</a>
-<a class="sourceLine" id="cb31-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb31-3" data-line-number="3">inventory</a>
-<a class="sourceLine" id="cb31-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb31-5" data-line-number="5"><span class="kw">subset</span>(inventory, STNID <span class="op">==</span><span class="st"> "955510-99999"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">inventory &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_inventory.html">get_inventory</a></span>()
+
+inventory
+
+<span class="kw">subset</span>(inventory, STNID <span class="op">==</span><span class="st"> "955510-99999"</span>)</code></pre></div>
 </div>
 <div id="additional-climate-data-availability" class="section level1">
 <h1 class="hasAnchor">
 <a href="#additional-climate-data-availability" class="anchor"></a>Additional Climate Data Availability</h1>
 <p>Additional climate data, <a href="https://github.com/adamhsparks/GSODRdata"><em>GSODRdata</em></a>, formatted for use with GSOD data provided by <em>GSODR</em> are available as an R package, which can only be installed through GitHub due to the package size, 5.1Mb, being too large for CRAN.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="co">#install.packages("devtools")</span></a>
-<a class="sourceLine" id="cb32-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"adamhsparks/GSODRdata"</span>)</a>
-<a class="sourceLine" id="cb32-3" data-line-number="3"><span class="kw">library</span>(<span class="st">"GSODRdata"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages("devtools")</span>
+devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"adamhsparks/GSODRdata"</span>)
+<span class="kw">library</span>(<span class="st">"GSODRdata"</span>)</code></pre></div>
 </div>
 <div id="notes" class="section level1">
 <h1 class="hasAnchor">
@@ -539,7 +539,7 @@
 <li><p><strong>LAT</strong> - Latitude. <em>Station dropped in cases where values are &lt; -90 or &gt; 90 degrees or Lat = 0 and Lon = 0</em>;</p></li>
 <li><p><strong>LON</strong> - Longitude. <em>Station dropped in cases where values are &lt; -180 or &gt; 180 degrees or Lat = 0 and Lon = 0</em>;</p></li>
 <li><p><strong>ELEV_M</strong> - Elevation in metres;</p></li>
-<li><p><strong>ELEV_M_SRTM_90m</strong> - Elevation in metres corrected for possible errors, derived from the CGIAR-CSI SRTM 90m database (Jarvis et al. 2008);</p></li>
+<li><p><strong>ELEV_M_SRTM_90m</strong> - Elevation in metres corrected for possible errors, derived from the CGIAR-CSI SRTM 90m database (Jarvis et al. 2008);</p></li>
 <li><p><strong>YEARMODA</strong> - Date in YYYY-mm-dd format;</p></li>
 <li><p><strong>YEAR</strong> - The year (YYYY);</p></li>
 <li><p><strong>MONTH</strong> - The month (mm);</p></li>

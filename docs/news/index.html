@@ -228,16 +228,17 @@
 <h2 class="hasAnchor">
 <a href="#bug-fixes-4" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>Fixes bug reported in <a href="https://github.com/ropensci/GSODR/issues/36">issue 36</a>
+<li>
+<p>Fixes bug reported in <a href="https://github.com/ropensci/GSODR/issues/36">issue 36</a></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>t &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> <span class="st">"955510-99999"</span>)
+Error <span class="cf">in</span> <span class="kw">.f</span>(.x[[i]], ...) <span class="op">:</span><span class="st"> </span>
+<span class="dv">955510</span><span class="op">-</span><span class="dv">99999</span> is not a valid station ID number, please check your entry.
+Valid Station IDs can be found <span class="cf">in</span> the isd<span class="op">-</span>history.txt file
+available from the US NCEI FTP server by combining the USAF and WBAN
+columns, e.g. <span class="st">'007005'</span> <span class="st">'99999'</span> is <span class="st">'007005-99999'</span> from this file 
+<span class="op">&lt;</span>ftp<span class="op">:</span><span class="er">//</span>ftp.ncdc.noaa.gov<span class="op">/</span>pub<span class="op">/</span>data<span class="op">/</span>noaa<span class="op">/</span>isd<span class="op">-</span>history.txt<span class="op">&gt;</span></code></pre></div>
 </li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span>t &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> <span class="st">"955510-99999"</span>)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">Error <span class="cf">in</span> <span class="kw">.f</span>(.x[[i]], ...) <span class="op">:</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="dv">955510-99999</span> is not a valid station ID number, please check your entry.</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">Valid Station IDs can be found <span class="cf">in</span> the isd<span class="op">-</span>history.txt file</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">available from the US NCEI FTP server by combining the USAF and WBAN</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">columns, e.g. <span class="st">'007005'</span> <span class="st">'99999'</span> is <span class="st">'007005-99999'</span> from this file </a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="op">&lt;</span>ftp<span class="op">:</span><span class="er">//</span>ftp.ncdc.noaa.gov<span class="op">/</span>pub<span class="op">/</span>data<span class="op">/</span>noaa<span class="op">/</span>isd<span class="op">-</span>history.txt<span class="op">&gt;</span></a></code></pre></div>
 </div>
 <div id="major-changes-1" class="section level2">
 <h2 class="hasAnchor">
@@ -544,7 +545,7 @@
 <li><p>Somehow the previously working function that checked country names broke with the <code>toupper()</code> function. A new <a href="http://stackoverflow.com/questions/16516593/convert-from-lowercase-to-uppercase-all-values-in-all-character-variables-in-dat">function from juba</a> fixes this issue and users can now select country again</p></li>
 <li><p>User entered values for a single station are now checked against actual station values for validity</p></li>
 <li><p>stations.rda is compressed</p></li>
-<li><p>stations.rda now includes a field for “corrected” elevation using hole-filled SRTM data from Jarvis et al. 2008, see <a href="https://github.com/ropensci/GSODR/blob/devel/data-raw/fetch_isd-history.html">https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md</a> for a description</p></li>
+<li><p>stations.rda now includes a field for “corrected” elevation using hole-filled SRTM data from Jarvis et al. 2008, see <a href="https://github.com/ropensci/GSODR/blob/devel/data-raw/fetch_isd-history.html">https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md</a> for a description</p></li>
 <li><p>Set NA or missing values in CSV or shapefile to -9999 from -9999.99 to align with other data sources such as Worldclim</p></li>
 </ul>
 </div>
