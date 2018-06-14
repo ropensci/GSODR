@@ -7,6 +7,11 @@ the server. This is in response to an inquiry from John Paul Bigouette where
 a station is reported as having data in the inventory but the files do not exist
 on the server.
 
+- Fix bug that removed a few hundred stations from the internal `GSODR` database
+of stations in the `data-raw` files.
+
+- Clarify the reasons for errors that a user may encounter.
+
 ## Minor changes
 
 - Update internal databases of station metadata
