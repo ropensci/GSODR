@@ -1,4 +1,4 @@
-# GSODR 1.2.0.9000
+# GSODR 1.2.1
 
 ## Bug fixes
 
@@ -10,9 +10,9 @@ on the server.
 - Fix bug that removed a few hundred stations from the internal `GSODR` database
 of stations in the `data-raw` files.
 
-- Clarify the reasons for errors that a user may encounter.
-
 ## Minor changes
+
+- Clarify the reasons for errors that a user may encounter
 
 - Update internal databases of station metadata
 
