@@ -1,8 +1,12 @@
-## Test environments  
-* local OS X install, R 3.4.4 (2018-03-15)
-* local Ubuntu 17.10, R 3.4.4 (2018-03-15)
-* win-builder, R Under development 3.5.0 alpha (2018-03-27 r74477)
-* local Windows 7, R version 3.4.4 (2018-03-15)
+## Test environments
+
+- local macOS install, R version 3.5.0 (2018-04-23)
+
+- local Ubuntu 18.04, R version 3.5.0 (2018-04-23)
+
+- win-builder R Under development (unstable) (2018-06-13 r74894)
+
+- win-builder R version 3.5.0 (2018-04-23)
 
 ## R CMD check results
 
@@ -12,33 +16,21 @@
 
 This is a new minor release
 
-## Major changes
-
-- Remove ability to export files from `get_GSOD()` to slim down the package
-dependencies and this functions parameters. Examples of how to convert to a
-spatial object (both _sp_ and _sf_ are shown) and export ESRI Shapefiles and
-GeoPackage files are now included in the vignette.
-
-- As a result of the previous point, the _sp_ and _rgdal_ packages are no longer
-Imports but are now in Suggests along with _sf_ for examples in the GSOD
-vignette.
-
 ## Bug fixes
 
-- Fix a nasty bug where GSOD files downloaded using Windows would not untar
-properly. This caused the `get_GSOD()` function to fail.
+- Introduce a message if a station ID is requested but files are not found on
+the server. This is in response to an inquiry from John Paul Bigouette where
+a station is reported as having data in the inventory but the files do not exist
+on the server.
 
-- Correct options in "GSODR use case: Specified years/stations vignette" on line
-201 where `file` was incorrectly used in place of `path`.
-
-- Correct documentation for `reformat_GSOD()`
+- Fix bug that removed a few hundred stations from the internal `GSODR` database
+of stations in the `data-raw` files.
 
 ## Minor changes
 
-- Update internal databases of station metadata
+- Clarify the reasons for errors that a user may encounter when running package
 
-- Faster installation by including figures for vignettes rather than building
-on-the fly
+- Update internal databases of station metadata
 
 ## Reverse dependencies
 
