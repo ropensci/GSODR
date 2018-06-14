@@ -129,7 +129,6 @@ countries <- dplyr::left_join(countries, countrycode::codelist,
 
 # create xy object to check for geographic location agreement with reported
 xy <- dplyr::left_join(stations, countries, by = c("CTRY" = "FIPS"))
-
 ```
 
 ## Check data for inconsistencies
@@ -244,9 +243,7 @@ corrected_elev[, 13] <- round(corrected_elev[, 13], 0)
 
 # retain only distinct rows in case of duplicate data
 
-corrected_elev <- corrected_elev %>%
-  dplyr::distinct(corrected_elev)
-
+corrected_elev <- dplyr::distinct(corrected_elev)
 ```
 
 Tidy up the `corrected_elev` object by converting any factors to character prior
@@ -255,7 +252,6 @@ For stations above/below 60/-60 latitude, `ELEV_M_SRTM_90m` will be `NA` as
 there is no SRTM data for these latitudes.
 
 ```{r join corrected_elev with station data}
-
 # convert any factors in stations object to character for left_join
 stations <- dplyr::mutate_if(as.data.frame(stations), is.factor, as.character)
 
