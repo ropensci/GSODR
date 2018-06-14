@@ -156,9 +156,10 @@
               return(res$result)
             if (i == max_retries) {
               stop(call. = FALSE,
-                   "\nWe've tried to get the file you requested six times.\n",
-                   "The server is not server may be under load and is not\n",
-                   "currently responding. Please try again later.\n")
+                   "\nWe've tried to get the file(s) you requested six\n",
+                   "times, but the server is not responding, so we are\n",
+                   "unable to process your request now.\n",
+                   "Please try again later.\n")
             }
           }
         }
@@ -176,9 +177,10 @@
             i <- i + 1
             if (i == max_retries) {
               stop(call. = FALSE,
-                   "\nWe've tried to get the file you requested six times.\n",
-                   "The server is not server may be under load and is not\n",
-                   "currently responding. Please try again later.\n")
+                   "\nWe've tried to get the file(s) you requested six\n",
+                   "times, but the server is not responding, so we are\n",
+                   "unable to process your request now.\n",
+                   "Please try again later.\n")
             }
             res <- s_curl_fetch_disk(url, cache_file)
             if (!is.null(res$result))
