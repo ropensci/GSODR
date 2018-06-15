@@ -37,30 +37,34 @@ data.
 }
 \description{
 This function automates downloading, cleaning, reformatting of data from
-the Global Surface Summary of the Day (GSOD) data provided by the US National
-Centers for Environmental Information (NCEI),
-\url{https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/},
-and elements three new variables; saturation vapour pressure (es) – Actual
-vapour pressure (ea) and relative humidity (RH).  Stations reporting a
-latitude of < -90 or > 90 or longitude of < -180 or > 180 are removed.
-Stations may be individually checked for number of missing days to assure data
-quality and omitting stations with too many missing observations.  All units
-are converted to International System of Units (SI), \emph{e.g.} Fahrenheit
-to Celsius and inches to millimetres.  Alternative elevation measurements are
-supplied for missing values or values found to be questionable based on the
-Consultative Group for International Agricultural Research's Consortium for
-Spatial Information group's (CGIAR-CSI) Shuttle Radar Topography Mission 90
-metre (SRTM 90m) digital elevation data based on NASA's original SRTM 90m
-data.  Further information on these data and methods can be found on GSODR's
-GitHub repository here:
-\url{https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md}.
+the Global Surface Summary of the Day (GSOD) data provided by the
+\href{https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/}{US National Centers for Environmental Information (NCEI)},
+Three additional useful elements: saturation vapour pressure (es), actual
+vapour pressure (ea) and relative humidity (RH) are calculated and returned
+in the final data frame.
 }
 \details{
+Stations reporting a latitude of < -90 or > 90 or longitude of < -180 or >
+180 are removed. Stations may be individually checked for number of
+missing days to assure data quality and omitting stations with too many
+missing observations.
+
+All units are converted to International System of Units (SI), \emph{e.g.}
+Fahrenheit to Celsius and inches to millimetres.
+
+Alternative elevation measurements are supplied for missing values or values
+found to be questionable based on the Consultative Group for International
+Agricultural Research's Consortium for Spatial Information group's
+(CGIAR-CSI) Shuttle Radar Topography Mission 90 metre (SRTM 90m) digital
+elevation data based on NASA's original SRTM 90m data. Further information
+on these data and methods can be found on GSODR's
+\href{https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md}{GitHub repository}.
+
 Data summarise each year by station, which include vapour pressure and
 relative humidity elements calculated from existing data in GSOD.
 
-All missing values in resulting files are represented as NA regardless of
-which field they occur in.
+All missing values in resulting files are represented as \code{NA} regardless
+of which field they occur in.
 
 For a complete list of the fields and description of the contents and units,
 please refer to Appendix 1 in the GSODR vignette,

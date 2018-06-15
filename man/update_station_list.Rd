@@ -23,8 +23,10 @@ There is no need to use this unless you know that a station exists in the
 GSODR data that is not available in the database distributed with
 \code{\link{GSODR}}.
 
-To directly access these data, use:
-\code{load(system.file("extdata", "isd_history.rda", package = "GSODR"))}
+To directly access these data, use: \cr
+\code{load(system.file("extdata", \cr
+                                    "isd_history.rda", \cr
+                        package = "GSODR"))}
 }
 \examples{
 \dontrun{

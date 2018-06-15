@@ -18,10 +18,10 @@ A data frame as a \code{\link[tibble]{tibble}} object of weather
 data.
 }
 \description{
-This function automates cleaning and reformatting of GSOD,
-\url{https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/},
-station files in "WMO-WBAN-YYYY.op.gz" format that have been downloaded from
-the United States National Center for Environmental Information's (NCEI)
+This function automates cleaning and reformatting of
+\href{https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/}{GSOD}
+station files in "WMO-WBAN-YYYY.op.gz" format that have been downloaded
+from the United States National Center for Environmental Information's (NCEI)
 FTP server.
 }
 \details{
@@ -31,9 +31,9 @@ relative humidity (RH).  All units are converted to International System of
 Units (SI), \emph{e.g.} Fahrenheit to Celsius and inches to millimetres.
 Alternative elevation measurements are supplied for missing values or values
 found to be questionable based on the Consultative Group for International
-Agricultural Research's Consortium for Spatial Information group's (CGIAR-CSI)
-Shuttle Radar Topography Mission 90 metre (SRTM 90m) digital elevation data
-based on NASA's original SRTM 90m data.
+Agricultural Research's Consortium for Spatial Information group's
+(CGIAR-CSI) Shuttle Radar Topography Mission 90 metre (SRTM 90m) digital
+elevation data based on NASA's original SRTM 90m data.
 
 
 If multiple stations are given, data are summarised for each year by station,
@@ -41,8 +41,8 @@ which include vapour pressure and relative humidity elements calculated from
 existing data in GSOD. Else, single stations are tidied and a data frame is
 returned.
 
-All missing values in resulting files are represented as NA regardless of
-which field they occur in.
+All missing values in resulting files are represented as \code{NA} regardless
+of which field they occur in.
 
 Only station files in the original ".op.gz" file format are supported by this
 function.  If you have downloaded the full annual "gsod_YYYY.tar" file you

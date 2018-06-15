@@ -71,8 +71,8 @@
 #' set of surface climate over global land areas. \emph{Climate Research}
 #' \bold{21}:1--25
 #'
-#' Sparks A., Hengl T., Nelson A. (2017) GSODRdata: Extra Climate Data for
-#' the GSODR Package. R package version 0.1.0,
+#' Sparks A., Hengl T., Nelson A. (2018) GSODRdata: Extra Climate Data for
+#' the GSODR Package. R package version 0.2.10,
 #' \url{https://adamhsparks.github.io/GSODRdata/index.html}.
 #'
 #' Wilson A. M., Jetz W. (2016) Remotely Sensed High-Resolution Global Cloud

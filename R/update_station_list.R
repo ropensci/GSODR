@@ -16,8 +16,10 @@
 #' GSODR data that is not available in the database distributed with
 #' \code{\link{GSODR}}.
 #'
-#' To directly access these data, use:
-#' \code{load(system.file("extdata", "isd_history.rda", package = "GSODR"))}
+#' To directly access these data, use: \cr
+#' \code{load(system.file("extdata", \cr
+#'                                     "isd_history.rda", \cr
+#'                         package = "GSODR"))}
 #'
 #' @examples
 #' \dontrun{
@@ -58,17 +60,17 @@ update_station_list <- function() {
   new_isd_history[new_isd_history == -999] <- NA
   new_isd_history <-
     new_isd_history[new_isd_history$LAT != 0 &
-                      new_isd_history$LON != 0, ]
+                      new_isd_history$LON != 0,]
   new_isd_history <-
     new_isd_history[new_isd_history$LAT > -90 &
-                      new_isd_history$LAT < 90, ]
+                      new_isd_history$LAT < 90,]
   new_isd_history <-
     new_isd_history[new_isd_history$LON > -180 &
-                      new_isd_history$LON < 180, ]
+                      new_isd_history$LON < 180,]
   new_isd_history$STNID <-
     as.character(paste(new_isd_history$USAF, new_isd_history$WBAN, sep = "-"))
-  new_isd_history <- new_isd_history[!is.na(new_isd_history$LAT), ]
-  new_isd_history <- new_isd_history[!is.na(new_isd_history$LON), ]
+  new_isd_history <- new_isd_history[!is.na(new_isd_history$LAT),]
+  new_isd_history <- new_isd_history[!is.na(new_isd_history$LON),]
 
   # left join the old and new data
   isd_history <- dplyr::left_join(
@@ -91,6 +93,7 @@ update_station_list <- function() {
   )
 
   # overwrite the existing isd_history.rda file on disk
-  fname <- system.file("extdata", "isd_history.rda", package = "GSODR")
+  fname <-
+    system.file("extdata", "isd_history.rda", package = "GSODR")
   save(isd_history, file = fname, compress = "bzip2")
 }
