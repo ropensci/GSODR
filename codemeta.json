@@ -35,7 +35,7 @@
   "keywords": ["US-NCEI", "meteorological-data", "global-weather", "weather", "weather-data", "meteorology", "station-data", "surface-weather", "data-access", "US-NCDC", "r", "gsod", "ncdc", "weather-stations", "global-data", "ncei", "weather-information", "historical-weather", "historical-data", "daily-data", "daily-weather", "rstats"],
   "license": "https://spdx.org/licenses/MIT",
   "title": "GSODR",
-  "version": "1.2.0.9000",
+  "version": "1.2.1",
   "name": "GSODR: Global Surface Summary of the Day (GSOD) Weather Data from R",
   "issueTracker": "https://github.com/ropensci/GSODR/issues",
   "programmingLanguage": {
@@ -423,7 +423,7 @@
   "contIntegration": "https://travis-ci.org/ropensci/GSODR",
   "releaseNotes": "https://github.com/ropensci/GSODR/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/GSODR/blob/master/README.md",
-  "fileSize": "3021.126KB",
+  "fileSize": "3017.133KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -487,6 +487,12 @@
       "givenName": "Łukasz",
       "familyName": "Pawlik",
       "email": "lukpawlik@gmail.com"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Ross",
+      "familyName": "Darnell",
+      "email": "Ross.Darnell@data61.csiro.au"
     }
   ],
   "copyrightHolder": [
@@ -512,5 +518,6 @@
     "url": "https://github.com/ropensci/onboarding/issues/79",
     "provider": "http://ropensci.org"
   },
-  "relatedLink": "https://CRAN.R-project.org/package=GSODR"
+  "relatedLink": "https://CRAN.R-project.org/package=GSODR",
+  "developmentStatus": "http://www.repostatus.org/#active"
 }
