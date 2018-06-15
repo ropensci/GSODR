@@ -126,17 +126,17 @@
 <div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Introduce a message <span class="cf">if</span> a station ID is requested but files are not found on</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Introduce a message <span class="cf">if</span> a station ID is requested but files are not found on</a></code></pre></div>
 <p>the server. This is in response to an inquiry from John Paul Bigouette where a station is reported as having data in the inventory but the files do not exist on the server.</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Fix bug that removed a few hundred stations from the internal <span class="st">`</span><span class="dt">GSODR</span><span class="st">`</span> database</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Fix bug that removed a few hundred stations from the internal <span class="st">`</span><span class="dt">GSODR</span><span class="st">`</span> database</a></code></pre></div>
 <p>of stations in the <code>data-raw</code> files.</p>
 </div>
 <div id="minor-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-changes" class="anchor"></a>Minor changes</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Clarify the reasons <span class="cf">for</span> errors that a user may encounter
-
-<span class="op">-</span><span class="st"> </span>Update internal databases of station metadata</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Clarify the reasons <span class="cf">for</span> errors that a user may encounter</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="op">-</span><span class="st"> </span>Update internal databases of station metadata</a></code></pre></div>
 <hr>
 </div>
 </div>
@@ -147,26 +147,26 @@
 <div id="major-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#major-changes" class="anchor"></a>Major changes</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Remove ability to export files from <span class="st">`</span><span class="dt">get_GSOD()</span><span class="st">`</span> to slim down the package</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Remove ability to export files from <span class="st">`</span><span class="dt">get_GSOD()</span><span class="st">`</span> to slim down the package</a></code></pre></div>
 <p>dependencies and this functions parameters. Examples of how to convert to a spatial object (both <em>sp</em> and <em>sf</em> are shown) and export ESRI Shapefiles and GeoPackage files are now included in the vignette.</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>As a result of the previous point, the _sp_ and _rgdal_ packages are no longer</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>As a result of the previous point, the _sp_ and _rgdal_ packages are no longer</a></code></pre></div>
 <p>Imports but are now in Suggests along with <em>sf</em> for examples in the GSOD vignette.</p>
 </div>
 <div id="bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Fix a nasty bug where GSOD files downloaded using Windows would not untar</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Fix a nasty bug where GSOD files downloaded using Windows would not untar</a></code></pre></div>
 <p>properly. This caused the <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> function to fail. Thanks to Ross Darnell, CSIRO, for reporting this.</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Correct options <span class="cf">in</span> <span class="st">"GSODR use case: Specified years/stations vignette"</span> on line</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Correct options <span class="cf">in</span> <span class="st">"GSODR use case: Specified years/stations vignette"</span> on line</a></code></pre></div>
 <p>201 where <code>file</code> was incorrectly used in place of <code>path</code>. Thanks to Ross Darnell, CSIRO, for reporting this.</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Correct documentation <span class="cf">for</span> <span class="st">`</span><span class="dt">reformat_GSOD()</span><span class="st">`</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Correct documentation <span class="cf">for</span> <span class="st">`</span><span class="dt">reformat_GSOD()</span><span class="st">`</span></a></code></pre></div>
 </div>
 <div id="minor-changes-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-changes-1" class="anchor"></a>Minor changes</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Update internal databases of station metadata
-
-<span class="op">-</span><span class="st"> </span>Vignettes contain pre<span class="op">-</span>built figures <span class="cf">for</span> faster package installation when</code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Update internal databases of station metadata</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="op">-</span><span class="st"> </span>Vignettes contain pre<span class="op">-</span>built figures <span class="cf">for</span> faster package installation when</a></code></pre></div>
 <p>building vignettes</p>
 <hr>
 </div>
@@ -178,16 +178,16 @@
 <div id="bug-fixes-2" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Fix startup message formatting
-
-<span class="op">-</span><span class="st"> </span>Correct ORCID comment <span class="cf">in</span> author field of DESCRIPTION
-
-<span class="op">-</span><span class="st"> </span>Update internal databases <span class="cf">for</span> country list and isd_history</code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Fix startup message formatting</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="op">-</span><span class="st"> </span>Correct ORCID comment <span class="cf">in</span> author field of DESCRIPTION</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="op">-</span><span class="st"> </span>Update internal databases <span class="cf">for</span> country list and isd_history</a></code></pre></div>
 </div>
 <div id="minor-changes-2" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-changes-2" class="anchor"></a>Minor changes</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Add X<span class="op">-</span>schema tags to DESCRIPTION</code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Add X<span class="op">-</span>schema tags to DESCRIPTION</a></code></pre></div>
 <hr>
 </div>
 </div>
@@ -198,22 +198,22 @@
 <div id="bug-fixes-3" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> `</span><span class="dt">MAX_FLAG</span><span class="st">`</span> and <span class="st">`</span><span class="dt">MIN_FLAG</span><span class="st">`</span> columns now report <span class="st">`</span><span class="dt">NA</span><span class="st">`</span> when there is no flag</code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="op">-</span><span class="st"> `</span><span class="dt">MAX_FLAG</span><span class="st">`</span> and <span class="st">`</span><span class="dt">MIN_FLAG</span><span class="st">`</span> columns now report <span class="st">`</span><span class="dt">NA</span><span class="st">`</span> when there is no flag</a></code></pre></div>
 </div>
 <div id="minor-changes-3" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-changes-3" class="anchor"></a>Minor changes</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Comment <span class="cf">for</span> Bob and Hugh <span class="cf">in</span> DESCRIPTION now only ORCID url
-
-<span class="op">-</span><span class="st"> </span>dplyr version set to <span class="op">&gt;=</span><span class="st"> </span><span class="fl">0.7</span>.<span class="dv">0</span> not <span class="fl">0.7</span> as before
-
-<span class="op">-</span><span class="st"> </span>Start<span class="op">-</span>up message statement is more clear <span class="cf">in</span> relation to WMO resolution <span class="dv">40</span>,</code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Comment <span class="cf">for</span> Bob and Hugh <span class="cf">in</span> DESCRIPTION now only ORCID url</a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="op">-</span><span class="st"> </span>dplyr version set to <span class="op">&gt;=</span><span class="st"> </span><span class="dv">0</span>.<span class="fl">7.0</span> not <span class="fl">0.7</span> as before</a>
+<a class="sourceLine" id="cb13-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb13-5" data-line-number="5"><span class="op">-</span><span class="st"> </span>Start<span class="op">-</span>up message statement is more clear <span class="cf">in</span> relation to WMO resolution <span class="dv">40</span>,</a></code></pre></div>
 <p>that GSODR does not redistribute any weather data itself</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Remove unnecessary <span class="cf">function</span>, <span class="kw">.onLoad</span>(), from zzz.R
-
-<span class="op">-</span><span class="st"> </span>Function titles <span class="cf">in</span> documentation now <span class="cf">in</span> title case
-
-<span class="op">-</span><span class="st"> </span>Correct grammar <span class="cf">in</span> documentation</code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Remove unnecessary <span class="cf">function</span>, <span class="kw">.onLoad</span>(), from zzz.R</a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="op">-</span><span class="st"> </span>Function titles <span class="cf">in</span> documentation now <span class="cf">in</span> title case</a>
+<a class="sourceLine" id="cb14-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="op">-</span><span class="st"> </span>Correct grammar <span class="cf">in</span> documentation</a></code></pre></div>
 <hr>
 </div>
 </div>
@@ -224,31 +224,31 @@
 <div id="bug-fixes-4" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes-4" class="anchor"></a>Bug fixes</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Fixes bug reported <span class="cf">in</span> [issue <span class="dv">36</span>](https<span class="op">:</span><span class="er">//</span>github.com<span class="op">/</span>ropensci<span class="op">/</span>GSODR<span class="op">/</span>issues<span class="op">/</span><span class="dv">36</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">t &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> <span class="st">"955510-99999"</span>)
-Error <span class="cf">in</span> <span class="kw">.f</span>(.x[[i]], ...) <span class="op">:</span>
-<span class="dv">955510</span><span class="op">-</span><span class="dv">99999</span> is not a valid station ID number, please check your entry.
-Valid Station IDs can be found <span class="cf">in</span> the isd<span class="op">-</span>history.txt file
-available from the US NCEI FTP server by combining the USAF and WBAN
-columns, e.g. <span class="st">'007005'</span> <span class="st">'99999'</span> is <span class="st">'007005-99999'</span> from this file
-<span class="op">&lt;</span>ftp<span class="op">:</span><span class="er">//</span>ftp.ncdc.noaa.gov<span class="op">/</span>pub<span class="op">/</span>data<span class="op">/</span>noaa<span class="op">/</span>isd<span class="op">-</span>history.txt<span class="op">&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Fixes bug reported <span class="cf">in</span> [issue <span class="dv">36</span>](https<span class="op">:</span><span class="er">//</span>github.com<span class="op">/</span>ropensci<span class="op">/</span>GSODR<span class="op">/</span>issues<span class="op">/</span><span class="dv">36</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">t &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> <span class="st">"955510-99999"</span>)</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2">Error <span class="cf">in</span> <span class="kw">.f</span>(.x[[i]], ...) <span class="op">:</span></a>
+<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="dv">955510-99999</span> is not a valid station ID number, please check your entry.</a>
+<a class="sourceLine" id="cb16-4" data-line-number="4">Valid Station IDs can be found <span class="cf">in</span> the isd<span class="op">-</span>history.txt file</a>
+<a class="sourceLine" id="cb16-5" data-line-number="5">available from the US NCEI FTP server by combining the USAF and WBAN</a>
+<a class="sourceLine" id="cb16-6" data-line-number="6">columns, e.g. <span class="st">'007005'</span> <span class="st">'99999'</span> is <span class="st">'007005-99999'</span> from this file</a>
+<a class="sourceLine" id="cb16-7" data-line-number="7"><span class="op">&lt;</span>ftp<span class="op">:</span><span class="er">//</span>ftp.ncdc.noaa.gov<span class="op">/</span>pub<span class="op">/</span>data<span class="op">/</span>noaa<span class="op">/</span>isd<span class="op">-</span>history.txt<span class="op">&gt;</span></a></code></pre></div>
 </div>
 <div id="major-changes-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#major-changes-1" class="anchor"></a>Major changes</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>The _data.table_ and _fields_ packages are no longer imported. All internal</code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>The _data.table_ and _fields_ packages are no longer imported. All internal</a></code></pre></div>
 <p>functions now use <em>dplyr</em> or base R functionality, reducing the dependencies of <em>GSODR</em></p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Any data frames returned by _GSODR_ functions are returned as a <span class="st">`</span><span class="dt">tibble()</span><span class="st">`</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Any data frames returned by _GSODR_ functions are returned as a <span class="st">`</span><span class="dt">tibble()</span><span class="st">`</span></a></code></pre></div>
 <p>object</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>The <span class="st">`</span><span class="dt">YEARMODA</span><span class="st">`</span> column is now returned as <span class="st">`</span><span class="dt">Date</span><span class="st">`</span> without time, rather than</code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>The <span class="st">`</span><span class="dt">YEARMODA</span><span class="st">`</span> column is now returned as <span class="st">`</span><span class="dt">Date</span><span class="st">`</span> without time, rather than</a></code></pre></div>
 <p><code>Character</code></p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Add new <span class="cf">function</span>, <span class="st">`</span><span class="dt">get_inventory()</span><span class="st">`</span>, which downloads the NCEI<span class="st">'s station</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Add new <span class="cf">function</span>, <span class="st">`</span><span class="dt">get_inventory()</span><span class="st">`</span>, which downloads the NCEI<span class="st">'s station</span></a></code></pre></div>
 <p>inventory document and returns a <code>tibble()</code> object of the data</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Use larger images and provide a table of contents <span class="cf">in</span> vignettes
-
-<span class="op">-</span><span class="st"> </span>Updated and enhanced introductory vignette
-
-<span class="op">-</span><span class="st"> </span>Update internal stations list</code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Use larger images and provide a table of contents <span class="cf">in</span> vignettes</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="op">-</span><span class="st"> </span>Updated and enhanced introductory vignette</a>
+<a class="sourceLine" id="cb21-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb21-5" data-line-number="5"><span class="op">-</span><span class="st"> </span>Update internal stations list</a></code></pre></div>
 <hr>
 </div>
 </div>
@@ -259,26 +259,26 @@ columns, e.g. <span class="st">'007005'</span> <span class="st">'99999'</span> i
 <div id="bug-fixes-5" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes-5" class="anchor"></a>Bug fixes</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Fix documentation <span class="cf">in</span> vignette where first example would not run due to changes</code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Fix documentation <span class="cf">in</span> vignette where first example would not run due to changes</a></code></pre></div>
 <p>in package data formats</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Fix bug <span class="cf">in</span> GSODR vignette where examples would not run due to libraries not</code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Fix bug <span class="cf">in</span> GSODR vignette where examples would not run due to libraries not</a></code></pre></div>
 <p>being loaded</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Fix bug where prior server queries would be pre<span class="op">/</span>appended to subsequent</code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Fix bug where prior server queries would be pre<span class="op">/</span>appended to subsequent</a></code></pre></div>
 <p>queries</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Fix bug where invalid stations would return an empty dataframe, should stop</code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Fix bug where invalid stations would return an empty dataframe, should stop</a></code></pre></div>
 <p>and return message about checking the <code>station</code> value supplied to <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> and check if data are available for the years requested</p>
 </div>
 <div id="minor-changes-4" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-changes-4" class="anchor"></a>Minor changes</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Update Appendix <span class="dv">2</span> of GSODR vignette, map of station locations, to be more</code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Update Appendix <span class="dv">2</span> of GSODR vignette, map of station locations, to be more</a></code></pre></div>
 <p>clear and follow same format as that of <code>bomrang</code> package</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Update example output <span class="cf">in</span> GSODR vignette where applicable</code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Update example output <span class="cf">in</span> GSODR vignette where applicable</a></code></pre></div>
 </div>
 <div id="major-changes-2" class="section level2">
 <h2 class="hasAnchor">
 <a href="#major-changes-2" class="anchor"></a>Major changes</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Update internal stations list</code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Update internal stations list</a></code></pre></div>
 <hr>
 </div>
 </div>
@@ -289,7 +289,7 @@ columns, e.g. <span class="st">'007005'</span> <span class="st">'99999'</span> i
 <div id="bug-fixes-6" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes-6" class="anchor"></a>Bug fixes</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Fix bug where <span class="kw">WSPD</span> (mean windspeed) conversion was miscalculated</code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Fix bug where <span class="kw">WSPD</span> (mean windspeed) conversion was miscalculated</a></code></pre></div>
 </div>
 </div>
     <div id="gsodr-1-0-5" class="section level1">
@@ -299,21 +299,21 @@ columns, e.g. <span class="st">'007005'</span> <span class="st">'99999'</span> i
 <div id="major-changes-3" class="section level2">
 <h2 class="hasAnchor">
 <a href="#major-changes-3" class="anchor"></a>Major changes</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Add welcome message on startup regarding data use and sharing
-
-<span class="op">-</span><span class="st"> </span>Update internal stations list</code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Add welcome message on startup regarding data use and sharing</a>
+<a class="sourceLine" id="cb30-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb30-3" data-line-number="3"><span class="op">-</span><span class="st"> </span>Update internal stations list</a></code></pre></div>
 </div>
 <div id="minor-changes-5" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-changes-5" class="anchor"></a>Minor changes</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Tidy up informative messages that the package returns <span class="cf">while</span> running</code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Tidy up informative messages that the package returns <span class="cf">while</span> running</a></code></pre></div>
 </div>
 <div id="bug-fixes-7" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes-7" class="anchor"></a>Bug fixes</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Fix bug where <span class="st">"Error in read_connection_(con):"</span> when writing to CSV occurs
-
-<span class="op">-</span><span class="st"> </span>Fix typo <span class="cf">in</span> line <span class="dv">160</span> of <span class="st">`</span><span class="dt">get_GSOD()</span><span class="st">`</span> where <span class="st">"Rda"</span> should be <span class="st">"rda"</span> to properly</code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Fix bug where <span class="st">"Error in read_connection_(con):"</span> when writing to CSV occurs</a>
+<a class="sourceLine" id="cb32-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb32-3" data-line-number="3"><span class="op">-</span><span class="st"> </span>Fix typo <span class="cf">in</span> line <span class="dv">160</span> of <span class="st">`</span><span class="dt">get_GSOD()</span><span class="st">`</span> where <span class="st">"Rda"</span> should be <span class="st">"rda"</span> to properly</a></code></pre></div>
 <p>load internal package files</p>
 </div>
 </div>
@@ -324,15 +324,15 @@ columns, e.g. <span class="st">'007005'</span> <span class="st">'99999'</span> i
 <div id="major-changes-4" class="section level2">
 <h2 class="hasAnchor">
 <a href="#major-changes-4" class="anchor"></a>Major changes</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Data distributed with GSODR are now internal to the package and not externally</code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Data distributed with GSODR are now internal to the package and not externally</a></code></pre></div>
 <p>exposed to the user</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Vignettes have been updated and improved with an improved order of information</code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Vignettes have been updated and improved with an improved order of information</a></code></pre></div>
 <p>presented and some have been combined for easier use</p>
 </div>
 <div id="minor-changes-6" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-changes-6" class="anchor"></a>Minor changes</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Clean code using linting</code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Clean code using linting</a></code></pre></div>
 <hr>
 </div>
 </div>
@@ -343,18 +343,18 @@ columns, e.g. <span class="st">'007005'</span> <span class="st">'99999'</span> i
 <div id="major-changes-5" class="section level2">
 <h2 class="hasAnchor">
 <a href="#major-changes-5" class="anchor"></a>Major changes</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Data <span class="cf">for</span> station locations and unique identifiers is now provided with the</code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Data <span class="cf">for</span> station locations and unique identifiers is now provided with the</a></code></pre></div>
 <p>package on installation. Previously this was fetched each time from the ftp server.</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>The station metadata can now be updated <span class="cf">if</span> necessary by using</code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>The station metadata can now be updated <span class="cf">if</span> necessary by using</a></code></pre></div>
 <p><code><a href="../reference/update_station_list.html">update_station_list()</a></code>, this change overwrites the internal data that were originally distributed with the package. This operation will fetch the latest list of stations and corresponding information from the NCEI ftp server. Any changes will be overwritten when the R package is updated, however, the package update should have the same or newer data included, so this should not be an issue.</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Replace _plyr_ functions with _purrr_, _plyr_ is no longer actively developed
-
-<span class="op">-</span><span class="st"> </span>_plyr_ is no longer an import</code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Replace _plyr_ functions with _purrr_, _plyr_ is no longer actively developed</a>
+<a class="sourceLine" id="cb38-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb38-3" data-line-number="3"><span class="op">-</span><span class="st"> </span>_plyr_ is no longer an import</a></code></pre></div>
 </div>
 <div id="minor-changes-7" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-changes-7" class="anchor"></a>Minor changes</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Fix bugs <span class="cf">in</span> the vignettes related to formatting and spelling</code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Fix bugs <span class="cf">in</span> the vignettes related to formatting and spelling</a></code></pre></div>
 </div>
 <div id="deprecated-and-defunct" class="section level2">
 <h2 class="hasAnchor">
@@ -370,7 +370,7 @@ columns, e.g. <span class="st">'007005'</span> <span class="st">'99999'</span> i
 <div id="minor-changes-8" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-changes-8" class="anchor"></a>Minor changes</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Correct references to _GSODRdata_ package where incorrectly referred to as</code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Correct references to _GSODRdata_ package where incorrectly referred to as</a></code></pre></div>
 <p><em>GSODdata</em></p>
 <hr>
 </div>
@@ -382,17 +382,17 @@ columns, e.g. <span class="st">'007005'</span> <span class="st">'99999'</span> i
 <div id="minor-changes-9" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-changes-9" class="anchor"></a>Minor changes</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Improved <span class="kw">documentation</span> (i.e., spelling corrections and more descriptive)
-
-<span class="op">-</span><span class="st"> </span>More descriptive vignette <span class="cf">for</span> <span class="st">"GSODR use case: Specified years/stations</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Improved <span class="kw">documentation</span> (i.e., spelling corrections and more descriptive)</a>
+<a class="sourceLine" id="cb41-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb41-3" data-line-number="3"><span class="op">-</span><span class="st"> </span>More descriptive vignette <span class="cf">for</span> <span class="st">"GSODR use case: Specified years/stations</span></a></code></pre></div>
 <p>vignette"</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Round MAX<span class="op">/</span>MIN temp to one decimal place, not two
-
-<span class="op">-</span><span class="st"> </span>Update SRTM elevation data
-
-<span class="op">-</span><span class="st"> </span>Update country list data
-
-<span class="op">-</span><span class="st"> </span>Fix missing images <span class="cf">in</span> README.html on CRAN</code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Round MAX<span class="op">/</span>MIN temp to one decimal place, not two</a>
+<a class="sourceLine" id="cb42-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb42-3" data-line-number="3"><span class="op">-</span><span class="st"> </span>Update SRTM elevation data</a>
+<a class="sourceLine" id="cb42-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb42-5" data-line-number="5"><span class="op">-</span><span class="st"> </span>Update country list data</a>
+<a class="sourceLine" id="cb42-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb42-7" data-line-number="7"><span class="op">-</span><span class="st"> </span>Fix missing images <span class="cf">in</span> README.html on CRAN</a></code></pre></div>
 <hr>
 </div>
 </div>
@@ -403,13 +403,13 @@ columns, e.g. <span class="st">'007005'</span> <span class="st">'99999'</span> i
 <div id="minor-changes-10" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-changes-10" class="anchor"></a>Minor changes</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Update documentation <span class="cf">for</span> <span class="st">`</span><span class="dt">get_GSOD()</span><span class="st">`</span> when using <span class="st">`</span><span class="dt">station</span><span class="st">`</span> parameter
-
-<span class="op">-</span><span class="st"> </span>Edit paper.md <span class="cf">for</span> submission to JOSS
-
-<span class="op">-</span><span class="st"> </span>Remove extra packages listed as dependencies that are no longer necessary
-
-<span class="op">-</span><span class="st"> </span>Correct Working_with_spatial_and_climate_data.Rmd where it was missing the</code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Update documentation <span class="cf">for</span> <span class="st">`</span><span class="dt">get_GSOD()</span><span class="st">`</span> when using <span class="st">`</span><span class="dt">station</span><span class="st">`</span> parameter</a>
+<a class="sourceLine" id="cb43-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb43-3" data-line-number="3"><span class="op">-</span><span class="st"> </span>Edit paper.md <span class="cf">for</span> submission to JOSS</a>
+<a class="sourceLine" id="cb43-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb43-5" data-line-number="5"><span class="op">-</span><span class="st"> </span>Remove extra packages listed as dependencies that are no longer necessary</a>
+<a class="sourceLine" id="cb43-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb43-7" data-line-number="7"><span class="op">-</span><span class="st"> </span>Correct Working_with_spatial_and_climate_data.Rmd where it was missing the</a></code></pre></div>
 <p>first portion of documentation and thus examples did not work</p>
 <hr>
 </div>
@@ -421,100 +421,100 @@ columns, e.g. <span class="st">'007005'</span> <span class="st">'99999'</span> i
 <div id="major-changes-6" class="section level2">
 <h2 class="hasAnchor">
 <a href="#major-changes-6" class="anchor"></a>Major changes</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>The <span class="st">`</span><span class="dt">get_GSOD()</span><span class="st">`</span> <span class="cf">function</span> returns a <span class="st">`</span><span class="dt">data.frame</span><span class="st">`</span> object <span class="cf">in</span> the current R</code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>The <span class="st">`</span><span class="dt">get_GSOD()</span><span class="st">`</span> <span class="cf">function</span> returns a <span class="st">`</span><span class="dt">data.frame</span><span class="st">`</span> object <span class="cf">in</span> the current R</a></code></pre></div>
 <p>session with the option to save data to local disk</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Multiple stations can be specified <span class="cf">for</span> download rather than just downloading a</code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Multiple stations can be specified <span class="cf">for</span> download rather than just downloading a</a></code></pre></div>
 <p>single station or all stations</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>A new <span class="cf">function</span>, <span class="st">`</span><span class="dt">nearest_stations()</span><span class="st">`</span> is now included to find stations within a</code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>A new <span class="cf">function</span>, <span class="st">`</span><span class="dt">nearest_stations()</span><span class="st">`</span> is now included to find stations within a</a></code></pre></div>
 <p>user specified radius (in kilometres) of a point given as latitude and longitude in decimal degrees</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>A general use vignette is now included
-
-<span class="op">-</span><span class="st"> </span>New vignette with a detailed use<span class="op">-</span>case
-
-<span class="op">-</span><span class="st"> </span>Output files now include fields <span class="cf">for</span> <span class="kw">State</span> (US only) and <span class="kw">Call</span> (International</code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>A general use vignette is now included</a>
+<a class="sourceLine" id="cb47-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb47-3" data-line-number="3"><span class="op">-</span><span class="st"> </span>New vignette with a detailed use<span class="op">-</span>case</a>
+<a class="sourceLine" id="cb47-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb47-5" data-line-number="5"><span class="op">-</span><span class="st"> </span>Output files now include fields <span class="cf">for</span> <span class="kw">State</span> (US only) and <span class="kw">Call</span> (International</a></code></pre></div>
 <p>Civil Aviation Organization (ICAO) Airport Code)</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Use FIPS codes <span class="cf">in</span> place of ISO3c <span class="cf">for</span> file name and <span class="cf">in</span> output files because</code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Use FIPS codes <span class="cf">in</span> place of ISO3c <span class="cf">for</span> file name and <span class="cf">in</span> output files because</a></code></pre></div>
 <p>some stations do not have an ISO country code</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Spatial file output is now <span class="cf">in</span> GeoPackage <span class="kw">format</span> (GPKG). This results <span class="cf">in</span> a</code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Spatial file output is now <span class="cf">in</span> GeoPackage <span class="kw">format</span> (GPKG). This results <span class="cf">in</span> a</a></code></pre></div>
 <p>single file output unlike shapefile and allows for long field names</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Users can specify file name of output
-
-<span class="op">-</span><span class="st"> </span>R <span class="op">&gt;=</span><span class="st"> </span><span class="fl">3.2</span>.<span class="dv">0</span> now required
-
-<span class="op">-</span><span class="st"> </span>Field names <span class="cf">in</span> output files use <span class="st">"\_"</span> <span class="cf">in</span> place of <span class="st">"."</span>
-
-<span class="op">-</span><span class="st"> </span>Long field names now used <span class="cf">in</span> file outputs
-
-<span class="op">-</span><span class="st"> </span>Country is specified using FIPS codes <span class="cf">in</span> file name and output file contents</code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Users can specify file name of output</a>
+<a class="sourceLine" id="cb50-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb50-3" data-line-number="3"><span class="op">-</span><span class="st"> </span>R <span class="op">&gt;=</span><span class="st"> </span><span class="dv">3</span>.<span class="fl">2.0</span> now required</a>
+<a class="sourceLine" id="cb50-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb50-5" data-line-number="5"><span class="op">-</span><span class="st"> </span>Field names <span class="cf">in</span> output files use <span class="st">"\_"</span> <span class="cf">in</span> place of <span class="st">"."</span></a>
+<a class="sourceLine" id="cb50-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb50-7" data-line-number="7"><span class="op">-</span><span class="st"> </span>Long field names now used <span class="cf">in</span> file outputs</a>
+<a class="sourceLine" id="cb50-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb50-9" data-line-number="9"><span class="op">-</span><span class="st"> </span>Country is specified using FIPS codes <span class="cf">in</span> file name and output file contents</a></code></pre></div>
 <p>due to stations occurring in some locales that lack ISO 3166 3 letter country codes</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>The <span class="st">`</span><span class="dt">get_GSOD()</span><span class="st">`</span> <span class="cf">function</span> will retrieve the latest station data from NCDC and</code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>The <span class="st">`</span><span class="dt">get_GSOD()</span><span class="st">`</span> <span class="cf">function</span> will retrieve the latest station data from NCDC and</a></code></pre></div>
 <p>automatically merge it with the CGIAR-CSI SRTM elevation values provided by this package. Previously, the package provided it’s own list of station information, which was difficult to keep up-to-date</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>A new <span class="st">`</span><span class="dt">reformat_GSOD()</span><span class="st">`</span> <span class="cf">function</span> reformats station files <span class="cf">in</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>A new <span class="st">`</span><span class="dt">reformat_GSOD()</span><span class="st">`</span> <span class="cf">function</span> reformats station files <span class="cf">in</span></a></code></pre></div>
 <p>“WMO-WBAN-YYYY.op.gz” format that have been downloaded from the United States National Climatic Data Center’s (NCDC) FTP server.</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>A new <span class="cf">function</span>, <span class="st">`</span><span class="dt">get_station_list()</span><span class="st">`</span> allows <span class="cf">for</span> fetching latest station list</code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>A new <span class="cf">function</span>, <span class="st">`</span><span class="dt">get_station_list()</span><span class="st">`</span> allows <span class="cf">for</span> fetching latest station list</a></code></pre></div>
 <p>from the FTP server and querying by the user for a specified station or location.</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>New data layers are provided through a separate package,</code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>New data layers are provided through a separate package,</a></code></pre></div>
 <p><a href="https://github.com/adamhsparks/GSODRdata"><code>GSODRdata</code></a>, which provide climate data formatted for use with GSODR.</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r">    <span class="op">-</span><span class="st"> </span><span class="kw">CHELSA</span> (climatic surfaces at <span class="dv">1</span> km resolution),
-<span class="op">&lt;</span>http<span class="op">:</span><span class="er">//</span>chelsa<span class="op">-</span>climate.org<span class="op">/</span><span class="er">&gt;</span>,
-
-    <span class="op">-</span><span class="st"> </span>MODCF     <span class="op">-</span><span class="st"> </span>Remotely sensed high<span class="op">-</span>resolution global cloud dynamics <span class="cf">for</span>
-predicting ecosystem and biodiversity distributions
-(<span class="op">&lt;</span>http<span class="op">:</span><span class="er">//</span>www.earthenv.org<span class="op">/</span>cloud<span class="op">&gt;</span>),
-
-    <span class="op">-</span><span class="st"> </span>ESACCI     <span class="op">-</span><span class="st"> </span>ESA<span class="st">'s CCI-LC snow cover probability</span>
-<span class="st">(&lt;http://maps.elie.ucl.ac.be/CCI/viewer/index.php&gt;) and</span>
-
-<span class="st">    - CRU CL2.0 (climatic surfaces at 10 minute resolution)</span>
-<span class="st">(&lt;https://crudata.uea.ac.uk/%7Etimm/grid/CRU_CL_2_0.html&gt;)</span>
-
-<span class="st">- Improved file handling for individual station downloads</span>
-
-<span class="st">- Missing values are handled as `NA` not -9999</span>
-
-<span class="st">- Change from GPL &gt;= 3 to MIT licence to bring into line with ropensci packages</span>
-
-<span class="st">- Now included in ropensci, [ropensci/GSODR](https://github.com/ropensci/GSODR)</span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1">    <span class="op">-</span><span class="st"> </span><span class="kw">CHELSA</span> (climatic surfaces at <span class="dv">1</span> km resolution),</a>
+<a class="sourceLine" id="cb55-2" data-line-number="2"><span class="op">&lt;</span>http<span class="op">:</span><span class="er">//</span>chelsa<span class="op">-</span>climate.org<span class="op">/</span><span class="er">&gt;</span>,</a>
+<a class="sourceLine" id="cb55-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb55-4" data-line-number="4">    <span class="op">-</span><span class="st"> </span>MODCF     <span class="op">-</span><span class="st"> </span>Remotely sensed high<span class="op">-</span>resolution global cloud dynamics <span class="cf">for</span></a>
+<a class="sourceLine" id="cb55-5" data-line-number="5">predicting ecosystem and biodiversity distributions</a>
+<a class="sourceLine" id="cb55-6" data-line-number="6">(<span class="op">&lt;</span>http<span class="op">:</span><span class="er">//</span>www.earthenv.org<span class="op">/</span>cloud<span class="op">&gt;</span>),</a>
+<a class="sourceLine" id="cb55-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb55-8" data-line-number="8">    <span class="op">-</span><span class="st"> </span>ESACCI     <span class="op">-</span><span class="st"> </span>ESA<span class="st">'s CCI-LC snow cover probability</span></a>
+<a class="sourceLine" id="cb55-9" data-line-number="9"><span class="st">(&lt;http://maps.elie.ucl.ac.be/CCI/viewer/index.php&gt;) and</span></a>
+<a class="sourceLine" id="cb55-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb55-11" data-line-number="11"><span class="st">    - CRU CL2.0 (climatic surfaces at 10 minute resolution)</span></a>
+<a class="sourceLine" id="cb55-12" data-line-number="12"><span class="st">(&lt;https://crudata.uea.ac.uk/%7Etimm/grid/CRU_CL_2_0.html&gt;)</span></a>
+<a class="sourceLine" id="cb55-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb55-14" data-line-number="14"><span class="st">- Improved file handling for individual station downloads</span></a>
+<a class="sourceLine" id="cb55-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb55-16" data-line-number="16"><span class="st">- Missing values are handled as `NA` not -9999</span></a>
+<a class="sourceLine" id="cb55-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb55-18" data-line-number="18"><span class="st">- Change from GPL &gt;= 3 to MIT licence to bring into line with ropensci packages</span></a>
+<a class="sourceLine" id="cb55-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb55-20" data-line-number="20"><span class="st">- Now included in ropensci, [ropensci/GSODR](https://github.com/ropensci/GSODR)</span></a></code></pre></div>
 </div>
 <div id="minor-changes-11" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-changes-11" class="anchor"></a>Minor changes</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> `</span><span class="dt">get_GSOD()</span><span class="st">`</span> <span class="cf">function</span> optimised <span class="cf">for</span> speed as best possible after FTPing files</code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1"><span class="op">-</span><span class="st"> `</span><span class="dt">get_GSOD()</span><span class="st">`</span> <span class="cf">function</span> optimised <span class="cf">for</span> speed as best possible after FTPing files</a></code></pre></div>
 <p>from NCDC server</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>All files are downloaded from server and then locally processed, previously</code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>All files are downloaded from server and then locally processed, previously</a></code></pre></div>
 <p>these were sequentially downloaded by year and then processed</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>A progress bar is now shown when processing files locally after downloading
-
-<span class="op">-</span><span class="st"> </span>Reduced package dependencies
-
-<span class="op">-</span><span class="st"> </span>The <span class="st">`</span><span class="dt">get_GSOD()</span><span class="st">`</span> <span class="cf">function</span> now checks stations to see <span class="cf">if</span> the years being</code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>A progress bar is now shown when processing files locally after downloading</a>
+<a class="sourceLine" id="cb58-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb58-3" data-line-number="3"><span class="op">-</span><span class="st"> </span>Reduced package dependencies</a>
+<a class="sourceLine" id="cb58-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb58-5" data-line-number="5"><span class="op">-</span><span class="st"> </span>The <span class="st">`</span><span class="dt">get_GSOD()</span><span class="st">`</span> <span class="cf">function</span> now checks stations to see <span class="cf">if</span> the years being</a></code></pre></div>
 <p>queried are provided and returns a message alerting user if the station and years requested are not available</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>When stations are specified <span class="cf">for</span> retrieval using the <span class="st">`</span><span class="dt">station = ""</span><span class="st">`</span> parameter,</code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>When stations are specified <span class="cf">for</span> retrieval using the <span class="st">`</span><span class="dt">station = ""</span><span class="st">`</span> parameter,</a></code></pre></div>
 <p>the <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> function now checks to see if the file exists on the server, if it does not, a message is returned and all other stations that have files are processed and returned in output</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Documentation has been improved throughout package
-
-<span class="op">-</span><span class="st"> </span>Better testing of internal functions</code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Documentation has been improved throughout package</a>
+<a class="sourceLine" id="cb60-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb60-3" data-line-number="3"><span class="op">-</span><span class="st"> </span>Better testing of internal functions</a></code></pre></div>
 </div>
 <div id="bug-fixes-8" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes-8" class="anchor"></a>Bug Fixes</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Fixed<span class="op">:</span><span class="st"> </span>Remove redundant code <span class="cf">in</span> <span class="st">`</span><span class="dt">get_GSOD()</span><span class="st">`</span> <span class="cf">function</span>
-
-<span class="op">-</span><span class="st"> </span>Fixed<span class="op">:</span><span class="st"> </span>The stations data frame distributed with the package now include</code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Fixed<span class="op">:</span><span class="st"> </span>Remove redundant code <span class="cf">in</span> <span class="st">`</span><span class="dt">get_GSOD()</span><span class="st">`</span> <span class="cf">function</span></a>
+<a class="sourceLine" id="cb61-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb61-3" data-line-number="3"><span class="op">-</span><span class="st"> </span>Fixed<span class="op">:</span><span class="st"> </span>The stations data frame distributed with the package now include</a></code></pre></div>
 <p>stations that are located above 60 latitude and below -60 latitude</p>
 </div>
 <div id="deprecated-and-defunct-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#deprecated-and-defunct-1" class="anchor"></a>Deprecated and defunct</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Missing values are reported as <span class="ot">NA</span> <span class="cf">for</span> use <span class="cf">in</span> R, not <span class="op">-</span><span class="dv">9999</span> as previously
-
-<span class="op">-</span><span class="st"> </span>The <span class="st">`</span><span class="dt">path</span><span class="st">`</span> parameter is now instead called <span class="st">`</span><span class="dt">dsn</span><span class="st">`</span> to be more inline with other</code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Missing values are reported as <span class="ot">NA</span> <span class="cf">for</span> use <span class="cf">in</span> R, not <span class="dv">-9999</span> as previously</a>
+<a class="sourceLine" id="cb62-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb62-3" data-line-number="3"><span class="op">-</span><span class="st"> </span>The <span class="st">`</span><span class="dt">path</span><span class="st">`</span> parameter is now instead called <span class="st">`</span><span class="dt">dsn</span><span class="st">`</span> to be more inline with other</a></code></pre></div>
 <p>tools like <code>readOGR()</code> and <code>writeOGR()</code></p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Shapefile file out is no longer supported. Use <span class="kw">GeoPackage</span> (GPKG) instead
-
-<span class="op">-</span><span class="st"> </span>The option to remove stations with too many missing days is now optional, it</code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Shapefile file out is no longer supported. Use <span class="kw">GeoPackage</span> (GPKG) instead</a>
+<a class="sourceLine" id="cb63-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb63-3" data-line-number="3"><span class="op">-</span><span class="st"> </span>The option to remove stations with too many missing days is now optional, it</a></code></pre></div>
 <p>now defaults to including all stations, the user must specify how many missing stations to check for an exclude</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>The <span class="st">`</span><span class="dt">max_missing</span><span class="st">`</span> parameter is now user set, defaults to no check, return all</code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>The <span class="st">`</span><span class="dt">max_missing</span><span class="st">`</span> parameter is now user set, defaults to no check, return all</a></code></pre></div>
 <p>stations regardless of missing days</p>
 <hr>
 </div>
@@ -526,38 +526,38 @@ predicting ecosystem and biodiversity distributions
 <div id="bug-fixes-in-0-1-9" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes-in-0-1-9" class="anchor"></a>Bug Fixes in 0.1.9</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Fix bug <span class="cf">in</span> precipitation calculation. Documentation states that PRCP is <span class="cf">in</span> mm</code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Fix bug <span class="cf">in</span> precipitation calculation. Documentation states that PRCP is <span class="cf">in</span> mm</a></code></pre></div>
 <p>to hundredths. Issues with conversion and missing values meant that this was not the case. Thanks to Gwenael Giboire for reporting and help with fixing this</p>
 </div>
 <div id="minor-changes-in-0-1-9" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-changes-in-0-1-9" class="anchor"></a>Minor changes in 0.1.9</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Users can now select to merge output <span class="cf">for</span> station queries across multiple</code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Users can now select to merge output <span class="cf">for</span> station queries across multiple</a></code></pre></div>
 <p>years. Previously one year = one file per station. Now are set by user, <code>merge_station_years = TRUE</code> parameter, only one output file is generated</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Country list is now included <span class="cf">in</span> the package to reduce run time necessary when</code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Country list is now included <span class="cf">in</span> the package to reduce run time necessary when</a></code></pre></div>
 <p>querying for a specific country. However, this means any time that the country-list.txt file is updated, this package needs to be updated as well</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Updated <span class="st">`</span><span class="dt">stations</span><span class="st">`</span> list with latest version from NCDC published <span class="dv">12</span><span class="op">-</span><span class="dv">07</span><span class="op">-</span><span class="dv">2016</span>
-
- <span class="op">-</span><span class="st"> </span>Country list is now included <span class="cf">in</span> the package to reduce run time necessary when</code></pre></div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Updated <span class="st">`</span><span class="dt">stations</span><span class="st">`</span> list with latest version from NCDC published <span class="dv">12-07-2016</span></a>
+<a class="sourceLine" id="cb68-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb68-3" data-line-number="3"> <span class="op">-</span><span class="st"> </span>Country list is now included <span class="cf">in</span> the package to reduce run time necessary when</a></code></pre></div>
 <p>querying for a specific country. However, this means any time that the country-list.txt file is updated, this package needs to be updated as well</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Country level, agroclimatology and global data query conversions and</code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Country level, agroclimatology and global data query conversions and</a></code></pre></div>
 <p>calculations are processed in parallel now to reduce runtime</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Improved documentation with spelling fixes, clarification and updates
-
-<span class="op">-</span><span class="st"> </span>Enable <span class="st">`</span><span class="dt">ByteCompile</span><span class="st">`</span> option upon installation <span class="cf">for</span> small increase <span class="cf">in</span> speed
-
-<span class="op">-</span><span class="st"> </span>Use <span class="st">`</span><span class="dt">write.csv.raw</span><span class="st">`</span> from</code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Improved documentation with spelling fixes, clarification and updates</a>
+<a class="sourceLine" id="cb70-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb70-3" data-line-number="3"><span class="op">-</span><span class="st"> </span>Enable <span class="st">`</span><span class="dt">ByteCompile</span><span class="st">`</span> option upon installation <span class="cf">for</span> small increase <span class="cf">in</span> speed</a>
+<a class="sourceLine" id="cb70-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb70-5" data-line-number="5"><span class="op">-</span><span class="st"> </span>Use <span class="st">`</span><span class="dt">write.csv.raw</span><span class="st">`</span> from</a></code></pre></div>
 <p><code>[iotools]("https://cran.r-project.org/web/packages/iotools/index.html")</code> to greatly improve runtime by decreasing time used to write CSV files to disk</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Use <span class="st">`</span><span class="dt">writeOGR()</span><span class="st">`</span> from <span class="st">`</span><span class="dt">rgdal</span><span class="st">`</span>, <span class="cf">in</span> place of <span class="st">`</span><span class="dt">raster's</span><span class="st">`</span> <span class="st">`</span><span class="dt">shapefile</span><span class="st">`</span> to improve</code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Use <span class="st">`</span><span class="dt">writeOGR()</span><span class="st">`</span> from <span class="st">`</span><span class="dt">rgdal</span><span class="st">`</span>, <span class="cf">in</span> place of <span class="st">`</span><span class="dt">raster's</span><span class="st">`</span> <span class="st">`</span><span class="dt">shapefile</span><span class="st">`</span> to improve</a></code></pre></div>
 <p>runtime by decreasing time used to write shapefiles to disk</p>
 <hr>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"> <span class="op">-</span><span class="st"> </span>Country level, agroclimatology and global data query conversions and</code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" data-line-number="1"> <span class="op">-</span><span class="st"> </span>Country level, agroclimatology and global data query conversions and</a></code></pre></div>
 <p>calculations are processed in parallel now to reduce runtime</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"> <span class="op">-</span><span class="st"> </span>Improved documentation with spelling fixes, clarification and updates
-
- <span class="op">-</span><span class="st"> </span>Enable <span class="st">`</span><span class="dt">ByteCompile</span><span class="st">`</span> option upon installation <span class="cf">for</span> small increase <span class="cf">in</span> speed
-
- <span class="op">-</span><span class="st"> </span>Use <span class="st">`</span><span class="dt">write.csv.raw</span><span class="st">`</span> from</code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1"> <span class="op">-</span><span class="st"> </span>Improved documentation with spelling fixes, clarification and updates</a>
+<a class="sourceLine" id="cb73-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb73-3" data-line-number="3"> <span class="op">-</span><span class="st"> </span>Enable <span class="st">`</span><span class="dt">ByteCompile</span><span class="st">`</span> option upon installation <span class="cf">for</span> small increase <span class="cf">in</span> speed</a>
+<a class="sourceLine" id="cb73-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb73-5" data-line-number="5"> <span class="op">-</span><span class="st"> </span>Use <span class="st">`</span><span class="dt">write.csv.raw</span><span class="st">`</span> from</a></code></pre></div>
 <p><code>[iotools]("https://cran.r-project.org/web/packages/iotools/index.html")</code> to greatly improve runtime by decreasing time used to write CSV files to disk</p>
 <hr>
 </div>
@@ -569,25 +569,25 @@ predicting ecosystem and biodiversity distributions
 <div id="bug-fixes-in-0-1-8" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes-in-0-1-8" class="anchor"></a>Bug Fixes in 0.1.8</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Fix bug with connection timing out <span class="cf">for</span> single station queries commit<span class="op">:</span><span class="st">  </span>[a126641e00dc7acc21844ff0436e5702f8b6e04a](https<span class="op">:</span><span class="er">//</span>github.com<span class="op">/</span>ropensci<span class="op">/</span>GSODR<span class="op">/</span>commit<span class="op">/</span>a126641e00dc7acc21844ff0436e5702f8b6e04a)
-
-<span class="op">-</span><span class="st"> </span>Somehow the previously working <span class="cf">function</span> that checked country names broke with</code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Fix bug with connection timing out <span class="cf">for</span> single station queries commit<span class="op">:</span><span class="st">  </span>[a126641e00dc7acc21844ff0436e5702f8b6e04a](https<span class="op">:</span><span class="er">//</span>github.com<span class="op">/</span>ropensci<span class="op">/</span>GSODR<span class="op">/</span>commit<span class="op">/</span>a126641e00dc7acc21844ff0436e5702f8b6e04a)</a>
+<a class="sourceLine" id="cb74-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb74-3" data-line-number="3"><span class="op">-</span><span class="st"> </span>Somehow the previously working <span class="cf">function</span> that checked country names broke with</a></code></pre></div>
 <p>the <code>toupper()</code> function. A new <a href="http://stackoverflow.com/questions/16516593/convert-from-lowercase-to-uppercase-all-values-in-all-character-variables-in-dat">function from juba</a> fixes this issue and users can now select country again</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"> <span class="op">-</span><span class="st"> </span>Somehow the previously working <span class="cf">function</span> that checked country names broke with</code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1"> <span class="op">-</span><span class="st"> </span>Somehow the previously working <span class="cf">function</span> that checked country names broke with</a></code></pre></div>
 <p>the <code>toupper()</code> function. A new <a href="http://stackoverflow.com/questions/16516593/convert-from-lowercase-to-uppercase-all-values-in-all-character-variables-in-dat">function from juba</a> fixes this issue and users can now select country again</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>User entered values <span class="cf">for</span> a single station are now checked against actual</code></pre></div>
+<div class="sourceCode" id="cb76"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>User entered values <span class="cf">for</span> a single station are now checked against actual</a></code></pre></div>
 <p>station values for validity</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>stations.rda is compressed
-
-<span class="op">-</span><span class="st"> </span>stations.rda now includes a field <span class="cf">for</span> <span class="st">"corrected"</span> elevation using hole<span class="op">-</span>filled</code></pre></div>
-<p>SRTM data from Jarvis et al. 2008, see <a href="https://github.com/ropensci/GSODR/blob/devel/data-raw/fetch_isd-history.html">https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md</a> for a description</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Set <span class="ot">NA</span> or missing values <span class="cf">in</span> CSV or shapefile to <span class="op">-</span><span class="dv">9999</span> from <span class="op">-</span><span class="fl">9999.99</span> to align</code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>stations.rda is compressed</a>
+<a class="sourceLine" id="cb77-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb77-3" data-line-number="3"><span class="op">-</span><span class="st"> </span>stations.rda now includes a field <span class="cf">for</span> <span class="st">"corrected"</span> elevation using hole<span class="op">-</span>filled</a></code></pre></div>
+<p>SRTM data from Jarvis et al. 2008, see <a href="https://github.com/ropensci/GSODR/blob/devel/data-raw/fetch_isd-history.html">https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md</a> for a description</p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Set <span class="ot">NA</span> or missing values <span class="cf">in</span> CSV or shapefile to <span class="dv">-9999</span> from <span class="fl">-9999.99</span> to align</a></code></pre></div>
 <p>with other data sources such as Worldclim</p>
 </div>
 <div id="minor-changes-12" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-changes-12" class="anchor"></a>Minor changes</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Documentation is more complete and easier to use</code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Documentation is more complete and easier to use</a></code></pre></div>
 <hr>
 </div>
 </div>
@@ -598,22 +598,22 @@ predicting ecosystem and biodiversity distributions
 <div id="bug-fixes-in-0-1-7" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes-in-0-1-7" class="anchor"></a>Bug Fixes in 0.1.7</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Fix issues with MIN<span class="op">/</span>MAX where MIN referred to MAX</code></pre></div>
+<div class="sourceCode" id="cb80"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Fix issues with MIN<span class="op">/</span>MAX where MIN referred to MAX</a></code></pre></div>
 <p><a href="https://github.com/ropensci/GSODR/issues/5">(Issue 5)</a></p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Fix bug where the <span class="st">`</span><span class="dt">tf</span><span class="st">`</span> item was incorrectly set as</code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Fix bug where the <span class="st">`</span><span class="dt">tf</span><span class="st">`</span> item was incorrectly set as</a></code></pre></div>
 <p><code>tf &lt;    - "~/tmp/GSOD-2010.tar</code>, not <code>tf &lt;    - tempfile</code>, in <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> <a href="https://github.com/ropensci/GSODR/issues/6">(Issue 6)</a></p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Fix issues with MIN<span class="op">/</span>MAX where MIN referred to MAX</code></pre></div>
+<div class="sourceCode" id="cb82"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Fix issues with MIN<span class="op">/</span>MAX where MIN referred to MAX</a></code></pre></div>
 <p><a href="https://github.com/ropensci/GSODR/issues/5">(Issue 5)</a></p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Fix bug where the <span class="st">`</span><span class="dt">tf</span><span class="st">`</span> item was incorrectly set as</code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Fix bug where the <span class="st">`</span><span class="dt">tf</span><span class="st">`</span> item was incorrectly set as</a></code></pre></div>
 <p><code>tf &lt;    - "~/tmp/GSOD-2010.tar</code>, not <code>tf &lt;    - tempfile</code>, in <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> <a href="https://github.com/ropensci/GSODR/issues/6">(Issue 6)</a></p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>CITATION file is updated and corrected</code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>CITATION file is updated and corrected</a></code></pre></div>
 </div>
 <div id="minor-changes-in-0-1-7" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-changes-in-0-1-7" class="anchor"></a>Minor changes in 0.1.7</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>User now has the ability to generate a shapefile as well as CSV file output</code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>User now has the ability to generate a shapefile as well as CSV file output</a></code></pre></div>
 <p><a href="https://github.com/ropensci/GSODR/issues/3">(Issue 3)</a></p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Documentation is more complete and easier to use</code></pre></div>
+<div class="sourceCode" id="cb86"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Documentation is more complete and easier to use</a></code></pre></div>
 <hr>
 </div>
 </div>
@@ -624,18 +624,18 @@ predicting ecosystem and biodiversity distributions
 <div id="bug-fixes-in-0-1-6" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes-in-0-1-6" class="anchor"></a>Bug Fixes in 0.1.6</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Fix issue when reading .op files into R where temperature was incorrectly read</code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Fix issue when reading .op files into R where temperature was incorrectly read</a></code></pre></div>
 <p>causing negative values where T &gt;= 100F, this issue caused RH values of &gt;100% and incorrect TEMP values <a href="https://github.com/ropensci/GSODR/issues/1">(Issue 1)</a></p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Fix issue when reading .op files into R where temperature was incorrectly read</code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Fix issue when reading .op files into R where temperature was incorrectly read</a></code></pre></div>
 <p>causing negative values where T &gt;= 100F, this issue caused RH values of &gt;100% and incorrect TEMP values <a href="https://github.com/ropensci/GSODR/issues/1">(Issue 1)</a></p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Spelling corrections</code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Spelling corrections</a></code></pre></div>
 </div>
 <div id="major-changes-in-0-1-6" class="section level2">
 <h2 class="hasAnchor">
 <a href="#major-changes-in-0-1-6" class="anchor"></a>Major changes in 0.1.6</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Include MIN<span class="op">/</span>MAX flag column
-
-<span class="op">-</span><span class="st"> </span>Station data is now included <span class="cf">in</span> package rather than downloading from NCDC</code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Include MIN<span class="op">/</span>MAX flag column</a>
+<a class="sourceLine" id="cb90-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb90-3" data-line-number="3"><span class="op">-</span><span class="st"> </span>Station data is now included <span class="cf">in</span> package rather than downloading from NCDC</a></code></pre></div>
 <p>every time get_GSOD() is run, this data has some corrections where stations with missing LAT/LON values or elevation are omitted, this is <strong>not</strong> the original complete station list provided by NCDC</p>
 <hr>
 </div>
@@ -647,19 +647,19 @@ predicting ecosystem and biodiversity distributions
 <div id="bug-fixes-9" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes-9" class="anchor"></a>Bug Fixes</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Fixed bug where YDAY not correctly calculated and reported <span class="cf">in</span> CSV file
-
-<span class="op">-</span><span class="st"> </span>CSV files <span class="cf">for</span> station only queries now are names with the Station Identifier.</code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Fixed bug where YDAY not correctly calculated and reported <span class="cf">in</span> CSV file</a>
+<a class="sourceLine" id="cb91-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb91-3" data-line-number="3"><span class="op">-</span><span class="st"> </span>CSV files <span class="cf">for</span> station only queries now are names with the Station Identifier.</a></code></pre></div>
 <p>Previously named same as global data</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Likewise, CSV files <span class="cf">for</span> agroclimatology now are names with the Station</code></pre></div>
+<div class="sourceCode" id="cb92"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Likewise, CSV files <span class="cf">for</span> agroclimatology now are names with the Station</a></code></pre></div>
 <p>Identifier. Previously named same as global data</p>
 </div>
 <div id="minor-changes-13" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-changes-13" class="anchor"></a>Minor Changes</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Set values where MIN <span class="op">&gt;</span><span class="st"> </span>MAX to <span class="ot">NA</span>
-
-<span class="op">-</span><span class="st"> </span>Set more MIN<span class="op">/</span>MAX<span class="op">/</span>DEWP values to NA. GSOD README indicates that <span class="dv">999</span> indicates</code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Set values where MIN <span class="op">&gt;</span><span class="st"> </span>MAX to <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb93-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb93-3" data-line-number="3"><span class="op">-</span><span class="st"> </span>Set more MIN<span class="op">/</span>MAX<span class="op">/</span>DEWP values to NA. GSOD README indicates that <span class="dv">999</span> indicates</a></code></pre></div>
 <p>missing values in these columns, this does not appear to always be true. There are instances where 99 is the value recorded for missing data. While 99F is possible, the vast majority of these recorded values are missing data, thus the function now converts them to NA</p>
 <hr>
 </div>
@@ -671,7 +671,7 @@ predicting ecosystem and biodiversity distributions
 <div id="bug-fixes-in-0-1-4" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes-in-0-1-4" class="anchor"></a>Bug Fixes in 0.1.4</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Fixed bug related to MIN<span class="op">/</span>MAX columns when agroclimatology or all stations are</code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Fixed bug related to MIN<span class="op">/</span>MAX columns when agroclimatology or all stations are</a></code></pre></div>
 <p>selected where flags were not removed properly from numeric values.</p>
 </div>
 <div id="minor-changes-in-0-1-4" class="section level2">
@@ -687,14 +687,14 @@ predicting ecosystem and biodiversity distributions
 <div id="bug-fixes-10" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes-10" class="anchor"></a>Bug fixes</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Bug fix <span class="cf">in</span> MIN<span class="op">/</span>MAX with flags. Some columns have differing widths, which</code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb95-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Bug fix <span class="cf">in</span> MIN<span class="op">/</span>MAX with flags. Some columns have differing widths, which</a></code></pre></div>
 <p>caused a flag to be left attached to some values</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Correct URL <span class="cf">in</span> README.md <span class="cf">for</span> CRAN to point to CRAN not GitHub</code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Correct URL <span class="cf">in</span> README.md <span class="cf">for</span> CRAN to point to CRAN not GitHub</a></code></pre></div>
 </div>
 <div id="minor-changes-14" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-changes-14" class="anchor"></a>Minor Changes</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Set <span class="ot">NA</span> to <span class="op">-</span><span class="fl">9999.99</span></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Set <span class="ot">NA</span> to <span class="fl">-9999.99</span></a></code></pre></div>
 <hr>
 </div>
 </div>
@@ -705,19 +705,19 @@ predicting ecosystem and biodiversity distributions
 <div id="bug-fixes-11" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes-11" class="anchor"></a>Bug Fixes</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Bug fix <span class="cf">in</span> importing isd<span class="op">-</span>history.csv file. Previous issues caused all</code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb98-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Bug fix <span class="cf">in</span> importing isd<span class="op">-</span>history.csv file. Previous issues caused all</a></code></pre></div>
 <p>lat/lon/elev values to be &gt;0.</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Bug fix where WDSP was mistyped as WDPS causing the creation of a new column,</code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb99-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Bug fix where WDSP was mistyped as WDPS causing the creation of a new column,</a></code></pre></div>
 <p>rather than the conversion of the existing</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Bug fix <span class="cf">if</span> Agroclimatology selected. Previously this resulted <span class="cf">in</span> no records.
-
-<span class="op">-</span><span class="st"> </span>Set the default encoding to UTF8.
-
-<span class="op">-</span><span class="st"> </span>Bug fix <span class="cf">for</span> country selection. Some countries did not return proper ISO code.
-
- <span class="op">-</span><span class="st"> </span>Bug fix where WDSP was mistyped as WDPS causing the creation of a new column,</code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Bug fix <span class="cf">if</span> Agroclimatology selected. Previously this resulted <span class="cf">in</span> no records.</a>
+<a class="sourceLine" id="cb100-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb100-3" data-line-number="3"><span class="op">-</span><span class="st"> </span>Set the default encoding to UTF8.</a>
+<a class="sourceLine" id="cb100-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb100-5" data-line-number="5"><span class="op">-</span><span class="st"> </span>Bug fix <span class="cf">for</span> country selection. Some countries did not return proper ISO code.</a>
+<a class="sourceLine" id="cb100-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb100-7" data-line-number="7"> <span class="op">-</span><span class="st"> </span>Bug fix where WDSP was mistyped as WDPS causing the creation of a new column,</a></code></pre></div>
 <p>rather than the conversion of the existing</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Use write.csv, not readr<span class="op">::</span>write_csv due to issue converting double to string<span class="op">:</span></code></pre></div>
+<div class="sourceCode" id="cb101"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb101-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Use write.csv, not readr<span class="op">::</span>write_csv due to issue converting double to string<span class="op">:</span></a></code></pre></div>
 <p><a href="https://github.com/hadley/readr/issues/387" class="uri">https://github.com/hadley/readr/issues/387</a></p>
 <hr>
 </div>
@@ -729,13 +729,13 @@ predicting ecosystem and biodiversity distributions
 <div id="major-changes-in-0-1-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#major-changes-in-0-1-1" class="anchor"></a>Major changes in 0.1.1</h2>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Now available on CRAN
-
-<span class="op">-</span><span class="st"> </span>Add single quotes around possibly misspelled words and spell out</code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb102-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Now available on CRAN</a>
+<a class="sourceLine" id="cb102-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb102-3" data-line-number="3"><span class="op">-</span><span class="st"> </span>Add single quotes around possibly misspelled words and spell out</a></code></pre></div>
 <p>comma-separated values and geographic information system rather than just using “CSV” or “GIS” in DESCRIPTION.</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Add full name of <span class="kw">GSOD</span> (Global Surface Summary of the Day) and URL <span class="cf">for</span> GSOD, <span class="op">&lt;</span>https<span class="op">:</span><span class="er">//</span>data.noaa.gov<span class="op">/</span>dataset<span class="op">/</span>dataset<span class="op">/</span>global<span class="op">-</span>surface<span class="op">-</span>summary<span class="op">-</span>of<span class="op">-</span>the<span class="op">-</span>day<span class="op">-</span>gsod<span class="op">/</span><span class="er">&gt;</span><span class="st"> </span>to</code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb103-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Add full name of <span class="kw">GSOD</span> (Global Surface Summary of the Day) and URL <span class="cf">for</span> GSOD, <span class="op">&lt;</span>https<span class="op">:</span><span class="er">//</span>data.noaa.gov<span class="op">/</span>dataset<span class="op">/</span>dataset<span class="op">/</span>global<span class="op">-</span>surface<span class="op">-</span>summary<span class="op">-</span>of<span class="op">-</span>the<span class="op">-</span>day<span class="op">-</span>gsod<span class="op">/</span><span class="er">&gt;</span><span class="st"> </span>to</a></code></pre></div>
 <p>DESCRIPTION as requested by CRAN.</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Require user to specify directory <span class="cf">for</span> resulting .csv file output so that any</code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Require user to specify directory <span class="cf">for</span> resulting .csv file output so that any</a></code></pre></div>
 <p>files written to disk are interactive and with user’s permission</p>
 <hr>
 </div>
@@ -744,7 +744,7 @@ predicting ecosystem and biodiversity distributions
 <h1 class="page-header">
 <a href="#gsodr-0-1-release-date-2016-04-18" class="anchor"></a>GSODR 0.1 (Release date: 2016-04-18)<small> Unreleased </small>
 </h1>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>Initial submission to CRAN</code></pre></div>
+<div class="sourceCode" id="cb105"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb105-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Initial submission to CRAN</a></code></pre></div>
 </div>
   </div>
 
