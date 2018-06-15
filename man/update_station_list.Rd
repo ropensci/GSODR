@@ -24,9 +24,7 @@ GSODR data that is not available in the database distributed with
 \code{\link{GSODR}}.
 
 To directly access these data, use: \cr
-\code{load(system.file("extdata", \cr
-                                    "isd_history.rda", \cr
-                        package = "GSODR"))}
+\code{load(system.file("extdata", "isd_history.rda", package = "GSODR"))}
 }
 \examples{
 \dontrun{
