@@ -12,6 +12,9 @@ of stations in the `data-raw` files.
 
 ## Minor changes
 
+    - Clean documentation, shortening long lines, fixing formatting,
+    incomplete sentences and broken links
+
     - Clarify the reasons for errors that a user may encounter
 
     - Update internal databases of station metadata
