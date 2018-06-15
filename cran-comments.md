@@ -1,4 +1,4 @@
-## Test environments
+# Test environments
 
 - local macOS install, R version 3.5.0 (2018-04-23)
 
@@ -8,11 +8,11 @@
 
 - win-builder R version 3.5.0 (2018-04-23)
 
-## R CMD check results
+# R CMD check results
 
 0 errors | 0 warnings | 1 note
 
-## New minor release
+# New minor release
 
 This is a new minor release
 
@@ -32,10 +32,10 @@ of stations in the `data-raw` files.
 
 - Update internal databases of station metadata
 
-## Reverse dependencies
+# Reverse dependencies
 
 - No ERRORs or WARNINGs found
 
-## Downstream dependencies
+# Downstream dependencies
 
 - There currently are no downstream dependencies for this package
