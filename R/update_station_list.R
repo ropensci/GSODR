@@ -24,7 +24,7 @@
 #' update_station_list()
 #' }
 #'
-#' @author Adam H Sparks, \email{adamhsparks@gmail.com}
+#' @author Adam H Sparks, \email{adamhsparks@@gmail.com}
 #' @export
 #'
 update_station_list <- function() {

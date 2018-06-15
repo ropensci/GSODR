@@ -2,8 +2,7 @@
 required <- c("ggplot2", "tidyr", "lubridate")
 
 if (!all(unlist(lapply(required, function(pkg) requireNamespace(pkg, quietly = TRUE)))))
-
-  knitr::opts_chunk$set(eval = FALSE, collapse = TRUE, comment = "#>", fig.width = 7, fig.height = 7, fig.align = "center")
+knitr::opts_chunk$set(eval = FALSE, collapse = TRUE, comment = "#>", fig.width = 7, fig.height = 7, fig.align = "center")
 
 ## ---- eval=TRUE----------------------------------------------------------
 library(GSODR)
@@ -15,12 +14,11 @@ station_locations <- left_join(isd_history, country_list,
                                by = c("CTRY" = "FIPS"))
 
 # create data.frame for Australia only
-Oz <- filter(station_locations, COUNTRY_NAME == "AUSTRALIA")
+Oz <- subset(station_locations, COUNTRY_NAME == "AUSTRALIA")
 
 Oz
 
-Oz %>%
-  filter(grepl("TOOWOOMBA", STN_NAME))
+subset(Oz, grepl("TOOWOOMBA", STN_NAME))
 
 ## ---- eval=TRUE----------------------------------------------------------
 tbar <- get_GSOD(years = 2010, station = "955510-99999")
@@ -34,7 +32,7 @@ tbar
 #  
 #  tbar <- get_GSOD(years = 2010, station = tbar_stations)
 
-## ---- eval=FALSE, message=FALSE------------------------------------------
+## ---- eval=FALSE---------------------------------------------------------
 #  remove <- c("949999-00170", "949999-00183")
 #  
 #  tbar_stations <- tbar_stations[!tbar_stations %in% remove]
@@ -65,11 +63,12 @@ ggplot(data = tbar_temps, aes(x = ymd(YEARMODA), y = value,
 
 ## ----spatial_convert, eval = FALSE---------------------------------------
 #  # get GSOD data
+#  library(sp)
 #  GSOD <- get_GSOD(years = 2015, country = "Australia")
 #  
 #  # convert to SpatialPointsDataFrame
-#  sp::coordinates(GSOD_sp) <- ~ LON + LAT
-#  sp::proj4string(GSOD_sp) <- sp::CRS("+proj=longlat +datum=WGS84")
+#  coordinates(GSOD_sp) <- ~ LON + LAT
+#  proj4string(GSOD_sp) <- CRS("+proj=longlat +datum=WGS84")
 #  
 #  str(GSOD_sp)
 
@@ -135,7 +134,9 @@ ggplot(data = tbar_temps, aes(x = ymd(YEARMODA), y = value,
 #>   .. .. ..@ projargs: chr "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"
 
 ## ----sp_save_gpkg, eval=FALSE--------------------------------------------
-#    rgdal::writeOGR(
+#  library(rgdal)
+#  
+#    writeOGR(
 #      GSOD_sp,
 #      dsn = path.expand("~/"),
 #      layer = "GSOD",
@@ -143,7 +144,7 @@ ggplot(data = tbar_temps, aes(x = ymd(YEARMODA), y = value,
 #    )
 
 ## ----sp_save_shp, eval=FALSE---------------------------------------------
-#    rgdal::writeOGR(
+#    writeOGR(
 #      GSOD_sp,
 #      dsn = path.expand("~/"),
 #      layer = "GSOD",
@@ -151,6 +152,7 @@ ggplot(data = tbar_temps, aes(x = ymd(YEARMODA), y = value,
 #    )
 
 ## ----convert_sf, eval=FALSE----------------------------------------------
+#  library(sf)
 #  GSOD_SF <- st_as_sf(x = GSOD,
 #                          coords = c("LON", "LAT"),
 #                          crs = "+proj=longlat +datum=WGS84")

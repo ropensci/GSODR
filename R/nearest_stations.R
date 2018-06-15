@@ -26,7 +26,7 @@
 #' n <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 100)
 #'}
 #' @return \code{\link[base]{vector}} object of station identification numbers
-#' @author Adam H Sparks, \email{adamhsparks@gmail.com}
+#' @author Adam H Sparks, \email{adamhsparks@@gmail.com}
 #' @export
 nearest_stations <- function(LAT, LON, distance) {
 

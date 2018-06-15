@@ -81,7 +81,7 @@
 #' get_GSOD(years = 2010:2011, agroclimatology = TRUE)
 #' }
 #'
-#' @author Adam H Sparks, \email{adamhsparks@gmail.com}
+#' @author Adam H Sparks, \email{adamhsparks@@gmail.com}
 #'
 #' @references {Jarvis, A., Reuter, H. I, Nelson, A., Guevara, E. (2008)
 #' Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
