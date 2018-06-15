@@ -2,7 +2,6 @@
 
 export(get_GSOD)
 export(get_inventory)
-export(get_station_list)
 export(nearest_stations)
 export(reformat_GSOD)
 export(update_station_list)
