@@ -57,7 +57,7 @@
 
 --------------------------------------------------------------------------------
 
-# GSODR 1.1.2  (Release Date 2017-12-15)
+# GSODR 1.1.2
 
 ## Bug fixes
 
@@ -73,7 +73,7 @@
 
 --------------------------------------------------------------------------------
 
-# GSODR 1.1.1 (Release Date 2017-11-27)
+# GSODR 1.1.1
 
 ## Bug fixes
 
@@ -403,16 +403,16 @@ _GSODdata_
 
 --------------------------------------------------------------------------------
 
-# GSODR 0.1.9 (Release Date: 2016-07-15)
+# GSODR 0.1.9
 
-## Bug Fixes in 0.1.9
+## Bug Fixes
 
   - Fix bug in precipitation calculation. Documentation states that PRCP is in
     mm to hundredths. Issues with conversion and missing values meant that this
     was not the case. Thanks to Gwenael Giboire for reporting and help with
     fixing this
 
-## Minor changes in 0.1.9
+## Minor changes
 
   - Users can now select to merge output for station queries across multiple
     years. Previously one year = one file per station. Now are set by user,
@@ -459,9 +459,9 @@ _GSODdata_
 
 --------------------------------------------------------------------------------
 
-# GSODR 0.1.8 (Release Date: 2016-07-04)
+# GSODR 0.1.8
 
-## Bug Fixes in 0.1.8
+## Bug Fixes
 
   - Fix bug with connection timing out for single station queries commit:  [a126641e00dc7acc21844ff0436e5702f8b6e04a](https://github.com/ropensci/GSODR/commit/a126641e00dc7acc21844ff0436e5702f8b6e04a)
 
@@ -488,9 +488,9 @@ _GSODdata_
 
 --------------------------------------------------------------------------------
 
-# GSODR 0.1.7 (Release Date: 2016-06-02)
+# GSODR 0.1.7
 
-## Bug Fixes in 0.1.7
+## Bug Fixes
 
   - Fix issues with MIN/MAX where MIN referred to MAX
      [(Issue 5)](https://github.com/ropensci/GSODR/issues/5)
@@ -501,7 +501,7 @@ _GSODdata_
 
   - CITATION file is updated and corrected
 
-## Minor changes in 0.1.7
+## Minor changes
 
   - User now has the ability to generate a shapefile as well as CSV file
     output [(Issue 3)](https://github.com/ropensci/GSODR/issues/3)
@@ -510,9 +510,9 @@ _GSODdata_
 
 --------------------------------------------------------------------------------
 
-# GSODR 0.1.6 (Release date: 2016-05-26)
+# GSODR 0.1.6
 
-## Bug Fixes in 0.1.6
+## Bug Fixes
 
   - Fix issue when reading .op files into R where temperature was incorrectly
     read causing negative values where T >= 100F, this issue caused RH values of
@@ -521,7 +521,7 @@ _GSODdata_
 
   - Spelling corrections
 
-## Major changes in 0.1.6
+## Major changes
 
   - Include MIN/MAX flag column
 
@@ -532,7 +532,7 @@ _GSODdata_
 
 --------------------------------------------------------------------------------
 
-# GSODR 0.1.5 (Release date: 2016-05-16)
+# GSODR 0.1.5
 
 ## Bug Fixes
 
@@ -556,18 +556,18 @@ _GSODdata_
 
 --------------------------------------------------------------------------------
 
-# GSODR 0.1.4 (Release date: 2016-05-09)
+# GSODR 0.1.4
 
-## Bug Fixes in 0.1.4
+## Bug Fixes
 
   - Fixed bug related to MIN/MAX columns when agroclimatology or all stations
     are selected where flags were not removed properly from numeric values.
 
-## Minor Changes in 0.1.4
+## Minor Changes
 
 --------------------------------------------------------------------------------
 
-# GSODR 0.1.3 (Release date: 2016-05-06)
+# GSODR 0.1.3
 
 ## Bug fixes
 
@@ -582,7 +582,7 @@ _GSODdata_
 
 --------------------------------------------------------------------------------
 
-# GSODR 0.1.2 (Release date: 2016-05-05)
+# GSODR 0.1.2
 
 ## Bug Fixes
 
@@ -608,9 +608,9 @@ _GSODdata_
 
 --------------------------------------------------------------------------------
 
-# GSODR 0.1.1 (Release date: 2016-04-21)
+# GSODR 0.1.1
 
-## Major changes in 0.1.1
+## Major changes
 
   - Now available on CRAN
 
@@ -628,6 +628,6 @@ _GSODdata_
 
 --------------------------------------------------------------------------------
 
-# GSODR 0.1 (Release date: 2016-04-18)
+# GSODR 0.1
 
   - Initial submission to CRAN

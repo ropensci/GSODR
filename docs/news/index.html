@@ -121,7 +121,7 @@
 
     <div id="gsodr-1-2-1" class="section level1">
 <h1 class="page-header">
-<a href="#gsodr-1-2-1" class="anchor"></a>GSODR 1.2.1<small> Unreleased </small>
+<a href="#gsodr-1-2-1" class="anchor"></a>GSODR 1.2.1<small> 2018-06-16 </small>
 </h1>
 <div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
@@ -174,9 +174,9 @@
 <hr>
 </div>
 </div>
-    <div id="gsodr-1-1-2-release-date-2017-12-15" class="section level1">
+    <div id="gsodr-1-1-2" class="section level1">
 <h1 class="page-header">
-<a href="#gsodr-1-1-2-release-date-2017-12-15" class="anchor"></a>GSODR 1.1.2 (Release Date 2017-12-15)<small> 2017-12-15 </small>
+<a href="#gsodr-1-1-2" class="anchor"></a>GSODR 1.1.2<small> 2017-12-15 </small>
 </h1>
 <div id="bug-fixes-2" class="section level2">
 <h2 class="hasAnchor">
@@ -196,9 +196,9 @@
 <hr>
 </div>
 </div>
-    <div id="gsodr-1-1-1-release-date-2017-11-27" class="section level1">
+    <div id="gsodr-1-1-1" class="section level1">
 <h1 class="page-header">
-<a href="#gsodr-1-1-1-release-date-2017-11-27" class="anchor"></a>GSODR 1.1.1 (Release Date 2017-11-27)<small> 2017-11-27 </small>
+<a href="#gsodr-1-1-1" class="anchor"></a>GSODR 1.1.1<small> 2017-11-27 </small>
 </h1>
 <div id="bug-fixes-3" class="section level2">
 <h2 class="hasAnchor">
@@ -494,20 +494,20 @@
 <hr>
 </div>
 </div>
-    <div id="gsodr-0-1-9-release-date-2016-07-15" class="section level1">
+    <div id="gsodr-0-1-9" class="section level1">
 <h1 class="page-header">
-<a href="#gsodr-0-1-9-release-date-2016-07-15" class="anchor"></a>GSODR 0.1.9 (Release Date: 2016-07-15)<small> 2016-07-15 </small>
+<a href="#gsodr-0-1-9" class="anchor"></a>GSODR 0.1.9<small> 2016-07-15 </small>
 </h1>
-<div id="bug-fixes-in-0-1-9" class="section level2">
+<div id="bug-fixes-9" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-in-0-1-9" class="anchor"></a>Bug Fixes in 0.1.9</h2>
+<a href="#bug-fixes-9" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li>Fix bug in precipitation calculation. Documentation states that PRCP is in mm to hundredths. Issues with conversion and missing values meant that this was not the case. Thanks to Gwenael Giboire for reporting and help with fixing this</li>
 </ul>
 </div>
-<div id="minor-changes-in-0-1-9" class="section level2">
+<div id="minor-changes-12" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-in-0-1-9" class="anchor"></a>Minor changes in 0.1.9</h2>
+<a href="#minor-changes-12" class="anchor"></a>Minor changes</h2>
 <ul>
 <li><p>Users can now select to merge output for station queries across multiple years. Previously one year = one file per station. Now are set by user, <code>merge_station_years = TRUE</code> parameter, only one output file is generated</p></li>
 <li><p>Country list is now included in the package to reduce run time necessary when querying for a specific country. However, this means any time that the country-list.txt file is updated, this package needs to be updated as well</p></li>
@@ -529,13 +529,13 @@
 <hr>
 </div>
 </div>
-    <div id="gsodr-0-1-8-release-date-2016-07-04" class="section level1">
+    <div id="gsodr-0-1-8" class="section level1">
 <h1 class="page-header">
-<a href="#gsodr-0-1-8-release-date-2016-07-04" class="anchor"></a>GSODR 0.1.8 (Release Date: 2016-07-04)<small> 2016-07-04 </small>
+<a href="#gsodr-0-1-8" class="anchor"></a>GSODR 0.1.8<small> 2016-07-04 </small>
 </h1>
-<div id="bug-fixes-in-0-1-8" class="section level2">
+<div id="bug-fixes-10" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-in-0-1-8" class="anchor"></a>Bug Fixes in 0.1.8</h2>
+<a href="#bug-fixes-10" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li><p>Fix bug with connection timing out for single station queries commit: <a href="https://github.com/ropensci/GSODR/commit/a126641e00dc7acc21844ff0436e5702f8b6e04a">a126641e00dc7acc21844ff0436e5702f8b6e04a</a></p></li>
 <li><p>Somehow the previously working function that checked country names broke with the <code>toupper()</code> function. A new <a href="http://stackoverflow.com/questions/16516593/convert-from-lowercase-to-uppercase-all-values-in-all-character-variables-in-dat">function from juba</a> fixes this issue and users can now select country again</p></li>
@@ -545,31 +545,31 @@
 <li><p>Set NA or missing values in CSV or shapefile to -9999 from -9999.99 to align with other data sources such as Worldclim</p></li>
 </ul>
 </div>
-<div id="minor-changes-12" class="section level2">
+<div id="minor-changes-13" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-12" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-13" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Documentation is more complete and easier to use</li>
 </ul>
 <hr>
 </div>
 </div>
-    <div id="gsodr-0-1-7-release-date-2016-06-02" class="section level1">
+    <div id="gsodr-0-1-7" class="section level1">
 <h1 class="page-header">
-<a href="#gsodr-0-1-7-release-date-2016-06-02" class="anchor"></a>GSODR 0.1.7 (Release Date: 2016-06-02)<small> 2016-06-02 </small>
+<a href="#gsodr-0-1-7" class="anchor"></a>GSODR 0.1.7<small> 2016-06-02 </small>
 </h1>
-<div id="bug-fixes-in-0-1-7" class="section level2">
+<div id="bug-fixes-11" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-in-0-1-7" class="anchor"></a>Bug Fixes in 0.1.7</h2>
+<a href="#bug-fixes-11" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li><p>Fix issues with MIN/MAX where MIN referred to MAX <a href="https://github.com/ropensci/GSODR/issues/5">(Issue 5)</a></p></li>
 <li><p>Fix bug where the <code>tf</code> item was incorrectly set as <code>tf &lt;  - "~/tmp/GSOD-2010.tar</code>, not <code>tf &lt;  - tempfile</code>, in <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> <a href="https://github.com/ropensci/GSODR/issues/6">(Issue 6)</a></p></li>
 <li><p>CITATION file is updated and corrected</p></li>
 </ul>
 </div>
-<div id="minor-changes-in-0-1-7" class="section level2">
+<div id="minor-changes-14" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-in-0-1-7" class="anchor"></a>Minor changes in 0.1.7</h2>
+<a href="#minor-changes-14" class="anchor"></a>Minor changes</h2>
 <ul>
 <li><p>User now has the ability to generate a shapefile as well as CSV file output <a href="https://github.com/ropensci/GSODR/issues/3">(Issue 3)</a></p></li>
 <li><p>Documentation is more complete and easier to use</p></li>
@@ -577,13 +577,13 @@
 <hr>
 </div>
 </div>
-    <div id="gsodr-0-1-6-release-date-2016-05-26" class="section level1">
+    <div id="gsodr-0-1-6" class="section level1">
 <h1 class="page-header">
-<a href="#gsodr-0-1-6-release-date-2016-05-26" class="anchor"></a>GSODR 0.1.6 (Release date: 2016-05-26)<small> 2016-05-26 </small>
+<a href="#gsodr-0-1-6" class="anchor"></a>GSODR 0.1.6<small> 2016-05-26 </small>
 </h1>
-<div id="bug-fixes-in-0-1-6" class="section level2">
+<div id="bug-fixes-12" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-in-0-1-6" class="anchor"></a>Bug Fixes in 0.1.6</h2>
+<a href="#bug-fixes-12" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li>
 <p>Fix issue when reading .op files into R where temperature was incorrectly read causing negative values where T &gt;= 100F, this issue caused RH values of</p>
@@ -594,9 +594,9 @@
 <li><p>Spelling corrections</p></li>
 </ul>
 </div>
-<div id="major-changes-in-0-1-6" class="section level2">
+<div id="major-changes-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-in-0-1-6" class="anchor"></a>Major changes in 0.1.6</h2>
+<a href="#major-changes-7" class="anchor"></a>Major changes</h2>
 <ul>
 <li><p>Include MIN/MAX flag column</p></li>
 <li><p>Station data is now included in package rather than downloading from NCDC every time get_GSOD() is run, this data has some corrections where stations with missing LAT/LON values or elevation are omitted, this is <strong>not</strong> the original complete station list provided by NCDC</p></li>
@@ -604,22 +604,22 @@
 <hr>
 </div>
 </div>
-    <div id="gsodr-0-1-5-release-date-2016-05-16" class="section level1">
+    <div id="gsodr-0-1-5" class="section level1">
 <h1 class="page-header">
-<a href="#gsodr-0-1-5-release-date-2016-05-16" class="anchor"></a>GSODR 0.1.5 (Release date: 2016-05-16)<small> 2016-05-17 </small>
+<a href="#gsodr-0-1-5" class="anchor"></a>GSODR 0.1.5<small> 2016-05-17 </small>
 </h1>
-<div id="bug-fixes-9" class="section level2">
+<div id="bug-fixes-13" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-9" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-13" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li><p>Fixed bug where YDAY not correctly calculated and reported in CSV file</p></li>
 <li><p>CSV files for station only queries now are names with the Station Identifier. Previously named same as global data</p></li>
 <li><p>Likewise, CSV files for agroclimatology now are names with the Station Identifier. Previously named same as global data</p></li>
 </ul>
 </div>
-<div id="minor-changes-13" class="section level2">
+<div id="minor-changes-15" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-13" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-15" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li><p>Set values where MIN &gt; MAX to NA</p></li>
 <li><p>Set more MIN/MAX/DEWP values to NA. GSOD README indicates that 999 indicates missing values in these columns, this does not appear to always be true. There are instances where 99 is the value recorded for missing data. While 99F is possible, the vast majority of these recorded values are missing data, thus the function now converts them to NA</p></li>
@@ -627,51 +627,51 @@
 <hr>
 </div>
 </div>
-    <div id="gsodr-0-1-4-release-date-2016-05-09" class="section level1">
+    <div id="gsodr-0-1-4" class="section level1">
 <h1 class="page-header">
-<a href="#gsodr-0-1-4-release-date-2016-05-09" class="anchor"></a>GSODR 0.1.4 (Release date: 2016-05-09)<small> 2016-05-09 </small>
+<a href="#gsodr-0-1-4" class="anchor"></a>GSODR 0.1.4<small> 2016-05-09 </small>
 </h1>
-<div id="bug-fixes-in-0-1-4" class="section level2">
+<div id="bug-fixes-14" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-in-0-1-4" class="anchor"></a>Bug Fixes in 0.1.4</h2>
+<a href="#bug-fixes-14" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li>Fixed bug related to MIN/MAX columns when agroclimatology or all stations are selected where flags were not removed properly from numeric values.</li>
 </ul>
 </div>
-<div id="minor-changes-in-0-1-4" class="section level2">
+<div id="minor-changes-16" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-in-0-1-4" class="anchor"></a>Minor Changes in 0.1.4</h2>
+<a href="#minor-changes-16" class="anchor"></a>Minor Changes</h2>
 <hr>
 </div>
 </div>
-    <div id="gsodr-0-1-3-release-date-2016-05-06" class="section level1">
+    <div id="gsodr-0-1-3" class="section level1">
 <h1 class="page-header">
-<a href="#gsodr-0-1-3-release-date-2016-05-06" class="anchor"></a>GSODR 0.1.3 (Release date: 2016-05-06)<small> 2016-05-07 </small>
+<a href="#gsodr-0-1-3" class="anchor"></a>GSODR 0.1.3<small> 2016-05-07 </small>
 </h1>
-<div id="bug-fixes-10" class="section level2">
+<div id="bug-fixes-15" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-10" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-15" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li><p>Bug fix in MIN/MAX with flags. Some columns have differing widths, which caused a flag to be left attached to some values</p></li>
 <li><p>Correct URL in README.md for CRAN to point to CRAN not GitHub</p></li>
 </ul>
 </div>
-<div id="minor-changes-14" class="section level2">
+<div id="minor-changes-17" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-14" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-17" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Set NA to -9999.99</li>
 </ul>
 <hr>
 </div>
 </div>
-    <div id="gsodr-0-1-2-release-date-2016-05-05" class="section level1">
+    <div id="gsodr-0-1-2" class="section level1">
 <h1 class="page-header">
-<a href="#gsodr-0-1-2-release-date-2016-05-05" class="anchor"></a>GSODR 0.1.2 (Release date: 2016-05-05)<small> Unreleased </small>
+<a href="#gsodr-0-1-2" class="anchor"></a>GSODR 0.1.2<small> Unreleased </small>
 </h1>
-<div id="bug-fixes-11" class="section level2">
+<div id="bug-fixes-16" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-11" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-16" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li><p>Bug fix in importing isd-history.csv file. Previous issues caused all lat/lon/elev values to be &gt;0.</p></li>
 <li><p>Bug fix where WDSP was mistyped as WDPS causing the creation of a new column, rather than the conversion of the existing</p></li>
@@ -684,13 +684,13 @@
 <hr>
 </div>
 </div>
-    <div id="gsodr-0-1-1-release-date-2016-04-21" class="section level1">
+    <div id="gsodr-0-1-1" class="section level1">
 <h1 class="page-header">
-<a href="#gsodr-0-1-1-release-date-2016-04-21" class="anchor"></a>GSODR 0.1.1 (Release date: 2016-04-21)<small> 2016-04-20 </small>
+<a href="#gsodr-0-1-1" class="anchor"></a>GSODR 0.1.1<small> 2016-04-20 </small>
 </h1>
-<div id="major-changes-in-0-1-1" class="section level2">
+<div id="major-changes-8" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-in-0-1-1" class="anchor"></a>Major changes in 0.1.1</h2>
+<a href="#major-changes-8" class="anchor"></a>Major changes</h2>
 <ul>
 <li><p>Now available on CRAN</p></li>
 <li><p>Add single quotes around possibly misspelled words and spell out comma-separated values and geographic information system rather than just using “CSV” or “GIS” in DESCRIPTION.</p></li>
@@ -700,9 +700,9 @@
 <hr>
 </div>
 </div>
-    <div id="gsodr-0-1-release-date-2016-04-18" class="section level1">
+    <div id="gsodr-0-1" class="section level1">
 <h1 class="page-header">
-<a href="#gsodr-0-1-release-date-2016-04-18" class="anchor"></a>GSODR 0.1 (Release date: 2016-04-18)<small> Unreleased </small>
+<a href="#gsodr-0-1" class="anchor"></a>GSODR 0.1<small> Unreleased </small>
 </h1>
 <ul>
 <li>Initial submission to CRAN</li>
@@ -716,8 +716,8 @@
       <ul class="nav nav-pills nav-stacked">
         <li><a href="#gsodr-1-2-1">1.2.1</a></li>
         <li><a href="#gsodr-1-2-0">1.2.0</a></li>
-        <li><a href="#gsodr-1-1-2-release-date-2017-12-15">1.1.2</a></li>
-        <li><a href="#gsodr-1-1-1-release-date-2017-11-27">1.1.1</a></li>
+        <li><a href="#gsodr-1-1-2">1.1.2</a></li>
+        <li><a href="#gsodr-1-1-1">1.1.1</a></li>
         <li><a href="#gsodr-1-1-0">1.1.0</a></li>
         <li><a href="#gsodr-1-0-7">1.0.7</a></li>
         <li><a href="#gsodr-1-0-6">1.0.6</a></li>
@@ -728,16 +728,16 @@
         <li><a href="#gsodr-1-0-2">1.0.2</a></li>
         <li><a href="#gsodr-1-0-1">1.0.1</a></li>
         <li><a href="#gsodr-1-0-0">1.0.0</a></li>
-        <li><a href="#gsodr-0-1-9-release-date-2016-07-15">0.1.9</a></li>
-        <li><a href="#gsodr-0-1-8-release-date-2016-07-04">0.1.8</a></li>
-        <li><a href="#gsodr-0-1-7-release-date-2016-06-02">0.1.7</a></li>
-        <li><a href="#gsodr-0-1-6-release-date-2016-05-26">0.1.6</a></li>
-        <li><a href="#gsodr-0-1-5-release-date-2016-05-16">0.1.5</a></li>
-        <li><a href="#gsodr-0-1-4-release-date-2016-05-09">0.1.4</a></li>
-        <li><a href="#gsodr-0-1-3-release-date-2016-05-06">0.1.3</a></li>
-        <li><a href="#gsodr-0-1-2-release-date-2016-05-05">0.1.2</a></li>
-        <li><a href="#gsodr-0-1-1-release-date-2016-04-21">0.1.1</a></li>
-        <li><a href="#gsodr-0-1-release-date-2016-04-18">0.1</a></li>
+        <li><a href="#gsodr-0-1-9">0.1.9</a></li>
+        <li><a href="#gsodr-0-1-8">0.1.8</a></li>
+        <li><a href="#gsodr-0-1-7">0.1.7</a></li>
+        <li><a href="#gsodr-0-1-6">0.1.6</a></li>
+        <li><a href="#gsodr-0-1-5">0.1.5</a></li>
+        <li><a href="#gsodr-0-1-4">0.1.4</a></li>
+        <li><a href="#gsodr-0-1-3">0.1.3</a></li>
+        <li><a href="#gsodr-0-1-2">0.1.2</a></li>
+        <li><a href="#gsodr-0-1-1">0.1.1</a></li>
+        <li><a href="#gsodr-0-1">0.1</a></li>
       </ul>
     </div>
   </div>
