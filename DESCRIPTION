@@ -60,6 +60,7 @@ Imports:
     tibble,
     utils
 Suggests:
+    covr,
     ggplot2,
     ggthemes,
     gridExtra,
@@ -78,8 +79,7 @@ Suggests:
     sp,
     spacetime,
     testthat,
-    tidyr,
-    covr
+    tidyr
 RoxygenNote: 6.0.1
 Encoding: UTF-8
 NeedsCompilation: no
