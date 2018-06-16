@@ -24,7 +24,7 @@ Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     person("Ross","Darnell", email = "Ross.Darnell@data61.csiro.au",
     role = "ctb", comment = "Reported bug in Windows OS versions causing
     GSOD data untarring to fail"))
-URL: https://github.com/ropensci/GSODR
+URL: https://github.com/ropensci/GSODR, https://ropensci.github.io/GSODR/
 BugReports: https://github.com/ropensci/GSODR/issues
 Description: Provides automated downloading, parsing, cleaning, unit conversion
     and formatting of Global Surface Summary of the Day (GSOD) weather data from
