@@ -18,6 +18,8 @@
     - Clarify the reasons for errors that a user may encounter
 
     - Update internal databases of station metadata
+    
+    - Clean up this file
 
 --------------------------------------------------------------------------------
 
