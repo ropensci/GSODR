@@ -12,9 +12,7 @@
 
 0 errors | 0 warnings | 1 note
 
-# New minor release
-
-This is a new minor release
+# New patch release
 
 ## Bug fixes
 
@@ -38,7 +36,3 @@ of stations in the `data-raw` files.
 # Reverse dependencies
 
 - No ERRORs or WARNINGs found
-
-# Downstream dependencies
-
-- There currently are no downstream dependencies for this package
