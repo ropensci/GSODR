@@ -32,11 +32,18 @@
 
 <meta property="og:title" content="Tidy and Return a Data Frame of GSOD Weather from Local Data — reformat_GSOD" />
 
-<meta property="og:description" content="This function automates cleaning and reformatting of
-GSOD
-station files in &quot;WMO-WBAN-YYYY.op.gz&quot; format that have been downloaded
-from the United States National Center for Environmental Information's (NCEI)
-FTP server." />
+<meta property="og:description" content="This function automates cleaning and reformatting of GSOD station files in
+&quot;WMO-WBAN-YYYY.op.gz&quot; format that have been downloaded from the United States
+National Center for Environmental Information's (NCEI) FTP server. Three
+new elements; saturation vapour pressure (es), actual vapour pressure (ea)
+and relative humidity (RH) are calculated and returned in the final data as
+well.  All units are converted to International System of Units (SI),
+e.g. Fahrenheit to Celsius and inches to millimetres.  Alternative
+elevation measurements are supplied for missing values or values found to be
+questionable based on the Consultative Group for International Agricultural
+Research's Consortium for Spatial Information group's (CGIAR-CSI) Shuttle
+Radar Topography Mission 90 metre (SRTM 90m) digital elevation data based on
+NASA's original SRTM 90m data." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -129,11 +136,18 @@ FTP server." />
 
     <div class="ref-description">
     
-    <p>This function automates cleaning and reformatting of
-<a href='https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/'>GSOD</a>
-station files in "WMO-WBAN-YYYY.op.gz" format that have been downloaded
-from the United States National Center for Environmental Information's (NCEI)
-FTP server.</p>
+    <p>This function automates cleaning and reformatting of GSOD station files in
+"WMO-WBAN-YYYY.op.gz" format that have been downloaded from the United States
+National Center for Environmental Information's (NCEI) FTP server. Three
+new elements; saturation vapour pressure (es), actual vapour pressure (ea)
+and relative humidity (RH) are calculated and returned in the final data as
+well.  All units are converted to International System of Units (SI),
+<em>e.g.</em> Fahrenheit to Celsius and inches to millimetres.  Alternative
+elevation measurements are supplied for missing values or values found to be
+questionable based on the Consultative Group for International Agricultural
+Research's Consortium for Spatial Information group's (CGIAR-CSI) Shuttle
+Radar Topography Mission 90 metre (SRTM 90m) digital elevation data based on
+NASA's original SRTM 90m data.</p>
     
     </div>
 
@@ -144,8 +158,8 @@ FTP server.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>dsn</th>
-      <td><p>User supplied file path to location of data files on local disk for
-tidying.</p></td>
+      <td><p>User supplied file path to location of data files on local disk
+for tidying.</p></td>
     </tr>
     <tr>
       <th>file_list</th>
@@ -161,15 +175,6 @@ data.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function reformats the data into a more usable form and calculates three
-new elements; saturation vapour pressure (es), actual vapour pressure (ea) and
-relative humidity (RH).  All units are converted to International System of
-Units (SI), <em>e.g.</em> Fahrenheit to Celsius and inches to millimetres.
-Alternative elevation measurements are supplied for missing values or values
-found to be questionable based on the Consultative Group for International
-Agricultural Research's Consortium for Spatial Information group's
-(CGIAR-CSI) Shuttle Radar Topography Mission 90 metre (SRTM 90m) digital
-elevation data based on NASA's original SRTM 90m data.</p>
     <p>If multiple stations are given, data are summarised for each year by station,
 which include vapour pressure and relative humidity elements calculated from
 existing data in GSOD. Else, single stations are tidied and a data frame is
@@ -181,7 +186,7 @@ function.  If you have downloaded the full annual "gsod_YYYY.tar" file you
 will need to extract the individual station files from the tar file first to
 use this function.</p>
 <p>For a complete list of the fields and description of the contents and units,
-please refer to Appendix 1 in the GSODR vignette,
+please refer to Appendix 1 in the <span class="pkg">GSODR</span> vignette,
 <code><a href='../articles/GSODR.html'>vignette("GSODR", package = "GSODR")</a></code>.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
