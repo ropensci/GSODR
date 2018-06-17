@@ -18,6 +18,9 @@ init:
 install:
   ps: Bootstrap
 
+environment:
+  NOT_CRAN: true
+
 build_script:
   - travis-tool.sh install_deps
 
