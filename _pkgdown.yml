@@ -3,3 +3,6 @@ url: https://ropensci.github.io/GSODR/
 template:
   params:
     bootswatch: spacelab
+    docsearch:
+      api_key: 432336b5561cc8eeddda9af96c7a8cc2
+      index_name: gsodr
