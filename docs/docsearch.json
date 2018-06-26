@@ -2,21 +2,21 @@
   "index_name": "gsodr",
   "start_urls": [
     {
-      "url": "https://ropensci.github.io/GSODR//index.html",
+      "url": "https://ropensci.github.io/GSODR/index.html",
       "selectors_key": "homepage",
       "tags": [
         "homepage"
       ]
     },
     {
-      "url": "https://ropensci.github.io/GSODR//reference",
+      "url": "https://ropensci.github.io/GSODR/reference",
       "selectors_key": "reference",
       "tags": [
         "reference"
       ]
     },
     {
-      "url": "https://ropensci.github.io/GSODR//articles",
+      "url": "https://ropensci.github.io/GSODR/articles",
       "selectors_key": "articles",
       "tags": [
         "articles"
@@ -30,7 +30,7 @@
     "/articles/index.html"
   ],
   "sitemap_urls": [
-    "https://ropensci.github.io/GSODR//sitemap.xml"
+    "https://ropensci.github.io/GSODR/sitemap.xml"
   ],
   "selectors": {
     "homepage": {
