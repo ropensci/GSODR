@@ -87,8 +87,10 @@ CRAN. We strive to keep the master branch on GitHub functional and
 working properly.
 
 ``` r
-#install.packages("devtools")
-devtools::install_github("ropensci/GSODR", build_vignettes = TRUE)
+if (!require("devtools")) {
+  install.packages("devtools", repos = "http://cran.rstudio.com/")
+  library("devtools")
+}
 ```
 
 -----
