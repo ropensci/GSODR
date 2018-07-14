@@ -3,8 +3,8 @@ pkgdown: 1.1.0
 pkgdown_sha: ~
 articles:
   GSODR: GSODR.html
-  Specified_stations_for_a_range_of_years: Specified_stations_for_a_range_of_years.html
   Working_with_spatial_and_climate_data: Working_with_spatial_and_climate_data.html
+  use_case_1: use_case_1.html
 urls:
   reference: https://ropensci.github.io/GSODR/reference
   article: https://ropensci.github.io/GSODR/articles
