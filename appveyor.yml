@@ -9,6 +9,7 @@ environment:
   R_VERSION: release
   R_CHECK_ARGS: --no-build-vignettes --no-manual
   _R_CHECK_FORCE_SUGGESTS_: FALSE
+  NOT_CRAN: true
 
 init:
   ps: |
@@ -17,9 +18,6 @@ init:
         Import-Module '..\appveyor-tool.ps1'
 install:
   ps: Bootstrap
-
-environment:
-  NOT_CRAN: true
 
 build_script:
   - travis-tool.sh install_deps
