@@ -1,6 +1,8 @@
 GSODR: Global Surface Summary of the Day (GSOD) Weather Data from R
 ================
 
+# *GSODR* <img src="man/figures/logo.png" align="right" />
+
 [![CircleCI Build
 Status](https://circleci.com/gh/ropensci/GSODR.svg?style=shield)](https://circleci.com/gh/ropensci/GSODR)
 [![Appveyor Build
@@ -14,7 +16,7 @@ developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repo
 [![JOSS](http://joss.theoj.org/papers/10.21105/joss.00177/status.svg)](http://joss.theoj.org/papers/14021f4e4931cdaab4ea41be27df2df6)
 [![](https://badges.ropensci.org/79_status.svg)](https://github.com/ropensci/onboarding/issues/79)
 
-## Introduction to *GSODR*
+## Introduction
 
 The GSOD or [Global Surface Summary of the Day
 (GSOD)](https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod)
@@ -103,7 +105,9 @@ more detailed examples of its capabilities, please see the [*GSODR*
 introduction
 vignette](https://ropensci.github.io/GSODR/articles/GSODR.html).
 
-### Example - Download weather station data for Toowoomba, Queensland for 2010
+### Example
+
+Download weather station data for Toowoomba, Queensland for 2010
 
 ``` r
 library(GSODR)
