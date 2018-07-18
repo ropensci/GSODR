@@ -39,7 +39,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-article">
+    <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -110,14 +110,10 @@
 
       
       </header><div class="row">
-  <div class="col-md-9 contents">
-    
-
-    
-    
-<div id="gsodr" class="section level1">
+  <div class="contents col-md-9">
+    <div id="gsodr-global-surface-summary-of-the-day-gsod-weather-data-from-r" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#gsodr" class="anchor"></a><em>GSODR</em> <img src="reference/figures/logo.png" align="right">
+<a href="#gsodr-global-surface-summary-of-the-day-gsod-weather-data-from-r" class="anchor"></a><em>GSODR</em>: Global Surface Summary of the Day (GSOD) Weather Data from R <img src="reference/figures/logo.png" align="right">
 </h1></div>
 
 <div id="introduction" class="section level2">
@@ -152,59 +148,6 @@
 <a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="kw">install.packages</span>(<span class="st">"devtools"</span>, <span class="dt">repos =</span> <span class="st">"http://cran.rstudio.com/"</span>)</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="kw">library</span>(<span class="st">"devtools"</span>)</a>
 <a class="sourceLine" id="cb2-4" data-line-number="4">}</a></code></pre></div>
-<hr>
-</div>
-</div>
-<div id="using-gsodr" class="section level2">
-<h2 class="hasAnchor">
-<a href="#using-gsodr" class="anchor"></a>Using <em>GSODR</em>
-</h2>
-<p><em>GSODR’s</em> main function, <code><a href="reference/get_GSOD.html">get_GSOD()</a></code>, downloads and cleans GSOD data from the NCEI server. Following is an example of its capabilities, for more detailed examples of its capabilities, please see the <a href="https://ropensci.github.io/GSODR/articles/GSODR.html"><em>GSODR</em> introduction vignette</a>.</p>
-<div id="example" class="section level3">
-<h3 class="hasAnchor">
-<a href="#example" class="anchor"></a>Example</h3>
-<p>Download weather station data for Toowoomba, Queensland for 2010</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(GSODR)</a></code></pre></div>
-<pre><code>## 
-## GSOD is distributed free by the U.S. NCEI with the
-## following conditions.
-## 'The following data and products may have conditions placed
-## their international commercial use. They can be used within
-## the U.S. or for non-commercial international activities
-## without restriction. The non-U.S. data cannot be
-## redistributed for commercial purposes. Re-distribution of
-## these data by others must provide this same notification.
-## WMO Resolution 40. NOAA Policy'
-## 
-## GSODR does not redistribute any weather data itself. It 
-## only provides an interface for R users to download these
-## data, however it does redistribute station metadata in the
-## package.</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">tbar &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span>, <span class="dt">station =</span> <span class="st">"955510-99999"</span>)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">tbar</a></code></pre></div>
-<pre><code>## # A tibble: 365 x 48
-##    USAF   WBAN  STNID    STN_NAME     CTRY  STATE CALL    LAT   LON ELEV_M
-##    &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;        &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
-##  1 955510 99999 955510-… TOOWOOMBA A… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
-##  2 955510 99999 955510-… TOOWOOMBA A… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
-##  3 955510 99999 955510-… TOOWOOMBA A… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
-##  4 955510 99999 955510-… TOOWOOMBA A… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
-##  5 955510 99999 955510-… TOOWOOMBA A… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
-##  6 955510 99999 955510-… TOOWOOMBA A… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
-##  7 955510 99999 955510-… TOOWOOMBA A… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
-##  8 955510 99999 955510-… TOOWOOMBA A… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
-##  9 955510 99999 955510-… TOOWOOMBA A… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
-## 10 955510 99999 955510-… TOOWOOMBA A… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
-## # ... with 355 more rows, and 38 more variables: ELEV_M_SRTM_90m &lt;dbl&gt;,
-## #   BEGIN &lt;dbl&gt;, END &lt;dbl&gt;, YEARMODA &lt;date&gt;, YEAR &lt;chr&gt;, MONTH &lt;chr&gt;,
-## #   DAY &lt;chr&gt;, YDAY &lt;dbl&gt;, TEMP &lt;dbl&gt;, TEMP_CNT &lt;int&gt;, DEWP &lt;dbl&gt;,
-## #   DEWP_CNT &lt;int&gt;, SLP &lt;dbl&gt;, SLP_CNT &lt;int&gt;, STP &lt;dbl&gt;, STP_CNT &lt;int&gt;,
-## #   VISIB &lt;dbl&gt;, VISIB_CNT &lt;int&gt;, WDSP &lt;dbl&gt;, WDSP_CNT &lt;int&gt;, MXSPD &lt;dbl&gt;,
-## #   GUST &lt;dbl&gt;, MAX &lt;dbl&gt;, MAX_FLAG &lt;chr&gt;, MIN &lt;dbl&gt;, MIN_FLAG &lt;chr&gt;,
-## #   PRCP &lt;dbl&gt;, PRCP_FLAG &lt;chr&gt;, SNDP &lt;dbl&gt;, I_FOG &lt;int&gt;,
-## #   I_RAIN_DRIZZLE &lt;int&gt;, I_SNOW_ICE &lt;int&gt;, I_HAIL &lt;int&gt;, I_THUNDER &lt;int&gt;,
-## #   I_TORNADO_FUNNEL &lt;int&gt;, EA &lt;dbl&gt;, ES &lt;dbl&gt;, RH &lt;dbl&gt;</code></pre>
 </div>
 </div>
 <div id="other-sources-of-weather-data-in-r" class="section level2">
@@ -263,7 +206,7 @@
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3" id="sidebar">
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
@@ -299,11 +242,11 @@
 </ul>
 </div>
 
-      <div class="dev-status">
+  <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://circleci.com/gh/ropensci/GSODR"><img src="https://circleci.com/gh/ropensci/GSODR.svg?style=shield" alt="CircleCI Build Status"></a></li>
-<li><a href="https://ci.appveyor.com/project/ropensci/gsodr/branch/master"><img src="https://ci.appveyor.com/api/projects/status/s09kh2nj59o35ob1/branch/master?svg=true" alt="Appveyor Build Status"></a></li>
+<li><a href="https://ci.appveyor.com/project/adamhsparks/gsodr"><img src="https://ci.appveyor.com/api/projects/status/s09kh2nj59o35ob1?svg=true" alt="Build status"></a></li>
 <li><a href="https://codecov.io/gh/ropensci/GSODR"><img src="https://codecov.io/gh/ropensci/GSODR/branch/master/graph/badge.svg" alt="codecov"></a></li>
 <li><a href="https://doi.org/10.5281/zenodo.439850"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.439850.svg" alt="DOI"></a></li>
 <li><a href="https://cran.r-project.org/package=GSODR"><img src="https://www.r-pkg.org/badges/version/GSODR" alt="CRAN_Status_Badge"></a></li>
@@ -313,7 +256,6 @@
 </ul>
 </div>
 </div>
-
 </div>
 
 
