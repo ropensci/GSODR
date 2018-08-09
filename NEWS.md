@@ -1,5 +1,10 @@
 # GSODR 1.2.1.9000
 
+ - Repatch bug reported and fixed previously in version 1.2.0 where Windows
+ users could not successfully download files. This somehow snuck back in.
+
+--------------------------------------------------------------------------------
+
 # GSODR 1.2.1
 
 ## Bug fixes
