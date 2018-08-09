@@ -117,7 +117,7 @@
       tryCatch(
         Map(
           function(ftp, dest)
-            utils::download.file(url = ftp, destfile = dest),
+            utils::download.file(url = ftp, destfile = dest, mode = "wb"),
           file_list,
           file.path(cache_dir, basename(file_list))
         ),
