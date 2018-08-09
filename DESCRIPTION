@@ -80,7 +80,7 @@ Suggests:
     spacetime,
     testthat,
     tidyr
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 Encoding: UTF-8
 NeedsCompilation: no
 Repository: CRAN
