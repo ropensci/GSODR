@@ -74,7 +74,7 @@ Suggests:
     rgdal (>= 1.1-9),
     rgeos,
     rmarkdown,
-    roxygen2 (>= 6.0.1),
+    roxygen2 (>= 6.1.0),
     sf,
     sp,
     spacetime,
