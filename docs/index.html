@@ -143,11 +143,13 @@
 <div id="development-version" class="section level3">
 <h3 class="hasAnchor">
 <a href="#development-version" class="anchor"></a>Development Version</h3>
-<p>A development version is available from from GitHub. If you wish to install the development version that may have new features or bug fixes before the CRAN version does (but also may not work properly), please install the <a href="https://CRAN.R-project.org/package=devtools">devtools package</a>, available from CRAN. We strive to keep the master branch on GitHub functional and working properly.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(<span class="st">"devtools"</span>)) {
-  <span class="kw">install.packages</span>(<span class="st">"devtools"</span>, <span class="dt">repos =</span> <span class="st">"http://cran.rstudio.com/"</span>)
-  <span class="kw">library</span>(<span class="st">"devtools"</span>)
-}</code></pre></div>
+<p>A development version is available from from GitHub. If you wish to install the development version that may have new features or bug fixes before the CRAN version does (but also may not work properly), please install the <a href="https://github.com/r-lib/remotes">remotes</a> package, available from CRAN. We strive to keep the master branch on GitHub functional and working properly.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(<span class="st">"remotes"</span>)) {
+  <span class="kw">install.packages</span>(<span class="st">"remotes"</span>, <span class="dt">repos =</span> <span class="st">"http://cran.rstudio.com/"</span>)
+  <span class="kw">library</span>(<span class="st">"remotes"</span>)
+}
+
+<span class="kw"><a href="http://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"ropensci/GSODR"</span>)</code></pre></div>
 </div>
 </div>
 <div id="other-sources-of-weather-data-in-r" class="section level2">

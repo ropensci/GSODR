@@ -70,17 +70,19 @@ install.packages("GSODR")
 ### Development Version
 
 A development version is available from from GitHub. If you wish to
-install the development version that may have new features or bug fixes before the CRAN version does (but also may
-not work properly), please install the
-[devtools package](https://CRAN.R-project.org/package=devtools),
+install the development version that may have new features or bug fixes before
+the CRAN version does (but also may not work properly), please install the
+[remotes](https://github.com/r-lib/remotes) package,
 available from CRAN. We strive to keep the master branch on GitHub functional
 and working properly.
 
 ```r
-if (!require("devtools")) {
-  install.packages("devtools", repos = "http://cran.rstudio.com/")
-  library("devtools")
+if (!require("remotes")) {
+  install.packages("remotes", repos = "http://cran.rstudio.com/")
+  library("remotes")
 }
+
+install_github("ropensci/GSODR")
 ```
 
 ## Other Sources of Weather Data in R
