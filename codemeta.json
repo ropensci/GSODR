@@ -35,16 +35,16 @@
   "keywords": ["US-NCEI", "meteorological-data", "global-weather", "weather", "weather-data", "meteorology", "station-data", "surface-weather", "data-access", "US-NCDC", "r", "gsod", "ncdc", "weather-stations", "global-data", "ncei", "weather-information", "historical-weather", "historical-data", "daily-data", "daily-weather", "rstats", "r-package"],
   "license": "https://spdx.org/licenses/MIT",
   "title": "GSODR",
-  "version": "1.2.1",
+  "version": "1.2.1.9000",
   "name": "GSODR: Global Surface Summary of the Day (GSOD) Weather Data from R",
   "issueTracker": "https://github.com/ropensci/GSODR/issues",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "3.5.0",
+    "version": "3.5.1",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 3.5.0 (2018-04-23)",
+  "runtimePlatform": "R version 3.5.1 (2018-07-02)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -234,7 +234,7 @@
       "@type": "SoftwareApplication",
       "identifier": "roxygen2",
       "name": "roxygen2",
-      "version": ">= 6.0.1",
+      "version": ">= 6.1.0",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -423,7 +423,7 @@
   "contIntegration": "https://travis-ci.org/ropensci/GSODR",
   "releaseNotes": "https://github.com/ropensci/GSODR/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/GSODR/blob/master/README.md",
-  "fileSize": "2897.231KB",
+  "fileSize": "1093.194KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -518,6 +518,9 @@
     "url": "https://github.com/ropensci/onboarding/issues/79",
     "provider": "http://ropensci.org"
   },
-  "relatedLink": ["https://CRAN.R-project.org/package=GSODR", "https://ropensci.github.io/GSODR/"],
+  "relatedLink": [
+    "https://CRAN.R-project.org/package=GSODR",
+    "https://ropensci.github.io/GSODR/"
+  ],
   "developmentStatus": "http://www.repostatus.org/#active"
 }
