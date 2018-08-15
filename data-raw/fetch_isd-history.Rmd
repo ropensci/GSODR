@@ -30,7 +30,7 @@ data:
 
 * A new field, STNID, a concatenation of the USAF and WBAN fields, is added
 
-* Stations are checked against Natural Earth 1:10 ADM0 Cultural data, stations
+* Stations are checked against Natural Earth 1:10 ADM0 cultural data, stations
 not mapping in the isd-history reported country are dropped
 
 * 90m hole-filled SRTM digital elevation (Jarvis *et al.* 2008) is used to
@@ -200,32 +200,32 @@ cl <- parallel::makeCluster(parallel::detectCores())
 doParallel::registerDoParallel(cl)
 
 corrected_elev <- dplyr::bind_rows(
-foreach(i = dem_tiles, .packages = "magrittr") %dopar% {
-# Load the DEM tile
-dem <- raster::raster(i)
-sub_stations <- raster::crop(stations, dem)
-
-# in some cases the DEM represents areas where there is no station
-# check for that here and if no stations, go on to next iteration
-if (!is.null(sub_stations)) {
-# use a 200m buffer to extract elevation from the DEM
-
-  sub_stations$ELEV_M_SRTM_90m <- 
-  raster::extract(dem, sub_stations,
-                  buffer = 200,
-                  fun = mean)
-  
-# convert spatial object back to normal data frame and add new fields
-sub_stations <- as.data.frame(sub_stations)
-
-# set any factors back to character
-sub_stations <- sub_stations %>%
-  dplyr::mutate_if(is.factor, as.character)
-
-return(sub_stations)
+  foreach(i = dem_tiles, .packages = "magrittr") %dopar% {
+    # Load the DEM tile
+    dem <- raster::raster(i)
+    sub_stations <- raster::crop(stations, dem)
+    
+    # in some cases the DEM represents areas where there is no station
+    # check for that here and if no stations, go on to next iteration
+    if (!is.null(sub_stations)) {
+      # use a 200m buffer to extract elevation from the DEM
+      
+      sub_stations$ELEV_M_SRTM_90m <- 
+        raster::extract(dem, sub_stations,
+                        buffer = 200,
+                        fun = mean)
+      
+      # convert spatial object back to normal data frame and add new fields
+      sub_stations <- as.data.frame(sub_stations)
+      
+      # set any factors back to character
+      sub_stations <- sub_stations %>%
+        dplyr::mutate_if(is.factor, as.character)
+      
+      return(sub_stations)
     }
   }
-  )
+)
 
 # stop cluster
 parallel::stopCluster(cl)
@@ -235,30 +235,40 @@ station elevation for these stations.
 
 ```{r create corrected_elev}
 corrected_elev <- dplyr::mutate(corrected_elev,
-                                ELEV_M_SRTM_90m = ifelse(is.na(ELEV_M_SRTM_90m),
-                                                ELEV_M, ELEV_M_SRTM_90m))
+                                ELEV_M_SRTM_90m = ifelse(
+                                  is.na(ELEV_M_SRTM_90m),
+                                  ELEV_M, ELEV_M_SRTM_90m))
 # round SRTM_90m_Buffer field to whole number in cases where station reported
 # data was used and rename column
 corrected_elev[, 13] <- round(corrected_elev[, 13], 0)
-
-# retain only distinct rows in case of duplicate data
-
-corrected_elev <- dplyr::distinct(corrected_elev)
 ```
 
-Tidy up the `corrected_elev` object by converting any factors to character prior
-to performing a left-join with the `stations` object and remove duplicate rows. 
-For stations above/below 60/-60 latitude, `ELEV_M_SRTM_90m` will be `NA` as
-there is no SRTM data for these latitudes.
+In some cases duplicate stations occur, use the mean value of duplicate rows for
+corrected elevation and create a data frame with only `STNID` and the new
+elevation values. `STNID` is used for a left-join with the `stations` object.
+
+```{r summarise_corrected}
+corrected_elev <- corrected_elev %>%
+  dplyr::group_by(STNID) %>%
+  dplyr::summarise(ELEV_M_SRTM_90m = mean(ELEV_M_SRTM_90m))
+```
+
+Left-join the new station elevation data with the `stations` object. For
+stations above/below 60/-60 latitude or bouys, `ELEV_M_SRTM_90m` will be `NA` as
+there is no SRTM data for these locations.
 
 ```{r join corrected_elev with station data}
 # convert any factors in stations object to character for left_join
-stations <- dplyr::mutate_if(as.data.frame(stations), is.factor, as.character)
+stations <- dplyr::mutate_if(
+  as.data.frame(stations),
+  is.factor,
+  as.character)
 
 # Perform left join to join corrected elevation with original station data,
 # this will include stations below/above -60/60
 isd_history <- 
-  dplyr::left_join(stations, corrected_elev) %>% 
+  dplyr::left_join(stations, corrected_elev,
+                   by = "STNID") %>% 
   tibble::as_tibble()
 
 str(isd_history)
