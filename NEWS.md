@@ -4,11 +4,14 @@
 
   - Fix bug in creating `isd-history.rda` file where duplicate stations existed
   in the file distributed with `GSODR`
-  
+
+  - Repatch bug reported and fixed previously in version 1.2.0 where Windows
+  users could not successfully download files. This somehow snuck back in.
+
 ## Minor changes
 
   - Refactor vignettes for clarity
-  
+
 --------------------------------------------------------------------------------
 
 # GSODR 1.2.1
@@ -31,7 +34,7 @@
   - Clarify the reasons for errors that a user may encounter
 
   - Update internal databases of station metadata
-    
+
   - Clean up this file
 
 
@@ -238,7 +241,7 @@
 ## Deprecated and defunct
 
   - `get_station_list()` is no longer supported. Instead use the new
-    
+
   - `update_station_list()` to update the package's internal station database.
 
 --------------------------------------------------------------------------------
@@ -338,7 +341,7 @@ _GSODdata_
     list from the FTP server and querying by the user for a specified station or
     location.
 
-  - New data layers are provided through a separate package, 
+  - New data layers are provided through a separate package,
     [`GSODRdata`](https://github.com/adamhsparks/GSODRdata), which provide
     climate data formatted for use with GSODR.
 
@@ -529,7 +532,7 @@ _GSODdata_
 
   - Fix issue when reading .op files into R where temperature was incorrectly
     read causing negative values where T >= 100F, this issue caused RH values of
-    >100% and incorrect TEMP values 
+    >100% and incorrect TEMP values
     [(Issue 1)](https://github.com/ropensci/GSODR/issues/1)
 
   - Spelling corrections
