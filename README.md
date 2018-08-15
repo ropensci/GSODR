@@ -69,12 +69,11 @@ install.packages("GSODR")
 
 ### Development Version
 
-A development version is available from from GitHub. If you wish to
-install the development version that may have new features or bug fixes before
-the CRAN version does (but also may not work properly), please install the
-[remotes](https://github.com/r-lib/remotes) package,
-available from CRAN. We strive to keep the master branch on GitHub functional
-and working properly.
+A development version is available from from GitHub. If you wish to install the
+development version that may have new features or bug fixes before the CRAN
+version does (but also may not work properly), please install the
+[remotes](https://github.com/r-lib/remotes) package, available from CRAN.
+We strive to keep the master branch on GitHub functional and working properly.
 
 ```r
 if (!require("remotes")) {
@@ -87,36 +86,42 @@ install_github("ropensci/GSODR")
 
 ## Other Sources of Weather Data in R
 
-There are several other sources of weather data and ways of retrieving
-them through R. Several are also [rOpenSci](https://ropensci.org) projects.
+There are several other sources of weather data and ways of retrieving them
+through R. Several are also [rOpenSci](https://ropensci.org) projects.
 
 [_rnoaa_](https://CRAN.R-project.org/package=rnoaa), from
 [rOpenSci](https://ropensci.org) offers tools for interacting with and
-downloading weather data from the United States National Oceanic and
-Atmospheric Administration but lacks support for GSOD data.
+downloading weather data from the United States National Oceanic and Atmospheric
+Administration but lacks support for GSOD data.
 
-[_bomrang_](https://CRAN.R-project.org/package=bomrang), from [rOpenSci](https://ropensci.org) provides functions to interface with Australia
+[_bomrang_](https://CRAN.R-project.org/package=bomrang), from
+[rOpenSci](https://ropensci.org) provides functions to interface with Australia
 Government Bureau of Meteorology (BoM) data, fetching data and returning a tidy
 data frame of précis forecasts, current weather data from stations, agriculture
-bulletin data, BoM 0900 or 1500 weather bulletins or a raster stack object of satellite imagery from GeoTIFF files. Data (c) Australian Government Bureau of
+bulletin data, BoM 0900 or 1500 weather bulletins or a raster stack object of
+satellite imagery from GeoTIFF files. Data (c) Australian Government Bureau of
 Meteorology Creative Commons (CC) Attribution 3.0 licence or Public Access
 Licence (PAL) as appropriate. See <http://www.bom.gov.au/other/copyright.shtml>
 for further details.
 
-[_riem_](https://CRAN.R-project.org/package=riem) from [rOpenSci](https://ropensci.org) allows to get weather data from Automated
+[_riem_](https://CRAN.R-project.org/package=riem) from
+[rOpenSci](https://ropensci.org) allows to get weather data from Automated
 Surface Observing System (ASOS) stations (airports) in the whole world thanks to
 the Iowa Environment Mesonet website.
 
-[_CliFlo_](https://CRAN.R-project.org/package=clifro) from [rOpenSci](https://ropensci.org)
-is a web portal to the New Zealand National Climate Database and provides public
-access (via subscription) to around 6,500 various climate stations (see
-<https://cliflo.niwa.co.nz/> for more information). Collating and manipulating
-data from CliFlo (hence clifro) and importing into R for further analysis, exploration and visualisation is now straightforward and coherent. The user is
-required to have an internet connection, and a current CliFlo subscription
-(free) if data from stations, other than the public Reefton electronic weather
-station, is sought.
+[_CliFlo_](https://CRAN.R-project.org/package=clifro) from
+[rOpenSci](https://ropensci.org) is a web portal to the New Zealand National
+Climate Database and provides public access (via subscription) to around 6,500
+various climate stations (see <https://cliflo.niwa.co.nz/> for more
+information). Collating and manipulating data from CliFlo (hence clifro) and
+importing into R for further analysis, exploration and visualisation is now
+straightforward and coherent. The user is required to have an internet
+connection, and a current CliFlo subscription (free) if data from stations,
+other than the public Reefton electronic weather station, is sought.
 
-[_weatherData_](https://CRAN.R-project.org/package=weatherData) provides a selection of functions to fetch weather data from Weather Underground and return it as a clean data frame. 
+[_weatherData_](https://CRAN.R-project.org/package=weatherData) provides a
+selection of functions to fetch weather data from Weather Underground and return
+it as a clean data frame. 
 
 ## Other Sources for Fetching GSOD Weather Data
 
