@@ -1,5 +1,16 @@
 # GSODR 1.2.1.9000
 
+## Bug fixes
+
+  - Fix bug in creating `isd-history.rda` file where duplicate stations existed
+  in the file distributed with `GSODR`
+  
+## Minor changes
+
+  - Refactor vignettes for clarity
+  
+--------------------------------------------------------------------------------
+
 # GSODR 1.2.1
 
 ## Bug fixes
@@ -23,7 +34,7 @@
     
   - Clean up this file
 
---------------------------------------------------------------------------------
+
 
 # GSODR 1.2.0
 
