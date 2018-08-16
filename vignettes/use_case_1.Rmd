@@ -11,10 +11,11 @@ vignette: >
 ---
 
 ```{r check_packages, echo=FALSE, messages=FALSE, warning=FALSE}
-required <- c("raster", "rgdal", "rgeos")
+required <- c("raster", "rgdal", "rgeos", "sp")
 
 if (!all(unlist(lapply(required, function(pkg) requireNamespace(pkg, quietly = TRUE)))))
     knitr::opts_chunk$set(eval = FALSE, collapse = TRUE, comment = "#>", fig.align = "center", fig.width = 5, fig.height = 5)
+library(sp)
 ```
 
 ## Purpose
@@ -40,7 +41,7 @@ within the provinces where the study was conducted.
 
 Using `raster::getData()` fetch level 0 (national) and 1 (provincial) data for the Philippines.
 
-```{r, eval=TRUE, message=FALSE}
+```{r, eval=FALSE, message=FALSE}
 library(raster)
 RP0 <- getData(country = "Philippines", level = 0)
 RP1 <- getData(country = "Philippines", level = 1)
@@ -48,7 +49,7 @@ RP1 <- getData(country = "Philippines", level = 1)
 
 Now we will select the provinces involved in the survey and make a new object called `Central_Luzon` from the provincial level data, `RP1`.
 
-```{r, eval=TRUE}
+```{r, eval=FALSE}
 Central_Luzon <- RP1[RP1@data$NAME_1 == "Pampanga" | 
                      RP1@data$NAME_1 == "Tarlac" |
                      RP1@data$NAME_1 == "Pangasinan" |
@@ -61,12 +62,12 @@ Next, create a map inset showing where the Central Luzon Loop survey takes place
 
 First we'll use `gSimplify()` from _rgeos_ to simplify the map of the Philippines to make the map generation in the next few steps much quicker.
 
-```{r, eval=TRUE}
+```{r, eval=FALSE}
 library(rgeos)
 RP0 <- gSimplify(RP0, tol = 0.05)
 ```
 
-```{r, eval=TRUE}
+```{r, eval=FALSE}
 library(ggplot2)
 library(grid)
 library(gridExtra)
@@ -134,6 +135,8 @@ print(p1, vp = v1)
 print(p2, vp = v2)
 ```
 
+![Figure 1: Station locations](../man/figures/Use_Case_1_Figure_1.png)
+
 ## Identify stations in area of interest
 
 Next, make a list of stations that are within this area. _GSODR_ provides a
@@ -141,12 +144,14 @@ table of the metadata associated with GSOD stations, which includes latitude and
 longitude that can be used to identify stations falling within the area of
 interest.
 
-```{r, eval=TRUE}
+```{r, eval=FALSE}
 library(GSODR)
 
 # load the station metadata file from GSODR (this loads `isd_history` in your
 # R sesion)
 load(system.file("extdata", "isd_history.rda", package = "GSODR"))
+
+isd_history <- as.data.frame(isd_history)
 
 # convert to a spatial object to find stations within the states
 coordinates(isd_history) <- ~ LON + LAT
@@ -169,12 +174,19 @@ loop_stations <- loop_stations[loop_stations$BEGIN <= 19600101 &
 print(loop_stations[, c(1:2, 3, 7:12)])
 ```
 
+```
+        USAF  WBAN   STN_NAME    LAT    LON ELEV_M    BEGIN      END        STNID
+25617 983250 99999    DAGUPAN 16.083 120.35    2.0 19450119 20180610 983250-99999
+25619 983270 99999 CLARK INTL 15.186 120.56  147.5 19450214 20180610 983270-99999
+25623 983300 99999 CABANATUAN 15.467 120.95   32.0 19490101 20180610 983300-99999
+```
+
 These are all of the stations that are available within the provinces of
 interest and the locations in the provinces.
 
 ### Map station locations
 
-```{r, station_locations}
+```{r, station_locations, eval=FALSE}
 p1 +
   geom_point(data = loop_stations,
              aes(x = LON,
@@ -237,6 +249,8 @@ loop_data <- reformat_GSOD(file_list = local_files)
 
 readr::write_csv(loop_data, path = "Loop_Survey_Weather_1960-2015", path = "./")
 ```
+
+![Figure 2: Station locations](../man/figures/Use_Case_1_Figure_2.png)
 
 ```{r cleanup GADM files, eval=TRUE, echo=FALSE, message=FALSE}
 unlink("GADM_2.8_PHL_adm0.rds")
