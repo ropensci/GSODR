@@ -15,25 +15,25 @@ This document details how the GSOD station history data file,
 ["isd-history.csv"](ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv),
 is fetched from the NCEI ftp server, error checked and new elevation values
 generated. The new elevation values are then saved for inclusion in package as
-/extdata/isd_history.rda. The resulting values are merged with the most
+`/extdata/isd_history.rda`. The resulting values are merged with the most
 recent station history data file from the NCEI when the user runs the
 `get_GSOD()` function. The resulting data frame of station information, based on
-the merging of the `SRTM_GSOD_elevation` data frame with the most recently
-available "isd-history.csv" file will result in the following changes to the
+the merging of the `corrected_elev` data frame with the most recently
+available "isd-history.csv" file, will result in the following changes to the
 data:
 
-* Stations where latitude or longitude are NA or both 0 are removed
+  * Stations where latitude or longitude are NA or both 0 are removed
 
-* Stations where latitude is < -90˚ or > 90˚ are removed
+  * Stations where latitude is < -90˚ or > 90˚ are removed
 
-* Stations where longitude is < -180˚ or > 180˚ are removed
+  * Stations where longitude is < -180˚ or > 180˚ are removed
 
-* A new field, STNID, a concatenation of the USAF and WBAN fields, is added
+  * A new field, STNID, a concatenation of the USAF and WBAN fields, is added
 
-* Stations are checked against Natural Earth 1:10 ADM0 cultural data, stations
+  * Stations are checked against Natural Earth 1:10 ADM0 cultural data, stations
 not mapping in the isd-history reported country are dropped
 
-* 90m hole-filled SRTM digital elevation (Jarvis *et al.* 2008) is used to
+  * 90m hole-filled SRTM digital elevation (Jarvis *et al.* 2008) is used to
 identify and correct/remove elevation errors in data for station locations
 between -60˚ and 60˚ latitude. This applies to cases here where elevation was
 missing in the reported values as well. In case the station reported an
@@ -45,7 +45,7 @@ every instance for the 90m column.
 
 ## Set up workspace
 
-```{r set up workspace, echo=TRUE, messages=FALSE, output=FALSE}
+```{r set_up_workspace, echo=TRUE, messages=FALSE, output=FALSE, warning=FALSE}
 # check for presence of countrycode package and install if needed
 if (!require("countrycode")) {
   install.packages("countrycode", repos = "https://cran.rstudio.com/")
@@ -94,7 +94,7 @@ tf <- tempfile()
 
 ## Download from Natural Earth and NCEI
 
-```{r download NE data, echo=TRUE, message = FALSE}
+```{r download_NE_data, echo=TRUE, message=FALSE, warning=FALSE}
 # import Natural Earth cultural 1:10m data
 NE <- rnaturalearth::ne_countries(scale = 10)
 
@@ -115,7 +115,7 @@ countries <- readr::read_table(
 
 ## Reformat and clean station data file from NCEI
 
-```{r clean and reformat station data, echo=TRUE, cache=FALSE}
+```{r clean_and_reformat, echo=TRUE, cache=FALSE}
 # clean data
 stations <- stations[!is.na(stations$LAT) & !is.na(stations$LON), ]
 stations <- stations[stations$LAT != 0 & stations$LON != 0, ]
@@ -165,7 +165,7 @@ Data can be downloaded from the
 [CGIAR-CSI's](http://csi.cgiar.org/WhtIsCGIAR_CSI.asp) ftp server, [srtm.csi.cgiar.org](ftp://srtm.csi.cgiar.org), using an FTP client to
 facilitate this next step.
 
-```{r check station location, echo=TRUE, cache=FALSE}
+```{r check_station_location, echo=TRUE, cache=FALSE}
 # quality check station locations for reported country and lat/lon position
 # agreement
 
@@ -188,7 +188,7 @@ remove any
 Next use the `raster::extract()` function to get the mean elevation data from
 the 90m elevation data and supplement the elevation data from the NCEI.
 
-```{r check and supplement station elevation, echo=TRUE, cache=FALSE}
+```{r check_and_supplement_elevation, echo=TRUE, cache=FALSE}
 # create a spatial object for extracting elevation values using spatial points
 stations <- as.data.frame(stations)
 sp::coordinates(stations) <- ~ LON + LAT
@@ -238,9 +238,6 @@ corrected_elev <- dplyr::mutate(corrected_elev,
                                 ELEV_M_SRTM_90m = ifelse(
                                   is.na(ELEV_M_SRTM_90m),
                                   ELEV_M, ELEV_M_SRTM_90m))
-# round SRTM_90m_Buffer field to whole number in cases where station reported
-# data was used and rename column
-corrected_elev[, 13] <- round(corrected_elev[, 13], 0)
 ```
 
 In some cases duplicate stations occur, use the mean value of duplicate rows for
@@ -253,11 +250,18 @@ corrected_elev <- corrected_elev %>%
   dplyr::summarise(ELEV_M_SRTM_90m = mean(ELEV_M_SRTM_90m))
 ```
 
+Round `ELEV_M_SRTM_90m` field to whole number in cases where station reported
+data was used.
+
+```{r round_corrected}
+corrected_elev[, 2] <- round(corrected_elev[, 2], 0)
+```
+
 Left-join the new station elevation data with the `stations` object. For
-stations above/below 60/-60 latitude or bouys, `ELEV_M_SRTM_90m` will be `NA` as
+stations above/below 60/-60 latitude or buoys, `ELEV_M_SRTM_90m` will be `NA` as
 there is no SRTM data for these locations.
 
-```{r join corrected_elev with station data}
+```{r join_corrected_elev}
 # convert any factors in stations object to character for left_join
 stations <- dplyr::mutate_if(
   as.data.frame(stations),
@@ -298,7 +302,7 @@ package following the approach of Hijmans *et al.* (2005).
 The final dataframe for distribution with _GSODR_ includes the new elevation 
 values along with the cleaned "isd-history.csv" data.
 
-```{r cleanup and .rda file creation, message=FALSE, echo=TRUE, warning=FALSE, error=FALSE}
+```{r cleanup_and_.rda_file_creation, message=FALSE, echo=TRUE, warning=FALSE, error=FALSE}
 
 # write rda file to disk for use with GSODR package
 save(isd_history, file = "../inst/extdata/isd_history.rda",
@@ -324,7 +328,7 @@ by others must provide this same notification."
 
 ## R System Information
 
-```{r system information, echo=FALSE}
+```{r system_information, echo=FALSE}
 sessioninfo::session_info()
 ```
 

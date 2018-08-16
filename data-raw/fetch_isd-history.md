@@ -1,7 +1,7 @@
 Fetch, clean and correct altitude in GSOD isd\_history.csv data
 ================
 Adam H. Sparks
-2018-08-15
+2018-08-16
 
 # Introduction
 
@@ -9,11 +9,11 @@ This document details how the GSOD station history data file,
 [“isd-history.csv”](ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv),
 is fetched from the NCEI ftp server, error checked and new elevation
 values generated. The new elevation values are then saved for inclusion
-in package as /extdata/isd\_history.rda. The resulting values are merged
-with the most recent station history data file from the NCEI when the
-user runs the `get_GSOD()` function. The resulting data frame of station
-information, based on the merging of the `SRTM_GSOD_elevation` data
-frame with the most recently available “isd-history.csv” file will
+in package as `/extdata/isd_history.rda`. The resulting values are
+merged with the most recent station history data file from the NCEI when
+the user runs the `get_GSOD()` function. The resulting data frame of
+station information, based on the merging of the `corrected_elev` data
+frame with the most recently available “isd-history.csv” file, will
 result in the following changes to the data:
 
   - Stations where latitude or longitude are NA or both 0 are removed
@@ -304,9 +304,6 @@ corrected_elev <- dplyr::mutate(corrected_elev,
                                 ELEV_M_SRTM_90m = ifelse(
                                   is.na(ELEV_M_SRTM_90m),
                                   ELEV_M, ELEV_M_SRTM_90m))
-# round SRTM_90m_Buffer field to whole number in cases where station reported
-# data was used and rename column
-corrected_elev[, 13] <- round(corrected_elev[, 13], 0)
 ```
 
 In some cases duplicate stations occur, use the mean value of duplicate
@@ -320,8 +317,15 @@ corrected_elev <- corrected_elev %>%
   dplyr::summarise(ELEV_M_SRTM_90m = mean(ELEV_M_SRTM_90m))
 ```
 
+Round `ELEV_M_SRTM_90m` field to whole number in cases where station
+reported data was used.
+
+``` r
+corrected_elev[, 2] <- round(corrected_elev[, 2], 0)
+```
+
 Left-join the new station elevation data with the `stations` object. For
-stations above/below 60/-60 latitude or bouys, `ELEV_M_SRTM_90m` will be
+stations above/below 60/-60 latitude or buoys, `ELEV_M_SRTM_90m` will be
 `NA` as there is no SRTM data for these locations.
 
 ``` r
@@ -434,7 +438,7 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  language (EN)                        
     ##  collate  en_AU.UTF-8                 
     ##  tz       Australia/Brisbane          
-    ##  date     2018-08-15                  
+    ##  date     2018-08-16                  
     ## 
     ## ─ Packages ──────────────────────────────────────────────────────────────
     ##  package            * version date       source        
