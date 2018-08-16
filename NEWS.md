@@ -3,7 +3,8 @@
 ## Bug fixes
 
   - Fix bug in creating `isd-history.rda` file where duplicate stations existed
-  in the file distributed with `GSODR`
+  in the file distributed with `GSODR` but with different corrected elevation
+  values
 
   - Repatch bug reported and fixed previously in version 1.2.0 where Windows
   users could not successfully download files. This somehow snuck back in.
