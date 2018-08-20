@@ -1,4 +1,4 @@
-# GSODR 1.2.1.9000
+# GSODR 1.2.2
 
 ## Bug fixes
 
