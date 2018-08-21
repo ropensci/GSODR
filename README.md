@@ -173,9 +173,9 @@ _Users of these data should take into account the following (from the [NCEI webs
   Daily Weather Data in R. _The Journal of Open Source Software_, **2(10)**.
   DOI: 10.21105/joss.00177.
   
-- Please note that the GSODR project is released with a
-[Contributor Code of Conduct](CONDUCT.md). By participating in working on the 
-GSODR project you agree to abide by its terms.
+- Please note that the _GSODR_ project is released with a
+[Contributor Code of Conduct](CONDUCT.md). By participating in the _GSODR_
+project you agree to abide by its terms.
 
 ## References
 
