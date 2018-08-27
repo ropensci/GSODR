@@ -35,7 +35,7 @@
   "keywords": ["US-NCEI", "meteorological-data", "global-weather", "weather", "weather-data", "meteorology", "station-data", "surface-weather", "data-access", "US-NCDC", "r", "gsod", "ncdc", "weather-stations", "global-data", "ncei", "weather-information", "historical-weather", "historical-data", "daily-data", "daily-weather", "rstats", "r-package"],
   "license": "https://spdx.org/licenses/MIT",
   "title": "GSODR",
-  "version": "1.2.2",
+  "version": "1.2.2.9000",
   "name": "GSODR: Global Surface Summary of the Day (GSOD) Weather Data from R",
   "issueTracker": "https://github.com/ropensci/GSODR/issues",
   "programmingLanguage": {
@@ -423,7 +423,7 @@
   "contIntegration": "https://travis-ci.org/ropensci/GSODR",
   "releaseNotes": "https://github.com/ropensci/GSODR/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/GSODR/blob/master/README.md",
-  "fileSize": "1228.398KB",
+  "fileSize": "1229.432KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
