@@ -15,4 +15,5 @@
                 "data, however it does redistribute station metadata in the\n",
                 "package.\n")
   packageStartupMessage(msg)
+  options(GSODR_connection = stdin())
 }

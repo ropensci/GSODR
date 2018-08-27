@@ -27,6 +27,21 @@
 #' @export
 #'
 update_station_list <- function() {
+  message(
+    "This will overwrite GSODR's current internal list of GSOD stations.\n",
+    "If reproducibility is necessary, you may not wish to proceed.\n",
+    "Do you understand and wish to proceed (Y/n)?\n")
+
+  answer <-
+    readLines(con = getOption("GSODR_connection"), n = 1)
+
+  answer <- toupper(answer)
+
+  if (answer != "Y" & answer != "YES") {
+    stop("Station list was not updated.",
+         call. = FALSE)
+  }
+
   original_timeout <- options("timeout")[[1]]
   options(timeout = 300)
   on.exit(options(timeout = original_timeout))
