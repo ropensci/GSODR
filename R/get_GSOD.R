@@ -95,7 +95,7 @@
 #'
 #' @importFrom magrittr %>%
 #' @export
-get_GSOD <- function(years = NULL,
+get_GSOD <- function(years,
                      station = NULL,
                      country = NULL,
                      max_missing = NULL,

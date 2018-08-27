@@ -3,7 +3,7 @@ context("get_GSOD")
 # Check that .validate_years handles invalid years -----------------------------
 
 test_that(".validate_years handles invalid years", {
-  expect_error(.validate_years(years = NULL))
+  expect_error(.validate_years())
   expect_error(.validate_years(years = "nineteen ninety two"))
   expect_error(.validate_years(years = 1923))
   expect_error(.validate_years(years = 1901 +

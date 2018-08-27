@@ -2,22 +2,16 @@
 #' @noRd
 .validate_years <- function(years) {
   this_year <- 1900 + as.POSIXlt(Sys.Date())$year
-  if (is.null(years) | is.character(years)) {
-    stop(call. = FALSE,
-         "\nYou must provide at least one year of data to download in a numeric
-         format.\n")
-  } else {
-    for (i in years) {
-      if (i <= 0) {
-        stop("\nThis is not a valid year.\n")
-      } else if (i < 1929) {
-        stop(call. = FALSE,
-             "\nThe GSOD data files start at 1929, you have entered a year prior
-             to 1929.\n")
-      } else if (i > this_year) {
-        stop(call. = FALSE,
-             "\nThe year cannot be greater than current year.\n")
-      }
+  for (i in years) {
+    if (i <= 0) {
+      stop("\nThis is not a valid year.\n")
+    } else if (i < 1929) {
+      stop(call. = FALSE,
+           "\nThe GSOD data files start at 1929, you have entered a year prior
+           to 1929.\n")
+    } else if (i > this_year) {
+      stop(call. = FALSE,
+           "\nThe year cannot be greater than current year.\n")
     }
   }
 }
@@ -25,20 +19,21 @@
 #' @noRd
 .validate_station <- function(station, isd_history, years) {
   if (!station %in% isd_history[[12]]) {
-    stop(call. = FALSE,
-         "\n",
-         paste0(station),
-         " is not a valid station ID number, please check your entry.\n",
-         "Valid Station IDs can be found in the isd-history.txt file\n",
-         "available from the US NCEI FTP server by combining the USAF and\n",
-         "WBAN columns, e.g. '007005' '99999' is '007005-99999' from this\n",
-         "file <ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.txt>\n"
+    stop(
+      call. = FALSE,
+      "\n",
+      paste0(station),
+      " is not a valid station ID number, please check your entry.\n",
+      "Valid Station IDs can be found in the isd-history.txt file\n",
+      "available from the US NCEI FTP server by combining the USAF and\n",
+      "WBAN columns, e.g. '007005' '99999' is '007005-99999' from this\n",
+      "file <ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.txt>\n"
     )
   }
   BEGIN <-
-    as.numeric(substr(isd_history[isd_history[[12]] == station, ]$BEGIN, 1, 4))
+    as.numeric(substr(isd_history[isd_history[[12]] == station,]$BEGIN, 1, 4))
   END <-
-    as.numeric(substr(isd_history[isd_history[[12]] == station, ]$END, 1, 4))
+    as.numeric(substr(isd_history[isd_history[[12]] == station,]$END, 1, 4))
   if (min(years) < BEGIN | max(years) > END) {
     message("\nThis station, ",
             station,
@@ -117,7 +112,11 @@
       tryCatch(
         Map(
           function(ftp, dest)
-            utils::download.file(url = ftp, destfile = dest, mode = "wb"),
+            utils::download.file(
+              url = ftp,
+              destfile = dest,
+              mode = "wb"
+            ),
           file_list,
           file.path(cache_dir, basename(file_list))
         ),
@@ -155,11 +154,13 @@
             if (!is.null(res$result))
               return(res$result)
             if (i == max_retries) {
-              stop(call. = FALSE,
-                   "\nWe've tried to get the file(s) you requested six\n",
-                   "times, but the server is not responding, so we are\n",
-                   "unable to process your request now.\n",
-                   "Please try again later.\n")
+              stop(
+                call. = FALSE,
+                "\nWe've tried to get the file(s) you requested six\n",
+                "times, but the server is not responding, so we are\n",
+                "unable to process your request now.\n",
+                "Please try again later.\n"
+              )
             }
           }
         }
@@ -176,11 +177,13 @@
           repeat {
             i <- i + 1
             if (i == max_retries) {
-              stop(call. = FALSE,
-                   "\nWe've tried to get the file(s) you requested six\n",
-                   "times, but the server is not responding, so we are\n",
-                   "unable to process your request now.\n",
-                   "Please try again later.\n")
+              stop(
+                call. = FALSE,
+                "\nWe've tried to get the file(s) you requested six\n",
+                "times, but the server is not responding, so we are\n",
+                "unable to process your request now.\n",
+                "Please try again later.\n"
+              )
             }
             res <- s_curl_fetch_disk(url, cache_file)
             if (!is.null(res$result))
@@ -197,7 +200,7 @@
         close(con)
         # sift out only the target stations
         purrr::map(station, ~ grep(., fils, value = TRUE)) %>%
-          purrr::keep(~ length(.) > 0) %>%
+          purrr::keep( ~ length(.) > 0) %>%
           purrr::flatten_chr() -> fils
 
         if (length(fils) > 0) {
@@ -207,8 +210,11 @@
           pb$tick()$print()
         }
         else {
-          message("\nThere are no files for station ID ", station, " in ",
-                  yr, ".\n")
+          message("\nThere are no files for station ID ",
+                  station,
+                  " in ",
+                  yr,
+                  ".\n")
         }
       })
     }
@@ -222,7 +228,7 @@
 .agroclimatology_list <-
   function(GSOD_list, isd_history, cache_dir, years) {
     station_list <- isd_history[isd_history$LAT >= -60 &
-                                  isd_history$LAT <= 60, ]$STNID
+                                  isd_history$LAT <= 60,]$STNID
     station_list <- do.call(paste0,
                             c(
                               expand.grid(cache_dir, "/", station_list, "-",
@@ -241,12 +247,11 @@
            isd_history,
            cache_dir,
            years) {
-    country_FIPS <- unlist(
-      as.character(
-        stats::na.omit
-        (country_list[country_list$FIPS == country, ][[1]]),
-        use.names = FALSE))
-    station_list <- isd_history[isd_history$CTRY == country_FIPS, ]$STNID
+    country_FIPS <- unlist(as.character(stats::na.omit
+                                        (country_list[country_list$FIPS == country,][[1]]),
+                                        use.names = FALSE))
+    station_list <-
+      isd_history[isd_history$CTRY == country_FIPS,]$STNID
     station_list <- do.call(paste0,
                             c(
                               expand.grid(cache_dir,

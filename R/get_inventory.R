@@ -28,6 +28,7 @@
 #' @export
 #'
 get_inventory <- function() {
+
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 
   ftp_handle <-
