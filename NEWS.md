@@ -1,18 +1,28 @@
 # GSODR 1.2.2.9000
 
 ## Minor changes
-  - Update internal database of station locations
+  - Update internal database of station locations, adding 346 new stations to
+  internal list
   
-  - Refactor internal functionality to be more clear
+  - Refactor internal functionality to be more clear and efficient in execution
+    
+    - `country-list` is not loaded unless user has specified a country in
+      `get_GSOD()`
+      
+    - An instance where the FIPS code was determined twice was removed
   
   - Internal database of station locations stores `BEGIN` and `END` fields as
-  integer, not double now
+  integer, not double
   
   - Clarify code of conduct statement in README that it only applies to this,
   GSODR, project
   
   - Prompt user for input with warning about reproducibility if using the
   `update_station_list()` function
+  
+  - Remove extra code, clean up code-chunks and use `hrbrthemes::theme_ipsum()`
+  for 
+  [data-raw/fetch_isd-history.md](https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md)
 
 --------------------------------------------------------------------------------
 

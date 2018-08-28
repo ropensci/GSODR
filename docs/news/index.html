@@ -142,11 +142,18 @@
 <h2 class="hasAnchor">
 <a href="#minor-changes" class="anchor"></a>Minor changes</h2>
 <ul>
-<li><p>Update internal database of station locations</p></li>
-<li><p>Refactor internal functionality to be more clear</p></li>
-<li><p>Internal database of station locations stores <code>BEGIN</code> and <code>END</code> fields as integer, not double now</p></li>
+<li><p>Update internal database of station locations, adding 346 new stations to internal list</p></li>
+<li>
+<p>Refactor internal functionality to be more clear and efficient in execution</p>
+<ul>
+<li><p><code>country-list</code> is not loaded unless user has specified a country in <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code></p></li>
+<li><p>An instance where the FIPS code was determined twice was removed</p></li>
+</ul>
+</li>
+<li><p>Internal database of station locations stores <code>BEGIN</code> and <code>END</code> fields as integer, not double</p></li>
 <li><p>Clarify code of conduct statement in README that it only applies to this, GSODR, project</p></li>
 <li><p>Prompt user for input with warning about reproducibility if using the <code><a href="../reference/update_station_list.html">update_station_list()</a></code> function</p></li>
+<li><p>Remove extra code, clean up code-chunks and use <code><a href="http://www.rdocumentation.org/packages/hrbrthemes/topics/theme_ipsum">hrbrthemes::theme_ipsum()</a></code> for <a href="https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.html">data-raw/fetch_isd-history.md</a></p></li>
 </ul>
 <hr>
 </div>
