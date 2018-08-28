@@ -46,11 +46,6 @@ every instance for the 90m column.
 ## Set up workspace
 
 ```{r set_up_workspace, echo=TRUE, messages=FALSE, output=FALSE, warning=FALSE}
-# check for presence of countrycode package and install if needed
-if (!require("countrycode")) {
-  install.packages("countrycode", repos = "https://cran.rstudio.com/")
-}
-
 if (!require("dplyr")) {
   install.packages("dplyr", repos = "https://cran.rstudio.com/")
 }
@@ -83,6 +78,10 @@ if (!require("rnaturalearth")) {
   install.packages("rnaturalearth", repos = "https://cran.rstudio.com/")
 }
 
+if (!require("hrbrthemes")) {
+  install.packages("hrbrthemes", repos = "https://cran.rstudio.com/")
+}
+
 library(magrittr) # comes with dplyr above
 
 dem_tiles <- list.files(path.expand("~/Data/CGIAR-CSI SRTM"), 
@@ -92,7 +91,7 @@ cor_stations <- list()
 tf <- tempfile()
 ```
 
-## Download from Natural Earth and NCEI
+## Download data from Natural Earth and NCEI
 
 ```{r download_NE_data, echo=TRUE, message=FALSE, warning=FALSE}
 # import Natural Earth cultural 1:10m data
@@ -105,12 +104,8 @@ stations <- readr::read_csv(
   col_names = c("USAF", "WBAN", "STN_NAME", "CTRY", "STATE", "CALL",
                 "LAT", "LON", "ELEV_M", "BEGIN", "END"), skip = 1)
 
-stations[stations == -999.9] <- NA
 stations[stations == -999] <- NA
-
-countries <- readr::read_table(
-  "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/country-list.txt",
-  col_types = "ccc")[-1, ]
+stations[stations == -999.9] <- NA
 ```
 
 ## Reformat and clean station data file from NCEI
@@ -122,13 +117,6 @@ stations <- stations[stations$LAT != 0 & stations$LON != 0, ]
 stations <- stations[stations$LAT > -90 & stations$LAT < 90, ]
 stations <- stations[stations$LON > -180 & stations$LON < 180, ]
 stations$STNID <- as.character(paste(stations$USAF, stations$WBAN, sep = "-"))
-
-# join countries with countrycode data
-countries <- dplyr::left_join(countries, countrycode::codelist,
-                              by = c("FIPS" = "fips"))
-
-# create xy object to check for geographic location agreement with reported
-xy <- dplyr::left_join(stations, countries, by = c("CTRY" = "FIPS"))
 ```
 
 ## Check data for inconsistencies
@@ -170,7 +158,7 @@ facilitate this next step.
 # agreement
 
 # create spatial object to check for location
-xy <- as.data.frame(xy)
+xy <- as.data.frame(stations)
 sp::coordinates(xy) <- ~ LON + LAT
 sp::proj4string(xy) <- sp::CRS(crs)
 
@@ -273,7 +261,9 @@ stations <- dplyr::mutate_if(
 isd_history <- 
   dplyr::left_join(stations, corrected_elev,
                    by = "STNID") %>% 
-  tibble::as_tibble()
+  tibble::as_tibble() %>% 
+  dplyr::mutate(BEGIN = as.integer(BEGIN),
+                END = as.integer(END))
 
 str(isd_history)
 
@@ -282,25 +272,34 @@ isd_history
 
 # Figures
 
-```{r ggplot, echo=FALSE, message=FALSE}
-library(ggplot2)
-```
+Visualise the corrected elevation values against the original elevation values.
 
-```{r Buffered SRTM 90m vs Reported Elevation, echo=TRUE, fig.cap="GSOD Reported Elevation versus CGIAR-CSI SRTM Buffered Elevation", warning=FALSE}
-ggplot(data = isd_history, aes(x = ELEV_M, y = ELEV_M_SRTM_90m)) +
-  geom_point(alpha = 0.4, size = 0.5) +
-  geom_abline(slope = 1, colour = "white")
+``````{r Buffered SRTM 90m vs Reported Elevation, echo=TRUE, fig.cap="GSOD Reported Elevation versus CGIAR-CSI SRTM Buffered Elevation", warning=FALSE}
+
+ggplot2::ggplot(data = isd_history,
+                ggplot2::aes(x = ELEV_M,
+                             y = ELEV_M_SRTM_90m)) +
+  ggplot2::geom_point(alpha = 0.4,
+                      size = 0.5) +
+  ggplot2::geom_abline(slope = 1,
+                       colour = "white",
+                       width = 2.5) +
+  ggplot2::ggtitle("Corrected elevation versus original elevation values.") +
+  hrbrthemes::theme_ipsum()
+  
 ```
 
 Buffered versus non-buffered elevation values were previously checked and found
 not to be different while also not showing any discernible geographic patterns.
-However, The buffered elevation data are higher than the non-buffered data. To
+However, the buffered elevation data are higher than the non-buffered data. To
 help avoid within cell and between cell variation the buffered values are the
 values that are included in the final data for distribution with the GSODR
 package following the approach of Hijmans *et al.* (2005).
 
 The final dataframe for distribution with _GSODR_ includes the new elevation 
-values along with the cleaned "isd-history.csv" data.
+values in the `ELEV\_M\_SRTM\_90m` field along with the cleaned
+"isd-history.csv" data that removes stations that do not have valid x, y
+locations.
 
 ```{r cleanup_and_.rda_file_creation, message=FALSE, echo=TRUE, warning=FALSE, error=FALSE}
 
@@ -308,9 +307,6 @@ values along with the cleaned "isd-history.csv" data.
 save(isd_history, file = "../inst/extdata/isd_history.rda",
      compress = "bzip2")
 ```
-
-The `isd_history.rda` file is bundled in the GSODR package and includes
-the new elevation data as the field; ELEV\_M\_SRTM\_90m.
 
 # Notes
 
