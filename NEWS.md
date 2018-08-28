@@ -1,5 +1,18 @@
 # GSODR 1.2.2.9000
 
+## Minor changes
+  - Update internal database of station locations
+  
+  - Refactor internal functionality to be more clear
+  
+  - Internal database of station locations stores `BEGIN` and `END` fields as
+  integer, not double now
+  
+  - Clarify code of conduct statement in README that it only applies to this,
+  GSODR, project
+
+--------------------------------------------------------------------------------
+
 # GSODR 1.2.2
 
 ## Bug fixes
