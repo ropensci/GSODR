@@ -45,36 +45,19 @@ result in the following changes to the data:
 if (!require("dplyr")) {
   install.packages("dplyr", repos = "https://cran.rstudio.com/")
 }
-```
 
-    ## Loading required package: dplyr
+if (!require("sp")) {
+  install.packages("sp", repos = "https://cran.rstudio.com/")
+}
 
-    ## 
-    ## Attaching package: 'dplyr'
+if (!require("parallel")) {
+  install.packages("parallel", repos = "https://cran.rstudio.com/")
+}
 
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     filter, lag
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     intersect, setdiff, setequal, union
-
-``` r
 if (!require("doParallel")) {
   install.packages("doParallel", repos = "https://cran.rstudio.com/")
 }
-```
 
-    ## Loading required package: doParallel
-
-    ## Loading required package: foreach
-
-    ## Loading required package: iterators
-
-    ## Loading required package: parallel
-
-``` r
 if (!require("foreach")) {
   install.packages("foreach", repos = "https://cran.rstudio.com/")
 }
@@ -82,67 +65,30 @@ if (!require("foreach")) {
 if (!require("ggplot2")) {
   install.packages("ggplot2", repos = "https://cran.rstudio.com/")
 }
-```
-
-    ## Loading required package: ggplot2
-
-``` r
-if (!require("parallel")) {
-  install.packages("parallel", repos = "https://cran.rstudio.com/")
-}
 
 if (!require("raster")) {
   install.packages("raster", repos = "https://cran.rstudio.com/")
 }
-```
 
-    ## Loading required package: raster
-
-    ## Loading required package: sp
-
-    ## 
-    ## Attaching package: 'raster'
-
-    ## The following object is masked from 'package:dplyr':
-    ## 
-    ##     select
-
-``` r
 if (!require("readr")) {
   install.packages("readr", repos = "https://cran.rstudio.com/")
 }
-```
 
-    ## Loading required package: readr
-
-``` r
 if (!require("rnaturalearth")) {
   install.packages("rnaturalearth", repos = "https://cran.rstudio.com/")
 }
-```
 
-    ## Loading required package: rnaturalearth
-
-``` r
 if (!require("hrbrthemes")) {
   install.packages("hrbrthemes", repos = "https://cran.rstudio.com/")
 }
-```
 
-    ## Loading required package: hrbrthemes
+if (!require("sessioninfo")) {
+  install.packages("sessioninfo", repos = "https://cran.rstudio.com/")
+}
 
-``` r
+
 library(magrittr) # comes with dplyr above
-```
 
-    ## 
-    ## Attaching package: 'magrittr'
-
-    ## The following object is masked from 'package:raster':
-    ## 
-    ##     extract
-
-``` r
 dem_tiles <- list.files(path.expand("~/Data/CGIAR-CSI SRTM"), 
                         pattern = glob2rx("*.tif"), full.names = TRUE)
 crs <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
@@ -154,10 +100,10 @@ tf <- tempfile()
 
 ``` r
 # import Natural Earth cultural 1:10m data
-NE <- rnaturalearth::ne_countries(scale = 10)
+NE <- ne_countries(scale = 10)
 
 # download data
-stations <- readr::read_csv(
+stations <- read_csv(
   "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
   col_types = "ccccccddddd",
   col_names = c("USAF", "WBAN", "STN_NAME", "CTRY", "STATE", "CALL",
@@ -220,11 +166,11 @@ step.
 
 # create spatial object to check for location
 xy <- as.data.frame(stations)
-sp::coordinates(xy) <- ~ LON + LAT
-sp::proj4string(xy) <- sp::CRS(crs)
+coordinates(xy) <- ~ LON + LAT
+proj4string(xy) <- CRS(crs)
 
 # check for location in country
-point_check <- sp::over(xy, NE)
+point_check <- over(xy, NE)
 point_check <- as.data.frame(point_check)
 stations_discard <- point_check[point_check$FIPS %in% point_check$FIPS_10_ == FALSE, ]
 nrow(stations_discard)
@@ -244,19 +190,19 @@ NCEI.
 ``` r
 # create a spatial object for extracting elevation values using spatial points
 stations <- as.data.frame(stations)
-sp::coordinates(stations) <- ~ LON + LAT
-sp::proj4string(stations) <- sp::CRS(crs)
+coordinates(stations) <- ~ LON + LAT
+proj4string(stations) <- CRS(crs)
 
 # set up cluster for parallel processing
 library(foreach)
-cl <- parallel::makeCluster(parallel::detectCores())
-doParallel::registerDoParallel(cl)
+cl <- makeCluster(detectCores())
+registerDoParallel(cl)
 
-corrected_elev <- dplyr::bind_rows(
-  foreach(i = dem_tiles, .packages = "magrittr") %dopar% {
+corrected_elev <- bind_rows(
+  foreach(i = dem_tiles, .packages = c("magrittr", "raster", "dplyr")) %dopar% {
     # Load the DEM tile
-    dem <- raster::raster(i)
-    sub_stations <- raster::crop(stations, dem)
+    dem <- raster(i)
+    sub_stations <- crop(stations, dem)
     
     # in some cases the DEM represents areas where there is no station
     # check for that here and if no stations, go on to next iteration
@@ -264,16 +210,16 @@ corrected_elev <- dplyr::bind_rows(
       # use a 200m buffer to extract elevation from the DEM
       
       sub_stations$ELEV_M_SRTM_90m <- 
-        raster::extract(dem, sub_stations,
-                        buffer = 200,
-                        fun = mean)
+        extract(dem, sub_stations,
+                buffer = 200,
+                fun = mean)
       
       # convert spatial object back to normal data frame and add new fields
       sub_stations <- as.data.frame(sub_stations)
       
       # set any factors back to character
       sub_stations <- sub_stations %>%
-        dplyr::mutate_if(is.factor, as.character)
+        mutate_if(is.factor, as.character)
       
       return(sub_stations)
     }
@@ -281,17 +227,17 @@ corrected_elev <- dplyr::bind_rows(
 )
 
 # stop cluster
-parallel::stopCluster(cl)
+stopCluster(cl)
 ```
 
 Some stations occur in areas where DEM has no data, in this case, use
 original station elevation for these stations.
 
 ``` r
-corrected_elev <- dplyr::mutate(corrected_elev,
-                                ELEV_M_SRTM_90m = ifelse(
-                                  is.na(ELEV_M_SRTM_90m),
-                                  ELEV_M, ELEV_M_SRTM_90m))
+corrected_elev <- mutate(corrected_elev,
+                         ELEV_M_SRTM_90m = ifelse(
+                           is.na(ELEV_M_SRTM_90m),
+                           ELEV_M, ELEV_M_SRTM_90m))
 ```
 
 In some cases duplicate stations occur, use the mean value of duplicate
@@ -301,8 +247,8 @@ and the new elevation values. `STNID` is used for a left-join with the
 
 ``` r
 corrected_elev <- corrected_elev %>%
-  dplyr::group_by(STNID) %>%
-  dplyr::summarise(ELEV_M_SRTM_90m = mean(ELEV_M_SRTM_90m))
+  group_by(STNID) %>%
+  summarise(ELEV_M_SRTM_90m = mean(ELEV_M_SRTM_90m))
 ```
 
 Round `ELEV_M_SRTM_90m` field to whole number in cases where station
@@ -318,7 +264,7 @@ stations above/below 60/-60 latitude or buoys, `ELEV_M_SRTM_90m` will be
 
 ``` r
 # convert any factors in stations object to character for left_join
-stations <- dplyr::mutate_if(
+stations <- mutate_if(
   as.data.frame(stations),
   is.factor,
   as.character)
@@ -326,11 +272,11 @@ stations <- dplyr::mutate_if(
 # Perform left join to join corrected elevation with original station data,
 # this will include stations below/above -60/60
 isd_history <- 
-  dplyr::left_join(stations, corrected_elev,
-                   by = "STNID") %>% 
-  tibble::as_tibble() %>% 
-  dplyr::mutate(BEGIN = as.integer(BEGIN),
-                END = as.integer(END))
+  left_join(stations, corrected_elev,
+            by = "STNID") %>% 
+  as_tibble() %>% 
+  mutate(BEGIN = as.integer(BEGIN),
+         END = as.integer(END))
 
 str(isd_history)
 ```
@@ -376,16 +322,16 @@ Visualise the corrected elevation values against the original elevation
 values.
 
 ``` r
-ggplot2::ggplot(data = isd_history,
-                ggplot2::aes(x = ELEV_M,
-                             y = ELEV_M_SRTM_90m)) +
-  ggplot2::geom_point(alpha = 0.4,
-                      size = 0.5) +
-  ggplot2::geom_abline(slope = 1,
-                       colour = "white",
-                       width = 2.5) +
-  ggplot2::ggtitle("Corrected elevation versus original elevation values.") +
-  hrbrthemes::theme_ipsum()
+ggplot(data = isd_history,
+       aes(x = ELEV_M,
+           y = ELEV_M_SRTM_90m)) +
+  geom_point(alpha = 0.4,
+             size = 0.5) +
+  geom_abline(slope = 1,
+              colour = "white",
+              width = 2.5) +
+  ggtitle("Corrected elevation versus original elevation values.") +
+  theme_ipsum()
 ```
 
 ![GSOD Reported Elevation versus CGIAR-CSI SRTM Buffered
@@ -399,8 +345,8 @@ variation the buffered values are the values that are included in the
 final data for distribution with the GSODR package following the
 approach of Hijmans *et al.* (2005).
 
-The final dataframe for distribution with *GSODR* includes the new
-elevation values in the `ELEV\_M\_SRTM\_90m` field along with the
+The final data frame for distribution with *GSODR* includes the new
+elevation values in the `ELEV_M_SRTM_90m` field along with the
 cleaned “isd-history.csv” data that removes stations that do not have
 valid x, y locations.
 
@@ -494,7 +440,7 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  rprojroot            1.3-2   2018-01-03
     ##  Rttf2pt1             1.3.7   2018-06-29
     ##  scales               1.0.0   2018-08-09
-    ##  sessioninfo          1.0.0   2017-06-21
+    ##  sessioninfo        * 1.0.0   2017-06-21
     ##  sf                   0.6-3   2018-05-17
     ##  sp                 * 1.3-1   2018-06-05
     ##  spData               0.2.9.3 2018-08-01
