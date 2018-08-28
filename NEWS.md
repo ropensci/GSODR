@@ -1,5 +1,18 @@
 # GSODR 1.2.2.9000
 
+## Minor changes
+
+  - Alert user to reproducibility issues and ask for user input before
+  proceeding with updating station list
+  
+  - Internal changes to function arguments to use a more cannonical way of
+  failing if not specified
+  
+  - Update code of conduct statement to reflect that it is only the GSODR
+  project that it applies to
+
+--------------------------------------------------------------------------------
+
 # GSODR 1.2.2
 
 ## Bug fixes
