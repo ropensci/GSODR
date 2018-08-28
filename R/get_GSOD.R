@@ -132,11 +132,6 @@ get_GSOD <- function(years,
   # Load station list
   load(system.file("extdata", "isd_history.rda", package = "GSODR")) # nocov
 
-  # Load country list
-  # CRAN NOTE avoidance
-  country_list <- NULL # nocov
-  load(system.file("extdata", "country_list.rda", package = "GSODR")) # nocov
-
   # Validate user entered stations for existence in stations list from NCEI
   purrr::walk(
     .x = station,
@@ -144,7 +139,6 @@ get_GSOD <- function(years,
     isd_history = isd_history,
     years = years
   )
-  country <- .validate_country(country, country_list)
 
   # Download files from server -----------------------------------------------
   GSOD_list <- .download_files(ftp_base, station, years, cache_dir)
@@ -157,6 +151,13 @@ get_GSOD <- function(years,
 
   # Subset GSOD_list for specified country -------------------------------------
   if (!is.null(country)) {
+    # Load country list
+    # CRAN NOTE avoidance
+    country_list <- NULL # nocov
+    load(system.file("extdata", "country_list.rda", package = "GSODR")) # nocov
+
+    country <- .validate_country(country, country_list)
+
     GSOD_list <-
       .subset_country_list(country,
                            country_list,

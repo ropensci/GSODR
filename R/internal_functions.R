@@ -247,11 +247,9 @@
            isd_history,
            cache_dir,
            years) {
-    country_FIPS <- unlist(as.character(stats::na.omit
-                                        (country_list[country_list$FIPS == country,][[1]]),
-                                        use.names = FALSE))
+
     station_list <-
-      isd_history[isd_history$CTRY == country_FIPS,]$STNID
+      isd_history[isd_history$CTRY == country, ]$STNID
     station_list <- do.call(paste0,
                             c(
                               expand.grid(cache_dir,
