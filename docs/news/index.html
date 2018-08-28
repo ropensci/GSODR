@@ -138,6 +138,18 @@
 <h1 class="page-header">
 <a href="#gsodr-1-2-2-9000" class="anchor"></a>GSODR 1.2.2.9000<small> Unreleased </small>
 </h1>
+<div id="minor-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#minor-changes" class="anchor"></a>Minor changes</h2>
+<ul>
+<li><p>Update internal database of station locations</p></li>
+<li><p>Refactor internal functionality to be more clear</p></li>
+<li><p>Internal database of station locations stores <code>BEGIN</code> and <code>END</code> fields as integer, not double now</p></li>
+<li><p>Clarify code of conduct statement in README that it only applies to this, GSODR, project</p></li>
+<li><p>Prompt user for input with warning about reproducibility if using the <code><a href="../reference/update_station_list.html">update_station_list()</a></code> function</p></li>
+</ul>
+<hr>
+</div>
 </div>
     <div id="gsodr-1-2-2" class="section level1">
 <h1 class="page-header">
@@ -151,9 +163,9 @@
 <li><p>Repatch bug reported and fixed previously in version 1.2.0 where Windows users could not successfully download files. This somehow snuck back in.</p></li>
 </ul>
 </div>
-<div id="minor-changes" class="section level2">
+<div id="minor-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-1" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Refactor vignettes for clarity</li>
 </ul>
@@ -172,9 +184,9 @@
 <li><p>Fix bug that removed a few hundred stations from the internal <code>GSODR</code> database of stations in the <code>data-raw</code> files.</p></li>
 </ul>
 </div>
-<div id="minor-changes-1" class="section level2">
+<div id="minor-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-1" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-2" class="anchor"></a>Minor changes</h2>
 <ul>
 <li><p>Clean documentation, shortening long lines, fixing formatting, incomplete sentences and broken links</p></li>
 <li><p>Clarify the reasons for errors that a user may encounter</p></li>
@@ -204,9 +216,9 @@
 <li><p>Correct documentation for <code><a href="../reference/reformat_GSOD.html">reformat_GSOD()</a></code></p></li>
 </ul>
 </div>
-<div id="minor-changes-2" class="section level2">
+<div id="minor-changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-2" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-3" class="anchor"></a>Minor changes</h2>
 <ul>
 <li><p>Update internal databases of station metadata</p></li>
 <li><p>Vignettes contain pre-built figures for faster package installation when building vignettes</p></li>
@@ -227,9 +239,9 @@
 <li><p>Update internal databases for country list and isd_history</p></li>
 </ul>
 </div>
-<div id="minor-changes-3" class="section level2">
+<div id="minor-changes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-3" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-4" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Add X-schema tags to DESCRIPTION</li>
 </ul>
@@ -248,9 +260,9 @@
 <code>MAX_FLAG</code> and <code>MIN_FLAG</code> columns now report <code>NA</code> when there is no flag</li>
 </ul>
 </div>
-<div id="minor-changes-4" class="section level2">
+<div id="minor-changes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-4" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-5" class="anchor"></a>Minor changes</h2>
 <ul>
 <li><p>Comment for Bob and Hugh in DESCRIPTION now only ORCID url</p></li>
 <li><p>dplyr version set to &gt;= 0.7.0 not 0.7 as before</p></li>
@@ -303,9 +315,9 @@
 <li><p>Fix bug where invalid stations would return an empty dataframe, should stop and return message about checking the <code>station</code> value supplied to <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> and check if data are available for the years requested</p></li>
 </ul>
 </div>
-<div id="minor-changes-5" class="section level2">
+<div id="minor-changes-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-5" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-6" class="anchor"></a>Minor changes</h2>
 <ul>
 <li><p>Update Appendix 2 of GSODR vignette, map of station locations, to be more clear and follow same format as that of <code>bomrang</code> package</p></li>
 <li><p>Update example output in GSODR vignette where applicable</p></li>
@@ -344,9 +356,9 @@
 <li><p>Update internal stations list</p></li>
 </ul>
 </div>
-<div id="minor-changes-6" class="section level2">
+<div id="minor-changes-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-6" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-7" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Tidy up informative messages that the package returns while running</li>
 </ul>
@@ -372,9 +384,9 @@
 <li><p>Vignettes have been updated and improved with an improved order of information presented and some have been combined for easier use</p></li>
 </ul>
 </div>
-<div id="minor-changes-7" class="section level2">
+<div id="minor-changes-8" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-7" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-8" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Clean code using linting</li>
 </ul>
@@ -395,9 +407,9 @@
 <li><p><em>plyr</em> is no longer an import</p></li>
 </ul>
 </div>
-<div id="minor-changes-8" class="section level2">
+<div id="minor-changes-9" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-8" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-9" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Fix bugs in the vignettes related to formatting and spelling</li>
 </ul>
@@ -416,9 +428,9 @@
 <h1 class="page-header">
 <a href="#gsodr-1-0-2-1" class="anchor"></a>GSODR 1.0.2.1<small> 2017-04-03 </small>
 </h1>
-<div id="minor-changes-9" class="section level2">
+<div id="minor-changes-10" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-9" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-10" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Correct references to <em>GSODRdata</em> package where incorrectly referred to as <em>GSODdata</em>
 </li>
@@ -430,9 +442,9 @@
 <h1 class="page-header">
 <a href="#gsodr-1-0-2" class="anchor"></a>GSODR 1.0.2<small> 2017-04-03 </small>
 </h1>
-<div id="minor-changes-10" class="section level2">
+<div id="minor-changes-11" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-10" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-11" class="anchor"></a>Minor changes</h2>
 <ul>
 <li><p>Improved documentation (i.e., spelling corrections and more descriptive)</p></li>
 <li><p>More descriptive vignette for “GSODR use case: Specified years/stations vignette”</p></li>
@@ -448,9 +460,9 @@
 <h1 class="page-header">
 <a href="#gsodr-1-0-1" class="anchor"></a>GSODR 1.0.1<small> 2017-01-27 </small>
 </h1>
-<div id="minor-changes-11" class="section level2">
+<div id="minor-changes-12" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-11" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-12" class="anchor"></a>Minor changes</h2>
 <ul>
 <li><p>Update documentation for <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> when using <code>station</code> parameter</p></li>
 <li><p>Edit paper.md for submission to JOSS</p></li>
@@ -499,9 +511,9 @@
 <li><p>Now included in ropensci, <a href="https://github.com/ropensci/GSODR">ropensci/GSODR</a></p></li>
 </ul>
 </div>
-<div id="minor-changes-12" class="section level2">
+<div id="minor-changes-13" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-12" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-13" class="anchor"></a>Minor changes</h2>
 <ul>
 <li><p><code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> function optimised for speed as best possible after FTPing files from NCDC server</p></li>
 <li><p>All files are downloaded from server and then locally processed, previously these were sequentially downloaded by year and then processed</p></li>
@@ -545,9 +557,9 @@
 <li>Fix bug in precipitation calculation. Documentation states that PRCP is in mm to hundredths. Issues with conversion and missing values meant that this was not the case. Thanks to Gwenael Giboire for reporting and help with fixing this</li>
 </ul>
 </div>
-<div id="minor-changes-13" class="section level2">
+<div id="minor-changes-14" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-13" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-14" class="anchor"></a>Minor changes</h2>
 <ul>
 <li><p>Users can now select to merge output for station queries across multiple years. Previously one year = one file per station. Now are set by user, <code>merge_station_years = TRUE</code> parameter, only one output file is generated</p></li>
 <li><p>Country list is now included in the package to reduce run time necessary when querying for a specific country. However, this means any time that the country-list.txt file is updated, this package needs to be updated as well</p></li>
@@ -585,9 +597,9 @@
 <li><p>Set NA or missing values in CSV or shapefile to -9999 from -9999.99 to align with other data sources such as Worldclim</p></li>
 </ul>
 </div>
-<div id="minor-changes-14" class="section level2">
+<div id="minor-changes-15" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-14" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-15" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Documentation is more complete and easier to use</li>
 </ul>
@@ -607,9 +619,9 @@
 <li><p>CITATION file is updated and corrected</p></li>
 </ul>
 </div>
-<div id="minor-changes-15" class="section level2">
+<div id="minor-changes-16" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-15" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-16" class="anchor"></a>Minor changes</h2>
 <ul>
 <li><p>User now has the ability to generate a shapefile as well as CSV file output <a href="https://github.com/ropensci/GSODR/issues/3">(Issue 3)</a></p></li>
 <li><p>Documentation is more complete and easier to use</p></li>
@@ -657,9 +669,9 @@
 <li><p>Likewise, CSV files for agroclimatology now are names with the Station Identifier. Previously named same as global data</p></li>
 </ul>
 </div>
-<div id="minor-changes-16" class="section level2">
+<div id="minor-changes-17" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-16" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-17" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li><p>Set values where MIN &gt; MAX to NA</p></li>
 <li><p>Set more MIN/MAX/DEWP values to NA. GSOD README indicates that 999 indicates missing values in these columns, this does not appear to always be true. There are instances where 99 is the value recorded for missing data. While 99F is possible, the vast majority of these recorded values are missing data, thus the function now converts them to NA</p></li>
@@ -678,9 +690,9 @@
 <li>Fixed bug related to MIN/MAX columns when agroclimatology or all stations are selected where flags were not removed properly from numeric values.</li>
 </ul>
 </div>
-<div id="minor-changes-17" class="section level2">
+<div id="minor-changes-18" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-17" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-18" class="anchor"></a>Minor Changes</h2>
 <hr>
 </div>
 </div>
@@ -696,9 +708,9 @@
 <li><p>Correct URL in README.md for CRAN to point to CRAN not GitHub</p></li>
 </ul>
 </div>
-<div id="minor-changes-18" class="section level2">
+<div id="minor-changes-19" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-18" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-19" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Set NA to -9999.99</li>
 </ul>
