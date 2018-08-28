@@ -10,6 +10,9 @@
   
   - Clarify code of conduct statement in README that it only applies to this,
   GSODR, project
+  
+  - Prompt user for input with warning about reproducibility if using the
+  `update_station_list()` function
 
 --------------------------------------------------------------------------------
 
