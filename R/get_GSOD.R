@@ -112,7 +112,7 @@ get_GSOD <- function(years,
   if (!is.null(max_missing)) {
     if (is.na(max_missing) | max_missing < 1) {
       stop(call. = FALSE,
-           "\nThe 'max_missing' parameter must be a positive",
+           "\nThe `max_missing` parameter must be a positive",
            "value larger than 1\n")
     }
   }
