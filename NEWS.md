@@ -1,8 +1,7 @@
 # GSODR 1.2.2.9000
 
 ## Minor changes
-  - Update internal database of station locations, adding 346 new stations to
-  internal list
+  - Update internal database of station locations
   
   - Refactor internal functionality to be more clear and efficient in execution
     
