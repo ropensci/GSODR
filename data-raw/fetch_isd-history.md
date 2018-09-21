@@ -1,7 +1,7 @@
 Fetch, clean and correct altitude in GSOD isd\_history.csv data
 ================
 Adam H. Sparks
-2018-08-28
+2018-09-21
 
 # Introduction
 
@@ -281,39 +281,39 @@ isd_history <-
 str(isd_history)
 ```
 
-    ## Classes 'tbl_df', 'tbl' and 'data.frame':    28375 obs. of  13 variables:
-    ##  $ USAF           : chr  "010010" "010014" "010015" "010016" ...
+    ## Classes 'tbl_df', 'tbl' and 'data.frame':    28285 obs. of  13 variables:
+    ##  $ USAF           : chr  "008268" "010010" "010014" "010015" ...
     ##  $ WBAN           : chr  "99999" "99999" "99999" "99999" ...
-    ##  $ STN_NAME       : chr  "JAN MAYEN(NOR-NAVY)" "SORSTOKKEN" "BRINGELAND" "RORVIK/RYUM" ...
-    ##  $ CTRY           : chr  "NO" "NO" "NO" "NO" ...
+    ##  $ STN_NAME       : chr  "WXPOD8278" "JAN MAYEN(NOR-NAVY)" "SORSTOKKEN" "BRINGELAND" ...
+    ##  $ CTRY           : chr  "AF" "NO" "NO" "NO" ...
     ##  $ STATE          : chr  NA NA NA NA ...
-    ##  $ CALL           : chr  "ENJA" "ENSO" NA NA ...
-    ##  $ LAT            : num  70.9 59.8 61.4 64.8 60 ...
-    ##  $ LON            : num  -8.67 5.34 5.87 11.23 2.25 ...
-    ##  $ ELEV_M         : num  9 48.8 327 14 48 8 12 8 9 14 ...
-    ##  $ BEGIN          : int  19310101 19861120 19870117 19870116 19880320 19861109 19850601 19730101 19310103 19730101 ...
-    ##  $ END            : int  20180824 20180824 20111020 19910806 20050228 20180824 20180824 20140523 20110106 20180824 ...
-    ##  $ STNID          : chr  "010010-99999" "010014-99999" "010015-99999" "010016-99999" ...
-    ##  $ ELEV_M_SRTM_90m: num  NA 48 NA NA 48 NA NA NA NA NA ...
+    ##  $ CALL           : chr  NA "ENJA" "ENSO" NA ...
+    ##  $ LAT            : num  33 70.9 59.8 61.4 64.8 ...
+    ##  $ LON            : num  65.57 -8.67 5.34 5.87 11.23 ...
+    ##  $ ELEV_M         : num  1156.7 9 48.8 327 14 ...
+    ##  $ BEGIN          : int  20110703 19310101 19861120 19870117 19870116 19880320 19861109 19850601 19730101 19310103 ...
+    ##  $ END            : int  20120323 20180917 20180914 20101231 19910806 20050228 20180915 20180917 20140523 20100331 ...
+    ##  $ STNID          : chr  "008268-99999" "010010-99999" "010014-99999" "010015-99999" ...
+    ##  $ ELEV_M_SRTM_90m: num  1160 NA 48 NA NA 48 NA NA NA NA ...
 
 ``` r
 isd_history
 ```
 
-    ## # A tibble: 28,375 x 13
+    ## # A tibble: 28,285 x 13
     ##    USAF  WBAN  STN_NAME CTRY  STATE CALL    LAT    LON ELEV_M  BEGIN    END
     ##    <chr> <chr> <chr>    <chr> <chr> <chr> <dbl>  <dbl>  <dbl>  <int>  <int>
-    ##  1 0100… 99999 JAN MAY… NO    <NA>  ENJA   70.9  -8.67    9   1.93e7 2.02e7
-    ##  2 0100… 99999 SORSTOK… NO    <NA>  ENSO   59.8   5.34   48.8 1.99e7 2.02e7
-    ##  3 0100… 99999 BRINGEL… NO    <NA>  <NA>   61.4   5.87  327   1.99e7 2.01e7
-    ##  4 0100… 99999 RORVIK/… NO    <NA>  <NA>   64.8  11.2    14   1.99e7 1.99e7
-    ##  5 0100… 99999 FRIGG    NO    <NA>  ENFR   60.0   2.25   48   1.99e7 2.01e7
-    ##  6 0100… 99999 VERLEGE… NO    <NA>  <NA>   80.0  16.2     8   1.99e7 2.02e7
-    ##  7 0100… 99999 HORNSUND NO    <NA>  <NA>   77    15.5    12   1.99e7 2.02e7
-    ##  8 0100… 99999 NY-ALES… NO    <NA>  ENAS   78.9  11.9     8   1.97e7 2.01e7
-    ##  9 0100… 99999 ISFJORD… SV    <NA>  <NA>   78.1  13.6     9   1.93e7 2.01e7
-    ## 10 0100… 99999 EDGEOYA  NO    <NA>  <NA>   78.2  22.8    14   1.97e7 2.02e7
-    ## # ... with 28,365 more rows, and 2 more variables: STNID <chr>,
+    ##  1 0082… 99999 WXPOD82… AF    <NA>  <NA>   33.0  65.6  1157.  2.01e7 2.01e7
+    ##  2 0100… 99999 JAN MAY… NO    <NA>  ENJA   70.9  -8.67    9   1.93e7 2.02e7
+    ##  3 0100… 99999 SORSTOK… NO    <NA>  ENSO   59.8   5.34   48.8 1.99e7 2.02e7
+    ##  4 0100… 99999 BRINGEL… NO    <NA>  <NA>   61.4   5.87  327   1.99e7 2.01e7
+    ##  5 0100… 99999 RORVIK/… NO    <NA>  <NA>   64.8  11.2    14   1.99e7 1.99e7
+    ##  6 0100… 99999 FRIGG    NO    <NA>  ENFR   60.0   2.25   48   1.99e7 2.01e7
+    ##  7 0100… 99999 VERLEGE… NO    <NA>  <NA>   80.0  16.2     8   1.99e7 2.02e7
+    ##  8 0100… 99999 HORNSUND NO    <NA>  <NA>   77    15.5    12   1.99e7 2.02e7
+    ##  9 0100… 99999 NY-ALES… NO    <NA>  ENAS   78.9  11.9     8   1.97e7 2.01e7
+    ## 10 0100… 99999 ISFJORD… SV    <NA>  <NA>   78.1  13.6     9   1.93e7 2.01e7
+    ## # ... with 28,275 more rows, and 2 more variables: STNID <chr>,
     ## #   ELEV_M_SRTM_90m <dbl>
 
 # Figures
@@ -346,9 +346,9 @@ final data for distribution with the GSODR package following the
 approach of Hijmans *et al.* (2005).
 
 The final data frame for distribution with *GSODR* includes the new
-elevation values in the `ELEV_M_SRTM_90m` field along with the
-cleaned “isd-history.csv” data that removes stations that do not have
-valid x, y locations.
+elevation values in the `ELEV_M_SRTM_90m` field along with the cleaned
+“isd-history.csv” data that removes stations that do not have valid x,
+y locations.
 
 ``` r
 # write rda file to disk for use with GSODR package
@@ -383,7 +383,7 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  language (EN)                        
     ##  collate  en_AU.UTF-8                 
     ##  tz       Australia/Brisbane          
-    ##  date     2018-08-28                  
+    ##  date     2018-09-21                  
     ## 
     ## ─ Packages ──────────────────────────────────────────────────────────────
     ##  package            * version date      
@@ -401,7 +401,7 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  crayon               1.3.4   2017-09-16
     ##  curl                 3.2     2018-03-28
     ##  DBI                  1.0.0   2018-05-02
-    ##  digest               0.6.16  2018-08-22
+    ##  digest               0.6.17  2018-09-12
     ##  doParallel         * 1.0.11  2017-09-28
     ##  dplyr              * 0.7.6   2018-06-29
     ##  e1071                1.7-0   2018-07-28
@@ -443,7 +443,7 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  sessioninfo        * 1.0.0   2017-06-21
     ##  sf                   0.6-3   2018-05-17
     ##  sp                 * 1.3-1   2018-06-05
-    ##  spData               0.2.9.3 2018-08-01
+    ##  spData               0.2.9.4 2018-09-15
     ##  stringi              1.2.4   2018-07-20
     ##  stringr              1.3.1   2018-05-10
     ##  tibble               1.4.2   2018-01-22
@@ -467,7 +467,6 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  CRAN (R 3.5.1)                    
     ##  CRAN (R 3.5.1)                    
     ##  CRAN (R 3.5.1)                    
-    ##  cran (@0.6.16)                    
     ##  CRAN (R 3.5.1)                    
     ##  CRAN (R 3.5.1)                    
     ##  CRAN (R 3.5.1)                    
@@ -481,7 +480,6 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  CRAN (R 3.5.1)                    
     ##  CRAN (R 3.5.1)                    
     ##  CRAN (R 3.5.1)                    
-    ##  cran (@0.5.0.1)                   
     ##  CRAN (R 3.5.1)                    
     ##  CRAN (R 3.5.1)                    
     ##  CRAN (R 3.5.1)                    
@@ -491,7 +489,6 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  CRAN (R 3.5.1)                    
     ##  CRAN (R 3.5.1)                    
     ##  CRAN (R 3.5.1)                    
-    ##  cran (@2.0.2)                     
     ##  CRAN (R 3.5.1)                    
     ##  CRAN (R 3.5.1)                    
     ##  CRAN (R 3.5.1)                    
@@ -499,7 +496,10 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  CRAN (R 3.5.1)                    
     ##  CRAN (R 3.5.1)                    
     ##  CRAN (R 3.5.1)                    
-    ##  cran (@0.2.2)                     
+    ##  CRAN (R 3.5.1)                    
+    ##  CRAN (R 3.5.1)                    
+    ##  CRAN (R 3.5.1)                    
+    ##  CRAN (R 3.5.1)                    
     ##  CRAN (R 3.5.1)                    
     ##  CRAN (R 3.5.1)                    
     ##  local                             
