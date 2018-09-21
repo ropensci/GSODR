@@ -17,17 +17,25 @@
 
 ## Bug fixes
 
-  - Fix bug in creating `isd-history.rda` file where duplicate stations existed
-  in the file distributed with `GSODR` but with different corrected elevation
-  values
-
-  - Repatch bug reported and fixed previously in version 1.2.0 where Windows
-  users could not successfully download files. This somehow snuck back in with
-  the last release.
+- Refactor internal functionality to be more clear and efficient in execution
+    
+    - `country-list` is not loaded unless user has specified a country in
+      `get_GSOD()`
+      
+    - An instance where the FIPS code was determined twice was removed
 
 ## Minor changes
 
-  - Refactor vignettes for clarity
+- Update internal database of station locations
+  
+- Internal database of station locations stores `BEGIN` and `END` fields as
+  integer, not double
+  
+- Clarify code of conduct statement in README that it only applies to this,
+  GSODR, project
+  
+- Prompt user for input with warning about reproducibility if using the
+  `update_station_list()` function
 
 # Reverse dependencies
 
