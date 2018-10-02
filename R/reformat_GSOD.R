@@ -51,7 +51,7 @@
 #' and expanding annual GSOD files and cleaning station files.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'
 #' # Reformat station data files in local directory
 #' x <- reformat_GSOD(dsn = "~/tmp")

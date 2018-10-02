@@ -17,7 +17,7 @@
 #' others must provide this same notification.}
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' inventory <- get_inventory()
 #'}
 #' @return A data frame as a tibble \code{\link[tibble]{tibble}} object of

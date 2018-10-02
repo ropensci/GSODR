@@ -38,6 +38,7 @@
 #'
 #' For more information see the description of the data provided by NCEI,
 #'\url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
+#'
 #' @note While \pkg{GSODR} does not distribute GSOD weather data, users of
 #' the data should note the conditions that the U.S. NCEI places upon the GSOD
 #' data.  \dQuote{The following data and products may have conditions placed on
@@ -45,7 +46,6 @@
 #' non-commercial international activities without restriction. The non-U.S.
 #' data cannot be redistributed for commercial purposes. Re-distribution of
 #' these data by others must provide this same notification.}
-
 #'
 #' @param years Year(s) of weather data to download.
 #' @param station Optional. Specify a station or multiple stations for which to
@@ -67,7 +67,7 @@
 #' latitudes.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Download weather station for Toowoomba, Queensland for 2010
 #' t <- get_GSOD(years = 2010, station = "955510-99999")
 #'
