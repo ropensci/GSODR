@@ -1,5 +1,5 @@
 
-#' GSODR: Global Surface Summary of the Day (GSOD) Weather Data from R
+#' GSODR: Global Surface Summary of the Day (GSOD) Weather Data Client
 #'
 #'Provides automated downloading, parsing, cleaning, unit conversion and
 #'formatting of Global Surface Summary of the Day (GSOD) weather data from
