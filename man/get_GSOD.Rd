@@ -83,7 +83,7 @@ data cannot be redistributed for commercial purposes. Re-distribution of
 these data by others must provide this same notification.}
 }
 \examples{
-\dontrun{
+\donttest{
 # Download weather station for Toowoomba, Queensland for 2010
 t <- get_GSOD(years = 2010, station = "955510-99999")
 

@@ -246,8 +246,7 @@ Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"># NOT RUN {
-# Download weather station for Toowoomba, Queensland for 2010
+    <pre class="examples"><div class='input'># Download weather station for Toowoomba, Queensland for 2010
 t <- get_GSOD(years = 2010, station = "955510-99999")
 
 # Download data for Philippines for year 2010 with a maximum of five missing
@@ -258,8 +257,10 @@ get_GSOD(years = 2010, country = "Philippines", max_missing = 5)
 # Download global GSOD data for agroclimatology work for years 2009 and 2010
 
 get_GSOD(years = 2010:2011, agroclimatology = TRUE)
-# }
-<div class='input'>
+</div><div class='output co'>#&gt; <span class='error'>Error: &lt;text&gt;:5:6: unexpected symbol</span>
+#&gt; <span class='error'>4: # Download data for Philippines for year 2010 with a maximum of five missing</span>
+#&gt; <span class='error'>5: days per</span>
+#&gt; <span class='error'>        ^</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -59,7 +59,7 @@ data cannot be redistributed for commercial purposes. Re-distribution of
 these data by others must provide this same notification.}
 }
 \examples{
-\dontrun{
+\donttest{
 
 # Reformat station data files in local directory
 x <- reformat_GSOD(dsn = "~/tmp")

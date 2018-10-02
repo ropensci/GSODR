@@ -30,7 +30,7 @@ others must provide this same notification.}
 The download process can take quite some time to complete.
 }
 \examples{
-\dontrun{
+\donttest{
 inventory <- get_inventory()
 }
 }

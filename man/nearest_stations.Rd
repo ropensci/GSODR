@@ -33,7 +33,7 @@ redistributed for commercial purposes.  Re-distribution of these data by
 others must provide this same notification.}
 }
 \examples{
-\dontrun{
+\donttest{
 # Find stations within a 100km radius of Toowoomba, QLD, AUS
 
 n <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 100)
