@@ -80,8 +80,9 @@ Suggests:
     testthat,
     tidyr
 RoxygenNote: 6.1.0
+Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
-NeedsCompilation: no
+NeedsCompilation: FALSE
 Repository: CRAN
 LazyData: FALSE
 LazyLoad: FALSE
