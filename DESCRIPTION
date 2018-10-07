@@ -47,8 +47,7 @@ Description: Provides automated downloading, parsing, cleaning, unit conversion
 Depends:
     R (>= 3.3.0)
 License: MIT + file LICENSE
-Imports:
-    curl,
+Imports: curl,
     dplyr (>= 0.7.0),
     magrittr,
     purrr (>= 0.2.0),
