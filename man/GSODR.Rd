@@ -4,39 +4,40 @@
 \name{GSODR}
 \alias{GSODR}
 \alias{GSODR-package}
-\title{'GSODR': Global Surface Summary of the Day ('GSOD') Weather Data Client}
+\title{'GSODR': Global Surface Summary of the Day (\acronym{GSOD}) Weather Data Client}
 \source{
 \url{https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/}
 }
 \description{
 Provides automated downloading, parsing, cleaning, unit conversion and
-formatting of Global Surface Summary of the Day ('GSOD') weather data from
-the from the USA's National Centre for Environmental Information ('NCEI')
-for use in R.  All units are converted from from United States Customary
-System ('USCS') units to International System of Units ('SI').  Stations
-may be individually checked for number of missing days defined by the user,
- where stations with too many missing observations are omitted.  Only
-stations with valid reported latitude and longitude values are permitted
-in the final data.  Additional useful elements, saturation vapour pressure
-('es'), actual vapour pressure ('ea') and relative humidity are calculated
-from the original data and included in the final data set.  The resulting
-data include station identification information, state, country, latitude,
-longitude, elevation, weather observations and associated flags.
+formatting of Global Surface Summary of the Day (\acronym{GSOD}) weather data
+from the from the USA's National Centre for Environmental Information
+(\acronym{NCEI}) for use in \pkg{R}.  All units are converted from United
+States Customary System (\acronym{USCS}) units to International System of
+Units (\acronym{SI}).  Stations may be individually checked for number of
+missing days defined by the user, where stations with too many missing
+observations are omitted.  Only stations with valid reported latitude and
+longitude values are permitted in the final data.  Additional useful
+elements, saturation vapour pressure ('es'), actual vapour pressure ('ea')
+and relative humidity are calculated from the original data and included in
+the final data set.  The resulting data include station identification
+information, state, country, latitude, longitude, elevation, weather
+observations and associated flags.
 }
 \details{
 Additional data are included: a list of elevation values for stations
 between -60 and 60 degrees latitude derived from the Shuttle Radar
-Topography Measuring Mission ('SRTM').
+Topography Measuring Mission (\acronym{SRTM}).
 
-For information on the 'GSOD' data from 'NCEI', please see the 'GSOD'
-readme.txt file available from,
+For information on the \acronym{GSOD} data from \acronym{NCEI}, please see
+the \acronym{GSOD} readme.txt file available from,
 \url{http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt}.
 
 For climate data that have been formatted specifically for use with the
 \pkg{GSODR} package, please see the \pkg{GSODRdata} package
 (Sparks \emph{et al}.) available from GitHub:
 \url{https://adamhsparks.github.io/GSODRdata/}. Four data frames of
-climate data are provided from various sources for 'GSOD' station
+climate data are provided from various sources for \acronym{GSOD} station
 locations.
 }
 \references{
