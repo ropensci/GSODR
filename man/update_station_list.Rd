@@ -2,17 +2,17 @@
 % Please edit documentation in R/update_station_list.R
 \name{update_station_list}
 \alias{update_station_list}
-\title{Download Latest Station List Information and Update GSODR's Internal Database}
+\title{Download Latest Station List Information and Update Internal Database}
 \usage{
 update_station_list()
 }
 \description{
 This function downloads the latest station list (isd-history.csv) from the
-NCEI FTP server and updates the data distributed with \pkg{GSODR} to the
-latest stations available.  These data provide unique identifiers, country,
-state (if in US), latitude, longitude, elevation and when weather
-observations begin and end.  Stations with invalid latitude and longitude
-values will not be included.
+\acronym{NCEI} \acronym{FTP} server and updates the data distributed with
+\pkg{GSODR} to the latest stations available.  These data provide unique
+identifiers, country, state (if in U.S.), latitude, longitude, elevation and
+when weather observations begin and end.  Stations with invalid latitude and
+longitude values will not be included.
 }
 \details{
 Care should be taken when using this function if reproducibility is necessary
@@ -20,7 +20,7 @@ as different machines with the same version of \pkg{GSODR} can end up with
 different versions of the isd_history.csv file internally.
 
 There is no need to use this unless you know that a station exists in the
-GSODR data that is not available in the self-contained database.
+\pkg{GSODR} data that is not available in the self-contained database.
 
 To directly access these data, use: \cr
 \code{load(system.file("extdata", "isd_history.rda", package = "GSODR"))}
