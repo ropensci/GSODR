@@ -7,8 +7,7 @@
 get_inventory()
 }
 \value{
-A data frame as a tibble \code{[tibble::tibble()]} object of
-station inventories
+A data frame as a \code{[tibble::tibble()]} object of station inventories
 }
 \description{
 The \acronym{NCEI} maintains a document,

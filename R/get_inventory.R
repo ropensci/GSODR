@@ -20,8 +20,7 @@
 #' \donttest{
 #' inventory <- get_inventory()
 #'}
-#' @return A data frame as a tibble `[tibble::tibble()]` object of
-#' station inventories
+#' @return A data frame as a `[tibble::tibble()]` object of station inventories
 #' @author Adam H Sparks, \email{adamhsparks@@gmail.com}
 #' @note The download process can take quite some time to complete.
 #' @importFrom rlang .data
@@ -92,7 +91,7 @@ get_inventory <- function() {
       gsub("^([^\\D]*\\d+).*", "\\1", header[[year_month]])
     )
   )
-  year_month <- gsub("Through", "", year_month)
+  year_month <- gsub("Through ", "", year_month)
 
   attr(main_body, "class") <- c(
     "GSODR.Info",
