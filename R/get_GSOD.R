@@ -1,5 +1,5 @@
 
-#' Download and Return a Tidy Data Frame of 'GSOD' Weather Data
+#' Download and Return a Tidy Data Frame of \acronym{GSOD} Weather Data
 #'
 #' @description
 #' This function automates downloading, cleaning, reformatting of data from

@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_GSOD.R
 \name{get_GSOD}
 \alias{get_GSOD}
-\title{Download and Return a Tidy Data Frame of 'GSOD' Weather Data}
+\title{Download and Return a Tidy Data Frame of \acronym{GSOD} Weather Data}
 \usage{
 get_GSOD(years, station = NULL, country = NULL, max_missing = NULL,
   agroclimatology = FALSE)

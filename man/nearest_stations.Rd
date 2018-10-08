@@ -2,7 +2,7 @@
 % Please edit documentation in R/nearest_stations.R
 \name{nearest_stations}
 \alias{nearest_stations}
-\title{Find Nearest GSOD Stations to a Specified Latitude and Longitude}
+\title{Find Nearest \acronym{GSOD} Stations to a Specified Latitude and Longitude}
 \usage{
 nearest_stations(LAT, LON, distance)
 }
@@ -19,18 +19,18 @@ be returned.}
 }
 \description{
 Given latitude and longitude values entered as decimal degrees (DD), this
-function returns a list (atomic vector) of STNID values, which can be used in
-\code{\link{get_GSOD}} to query for specific stations as an argument in the
-\code{station} parameter of that function.
+function returns a list (atomic vector) of \acronym{STNID} values, which can
+be used in \code{\link{get_GSOD}} to query for specific stations as an
+argument in the \code{station} parameter of that function.
 }
 \note{
-The GSOD data, which are downloaded and manipulated by this R package,
-stipulate that the following notice should be given.  \dQuote{The following
-data and products may have conditions placed on their international
-commercial use.  They can be used within the U.S. or for non-commercial
-international activities without restriction.  The non-U.S. data cannot be
-redistributed for commercial purposes.  Re-distribution of these data by
-others must provide this same notification.}
+The \acronym{GSOD} data, which are downloaded and manipulated by
+\pkg{GSODR} stipulate that the following notice should be given.
+\dQuote{The following data and products may have conditions placed on their
+international commercial use.  They can be used within the U.S. or for non-
+commercial international activities without restriction.  The non-U.S. data
+cannot be redistributed for commercial purposes.  Re-distribution of these
+data by others must provide this same notification.}
 }
 \examples{
 \donttest{

@@ -1,23 +1,23 @@
 
-#' Find Nearest GSOD Stations to a Specified Latitude and Longitude
+#' Find Nearest \acronym{GSOD} Stations to a Specified Latitude and Longitude
 #'
 #' Given latitude and longitude values entered as decimal degrees (DD), this
-#' function returns a list (atomic vector) of STNID values, which can be used in
-#' \code{\link{get_GSOD}} to query for specific stations as an argument in the
-#' \code{station} parameter of that function.
+#' function returns a list (atomic vector) of \acronym{STNID} values, which can
+#' be used in \code{\link{get_GSOD}} to query for specific stations as an
+#' argument in the \code{station} parameter of that function.
 #'
 #' @param LAT Latitude expressed as decimal degrees (DD) [WGS84]
 #' @param LON Longitude expressed as decimal degrees (DD) [WGS84]
 #' @param distance Distance in kilometres from point for which stations are to
 #' be returned.
 #'
-#' @note The GSOD data, which are downloaded and manipulated by this R package,
-#' stipulate that the following notice should be given.  \dQuote{The following
-#' data and products may have conditions placed on their international
-#' commercial use.  They can be used within the U.S. or for non-commercial
-#' international activities without restriction.  The non-U.S. data cannot be
-#' redistributed for commercial purposes.  Re-distribution of these data by
-#' others must provide this same notification.}
+#' @note The \acronym{GSOD} data, which are downloaded and manipulated by
+#' \pkg{GSODR} stipulate that the following notice should be given.
+#' \dQuote{The following data and products may have conditions placed on their
+#' international commercial use.  They can be used within the U.S. or for non-
+#' commercial international activities without restriction.  The non-U.S. data
+#' cannot be redistributed for commercial purposes.  Re-distribution of these
+#' data by others must provide this same notification.}
 #'
 #' @examples
 #' \donttest{
