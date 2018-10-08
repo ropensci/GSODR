@@ -1,7 +1,7 @@
-Fetch, clean and correct altitude in GSOD isd\_history.csv data
+Fetch, Clean and Correct Altitude in GSOD ‘isd\_history.csv’ Data
 ================
 Adam H. Sparks
-2018-09-21
+2018-10-08
 
 # Introduction
 
@@ -281,7 +281,7 @@ isd_history <-
 str(isd_history)
 ```
 
-    ## Classes 'tbl_df', 'tbl' and 'data.frame':    28285 obs. of  13 variables:
+    ## Classes 'tbl_df', 'tbl' and 'data.frame':    28202 obs. of  13 variables:
     ##  $ USAF           : chr  "008268" "010010" "010014" "010015" ...
     ##  $ WBAN           : chr  "99999" "99999" "99999" "99999" ...
     ##  $ STN_NAME       : chr  "WXPOD8278" "JAN MAYEN(NOR-NAVY)" "SORSTOKKEN" "BRINGELAND" ...
@@ -291,8 +291,8 @@ str(isd_history)
     ##  $ LAT            : num  33 70.9 59.8 61.4 64.8 ...
     ##  $ LON            : num  65.57 -8.67 5.34 5.87 11.23 ...
     ##  $ ELEV_M         : num  1156.7 9 48.8 327 14 ...
-    ##  $ BEGIN          : int  20110703 19310101 19861120 19870117 19870116 19880320 19861109 19850601 19730101 19310103 ...
-    ##  $ END            : int  20120323 20180917 20180914 20101231 19910806 20050228 20180915 20180917 20140523 20100331 ...
+    ##  $ BEGIN          : int  20100519 19310101 19861120 19870117 19870116 19880320 19861109 19850601 19730101 19310103 ...
+    ##  $ END            : int  20120323 20181005 20181005 20081231 19910806 20050228 20181005 20181005 20140523 20051109 ...
     ##  $ STNID          : chr  "008268-99999" "010010-99999" "010014-99999" "010015-99999" ...
     ##  $ ELEV_M_SRTM_90m: num  1160 NA 48 NA NA 48 NA NA NA NA ...
 
@@ -300,7 +300,7 @@ str(isd_history)
 isd_history
 ```
 
-    ## # A tibble: 28,285 x 13
+    ## # A tibble: 28,202 x 13
     ##    USAF  WBAN  STN_NAME CTRY  STATE CALL    LAT    LON ELEV_M  BEGIN    END
     ##    <chr> <chr> <chr>    <chr> <chr> <chr> <dbl>  <dbl>  <dbl>  <int>  <int>
     ##  1 0082… 99999 WXPOD82… AF    <NA>  <NA>   33.0  65.6  1157.  2.01e7 2.01e7
@@ -313,7 +313,7 @@ isd_history
     ##  8 0100… 99999 HORNSUND NO    <NA>  <NA>   77    15.5    12   1.99e7 2.02e7
     ##  9 0100… 99999 NY-ALES… NO    <NA>  ENAS   78.9  11.9     8   1.97e7 2.01e7
     ## 10 0100… 99999 ISFJORD… SV    <NA>  <NA>   78.1  13.6     9   1.93e7 2.01e7
-    ## # ... with 28,275 more rows, and 2 more variables: STNID <chr>,
+    ## # ... with 28,192 more rows, and 2 more variables: STNID <chr>,
     ## #   ELEV_M_SRTM_90m <dbl>
 
 # Figures
@@ -382,78 +382,77 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  ui       X11                         
     ##  language (EN)                        
     ##  collate  en_AU.UTF-8                 
+    ##  ctype    en_AU.UTF-8                 
     ##  tz       Australia/Brisbane          
-    ##  date     2018-09-21                  
+    ##  date     2018-10-08                  
     ## 
     ## ─ Packages ──────────────────────────────────────────────────────────────
-    ##  package            * version date      
-    ##  assertthat           0.2.0   2017-04-11
-    ##  backports            1.1.2   2017-12-13
-    ##  bindr                0.1.1   2018-03-13
-    ##  bindrcpp           * 0.2.2   2018-03-29
-    ##  class                7.3-14  2015-08-30
-    ##  classInt             0.2-3   2018-04-16
-    ##  cli                  1.0.0   2017-11-05
-    ##  clisymbols           1.2.0   2017-05-21
-    ##  codetools            0.2-15  2016-10-05
-    ##  colorout           * 1.2-0   2018-08-16
-    ##  colorspace           1.3-2   2016-12-14
-    ##  crayon               1.3.4   2017-09-16
-    ##  curl                 3.2     2018-03-28
-    ##  DBI                  1.0.0   2018-05-02
-    ##  digest               0.6.17  2018-09-12
-    ##  doParallel         * 1.0.11  2017-09-28
-    ##  dplyr              * 0.7.6   2018-06-29
-    ##  e1071                1.7-0   2018-07-28
-    ##  evaluate             0.11    2018-07-17
-    ##  extrafont            0.17    2014-12-08
-    ##  extrafontdb          1.0     2012-06-11
-    ##  fansi                0.3.0   2018-08-13
-    ##  foreach            * 1.4.4   2017-12-12
-    ##  ggplot2            * 3.0.0   2018-07-03
-    ##  glue                 1.3.0   2018-07-17
-    ##  gtable               0.2.0   2016-02-26
-    ##  highr                0.7     2018-06-09
-    ##  hms                  0.4.2   2018-03-10
-    ##  hrbrthemes         * 0.5.0.1 2018-08-19
-    ##  htmltools            0.3.6   2017-04-28
-    ##  iterators          * 1.0.10  2018-07-13
-    ##  knitr                1.20    2018-02-20
-    ##  labeling             0.3     2014-08-23
-    ##  lattice              0.20-35 2017-03-25
-    ##  lazyeval             0.2.1   2017-10-29
-    ##  magrittr           * 1.5     2014-11-22
-    ##  munsell              0.5.0   2018-06-12
-    ##  pillar               1.3.0   2018-07-14
-    ##  pkgconfig            2.0.2   2018-08-16
-    ##  plyr                 1.8.4   2016-06-08
-    ##  purrr                0.2.5   2018-05-29
-    ##  R6                   2.2.2   2017-06-17
-    ##  raster             * 2.6-7   2017-11-13
-    ##  Rcpp                 0.12.18 2018-07-23
-    ##  readr              * 1.1.1   2017-05-16
-    ##  rgdal                1.3-4   2018-08-03
-    ##  rlang                0.2.2   2018-08-16
-    ##  rmarkdown            1.10    2018-06-11
-    ##  rnaturalearth      * 0.1.0   2017-03-21
-    ##  rnaturalearthhires   0.1.0   2018-06-13
-    ##  rprojroot            1.3-2   2018-01-03
-    ##  Rttf2pt1             1.3.7   2018-06-29
-    ##  scales               1.0.0   2018-08-09
-    ##  sessioninfo        * 1.0.0   2017-06-21
-    ##  sf                   0.6-3   2018-05-17
-    ##  sp                 * 1.3-1   2018-06-05
-    ##  spData               0.2.9.4 2018-09-15
-    ##  stringi              1.2.4   2018-07-20
-    ##  stringr              1.3.1   2018-05-10
-    ##  tibble               1.4.2   2018-01-22
-    ##  tidyselect           0.2.4   2018-02-26
-    ##  units                0.6-0   2018-06-09
-    ##  utf8                 1.1.4   2018-05-24
-    ##  withr                2.1.2   2018-03-15
-    ##  yaml                 2.2.0   2018-07-25
+    ##  package            * version date       lib
+    ##  assertthat           0.2.0   2017-04-11 [1]
+    ##  backports            1.1.2   2017-12-13 [1]
+    ##  bindr                0.1.1   2018-03-13 [1]
+    ##  bindrcpp           * 0.2.2   2018-03-29 [1]
+    ##  class                7.3-14  2015-08-30 [3]
+    ##  classInt             0.2-3   2018-04-16 [1]
+    ##  cli                  1.0.1   2018-09-25 [1]
+    ##  codetools            0.2-15  2016-10-05 [3]
+    ##  colorout           * 1.2-0   2018-08-16 [1]
+    ##  colorspace           1.3-2   2016-12-14 [1]
+    ##  crayon               1.3.4   2017-09-16 [1]
+    ##  curl                 3.2     2018-03-28 [1]
+    ##  DBI                  1.0.0   2018-05-02 [1]
+    ##  digest               0.6.17  2018-09-12 [1]
+    ##  doParallel         * 1.0.14  2018-09-24 [1]
+    ##  dplyr              * 0.7.6   2018-06-29 [1]
+    ##  e1071                1.7-0   2018-07-28 [1]
+    ##  evaluate             0.11    2018-07-17 [1]
+    ##  extrafont            0.17    2014-12-08 [1]
+    ##  extrafontdb          1.0     2012-06-11 [1]
+    ##  fansi                0.3.0   2018-08-13 [1]
+    ##  foreach            * 1.4.4   2017-12-12 [1]
+    ##  ggplot2            * 3.0.0   2018-07-03 [1]
+    ##  glue                 1.3.0   2018-07-17 [1]
+    ##  gtable               0.2.0   2016-02-26 [1]
+    ##  highr                0.7     2018-06-09 [1]
+    ##  hms                  0.4.2   2018-03-10 [1]
+    ##  hrbrthemes         * 0.5.0.1 2018-08-19 [1]
+    ##  htmltools            0.3.6   2017-04-28 [1]
+    ##  iterators          * 1.0.10  2018-07-13 [1]
+    ##  knitr                1.20    2018-02-20 [1]
+    ##  labeling             0.3     2014-08-23 [1]
+    ##  lattice              0.20-35 2017-03-25 [3]
+    ##  lazyeval             0.2.1   2017-10-29 [1]
+    ##  magrittr           * 1.5     2014-11-22 [1]
+    ##  munsell              0.5.0   2018-06-12 [1]
+    ##  pillar               1.3.0   2018-07-14 [1]
+    ##  pkgconfig            2.0.2   2018-08-16 [1]
+    ##  plyr                 1.8.4   2016-06-08 [1]
+    ##  purrr                0.2.5   2018-05-29 [1]
+    ##  R6                   2.2.2   2017-06-17 [1]
+    ##  raster             * 2.6-7   2017-11-13 [1]
+    ##  Rcpp                 0.12.19 2018-10-01 [1]
+    ##  readr              * 1.1.1   2017-05-16 [1]
+    ##  rgdal                1.3-4   2018-08-03 [1]
+    ##  rlang                0.2.2   2018-08-16 [1]
+    ##  rmarkdown            1.10    2018-06-11 [1]
+    ##  rnaturalearth      * 0.1.0   2017-03-21 [1]
+    ##  rnaturalearthhires   0.1.0   2018-06-13 [1]
+    ##  rprojroot            1.3-2   2018-01-03 [1]
+    ##  Rttf2pt1             1.3.7   2018-06-29 [1]
+    ##  scales               1.0.0   2018-08-09 [1]
+    ##  sessioninfo        * 1.1.0   2018-09-25 [1]
+    ##  sf                   0.6-3   2018-05-17 [1]
+    ##  sp                 * 1.3-1   2018-06-05 [1]
+    ##  spData               0.2.9.4 2018-09-15 [1]
+    ##  stringi              1.2.4   2018-07-20 [1]
+    ##  stringr              1.3.1   2018-05-10 [1]
+    ##  tibble               1.4.2   2018-01-22 [1]
+    ##  tidyselect           0.2.4   2018-02-26 [1]
+    ##  units                0.6-1   2018-09-21 [1]
+    ##  utf8                 1.1.4   2018-05-24 [1]
+    ##  withr                2.1.2   2018-03-15 [1]
+    ##  yaml                 2.2.0   2018-07-25 [1]
     ##  source                            
-    ##  CRAN (R 3.5.1)                    
     ##  CRAN (R 3.5.1)                    
     ##  CRAN (R 3.5.1)                    
     ##  CRAN (R 3.5.1)                    
@@ -517,7 +516,11 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  CRAN (R 3.5.1)                    
     ##  CRAN (R 3.5.1)                    
     ##  CRAN (R 3.5.1)                    
-    ##  CRAN (R 3.5.1)
+    ##  CRAN (R 3.5.1)                    
+    ## 
+    ## [1] /Users/U8004755/Library/R/3.x/library
+    ## [2] /usr/local/lib/R/3.5/site-library
+    ## [3] /usr/local/Cellar/r/3.5.1/lib/R/library
 
 # References
 
