@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Download Latest Station List Information and Update Internal Database — update_station_list • GSODR</title>
+<title>Prints GSODR.info object. — print.GSODR.Info • GSODR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -36,14 +36,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Download Latest Station List Information and Update Internal Database — update_station_list" />
+<meta property="og:title" content="Prints GSODR.info object. — print.GSODR.Info" />
 
-<meta property="og:description" content="This function downloads the latest station list (isd-history.csv) from the
-NCEI FTP server and updates the data distributed with
-GSODR to the latest stations available.  These data provide unique
-identifiers, country, state (if in U.S.), latitude, longitude, elevation and
-when weather observations begin and end.  Stations with invalid latitude and
-longitude values will not be included." />
+<meta property="og:description" content="Prints GSODR.info object." />
 
 <meta property="og:image" content="https://ropensci.github.io/GSODR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -137,53 +132,40 @@ longitude values will not be included." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Download Latest Station List Information and Update Internal Database</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ropensci/GSODR/blob/master/R/update_station_list.R'><code>R/update_station_list.R</code></a></small>
-    <div class="hidden name"><code>update_station_list.Rd</code></div>
+    <h1>Prints GSODR.info object.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/GSODR/blob/master/R/get_inventory.R'><code>R/get_inventory.R</code></a></small>
+    <div class="hidden name"><code>print.GSODR.Info.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This function downloads the latest station list (isd-history.csv) from the
-<acronym>NCEI</acronym> <acronym>FTP</acronym> server and updates the data distributed with
-<span class="pkg">GSODR</span> to the latest stations available.  These data provide unique
-identifiers, country, state (if in U.S.), latitude, longitude, elevation and
-when weather observations begin and end.  Stations with invalid latitude and
-longitude values will not be included.</p>
+    <p>Prints GSODR.info object.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>update_station_list</span>()</pre>
-        
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Care should be taken when using this function if reproducibility is necessary
-as different machines with the same version of <span class="pkg">GSODR</span> can end up with
-different versions of the isd_history.csv file internally.</p>
-<p>There is no need to use this unless you know that a station exists in the
-<span class="pkg">GSODR</span> data that is not available in the self-contained database.</p>
-<p>To directly access these data, use: <br />
-<code>load(system.file("extdata", "isd_history.rda", package = "GSODR"))</code></p>
+    <pre class="usage"><span class='co'># S3 method for GSODR.Info</span>
+<span class='fu'>print</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>GSODR.info object</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>ignored</p></td>
+    </tr>
+    </table>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='fu'>update_station_list</span>()
-<span class='co'># }</span><div class='input'>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      
-      <li><a href="#details">Details</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    
-Adam H Sparks, <a href='mailto:adamhsparks@gmail.com'>adamhsparks@gmail.com</a>
+      <li><a href="#arguments">Arguments</a></li>
+                </ul>
 
   </div>
 </div>

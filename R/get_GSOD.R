@@ -74,11 +74,11 @@
 #' t <- get_GSOD(years = 2010, station = "955510-99999")
 #'
 #' # Download data for Philippines for year 2010 with a maximum of five missing
-#' days per station allowed.
+#' # days per station allowed.
 #'
 #' get_GSOD(years = 2010, country = "Philippines", max_missing = 5)
 #'
-#' # Download global GSOD data for agroclimatology work for years 2009 and 2010
+#' # Download global GSOD data for agroclimatology work for years 2010 and 2011
 #'
 #' get_GSOD(years = 2010:2011, agroclimatology = TRUE)
 #' }

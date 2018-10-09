@@ -16,7 +16,7 @@ station information, based on the merging of the `corrected_elev` data
 frame with the most recently available “isd-history.csv” file, will
 result in the following changes to the data:
 
-  - Stations where latitude or longitude are NA or both 0 are removed
+  - Stations where latitude or longitude are `NA` or both 0 are removed
 
   - Stations where latitude is \< -90˚ or \> 90˚ are removed
 

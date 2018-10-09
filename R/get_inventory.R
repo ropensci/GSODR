@@ -8,8 +8,8 @@
 #' an information header displaying the last update time with a data frame of
 #' the inventory information for each station-year-month.
 #'
-#' @note The \acronym{GSOD} data, which are downloaded and manipulated by this R
-#' package, stipulate that the following notice should be given.
+#' @note The \acronym{GSOD} data, which are downloaded and manipulated by
+#' \pkg{GSODR}, stipulate that the following notice should be given.
 #' \dQuote{The following data and products may have conditions placed on their
 #' international commercial use.  They can be used within the U.S. or for non-
 #' commercial international activities without restriction.  The non-U.S. data
@@ -19,8 +19,10 @@
 #' @examples
 #' \donttest{
 #' inventory <- get_inventory()
+#' inventory
 #'}
-#' @return A data frame as a `[tibble::tibble()]` object of station inventories
+#' @return A data frame as a \code{\link{tibble::tibble}} object of station
+#' inventories
 #' @author Adam H Sparks, \email{adamhsparks@@gmail.com}
 #' @note The download process can take quite some time to complete.
 #' @importFrom rlang .data

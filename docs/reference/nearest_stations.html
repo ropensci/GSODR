@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Find Nearest GSOD Stations to a Specified Latitude and Longitude — nearest_stations • GSODR</title>
+<title>Find Nearest <acronym>GSOD</acronym> Stations to a Specified Latitude and Longitude — nearest_stations • GSODR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -36,12 +36,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Find Nearest GSOD Stations to a Specified Latitude and Longitude — nearest_stations" />
+<meta property="og:title" content="Find Nearest <acronym>GSOD</acronym> Stations to a Specified Latitude and Longitude — nearest_stations" />
 
 <meta property="og:description" content="Given latitude and longitude values entered as decimal degrees (DD), this
-function returns a list (atomic vector) of STNID values, which can be used in
-get_GSOD to query for specific stations as an argument in the
-station parameter of that function." />
+function returns a list (atomic vector) of STNID values, which can
+be used in get_GSOD to query for specific stations as an
+argument in the station parameter of that function." />
 
 <meta property="og:image" content="https://ropensci.github.io/GSODR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -135,7 +135,7 @@ station parameter of that function." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Find Nearest GSOD Stations to a Specified Latitude and Longitude</h1>
+    <h1>Find Nearest <acronym>GSOD</acronym> Stations to a Specified Latitude and Longitude</h1>
     <small class="dont-index">Source: <a href='https://github.com/ropensci/GSODR/blob/master/R/nearest_stations.R'><code>R/nearest_stations.R</code></a></small>
     <div class="hidden name"><code>nearest_stations.Rd</code></div>
     </div>
@@ -143,9 +143,9 @@ station parameter of that function." />
     <div class="ref-description">
     
     <p>Given latitude and longitude values entered as decimal degrees (DD), this
-function returns a list (atomic vector) of STNID values, which can be used in
-<code><a href='get_GSOD.html'>get_GSOD</a></code> to query for specific stations as an argument in the
-<code>station</code> parameter of that function.</p>
+function returns a list (atomic vector) of <acronym>STNID</acronym> values, which can
+be used in <code><a href='get_GSOD.html'>get_GSOD</a></code> to query for specific stations as an
+argument in the <code>station</code> parameter of that function.</p>
     
     </div>
 
@@ -156,11 +156,11 @@ function returns a list (atomic vector) of STNID values, which can be used in
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>LAT</th>
-      <td><p>Latitude expressed as decimal degrees (DD) [WGS84]</p></td>
+      <td><p>Latitude expressed as decimal degrees (DD) WGS84</p></td>
     </tr>
     <tr>
       <th>LON</th>
-      <td><p>Longitude expressed as decimal degrees (DD) [WGS84]</p></td>
+      <td><p>Longitude expressed as decimal degrees (DD) WGS84</p></td>
     </tr>
     <tr>
       <th>distance</th>
@@ -175,21 +175,23 @@ be returned.</p></td>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>The GSOD data, which are downloaded and manipulated by this R package,
-stipulate that the following notice should be given.  &#8220;The following
-data and products may have conditions placed on their international
-commercial use.  They can be used within the U.S. or for non-commercial
-international activities without restriction.  The non-U.S. data cannot be
-redistributed for commercial purposes.  Re-distribution of these data by
-others must provide this same notification.&#8221;</p>
+    <p>The <acronym>GSOD</acronym> data, which are downloaded and manipulated by
+<span class="pkg">GSODR</span> stipulate that the following notice should be given.
+&#8220;The following data and products may have conditions placed on their
+international commercial use.  They can be used within the U.S. or for non-
+commercial international activities without restriction.  The non-U.S. data
+cannot be redistributed for commercial purposes.  Re-distribution of these
+data by others must provide this same notification.&#8221;</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'># Find stations within a 100km radius of Toowoomba, QLD, AUS</span>
+    <pre class="examples"><div class='input'><span class='co'># Find stations within a 100km radius of Toowoomba, QLD, AUS</span>
 
 <span class='no'>n</span> <span class='kw'>&lt;-</span> <span class='fu'>nearest_stations</span>(<span class='kw'>LAT</span> <span class='kw'>=</span> -<span class='fl'>27.5598</span>, <span class='kw'>LON</span> <span class='kw'>=</span> <span class='fl'>151.9507</span>, <span class='kw'>distance</span> <span class='kw'>=</span> <span class='fl'>100</span>)
-<span class='co'># }</span></pre>
+<span class='no'>n</span></div><div class='output co'>#&gt;  [1] "749459-99999" "945420-99999" "945510-99999" "945520-99999" "945550-99999"
+#&gt;  [6] "945620-99999" "945951-99999" "949999-00170" "949999-00172" "949999-00176"
+#&gt; [11] "949999-00179" "949999-00180" "949999-00183" "949999-00185" "949999-00186"
+#&gt; [16] "955510-99999" "955550-99999"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

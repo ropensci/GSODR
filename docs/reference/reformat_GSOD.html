@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Tidy and Return a Data Frame of GSOD Weather from Local Data — reformat_GSOD • GSODR</title>
+<title>Tidy and Return a Data Frame of <acronym>GSOD</acronym> Weather from Local Data — reformat_GSOD • GSODR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -36,20 +36,21 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Tidy and Return a Data Frame of GSOD Weather from Local Data — reformat_GSOD" />
+<meta property="og:title" content="Tidy and Return a Data Frame of <acronym>GSOD</acronym> Weather from Local Data — reformat_GSOD" />
 
-<meta property="og:description" content="This function automates cleaning and reformatting of GSOD station files in
-&quot;WMO-WBAN-YYYY.op.gz&quot; format that have been downloaded from the United States
-National Center for Environmental Information's (NCEI) FTP server. Three
-new elements; saturation vapour pressure (es), actual vapour pressure (ea)
-and relative humidity (RH) are calculated and returned in the final data as
-well.  All units are converted to International System of Units (SI),
-e.g. Fahrenheit to Celsius and inches to millimetres.  Alternative
-elevation measurements are supplied for missing values or values found to be
-questionable based on the Consultative Group for International Agricultural
-Research's Consortium for Spatial Information group's (CGIAR-CSI) Shuttle
-Radar Topography Mission 90 metre (SRTM 90m) digital elevation data based on
-NASA's original SRTM 90m data." />
+<meta property="og:description" content="This function automates cleaning and reformatting of GSOD station
+files in &quot;WMO-WBAN-YYYY.op.gz&quot; format that have been downloaded from the
+United States National Center for Environmental Information's
+(NCEI) FTP server. Three new elements; saturation vapour
+pressure (es), actual vapour pressure (ea) and relative humidity are
+calculated and returned in the final data as well.  All units are converted
+to International System of Units (SI), e.g. Fahrenheit to Celsius and
+inches to millimetres.  Alternative elevation measurements are supplied for
+missing values or values found to be questionable based on the Consultative
+Group for International Agricultural Research's Consortium for Spatial
+Information group's (CGIAR-CSI) Shuttle Radar Topography Mission 90
+metre (SRTM 90m) digital elevation data based on NASA's
+original SRTM 90m data." />
 
 <meta property="og:image" content="https://ropensci.github.io/GSODR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -143,25 +144,26 @@ NASA's original SRTM 90m data." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Tidy and Return a Data Frame of GSOD Weather from Local Data</h1>
+    <h1>Tidy and Return a Data Frame of <acronym>GSOD</acronym> Weather from Local Data</h1>
     <small class="dont-index">Source: <a href='https://github.com/ropensci/GSODR/blob/master/R/reformat_GSOD.R'><code>R/reformat_GSOD.R</code></a></small>
     <div class="hidden name"><code>reformat_GSOD.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This function automates cleaning and reformatting of GSOD station files in
-"WMO-WBAN-YYYY.op.gz" format that have been downloaded from the United States
-National Center for Environmental Information's (NCEI) FTP server. Three
-new elements; saturation vapour pressure (es), actual vapour pressure (ea)
-and relative humidity (RH) are calculated and returned in the final data as
-well.  All units are converted to International System of Units (SI),
-<em>e.g.</em> Fahrenheit to Celsius and inches to millimetres.  Alternative
-elevation measurements are supplied for missing values or values found to be
-questionable based on the Consultative Group for International Agricultural
-Research's Consortium for Spatial Information group's (CGIAR-CSI) Shuttle
-Radar Topography Mission 90 metre (SRTM 90m) digital elevation data based on
-NASA's original SRTM 90m data.</p>
+    <p>This function automates cleaning and reformatting of <acronym>GSOD</acronym> station
+files in "WMO-WBAN-YYYY.op.gz" format that have been downloaded from the
+United States National Center for Environmental Information's
+(<acronym>NCEI</acronym>) <acronym>FTP</acronym> server. Three new elements; saturation vapour
+pressure (es), actual vapour pressure (ea) and relative humidity are
+calculated and returned in the final data as well.  All units are converted
+to International System of Units (SI), <em>e.g.</em> Fahrenheit to Celsius and
+inches to millimetres.  Alternative elevation measurements are supplied for
+missing values or values found to be questionable based on the Consultative
+Group for International Agricultural Research's Consortium for Spatial
+Information group's (<acronym>CGIAR-CSI</acronym>) Shuttle Radar Topography Mission 90
+metre (<acronym>SRTM</acronym> 90m) digital elevation data based on <acronym>NASA</acronym>'s
+original <acronym>SRTM</acronym> 90m data.</p>
     
     </div>
 
@@ -191,8 +193,8 @@ data.</p>
 
     <p>If multiple stations are given, data are summarised for each year by station,
 which include vapour pressure and relative humidity elements calculated from
-existing data in GSOD. Else, single stations are tidied and a data frame is
-returned.</p>
+existing data in <acronym>GSOD</acronym>. Else, single stations are tidied and a data
+frame is returned.</p>
 <p>All missing values in resulting files are represented as <code>NA</code> regardless
 of which field they occur in.</p>
 <p>Only station files in the original ".op.gz" file format are supported by this
@@ -205,9 +207,10 @@ please refer to Appendix 1 in the <span class="pkg">GSODR</span> vignette,
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>While <span class="pkg">GSODR</span> does not distribute GSOD weather data, users of
-the data should note the conditions that the U.S. NCEI places upon the GSOD
-data.  &#8220;The following data and products may have conditions placed on
+    <p>While <span class="pkg">GSODR</span> does not distribute <acronym>GSOD</acronym> weather data,
+users of the data should note the conditions that the U.S. <acronym>NCEI</acronym>
+places upon the <acronym>GSOD</acronym> data.
+&#8220;The following data and products may have conditions placed on
 their international commercial use.  They can be used within the U.S. or for
 non-commercial international activities without restriction. The non-U.S.
 data cannot be redistributed for commercial purposes. Re-distribution of
@@ -223,20 +226,18 @@ Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
 
     <div class='dont-index'><p>For automated downloading and tidying see the <code><a href='get_GSOD.html'>get_GSOD</a></code>
 function which provides expanded functionality for automatically downloading
-and expanding annual GSOD files and cleaning station files.</p>
+and expanding annual <acronym>GSOD</acronym> files and cleaning station files.</p>
 <p><code><a href='get_GSOD.html'>get_GSOD</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
+    <pre class="examples"><div class='input'>
 <span class='co'># Reformat station data files in local directory</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>reformat_GSOD</span>(<span class='kw'>dsn</span> <span class='kw'>=</span> <span class='st'>"~/tmp"</span>)
-
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>reformat_GSOD</span>(<span class='kw'>dsn</span> <span class='kw'>=</span> <span class='st'>"~/tmp"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in reformat_GSOD(dsn = "~/tmp"): No files were found, please check your file location.</span></div><div class='input'>
 <span class='co'># Reformat a list of data files</span>
 <span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='st'>"~/GSOD/gsod_1960/200490-99999-1960.op.gz"</span>,
        <span class='st'>"~/GSOD/gsod_1961/200490-99999-1961.op.gz"</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>reformat_GSOD</span>(<span class='kw'>file_list</span> <span class='kw'>=</span> <span class='no'>y</span>)
-<span class='co'># }</span><div class='input'>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>reformat_GSOD</span>(<span class='kw'>file_list</span> <span class='kw'>=</span> <span class='no'>y</span>)</div><div class='output co'>#&gt; <span class='error'>Error: '~/GSOD/gsod_1960/200490-99999-1960.op.gz' does not exist.</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

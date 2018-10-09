@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Download and Return a Tidy Data Frame of GSOD Weather Data — get_GSOD • GSODR</title>
+<title>Download and Return a Tidy Data Frame of <acronym>GSOD</acronym> Weather Data — get_GSOD • GSODR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -36,7 +36,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Download and Return a Tidy Data Frame of GSOD Weather Data — get_GSOD" />
+<meta property="og:title" content="Download and Return a Tidy Data Frame of <acronym>GSOD</acronym> Weather Data — get_GSOD" />
 
 <meta property="og:description" content="This function automates downloading, cleaning, reformatting of data from
 the Global Surface Summary of the Day (GSOD) data provided by the
@@ -137,7 +137,7 @@ in the final data frame." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Download and Return a Tidy Data Frame of GSOD Weather Data</h1>
+    <h1>Download and Return a Tidy Data Frame of <acronym>GSOD</acronym> Weather Data</h1>
     <small class="dont-index">Source: <a href='https://github.com/ropensci/GSODR/blob/master/R/get_GSOD.R'><code>R/get_GSOD.R</code></a></small>
     <div class="hidden name"><code>get_GSOD.Rd</code></div>
     </div>
@@ -145,7 +145,7 @@ in the final data frame." />
     <div class="ref-description">
     
     <p>This function automates downloading, cleaning, reformatting of data from
-the Global Surface Summary of the Day (GSOD) data provided by the
+the Global Surface Summary of the Day (<acronym>GSOD</acronym>) data provided by the
 <a href='https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/'>US National Centers for Environmental Information (NCEI)</a>,
 Three additional useful elements: saturation vapour pressure (es), actual
 vapour pressure (ea) and relative humidity (RH) are calculated and returned
@@ -166,19 +166,19 @@ in the final data frame.</p>
     <tr>
       <th>station</th>
       <td><p>Optional. Specify a station or multiple stations for which to
-retrieve, check and clean weather data using <code>STNID</code>. The NCEI reports
-years for which the data are available. This function checks against these
-years. However, not all cases are properly documented and in some cases files
-may not exist on the FTP server even though it is indicated that data was
-recorded for the station for a particular year. If a station is specified
-that does not have an existing file on the server, this function will
-silently fail and move on to existing files for download and cleaning from
-the FTP server.</p></td>
+retrieve, check and clean weather data using <var>STNID</var>. The <acronym>NCEI</acronym>
+reports years for which the data are available. This function checks against
+these years. However, not all cases are properly documented and in some cases
+files may not exist on the <acronym>FTP</acronym> server even though it is indicated
+that data was recorded for the station for a particular year. If a station is
+specified that does not have an existing file on the server, this function
+will silently fail and move on to existing files for download and cleaning
+from the <acronym>FTP</acronym> server.</p></td>
     </tr>
     <tr>
       <th>country</th>
       <td><p>Optional. Specify a country for which to retrieve weather
-data; full name or ISO codes can be used.</p></td>
+data; full name or <acronym>ISO</acronym> codes can be used.</p></td>
     </tr>
     <tr>
       <th>max_missing</th>
@@ -188,8 +188,8 @@ from a station's data before it is excluded from final file output.</p></td>
     <tr>
       <th>agroclimatology</th>
       <td><p>Optional. Logical. Only clean data for stations
-between latitudes 60 and -60 for agroclimatology work, defaults to FALSE.
-Set to TRUE to include only stations within the confines of these
+between latitudes 60 and -60 for agroclimatology work, defaults to <code>FALSE</code>.
+Set to <code>TRUE</code> to include only stations within the confines of these
 latitudes.</p></td>
     </tr>
     </table>
@@ -210,25 +210,27 @@ Fahrenheit to Celsius and inches to millimetres.</p>
 <p>Alternative elevation measurements are supplied for missing values or values
 found to be questionable based on the Consultative Group for International
 Agricultural Research's Consortium for Spatial Information group's
-(CGIAR-CSI) Shuttle Radar Topography Mission 90 metre (SRTM 90m) digital
-elevation data based on NASA's original SRTM 90m data. Further information
-on these data and methods can be found on GSODR's
+(<acronym>CGIAR-CSI</acronym>) Shuttle Radar Topography Mission 90 metre
+(<acronym>SRTM</acronym> 90m) digital elevation data based on <acronym>NASA</acronym>'s
+original <acronym>SRTM</acronym> 90m data. Further information on these data and
+methods can be found on <span class="pkg">GSODR</span>'s
 <a href='https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md'>GitHub repository</a>.</p>
 <p>Data summarise each year by station, which include vapour pressure and
-relative humidity elements calculated from existing data in GSOD.</p>
+relative humidity elements calculated from existing data in <acronym>GSOD</acronym>.</p>
 <p>All missing values in resulting files are represented as <code>NA</code> regardless
 of which field they occur in.</p>
 <p>For a complete list of the fields and description of the contents and units,
-please refer to Appendix 1 in the GSODR vignette,
-<code><a href='../articles/GSODR.html'>vignette("GSODR", package = "GSODR")</a></code>.</p>
-<p>For more information see the description of the data provided by NCEI,
-<a href='http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt'>http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt</a>.</p>
+please refer to Appendix 1 in the <span class="pkg">GSODR</span> vignette,
+<code><a href='../articles/GSODR.html'>utils::vignette("GSODR", package = "GSODR")</a></code>.</p>
+<p>For more information see the description of the data provided by
+<acronym>NCEI</acronym>, <a href='http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt'>http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt</a>.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>While <span class="pkg">GSODR</span> does not distribute GSOD weather data, users of
-the data should note the conditions that the U.S. NCEI places upon the GSOD
-data.  &#8220;The following data and products may have conditions placed on
+the data should note the conditions that the U.S. <acronym>NCEI</acronym> places upon
+the <acronym>GSOD</acronym> data.
+&#8220;The following data and products may have conditions placed on
 their international commercial use.  They can be used within the U.S. or for
 non-commercial international activities without restriction. The non-U.S.
 data cannot be redistributed for commercial purposes. Re-distribution of
@@ -246,21 +248,57 @@ Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'># Download weather station for Toowoomba, Queensland for 2010
-t <- get_GSOD(years = 2010, station = "955510-99999")
+    <pre class="examples"><div class='input'><span class='co'># Download weather station for Toowoomba, Queensland for 2010</span>
+<span class='no'>t</span> <span class='kw'>&lt;-</span> <span class='fu'>get_GSOD</span>(<span class='kw'>years</span> <span class='kw'>=</span> <span class='fl'>2010</span>, <span class='kw'>station</span> <span class='kw'>=</span> <span class='st'>"955510-99999"</span>)</div><div class='output co'>#&gt; |======================================================|100% ~0 s remaining     </div><div class='input'>
+<span class='co'># Download data for Philippines for year 2010 with a maximum of five missing</span>
+<span class='co'># days per station allowed.</span>
 
-# Download data for Philippines for year 2010 with a maximum of five missing
-days per station allowed.
+<span class='fu'>get_GSOD</span>(<span class='kw'>years</span> <span class='kw'>=</span> <span class='fl'>2010</span>, <span class='kw'>country</span> <span class='kw'>=</span> <span class='st'>"Philippines"</span>, <span class='kw'>max_missing</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; # A tibble: 4,709 x 48
+#&gt;    USAF  WBAN  STNID STN_NAME CTRY  STATE CALL    LAT   LON ELEV_M
+#&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+#&gt;  1 9822… 99999 9822… VIGAN    RP    &lt;NA&gt;  RPUQ   17.6  120.    4.9
+#&gt;  2 9822… 99999 9822… VIGAN    RP    &lt;NA&gt;  RPUQ   17.6  120.    4.9
+#&gt;  3 9822… 99999 9822… VIGAN    RP    &lt;NA&gt;  RPUQ   17.6  120.    4.9
+#&gt;  4 9822… 99999 9822… VIGAN    RP    &lt;NA&gt;  RPUQ   17.6  120.    4.9
+#&gt;  5 9822… 99999 9822… VIGAN    RP    &lt;NA&gt;  RPUQ   17.6  120.    4.9
+#&gt;  6 9822… 99999 9822… VIGAN    RP    &lt;NA&gt;  RPUQ   17.6  120.    4.9
+#&gt;  7 9822… 99999 9822… VIGAN    RP    &lt;NA&gt;  RPUQ   17.6  120.    4.9
+#&gt;  8 9822… 99999 9822… VIGAN    RP    &lt;NA&gt;  RPUQ   17.6  120.    4.9
+#&gt;  9 9822… 99999 9822… VIGAN    RP    &lt;NA&gt;  RPUQ   17.6  120.    4.9
+#&gt; 10 9822… 99999 9822… VIGAN    RP    &lt;NA&gt;  RPUQ   17.6  120.    4.9
+#&gt; # ... with 4,699 more rows, and 38 more variables: ELEV_M_SRTM_90m &lt;dbl&gt;,
+#&gt; #   BEGIN &lt;int&gt;, END &lt;int&gt;, YEARMODA &lt;date&gt;, YEAR &lt;chr&gt;, MONTH &lt;chr&gt;,
+#&gt; #   DAY &lt;chr&gt;, YDAY &lt;dbl&gt;, TEMP &lt;dbl&gt;, TEMP_CNT &lt;int&gt;, DEWP &lt;dbl&gt;,
+#&gt; #   DEWP_CNT &lt;int&gt;, SLP &lt;dbl&gt;, SLP_CNT &lt;int&gt;, STP &lt;dbl&gt;, STP_CNT &lt;int&gt;,
+#&gt; #   VISIB &lt;dbl&gt;, VISIB_CNT &lt;int&gt;, WDSP &lt;dbl&gt;, WDSP_CNT &lt;int&gt;, MXSPD &lt;dbl&gt;,
+#&gt; #   GUST &lt;dbl&gt;, MAX &lt;dbl&gt;, MAX_FLAG &lt;chr&gt;, MIN &lt;dbl&gt;, MIN_FLAG &lt;chr&gt;,
+#&gt; #   PRCP &lt;dbl&gt;, PRCP_FLAG &lt;chr&gt;, SNDP &lt;dbl&gt;, I_FOG &lt;int&gt;, I_RAIN_DRIZZLE &lt;int&gt;,
+#&gt; #   I_SNOW_ICE &lt;int&gt;, I_HAIL &lt;int&gt;, I_THUNDER &lt;int&gt;, I_TORNADO_FUNNEL &lt;int&gt;,
+#&gt; #   EA &lt;dbl&gt;, ES &lt;dbl&gt;, RH &lt;dbl&gt;</div><div class='input'>
+<span class='co'># Download global GSOD data for agroclimatology work for years 2010 and 2011</span>
 
-get_GSOD(years = 2010, country = "Philippines", max_missing = 5)
-
-# Download global GSOD data for agroclimatology work for years 2009 and 2010
-
-get_GSOD(years = 2010:2011, agroclimatology = TRUE)
-</div><div class='output co'>#&gt; <span class='error'>Error: &lt;text&gt;:5:6: unexpected symbol</span>
-#&gt; <span class='error'>4: # Download data for Philippines for year 2010 with a maximum of five missing</span>
-#&gt; <span class='error'>5: days per</span>
-#&gt; <span class='error'>        ^</span></div><div class='input'>
+<span class='fu'>get_GSOD</span>(<span class='kw'>years</span> <span class='kw'>=</span> <span class='fl'>2010</span>:<span class='fl'>2011</span>, <span class='kw'>agroclimatology</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; # A tibble: 6,507,032 x 48
+#&gt;    USAF  WBAN  STNID STN_NAME CTRY  STATE CALL    LAT   LON ELEV_M
+#&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+#&gt;  1 0082… 99999 0082… WXPOD82… AF    &lt;NA&gt;  &lt;NA&gt;   33.0  65.6  1157.
+#&gt;  2 0082… 99999 0082… WXPOD82… AF    &lt;NA&gt;  &lt;NA&gt;   33.0  65.6  1157.
+#&gt;  3 0082… 99999 0082… WXPOD82… AF    &lt;NA&gt;  &lt;NA&gt;   33.0  65.6  1157.
+#&gt;  4 0082… 99999 0082… WXPOD82… AF    &lt;NA&gt;  &lt;NA&gt;   33.0  65.6  1157.
+#&gt;  5 0082… 99999 0082… WXPOD82… AF    &lt;NA&gt;  &lt;NA&gt;   33.0  65.6  1157.
+#&gt;  6 0082… 99999 0082… WXPOD82… AF    &lt;NA&gt;  &lt;NA&gt;   33.0  65.6  1157.
+#&gt;  7 0082… 99999 0082… WXPOD82… AF    &lt;NA&gt;  &lt;NA&gt;   33.0  65.6  1157.
+#&gt;  8 0082… 99999 0082… WXPOD82… AF    &lt;NA&gt;  &lt;NA&gt;   33.0  65.6  1157.
+#&gt;  9 0082… 99999 0082… WXPOD82… AF    &lt;NA&gt;  &lt;NA&gt;   33.0  65.6  1157.
+#&gt; 10 0082… 99999 0082… WXPOD82… AF    &lt;NA&gt;  &lt;NA&gt;   33.0  65.6  1157.
+#&gt; # ... with 6,507,022 more rows, and 38 more variables: ELEV_M_SRTM_90m &lt;dbl&gt;,
+#&gt; #   BEGIN &lt;int&gt;, END &lt;int&gt;, YEARMODA &lt;date&gt;, YEAR &lt;chr&gt;, MONTH &lt;chr&gt;,
+#&gt; #   DAY &lt;chr&gt;, YDAY &lt;dbl&gt;, TEMP &lt;dbl&gt;, TEMP_CNT &lt;int&gt;, DEWP &lt;dbl&gt;,
+#&gt; #   DEWP_CNT &lt;int&gt;, SLP &lt;dbl&gt;, SLP_CNT &lt;int&gt;, STP &lt;dbl&gt;, STP_CNT &lt;int&gt;,
+#&gt; #   VISIB &lt;dbl&gt;, VISIB_CNT &lt;int&gt;, WDSP &lt;dbl&gt;, WDSP_CNT &lt;int&gt;, MXSPD &lt;dbl&gt;,
+#&gt; #   GUST &lt;dbl&gt;, MAX &lt;dbl&gt;, MAX_FLAG &lt;chr&gt;, MIN &lt;dbl&gt;, MIN_FLAG &lt;chr&gt;,
+#&gt; #   PRCP &lt;dbl&gt;, PRCP_FLAG &lt;chr&gt;, SNDP &lt;dbl&gt;, I_FOG &lt;int&gt;, I_RAIN_DRIZZLE &lt;int&gt;,
+#&gt; #   I_SNOW_ICE &lt;int&gt;, I_HAIL &lt;int&gt;, I_THUNDER &lt;int&gt;, I_TORNADO_FUNNEL &lt;int&gt;,
+#&gt; #   EA &lt;dbl&gt;, ES &lt;dbl&gt;, RH &lt;dbl&gt;</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
