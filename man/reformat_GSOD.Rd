@@ -19,7 +19,7 @@ data.
 }
 \description{
 This function automates cleaning and reformatting of \acronym{GSOD} station
-files in "WMO-WBAN-YYYY.op.gz" format that have been downloaded from the
+files in\cr "WMO-WBAN-YYYY.op.gz" format that have been downloaded from the
 United States National Center for Environmental Information's
 (\acronym{NCEI}) \acronym{FTP} server. Three new elements; saturation vapour
 pressure (es), actual vapour pressure (ea) and relative humidity are
@@ -48,7 +48,7 @@ use this function.
 
 For a complete list of the fields and description of the contents and units,
 please refer to Appendix 1 in the \pkg{GSODR} vignette,
-\code{vignette("GSODR", package = "GSODR")}.
+\code{\link[utils]{vignette("GSODR", package = "GSODR")}}.
 }
 \note{
 While \pkg{GSODR} does not distribute \acronym{GSOD} weather data,
