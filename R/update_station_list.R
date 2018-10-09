@@ -24,8 +24,8 @@
 #' }
 #'
 #' @author Adam H Sparks, \email{adamhsparks@@gmail.com}
-#' @export
-#'
+#' @export update_station_list
+
 update_station_list <- function() {
   message(
     "This will overwrite GSODR's current internal list of GSOD stations.\n",

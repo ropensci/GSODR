@@ -28,7 +28,8 @@
 #'}
 #' @return \code{\link[base]{vector}} object of station identification numbers
 #' @author Adam H Sparks, \email{adamhsparks@@gmail.com}
-#' @export
+#' @export nearest_stations
+
 nearest_stations <- function(LAT, LON, distance) {
 
   # CRAN NOTE avoidance

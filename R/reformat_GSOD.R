@@ -77,8 +77,8 @@
 #'
 #' @importFrom magrittr %>%
 #'
-#' @export
-#'
+#' @export reformat_GSOD
+
 reformat_GSOD <- function(dsn = NULL, file_list = NULL) {
   isd_history <- NULL # nocov
   load(system.file("extdata", "isd_history.rda", package = "GSODR")) # nocov
