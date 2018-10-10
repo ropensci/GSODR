@@ -1,6 +1,12 @@
 # GSODR 1.2.2.9000
 
 ## Minor changes
+  - Ensure that DESCRIPTION file follows CRAN guidelines
+  
+  - Format help files, fixing errors and formatting for attractiveness
+  
+  - Replace `\dontrun{}` with `\donttest{}` in documentation examples
+
   - Update internal database of station locations
   
   - Refactor internal functionality to be more clear and efficient in execution
