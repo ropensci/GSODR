@@ -35,7 +35,7 @@
 #'
 #' For a complete list of the fields and description of the contents and units,
 #' please refer to Appendix 1 in the \pkg{GSODR} vignette,
-#' [`utils::vignette("GSODR", package = "GSODR")`].
+#' `vignette("GSODR", package = "GSODR")`.
 #'
 #' For more information see the description of the data provided by
 #' \acronym{NCEI}, \url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
