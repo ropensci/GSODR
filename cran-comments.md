@@ -24,8 +24,15 @@
       
     - An instance where the FIPS code was determined twice was removed
 
-## Minor changes
+- Replace `\dontrun{}` with `\donttest{}` in documentation examples
 
+- Ensure that DESCRIPTION file follows CRAN guidelines
+
+## Minor changes
+- Format help files, fixing errors and formatting for attractiveness
+
+- Update internal database of station locations
+  
 - Update internal database of station locations
   
 - Internal database of station locations stores `BEGIN` and `END` fields as
