@@ -7,9 +7,9 @@
 nearest_stations(LAT, LON, distance)
 }
 \arguments{
-\item{LAT}{Latitude expressed as decimal degrees (DD) \link{WGS84}}
+\item{LAT}{Latitude expressed as decimal degrees (DD) (WGS84)}
 
-\item{LON}{Longitude expressed as decimal degrees (DD) \link{WGS84}}
+\item{LON}{Longitude expressed as decimal degrees (DD) (WGS84)}
 
 \item{distance}{Distance in kilometres from point for which stations are to
 be returned.}
