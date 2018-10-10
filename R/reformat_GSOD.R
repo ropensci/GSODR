@@ -36,7 +36,7 @@
 #'
 #' For a complete list of the fields and description of the contents and units,
 #' please refer to Appendix 1 in the \pkg{GSODR} vignette,
-#' \code{\link[utils]{vignette("GSODR", package = "GSODR")}}.
+#' \code{vignette("GSODR", package = "GSODR")}.
 #'
 #' @note While \pkg{GSODR} does not distribute \acronym{GSOD} weather data,
 #' users of the data should note the conditions that the U.S. \acronym{NCEI}
