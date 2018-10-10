@@ -6,8 +6,8 @@
 #' be used in \code{\link{get_GSOD}} to query for specific stations as an
 #' argument in the \code{station} parameter of that function.
 #'
-#' @param LAT Latitude expressed as decimal degrees (DD) [WGS84]
-#' @param LON Longitude expressed as decimal degrees (DD) [WGS84]
+#' @param LAT Latitude expressed as decimal degrees (DD) (WGS84)
+#' @param LON Longitude expressed as decimal degrees (DD) (WGS84)
 #' @param distance Distance in kilometres from point for which stations are to
 #' be returned.
 #'
