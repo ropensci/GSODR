@@ -7,7 +7,7 @@
 get_inventory()
 }
 \value{
-A data frame as a \code{\link{tibble::tibble}} object of station
+A data frame as a \code{\link[tibble]{tibble}} object of station
 inventories
 }
 \description{

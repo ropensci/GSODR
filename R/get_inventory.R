@@ -21,7 +21,7 @@
 #' inventory <- get_inventory()
 #' inventory
 #'}
-#' @return A data frame as a \code{\link{tibble::tibble}} object of station
+#' @return A data frame as a \code{\link[tibble]{tibble}} object of station
 #' inventories
 #' @author Adam H Sparks, \email{adamhsparks@@gmail.com}
 #' @note The download process can take quite some time to complete.
@@ -95,18 +95,13 @@ get_inventory <- function() {
   )
   year_month <- gsub("Through ", "", year_month)
 
-  attr(main_body, "class") <- c(
-    "GSODR.Info",
-    "tbl_df",
-    "tbl",
-    "data.frame"
-  )
+  class(main_body) <- c("GSODR.Info", class(main_body))
 
   # add attributes for printing df
   attr(main_body, "GSODR.Inventory") <- c(
     "   *** FEDERAL CLIMATE COMPLEX INTEGRATED SURFACE DATA INVENTORY ***   \n",
     "   This inventory provides the number of weather observations by   \n",
-    "   STATION-YEAR-MONTH for beginning of record through", year_month, "   "
+    "   STATION-YEAR-MONTH for beginning of record through", year_month, "   \n"
   )
 
   return(main_body)
@@ -120,5 +115,6 @@ get_inventory <- function() {
 #' @export
 print.GSODR.Info <- function(x, ...) {
   cat(attr(x, "GSODR.Inventory"))
-  print(data.table::as.data.table(x), ...)
+  NextMethod(x)
+  invisible(x)
 }
