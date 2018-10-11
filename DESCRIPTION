@@ -22,8 +22,8 @@ Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     person("Łukasz","Pawlik", email = "lukpawlik@gmail.com", role = "ctb",
     comment = "Reported bug in windspeed conversion calculation"),
     person("Ross","Darnell", email = "Ross.Darnell@data61.csiro.au",
-    role = "ctb", comment = "Reported bug in Windows OS versions causing
-    GSOD data untarring to fail"))
+    role = "ctb", comment = "Reported bug in 'Windows OS' versions causing
+    'GSOD' data untarring to fail"))
 URL: https://github.com/ropensci/GSODR, https://ropensci.github.io/GSODR/
 BugReports: https://github.com/ropensci/GSODR/issues
 Description: Provides automated downloading, parsing, cleaning, unit conversion
