@@ -81,7 +81,7 @@ original SRTM 90m data." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GSODR</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.2.3</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.2.3.9000</span>
       </span>
     </div>
 
@@ -236,10 +236,33 @@ and expanding annual <acronym>GSOD</acronym> files and cleaning station files.</
 <span class='fu'>download.file</span>(<span class='kw'>url</span> <span class='kw'>=</span>
   <span class='st'>"ftp://ftp.ncdc.noaa.gov/pub/data/gsod/2010/955510-99999-2010.op.gz"</span>,
         <span class='kw'>destfile</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(<span class='fu'>tempdir</span>(), <span class='st'>"955510-99999-2010.op.gz"</span>),
-        <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"wb"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: cannot open URL 'ftp://ftp.ncdc.noaa.gov/pub/data/gsod/2010/955510-99999-2010.op.gz': FTP status was '530 Not logged in'</span></div><div class='output co'>#&gt; <span class='error'>Error in download.file(url = "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/2010/955510-99999-2010.op.gz",     destfile = file.path(tempdir(), "955510-99999-2010.op.gz"),     mode = "wb"): cannot open URL 'ftp://ftp.ncdc.noaa.gov/pub/data/gsod/2010/955510-99999-2010.op.gz'</span></div><div class='input'>
+        <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"wb"</span>)
+
 <span class='co'># Reformat station data files in R's tempdir() directory</span>
-<span class='no'>tbar</span> <span class='kw'>&lt;-</span> <span class='fu'>reformat_GSOD</span>(<span class='kw'>dsn</span> <span class='kw'>=</span> <span class='fu'>tempdir</span>())</div><div class='output co'>#&gt; <span class='error'>Error in reformat_GSOD(dsn = tempdir()): No files were found, please check your file location.</span></div><div class='input'>
-<span class='no'>tbar</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'tbar' not found</span></div><div class='input'>
+<span class='no'>tbar</span> <span class='kw'>&lt;-</span> <span class='fu'>reformat_GSOD</span>(<span class='kw'>dsn</span> <span class='kw'>=</span> <span class='fu'>tempdir</span>())
+
+<span class='no'>tbar</span></div><div class='output co'>#&gt; # A tibble: 365 x 48
+#&gt;    USAF  WBAN  STNID STN_NAME CTRY  STATE CALL    LAT   LON ELEV_M
+#&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+#&gt;  1 9555… 99999 9555… TOOWOOM… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
+#&gt;  2 9555… 99999 9555… TOOWOOM… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
+#&gt;  3 9555… 99999 9555… TOOWOOM… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
+#&gt;  4 9555… 99999 9555… TOOWOOM… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
+#&gt;  5 9555… 99999 9555… TOOWOOM… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
+#&gt;  6 9555… 99999 9555… TOOWOOM… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
+#&gt;  7 9555… 99999 9555… TOOWOOM… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
+#&gt;  8 9555… 99999 9555… TOOWOOM… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
+#&gt;  9 9555… 99999 9555… TOOWOOM… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
+#&gt; 10 9555… 99999 9555… TOOWOOM… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
+#&gt; # ... with 355 more rows, and 38 more variables: ELEV_M_SRTM_90m &lt;dbl&gt;,
+#&gt; #   BEGIN &lt;int&gt;, END &lt;int&gt;, YEARMODA &lt;date&gt;, YEAR &lt;chr&gt;, MONTH &lt;chr&gt;,
+#&gt; #   DAY &lt;chr&gt;, YDAY &lt;dbl&gt;, TEMP &lt;dbl&gt;, TEMP_CNT &lt;int&gt;, DEWP &lt;dbl&gt;,
+#&gt; #   DEWP_CNT &lt;int&gt;, SLP &lt;dbl&gt;, SLP_CNT &lt;int&gt;, STP &lt;dbl&gt;, STP_CNT &lt;int&gt;,
+#&gt; #   VISIB &lt;dbl&gt;, VISIB_CNT &lt;int&gt;, WDSP &lt;dbl&gt;, WDSP_CNT &lt;int&gt;, MXSPD &lt;dbl&gt;,
+#&gt; #   GUST &lt;dbl&gt;, MAX &lt;dbl&gt;, MAX_FLAG &lt;chr&gt;, MIN &lt;dbl&gt;, MIN_FLAG &lt;chr&gt;,
+#&gt; #   PRCP &lt;dbl&gt;, PRCP_FLAG &lt;chr&gt;, SNDP &lt;dbl&gt;, I_FOG &lt;int&gt;, I_RAIN_DRIZZLE &lt;int&gt;,
+#&gt; #   I_SNOW_ICE &lt;int&gt;, I_HAIL &lt;int&gt;, I_THUNDER &lt;int&gt;, I_TORNADO_FUNNEL &lt;int&gt;,
+#&gt; #   EA &lt;dbl&gt;, ES &lt;dbl&gt;, RH &lt;dbl&gt;</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
