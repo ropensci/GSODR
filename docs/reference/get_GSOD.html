@@ -74,7 +74,7 @@ in the final data frame." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GSODR</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.2.2.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.2.3</span>
       </span>
     </div>
 
@@ -221,7 +221,7 @@ relative humidity elements calculated from existing data in <acronym>GSOD</acron
 of which field they occur in.</p>
 <p>For a complete list of the fields and description of the contents and units,
 please refer to Appendix 1 in the <span class="pkg">GSODR</span> vignette,
-<code><a href='../articles/GSODR.html'>utils::vignette("GSODR", package = "GSODR")</a></code>.</p>
+<code><a href='../articles/GSODR.html'>vignette("GSODR", package = "GSODR")</a></code>.</p>
 <p>For more information see the description of the data provided by
 <acronym>NCEI</acronym>, <a href='http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt'>http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt</a>.</p>
     
@@ -249,48 +249,22 @@ Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Download weather station for Toowoomba, Queensland for 2010</span>
-<span class='no'>t</span> <span class='kw'>&lt;-</span> <span class='fu'>get_GSOD</span>(<span class='kw'>years</span> <span class='kw'>=</span> <span class='fl'>2010</span>, <span class='kw'>station</span> <span class='kw'>=</span> <span class='st'>"955510-99999"</span>)</div><div class='output co'>#&gt; |======================================================|100% ~0 s remaining     </div><div class='input'>
-<span class='co'># Download data for Philippines for year 2010 with a maximum of five missing</span>
-<span class='co'># days per station allowed.</span>
+<span class='no'>t</span> <span class='kw'>&lt;-</span> <span class='fu'>get_GSOD</span>(<span class='kw'>years</span> <span class='kw'>=</span> <span class='fl'>2010</span>, <span class='kw'>station</span> <span class='kw'>=</span> <span class='st'>"955510-99999"</span>)
 
-<span class='fu'>get_GSOD</span>(<span class='kw'>years</span> <span class='kw'>=</span> <span class='fl'>2010</span>, <span class='kw'>country</span> <span class='kw'>=</span> <span class='st'>"Philippines"</span>, <span class='kw'>max_missing</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; # A tibble: 4,709 x 48
+<span class='no'>t</span></div><div class='output co'>#&gt; # A tibble: 365 x 48
 #&gt;    USAF  WBAN  STNID STN_NAME CTRY  STATE CALL    LAT   LON ELEV_M
 #&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
-#&gt;  1 9822… 99999 9822… VIGAN    RP    &lt;NA&gt;  RPUQ   17.6  120.    4.9
-#&gt;  2 9822… 99999 9822… VIGAN    RP    &lt;NA&gt;  RPUQ   17.6  120.    4.9
-#&gt;  3 9822… 99999 9822… VIGAN    RP    &lt;NA&gt;  RPUQ   17.6  120.    4.9
-#&gt;  4 9822… 99999 9822… VIGAN    RP    &lt;NA&gt;  RPUQ   17.6  120.    4.9
-#&gt;  5 9822… 99999 9822… VIGAN    RP    &lt;NA&gt;  RPUQ   17.6  120.    4.9
-#&gt;  6 9822… 99999 9822… VIGAN    RP    &lt;NA&gt;  RPUQ   17.6  120.    4.9
-#&gt;  7 9822… 99999 9822… VIGAN    RP    &lt;NA&gt;  RPUQ   17.6  120.    4.9
-#&gt;  8 9822… 99999 9822… VIGAN    RP    &lt;NA&gt;  RPUQ   17.6  120.    4.9
-#&gt;  9 9822… 99999 9822… VIGAN    RP    &lt;NA&gt;  RPUQ   17.6  120.    4.9
-#&gt; 10 9822… 99999 9822… VIGAN    RP    &lt;NA&gt;  RPUQ   17.6  120.    4.9
-#&gt; # ... with 4,699 more rows, and 38 more variables: ELEV_M_SRTM_90m &lt;dbl&gt;,
-#&gt; #   BEGIN &lt;int&gt;, END &lt;int&gt;, YEARMODA &lt;date&gt;, YEAR &lt;chr&gt;, MONTH &lt;chr&gt;,
-#&gt; #   DAY &lt;chr&gt;, YDAY &lt;dbl&gt;, TEMP &lt;dbl&gt;, TEMP_CNT &lt;int&gt;, DEWP &lt;dbl&gt;,
-#&gt; #   DEWP_CNT &lt;int&gt;, SLP &lt;dbl&gt;, SLP_CNT &lt;int&gt;, STP &lt;dbl&gt;, STP_CNT &lt;int&gt;,
-#&gt; #   VISIB &lt;dbl&gt;, VISIB_CNT &lt;int&gt;, WDSP &lt;dbl&gt;, WDSP_CNT &lt;int&gt;, MXSPD &lt;dbl&gt;,
-#&gt; #   GUST &lt;dbl&gt;, MAX &lt;dbl&gt;, MAX_FLAG &lt;chr&gt;, MIN &lt;dbl&gt;, MIN_FLAG &lt;chr&gt;,
-#&gt; #   PRCP &lt;dbl&gt;, PRCP_FLAG &lt;chr&gt;, SNDP &lt;dbl&gt;, I_FOG &lt;int&gt;, I_RAIN_DRIZZLE &lt;int&gt;,
-#&gt; #   I_SNOW_ICE &lt;int&gt;, I_HAIL &lt;int&gt;, I_THUNDER &lt;int&gt;, I_TORNADO_FUNNEL &lt;int&gt;,
-#&gt; #   EA &lt;dbl&gt;, ES &lt;dbl&gt;, RH &lt;dbl&gt;</div><div class='input'>
-<span class='co'># Download global GSOD data for agroclimatology work for years 2010 and 2011</span>
-
-<span class='fu'>get_GSOD</span>(<span class='kw'>years</span> <span class='kw'>=</span> <span class='fl'>2010</span>:<span class='fl'>2011</span>, <span class='kw'>agroclimatology</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; # A tibble: 6,507,032 x 48
-#&gt;    USAF  WBAN  STNID STN_NAME CTRY  STATE CALL    LAT   LON ELEV_M
-#&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
-#&gt;  1 0082… 99999 0082… WXPOD82… AF    &lt;NA&gt;  &lt;NA&gt;   33.0  65.6  1157.
-#&gt;  2 0082… 99999 0082… WXPOD82… AF    &lt;NA&gt;  &lt;NA&gt;   33.0  65.6  1157.
-#&gt;  3 0082… 99999 0082… WXPOD82… AF    &lt;NA&gt;  &lt;NA&gt;   33.0  65.6  1157.
-#&gt;  4 0082… 99999 0082… WXPOD82… AF    &lt;NA&gt;  &lt;NA&gt;   33.0  65.6  1157.
-#&gt;  5 0082… 99999 0082… WXPOD82… AF    &lt;NA&gt;  &lt;NA&gt;   33.0  65.6  1157.
-#&gt;  6 0082… 99999 0082… WXPOD82… AF    &lt;NA&gt;  &lt;NA&gt;   33.0  65.6  1157.
-#&gt;  7 0082… 99999 0082… WXPOD82… AF    &lt;NA&gt;  &lt;NA&gt;   33.0  65.6  1157.
-#&gt;  8 0082… 99999 0082… WXPOD82… AF    &lt;NA&gt;  &lt;NA&gt;   33.0  65.6  1157.
-#&gt;  9 0082… 99999 0082… WXPOD82… AF    &lt;NA&gt;  &lt;NA&gt;   33.0  65.6  1157.
-#&gt; 10 0082… 99999 0082… WXPOD82… AF    &lt;NA&gt;  &lt;NA&gt;   33.0  65.6  1157.
-#&gt; # ... with 6,507,022 more rows, and 38 more variables: ELEV_M_SRTM_90m &lt;dbl&gt;,
+#&gt;  1 9555… 99999 9555… TOOWOOM… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
+#&gt;  2 9555… 99999 9555… TOOWOOM… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
+#&gt;  3 9555… 99999 9555… TOOWOOM… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
+#&gt;  4 9555… 99999 9555… TOOWOOM… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
+#&gt;  5 9555… 99999 9555… TOOWOOM… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
+#&gt;  6 9555… 99999 9555… TOOWOOM… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
+#&gt;  7 9555… 99999 9555… TOOWOOM… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
+#&gt;  8 9555… 99999 9555… TOOWOOM… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
+#&gt;  9 9555… 99999 9555… TOOWOOM… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
+#&gt; 10 9555… 99999 9555… TOOWOOM… AS    &lt;NA&gt;  &lt;NA&gt;  -27.6  152.    642
+#&gt; # ... with 355 more rows, and 38 more variables: ELEV_M_SRTM_90m &lt;dbl&gt;,
 #&gt; #   BEGIN &lt;int&gt;, END &lt;int&gt;, YEARMODA &lt;date&gt;, YEAR &lt;chr&gt;, MONTH &lt;chr&gt;,
 #&gt; #   DAY &lt;chr&gt;, YDAY &lt;dbl&gt;, TEMP &lt;dbl&gt;, TEMP_CNT &lt;int&gt;, DEWP &lt;dbl&gt;,
 #&gt; #   DEWP_CNT &lt;int&gt;, SLP &lt;dbl&gt;, SLP_CNT &lt;int&gt;, STP &lt;dbl&gt;, STP_CNT &lt;int&gt;,

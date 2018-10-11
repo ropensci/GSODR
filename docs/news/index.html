@@ -67,7 +67,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GSODR</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.2.2.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.2.3</span>
       </span>
     </div>
 
@@ -138,11 +138,10 @@
 <h1 class="page-header">
 <a href="#gsodr-1-2-2-9000" class="anchor"></a>GSODR 1.2.2.9000<small> Unreleased </small>
 </h1>
-<div id="minor-changes" class="section level2">
+<div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes" class="anchor"></a>Minor changes</h2>
+<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li><p>Update internal database of station locations</p></li>
 <li>
 <p>Refactor internal functionality to be more clear and efficient in execution</p>
 <ul>
@@ -150,9 +149,21 @@
 <li><p>An instance where the FIPS code was determined twice was removed</p></li>
 </ul>
 </li>
-<li><p>Internal database of station locations stores <code>BEGIN</code> and <code>END</code> fields as integer, not double</p></li>
+<li><p>Replace <code>\dontrun{}</code> with <code>\donttest{}</code> in documentation examples</p></li>
+<li><p>Ensure that DESCRIPTION file follows CRAN guidelines</p></li>
+</ul>
+</div>
+<div id="minor-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#minor-changes" class="anchor"></a>Minor changes</h2>
+<ul>
+<li><p>Format help files, fixing errors and formatting for attractiveness</p></li>
+<li><p>Update internal database of station locations</p></li>
+<li><p>Store internal database of station locations fields <code>BEGIN</code> and <code>END</code> as integer, not double</p></li>
 <li><p>Clarify code of conduct statement in README that it only applies to this, GSODR, project</p></li>
 <li><p>Prompt user for input with warning about reproducibility if using the <code><a href="../reference/update_station_list.html">update_station_list()</a></code> function</p></li>
+<li><p>Adds metadata header to the <code>tibble</code> returned by <code><a href="../reference/get_inventory.html">get_inventory()</a></code></p></li>
+<li><p>Remove startup message to conform with rOpenSci guidelines</p></li>
 <li><p>Remove extra code, clean up code-chunks and use <code><a href="http://www.rdocumentation.org/packages/hrbrthemes/topics/theme_ipsum">hrbrthemes::theme_ipsum()</a></code> for <a href="https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.html">data-raw/fetch_isd-history.md</a></p></li>
 </ul>
 <hr>
@@ -162,9 +173,9 @@
 <h1 class="page-header">
 <a href="#gsodr-1-2-2" class="anchor"></a>GSODR 1.2.2<small> 2018-08-17 </small>
 </h1>
-<div id="bug-fixes" class="section level2">
+<div id="bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li><p>Fix bug in creating <code>isd-history.rda</code> file where duplicate stations existed in the file distributed with <code>GSODR</code> but with different corrected elevation values</p></li>
 <li><p>Repatch bug reported and fixed previously in version 1.2.0 where Windows users could not successfully download files. This somehow snuck back in.</p></li>
@@ -183,9 +194,9 @@
 <h1 class="page-header">
 <a href="#gsodr-1-2-1" class="anchor"></a>GSODR 1.2.1<small> 2018-06-16 </small>
 </h1>
-<div id="bug-fixes-1" class="section level2">
+<div id="bug-fixes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li><p>Introduce a message if a station ID is requested but files are not found on the server. This is in response to an inquiry from John Paul Bigouette where a station is reported as having data in the inventory but the files do not exist on the server.</p></li>
 <li><p>Fix bug that removed a few hundred stations from the internal <code>GSODR</code> database of stations in the <code>data-raw</code> files.</p></li>
@@ -214,9 +225,9 @@
 <li><p>As a result of the previous point, the <em>sp</em> and <em>rgdal</em> packages are no longer Imports but are now in Suggests along with <em>sf</em> for examples in the GSOD vignette.</p></li>
 </ul>
 </div>
-<div id="bug-fixes-2" class="section level2">
+<div id="bug-fixes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li><p>Fix a nasty bug where GSOD files downloaded using Windows would not untar properly. This caused the <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> function to fail. Thanks to Ross Darnell, CSIRO, for reporting this.</p></li>
 <li><p>Correct options in “GSODR use case: Specified years/stations vignette” on line 201 where <code>file</code> was incorrectly used in place of <code>path</code>. Thanks to Ross Darnell, CSIRO, for reporting this.</p></li>
@@ -237,9 +248,9 @@
 <h1 class="page-header">
 <a href="#gsodr-1-1-2" class="anchor"></a>GSODR 1.1.2<small> 2017-12-15 </small>
 </h1>
-<div id="bug-fixes-3" class="section level2">
+<div id="bug-fixes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-4" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li><p>Fix startup message formatting</p></li>
 <li><p>Correct ORCID comment in author field of DESCRIPTION</p></li>
@@ -259,9 +270,9 @@
 <h1 class="page-header">
 <a href="#gsodr-1-1-1" class="anchor"></a>GSODR 1.1.1<small> 2017-11-27 </small>
 </h1>
-<div id="bug-fixes-4" class="section level2">
+<div id="bug-fixes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-4" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-5" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code>MAX_FLAG</code> and <code>MIN_FLAG</code> columns now report <code>NA</code> when there is no flag</li>
@@ -285,9 +296,9 @@
 <h1 class="page-header">
 <a href="#gsodr-1-1-0" class="anchor"></a>GSODR 1.1.0<small> 2017-10-28 </small>
 </h1>
-<div id="bug-fixes-5" class="section level2">
+<div id="bug-fixes-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-5" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-6" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixes bug reported in <a href="https://github.com/ropensci/GSODR/issues/36">issue 36</a>
 </li>
@@ -312,9 +323,9 @@
 <h1 class="page-header">
 <a href="#gsodr-1-0-7" class="anchor"></a>GSODR 1.0.7<small> 2017-10-16 </small>
 </h1>
-<div id="bug-fixes-6" class="section level2">
+<div id="bug-fixes-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-6" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-7" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li><p>Fix documentation in vignette where first example would not run due to changes in package data formats</p></li>
 <li><p>Fix bug in GSODR vignette where examples would not run due to libraries not being loaded</p></li>
@@ -343,9 +354,9 @@
 <h1 class="page-header">
 <a href="#gsodr-1-0-6" class="anchor"></a>GSODR 1.0.6<small> 2017-09-19 </small>
 </h1>
-<div id="bug-fixes-7" class="section level2">
+<div id="bug-fixes-8" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-7" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-8" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fix bug where WSPD (mean windspeed) conversion was miscalculated</li>
 </ul>
@@ -370,9 +381,9 @@
 <li>Tidy up informative messages that the package returns while running</li>
 </ul>
 </div>
-<div id="bug-fixes-8" class="section level2">
+<div id="bug-fixes-9" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-8" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-9" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li><p>Fix bug where “Error in read_connection_(con):” when writing to CSV occurs</p></li>
 <li><p>Fix typo in line 160 of <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> where “Rda” should be “rda” to properly load internal package files</p></li>
@@ -532,9 +543,9 @@
 <li><p>Better testing of internal functions</p></li>
 </ul>
 </div>
-<div id="bug-fixes-9" class="section level2">
+<div id="bug-fixes-10" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-9" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-10" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li><p>Fixed: Remove redundant code in <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> function</p></li>
 <li><p>Fixed: The stations data frame distributed with the package now include stations that are located above 60 latitude and below -60 latitude</p></li>
@@ -557,9 +568,9 @@
 <h1 class="page-header">
 <a href="#gsodr-0-1-9" class="anchor"></a>GSODR 0.1.9<small> 2016-07-15 </small>
 </h1>
-<div id="bug-fixes-10" class="section level2">
+<div id="bug-fixes-11" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-10" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-11" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li>Fix bug in precipitation calculation. Documentation states that PRCP is in mm to hundredths. Issues with conversion and missing values meant that this was not the case. Thanks to Gwenael Giboire for reporting and help with fixing this</li>
 </ul>
@@ -592,9 +603,9 @@
 <h1 class="page-header">
 <a href="#gsodr-0-1-8" class="anchor"></a>GSODR 0.1.8<small> 2016-07-04 </small>
 </h1>
-<div id="bug-fixes-11" class="section level2">
+<div id="bug-fixes-12" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-11" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-12" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li><p>Fix bug with connection timing out for single station queries commit: <a href="https://github.com/ropensci/GSODR/commit/a126641e00dc7acc21844ff0436e5702f8b6e04a">a126641e00dc7acc21844ff0436e5702f8b6e04a</a></p></li>
 <li><p>Somehow the previously working function that checked country names broke with the <code>toupper()</code> function. A new <a href="http://stackoverflow.com/questions/16516593/convert-from-lowercase-to-uppercase-all-values-in-all-character-variables-in-dat">function from juba</a> fixes this issue and users can now select country again</p></li>
@@ -617,9 +628,9 @@
 <h1 class="page-header">
 <a href="#gsodr-0-1-7" class="anchor"></a>GSODR 0.1.7<small> 2016-06-02 </small>
 </h1>
-<div id="bug-fixes-12" class="section level2">
+<div id="bug-fixes-13" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-12" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-13" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li><p>Fix issues with MIN/MAX where MIN referred to MAX <a href="https://github.com/ropensci/GSODR/issues/5">(Issue 5)</a></p></li>
 <li><p>Fix bug where the <code>tf</code> item was incorrectly set as <code>tf &lt;  - "~/tmp/GSOD-2010.tar</code>, not <code>tf &lt;  - tempfile</code>, in <code><a href="../reference/get_GSOD.html">get_GSOD()</a></code> <a href="https://github.com/ropensci/GSODR/issues/6">(Issue 6)</a></p></li>
@@ -640,9 +651,9 @@
 <h1 class="page-header">
 <a href="#gsodr-0-1-6" class="anchor"></a>GSODR 0.1.6<small> 2016-05-26 </small>
 </h1>
-<div id="bug-fixes-13" class="section level2">
+<div id="bug-fixes-14" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-13" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-14" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li>
 <p>Fix issue when reading .op files into R where temperature was incorrectly read causing negative values where T &gt;= 100F, this issue caused RH values of</p>
@@ -667,9 +678,9 @@
 <h1 class="page-header">
 <a href="#gsodr-0-1-5" class="anchor"></a>GSODR 0.1.5<small> 2016-05-17 </small>
 </h1>
-<div id="bug-fixes-14" class="section level2">
+<div id="bug-fixes-15" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-14" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-15" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li><p>Fixed bug where YDAY not correctly calculated and reported in CSV file</p></li>
 <li><p>CSV files for station only queries now are names with the Station Identifier. Previously named same as global data</p></li>
@@ -690,9 +701,9 @@
 <h1 class="page-header">
 <a href="#gsodr-0-1-4" class="anchor"></a>GSODR 0.1.4<small> 2016-05-09 </small>
 </h1>
-<div id="bug-fixes-15" class="section level2">
+<div id="bug-fixes-16" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-15" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-16" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li>Fixed bug related to MIN/MAX columns when agroclimatology or all stations are selected where flags were not removed properly from numeric values.</li>
 </ul>
@@ -707,9 +718,9 @@
 <h1 class="page-header">
 <a href="#gsodr-0-1-3" class="anchor"></a>GSODR 0.1.3<small> 2016-05-07 </small>
 </h1>
-<div id="bug-fixes-16" class="section level2">
+<div id="bug-fixes-17" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-16" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-17" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li><p>Bug fix in MIN/MAX with flags. Some columns have differing widths, which caused a flag to be left attached to some values</p></li>
 <li><p>Correct URL in README.md for CRAN to point to CRAN not GitHub</p></li>
@@ -728,9 +739,9 @@
 <h1 class="page-header">
 <a href="#gsodr-0-1-2" class="anchor"></a>GSODR 0.1.2<small> Unreleased </small>
 </h1>
-<div id="bug-fixes-17" class="section level2">
+<div id="bug-fixes-18" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-17" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-18" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li><p>Bug fix in importing isd-history.csv file. Previous issues caused all lat/lon/elev values to be &gt;0.</p></li>
 <li><p>Bug fix where WDSP was mistyped as WDPS causing the creation of a new column, rather than the conversion of the existing</p></li>

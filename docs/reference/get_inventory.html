@@ -74,7 +74,7 @@ the inventory information for each station-year-month." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GSODR</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.2.2.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.2.3</span>
       </span>
     </div>
 
@@ -157,7 +157,7 @@ the inventory information for each station-year-month.</p>
         
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame as a <code><a href='http://www.rdocumentation.org/packages/tibble/topics/tibble'>tibble::tibble</a></code> object of station
+    <p>A data frame as a <code><a href='http://www.rdocumentation.org/packages/tibble/topics/tibble'>tibble</a></code> object of station
 inventories</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
@@ -176,30 +176,21 @@ data by others must provide this same notification.&#8221;</p>
     <pre class="examples"><div class='input'><span class='no'>inventory</span> <span class='kw'>&lt;-</span> <span class='fu'>get_inventory</span>()
 <span class='no'>inventory</span></div><div class='output co'>#&gt;    *** FEDERAL CLIMATE COMPLEX INTEGRATED SURFACE DATA INVENTORY ***   
 #&gt;     This inventory provides the number of weather observations by   
-#&gt;     STATION-YEAR-MONTH for beginning of record through October 2018                   STNID YEAR  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT
-#&gt;      1: 007018-99999 2011    0    0 2104 2797 2543 2614  382    0    0    0
-#&gt;      2: 007018-99999 2013    0    0    0    0    0    0  710    0    0    0
-#&gt;      3: 007026-99999 2012    0    0    0    0    0    0  367    0    0    0
-#&gt;      4: 007026-99999 2014    0    0    0    0    0    0  180    0    4    0
-#&gt;      5: 007026-99999 2016    0    0    0    0    0  794    0    0    0    0
-#&gt;     ---                                                                    
-#&gt; 620249:   A51256-451 2014    0    0    0    0    0    0    3 2190 1935 2207
-#&gt; 620250:   A51256-451 2015 2196 1866 2206 1909 2215 2090 2202 2191 2128 2192
-#&gt; 620251:   A51256-451 2016 2185 2047 2175 2131 2213 2139 2209 2216 2131 2196
-#&gt; 620252:   A51256-451 2017 2192 1883 2204 1910 2145 2113 2218 2204 2082 2192
-#&gt; 620253:   A51256-451 2018 2192 1887 2194 2113 2151 2095 2202 2197 1816  433
-#&gt;          NOV  DEC
-#&gt;      1:    0    0
-#&gt;      2:    0    0
-#&gt;      3:    0    7
-#&gt;      4:  552    0
-#&gt;      5:    0    0
-#&gt;     ---          
-#&gt; 620249: 2130 2188
-#&gt; 620250: 2097 2093
-#&gt; 620251: 2131 1665
-#&gt; 620252: 2103 2174
-#&gt; 620253:    0    0</div></pre>
+#&gt;     STATION-YEAR-MONTH for beginning of record through October 2018    
+#&gt; # A tibble: 620,253 x 14
+#&gt;    STN…  YEAR   JAN   FEB   MAR   APR   MAY   JUN   JUL   AUG   SEP   OCT   NOV
+#&gt;    &lt;ch&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+#&gt;  1 007…  2011     0     0  2104  2797  2543  2614   382     0     0     0     0
+#&gt;  2 007…  2013     0     0     0     0     0     0   710     0     0     0     0
+#&gt;  3 007…  2012     0     0     0     0     0     0   367     0     0     0     0
+#&gt;  4 007…  2014     0     0     0     0     0     0   180     0     4     0   552
+#&gt;  5 007…  2016     0     0     0     0     0   794     0     0     0     0     0
+#&gt;  6 007…  2017     0   914  2626   380   277   406  1230  1010     0     0     0
+#&gt;  7 007…  2014     0     0     0     0     0     0     0     0     1     0     0
+#&gt;  8 007…  2015     0     0     0     0     0     0     0     0   198     0     0
+#&gt;  9 008…  2009  2665  2206  2518  2471  2738  2490  2554  2430  2589  4163  3672
+#&gt; 10 008…  2010  4368  3630  3890  3690  3734  1455  1588     0     0     0     0
+#&gt; # ... with 620,243 more rows, and 1 more variable: DEC &lt;int&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
