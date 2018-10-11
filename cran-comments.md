@@ -29,13 +29,14 @@
 - Ensure that DESCRIPTION file follows CRAN guidelines
 
 ## Minor changes
+
 - Format help files, fixing errors and formatting for attractiveness
 
 - Update internal database of station locations
   
 - Update internal database of station locations
   
-- Internal database of station locations stores `BEGIN` and `END` fields as
+- Store internal database of station locations fields `BEGIN` and `END` as
   integer, not double
   
 - Clarify code of conduct statement in README that it only applies to this,
@@ -44,7 +45,9 @@
 - Prompt user for input with warning about reproducibility if using the
   `update_station_list()` function
 
-- Provide users with metadata for station inventory lists
+- Adds metadata header to the `tibble` returned by `get_inventory()`
+
+- Remove startup message to conform with rOpenSci guidelines
 
 # Reverse dependencies
 

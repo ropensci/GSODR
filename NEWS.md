@@ -1,33 +1,40 @@
 # GSODR 1.2.2.9000
 
-## Minor changes
-  - Ensure that DESCRIPTION file follows CRAN guidelines
-  
-  - Format help files, fixing errors and formatting for attractiveness
-  
-  - Replace `\dontrun{}` with `\donttest{}` in documentation examples
+## Bug fixes
 
-  - Update internal database of station locations
-  
-  - Refactor internal functionality to be more clear and efficient in execution
+- Refactor internal functionality to be more clear and efficient in execution
     
     - `country-list` is not loaded unless user has specified a country in
       `get_GSOD()`
       
     - An instance where the FIPS code was determined twice was removed
+
+- Replace `\dontrun{}` with `\donttest{}` in documentation examples
+
+- Ensure that DESCRIPTION file follows CRAN guidelines
+
+## Minor changes
+
+- Format help files, fixing errors and formatting for attractiveness
+
+- Update internal database of station locations
   
-  - Internal database of station locations stores `BEGIN` and `END` fields as
+- Update internal database of station locations
+  
+- Store internal database of station locations fields `BEGIN` and `END` as
   integer, not double
   
-  - Clarify code of conduct statement in README that it only applies to this,
+- Clarify code of conduct statement in README that it only applies to this,
   GSODR, project
   
-  - Prompt user for input with warning about reproducibility if using the
+- Prompt user for input with warning about reproducibility if using the
   `update_station_list()` function
+
+- Adds metadata header to the `tibble` returned by `get_inventory()`
+
+- Remove startup message to conform with rOpenSci guidelines
   
-  - Adds metadata header to the `tibble` returned by `get_inventory()`
-  
-  - Remove extra code, clean up code-chunks and use `hrbrthemes::theme_ipsum()`
+- Remove extra code, clean up code-chunks and use `hrbrthemes::theme_ipsum()`
   for 
   [data-raw/fetch_isd-history.md](https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md)
 
