@@ -81,7 +81,7 @@ Suggests:
 RoxygenNote: 6.1.0
 Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
-NeedsCompilation: FALSE
+NeedsCompilation: no
 Repository: CRAN
 LazyData: FALSE
 LazyLoad: FALSE
