@@ -25,6 +25,8 @@
   - Prompt user for input with warning about reproducibility if using the
   `update_station_list()` function
   
+  - Adds metadata header to the `tibble` returned by `get_inventory()`
+  
   - Remove extra code, clean up code-chunks and use `hrbrthemes::theme_ipsum()`
   for 
   [data-raw/fetch_isd-history.md](https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md)
