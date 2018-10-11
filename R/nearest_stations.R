@@ -22,9 +22,7 @@
 #' @examples
 #' \donttest{
 #' # Find stations within a 100km radius of Toowoomba, QLD, AUS
-#'
-#' n <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 100)
-#' n
+#' nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 100)
 #'}
 #' @return \code{\link[base]{vector}} object of station identification numbers
 #' @author Adam H Sparks, \email{adamhsparks@@gmail.com}
