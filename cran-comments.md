@@ -1,12 +1,12 @@
 # Test environments
 
-  -  local macOS install, R version 3.5.1 (2018-07-02)
+  -  macOS, R version 3.5.1 (2018-07-02)
 
-  -  local Ubuntu 18.04, R version 3.5.1 (2018-07-02)
+  -  Debian Linux, R version 3.5.1 (2018-07-02)
 
-  -  win-builder R Under development (unstable) (2018-09-20 r75339)
+  -  win-builder, R Under development (unstable) (2018-09-20 r75339)
 
-  -  win-builder R version 3.5.1 (2018-04-23)
+  -  win-builder, R version 3.5.1 (2018-04-23)
 
 
 # R CMD check results
@@ -43,6 +43,8 @@
   
 - Prompt user for input with warning about reproducibility if using the
   `update_station_list()` function
+
+- Provide users with metadata for station inventory lists
 
 # Reverse dependencies
 
