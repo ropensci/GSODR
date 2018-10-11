@@ -18,7 +18,8 @@
 #'
 #' @examples
 #' \donttest{
-#' get_inventory()
+#' inventory <- get_inventory()
+#' inventory
 #'}
 #' @return A data frame as a \code{\link[tibble]{tibble}} object of station
 #' inventories

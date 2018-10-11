@@ -56,12 +56,14 @@
 #' \donttest{
 #'
 #' # Download data to 'tempdir()'
-#' download.file(url =
-#'	  "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/2010/955510-99999-2010.op.gz",
+#' download.file(url = 
+#'	  "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/2010/955510-99999-2010.op.gz", 
 #'      	destfile = file.path(tempdir(), "955510-99999-2010.op.gz"),
 #'      	mode = "wb")
 #' # Reformat station data files in R's tempdir() directory
 #' x <- reformat_GSOD(dsn = tempdir())
+#'
+#' x
 #' }
 #'
 #' @author Adam H Sparks, \email{adamhsparks@@gmail.com}

@@ -19,7 +19,7 @@
 #' \code{load(system.file("extdata", "isd_history.rda", package = "GSODR"))}
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' update_station_list()
 #' }
 #'

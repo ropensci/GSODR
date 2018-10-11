@@ -72,6 +72,8 @@
 #' \donttest{
 #' # Download weather station for Toowoomba, Queensland for 2010
 #' t <- get_GSOD(years = 2010, station = "955510-99999")
+#'
+#' t
 #' }
 #'
 #' @author Adam H Sparks, \email{adamhsparks@@gmail.com}
