@@ -34,8 +34,6 @@
 
 - Update internal database of station locations
   
-- Update internal database of station locations
-  
 - Store internal database of station locations fields `BEGIN` and `END` as
   integer, not double
   
