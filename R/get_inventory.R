@@ -27,7 +27,7 @@
 #' @note The download process can take quite some time to complete.
 #' @importFrom rlang .data
 #' @export get_inventory
-#'
+
 get_inventory <- function() {
 
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))

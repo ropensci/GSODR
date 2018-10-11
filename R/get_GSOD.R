@@ -71,9 +71,9 @@
 #' @examples
 #' \donttest{
 #' # Download weather station for Toowoomba, Queensland for 2010
-#' t <- get_GSOD(years = 2010, station = "955510-99999")
+#' tbar <- get_GSOD(years = 2010, station = "955510-99999")
 #'
-#' t
+#' tbar
 #' }
 #'
 #' @author Adam H Sparks, \email{adamhsparks@@gmail.com}
@@ -89,7 +89,8 @@
 #' \code{\link{reformat_GSOD}}
 #'
 #' @importFrom magrittr %>%
-#' @export
+#' @export get_GSOD
+
 get_GSOD <- function(years,
                      station = NULL,
                      country = NULL,
