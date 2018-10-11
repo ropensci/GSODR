@@ -19,8 +19,8 @@ missing days defined by the user, where stations with too many missing
 observations are omitted.  Only stations with valid reported latitude and
 longitude values are permitted in the final data.  Additional useful
 elements, saturation vapour pressure ('es'), actual vapour pressure ('ea')
-and relative humidity are calculated from the original data and included in
-the final data set.  The resulting data include station identification
+and relative humidity (RH) are calculated from the original data and included
+in the final data set.  The resulting data include station identification
 information, state, country, latitude, longitude, elevation, weather
 observations and associated flags.
 }
