@@ -63,13 +63,15 @@ these data by others must provide this same notification.}
 \examples{
 \donttest{
 
-# Reformat station data files in local directory
-x <- reformat_GSOD(dsn = "~/tmp")
+# Download data to 'tempdir()'
+download.file(url = 
+  "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/2010/955510-99999-2010.op.gz", 
+     	destfile = file.path(tempdir(), "955510-99999-2010.op.gz"),
+     	mode = "wb")
+# Reformat station data files in R's tempdir() directory
+x <- reformat_GSOD(dsn = tempdir())
 
-# Reformat a list of data files
-y <- c("~/GSOD/gsod_1960/200490-99999-1960.op.gz",
-       "~/GSOD/gsod_1961/200490-99999-1961.op.gz")
-x <- reformat_GSOD(file_list = y)
+x
 }
 
 }
