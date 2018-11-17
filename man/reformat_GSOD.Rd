@@ -12,9 +12,6 @@ for tidying.}
 
 \item{file_list}{User supplied list of files of data on local disk for
 tidying.}
-
-\item{cores}{Optional. The number of cores to use for parallel processing of
-the GSOD data. Defaults to \code{1} if not otherwise specified by the user.}
 }
 \value{
 A data frame as a \code{\link[tibble]{tibble}} object of weather

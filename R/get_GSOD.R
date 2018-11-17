@@ -78,7 +78,8 @@
 #' tbar
 #'
 #' # Download global data for 2015 and use parallel processing
-#' global <- get_GSOD(years = 2015, cores = 2)
+#' future::plan(strategy = "multiprocess")
+#' global <- get_GSOD(years = 2015)
 #'
 #' global
 #' }
@@ -182,12 +183,10 @@ get_GSOD <- function(years,
   }
 
   # Clean and reformat list of station files from local disk in tempdir --------
-
-  future::plan(multiprocess, workers = cores)
-  GSOD_XY <- future.apply::future_apply(X = GSOD_list,
-                                        FUN = .process_gz,
-                                        isd_history = isd_history)  %>%
-    data.table::rbindlist()
+  GSOD_XY <- future.apply::future_lapply(X = GSOD_list,
+                                         FUN = .process_gz,
+                                         isd_history = isd_history)  %>%
+    dplyr::bind_rows()
 
   # Cleanup --------------------------------------------------------------------
   files <-

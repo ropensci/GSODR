@@ -19,8 +19,6 @@
 #' for tidying.
 #' @param file_list User supplied list of files of data on local disk for
 #' tidying.
-#' @param cores Optional. The number of cores to use for parallel processing of
-#' the GSOD data. Defaults to `1` if not otherwise specified by the user.
 #'
 #' @details
 #' If multiple stations are given, data are summarised for each year by station,
@@ -96,9 +94,8 @@ reformat_GSOD <- function(dsn = NULL, file_list = NULL) {
     if (length(file_list) == 0)
       stop("No files were found, please check your file location.")
   }
-  future::plan(multiprocess, workers = cores)
-  GSOD_XY <- future.apply::future_apply(X = file_list,
+  GSOD_XY <- future.apply::future_lapply(X = file_list,
                                         FUN = .process_gz,
                                         isd_history = isd_history) %>%
-    data.table::rbindlist()
+    dplyr::bind_rows()
 }
