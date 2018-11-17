@@ -67,6 +67,8 @@
 #' between latitudes 60 and -60 for agroclimatology work, defaults to `FALSE`.
 #' Set to `TRUE` to include only stations within the confines of these
 #' latitudes.
+#' @param cores Optional. The number of cores to use for parallel processing of
+#' the GSOD data. Defaults to `1` if not otherwise specified by the user.
 #'
 #' @examples
 #' \donttest{
@@ -74,6 +76,11 @@
 #' tbar <- get_GSOD(years = 2010, station = "955510-99999")
 #'
 #' tbar
+#'
+#' # Download global data for 2015 and use parallel processing
+#' global <- get_GSOD(years = 2015, cores = 2)
+#'
+#' global
 #' }
 #'
 #' @author Adam H Sparks, \email{adamhsparks@@gmail.com}
@@ -95,7 +102,8 @@ get_GSOD <- function(years,
                      station = NULL,
                      country = NULL,
                      max_missing = NULL,
-                     agroclimatology = FALSE) {
+                     agroclimatology = FALSE,
+                     cores = NULL) {
   # Create objects for use in retrieving files ---------------------------------
   original_timeout <- options("timeout")[[1]]
   options(timeout = 300)
@@ -120,6 +128,10 @@ get_GSOD <- function(years,
       stop(call. = FALSE,
            "You cannot use `max_missing` with the current, incomplete year.")
     }
+  }
+
+  if (is.null(cores)) {
+    cores <- 1
   }
 
   # CRAN NOTE avoidance
@@ -170,10 +182,12 @@ get_GSOD <- function(years,
   }
 
   # Clean and reformat list of station files from local disk in tempdir --------
-  GSOD_XY <- purrr::map(.x = GSOD_list,
-                        .f = .process_gz,
-                        isd_history = isd_history)  %>%
-    dplyr::bind_rows()
+
+  future::plan(multiprocess, workers = cores)
+  GSOD_XY <- future.apply::future_apply(X = GSOD_list,
+                                        FUN = .process_gz,
+                                        isd_history = isd_history)  %>%
+    data.table::rbindlist()
 
   # Cleanup --------------------------------------------------------------------
   files <-
@@ -187,6 +201,4 @@ get_GSOD <- function(years,
     )
   unlink(files, force = TRUE, recursive = TRUE)
   rm(cache_dir)
-  gc()
-  return(GSOD_XY)
 }

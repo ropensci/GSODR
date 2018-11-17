@@ -48,6 +48,8 @@ Depends:
     R (>= 3.3.0)
 License: MIT + file LICENSE
 Imports: curl,
+    future,
+    future.apply,
     dplyr (>= 0.7.0),
     magrittr,
     purrr (>= 0.2.0),
@@ -78,7 +80,7 @@ Suggests:
     spacetime,
     testthat,
     tidyr
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
 NeedsCompilation: no
