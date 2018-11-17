@@ -186,7 +186,7 @@ get_GSOD <- function(years,
   GSOD_XY <- future.apply::future_lapply(X = GSOD_list,
                                          FUN = .process_gz,
                                          isd_history = isd_history)  %>%
-    dplyr::bind_rows()
+    data.table::rbindlist()
 
   # Cleanup --------------------------------------------------------------------
   files <-
