@@ -94,8 +94,5 @@ reformat_GSOD <- function(dsn = NULL, file_list = NULL) {
     if (length(file_list) == 0)
       stop("No files were found, please check your file location.")
   }
-  GSOD_XY <- future.apply::future_lapply(X = file_list,
-                                        FUN = .process_gz,
-                                        isd_history = isd_history) %>%
-    dplyr::bind_rows()
+  GSOD_XY <- apply_process_gz(file_list, isd_history)
 }

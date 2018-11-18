@@ -5,7 +5,7 @@
 \title{Download and Return a Tidy Data Frame of \acronym{GSOD} Weather Data}
 \usage{
 get_GSOD(years, station = NULL, country = NULL, max_missing = NULL,
-  agroclimatology = FALSE, cores = NULL)
+  agroclimatology = FALSE)
 }
 \arguments{
 \item{years}{Year(s) of weather data to download.}
@@ -30,9 +30,6 @@ from a station's data before it is excluded from final file output.}
 between latitudes 60 and -60 for agroclimatology work, defaults to \code{FALSE}.
 Set to \code{TRUE} to include only stations within the confines of these
 latitudes.}
-
-\item{cores}{Optional. The number of cores to use for parallel processing of
-the GSOD data. Defaults to \code{1} if not otherwise specified by the user.}
 }
 \value{
 A data frame as a \code{\link[tibble]{tibble}} object of weather
@@ -95,7 +92,7 @@ tbar <- get_GSOD(years = 2010, station = "955510-99999")
 tbar
 
 # Download global data for 2015 and use parallel processing
-future::plan(strategy = "multiprocess")
+future::plan(multiprocess)
 global <- get_GSOD(years = 2015)
 
 global

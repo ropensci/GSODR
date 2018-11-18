@@ -67,9 +67,7 @@
 #' between latitudes 60 and -60 for agroclimatology work, defaults to `FALSE`.
 #' Set to `TRUE` to include only stations within the confines of these
 #' latitudes.
-#' @param cores Optional. The number of cores to use for parallel processing of
-#' the GSOD data. Defaults to `1` if not otherwise specified by the user.
-#'
+#' 
 #' @examples
 #' \donttest{
 #' # Download weather station for Toowoomba, Queensland for 2010
@@ -78,7 +76,7 @@
 #' tbar
 #'
 #' # Download global data for 2015 and use parallel processing
-#' future::plan(strategy = "multiprocess")
+#' future::plan(multiprocess)
 #' global <- get_GSOD(years = 2015)
 #'
 #' global
@@ -103,8 +101,7 @@ get_GSOD <- function(years,
                      station = NULL,
                      country = NULL,
                      max_missing = NULL,
-                     agroclimatology = FALSE,
-                     cores = NULL) {
+                     agroclimatology = FALSE) {
   # Create objects for use in retrieving files ---------------------------------
   original_timeout <- options("timeout")[[1]]
   options(timeout = 300)
@@ -121,7 +118,7 @@ get_GSOD <- function(years,
            "value larger than 1\n")
     }
   }
-
+  
   if (!is.null(max_missing))
   {
     if (format(Sys.Date(), "%Y") %in% years)
@@ -131,16 +128,12 @@ get_GSOD <- function(years,
     }
   }
 
-  if (is.null(cores)) {
-    cores <- 1
-  }
-
-  # CRAN NOTE avoidance
+# CRAN NOTE avoidance
   isd_history <- NULL # nocov
-
+  
   # Load station list
   load(system.file("extdata", "isd_history.rda", package = "GSODR")) # nocov
-
+  
   # Validate user entered stations for existence in stations list from NCEI
   purrr::walk(
     .x = station,
@@ -148,46 +141,42 @@ get_GSOD <- function(years,
     isd_history = isd_history,
     years = years
   )
-
+  
   # Download files from server -----------------------------------------------
-  GSOD_list <- .download_files(ftp_base, station, years, cache_dir)
-
-  # Subset GSOD_list for agroclimatology only stations -----------------------
+  file_list <- .download_files(ftp_base, station, years, cache_dir)
+  
+  # Subset file_list for agroclimatology only stations -----------------------
   if (isTRUE(agroclimatology)) {
-    GSOD_list <-
-      .agroclimatology_list(GSOD_list, isd_history, cache_dir, years)
+    file_list <-
+      .agroclimatology_list(file_list, isd_history, cache_dir, years)
   }
-
-  # Subset GSOD_list for specified country -------------------------------------
+  
+  # Subset file_list for specified country -------------------------------------
   if (!is.null(country)) {
     # Load country list
     # CRAN NOTE avoidance
     country_list <- NULL # nocov
     load(system.file("extdata", "country_list.rda", package = "GSODR")) # nocov
-
+    
     country <- .validate_country(country, country_list)
-
-    GSOD_list <-
+    
+    file_list <-
       .subset_country_list(country,
                            country_list,
-                           GSOD_list,
+                           file_list,
                            isd_history,
                            cache_dir,
                            years)
   }
-
+  
   # Validate stations for missing days -----------------------------------------
   if (!is.null(max_missing)) {
-    GSOD_list <-
-      .validate_missing_days(max_missing, GSOD_list)
+    file_list <-
+      .validate_missing_days(max_missing, file_list)
   }
-
-  # Clean and reformat list of station files from local disk in tempdir --------
-  GSOD_XY <- future.apply::future_lapply(X = GSOD_list,
-                                         FUN = .process_gz,
-                                         isd_history = isd_history)  %>%
-    data.table::rbindlist()
-
+  
+  GSOD_XY <- apply_process_gz(file_list, isd_history)
+  return(GSOD_XY)
   # Cleanup --------------------------------------------------------------------
   files <-
     list.files(
