@@ -57,10 +57,6 @@ articles:
 - title: Peer Reviewed Articles
   desc: Articles about or citing GSODR
   contents:
-<<<<<<< Updated upstream
   - text: 'JOSS Article'
   - href: https://joss.theoj.org/papers/4e10b96b7d330496d89c169c9f4529be
-=======
   - 'JOSS Article'
-
->>>>>>> Stashed changes
