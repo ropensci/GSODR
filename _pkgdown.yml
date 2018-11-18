@@ -1,11 +1,3 @@
-title: GSODR
-url: https://ropensci.github.io/GSODR/
-template:
-  params:
-    bootswatch: spacelab
-    docsearch:
-      api_key: 432336b5561cc8eeddda9af96c7a8cc2
-      index_name: gsodr
 navbar:
   structure:
     left:
@@ -33,10 +25,9 @@ navbar:
         href: articles/Working_with_spatial_and_climate_data.html
       - text: 'GSODR use case: Finding specific stations using spatial queries'
         href: articles/use_case_1.html
-      text: Articles
-      menu:
-      - text: JOSS Article
-      - href: https://joss.theoj.org/papers/4e10b96b7d330496d89c169c9f4529be
+      - text: "---------"
+      - text: 'JOSS Article'
+        href: http://joss.theoj.org/papers/14021f4e4931cdaab4ea41be27df2df6
     news:
       text: Changelog
       href: news/index.html
@@ -58,13 +49,18 @@ reference:
 
 articles:
 - title: Vignettes
-  desc: ~
+  desc: Vingettes describing the use of GSODR
   contents:
   - '`GSODR`'
   - '`Working_with_spatial_and_climate_data`'
   - '`use_case_1`'
-- title: Articles
-  desc: Peer Reviewed Articles
+- title: Peer Reviewed Articles
+  desc: Articles about or citing GSODR
   contents:
+<<<<<<< Updated upstream
   - text: 'JOSS Article'
   - href: https://joss.theoj.org/papers/4e10b96b7d330496d89c169c9f4529be
+=======
+  - 'JOSS Article'
+
+>>>>>>> Stashed changes
