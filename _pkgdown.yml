@@ -27,16 +27,16 @@ navbar:
       text: Get started
       href: articles/GSODR.html
     articles:
-      text: Vignettes
-      menu:
-      - text: Working with spatial and climate data from GSODR and GSODRdata
-        href: articles/Working_with_spatial_and_climate_data.html
-      - text: 'GSODR use case: Finding specific stations using spatial queries'
-        href: articles/use_case_1.html
-      text: Articles
-      menu:
-      - text: JOSS Article
-      - href: https://joss.theoj.org/papers/4e10b96b7d330496d89c169c9f4529be
+      - text: Vignettes
+      - menu:
+        - text: Working with spatial and climate data from GSODR and GSODRdata
+        - href: articles/Working_with_spatial_and_climate_data.html
+        - text: 'GSODR use case: Finding specific stations using spatial queries'
+        - href: articles/use_case_1.html
+      - text: Articles
+      - menu:
+        - text: JOSS Article
+        - href: https://joss.theoj.org/papers/4e10b96b7d330496d89c169c9f4529be
     news:
       text: Changelog
       href: news/index.html
@@ -66,5 +66,4 @@ articles:
 - title: Articles
   desc: Peer Reviewed Articles
   contents:
-  - text: 'JOSS Article'
-  - href: https://joss.theoj.org/papers/4e10b96b7d330496d89c169c9f4529be
+  - 'JOSS Article'
