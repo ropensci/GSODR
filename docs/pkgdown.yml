@@ -1,0 +1,8 @@
+pandoc: 1.19.2.1
+pkgdown: 1.1.0
+pkgdown_sha: ~
+articles:
+  GSODR: GSODR.html
+  Working_with_spatial_and_climate_data: Working_with_spatial_and_climate_data.html
+  use_case_1: use_case_1.html
+
