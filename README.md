@@ -7,7 +7,7 @@
 [![JOSS](http://joss.theoj.org/papers/10.21105/joss.00177/status.svg)](http://joss.theoj.org/papers/14021f4e4931cdaab4ea41be27df2df6)
 [![](https://badges.ropensci.org/79_status.svg)](https://github.com/ropensci/onboarding/issues/79)
 
-_GSODR_: Global Surface Summary of the Day ('GSOD') Weather Data Client for R <img src="man/figures/logo.png" align="right" />
+_GSODR_: Global Surface Summary of the Day (GSOD) Weather Data Client for R <img src="man/figures/logo.png" align="right" />
 ================
 
 ## Introduction
@@ -50,9 +50,6 @@ relative humidity elements calculated from existing data in GSOD. Additional
 data are calculated by this R package using the original data and included in
 the final data. These include vapour pressure (ea and es) and relative humidity.
 
-It is recommended that you have a good Internet connection to download the data
-files as they can be quite large and slow to download.
-
 For more information see the description of the data provided by NCEI,
 <http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
 
@@ -89,50 +86,53 @@ install_github("ropensci/GSODR")
 There are several other sources of weather data and ways of retrieving them
 through R. Several are also [rOpenSci](https://ropensci.org) projects.
 
-[_rnoaa_](https://CRAN.R-project.org/package=rnoaa), from
-[rOpenSci](https://ropensci.org) offers tools for interacting with and
-downloading weather data from the United States National Oceanic and Atmospheric
-Administration but lacks support for GSOD data.
-
-[_bomrang_](https://CRAN.R-project.org/package=bomrang), from
-[rOpenSci](https://ropensci.org) provides functions to interface with Australia
-Government Bureau of Meteorology (BoM) data, fetching data and returning a tidy
-data frame of précis forecasts, current weather data from stations, agriculture
-bulletin data, BoM 0900 or 1500 weather bulletins or a raster stack object of
-satellite imagery from GeoTIFF files. Data (c) Australian Government Bureau of
-Meteorology Creative Commons (CC) Attribution 3.0 licence or Public Access
-Licence (PAL) as appropriate. See <http://www.bom.gov.au/other/copyright.shtml>
-for further details.
-
-[_riem_](https://CRAN.R-project.org/package=riem) from
-[rOpenSci](https://ropensci.org) allows to get weather data from Automated
-Surface Observing System (ASOS) stations (airports) in the whole world thanks to
-the Iowa Environment Mesonet website.
-
-[_CliFlo_](https://CRAN.R-project.org/package=clifro) from
-[rOpenSci](https://ropensci.org) is a web portal to the New Zealand National
-Climate Database and provides public access (via subscription) to around 6,500
-various climate stations (see <https://cliflo.niwa.co.nz/> for more
-information). Collating and manipulating data from CliFlo (hence clifro) and
-importing into R for further analysis, exploration and visualisation is now
-straightforward and coherent. The user is required to have an internet
-connection, and a current CliFlo subscription (free) if data from stations,
-other than the public Reefton electronic weather station, is sought.
-
-[_weatherData_](https://CRAN.R-project.org/package=weatherData) provides a
-selection of functions to fetch weather data from Weather Underground and return
-it as a clean data frame. 
-
-## Other Sources for Fetching GSOD Weather Data
-
 The
 [_GSODTools_](https://github.com/environmentalinformatics-marburg/GSODTools)
 by [Florian Detsch](https://github.com/fdetsch) is an R package that
 offers similar functionality as _GSODR_, but also has the ability to
 graph the data and working with data for time series analysis.
 
-The [_ULMO_](https://github.com/ulmo-dev/ulmo) library offers an
-interface to retrieve GSOD data using Python.
+The [_gsod_](https://github.com/databrew/gsod) package from
+[DataBrew](http://www.databrew.cc/posts/gsod.html) aims to streamline the way
+that researchers and data scientists interact with and utilize weather data and
+relies on [_GSODR_], but provides data in the package rather than downloading
+so it is faster (though available data may be out of date).
+
+[_rnoaa_](https://CRAN.R-project.org/package=rnoaa), from
+[rOpenSci](https://ropensci.github.io/rnoaa/) offers tools for interacting with
+and downloading weather data from the United States National Oceanic and
+Atmospheric Administration but lacks support for GSOD data.
+
+[_bomrang_](https://CRAN.R-project.org/package=bomrang), from
+[rOpenSci](https://ropensci.github.io/bomrang/) provides functions to interface
+with Australia Government Bureau of Meteorology (BoM) data, fetching current and
+historical data including précis and marine forecasts, current weather data
+from stations, agriculture bulletin data, BoM 0900 or 1500 weather bulletins and
+satellite and radar imagery.
+
+[_riem_](https://CRAN.R-project.org/package=riem) from
+[rOpenSci](https://ropensci.github.io/riem/) allows to get weather data from
+Automated Surface Observing System (ASOS) stations (airports) in the whole world
+thanks to the Iowa Environment Mesonet website.
+
+[_weathercan_](https://CRAN.R-project.org/package=weathercan) from
+[rOpenSci](https://ropensci.github.io/weathercan/) makes it easier to search for
+and download multiple months/years of historical weather data from Environment
+and Climate Change Canada (ECCC) website.
+
+[_CliFlo_](https://CRAN.R-project.org/package=clifro) from
+[rOpenSci](https://github.com/ropensci/clifro/) is a web portal to the New Zealand
+National Climate Database and provides public access (via subscription) to
+around 6,500 various climate stations (see <https://cliflo.niwa.co.nz/> for more
+information). Collating and manipulating data from CliFlo (hence clifro) and
+importing into R for further analysis, exploration and visualisation is now
+straightforward and coherent. The user is required to have an Internet
+connection, and a current CliFlo subscription (free) if data from stations,
+other than the public Reefton electronic weather station, is sought.
+
+[_weatherData_](https://CRAN.R-project.org/package=weatherData) provides a
+selection of functions to fetch weather data from Weather Underground and return
+it as a clean data frame.
 
 ## Notes
 
@@ -140,7 +140,7 @@ interface to retrieve GSOD data using Python.
 
 #### Elevation Values
 
-90m hole-filled SRTM digital elevation (Jarvis _et al._ 2008) was used
+90&nbsp;m hole-filled SRTM digital elevation (Jarvis _et al._ 2008) was used
 to identify and correct/remove elevation errors in data for station
 locations between -60˚ and 60˚ latitude. This applies to cases here
 where elevation was missing in the reported values as well. In case the
