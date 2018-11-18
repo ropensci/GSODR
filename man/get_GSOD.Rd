@@ -91,8 +91,8 @@ tbar <- get_GSOD(years = 2010, station = "955510-99999")
 
 tbar
 
-# Download global data for 2015 and use parallel processing
-future::plan(multiprocess)
+# Download global data for 2015
+
 global <- get_GSOD(years = 2015)
 
 global

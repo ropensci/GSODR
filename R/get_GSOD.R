@@ -75,8 +75,8 @@
 #'
 #' tbar
 #'
-#' # Download global data for 2015 and use parallel processing
-#' future::plan(multiprocess)
+#' # Download global data for 2015
+#' 
 #' global <- get_GSOD(years = 2015)
 #'
 #' global

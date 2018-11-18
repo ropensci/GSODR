@@ -6,12 +6,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Global Surface Summary of the Day ('GSOD') Weather Data Client • GSODR</title>
-<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/spacelab/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><!-- docsearch --><script src="docsearch.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css">
-<link href="docsearch.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><meta property="og:title" content="Global Surface Summary of the Day ('GSOD') Weather Data Client">
+<script src="pkgdown.js"></script><meta property="og:title" content="Global Surface Summary of the Day ('GSOD') Weather Data Client">
 <meta property="og:description" content="Provides automated downloading, parsing, cleaning, unit conversion
     and formatting of Global Surface Summary of the Day ('GSOD') weather data
     from the from the USA National Centers for Environmental Information
@@ -30,7 +28,7 @@
     Radar Topography Measuring Mission ('SRTM').  For information on the 'GSOD'
     data from 'NCEI', please see the 'GSOD' 'readme.txt' file available from,
     &lt;http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt&gt;.">
-<meta property="og:image" content="https://ropensci.github.io/GSODR/logo.png">
+<meta property="og:image" content="/logo.png">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -94,13 +92,7 @@
   </a>
 </li>
       </ul>
-<form class="navbar-form navbar-right" role="search">
-        <div class="form-group">
-          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
 </div>
-      </form>
-      
-    </div>
 <!--/.nav-collapse -->
   </div>
 <!--/.container -->
@@ -114,7 +106,7 @@
 
 <div id="gsodr-global-surface-summary-of-the-day-gsod-weather-data-client-for-r" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#gsodr-global-surface-summary-of-the-day-gsod-weather-data-client-for-r" class="anchor"></a><em>GSODR</em>: Global Surface Summary of the Day (‘GSOD’) Weather Data Client for R <img src="reference/figures/logo.png" align="right">
+<a href="#gsodr-global-surface-summary-of-the-day-gsod-weather-data-client-for-r" class="anchor"></a><em>GSODR</em>: Global Surface Summary of the Day (GSOD) Weather Data Client for R <img src="reference/figures/logo.png" align="right">
 </h1></div>
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
@@ -128,7 +120,6 @@
 <li><p><code><a href="reference/get_inventory.html">get_inventory()</a></code> - this function downloads the latest station inventory information from the NCEI’s FTP server and returns the header information about the latest version as a message in the console and a tidy data frame of the stations’ inventory for each month that data are reported.</p></li>
 </ul>
 <p>When reformatting data either with <code><a href="reference/get_GSOD.html">get_GSOD()</a></code> or <code><a href="reference/reformat_GSOD.html">reformat_GSOD()</a></code>, all units are converted to International System of Units (SI), <em>e.g.</em>, inches to millimetres and Fahrenheit to Celsius. File output is returned as a <code>tibble()</code>, summarising each year by station, which also includes vapour pressure and relative humidity elements calculated from existing data in GSOD. Additional data are calculated by this R package using the original data and included in the final data. These include vapour pressure (ea and es) and relative humidity.</p>
-<p>It is recommended that you have a good Internet connection to download the data files as they can be quite large and slow to download.</p>
 <p>For more information see the description of the data provided by NCEI, <a href="http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt" class="uri">http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt</a>.</p>
 </div>
 <div id="quick-start-install" class="section level2">
@@ -138,35 +129,32 @@
 <h3 class="hasAnchor">
 <a href="#stable-version" class="anchor"></a>Stable Version</h3>
 <p>A stable version of <em>GSODR</em> is available from <a href="https://cran.r-project.org/package=GSODR">CRAN</a>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">"GSODR"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"GSODR"</span>)</code></pre></div>
 </div>
 <div id="development-version" class="section level3">
 <h3 class="hasAnchor">
 <a href="#development-version" class="anchor"></a>Development Version</h3>
 <p>A development version is available from from GitHub. If you wish to install the development version that may have new features or bug fixes before the CRAN version does (but also may not work properly), please install the <a href="https://github.com/r-lib/remotes">remotes</a> package, available from CRAN. We strive to keep the master branch on GitHub functional and working properly.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(<span class="st">"remotes"</span>)) {</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="kw">install.packages</span>(<span class="st">"remotes"</span>, <span class="dt">repos =</span> <span class="st">"http://cran.rstudio.com/"</span>)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="kw">library</span>(<span class="st">"remotes"</span>)</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">}</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="kw"><a href="http://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"ropensci/GSODR"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(<span class="st">"remotes"</span>)) {
+  <span class="kw">install.packages</span>(<span class="st">"remotes"</span>, <span class="dt">repos =</span> <span class="st">"http://cran.rstudio.com/"</span>)
+  <span class="kw">library</span>(<span class="st">"remotes"</span>)
+}
+
+<span class="kw"><a href="http://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"ropensci/GSODR"</span>)</code></pre></div>
 </div>
 </div>
 <div id="other-sources-of-weather-data-in-r" class="section level2">
 <h2 class="hasAnchor">
 <a href="#other-sources-of-weather-data-in-r" class="anchor"></a>Other Sources of Weather Data in R</h2>
 <p>There are several other sources of weather data and ways of retrieving them through R. Several are also <a href="https://ropensci.org">rOpenSci</a> projects.</p>
-<p><a href="https://CRAN.R-project.org/package=rnoaa"><em>rnoaa</em></a>, from <a href="https://ropensci.org">rOpenSci</a> offers tools for interacting with and downloading weather data from the United States National Oceanic and Atmospheric Administration but lacks support for GSOD data.</p>
-<p><a href="https://CRAN.R-project.org/package=bomrang"><em>bomrang</em></a>, from <a href="https://ropensci.org">rOpenSci</a> provides functions to interface with Australia Government Bureau of Meteorology (BoM) data, fetching data and returning a tidy data frame of précis forecasts, current weather data from stations, agriculture bulletin data, BoM 0900 or 1500 weather bulletins or a raster stack object of satellite imagery from GeoTIFF files. Data (c) Australian Government Bureau of Meteorology Creative Commons (CC) Attribution 3.0 licence or Public Access Licence (PAL) as appropriate. See <a href="http://www.bom.gov.au/other/copyright.shtml" class="uri">http://www.bom.gov.au/other/copyright.shtml</a> for further details.</p>
-<p><a href="https://CRAN.R-project.org/package=riem"><em>riem</em></a> from <a href="https://ropensci.org">rOpenSci</a> allows to get weather data from Automated Surface Observing System (ASOS) stations (airports) in the whole world thanks to the Iowa Environment Mesonet website.</p>
-<p><a href="https://CRAN.R-project.org/package=clifro"><em>CliFlo</em></a> from <a href="https://ropensci.org">rOpenSci</a> is a web portal to the New Zealand National Climate Database and provides public access (via subscription) to around 6,500 various climate stations (see <a href="https://cliflo.niwa.co.nz/" class="uri">https://cliflo.niwa.co.nz/</a> for more information). Collating and manipulating data from CliFlo (hence clifro) and importing into R for further analysis, exploration and visualisation is now straightforward and coherent. The user is required to have an internet connection, and a current CliFlo subscription (free) if data from stations, other than the public Reefton electronic weather station, is sought.</p>
-<p><a href="https://CRAN.R-project.org/package=weatherData"><em>weatherData</em></a> provides a selection of functions to fetch weather data from Weather Underground and return it as a clean data frame.</p>
-</div>
-<div id="other-sources-for-fetching-gsod-weather-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#other-sources-for-fetching-gsod-weather-data" class="anchor"></a>Other Sources for Fetching GSOD Weather Data</h2>
 <p>The <a href="https://github.com/environmentalinformatics-marburg/GSODTools"><em>GSODTools</em></a> by <a href="https://github.com/fdetsch">Florian Detsch</a> is an R package that offers similar functionality as <em>GSODR</em>, but also has the ability to graph the data and working with data for time series analysis.</p>
-<p>The <a href="https://github.com/ulmo-dev/ulmo"><em>ULMO</em></a> library offers an interface to retrieve GSOD data using Python.</p>
+<p>The <a href="https://github.com/databrew/gsod"><em>gsod</em></a> package from <a href="http://www.databrew.cc/posts/gsod.html">DataBrew</a> aims to streamline the way that researchers and data scientists interact with and utilize weather data and relies on [<em>GSODR</em>], but provides data in the package rather than downloading so it is faster (though available data may be out of date).</p>
+<p><a href="https://CRAN.R-project.org/package=rnoaa"><em>rnoaa</em></a>, from <a href="https://ropensci.github.io/rnoaa/">rOpenSci</a> offers tools for interacting with and downloading weather data from the United States National Oceanic and Atmospheric Administration but lacks support for GSOD data.</p>
+<p><a href="https://CRAN.R-project.org/package=bomrang"><em>bomrang</em></a>, from <a href="https://ropensci.github.io/bomrang/">rOpenSci</a> provides functions to interface with Australia Government Bureau of Meteorology (BoM) data, fetching current and historical data including précis and marine forecasts, current weather data from stations, agriculture bulletin data, BoM 0900 or 1500 weather bulletins and satellite and radar imagery.</p>
+<p><a href="https://CRAN.R-project.org/package=riem"><em>riem</em></a> from <a href="https://ropensci.github.io/riem/">rOpenSci</a> allows to get weather data from Automated Surface Observing System (ASOS) stations (airports) in the whole world thanks to the Iowa Environment Mesonet website.</p>
+<p><a href="https://CRAN.R-project.org/package=weathercan"><em>weathercan</em></a> from <a href="https://ropensci.github.io/weathercan/">rOpenSci</a> makes it easier to search for and download multiple months/years of historical weather data from Environment and Climate Change Canada (ECCC) website.</p>
+<p><a href="https://CRAN.R-project.org/package=clifro"><em>CliFlo</em></a> from <a href="https://github.com/ropensci/clifro/">rOpenSci</a> is a web portal to the New Zealand National Climate Database and provides public access (via subscription) to around 6,500 various climate stations (see <a href="https://cliflo.niwa.co.nz/" class="uri">https://cliflo.niwa.co.nz/</a> for more information). Collating and manipulating data from CliFlo (hence clifro) and importing into R for further analysis, exploration and visualisation is now straightforward and coherent. The user is required to have an Internet connection, and a current CliFlo subscription (free) if data from stations, other than the public Reefton electronic weather station, is sought.</p>
+<p><a href="https://CRAN.R-project.org/package=weatherData"><em>weatherData</em></a> provides a selection of functions to fetch weather data from Weather Underground and return it as a clean data frame.</p>
 </div>
 <div id="notes" class="section level2">
 <h2 class="hasAnchor">
@@ -177,7 +165,7 @@
 <div id="elevation-values" class="section level4">
 <h4 class="hasAnchor">
 <a href="#elevation-values" class="anchor"></a>Elevation Values</h4>
-<p>90m hole-filled SRTM digital elevation (Jarvis <em>et al.</em> 2008) was used to identify and correct/remove elevation errors in data for station locations between -60˚ and 60˚ latitude. This applies to cases here where elevation was missing in the reported values as well. In case the station reported an elevation and the DEM does not, the station reported is taken. For stations beyond -60˚ and 60˚ latitude, the values are station reported values in every instance. See <a href="https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.html" class="uri">https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md</a> for more detail on the correction methods.</p>
+<p>90 m hole-filled SRTM digital elevation (Jarvis <em>et al.</em> 2008) was used to identify and correct/remove elevation errors in data for station locations between -60˚ and 60˚ latitude. This applies to cases here where elevation was missing in the reported values as well. In case the station reported an elevation and the DEM does not, the station reported is taken. For stations beyond -60˚ and 60˚ latitude, the values are station reported values in every instance. See <a href="https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.html" class="uri">https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md</a> for more detail on the correction methods.</p>
 </div>
 </div>
 <div id="wmo-resolution-40--noaa-policy" class="section level3">
@@ -274,20 +262,6 @@
 </div>
 
   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script><script>
-  docsearch({
-    
-    
-    apiKey: '432336b5561cc8eeddda9af96c7a8cc2',
-    indexName: 'gsodr',
-    inputSelector: 'input#search-input.form-control',
-    transformData: function(hits) {
-      return hits.map(function (hit) {
-        hit.url = updateHitURL(hit);
-        return hit;
-      });
-    }
-  });
-</script>
-</body>
+
+  </body>
 </html>
