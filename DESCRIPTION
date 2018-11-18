@@ -48,7 +48,6 @@ Depends:
     R (>= 3.3.0)
 License: MIT + file LICENSE
 Imports: curl,
-    data.table,
     dplyr (>= 0.7.0),
     future.apply,
     magrittr,
