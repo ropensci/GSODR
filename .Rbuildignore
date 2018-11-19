@@ -18,3 +18,4 @@ vignettes/figure
 ^codemeta\.json$
 ^_pkgdown\.yml$
 ^\.circleci$
+^GSODR.code-workspace$
