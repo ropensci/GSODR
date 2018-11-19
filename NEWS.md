@@ -1,8 +1,9 @@
-# GSODR 1.2.3.9000
+# GSODR 1.3.0
 
-## Major Changes
+## New Functionality
 
-- Use `future_apply` in processing files after downloading. This allows for end users to use a parallel process of their choice.
+- Use `future_apply` in processing files after downloading. This allows for end
+  users to use a parallel process of their choice.
 
 # GSODR 1.2.3
 
