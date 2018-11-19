@@ -42,6 +42,10 @@ the Global Surface Summary of the Day (\acronym{GSOD}) data provided by the
 Three additional useful elements: saturation vapour pressure (es), actual
 vapour pressure (ea) and relative humidity (RH) are calculated and returned
 in the final data frame.
+
+Parallel processing can be enabled using \code{\link[future]{plan}} to set
+up a parallel backend of your choice, e.g.,
+\code{future::plan(multisession)}. See examples for more.
 }
 \details{
 Stations reporting a latitude of < -90 or > 90 or longitude of < -180 or >
@@ -91,11 +95,25 @@ tbar <- get_GSOD(years = 2010, station = "955510-99999")
 
 tbar
 
-# Get agroclimatology data for 2015 using parallel processing
+# Download data for Australia from 2010 to 2015
+AUS <- get_GSOD(years = 2010:2015, country = "Australia")
+
+AUS
+
+# Download agroclimatology data for 2015 using parallel processing
 future::plan(multisession)
-global <- get_GSOD(years = 2015, agroclimatology = TRUE)
+ag <- get_GSOD(years = 2015, agroclimatology = TRUE)
+
+ag
+
+# Download global data for 2010 to 2015 with a maximum allowed 5 missing days
+# of data using parallel processing
+
+future::plan(multisession)
+global <- get_GSOD(years = 2010:2015, max_missing = 5)
 
 global
+
 }
 }
 \references{

@@ -179,7 +179,10 @@ data.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>If multiple stations are given, data are summarised for each year by station,
+    <p>Parallel processing can be enabled using <code><a href='http://www.rdocumentation.org/packages/future/topics/plan'>plan</a></code> to set
+up a parallel backend of your choice, e.g.,
+<code><a href='http://www.rdocumentation.org/packages/future/topics/plan'>future::plan(multisession)</a></code>.  See examples for more.</p>
+<p>If multiple stations are given, data are summarised for each year by station,
 which include vapour pressure and relative humidity elements calculated from
 existing data in <acronym>GSOD</acronym>. Else, single stations are tidied and a data
 frame is returned.</p>

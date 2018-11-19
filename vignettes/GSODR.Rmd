@@ -146,8 +146,21 @@ ggplot(data = tbar_temps, aes(x = ymd(YEARMODA), y = value,
   theme_bw()
 ```
 
+## Download and Process Files in Parallel
 
-## Creating Spatial Files
+`GSODR` supports the [`future`]( https://CRAN.R-project.org/package=future)
+package for parallel processing on varied platforms with the user determining
+the parallel backend to be used. The most simple way is to use `multisession`
+as an argument for `future::plan()`, which will default to available local cores
+as workers for the run. This can greatly reduce the time necessary to process
+GSOD files.
+
+```{r, eval=FALSE}
+future::plan(multisession)
+global <- get_GSOD(years = 2010:2015)
+```
+
+# Creating Spatial Files
 
 Because the stations provide geospatial location information, it is possible to
 create a spatial file. [GeoPackage files](http://www.geopackage.org) are a open,
@@ -155,8 +168,6 @@ standards-based, platform-independent, portable, self-describing compact
 format for transferring geospatial information, which handle vector files much
 like shapefiles do, but eliminate many of the issues that shapefiles have with
 field names and the number of files.
-
-# Converting GSOD Data to a Spatial Objects and Saving
 
 Converting the GSOD data to a spatial object is rather simple. In R there are
 two options, _sp_ and _sf_. The _sp_ format is older and more well established,

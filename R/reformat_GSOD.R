@@ -15,6 +15,10 @@
 #' metre (\acronym{SRTM} 90m) digital elevation data based on \acronym{NASA}'s
 #' original \acronym{SRTM} 90m data.
 #'
+#' Parallel processing can be enabled using \code{\link[future]{plan}} to set
+#' up a parallel backend of your choice, e.g.,
+#' \code{future::plan(multisession)}.  See examples for more.
+#'
 #' @param dsn User supplied file path to location of data files on local disk
 #' for tidying.
 #' @param file_list User supplied list of files of data on local disk for
