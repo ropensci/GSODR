@@ -91,13 +91,12 @@ tbar <- get_GSOD(years = 2010, station = "955510-99999")
 
 tbar
 
-# Download global data for 2015 using parallel processing
+# Get agroclimatology data for 2015 using parallel processing
 future::plan(multisession)
-global <- get_GSOD(years = 2015)
+global <- get_GSOD(years = 2015, agroclimatology = TRUE)
 
 global
 }
-
 }
 \references{
 {Jarvis, A., Reuter, H. I, Nelson, A., Guevara, E. (2008)
