@@ -180,7 +180,7 @@ test_that("Timeout options are reset on get_GSOD() exit", {
   # get_GSOD() resets on exit.
   skip_on_cran()
   original_timeout <- options("timeout")[[1]]
-  x <- get_GSOD(years = 2010, station = "945510-99999")
+  x <- get_GSOD(years = 2010, station = "945520-99999")
   expect_is(x, "data.frame")
   expect_equal(options("timeout")[[1]], original_timeout)
   rm(x)

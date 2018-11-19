@@ -27,11 +27,26 @@ if (!require("countrycode"))
 
     ## Loading required package: countrycode
 
-    ## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
-    ## logical.return = TRUE, : there is no package called 'countrycode'
+``` r
+if (!require("dplyr"))
+{
+  install.packages("dplyr",
+                   repos = c(CRAN = "https://cran.rstudio.com"))
+}
+```
 
-    ## Installing package into '/Users/U8004755/Library/R/3.x/library'
-    ## (as 'lib' is unspecified)
+    ## Loading required package: dplyr
+
+    ## 
+    ## Attaching package: 'dplyr'
+
+    ## The following objects are masked from 'package:stats':
+    ## 
+    ##     filter, lag
+
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     intersect, setdiff, setequal, union
 
 ``` r
 countries <- readr::read_table(
@@ -99,27 +114,28 @@ print(country_list)
     ## #   cldr.name.en <chr>, …
 
 There are unnecessary data in several columns. *GSODR* only requires
-FIPS, name, and ISO codes to function.
+FIPS, name, and ISO codes to
+function.
 
 ``` r
-country_list <- country_list[, c(1:2, 34:35)]
+country_list <- select(country_list, c("FIPS", "COUNTRY_NAME", "iso2c", "iso3c"))
 
 country_list
 ```
 
     ## # A tibble: 293 x 4
-    ##    FIPS  COUNTRY_NAME        iso.name.en         iso.name.fr       
-    ##    <chr> <chr>               <chr>               <chr>             
-    ##  1 AA    ARUBA               Aruba               Aruba             
-    ##  2 AC    ANTIGUA AND BARBUDA Antigua and Barbuda Antigua-et-Barbuda
-    ##  3 AF    AFGHANISTAN         Afghanistan         Afghanistan (l')  
-    ##  4 AG    ALGERIA             Algeria             Algérie (l')      
-    ##  5 AI    ASCENSION ISLAND    <NA>                <NA>              
-    ##  6 AJ    AZERBAIJAN          Azerbaijan          Azerbaïdjan (l')  
-    ##  7 AL    ALBANIA             Albania             Albanie (l')      
-    ##  8 AM    ARMENIA             Armenia             Arménie (l')      
-    ##  9 AN    ANDORRA             Andorra             Andorre (l')      
-    ## 10 AO    ANGOLA              Angola              Angola (l')       
+    ##    FIPS  COUNTRY_NAME        iso2c iso3c
+    ##    <chr> <chr>               <chr> <chr>
+    ##  1 AA    ARUBA               AW    ABW  
+    ##  2 AC    ANTIGUA AND BARBUDA AG    ATG  
+    ##  3 AF    AFGHANISTAN         AF    AFG  
+    ##  4 AG    ALGERIA             DZ    DZA  
+    ##  5 AI    ASCENSION ISLAND    <NA>  <NA> 
+    ##  6 AJ    AZERBAIJAN          AZ    AZE  
+    ##  7 AL    ALBANIA             AL    ALB  
+    ##  8 AM    ARMENIA             AM    ARM  
+    ##  9 AN    ANDORRA             AD    AND  
+    ## 10 AO    ANGOLA              AO    AGO  
     ## # ... with 283 more rows
 
 Write .rda file to disk.
@@ -154,85 +170,48 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  system   x86_64, darwin18.0.0        
     ##  ui       X11                         
     ##  language (EN)                        
-    ##  collate  en_US.UTF-8                 
-    ##  ctype    en_US.UTF-8                 
+    ##  collate  en_AU.UTF-8                 
+    ##  ctype    en_AU.UTF-8                 
     ##  tz       Australia/Brisbane          
     ##  date     2018-11-19                  
     ## 
     ## ─ Packages ──────────────────────────────────────────────────────────────
-    ##  ! package      * version    date       lib source        
-    ##  R .py            0.1.3      <NA>       [?] <NA>          
-    ##    assertthat     0.2.0      2017-04-11 [1] CRAN (R 3.5.1)
-    ##    backports      1.1.2      2017-12-13 [1] CRAN (R 3.5.1)
-    ##    base64enc      0.1-3      2015-07-28 [1] CRAN (R 3.5.1)
-    ##    bindr          0.1.1      2018-03-13 [1] CRAN (R 3.5.1)
-    ##    bindrcpp       0.2.2      2018-03-29 [1] CRAN (R 3.5.1)
-    ##    callr          3.0.0      2018-08-24 [1] CRAN (R 3.5.1)
-    ##    cli            1.0.1      2018-09-25 [1] CRAN (R 3.5.1)
-    ##    codetools      0.2-15     2016-10-05 [3] CRAN (R 3.5.1)
-    ##    colorout     * 1.2-0      2018-11-06 [1] local         
-    ##    commonmark     1.6        2018-09-30 [1] CRAN (R 3.5.1)
-    ##    countrycode    1.1.0      2018-10-27 [1] CRAN (R 3.5.1)
-    ##    crayon         1.3.4      2017-09-16 [1] CRAN (R 3.5.1)
-    ##    curl           3.2        2018-03-28 [1] CRAN (R 3.5.1)
-    ##    desc           1.2.0      2018-05-01 [1] CRAN (R 3.5.1)
-    ##    devtools       2.0.1      2018-10-26 [1] CRAN (R 3.5.1)
-    ##    digest         0.6.18     2018-10-10 [1] CRAN (R 3.5.1)
-    ##    dplyr          0.7.8      2018-11-10 [1] CRAN (R 3.5.1)
-    ##    evaluate       0.12       2018-10-09 [1] CRAN (R 3.5.1)
-    ##    fansi          0.4.0      2018-10-05 [1] CRAN (R 3.5.1)
-    ##    fs             1.2.6      2018-08-23 [1] CRAN (R 3.5.1)
-    ##    future         1.10.0     2018-10-17 [1] CRAN (R 3.5.1)
-    ##    future.apply   1.0.1      2018-08-26 [1] CRAN (R 3.5.1)
-    ##    globals        0.12.4     2018-10-11 [1] CRAN (R 3.5.1)
-    ##    glue           1.3.0      2018-07-17 [1] CRAN (R 3.5.1)
-    ##    GSODR        * 1.2.3.9000 2018-11-19 [1] CRAN (R 3.5.1)
-    ##    hms            0.4.2      2018-03-10 [1] CRAN (R 3.5.1)
-    ##    htmltools      0.3.6      2017-04-28 [1] CRAN (R 3.5.1)
-    ##    httr           1.3.1      2017-08-20 [1] CRAN (R 3.5.1)
-    ##    jsonlite       1.5        2017-06-01 [1] CRAN (R 3.5.1)
-    ##    knitr          1.20       2018-02-20 [1] CRAN (R 3.5.1)
-    ##    listenv        0.7.0      2018-01-21 [1] CRAN (R 3.5.1)
-    ##    magick         2.0        2018-10-05 [1] CRAN (R 3.5.1)
-    ##    magrittr       1.5        2014-11-22 [1] CRAN (R 3.5.1)
-    ##    MASS           7.3-51.1   2018-11-01 [3] CRAN (R 3.5.1)
-    ##    memoise        1.1.0      2017-04-21 [1] CRAN (R 3.5.1)
-    ##    pillar         1.3.0      2018-07-14 [1] CRAN (R 3.5.1)
-    ##    pkgbuild       1.0.2      2018-10-16 [1] CRAN (R 3.5.1)
-    ##    pkgconfig      2.0.2      2018-08-16 [1] CRAN (R 3.5.1)
-    ##    pkgdown      * 1.1.0      2018-06-02 [1] CRAN (R 3.5.1)
-    ##    pkgload        1.0.2      2018-10-29 [1] CRAN (R 3.5.1)
-    ##    prettyunits    1.0.2      2015-07-13 [1] CRAN (R 3.5.1)
-    ##    processx       3.2.0      2018-08-16 [1] CRAN (R 3.5.1)
-    ##    ps             1.2.1      2018-11-06 [1] CRAN (R 3.5.1)
-    ##    purrr          0.2.5      2018-05-29 [1] CRAN (R 3.5.1)
-    ##    R.methodsS3    1.7.1      2016-02-16 [1] CRAN (R 3.5.1)
-    ##    R.oo           1.22.0     2018-04-22 [1] CRAN (R 3.5.1)
-    ##    R.utils        2.7.0      2018-08-27 [1] CRAN (R 3.5.1)
-    ##    R6             2.3.0      2018-10-04 [1] CRAN (R 3.5.1)
-    ##    Rcpp           1.0.0      2018-11-07 [1] CRAN (R 3.5.1)
-    ##    readr          1.1.1      2017-05-16 [1] CRAN (R 3.5.1)
-    ##    remotes        2.0.2      2018-10-30 [1] CRAN (R 3.5.1)
-    ##    rlang          0.3.0.1    2018-10-25 [1] CRAN (R 3.5.1)
-    ##    rmarkdown      1.10       2018-06-11 [1] CRAN (R 3.5.1)
-    ##    roxygen2       6.1.1      2018-11-07 [1] CRAN (R 3.5.1)
-    ##    rprojroot      1.3-2      2018-01-03 [1] CRAN (R 3.5.1)
-    ##    rstudioapi     0.8        2018-10-02 [1] CRAN (R 3.5.1)
-    ##    sessioninfo    1.1.1      2018-11-05 [1] CRAN (R 3.5.1)
-    ##    stringi        1.2.4      2018-07-20 [1] CRAN (R 3.5.1)
-    ##    stringr        1.3.1      2018-05-10 [1] CRAN (R 3.5.1)
-    ##    testthat       2.0.1      2018-10-13 [1] CRAN (R 3.5.1)
-    ##    tibble         1.4.2      2018-01-22 [1] CRAN (R 3.5.1)
-    ##    tidyselect     0.2.5      2018-10-11 [1] CRAN (R 3.5.1)
-    ##    usethis        1.4.0      2018-08-14 [1] CRAN (R 3.5.1)
-    ##    utf8           1.1.4      2018-05-24 [1] CRAN (R 3.5.1)
-    ##    whisker        0.3-2      2013-04-28 [1] CRAN (R 3.5.1)
-    ##    withr          2.1.2      2018-03-15 [1] CRAN (R 3.5.1)
-    ##    xml2           1.2.0      2018-01-24 [1] CRAN (R 3.5.1)
-    ##    yaml           2.2.0      2018-07-25 [1] CRAN (R 3.5.1)
+    ##  package     * version date       lib source                            
+    ##  assertthat    0.2.0   2017-04-11 [1] CRAN (R 3.5.1)                    
+    ##  backports     1.1.2   2017-12-13 [1] CRAN (R 3.5.1)                    
+    ##  bindr         0.1.1   2018-03-13 [1] CRAN (R 3.5.1)                    
+    ##  bindrcpp      0.2.2   2018-03-29 [1] CRAN (R 3.5.1)                    
+    ##  cli           1.0.1   2018-09-25 [1] CRAN (R 3.5.1)                    
+    ##  colorout    * 1.2-0   2018-10-17 [1] Github (jalvesaq/colorout@cc5fbfa)
+    ##  countrycode * 1.1.0   2018-10-27 [1] CRAN (R 3.5.1)                    
+    ##  crayon        1.3.4   2017-09-16 [1] CRAN (R 3.5.1)                    
+    ##  curl          3.2     2018-03-28 [1] CRAN (R 3.5.1)                    
+    ##  digest        0.6.18  2018-10-10 [1] CRAN (R 3.5.1)                    
+    ##  dplyr       * 0.7.8   2018-11-10 [1] CRAN (R 3.5.1)                    
+    ##  evaluate      0.12    2018-10-09 [1] CRAN (R 3.5.1)                    
+    ##  fansi         0.4.0   2018-10-05 [1] CRAN (R 3.5.1)                    
+    ##  glue          1.3.0   2018-07-17 [1] CRAN (R 3.5.1)                    
+    ##  hms           0.4.2   2018-03-10 [1] CRAN (R 3.5.1)                    
+    ##  htmltools     0.3.6   2017-04-28 [1] CRAN (R 3.5.1)                    
+    ##  knitr         1.20    2018-02-20 [1] CRAN (R 3.5.1)                    
+    ##  magrittr      1.5     2014-11-22 [1] CRAN (R 3.5.1)                    
+    ##  pillar        1.3.0   2018-07-14 [1] CRAN (R 3.5.1)                    
+    ##  pkgconfig     2.0.2   2018-08-16 [1] CRAN (R 3.5.1)                    
+    ##  purrr         0.2.5   2018-05-29 [1] CRAN (R 3.5.1)                    
+    ##  R6            2.3.0   2018-10-04 [1] CRAN (R 3.5.1)                    
+    ##  Rcpp          1.0.0   2018-11-07 [1] CRAN (R 3.5.1)                    
+    ##  readr         1.1.1   2017-05-16 [1] CRAN (R 3.5.1)                    
+    ##  rlang         0.3.0.1 2018-10-25 [1] CRAN (R 3.5.1)                    
+    ##  rmarkdown     1.10    2018-06-11 [1] CRAN (R 3.5.1)                    
+    ##  rprojroot     1.3-2   2018-01-03 [1] CRAN (R 3.5.1)                    
+    ##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 3.5.1)                    
+    ##  stringi       1.2.4   2018-07-20 [1] CRAN (R 3.5.1)                    
+    ##  stringr       1.3.1   2018-05-10 [1] CRAN (R 3.5.1)                    
+    ##  tibble        1.4.2   2018-01-22 [1] CRAN (R 3.5.1)                    
+    ##  tidyselect    0.2.5   2018-10-11 [1] CRAN (R 3.5.1)                    
+    ##  utf8          1.1.4   2018-05-24 [1] CRAN (R 3.5.1)                    
+    ##  withr         2.1.2   2018-03-15 [1] CRAN (R 3.5.1)                    
+    ##  yaml          2.2.0   2018-07-25 [1] CRAN (R 3.5.1)                    
     ## 
-    ## [1] /Users/U8004755/Library/R/3.x/library
-    ## [2] /usr/local/lib/R/3.5/site-library
-    ## [3] /usr/local/Cellar/r/3.5.1/lib/R/library
-    ## 
-    ##  R ── Package was removed from disk.
+    ## [1] /Users/asparks/Library/R/3.x/library
+    ## [2] /usr/local/Cellar/r/3.5.1/lib/R/library
