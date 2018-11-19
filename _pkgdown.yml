@@ -21,15 +21,10 @@ navbar:
     articles:
       text: Articles
       menu:
-      - text: Vignettes
       - text: Working with spatial and climate data from GSODR and GSODRdata
         href: articles/Working_with_spatial_and_climate_data.html
       - text: 'GSODR use case: Finding specific stations using spatial queries'
         href: articles/use_case_1.html
-      - text: "---------"
-      - text: Peer Reviewed Articles
-      - text: JOSS Article
-        href: http://joss.theoj.org/papers/14021f4e4931cdaab4ea41be27df2df6
     news:
       text: Changelog
       href: news/index.html
@@ -48,4 +43,12 @@ reference:
   - '`print.GSODR.Info`'
   - '`reformat_GSOD`'
   - '`update_station_list`'
+
+articles:
+- title: All vignettes
+  desc: ~
+  contents:
+  - '`GSODR`'
+  - '`Working_with_spatial_and_climate_data`'
+  - '`use_case_1`'
 
