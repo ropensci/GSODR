@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Download and Return a Tidy Data Frame of <acronym>GSOD</acronym> Weather Station Data Inventories — get_inventory • GSODR</title>
+<title>Find Nearest <acronym>GSOD</acronym> Stations to a Specified Latitude and Longitude — nearest_stations • GSODR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,14 +30,12 @@
 
 
 
-<meta property="og:title" content="Download and Return a Tidy Data Frame of <acronym>GSOD</acronym> Weather Station Data Inventories — get_inventory" />
+<meta property="og:title" content="Find Nearest <acronym>GSOD</acronym> Stations to a Specified Latitude and Longitude — nearest_stations" />
 
-<meta property="og:description" content="The NCEI maintains a document,
-ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt, which lists
-the number of weather observations by station-year-month from the beginning
-of the stations' records.  This function retrieves that document and prints
-an information header displaying the last update time with a data frame of
-the inventory information for each station-year-month." />
+<meta property="og:description" content="Given latitude and longitude values entered as decimal degrees (DD), this
+function returns a list (atomic vector) of STNID values, which can
+be used in get_GSOD to query for specific stations as an
+argument in the station parameter of that function." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -125,50 +123,67 @@ the inventory information for each station-year-month." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Download and Return a Tidy Data Frame of <acronym>GSOD</acronym> Weather Station Data Inventories</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ropensci/GSODR/blob/master/R/get_inventory.R'><code>R/get_inventory.R</code></a></small>
-    <div class="hidden name"><code>get_inventory.Rd</code></div>
+    <h1>Find Nearest <acronym>GSOD</acronym> Stations to a Specified Latitude and Longitude</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/GSODR/blob/master/R/nearest_stations.R'><code>R/nearest_stations.R</code></a></small>
+    <div class="hidden name"><code>nearest_stations.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>The <acronym>NCEI</acronym> maintains a document,
-<a href='ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt'>ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt</a>, which lists
-the number of weather observations by station-year-month from the beginning
-of the stations' records.  This function retrieves that document and prints
-an information header displaying the last update time with a data frame of
-the inventory information for each station-year-month.</p>
+    <p>Given latitude and longitude values entered as decimal degrees (DD), this
+function returns a list (atomic vector) of <acronym>STNID</acronym> values, which can
+be used in <code><a href='get_GSOD.html'>get_GSOD</a></code> to query for specific stations as an
+argument in the <code>station</code> parameter of that function.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>get_inventory</span>()</pre>
-        
+    <pre class="usage"><span class='fu'>nearest_stations</span>(<span class='no'>LAT</span>, <span class='no'>LON</span>, <span class='no'>distance</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>LAT</th>
+      <td><p>Latitude expressed as decimal degrees (DD) (WGS84)</p></td>
+    </tr>
+    <tr>
+      <th>LON</th>
+      <td><p>Longitude expressed as decimal degrees (DD) (WGS84)</p></td>
+    </tr>
+    <tr>
+      <th>distance</th>
+      <td><p>Distance in kilometres from point for which stations are to
+be returned.</p></td>
+    </tr>
+    </table>
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame as a <code><a href='http://www.rdocumentation.org/packages/tibble/topics/tibble'>tibble</a></code> object of station
-inventories</p>
+    <p><code><a href='http://www.rdocumentation.org/packages/base/topics/vector'>vector</a></code> object of station identification numbers</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>The <acronym>GSOD</acronym> data, which are downloaded and manipulated by
-<span class="pkg">GSODR</span>, stipulate that the following notice should be given.
+<span class="pkg">GSODR</span> stipulate that the following notice should be given.
 &#8220;The following data and products may have conditions placed on their
 international commercial use.  They can be used within the U.S. or for non-
 commercial international activities without restriction.  The non-U.S. data
 cannot be redistributed for commercial purposes.  Re-distribution of these
 data by others must provide this same notification.&#8221;</p>
-<p>The download process can take quite some time to complete.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>inventory</span> <span class='kw'>&lt;-</span> <span class='fu'>get_inventory</span>()
-<span class='no'>inventory</span>
+<span class='co'># Find stations within a 100km radius of Toowoomba, QLD, AUS</span>
+
+<span class='no'>n</span> <span class='kw'>&lt;-</span> <span class='fu'>nearest_stations</span>(<span class='kw'>LAT</span> <span class='kw'>=</span> -<span class='fl'>27.5598</span>, <span class='kw'>LON</span> <span class='kw'>=</span> <span class='fl'>151.9507</span>, <span class='kw'>distance</span> <span class='kw'>=</span> <span class='fl'>100</span>)
+<span class='no'>n</span>
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
 

@@ -97,7 +97,6 @@ global <- get_GSOD(years = 2015, agroclimatology = TRUE)
 
 global
 }
-
 }
 \references{
 {Jarvis, A., Reuter, H. I, Nelson, A., Guevara, E. (2008)

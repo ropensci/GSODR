@@ -19,14 +19,16 @@ navbar:
       text: Get started
       href: articles/GSODR.html
     articles:
-      text: Vignettes
+      text: Articles
       menu:
+      - text: Vignettes
       - text: Working with spatial and climate data from GSODR and GSODRdata
         href: articles/Working_with_spatial_and_climate_data.html
       - text: 'GSODR use case: Finding specific stations using spatial queries'
         href: articles/use_case_1.html
       - text: "---------"
-      - text: 'JOSS Article'
+      - text: Peer Reviewed Articles
+      - text: JOSS Article
         href: http://joss.theoj.org/papers/14021f4e4931cdaab4ea41be27df2df6
     news:
       text: Changelog
@@ -47,16 +49,3 @@ reference:
   - '`reformat_GSOD`'
   - '`update_station_list`'
 
-articles:
-- title: Vignettes
-  desc: Vingettes describing the use of GSODR
-  contents:
-  - '`GSODR`'
-  - '`Working_with_spatial_and_climate_data`'
-  - '`use_case_1`'
-- title: Peer Reviewed Articles
-  desc: Articles about or citing GSODR
-  contents:
-  - text: 'JOSS Article'
-  - href: https://joss.theoj.org/papers/4e10b96b7d330496d89c169c9f4529be
-  - 'JOSS Article'

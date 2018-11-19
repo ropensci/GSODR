@@ -81,7 +81,6 @@
 #'
 #' global
 #' }
-#'
 #' @author Adam H Sparks, \email{adamhsparks@@gmail.com}
 #'
 #' @references {Jarvis, A., Reuter, H. I, Nelson, A., Guevara, E. (2008)

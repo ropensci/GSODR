@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Download and Return a Tidy Data Frame of <acronym>GSOD</acronym> Weather Data — get_GSOD • GSODR</title>
+<title>Tidy and Return a Data Frame of <acronym>GSOD</acronym> Weather from Local Data — reformat_GSOD • GSODR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,14 +30,21 @@
 
 
 
-<meta property="og:title" content="Download and Return a Tidy Data Frame of <acronym>GSOD</acronym> Weather Data — get_GSOD" />
+<meta property="og:title" content="Tidy and Return a Data Frame of <acronym>GSOD</acronym> Weather from Local Data — reformat_GSOD" />
 
-<meta property="og:description" content="This function automates downloading, cleaning, reformatting of data from
-the Global Surface Summary of the Day (GSOD) data provided by the
-US National Centers for Environmental Information (NCEI),
-Three additional useful elements: saturation vapour pressure (es), actual
-vapour pressure (ea) and relative humidity (RH) are calculated and returned
-in the final data frame." />
+<meta property="og:description" content="This function automates cleaning and reformatting of GSOD station
+files in &quot;WMO-WBAN-YYYY.op.gz&quot; format that have been downloaded from the
+United States National Center for Environmental Information's
+(NCEI) FTP server. Three new elements; saturation vapour
+pressure (es), actual vapour pressure (ea) and relative humidity are
+calculated and returned in the final data as well.  All units are converted
+to International System of Units (SI), e.g. Fahrenheit to Celsius and
+inches to millimetres.  Alternative elevation measurements are supplied for
+missing values or values found to be questionable based on the Consultative
+Group for International Agricultural Research's Consortium for Spatial
+Information group's (CGIAR-CSI) Shuttle Radar Topography Mission 90
+metre (SRTM 90m) digital elevation data based on NASA's
+original SRTM 90m data." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -125,60 +132,43 @@ in the final data frame." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Download and Return a Tidy Data Frame of <acronym>GSOD</acronym> Weather Data</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ropensci/GSODR/blob/master/R/get_GSOD.R'><code>R/get_GSOD.R</code></a></small>
-    <div class="hidden name"><code>get_GSOD.Rd</code></div>
+    <h1>Tidy and Return a Data Frame of <acronym>GSOD</acronym> Weather from Local Data</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/GSODR/blob/master/R/reformat_GSOD.R'><code>R/reformat_GSOD.R</code></a></small>
+    <div class="hidden name"><code>reformat_GSOD.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This function automates downloading, cleaning, reformatting of data from
-the Global Surface Summary of the Day (<acronym>GSOD</acronym>) data provided by the
-<a href='https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/'>US National Centers for Environmental Information (NCEI)</a>,
-Three additional useful elements: saturation vapour pressure (es), actual
-vapour pressure (ea) and relative humidity (RH) are calculated and returned
-in the final data frame.</p>
+    <p>This function automates cleaning and reformatting of <acronym>GSOD</acronym> station
+files in<br /> "WMO-WBAN-YYYY.op.gz" format that have been downloaded from the
+United States National Center for Environmental Information's
+(<acronym>NCEI</acronym>) <acronym>FTP</acronym> server. Three new elements; saturation vapour
+pressure (es), actual vapour pressure (ea) and relative humidity are
+calculated and returned in the final data as well.  All units are converted
+to International System of Units (SI), <em>e.g.</em> Fahrenheit to Celsius and
+inches to millimetres.  Alternative elevation measurements are supplied for
+missing values or values found to be questionable based on the Consultative
+Group for International Agricultural Research's Consortium for Spatial
+Information group's (<acronym>CGIAR-CSI</acronym>) Shuttle Radar Topography Mission 90
+metre (<acronym>SRTM</acronym> 90m) digital elevation data based on <acronym>NASA</acronym>'s
+original <acronym>SRTM</acronym> 90m data.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>get_GSOD</span>(<span class='no'>years</span>, <span class='kw'>station</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>country</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>max_missing</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>agroclimatology</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>reformat_GSOD</span>(<span class='kw'>dsn</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>file_list</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>years</th>
-      <td><p>Year(s) of weather data to download.</p></td>
+      <th>dsn</th>
+      <td><p>User supplied file path to location of data files on local disk
+for tidying.</p></td>
     </tr>
     <tr>
-      <th>station</th>
-      <td><p>Optional. Specify a station or multiple stations for which to
-retrieve, check and clean weather data using <var>STNID</var>. The <acronym>NCEI</acronym>
-reports years for which the data are available. This function checks against
-these years. However, not all cases are properly documented and in some cases
-files may not exist on the <acronym>FTP</acronym> server even though it is indicated
-that data was recorded for the station for a particular year. If a station is
-specified that does not have an existing file on the server, this function
-will silently fail and move on to existing files for download and cleaning
-from the <acronym>FTP</acronym> server.</p></td>
-    </tr>
-    <tr>
-      <th>country</th>
-      <td><p>Optional. Specify a country for which to retrieve weather
-data; full name or <acronym>ISO</acronym> codes can be used.</p></td>
-    </tr>
-    <tr>
-      <th>max_missing</th>
-      <td><p>Optional. The maximum number of days allowed to be missing
-from a station's data before it is excluded from final file output.</p></td>
-    </tr>
-    <tr>
-      <th>agroclimatology</th>
-      <td><p>Optional. Logical. Only clean data for stations
-between latitudes 60 and -60 for agroclimatology work, defaults to <code>FALSE</code>.
-Set to <code>TRUE</code> to include only stations within the confines of these
-latitudes.</p></td>
+      <th>file_list</th>
+      <td><p>User supplied list of files of data on local disk for
+tidying.</p></td>
     </tr>
     </table>
     
@@ -189,35 +179,25 @@ data.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Stations reporting a latitude of &lt; -90 or &gt; 90 or longitude of &lt; -180 or &gt;
-180 are removed. Stations may be individually checked for number of
-missing days to assure data quality and omitting stations with too many
-missing observations.</p>
-<p>All units are converted to International System of Units (SI), <em>e.g.</em>
-Fahrenheit to Celsius and inches to millimetres.</p>
-<p>Alternative elevation measurements are supplied for missing values or values
-found to be questionable based on the Consultative Group for International
-Agricultural Research's Consortium for Spatial Information group's
-(<acronym>CGIAR-CSI</acronym>) Shuttle Radar Topography Mission 90 metre
-(<acronym>SRTM</acronym> 90m) digital elevation data based on <acronym>NASA</acronym>'s
-original <acronym>SRTM</acronym> 90m data. Further information on these data and
-methods can be found on <span class="pkg">GSODR</span>'s
-<a href='https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md'>GitHub repository</a>.</p>
-<p>Data summarise each year by station, which include vapour pressure and
-relative humidity elements calculated from existing data in <acronym>GSOD</acronym>.</p>
+    <p>If multiple stations are given, data are summarised for each year by station,
+which include vapour pressure and relative humidity elements calculated from
+existing data in <acronym>GSOD</acronym>. Else, single stations are tidied and a data
+frame is returned.</p>
 <p>All missing values in resulting files are represented as <code>NA</code> regardless
 of which field they occur in.</p>
+<p>Only station files in the original ".op.gz" file format are supported by this
+function.  If you have downloaded the full annual "gsod_YYYY.tar" file you
+will need to extract the individual station files from the tar file first to
+use this function.</p>
 <p>For a complete list of the fields and description of the contents and units,
 please refer to Appendix 1 in the <span class="pkg">GSODR</span> vignette,
 <code><a href='../articles/GSODR.html'>vignette("GSODR", package = "GSODR")</a></code>.</p>
-<p>For more information see the description of the data provided by
-<acronym>NCEI</acronym>, <a href='http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt'>http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt</a>.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>While <span class="pkg">GSODR</span> does not distribute GSOD weather data, users of
-the data should note the conditions that the U.S. <acronym>NCEI</acronym> places upon
-the <acronym>GSOD</acronym> data.
+    <p>While <span class="pkg">GSODR</span> does not distribute <acronym>GSOD</acronym> weather data,
+users of the data should note the conditions that the U.S. <acronym>NCEI</acronym>
+places upon the <acronym>GSOD</acronym> data.
 &#8220;The following data and products may have conditions placed on
 their international commercial use.  They can be used within the U.S. or for
 non-commercial international activities without restriction. The non-U.S.
@@ -226,27 +206,30 @@ these data by others must provide this same notification.&#8221;</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Jarvis, A., Reuter, H. I, Nelson, A., Guevara, E. (2008)
+    <p>Jarvis, A., Reuter, H.I, Nelson, A., Guevara, E. (2008)
 Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
 90m Database <a href='http://srtm.csi.cgiar.org'>http://srtm.csi.cgiar.org</a></p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='reformat_GSOD.html'>reformat_GSOD</a></code></p></div>
+    <div class='dont-index'><p>For automated downloading and tidying see the <code><a href='get_GSOD.html'>get_GSOD</a></code>
+function which provides expanded functionality for automatically downloading
+and expanding annual <acronym>GSOD</acronym> files and cleaning station files.</p>
+<p><code><a href='get_GSOD.html'>get_GSOD</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'># Download weather station for Toowoomba, Queensland for 2010</span>
-<span class='no'>tbar</span> <span class='kw'>&lt;-</span> <span class='fu'>get_GSOD</span>(<span class='kw'>years</span> <span class='kw'>=</span> <span class='fl'>2010</span>, <span class='kw'>station</span> <span class='kw'>=</span> <span class='st'>"955510-99999"</span>)
+<span class='co'># Download data to 'tempdir()'</span>
+<span class='fu'>download.file</span>(<span class='kw'>url</span> <span class='kw'>=</span>
+  <span class='st'>"ftp://ftp.ncdc.noaa.gov/pub/data/gsod/2010/955510-99999-2010.op.gz"</span>,
+        <span class='kw'>destfile</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(<span class='fu'>tempdir</span>(), <span class='st'>"955510-99999-2010.op.gz"</span>),
+        <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"wb"</span>)
+
+<span class='co'># Reformat station data files in R's tempdir() directory</span>
+<span class='no'>tbar</span> <span class='kw'>&lt;-</span> <span class='fu'>reformat_GSOD</span>(<span class='kw'>dsn</span> <span class='kw'>=</span> <span class='fu'>tempdir</span>())
 
 <span class='no'>tbar</span>
-
-<span class='co'># Get agroclimatology data for 2015 using parallel processing</span>
-<span class='kw pkg'>future</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/future/topics/plan'>plan</a></span>(<span class='no'>multisession</span>)
-<span class='no'>global</span> <span class='kw'>&lt;-</span> <span class='fu'>get_GSOD</span>(<span class='kw'>years</span> <span class='kw'>=</span> <span class='fl'>2015</span>, <span class='kw'>agroclimatology</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
-<span class='no'>global</span>
 <span class='co'># }</span># NOT RUN {
 # }
 </pre>

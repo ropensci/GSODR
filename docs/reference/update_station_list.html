@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Download and Return a Tidy Data Frame of <acronym>GSOD</acronym> Weather Station Data Inventories — get_inventory • GSODR</title>
+<title>Download Latest Station List Information and Update Internal Database — update_station_list • GSODR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,14 +30,14 @@
 
 
 
-<meta property="og:title" content="Download and Return a Tidy Data Frame of <acronym>GSOD</acronym> Weather Station Data Inventories — get_inventory" />
+<meta property="og:title" content="Download Latest Station List Information and Update Internal Database — update_station_list" />
 
-<meta property="og:description" content="The NCEI maintains a document,
-ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt, which lists
-the number of weather observations by station-year-month from the beginning
-of the stations' records.  This function retrieves that document and prints
-an information header displaying the last update time with a data frame of
-the inventory information for each station-year-month." />
+<meta property="og:description" content="This function downloads the latest station list (isd-history.csv) from the
+NCEI FTP server and updates the data distributed with
+GSODR to the latest stations available.  These data provide unique
+identifiers, country, state (if in U.S.), latitude, longitude, elevation and
+when weather observations begin and end.  Stations with invalid latitude and
+longitude values will not be included." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -125,54 +125,47 @@ the inventory information for each station-year-month." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Download and Return a Tidy Data Frame of <acronym>GSOD</acronym> Weather Station Data Inventories</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ropensci/GSODR/blob/master/R/get_inventory.R'><code>R/get_inventory.R</code></a></small>
-    <div class="hidden name"><code>get_inventory.Rd</code></div>
+    <h1>Download Latest Station List Information and Update Internal Database</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/GSODR/blob/master/R/update_station_list.R'><code>R/update_station_list.R</code></a></small>
+    <div class="hidden name"><code>update_station_list.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>The <acronym>NCEI</acronym> maintains a document,
-<a href='ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt'>ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt</a>, which lists
-the number of weather observations by station-year-month from the beginning
-of the stations' records.  This function retrieves that document and prints
-an information header displaying the last update time with a data frame of
-the inventory information for each station-year-month.</p>
+    <p>This function downloads the latest station list (isd-history.csv) from the
+<acronym>NCEI</acronym> <acronym>FTP</acronym> server and updates the data distributed with
+<span class="pkg">GSODR</span> to the latest stations available.  These data provide unique
+identifiers, country, state (if in U.S.), latitude, longitude, elevation and
+when weather observations begin and end.  Stations with invalid latitude and
+longitude values will not be included.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>get_inventory</span>()</pre>
+    <pre class="usage"><span class='fu'>update_station_list</span>()</pre>
         
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>A data frame as a <code><a href='http://www.rdocumentation.org/packages/tibble/topics/tibble'>tibble</a></code> object of station
-inventories</p>
-    
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
-
-    <p>The <acronym>GSOD</acronym> data, which are downloaded and manipulated by
-<span class="pkg">GSODR</span>, stipulate that the following notice should be given.
-&#8220;The following data and products may have conditions placed on their
-international commercial use.  They can be used within the U.S. or for non-
-commercial international activities without restriction.  The non-U.S. data
-cannot be redistributed for commercial purposes.  Re-distribution of these
-data by others must provide this same notification.&#8221;</p>
-<p>The download process can take quite some time to complete.</p>
+    <p>Care should be taken when using this function if reproducibility is necessary
+as different machines with the same version of <span class="pkg">GSODR</span> can end up with
+different versions of the isd_history.csv file internally.</p>
+<p>There is no need to use this unless you know that a station exists in the
+<span class="pkg">GSODR</span> data that is not available in the self-contained database.</p>
+<p>To directly access these data, use: <br />
+<code>load(system.file("extdata", "isd_history.rda", package = "GSODR"))</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>inventory</span> <span class='kw'>&lt;-</span> <span class='fu'>get_inventory</span>()
-<span class='no'>inventory</span>
-<span class='co'># }</span></pre>
+<span class='fu'>update_station_list</span>()
+<span class='co'># }</span># NOT RUN {
+# }
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#note">Note</a></li>
+      <li><a href="#details">Details</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
