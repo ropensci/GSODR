@@ -40,7 +40,7 @@ vapour pressure (ea) and relative humidity (RH) are calculated and returned
 in the final data frame.
 Parallel processing can be enabled using plan to set
 up a parallel backend of your choice, e.g.,
-future::plan(multisession). See examples for more." />
+future::plan(&quot;multisession&quot;). See examples for more." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -71,7 +71,7 @@ future::plan(multisession). See examples for more." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GSODR</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.3.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.3.0.9000</span>
       </span>
     </div>
 
@@ -143,7 +143,7 @@ vapour pressure (ea) and relative humidity (RH) are calculated and returned
 in the final data frame.</p>
 <p>Parallel processing can be enabled using <code><a href='http://www.rdocumentation.org/packages/future/topics/plan'>plan</a></code> to set
 up a parallel backend of your choice, e.g.,
-<code><a href='http://www.rdocumentation.org/packages/future/topics/plan'>future::plan(multisession)</a></code>. See examples for more.</p>
+<code><a href='http://www.rdocumentation.org/packages/future/topics/plan'>future::plan("multisession")</a></code>. See examples for more.</p>
     
     </div>
 
@@ -254,7 +254,7 @@ Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
 <span class='no'>AUS</span>
 
 <span class='co'># Download agroclimatology data for 2015 using parallel processing</span>
-<span class='kw pkg'>future</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/future/topics/plan'>plan</a></span>(<span class='no'>multisession</span>)
+<span class='kw pkg'>future</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/future/topics/plan'>plan</a></span>(<span class='st'>"multisession"</span>)
 <span class='no'>ag</span> <span class='kw'>&lt;-</span> <span class='fu'>get_GSOD</span>(<span class='kw'>years</span> <span class='kw'>=</span> <span class='fl'>2015</span>, <span class='kw'>agroclimatology</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='no'>ag</span>
@@ -262,7 +262,7 @@ Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
 <span class='co'># Download global data for 2010 to 2015 with a maximum allowed 5 missing days</span>
 <span class='co'># of data using parallel processing</span>
 
-<span class='kw pkg'>future</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/future/topics/plan'>plan</a></span>(<span class='no'>multisession</span>)
+<span class='kw pkg'>future</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/future/topics/plan'>plan</a></span>(<span class='st'>"multisession"</span>)
 <span class='no'>global</span> <span class='kw'>&lt;-</span> <span class='fu'>get_GSOD</span>(<span class='kw'>years</span> <span class='kw'>=</span> <span class='fl'>2010</span>:<span class='fl'>2015</span>, <span class='kw'>max_missing</span> <span class='kw'>=</span> <span class='fl'>5</span>)
 
 <span class='no'>global</span>

@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GSODR</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.3.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.3.0.9000</span>
       </span>
     </div>
 
@@ -244,7 +244,7 @@
 <h2 class="hasAnchor">
 <a href="#download-and-process-files-in-parallel" class="anchor"></a>Download and Process Files in Parallel</h2>
 <p><code>GSODR</code> supports the <a href="https://CRAN.R-project.org/package=future"><code>future</code></a> package for parallel processing on varied platforms with the user determining the parallel backend to be used. The most simple way is to use <code>multisession</code> as an argument for <code><a href="http://www.rdocumentation.org/packages/future/topics/plan">future::plan()</a></code>, which will default to available local cores as workers for the run. This can greatly reduce the time necessary to process GSOD files.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">future<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/future/topics/plan">plan</a></span>(multisession)</a>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">future<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/future/topics/plan">plan</a></span>(<span class="st">"multisession"</span>)</a>
 <a class="sourceLine" id="cb17-2" title="2">global &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_GSOD.html">get_GSOD</a></span>(<span class="dt">years =</span> <span class="dv">2010</span><span class="op">:</span><span class="dv">2015</span>)</a></code></pre></div>
 </div>
 </div>
