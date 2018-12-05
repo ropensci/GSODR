@@ -197,8 +197,7 @@ get_GSOD <- function(years,
   # Cleanup --------------------------------------------------------------------
   file.remove(dir(
     cache_dir,
-    pattern = "^.gz$|.tar$",
+    pattern = ".gz$|.tar$",
     full.names = TRUE
   ))
-  rm(cache_dir)
 }
