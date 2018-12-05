@@ -195,15 +195,10 @@ get_GSOD <- function(years,
   GSOD_XY <- apply_process_gz(file_list, isd_history)
   return(GSOD_XY)
   # Cleanup --------------------------------------------------------------------
-  files <-
-    list.files(
-      cache_dir,
-      ignore.case = TRUE,
-      include.dirs = TRUE,
-      full.names = TRUE,
-      recursive = TRUE,
-      pattern = ".gz$"
-    )
-  unlink(files, force = TRUE, recursive = TRUE)
+  file.remove(dir(
+    cache_dir,
+    pattern = "^.gz$|.tar$",
+    full.names = TRUE
+  ))
   rm(cache_dir)
 }
