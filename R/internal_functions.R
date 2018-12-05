@@ -112,7 +112,7 @@
       tryCatch(
         Map(
           function(ftp, dest)
-            utils::download.file(
+            curl::curl_download(
               url = ftp,
               destfile = dest,
               mode = "wb"
