@@ -48,7 +48,7 @@ and ISO codes to function.
 
 ```{r remove_uncessesary, echo=TRUE, messages=FALSE}
 
-country_list <- select(country_list, c("FIPS", "COUNTRY_NAME", "iso2c", "iso3c"))
+country_list <- dplyr::select(country_list, c("FIPS", "COUNTRY_NAME", "iso2c", "iso3c"))
 
 country_list
 ```
