@@ -1,4 +1,12 @@
-# GSODR 1.3.0.9000
+# GSODR 1.3.1
+
+## Bug fixes
+
+- Correct examples in documentation so that they work
+
+## Minor changes
+
+- Use `curl::download_file` in place of `download.file`
 
 # GSODR 1.3.0
 
