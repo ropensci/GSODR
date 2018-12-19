@@ -20,6 +20,7 @@ jobs:
       - run:
           command: |
             R -e "devtools::check(run_dont_test = TRUE)"
+            no_output_timeout: 20m
       - save_cache:
           key: deps1-{{ .Branch }}-{{ checksum "DESCRIPTION" }}-{{ checksum ".circleci/config.yml" }}
           paths:
