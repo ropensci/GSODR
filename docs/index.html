@@ -48,7 +48,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">GSODR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.1</span>
       </span>
     </div>
 
@@ -105,9 +105,9 @@
   <div class="contents col-md-9">
 
 
-<div id="gsodr-global-surface-summary-of-the-day-gsod-weather-data-client-for-r-" class="section level1">
+<div id="gsodr-global-surface-summary-of-the-day-gsod-weather-data-client-for-r" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#gsodr-global-surface-summary-of-the-day-gsod-weather-data-client-for-r-" class="anchor"></a><em>GSODR</em>: Global Surface Summary of the Day (GSOD) Weather Data Client for R <img src="reference/figures/logo.png" align="right">
+<a href="#gsodr-global-surface-summary-of-the-day-gsod-weather-data-client-for-r" class="anchor"></a><em>GSODR</em>: Global Surface Summary of the Day (GSOD) Weather Data Client for R <img src="reference/figures/logo.png" align="right">
 </h1></div>
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
@@ -130,18 +130,18 @@
 <h3 class="hasAnchor">
 <a href="#stable-version" class="anchor"></a>Stable Version</h3>
 <p>A stable version of <em>GSODR</em> is available from <a href="https://cran.r-project.org/package=GSODR">CRAN</a>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"GSODR"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"GSODR"</span>)</code></pre></div>
 </div>
 <div id="development-version" class="section level3">
 <h3 class="hasAnchor">
 <a href="#development-version" class="anchor"></a>Development Version</h3>
 <p>A development version is available from from GitHub. If you wish to install the development version that may have new features or bug fixes before the CRAN version does (but also may not work properly), please install the <a href="https://github.com/r-lib/remotes">remotes</a> package, available from CRAN. We strive to keep the master branch on GitHub functional and working properly.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">require</a></span>(<span class="st">"remotes"</span>)) {</a>
-<a class="sourceLine" id="cb2-2" title="2">  <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"remotes"</span>, <span class="dt">repos =</span> <span class="st">"http://cran.rstudio.com/"</span>)</a>
-<a class="sourceLine" id="cb2-3" title="3">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"remotes"</span>)</a>
-<a class="sourceLine" id="cb2-4" title="4">}</a>
-<a class="sourceLine" id="cb2-5" title="5"></a>
-<a class="sourceLine" id="cb2-6" title="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"ropensci/GSODR"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">require</a></span>(<span class="st">"remotes"</span>)) {
+  <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"remotes"</span>, <span class="dt">repos =</span> <span class="st">"http://cran.rstudio.com/"</span>)
+  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"remotes"</span>)
+}
+
+<span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"ropensci/GSODR"</span>)</code></pre></div>
 </div>
 </div>
 <div id="other-sources-of-weather-data-in-r" class="section level2">
@@ -169,9 +169,9 @@
 <p>90 m hole-filled SRTM digital elevation (Jarvis <em>et al.</em> 2008) was used to identify and correct/remove elevation errors in data for station locations between -60˚ and 60˚ latitude. This applies to cases here where elevation was missing in the reported values as well. In case the station reported an elevation and the DEM does not, the station reported is taken. For stations beyond -60˚ and 60˚ latitude, the values are station reported values in every instance. See <a href="https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md" class="uri">https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md</a> for more detail on the correction methods.</p>
 </div>
 </div>
-<div id="wmo-resolution-40-noaa-policy" class="section level3">
+<div id="wmo-resolution-40--noaa-policy" class="section level3">
 <h3 class="hasAnchor">
-<a href="#wmo-resolution-40-noaa-policy" class="anchor"></a>WMO Resolution 40. NOAA Policy</h3>
+<a href="#wmo-resolution-40--noaa-policy" class="anchor"></a>WMO Resolution 40. NOAA Policy</h3>
 <p><em>Users of these data should take into account the following (from the <a href="http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&amp;countryabbv=&amp;georegionabbv=">NCEI website</a>):</em></p>
 <blockquote>
 <p>“The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification.” <a href="https://public.wmo.int/en/our-mandate/what-we-do/data-exchange-and-technology-transfer">WMO Resolution 40. NOAA Policy</a></p>
