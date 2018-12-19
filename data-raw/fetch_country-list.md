@@ -1,7 +1,7 @@
 Fetch GSOD Country List and Merge with ISO Country Codes
 ================
 Adam H. Sparks
-2018-12-08
+2018-12-19
 
 # Introduction
 
@@ -26,12 +26,6 @@ if (!require("countrycode"))
 ```
 
     ## Loading required package: countrycode
-
-    ## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
-    ## logical.return = TRUE, : there is no package called 'countrycode'
-
-    ## Installing package into '/Users/adamsparks/Library/R/3.x/library'
-    ## (as 'lib' is unspecified)
 
 ``` r
 if (!require("dplyr"))
@@ -117,7 +111,6 @@ country_list <- dplyr::select(country_list, c("FIPS",
                                               "COUNTRY_NAME",
                                               "iso2c",
                                               "iso3c"))
-
 country_list
 ```
 
@@ -150,37 +143,36 @@ save(country_list, file = "../inst/extdata/country_list.rda",
 Users of these data should take into account the following (from the
 [NCEI
 website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):
-
-> “The following data and products may have conditions placed on their
-> international commercial use. They can be used within the U.S. or for
-> non-commercial international activities without restriction. The
-> non-U.S. data cannot be redistributed for commercial purposes.
-> Re-distribution of these data by others must provide this same
-> notification.” [WMO Resolution 40. NOAA
-> Policy](http://www.wmo.int/pages/about/Resolution40.html)
+\> “The following data and products may have conditions placed on their
+international commercial use. They can be used within the U.S. or for \>
+non-commercial international activities without restriction. The
+non-U.S. \> data cannot be redistributed for commercial purposes.
+Re-distribution of these \> data by others must provide this same
+notification.” [WMO Resolution 40. NOAA
+Policy](http://www.wmo.int/pages/about/Resolution40.html)
 
 ## R System Information
 
     ## ─ Session info ──────────────────────────────────────────────────────────
     ##  setting  value                       
     ##  version  R version 3.5.1 (2018-07-02)
-    ##  os       macOS  10.14.1              
+    ##  os       macOS  10.14.2              
     ##  system   x86_64, darwin18.2.0        
     ##  ui       X11                         
     ##  language (EN)                        
     ##  collate  en_AU.UTF-8                 
     ##  ctype    en_AU.UTF-8                 
     ##  tz       Australia/Brisbane          
-    ##  date     2018-12-08                  
+    ##  date     2018-12-19                  
     ## 
     ## ─ Packages ──────────────────────────────────────────────────────────────
     ##  package     * version date       lib source        
     ##  assertthat    0.2.0   2017-04-11 [1] CRAN (R 3.5.1)
-    ##  backports     1.1.2   2017-12-13 [1] CRAN (R 3.5.1)
     ##  bindr         0.1.1   2018-03-13 [1] CRAN (R 3.5.1)
     ##  bindrcpp      0.2.2   2018-03-29 [1] CRAN (R 3.5.1)
     ##  cli           1.0.1   2018-09-25 [1] CRAN (R 3.5.1)
-    ##  countrycode   1.1.0   2018-10-27 [1] CRAN (R 3.5.1)
+    ##  colorout    * 1.2-0   2018-11-06 [1] local         
+    ##  countrycode * 1.1.0   2018-10-27 [1] CRAN (R 3.5.1)
     ##  crayon        1.3.4   2017-09-16 [1] CRAN (R 3.5.1)
     ##  curl          3.2     2018-03-28 [1] CRAN (R 3.5.1)
     ##  digest        0.6.18  2018-10-10 [1] CRAN (R 3.5.1)
@@ -190,17 +182,16 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  glue          1.3.0   2018-07-17 [1] CRAN (R 3.5.1)
     ##  hms           0.4.2   2018-03-10 [1] CRAN (R 3.5.1)
     ##  htmltools     0.3.6   2017-04-28 [1] CRAN (R 3.5.1)
-    ##  knitr         1.20    2018-02-20 [1] CRAN (R 3.5.1)
+    ##  knitr         1.21    2018-12-10 [1] CRAN (R 3.5.1)
     ##  magrittr      1.5     2014-11-22 [1] CRAN (R 3.5.1)
-    ##  pillar        1.3.0   2018-07-14 [1] CRAN (R 3.5.1)
+    ##  pillar        1.3.1   2018-12-15 [1] CRAN (R 3.5.1)
     ##  pkgconfig     2.0.2   2018-08-16 [1] CRAN (R 3.5.1)
     ##  purrr         0.2.5   2018-05-29 [1] CRAN (R 3.5.1)
     ##  R6            2.3.0   2018-10-04 [1] CRAN (R 3.5.1)
     ##  Rcpp          1.0.0   2018-11-07 [1] CRAN (R 3.5.1)
-    ##  readr         1.2.1   2018-11-22 [1] CRAN (R 3.5.1)
+    ##  readr         1.3.0   2018-12-11 [1] CRAN (R 3.5.1)
     ##  rlang         0.3.0.1 2018-10-25 [1] CRAN (R 3.5.1)
-    ##  rmarkdown     1.10    2018-06-11 [1] CRAN (R 3.5.1)
-    ##  rprojroot     1.3-2   2018-01-03 [1] CRAN (R 3.5.1)
+    ##  rmarkdown     1.11    2018-12-08 [1] CRAN (R 3.5.1)
     ##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 3.5.1)
     ##  stringi       1.2.4   2018-07-20 [1] CRAN (R 3.5.1)
     ##  stringr       1.3.1   2018-05-10 [1] CRAN (R 3.5.1)
@@ -208,8 +199,9 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  tidyselect    0.2.5   2018-10-11 [1] CRAN (R 3.5.1)
     ##  utf8          1.1.4   2018-05-24 [1] CRAN (R 3.5.1)
     ##  withr         2.1.2   2018-03-15 [1] CRAN (R 3.5.1)
+    ##  xfun          0.4     2018-10-23 [1] CRAN (R 3.5.1)
     ##  yaml          2.2.0   2018-07-25 [1] CRAN (R 3.5.1)
     ## 
-    ## [1] /Users/adamsparks/Library/R/3.x/library
+    ## [1] /Users/U8004755/Library/R/3.x/library
     ## [2] /usr/local/lib/R/3.5/site-library
     ## [3] /usr/local/Cellar/r/3.5.1/lib/R/library

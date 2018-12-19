@@ -1,5 +1,7 @@
 # GSODR 1.3.0.9000
 
+- Fix examples that did not run properly
+
 # GSODR 1.3.0
 
 ## New Functionality
