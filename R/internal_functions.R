@@ -112,7 +112,7 @@
       tryCatch(
         Map(
           function(ftp, dest)
-            utils::download.file(
+            curl::curl_download(
               url = ftp,
               destfile = dest,
               mode = "wb"
@@ -190,7 +190,7 @@
               return()
           }
         }
-      
+
       pb <- dplyr::progress_estimated(length(years))
       purrr::walk(years, function(yr) {
         year_url <- sprintf(ftp_base, yr)
@@ -202,7 +202,7 @@
         purrr::map(station, ~ grep(., fils, value = TRUE)) %>%
           purrr::keep( ~ length(.) > 0) %>%
           purrr::flatten_chr() -> fils
-        
+
         if (length(fils) > 0) {
           # grab the station files
           purrr::walk(paste0(year_url, fils), retry_cfd)
@@ -247,7 +247,7 @@
            isd_history,
            cache_dir,
            years) {
-    
+
     station_list <-
       isd_history[isd_history$CTRY == country, ]$STNID
     station_list <- do.call(paste0,

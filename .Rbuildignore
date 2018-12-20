@@ -1,3 +1,4 @@
+^CRAN-RELEASE$
 ^\.github$
 .travis.yml
 appveyor.yml
@@ -18,3 +19,4 @@ vignettes/figure
 ^codemeta\.json$
 ^_pkgdown\.yml$
 ^\.circleci$
+^GSODR.code-workspace$

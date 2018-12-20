@@ -17,7 +17,7 @@
 #'
 #' Parallel processing can be enabled using \code{\link[future]{plan}} to set
 #' up a parallel backend of your choice, e.g.,
-#' \code{future::plan(multisession)}.  See examples for more.
+#' \code{future::plan("multisession")}.  See examples for more.
 #'
 #' @param dsn User supplied file path to location of data files on local disk
 #' for tidying.

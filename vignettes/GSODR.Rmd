@@ -156,7 +156,7 @@ as workers for the run. This can greatly reduce the time necessary to process
 GSOD files.
 
 ```{r, eval=FALSE}
-future::plan(multisession)
+future::plan("multisession")
 global <- get_GSOD(years = 2010:2015)
 ```
 
