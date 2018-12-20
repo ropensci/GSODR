@@ -1,7 +1,7 @@
 Fetch GSOD Country List and Merge with ISO Country Codes
 ================
 Adam H. Sparks
-2018-11-19
+2018-12-19
 
 # Introduction
 
@@ -51,16 +51,6 @@ if (!require("dplyr"))
 ``` r
 countries <- readr::read_table(
   "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/country-list.txt")[-1, c(1, 3)]
-```
-
-    ## Parsed with column specification:
-    ## cols(
-    ##   FIPS = col_character(),
-    ##   ID = col_character(),
-    ##   `COUNTRY NAME` = col_character()
-    ## )
-
-``` r
 names(countries)[2] <- "COUNTRY_NAME"
 
 country_list <- dplyr::left_join(countries, countrycode::codelist,
@@ -69,20 +59,20 @@ country_list <- dplyr::left_join(countries, countrycode::codelist,
 print(country_list)
 ```
 
-    ## # A tibble: 293 x 682
+    ## # A tibble: 292 x 682
     ##    FIPS  COUNTRY_NAME ar5   continent country.name.de country.name.de…
     ##    <chr> <chr>        <chr> <chr>     <chr>           <chr>           
-    ##  1 AA    ARUBA        LAM   Americas  Aruba           "^(?!.*bonaire)…
-    ##  2 AC    ANTIGUA AND… LAM   Americas  Antigua und Ba… antigua         
-    ##  3 AF    AFGHANISTAN  ASIA  Asia      Afghanistan     afghan          
-    ##  4 AG    ALGERIA      MAF   Africa    Algerien        algerien        
-    ##  5 AI    ASCENSION I… <NA>  <NA>      <NA>            <NA>            
-    ##  6 AJ    AZERBAIJAN   EIT   Asia      Aserbaidschan   aserbaidsch     
-    ##  7 AL    ALBANIA      EIT   Europe    Albanien        albanien        
-    ##  8 AM    ARMENIA      EIT   Asia      Armenien        armenien        
-    ##  9 AN    ANDORRA      OECD… Europe    Andorra         andorra         
-    ## 10 AO    ANGOLA       MAF   Africa    Angola          angola          
-    ## # ... with 283 more rows, and 676 more variables: country.name.en <chr>,
+    ##  1 AC    ANTIGUA AND… LAM   Americas  Antigua und Ba… antigua         
+    ##  2 AF    AFGHANISTAN  ASIA  Asia      Afghanistan     afghan          
+    ##  3 AG    ALGERIA      MAF   Africa    Algerien        algerien        
+    ##  4 AI    ASCENSION I… <NA>  <NA>      <NA>            <NA>            
+    ##  5 AJ    AZERBAIJAN   EIT   Asia      Aserbaidschan   aserbaidsch     
+    ##  6 AL    ALBANIA      EIT   Europe    Albanien        albanien        
+    ##  7 AM    ARMENIA      EIT   Asia      Armenien        armenien        
+    ##  8 AN    ANDORRA      OECD… Europe    Andorra         andorra         
+    ##  9 AO    ANGOLA       MAF   Africa    Angola          angola          
+    ## 10 AQ    AMERICAN SA… ASIA  Oceania   Amerikanisch-S… ^(?=.*amerik).*…
+    ## # ... with 282 more rows, and 676 more variables: country.name.en <chr>,
     ## #   country.name.en.regex <chr>, cow.name <chr>, cowc <chr>, cown <int>,
     ## #   ecb <chr>, ecb.name <chr>, eu28 <chr>, eurocontrol_pru <chr>,
     ## #   eurocontrol_statfor <chr>, eurostat <chr>, eurostat.name <chr>,
@@ -114,29 +104,30 @@ print(country_list)
     ## #   cldr.name.en <chr>, …
 
 There are unnecessary data in several columns. *GSODR* only requires
-FIPS, name, and ISO codes to
-function.
+FIPS, name, and ISO codes to function.
 
 ``` r
-country_list <- select(country_list, c("FIPS", "COUNTRY_NAME", "iso2c", "iso3c"))
-
+country_list <- dplyr::select(country_list, c("FIPS",
+                                              "COUNTRY_NAME",
+                                              "iso2c",
+                                              "iso3c"))
 country_list
 ```
 
-    ## # A tibble: 293 x 4
+    ## # A tibble: 292 x 4
     ##    FIPS  COUNTRY_NAME        iso2c iso3c
     ##    <chr> <chr>               <chr> <chr>
-    ##  1 AA    ARUBA               AW    ABW  
-    ##  2 AC    ANTIGUA AND BARBUDA AG    ATG  
-    ##  3 AF    AFGHANISTAN         AF    AFG  
-    ##  4 AG    ALGERIA             DZ    DZA  
-    ##  5 AI    ASCENSION ISLAND    <NA>  <NA> 
-    ##  6 AJ    AZERBAIJAN          AZ    AZE  
-    ##  7 AL    ALBANIA             AL    ALB  
-    ##  8 AM    ARMENIA             AM    ARM  
-    ##  9 AN    ANDORRA             AD    AND  
-    ## 10 AO    ANGOLA              AO    AGO  
-    ## # ... with 283 more rows
+    ##  1 AC    ANTIGUA AND BARBUDA AG    ATG  
+    ##  2 AF    AFGHANISTAN         AF    AFG  
+    ##  3 AG    ALGERIA             DZ    DZA  
+    ##  4 AI    ASCENSION ISLAND    <NA>  <NA> 
+    ##  5 AJ    AZERBAIJAN          AZ    AZE  
+    ##  6 AL    ALBANIA             AL    ALB  
+    ##  7 AM    ARMENIA             AM    ARM  
+    ##  8 AN    ANDORRA             AD    AND  
+    ##  9 AO    ANGOLA              AO    AGO  
+    ## 10 AQ    AMERICAN SAMOA      AS    ASM  
+    ## # ... with 282 more rows
 
 Write .rda file to disk.
 
@@ -152,66 +143,65 @@ save(country_list, file = "../inst/extdata/country_list.rda",
 Users of these data should take into account the following (from the
 [NCEI
 website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):
-
-> “The following data and products may have conditions placed on their
-> international commercial use. They can be used within the U.S. or for
-> non-commercial international activities without restriction. The
-> non-U.S. data cannot be redistributed for commercial purposes.
-> Re-distribution of these data by others must provide this same
-> notification.” [WMO Resolution 40. NOAA
-> Policy](http://www.wmo.int/pages/about/Resolution40.html)
+\> “The following data and products may have conditions placed on their
+international commercial use. They can be used within the U.S. or for \>
+non-commercial international activities without restriction. The
+non-U.S. \> data cannot be redistributed for commercial purposes.
+Re-distribution of these \> data by others must provide this same
+notification.” [WMO Resolution 40. NOAA
+Policy](http://www.wmo.int/pages/about/Resolution40.html)
 
 ## R System Information
 
     ## ─ Session info ──────────────────────────────────────────────────────────
     ##  setting  value                       
     ##  version  R version 3.5.1 (2018-07-02)
-    ##  os       macOS  10.14.1              
-    ##  system   x86_64, darwin18.0.0        
+    ##  os       macOS  10.14.2              
+    ##  system   x86_64, darwin18.2.0        
     ##  ui       X11                         
     ##  language (EN)                        
     ##  collate  en_AU.UTF-8                 
     ##  ctype    en_AU.UTF-8                 
     ##  tz       Australia/Brisbane          
-    ##  date     2018-11-19                  
+    ##  date     2018-12-19                  
     ## 
     ## ─ Packages ──────────────────────────────────────────────────────────────
-    ##  package     * version date       lib source                            
-    ##  assertthat    0.2.0   2017-04-11 [1] CRAN (R 3.5.1)                    
-    ##  backports     1.1.2   2017-12-13 [1] CRAN (R 3.5.1)                    
-    ##  bindr         0.1.1   2018-03-13 [1] CRAN (R 3.5.1)                    
-    ##  bindrcpp      0.2.2   2018-03-29 [1] CRAN (R 3.5.1)                    
-    ##  cli           1.0.1   2018-09-25 [1] CRAN (R 3.5.1)                    
-    ##  colorout    * 1.2-0   2018-10-17 [1] Github (jalvesaq/colorout@cc5fbfa)
-    ##  countrycode * 1.1.0   2018-10-27 [1] CRAN (R 3.5.1)                    
-    ##  crayon        1.3.4   2017-09-16 [1] CRAN (R 3.5.1)                    
-    ##  curl          3.2     2018-03-28 [1] CRAN (R 3.5.1)                    
-    ##  digest        0.6.18  2018-10-10 [1] CRAN (R 3.5.1)                    
-    ##  dplyr       * 0.7.8   2018-11-10 [1] CRAN (R 3.5.1)                    
-    ##  evaluate      0.12    2018-10-09 [1] CRAN (R 3.5.1)                    
-    ##  fansi         0.4.0   2018-10-05 [1] CRAN (R 3.5.1)                    
-    ##  glue          1.3.0   2018-07-17 [1] CRAN (R 3.5.1)                    
-    ##  hms           0.4.2   2018-03-10 [1] CRAN (R 3.5.1)                    
-    ##  htmltools     0.3.6   2017-04-28 [1] CRAN (R 3.5.1)                    
-    ##  knitr         1.20    2018-02-20 [1] CRAN (R 3.5.1)                    
-    ##  magrittr      1.5     2014-11-22 [1] CRAN (R 3.5.1)                    
-    ##  pillar        1.3.0   2018-07-14 [1] CRAN (R 3.5.1)                    
-    ##  pkgconfig     2.0.2   2018-08-16 [1] CRAN (R 3.5.1)                    
-    ##  purrr         0.2.5   2018-05-29 [1] CRAN (R 3.5.1)                    
-    ##  R6            2.3.0   2018-10-04 [1] CRAN (R 3.5.1)                    
-    ##  Rcpp          1.0.0   2018-11-07 [1] CRAN (R 3.5.1)                    
-    ##  readr         1.1.1   2017-05-16 [1] CRAN (R 3.5.1)                    
-    ##  rlang         0.3.0.1 2018-10-25 [1] CRAN (R 3.5.1)                    
-    ##  rmarkdown     1.10    2018-06-11 [1] CRAN (R 3.5.1)                    
-    ##  rprojroot     1.3-2   2018-01-03 [1] CRAN (R 3.5.1)                    
-    ##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 3.5.1)                    
-    ##  stringi       1.2.4   2018-07-20 [1] CRAN (R 3.5.1)                    
-    ##  stringr       1.3.1   2018-05-10 [1] CRAN (R 3.5.1)                    
-    ##  tibble        1.4.2   2018-01-22 [1] CRAN (R 3.5.1)                    
-    ##  tidyselect    0.2.5   2018-10-11 [1] CRAN (R 3.5.1)                    
-    ##  utf8          1.1.4   2018-05-24 [1] CRAN (R 3.5.1)                    
-    ##  withr         2.1.2   2018-03-15 [1] CRAN (R 3.5.1)                    
-    ##  yaml          2.2.0   2018-07-25 [1] CRAN (R 3.5.1)                    
+    ##  package     * version date       lib source        
+    ##  assertthat    0.2.0   2017-04-11 [1] CRAN (R 3.5.1)
+    ##  bindr         0.1.1   2018-03-13 [1] CRAN (R 3.5.1)
+    ##  bindrcpp      0.2.2   2018-03-29 [1] CRAN (R 3.5.1)
+    ##  cli           1.0.1   2018-09-25 [1] CRAN (R 3.5.1)
+    ##  colorout    * 1.2-0   2018-11-06 [1] local         
+    ##  countrycode * 1.1.0   2018-10-27 [1] CRAN (R 3.5.1)
+    ##  crayon        1.3.4   2017-09-16 [1] CRAN (R 3.5.1)
+    ##  curl          3.2     2018-03-28 [1] CRAN (R 3.5.1)
+    ##  digest        0.6.18  2018-10-10 [1] CRAN (R 3.5.1)
+    ##  dplyr       * 0.7.8   2018-11-10 [1] CRAN (R 3.5.1)
+    ##  evaluate      0.12    2018-10-09 [1] CRAN (R 3.5.1)
+    ##  fansi         0.4.0   2018-10-05 [1] CRAN (R 3.5.1)
+    ##  glue          1.3.0   2018-07-17 [1] CRAN (R 3.5.1)
+    ##  hms           0.4.2   2018-03-10 [1] CRAN (R 3.5.1)
+    ##  htmltools     0.3.6   2017-04-28 [1] CRAN (R 3.5.1)
+    ##  knitr         1.21    2018-12-10 [1] CRAN (R 3.5.1)
+    ##  magrittr      1.5     2014-11-22 [1] CRAN (R 3.5.1)
+    ##  pillar        1.3.1   2018-12-15 [1] CRAN (R 3.5.1)
+    ##  pkgconfig     2.0.2   2018-08-16 [1] CRAN (R 3.5.1)
+    ##  purrr         0.2.5   2018-05-29 [1] CRAN (R 3.5.1)
+    ##  R6            2.3.0   2018-10-04 [1] CRAN (R 3.5.1)
+    ##  Rcpp          1.0.0   2018-11-07 [1] CRAN (R 3.5.1)
+    ##  readr         1.3.0   2018-12-11 [1] CRAN (R 3.5.1)
+    ##  rlang         0.3.0.1 2018-10-25 [1] CRAN (R 3.5.1)
+    ##  rmarkdown     1.11    2018-12-08 [1] CRAN (R 3.5.1)
+    ##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 3.5.1)
+    ##  stringi       1.2.4   2018-07-20 [1] CRAN (R 3.5.1)
+    ##  stringr       1.3.1   2018-05-10 [1] CRAN (R 3.5.1)
+    ##  tibble        1.4.2   2018-01-22 [1] CRAN (R 3.5.1)
+    ##  tidyselect    0.2.5   2018-10-11 [1] CRAN (R 3.5.1)
+    ##  utf8          1.1.4   2018-05-24 [1] CRAN (R 3.5.1)
+    ##  withr         2.1.2   2018-03-15 [1] CRAN (R 3.5.1)
+    ##  xfun          0.4     2018-10-23 [1] CRAN (R 3.5.1)
+    ##  yaml          2.2.0   2018-07-25 [1] CRAN (R 3.5.1)
     ## 
-    ## [1] /Users/asparks/Library/R/3.x/library
-    ## [2] /usr/local/Cellar/r/3.5.1/lib/R/library
+    ## [1] /Users/U8004755/Library/R/3.x/library
+    ## [2] /usr/local/lib/R/3.5/site-library
+    ## [3] /usr/local/Cellar/r/3.5.1/lib/R/library

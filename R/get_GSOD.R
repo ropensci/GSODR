@@ -11,7 +11,7 @@
 #'
 #' Parallel processing can be enabled using \code{\link[future]{plan}} to set
 #' up a parallel backend of your choice, e.g.,
-#' \code{future::plan(multisession)}. See examples for more.
+#' \code{future::plan("multisession")}. See examples for more.
 #'
 #' @details
 #' Stations reporting a latitude of < -90 or > 90 or longitude of < -180 or >
@@ -85,7 +85,7 @@
 #' AUS
 #'
 #' # Download agroclimatology data for 2015 using parallel processing
-#' future::plan(multisession)
+#' future::plan("multisession")
 #' ag <- get_GSOD(years = 2015, agroclimatology = TRUE)
 #'
 #' ag
@@ -93,7 +93,7 @@
 #' # Download global data for 2010 to 2015 with a maximum allowed 5 missing days
 #' # of data using parallel processing
 #'
-#' future::plan(multisession)
+#' future::plan("multisession")
 #' global <- get_GSOD(years = 2010:2015, max_missing = 5)
 #'
 #' global
@@ -194,16 +194,5 @@ get_GSOD <- function(years,
 
   GSOD_XY <- apply_process_gz(file_list, isd_history)
   return(GSOD_XY)
-  # Cleanup --------------------------------------------------------------------
-  files <-
-    list.files(
-      cache_dir,
-      ignore.case = TRUE,
-      include.dirs = TRUE,
-      full.names = TRUE,
-      recursive = TRUE,
-      pattern = ".gz$"
-    )
-  unlink(files, force = TRUE, recursive = TRUE)
-  rm(cache_dir)
 }
+

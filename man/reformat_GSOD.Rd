@@ -35,7 +35,7 @@ original \acronym{SRTM} 90m data.
 \details{
 Parallel processing can be enabled using \code{\link[future]{plan}} to set
 up a parallel backend of your choice, e.g.,
-\code{future::plan(multisession)}.  See examples for more.
+\code{future::plan("multisession")}.  See examples for more.
 
 If multiple stations are given, data are summarised for each year by station,
 which include vapour pressure and relative humidity elements calculated from

@@ -17,9 +17,11 @@ jobs:
           command: |
             R -e "devtools::install_deps(dependencies = TRUE)"
             R -e "devtools::install_github('MangoTheCat/goodpractice')"
+          no_output_timeout: 30m
       - run:
           command: |
-            R -e "devtools::check()"
+            R -e "devtools::check(run_dont_test = TRUE)"
+          no_output_timeout: 30m
       - save_cache:
           key: deps1-{{ .Branch }}-{{ checksum "DESCRIPTION" }}-{{ checksum ".circleci/config.yml" }}
           paths:
@@ -31,6 +33,7 @@ jobs:
             R -e "goodpractice::gp(checks = grep('(rcmdcheck|covr)', goodpractice::all_checks(), invert=TRUE, value=TRUE))"
             R -e "cv <- covr::package_coverage(); print(cv); covr::report(x = cv, file = '/root/main/artifacts/gsodr-coverage.html', browse=FALSE)"
             R CMD Rd2pdf --force --output='/root/main/artifacts/gsodr-manual.pdf' .
+          no_output_timeout: 30m
       - store_artifacts:
           path: /root/main/artifacts/
           destination: artifacts
