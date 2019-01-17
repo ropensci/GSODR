@@ -1,7 +1,7 @@
 Fetch GSOD Country List and Merge with ISO Country Codes
 ================
 Adam H. Sparks
-2018-12-19
+2019-01-18
 
 # Introduction
 
@@ -72,7 +72,7 @@ print(country_list)
     ##  8 AN    ANDORRA      OECD… Europe    Andorra         andorra         
     ##  9 AO    ANGOLA       MAF   Africa    Angola          angola          
     ## 10 AQ    AMERICAN SA… ASIA  Oceania   Amerikanisch-S… ^(?=.*amerik).*…
-    ## # ... with 282 more rows, and 676 more variables: country.name.en <chr>,
+    ## # … with 282 more rows, and 676 more variables: country.name.en <chr>,
     ## #   country.name.en.regex <chr>, cow.name <chr>, cowc <chr>, cown <int>,
     ## #   ecb <chr>, ecb.name <chr>, eu28 <chr>, eurocontrol_pru <chr>,
     ## #   eurocontrol_statfor <chr>, eurostat <chr>, eurostat.name <chr>,
@@ -127,7 +127,7 @@ country_list
     ##  8 AN    ANDORRA             AD    AND  
     ##  9 AO    ANGOLA              AO    AGO  
     ## 10 AQ    AMERICAN SAMOA      AS    ASM  
-    ## # ... with 282 more rows
+    ## # … with 282 more rows
 
 Write .rda file to disk.
 
@@ -155,53 +155,52 @@ Policy](http://www.wmo.int/pages/about/Resolution40.html)
 
     ## ─ Session info ──────────────────────────────────────────────────────────
     ##  setting  value                       
-    ##  version  R version 3.5.1 (2018-07-02)
-    ##  os       macOS  10.14.2              
+    ##  version  R version 3.5.2 (2018-12-20)
+    ##  os       macOS Mojave 10.14.2        
     ##  system   x86_64, darwin18.2.0        
     ##  ui       X11                         
     ##  language (EN)                        
     ##  collate  en_AU.UTF-8                 
     ##  ctype    en_AU.UTF-8                 
     ##  tz       Australia/Brisbane          
-    ##  date     2018-12-19                  
+    ##  date     2019-01-18                  
     ## 
     ## ─ Packages ──────────────────────────────────────────────────────────────
     ##  package     * version date       lib source        
-    ##  assertthat    0.2.0   2017-04-11 [1] CRAN (R 3.5.1)
-    ##  bindr         0.1.1   2018-03-13 [1] CRAN (R 3.5.1)
-    ##  bindrcpp      0.2.2   2018-03-29 [1] CRAN (R 3.5.1)
-    ##  cli           1.0.1   2018-09-25 [1] CRAN (R 3.5.1)
-    ##  colorout    * 1.2-0   2018-11-06 [1] local         
-    ##  countrycode * 1.1.0   2018-10-27 [1] CRAN (R 3.5.1)
-    ##  crayon        1.3.4   2017-09-16 [1] CRAN (R 3.5.1)
-    ##  curl          3.2     2018-03-28 [1] CRAN (R 3.5.1)
-    ##  digest        0.6.18  2018-10-10 [1] CRAN (R 3.5.1)
-    ##  dplyr       * 0.7.8   2018-11-10 [1] CRAN (R 3.5.1)
-    ##  evaluate      0.12    2018-10-09 [1] CRAN (R 3.5.1)
-    ##  fansi         0.4.0   2018-10-05 [1] CRAN (R 3.5.1)
-    ##  glue          1.3.0   2018-07-17 [1] CRAN (R 3.5.1)
-    ##  hms           0.4.2   2018-03-10 [1] CRAN (R 3.5.1)
-    ##  htmltools     0.3.6   2017-04-28 [1] CRAN (R 3.5.1)
-    ##  knitr         1.21    2018-12-10 [1] CRAN (R 3.5.1)
-    ##  magrittr      1.5     2014-11-22 [1] CRAN (R 3.5.1)
-    ##  pillar        1.3.1   2018-12-15 [1] CRAN (R 3.5.1)
-    ##  pkgconfig     2.0.2   2018-08-16 [1] CRAN (R 3.5.1)
-    ##  purrr         0.2.5   2018-05-29 [1] CRAN (R 3.5.1)
-    ##  R6            2.3.0   2018-10-04 [1] CRAN (R 3.5.1)
-    ##  Rcpp          1.0.0   2018-11-07 [1] CRAN (R 3.5.1)
-    ##  readr         1.3.0   2018-12-11 [1] CRAN (R 3.5.1)
-    ##  rlang         0.3.0.1 2018-10-25 [1] CRAN (R 3.5.1)
-    ##  rmarkdown     1.11    2018-12-08 [1] CRAN (R 3.5.1)
-    ##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 3.5.1)
-    ##  stringi       1.2.4   2018-07-20 [1] CRAN (R 3.5.1)
-    ##  stringr       1.3.1   2018-05-10 [1] CRAN (R 3.5.1)
-    ##  tibble        1.4.2   2018-01-22 [1] CRAN (R 3.5.1)
-    ##  tidyselect    0.2.5   2018-10-11 [1] CRAN (R 3.5.1)
-    ##  utf8          1.1.4   2018-05-24 [1] CRAN (R 3.5.1)
-    ##  withr         2.1.2   2018-03-15 [1] CRAN (R 3.5.1)
-    ##  xfun          0.4     2018-10-23 [1] CRAN (R 3.5.1)
-    ##  yaml          2.2.0   2018-07-25 [1] CRAN (R 3.5.1)
+    ##  assertthat    0.2.0   2017-04-11 [1] CRAN (R 3.5.2)
+    ##  bindr         0.1.1   2018-03-13 [1] CRAN (R 3.5.2)
+    ##  bindrcpp      0.2.2   2018-03-29 [1] CRAN (R 3.5.2)
+    ##  cli           1.0.1   2018-09-25 [1] CRAN (R 3.5.2)
+    ##  countrycode * 1.1.0   2018-10-27 [1] CRAN (R 3.5.2)
+    ##  crayon        1.3.4   2017-09-16 [1] CRAN (R 3.5.2)
+    ##  curl          3.3     2019-01-10 [1] CRAN (R 3.5.2)
+    ##  digest        0.6.18  2018-10-10 [1] CRAN (R 3.5.2)
+    ##  dplyr       * 0.7.8   2018-11-10 [1] CRAN (R 3.5.2)
+    ##  evaluate      0.12    2018-10-09 [1] CRAN (R 3.5.2)
+    ##  fansi         0.4.0   2018-10-05 [1] CRAN (R 3.5.2)
+    ##  glue          1.3.0   2018-07-17 [1] CRAN (R 3.5.2)
+    ##  hms           0.4.2   2018-03-10 [1] CRAN (R 3.5.2)
+    ##  htmltools     0.3.6   2017-04-28 [1] CRAN (R 3.5.2)
+    ##  knitr         1.21    2018-12-10 [1] CRAN (R 3.5.2)
+    ##  magrittr      1.5     2014-11-22 [1] CRAN (R 3.5.2)
+    ##  pillar        1.3.1   2018-12-15 [1] CRAN (R 3.5.2)
+    ##  pkgconfig     2.0.2   2018-08-16 [1] CRAN (R 3.5.2)
+    ##  purrr         0.2.5   2018-05-29 [1] CRAN (R 3.5.2)
+    ##  R6            2.3.0   2018-10-04 [1] CRAN (R 3.5.2)
+    ##  Rcpp          1.0.0   2018-11-07 [1] CRAN (R 3.5.2)
+    ##  readr         1.3.1   2018-12-21 [1] CRAN (R 3.5.2)
+    ##  rlang         0.3.1   2019-01-08 [1] CRAN (R 3.5.2)
+    ##  rmarkdown     1.11    2018-12-08 [1] CRAN (R 3.5.2)
+    ##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 3.5.2)
+    ##  stringi       1.2.4   2018-07-20 [1] CRAN (R 3.5.2)
+    ##  stringr       1.3.1   2018-05-10 [1] CRAN (R 3.5.2)
+    ##  tibble        2.0.1   2019-01-12 [1] CRAN (R 3.5.2)
+    ##  tidyselect    0.2.5   2018-10-11 [1] CRAN (R 3.5.2)
+    ##  utf8          1.1.4   2018-05-24 [1] CRAN (R 3.5.2)
+    ##  withr         2.1.2   2018-03-15 [1] CRAN (R 3.5.2)
+    ##  xfun          0.4     2018-10-23 [1] CRAN (R 3.5.2)
+    ##  yaml          2.2.0   2018-07-25 [1] CRAN (R 3.5.2)
     ## 
     ## [1] /Users/U8004755/Library/R/3.x/library
     ## [2] /usr/local/lib/R/3.5/site-library
-    ## [3] /usr/local/Cellar/r/3.5.1/lib/R/library
+    ## [3] /usr/local/Cellar/r/3.5.2/lib/R/library
