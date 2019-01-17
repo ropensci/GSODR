@@ -4,7 +4,7 @@
 
 - Fixes a bug where extra data could be appended to dataframe. See
 <https://github.com/ropensci/GSODR/issues/49>. This also means that when you are
-retreiving large amounts of data, e.g. global data for 20+ years, you won't fill
+retrieving large amounts of data, e.g. global data for 20+ years, you won't fill
 up your hard disk space due to the raw data before processing.
 
 # GSODR 1.3.1
