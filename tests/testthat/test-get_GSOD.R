@@ -7,7 +7,7 @@ test_that(".validate_years handles invalid years", {
   expect_error(.validate_years(years = "nineteen ninety two"))
   expect_error(.validate_years(years = 1923))
   expect_error(.validate_years(years = 1901 +
-                                         as.POSIXlt(Sys.Date())$year))
+                                 as.POSIXlt(Sys.Date())$year))
   expect_error(.validate_years(years = 0))
   expect_error(.validate_years(years = -1))
 })
@@ -189,5 +189,16 @@ test_that("Timeout options are reset on get_GSOD() exit", {
 # Check that max_missing is not allowed for current year -----------------------
 test_that("max_missing is not allowed for current year", {
   years <- 1983:format(Sys.Date(), "%Y")
- expect_error(get_GSOD(years = years, max_missing = 5))
-  })
+  expect_error(get_GSOD(years = years, max_missing = 5))
+})
+
+# Check that only unique stations returned, tempdir() is cleaned up on exit ----
+test_that("unique stations are returned, tempdir() is cleaned up on exit", {
+  a <- get_GSOD(years = 2010, station = "489300-99999")
+  b <- get_GSOD(years = 2010, station = "489260-99999")
+  expect_false(isTRUE(
+    list.files(tempdir(),
+               pattern = ".gz$",
+               full.names = TRUE)))
+  expect_equal(length(unique(b["USAF"])), 1)
+})

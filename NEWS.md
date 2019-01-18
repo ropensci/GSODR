@@ -7,6 +7,10 @@
 retrieving large amounts of data, e.g. global data for 20+ years, you won't fill
 up your hard disk space due to the raw data before processing.
 
+## Minor changes
+
+- Update internal database of station locations
+
 # GSODR 1.3.1
 
 ## Bug fixes
