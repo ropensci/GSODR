@@ -1,5 +1,5 @@
-# GSODR 1.3.1.9000
 
+# GSODR 1.3.2
 ## Bug fixes
 
 - Fixes a bug where extra data could be appended to dataframe. See
