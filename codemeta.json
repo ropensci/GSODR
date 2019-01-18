@@ -447,7 +447,7 @@
   "contIntegration": "https://travis-ci.org/ropensci/GSODR",
   "releaseNotes": "https://github.com/ropensci/GSODR/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/GSODR/blob/master/README.md",
-  "fileSize": "2298.161KB",
+  "fileSize": "2298.164KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
