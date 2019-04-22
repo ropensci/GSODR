@@ -1,5 +1,11 @@
-# Validation functions ---------------------------------------------------------
+
+#' Validate Years
+#'
+#' @param years User entered years for request
+#' @keywords internal
+#' @return None unless error in years being requested by users
 #' @noRd
+
 .validate_years <- function(years) {
   this_year <- 1900 + as.POSIXlt(Sys.Date())$year
   for (i in years) {
@@ -16,7 +22,16 @@
   }
 }
 
+
+#' Validate Station IDs
+#'
+#' @param station User entered station ID
+#' @param isd_history isd_history.csv from NCDC provided by GSODR
+#' @param years User entered years for query
+#' @keywords internal
+#' @return None unless an error with the years or invalid station ID
 #' @noRd
+
 .validate_station <- function(station, isd_history, years) {
   if (!station %in% isd_history[[12]]) {
     stop(
@@ -31,9 +46,9 @@
     )
   }
   BEGIN <-
-    as.numeric(substr(isd_history[isd_history[[12]] == station,]$BEGIN, 1, 4))
+    as.numeric(substr(isd_history[isd_history[[12]] == station, ]$BEGIN, 1, 4))
   END <-
-    as.numeric(substr(isd_history[isd_history[[12]] == station,]$END, 1, 4))
+    as.numeric(substr(isd_history[isd_history[[12]] == station, ]$END, 1, 4))
   if (min(years) < BEGIN | max(years) > END) {
     message("\nThis station, ",
             station,
@@ -45,7 +60,15 @@
   }
 }
 
+
+#' Validate Country Requests
+#'
+#' @param country User requested country name
+#' @param country_list country_list file from NCDC provided by GSODR
+#' @keywords internal
+#' @return A validated country name
 #' @noRd
+
 .validate_country <-
   function(country, country_list) {
     if (!is.null(country)) {
@@ -80,7 +103,15 @@
     }
   }
 
+
+#' Validate Data for Missing Days
+#'
+#' @param max_missing User entered maximum permissible missing days
+#' @param GSOD_list A list of GSOD files that have been downloaded from NCDC
+#' @keywords internal
+#' @return A validated `list()` of GSOD files that meet requirements for missing days
 #' @noRd
+
 .validate_missing_days <-
   function(max_missing, GSOD_list) {
     records <-
@@ -102,10 +133,21 @@
                                        NA))
   }
 
-# Function to download files from server ---------------------------------------
+
+#' Download GSOD Files from NCDC Server
+#'
+#' @param ftp_base URL of FTP server
+#' @param station Station ID being requested
+#' @param years Years being requested
+#' @param cache_dir Directory to cache downloaded files
+#' @param .download_failed Function to carry out if download fails
+#' @keywords internal
+#' @return A list of GSOD files that have been downloaded
+#'
 #' @noRd
+
 .download_files <-
-  function(ftp_base, station, years, cache_dir) {
+  function(ftp_base, station, years, cache_dir, .download_failed) {
     if (is.null(station)) {
       file_list <-
         paste0(sprintf(ftp_base, years), "gsod_", years, ".tar")
@@ -121,8 +163,7 @@
           file.path(cache_dir, basename(file_list))
         ),
         error = function(x)
-          stop(call. = FALSE,
-               "\nThe file downloads have failed. Please restart.\n")
+          .download_failed()
       )
       tar_files <-
         list.files(cache_dir, pattern = "^gsod.*\\.tar$", full.names = TRUE)
@@ -200,7 +241,7 @@
         close(con)
         # sift out only the target stations
         purrr::map(station, ~ grep(., fils, value = TRUE)) %>%
-          purrr::keep( ~ length(.) > 0) %>%
+          purrr::keep(~ length(.) > 0) %>%
           purrr::flatten_chr() -> fils
 
         if (length(fils) > 0) {
@@ -224,11 +265,21 @@
                  full.names = TRUE)
   }
 
-# Agroclimatology: subset list of stations to process---------------------------
+
+#' Agroclimatology List
+#'
+#' @param GSOD_list List of GSOD files to clean
+#' @param isd_history isd_history file from NCDC
+#' @param cache_dir Directory for caching files
+#' @param years Years being requested
+#' @keywords internal
+#' @return A list of GSOD stations suitable for agroclimatology work
+#' @noRd
+
 .agroclimatology_list <-
   function(GSOD_list, isd_history, cache_dir, years) {
     station_list <- isd_history[isd_history$LAT >= -60 &
-                                  isd_history$LAT <= 60,]$STNID
+                                  isd_history$LAT <= 60, ]$STNID
     station_list <- do.call(paste0,
                             c(
                               expand.grid(cache_dir, "/", station_list, "-",
@@ -239,7 +290,18 @@
     return(GSOD_list)
   }
 
-# Specified country: subset list of stations to process ------------------------
+#' Subset Country List
+#'
+#' @param country Country of interest to subset on
+#' @param country_list Country list file provided by NCDC as a part of GSODR
+#' @param GSOD_list List of GSOD files to be subset
+#' @param isd_history isd_history.csv file from NCDC provided by GSODR
+#' @param cache_dir Cache directory for files
+#' @param years Years being requested
+#' @keywords internal
+#' @return A list of stations in the requested country
+#' @noRd
+
 .subset_country_list <-
   function(country,
            country_list,
@@ -247,9 +309,8 @@
            isd_history,
            cache_dir,
            years) {
-
     station_list <-
-      isd_history[isd_history$CTRY == country, ]$STNID
+      isd_history[isd_history$CTRY == country,]$STNID
     station_list <- do.call(paste0,
                             c(
                               expand.grid(cache_dir,
@@ -264,11 +325,90 @@
     rm(station_list)
   }
 
-# Clean and reformat list of station files from local disk in tempdir ----------
+
+#' Process .gz Files in Parallel
+#'
+#' @param file_list List of GSOD files
+#' @param isd_history isd_history.csv file from NCDC provided by GSODR
+#' @keywords internal
+#' @return A `data.frame()` of GSOD weather data
+#' @noRd
 
 apply_process_gz <- function(file_list, isd_history) {
   future.apply::future_lapply(X = file_list,
                               FUN = .process_gz,
                               isd_history = isd_history)  %>%
     dplyr::bind_rows()
+}
+
+#' GSOD Download Failure Response
+#' @keywords internal
+#' @return A `data.frame` and `message`
+#' @noRd
+
+.download_failed <- function() {
+  message(
+    "\nThe file downloads have failed. I'd like to just stop here",
+    "as there's nothing more to do, but CRAN policy prohibits an",
+    "error as a result of a `stop()` function in R. So here's a",
+    "data.frame with a row of `NA` vaues. Please try downloading",
+    "the files again.\n"
+  )
+
+  error_df <-
+    setNames(
+      data.frame(matrix(ncol = 49, nrow = 1)),
+      c(
+        "USAF",
+        "WBAN",
+        "STNID",
+        "STN_NAME",
+        "CTRY",
+        "CALL",
+        "STATE",
+        "CALL",
+        "LAT",
+        "LON",
+        "ELEV_M",
+        "ELEV_M_SRTM_90m",
+        "BEGIN",
+        "END",
+        "YEARMODA",
+        "YEAR",
+        "MONTH",
+        "DAY",
+        "YDAY",
+        "TEMP",
+        "TEMP_CNT",
+        "DEWP",
+        "DEWP_CNT",
+        "SLP",
+        "SLP_CNT",
+        "STP",
+        "STP_CNT",
+        "VISIB",
+        "VISIB_CNT",
+        "WDSP",
+        "WDSP_CNT",
+        "MXSPD",
+        "GUST",
+        "MAX",
+        "MAX_FLAG",
+        "MIN",
+        "MIN_FLAG",
+        "PRCP",
+        "PRCP_FLAG",
+        "SNDP",
+        "I_FOG",
+        "I_RAIN_DRIZZLE",
+        "I_SNOW_ICE",
+        "I_HAIL",
+        "I_THUNDER",
+        "I_TORNADO_FUNNEL",
+        "EA",
+        "ES",
+        "RH"
+      )
+    )
+  return(error_df[error_df == ""] <- NA)
 }

@@ -1,6 +1,11 @@
-
+#' Processes GSOD .gz Files Extracting Weather Data
+#'
+#' @param gz_file The .gz file to be extracted
+#'
+#' @return A `tibble()` of well-formatted weather data
 #' @importFrom rlang .data
 #' @noRd
+
 .process_gz <- function(gz_file, isd_history) {
   tmp <- readr::read_fwf(
     file = gz_file,
