@@ -26,7 +26,7 @@
 #' Validate Station IDs
 #'
 #' @param station User entered station ID
-#' @param isd_history isd_history.csv from NCDC provided by GSODR
+#' @param isd_history isd_history.csv from NCEI provided by GSODR
 #' @param years User entered years for query
 #' @keywords internal
 #' @return None unless an error with the years or invalid station ID
@@ -64,7 +64,7 @@
 #' Validate Country Requests
 #'
 #' @param country User requested country name
-#' @param country_list country_list file from NCDC provided by GSODR
+#' @param country_list country_list file from NCEI provided by GSODR
 #' @keywords internal
 #' @return A validated country name
 #' @noRd
@@ -107,7 +107,7 @@
 #' Validate Data for Missing Days
 #'
 #' @param max_missing User entered maximum permissible missing days
-#' @param GSOD_list A list of GSOD files that have been downloaded from NCDC
+#' @param GSOD_list A list of GSOD files that have been downloaded from NCEI
 #' @keywords internal
 #' @return A validated `list()` of GSOD files that meet requirements for missing days
 #' @noRd
@@ -134,7 +134,7 @@
   }
 
 
-#' Download GSOD Files from NCDC Server
+#' Download GSOD Files from NCEI Server
 #'
 #' @param ftp_base URL of FTP server
 #' @param station Station ID being requested
@@ -269,7 +269,7 @@
 #' Agroclimatology List
 #'
 #' @param GSOD_list List of GSOD files to clean
-#' @param isd_history isd_history file from NCDC
+#' @param isd_history isd_history file from NCEI
 #' @param cache_dir Directory for caching files
 #' @param years Years being requested
 #' @keywords internal
@@ -293,9 +293,9 @@
 #' Subset Country List
 #'
 #' @param country Country of interest to subset on
-#' @param country_list Country list file provided by NCDC as a part of GSODR
+#' @param country_list Country list file provided by NCEI as a part of GSODR
 #' @param GSOD_list List of GSOD files to be subset
-#' @param isd_history isd_history.csv file from NCDC provided by GSODR
+#' @param isd_history isd_history.csv file from NCEI provided by GSODR
 #' @param cache_dir Cache directory for files
 #' @param years Years being requested
 #' @keywords internal
@@ -329,7 +329,7 @@
 #' Process .gz Files in Parallel
 #'
 #' @param file_list List of GSOD files
-#' @param isd_history isd_history.csv file from NCDC provided by GSODR
+#' @param isd_history isd_history.csv file from NCEI provided by GSODR
 #' @keywords internal
 #' @return A `data.frame()` of GSOD weather data
 #' @noRd
