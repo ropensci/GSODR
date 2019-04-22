@@ -41,68 +41,7 @@ get_inventory <- function() {
       ftp_skip_pasv_ip = TRUE
     )
 
-  file_in <-
-    curl::curl_download(
-      "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt",
-      destfile = tempfile(),
-      quiet = TRUE,
-      handle = ftp_handle
-    )
-
-  main_body <-
-    readr::read_fwf(
-      file_in,
-      skip = 8,
-      readr::fwf_positions(
-        c(1, 8, 14, 20, 28, 36, 44, 52, 60, 68, 76, 84, 92, 100, 108),
-        c(7, 13, 18, 27, 35, 43, 51, 59, 67, 75, 83, 91, 99, 107, 113),
-        c(
-          "USAF",
-          "WBAN",
-          "YEAR",
-          "JAN",
-          "FEB",
-          "MAR",
-          "APR",
-          "MAY",
-          "JUN",
-          "JUL",
-          "AUG",
-          "SEP",
-          "OCT",
-          "NOV",
-          "DEC"
-        )
-      ),
-      col_types = c("ciiiiiiiiiiiiii")
-    )
-
-  main_body[, "STNID"] <- paste(main_body$USAF, main_body$WBAN, sep = "-")
-
-  main_body <- main_body[, -c(1:2)]
-
-  main_body <- dplyr::select(main_body, .data$STNID, dplyr::everything())
-
-  header <- readLines(file_in, n = 5)
-
-  # sift out the year and month
-  year_month <- grep("[0-9]{4}", header)
-
-  year_month <- tools::toTitleCase(
-    tolower(
-      gsub("^([^\\D]*\\d+).*", "\\1", header[[year_month]])
-    )
-  )
-  year_month <- gsub("Through ", "", year_month)
-
-  class(main_body) <- c("GSODR.Info", class(main_body))
-
-  # add attributes for printing df
-  attr(main_body, "GSODR.Inventory") <- c(
-    "   *** FEDERAL CLIMATE COMPLEX INTEGRATED SURFACE DATA INVENTORY ***   \n",
-    "   This inventory provides the number of weather observations by   \n",
-    "   STATION-YEAR-MONTH for beginning of record through", year_month, "   \n"
-  )
+  main_body <- .read_inventory(ftp_handle)
 
   return(main_body)
   unlink(tempfile())
@@ -117,4 +56,90 @@ print.GSODR.Info <- function(x, ...) {
   cat(attr(x, "GSODR.Inventory"))
   NextMethod(x)
   invisible(x)
+}
+
+#' Fetch and import NCEI Station Inventory
+#'
+#' @param ftp_handle a `curl` FTP handle for downloading the inventory file
+#' @keywords internal
+#' @return A `tibble()` inventory of stations
+#' @noRd
+
+.read_inventory <- function(ftp_handle) {
+  out <- tryCatch(
+    {
+      file_in <-
+        curl::curl_download(
+          "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt",
+          destfile = tempfile(),
+          quiet = TRUE,
+          handle = ftp_handle
+        )
+
+      main_body <-
+        readr::read_fwf(
+          file_in,
+          skip = 8,
+          readr::fwf_positions(
+            c(1, 8, 14, 20, 28, 36, 44, 52, 60, 68, 76, 84, 92, 100, 108),
+            c(7, 13, 18, 27, 35, 43, 51, 59, 67, 75, 83, 91, 99, 107, 113),
+            c(
+              "USAF",
+              "WBAN",
+              "YEAR",
+              "JAN",
+              "FEB",
+              "MAR",
+              "APR",
+              "MAY",
+              "JUN",
+              "JUL",
+              "AUG",
+              "SEP",
+              "OCT",
+              "NOV",
+              "DEC"
+            )
+          ),
+          col_types = c("ciiiiiiiiiiiiii")
+        )
+
+
+      main_body[, "STNID"] <- paste(main_body$USAF, main_body$WBAN, sep = "-")
+
+      main_body <- main_body[, -c(1:2)]
+
+      main_body <- dplyr::select(main_body, .data$STNID, dplyr::everything())
+
+      header <- readLines(file_in, n = 5)
+
+      # sift out the year and month
+      year_month <- grep("[0-9]{4}", header)
+
+      year_month <- tools::toTitleCase(
+        tolower(
+          gsub("^([^\\D]*\\d+).*", "\\1", header[[year_month]])
+        )
+      )
+      year_month <- gsub("Through ", "", year_month)
+
+      class(main_body) <- c("GSODR.Info", class(main_body))
+
+      # add attributes for printing df
+      attr(main_body, "GSODR.Inventory") <- c(
+        "   *** FEDERAL CLIMATE COMPLEX INTEGRATED SURFACE DATA INVENTORY ***   \n",
+        "   This inventory provides the number of weather observations by   \n",
+        "   STATION-YEAR-MONTH for beginning of record through", year_month, "   \n"
+      )
+      return(main_body)
+    },
+    error = function(cond) {
+      message("There was a problem retrieving the inventory file. Perhaps",
+              "the server is not responding currently or there is no",
+              "Internet connection. Please try again later.")
+      message(cond)
+      # Choose a return value in case of error
+      return(NA)
+    }
+  )
 }
