@@ -1,4 +1,5 @@
 
+
 #' Validate Years
 #'
 #' @param years User entered years for request
@@ -46,9 +47,9 @@
     )
   }
   BEGIN <-
-    as.numeric(substr(isd_history[isd_history[[12]] == station, ]$BEGIN, 1, 4))
+    as.numeric(substr(isd_history[isd_history[[12]] == station,]$BEGIN, 1, 4))
   END <-
-    as.numeric(substr(isd_history[isd_history[[12]] == station, ]$END, 1, 4))
+    as.numeric(substr(isd_history[isd_history[[12]] == station,]$END, 1, 4))
   if (min(years) < BEGIN | max(years) > END) {
     message("\nThis station, ",
             station,
@@ -147,11 +148,13 @@
 #' @noRd
 
 .download_files <-
-  function(ftp_base, station, years, cache_dir, .download_failed) {
+  function(ftp_base,
+           station,
+           years,
+           cache_dir) {
     if (is.null(station)) {
       file_list <-
         paste0(sprintf(ftp_base, years), "gsod_", years, ".tar")
-      tryCatch(
         Map(
           function(ftp, dest)
             curl::curl_download(
@@ -161,10 +164,7 @@
             ),
           file_list,
           file.path(cache_dir, basename(file_list))
-        ),
-        error = function(x)
-          .download_failed()
-      )
+        )
       tar_files <-
         list.files(cache_dir, pattern = "^gsod.*\\.tar$", full.names = TRUE)
       purrr::map(.x = tar_files,
@@ -175,7 +175,7 @@
     }
     if (!is.null(station)) {
       # Written by @hrbrmstr
-      max_retries <- 6
+      max_retries <- 10
       dir_list_handle <-
         curl::new_handle(
           ftp_use_epsv = FALSE,
@@ -195,13 +195,8 @@
             if (!is.null(res$result))
               return(res$result)
             if (i == max_retries) {
-              stop(
-                call. = FALSE,
-                "\nWe've tried to get the file(s) you requested six\n",
-                "times, but the server is not responding, so we are\n",
-                "unable to process your request now.\n",
-                "Please try again later.\n"
-              )
+              stop("There have been ten (10) retries to download these files.\n",
+                   "There are too many retries, the server may be under load")
             }
           }
         }
@@ -218,13 +213,8 @@
           repeat {
             i <- i + 1
             if (i == max_retries) {
-              stop(
-                call. = FALSE,
-                "\nWe've tried to get the file(s) you requested six\n",
-                "times, but the server is not responding, so we are\n",
-                "unable to process your request now.\n",
-                "Please try again later.\n"
-              )
+              stop("There have been ten (10) retries to download these files.\n",
+                   "There are too many retries, the server may be under load")
             }
             res <- s_curl_fetch_disk(url, cache_file)
             if (!is.null(res$result))
@@ -236,21 +226,25 @@
       purrr::walk(years, function(yr) {
         year_url <- sprintf(ftp_base, yr)
         tmp <- retry_cfm(year_url, handle = dir_list_handle)
-        con <- rawConnection(tmp$content)
-        fils <- readLines(con)
-        close(con)
-        # sift out only the target stations
-        purrr::map(station, ~ grep(., fils, value = TRUE)) %>%
-          purrr::keep(~ length(.) > 0) %>%
-          purrr::flatten_chr() -> fils
+        if (!is.na(tmp)) {
+          con <- rawConnection(tmp$content)
+          fils <- readLines(con)
+          close(con)
+          # sift out only the target stations
+          purrr::map(station, ~ grep(., fils, value = TRUE)) %>%
+            purrr::keep( ~ length(.) > 0) %>%
+            purrr::flatten_chr() -> fils
 
-        if (length(fils) > 0) {
-          # grab the station files
-          purrr::walk(paste0(year_url, fils), retry_cfd)
-          # progress bar
-          pb$tick()$print()
-        }
-        else {
+          if (length(fils) > 0) {
+            # grab the station files
+            purrr::walk(paste0(year_url, fils), retry_cfd)
+            # progress bar
+            pb$tick()$print()
+          }
+        } else if (is.na(tmp)) {
+          GSOD_list <- NULL
+          return(GSOD_list)
+        } else {
           message("\nThere are no files for station ID ",
                   station,
                   " in ",
@@ -258,13 +252,13 @@
                   ".\n")
         }
       })
-    }
-    GSOD_list <-
-      list.files(path = cache_dir,
-                 pattern = "^.*\\.op.gz$",
-                 full.names = TRUE)
-  }
 
+      GSOD_list <-
+        list.files(path = cache_dir,
+                   pattern = "^.*\\.op.gz$",
+                   full.names = TRUE)
+    }
+  }
 
 #' Agroclimatology List
 #'
@@ -279,7 +273,7 @@
 .agroclimatology_list <-
   function(GSOD_list, isd_history, cache_dir, years) {
     station_list <- isd_history[isd_history$LAT >= -60 &
-                                  isd_history$LAT <= 60, ]$STNID
+                                  isd_history$LAT <= 60,]$STNID
     station_list <- do.call(paste0,
                             c(
                               expand.grid(cache_dir, "/", station_list, "-",
@@ -310,7 +304,7 @@
            cache_dir,
            years) {
     station_list <-
-      isd_history[isd_history$CTRY == country,]$STNID
+      isd_history[isd_history$CTRY == country, ]$STNID
     station_list <- do.call(paste0,
                             c(
                               expand.grid(cache_dir,
@@ -339,76 +333,4 @@ apply_process_gz <- function(file_list, isd_history) {
                               FUN = .process_gz,
                               isd_history = isd_history)  %>%
     dplyr::bind_rows()
-}
-
-#' GSOD Download Failure Response
-#' @keywords internal
-#' @return A `data.frame` and `message`
-#' @noRd
-
-.download_failed <- function() {
-  message(
-    "\nThe file downloads have failed. I'd like to just stop here",
-    "as there's nothing more to do, but CRAN policy prohibits an",
-    "error as a result of a `stop()` function in R. So here's a",
-    "data.frame with a row of `NA` vaues. Please try downloading",
-    "the files again.\n"
-  )
-
-  error_df <-
-    setNames(
-      data.frame(matrix(ncol = 49, nrow = 1)),
-      c(
-        "USAF",
-        "WBAN",
-        "STNID",
-        "STN_NAME",
-        "CTRY",
-        "CALL",
-        "STATE",
-        "CALL",
-        "LAT",
-        "LON",
-        "ELEV_M",
-        "ELEV_M_SRTM_90m",
-        "BEGIN",
-        "END",
-        "YEARMODA",
-        "YEAR",
-        "MONTH",
-        "DAY",
-        "YDAY",
-        "TEMP",
-        "TEMP_CNT",
-        "DEWP",
-        "DEWP_CNT",
-        "SLP",
-        "SLP_CNT",
-        "STP",
-        "STP_CNT",
-        "VISIB",
-        "VISIB_CNT",
-        "WDSP",
-        "WDSP_CNT",
-        "MXSPD",
-        "GUST",
-        "MAX",
-        "MAX_FLAG",
-        "MIN",
-        "MIN_FLAG",
-        "PRCP",
-        "PRCP_FLAG",
-        "SNDP",
-        "I_FOG",
-        "I_RAIN_DRIZZLE",
-        "I_SNOW_ICE",
-        "I_HAIL",
-        "I_THUNDER",
-        "I_TORNADO_FUNNEL",
-        "EA",
-        "ES",
-        "RH"
-      )
-    )
-  return(error_df[error_df == ""] <- NA)
 }
