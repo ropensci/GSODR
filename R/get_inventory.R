@@ -1,6 +1,5 @@
 
-
-#' Download and Return a Tidy Data Frame of \acronym{GSOD} Weather Station Data Inventories
+#' Download and return a data frame of \acronym{GSOD} weather station data inventories
 #'
 #' The \acronym{NCEI} maintains a document,
 #' \url{ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt}, which lists
@@ -22,11 +21,8 @@
 #' inventory <- get_inventory()
 #' inventory
 #'}
-#' @return A data frame as a \code{\link[tibble]{tibble}} object of station
-#' inventories
-#' @author Adam H Sparks, \email{adamhsparks@@gmail.com}
-#' @note The download process can take quite some time to complete.
-#' @importFrom rlang .data
+#' @return A \code{\link[data.table]{data.table}} object of station inventories
+#' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
 #' @export get_inventory
 
 get_inventory <- function() {
@@ -58,7 +54,7 @@ print.GSODR.Info <- function(x, ...) {
   invisible(x)
 }
 
-#' Fetch and import NCEI Station Inventory
+#' Fetch and import NCEI station inventory
 #'
 #' @param ftp_handle a `curl` FTP handle for downloading the inventory file
 #' @keywords internal
@@ -76,41 +72,33 @@ print.GSODR.Info <- function(x, ...) {
       )
 
     main_body <-
-      readr::read_fwf(
+      data.table::fread(
         file_in,
         skip = 8,
-        readr::fwf_positions(
-          c(1, 8, 14, 20, 28, 36, 44, 52, 60, 68, 76, 84, 92, 100, 108),
-          c(7, 13, 18, 27, 35, 43, 51, 59, 67, 75, 83, 91, 99, 107, 113),
-          c(
-            "USAF",
-            "WBAN",
-            "YEAR",
-            "JAN",
-            "FEB",
-            "MAR",
-            "APR",
-            "MAY",
-            "JUN",
-            "JUL",
-            "AUG",
-            "SEP",
-            "OCT",
-            "NOV",
-            "DEC"
-          )
-        ),
-        col_types = c("ciiiiiiiiiiiiii")
+        col.names = c(
+          "USAF",
+          "WBAN",
+          "YEAR",
+          "JAN",
+          "FEB",
+          "MAR",
+          "APR",
+          "MAY",
+          "JUN",
+          "JUL",
+          "AUG",
+          "SEP",
+          "OCT",
+          "NOV",
+          "DEC"
+        )
       )
 
+    main_body[, STNID := paste(main_body$USAF, main_body$WBAN, sep = "-")]
 
-    main_body[, "STNID"] <-
-      paste(main_body$USAF, main_body$WBAN, sep = "-")
+    main_body[, c(1:2) := NULL]
 
-    main_body <- main_body[, -c(1:2)]
-
-    main_body <-
-      dplyr::select(main_body, .data$STNID, dplyr::everything())
+    data.table::setcolorder(main_body, "STNID")
 
     header <- readLines(file_in, n = 5)
 

@@ -1,5 +1,5 @@
 
-#' Download Latest Station List Information and Update Internal Database
+#' Download latest station list information and update internal database
 #'
 #' This function downloads the latest station list (isd-history.csv) from the
 #' \acronym{NCEI} \acronym{FTP} server and updates the data distributed with
@@ -30,7 +30,8 @@ update_station_list <- function() {
   message(
     "This will overwrite GSODR's current internal list of GSOD stations.\n",
     "If reproducibility is necessary, you may not wish to proceed.\n",
-    "Do you understand and wish to proceed (Y/n)?\n")
+    "Do you understand and wish to proceed (Y/n)?\n"
+  )
 
   answer <-
     readLines(con = getOption("GSODR_connection"), n = 1)
@@ -50,10 +51,9 @@ update_station_list <- function() {
   old_isd_history <- isd_history
 
   # fetch new isd_history from NCEI server
-  new_isd_history <- readr::read_csv(
+  new_isd_history <- data.table::fread(
     "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
-    col_types = "ccccccddddd",
-    col_names = c(
+    col.names = c(
       "USAF",
       "WBAN",
       "STN_NAME",
@@ -68,41 +68,57 @@ update_station_list <- function() {
     ),
     skip = 1
   )
-  new_isd_history[new_isd_history == -999.9] <- NA
-  new_isd_history[new_isd_history == -999] <- NA
+
+  # Replace -999.9 with NA
+  for (col in names(new_isd_history)[names(new_isd_history) %in% c("ELEV_M")]) {
+    data.table::set(
+      new_isd_history,
+      i = which(new_isd_history[[col]] == -999.9),
+      j = col,
+      value = NA
+    )
+  }
+
+  # Replace -999 with NA
+  for (col in names(new_isd_history)[names(new_isd_history) %in% c("ELEV_M")]) {
+    data.table::set(
+      new_isd_history,
+      i = which(new_isd_history[[col]] == -999),
+      j = col,
+      value = NA
+    )
+  }
+
   new_isd_history <-
     new_isd_history[new_isd_history$LAT != 0 &
-                      new_isd_history$LON != 0,]
+                      new_isd_history$LON != 0, ]
   new_isd_history <-
     new_isd_history[new_isd_history$LAT > -90 &
-                      new_isd_history$LAT < 90,]
+                      new_isd_history$LAT < 90, ]
   new_isd_history <-
     new_isd_history[new_isd_history$LON > -180 &
-                      new_isd_history$LON < 180,]
+                      new_isd_history$LON < 180, ]
   new_isd_history$STNID <-
     as.character(paste(new_isd_history$USAF, new_isd_history$WBAN, sep = "-"))
-  new_isd_history <- new_isd_history[!is.na(new_isd_history$LAT),]
-  new_isd_history <- new_isd_history[!is.na(new_isd_history$LON),]
+  new_isd_history <- new_isd_history[!is.na(new_isd_history$LAT), ]
+  new_isd_history <- new_isd_history[!is.na(new_isd_history$LON), ]
 
   # left join the old and new data
-  isd_history <- dplyr::left_join(
-    old_isd_history,
-    new_isd_history,
-    by = c(
-      "USAF" = "USAF",
-      "WBAN" = "WBAN",
-      "STN_NAME" = "STN_NAME",
-      "CTRY" = "CTRY",
-      "STATE" = "STATE",
-      "CALL" = "CALL",
-      "LAT" = "LAT",
-      "LON" = "LON",
-      "ELEV_M" = "ELEV_M",
-      "BEGIN" = "BEGIN",
-      "END" = "END",
-      "STNID" = "STNID"
-    )
-  )
+  isd_history <- old_isd_history[new_isd_history,
+                                 on = c(
+                                   "USAF" = "USAF",
+                                   "WBAN" = "WBAN",
+                                   "STN_NAME" = "STN_NAME",
+                                   "CTRY" = "CTRY",
+                                   "STATE" = "STATE",
+                                   "CALL" = "CALL",
+                                   "LAT" = "LAT",
+                                   "LON" = "LON",
+                                   "ELEV_M" = "ELEV_M",
+                                   "BEGIN" = "BEGIN",
+                                   "END" = "END",
+                                   "STNID" = "STNID"
+                                 )]
 
   # overwrite the existing isd_history.rda file on disk
   fname <-

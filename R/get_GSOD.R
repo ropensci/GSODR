@@ -123,8 +123,7 @@ get_GSOD <- function(years,
   original_timeout <- options("timeout")[[1]]
   options(timeout = 300)
   on.exit(options(timeout = original_timeout))
-  cache_dir <- tempdir()
-  ftp_base <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/%s/"
+
   # Validate user inputs -------------------------------------------------------
   .validate_years(years)
   # Validate stations for missing days -----------------------------------------
@@ -152,20 +151,20 @@ get_GSOD <- function(years,
   load(system.file("extdata", "isd_history.rda", package = "GSODR")) # nocov
 
   # Validate user entered stations for existence in stations list from NCEI
-  purrr::walk(
-    .x = station,
-    .f = .validate_station,
+  lapply(
+    X = station,
+    FUN = .validate_station,
     isd_history = isd_history,
     years = years
   )
 
   # Download files from server -----------------------------------------------
-  file_list <- .download_files(ftp_base, station, years, cache_dir)
+  file_list <- .download_files(station, years)
 
   # Subset file_list for agroclimatology only stations -----------------------
   if (isTRUE(agroclimatology)) {
     file_list <-
-      .agroclimatology_list(file_list, isd_history, cache_dir, years)
+      .agroclimatology_list(file_list, isd_history, years)
   }
 
   # Subset file_list for specified country -------------------------------------

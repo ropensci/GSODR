@@ -1,4 +1,5 @@
 
+
 #' Validate Years
 #'
 #' @param years User entered years for request
@@ -46,9 +47,9 @@
     )
   }
   BEGIN <-
-    as.numeric(substr(isd_history[isd_history[[12]] == station,]$BEGIN, 1, 4))
+    as.numeric(substr(isd_history[isd_history[[12]] == station, ]$BEGIN, 1, 4))
   END <-
-    as.numeric(substr(isd_history[isd_history[[12]] == station,]$END, 1, 4))
+    as.numeric(substr(isd_history[isd_history[[12]] == station, ]$END, 1, 4))
   if (min(years) < BEGIN | max(years) > END) {
     message("\nThis station, ",
             station,
@@ -136,132 +137,74 @@
 
 #' Download GSOD Files from NCEI Server
 #'
-#' @param ftp_base URL of FTP server
-#' @param station Station ID being requested
-#' @param years Years being requested
-#' @param cache_dir Directory to cache downloaded files
-#' @param .download_failed Function to carry out if download fails
+#' @param station Station ID being requested. Optional
+#' @param years Years being requested. Mandatory
 #' @keywords internal
-#' @return A list of GSOD files that have been downloaded
+#' @return A list of data for processing before returning to user
 #'
 #' @noRd
 
 .download_files <-
-  function(ftp_base,
-           station,
-           years,
-           cache_dir) {
+  function(station,
+           years) {
+    # download archive .tar.gz files
     if (is.null(station)) {
-      file_list <-
-        paste0(sprintf(ftp_base, years), "gsod_", years, ".tar")
-        Map(
-          function(ftp, dest)
-            curl::curl_download(
-              url = ftp,
-              destfile = dest,
-              mode = "wb"
-            ),
-          file_list,
-          file.path(cache_dir, basename(file_list))
+      url_list <-
+        paste0(
+          "https://www.ncei.noaa.gov/data/global-summary-of-the-day/archive/",
+          years,
+          ".tar.gz"
         )
+      Map(
+        function(ftp, dest)
+          curl::curl_download(
+            url = ftp,
+            destfile = dest,
+            mode = "wb"
+          ),
+        url_list,
+        file.path(tempdir(), basename(url_list))
+      )
+
       tar_files <-
-        list.files(cache_dir, pattern = "^gsod.*\\.tar$", full.names = TRUE)
-      purrr::map(.x = tar_files,
-                 .f = utils::untar,
-                 exdir = cache_dir)
-      GSOD_list <-
-        list.files(cache_dir, pattern = "^.*\\.op.gz$", full.names = TRUE)
+        list.files(tempdir(), pattern = "*\\.tar.gz$", full.names = TRUE)
+      lapply(X = tar_files,
+             FUN = utils::untar,
+             exdir = tempdir())
     }
+
     if (!is.null(station)) {
-      # Written by @hrbrmstr
-      max_retries <- 10
-      dir_list_handle <-
-        curl::new_handle(
-          ftp_use_epsv = FALSE,
-          crlf = TRUE,
-          dirlistonly = TRUE,
-          ssl_verifypeer = FALSE,
-          ftp_response_timeout = 30,
-          ftp_skip_pasv_ip = TRUE
-        )
-      s_curl_fetch_memory <- purrr::safely(curl::curl_fetch_memory)
-      retry_cfm <-
-        function(url, handle) {
-          i <- 0
-          repeat {
-            i <- i + 1
-            res <- s_curl_fetch_memory(url, handle = handle)
-            if (!is.null(res$result))
-              return(res$result)
-            if (i == max_retries) {
-              stop("There have been ten (10) retries to download these files.\n",
-                   "There are too many retries, the server may be under load")
-            }
-          }
-        }
-      # Wrapping the disk writer (for the actual files)
-      # Note the use of the cache dir. It won't waste your bandwidth or the
-      # server's bandwidth or CPU if the file has already been retrieved.
-      s_curl_fetch_disk <- purrr::safely(curl::curl_fetch_disk)
-      retry_cfd <-
-        function(url, path) {
-          cache_file <- sprintf("%s/%s", cache_dir, basename(url))
-          if (file.exists(cache_file))
-            return()
-          i <- 0
-          repeat {
-            i <- i + 1
-            if (i == max_retries) {
-              stop("There have been ten (10) retries to download these files.\n",
-                   "There are too many retries, the server may be under load")
-            }
-            res <- s_curl_fetch_disk(url, cache_file)
-            if (!is.null(res$result))
-              return()
-          }
-        }
+      url_list <-
+        paste0("https://www.ncei.noaa.gov/data/global-summary-of-the-day/access/",
+               years)
+      url_list <-
+        data.table::CJ(years, station, sorted = FALSE)[, paste0(
+          "https://www.ncei.noaa.gov/data/global-summary-of-the-day/access/",
+          years,
+          "/",
+          station,
+          ".csv"
+        )]
 
-      pb <- dplyr::progress_estimated(length(years))
-      purrr::walk(years, function(yr) {
-        year_url <- sprintf(ftp_base, yr)
-        tmp <- retry_cfm(year_url, handle = dir_list_handle)
-        if (!is.na(tmp)) {
-          con <- rawConnection(tmp$content)
-          fils <- readLines(con)
-          close(con)
-          # sift out only the target stations
-          purrr::map(station, ~ grep(., fils, value = TRUE)) %>%
-            purrr::keep( ~ length(.) > 0) %>%
-            purrr::flatten_chr() -> fils
-
-          if (length(fils) > 0) {
-            # grab the station files
-            purrr::walk(paste0(year_url, fils), retry_cfd)
-            # progress bar
-            pb$tick()$print()
-          }
-        } else if (is.na(tmp)) {
-          GSOD_list <- NULL
-          return(GSOD_list)
-        } else {
-          message("\nThere are no files for station ID ",
-                  station,
-                  " in ",
-                  yr,
-                  ".\n")
-        }
-      })
-
-      GSOD_list <-
-        list.files(path = cache_dir,
-                   pattern = "^.*\\.op.gz$",
-                   full.names = TRUE)
+      Map(
+        function(ftp, dest)
+          curl::curl_download(
+            url = ftp,
+            destfile = dest,
+            mode = "wb"
+          ),
+        url_list,
+        file.path(tempdir(), basename(url_list))
+      )
     }
+    GSOD_list <-
+      list.files(tempdir(), pattern = "*\\.csv$", full.names = TRUE)
+    return(GSOD_list)
   }
 
 #' Agroclimatology List
 #'
-#' @param GSOD_list List of GSOD files to clean
+#' @param x A `data.table` of GSOD data from .download_data
 #' @param isd_history isd_history file from NCEI
 #' @param cache_dir Directory for caching files
 #' @param years Years being requested

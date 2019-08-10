@@ -334,8 +334,7 @@ ggplot(data = isd_history,
   theme_ipsum()
 ```
 
-![GSOD Reported Elevation versus CGIAR-CSI SRTM Buffered
-Elevation](fetch_isd-history_files/figure-gfm/Buffered%20SRTM%2090m%20vs%20Reported%20Elevation-1.png)
+![GSOD Reported Elevation versus CGIAR-CSI SRTM Buffered Elevation](fetch_isd-history_files/figure-gfm/Buffered%20SRTM%2090m%20vs%20Reported%20Elevation-1.png)
 
 Buffered versus non-buffered elevation values were previously checked
 and found not to be different while also not showing any discernible

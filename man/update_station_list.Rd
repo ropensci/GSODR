@@ -2,7 +2,7 @@
 % Please edit documentation in R/update_station_list.R
 \name{update_station_list}
 \alias{update_station_list}
-\title{Download Latest Station List Information and Update Internal Database}
+\title{Download latest station list information and update internal database}
 \usage{
 update_station_list()
 }
