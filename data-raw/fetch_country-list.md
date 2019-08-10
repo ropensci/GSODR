@@ -1,7 +1,7 @@
 Fetch GSOD Country List and Merge with ISO Country Codes
 ================
 Adam H. Sparks
-2019-04-22
+2019-08-09
 
 # Introduction
 
@@ -133,7 +133,8 @@ Write .rda file to disk.
 
 ``` r
 save(country_list, file = "../inst/extdata/country_list.rda",
-     compress = "bzip2")
+     compress = "bzip2",
+     version = 2)
 ```
 
 # Notes
@@ -158,49 +159,52 @@ Policy](http://www.wmo.int/pages/about/Resolution40.html)
 
     ## ─ Session info ──────────────────────────────────────────────────────────
     ##  setting  value                       
-    ##  version  R version 3.5.3 (2019-03-11)
-    ##  os       macOS Mojave 10.14.4        
+    ##  version  R version 3.6.1 (2019-07-05)
+    ##  os       macOS Mojave 10.14.6        
     ##  system   x86_64, darwin15.6.0        
     ##  ui       X11                         
     ##  language (EN)                        
     ##  collate  en_AU.UTF-8                 
     ##  ctype    en_AU.UTF-8                 
     ##  tz       Australia/Brisbane          
-    ##  date     2019-04-22                  
+    ##  date     2019-08-09                  
     ## 
     ## ─ Packages ──────────────────────────────────────────────────────────────
     ##  package     * version date       lib source        
-    ##  assertthat    0.2.1   2019-03-21 [1] CRAN (R 3.5.2)
-    ##  cli           1.1.0   2019-03-19 [1] CRAN (R 3.5.2)
-    ##  countrycode * 1.1.0   2018-10-27 [1] CRAN (R 3.5.0)
-    ##  crayon        1.3.4   2017-09-16 [1] CRAN (R 3.5.0)
-    ##  curl          3.3     2019-01-10 [1] CRAN (R 3.5.2)
-    ##  digest        0.6.18  2018-10-10 [1] CRAN (R 3.5.0)
-    ##  dplyr       * 0.8.0.1 2019-02-15 [1] CRAN (R 3.5.2)
-    ##  evaluate      0.13    2019-02-12 [1] CRAN (R 3.5.2)
-    ##  fansi         0.4.0   2018-10-05 [1] CRAN (R 3.5.0)
-    ##  glue          1.3.1   2019-03-12 [1] CRAN (R 3.5.2)
-    ##  hms           0.4.2   2018-03-10 [1] CRAN (R 3.5.0)
-    ##  htmltools     0.3.6   2017-04-28 [1] CRAN (R 3.5.0)
-    ##  knitr         1.22    2019-03-08 [1] CRAN (R 3.5.2)
-    ##  magrittr      1.5     2014-11-22 [1] CRAN (R 3.5.0)
-    ##  pillar        1.3.1   2018-12-15 [1] CRAN (R 3.5.0)
-    ##  pkgconfig     2.0.2   2018-08-16 [1] CRAN (R 3.5.0)
-    ##  purrr         0.3.2   2019-03-15 [1] CRAN (R 3.5.2)
-    ##  R6            2.4.0   2019-02-14 [1] CRAN (R 3.5.2)
-    ##  Rcpp          1.0.1   2019-03-17 [1] CRAN (R 3.5.2)
-    ##  readr         1.3.1   2018-12-21 [1] CRAN (R 3.5.0)
-    ##  rlang         0.3.4   2019-04-07 [1] CRAN (R 3.5.2)
-    ##  rmarkdown     1.12    2019-03-14 [1] CRAN (R 3.5.2)
-    ##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 3.5.0)
-    ##  stringi       1.4.3   2019-03-12 [1] CRAN (R 3.5.2)
-    ##  stringr       1.4.0   2019-02-10 [1] CRAN (R 3.5.2)
-    ##  tibble        2.1.1   2019-03-16 [1] CRAN (R 3.5.2)
-    ##  tidyselect    0.2.5   2018-10-11 [1] CRAN (R 3.5.0)
-    ##  utf8          1.1.4   2018-05-24 [1] CRAN (R 3.5.0)
-    ##  withr         2.1.2   2018-03-15 [1] CRAN (R 3.5.0)
-    ##  xfun          0.6     2019-04-02 [1] CRAN (R 3.5.2)
-    ##  yaml          2.2.0   2018-07-25 [1] CRAN (R 3.5.0)
+    ##  assertthat    0.2.1   2019-03-21 [1] CRAN (R 3.6.0)
+    ##  backports     1.1.4   2019-04-10 [1] CRAN (R 3.6.0)
+    ##  cli           1.1.0   2019-03-19 [1] CRAN (R 3.6.0)
+    ##  countrycode * 1.1.0   2018-10-27 [1] CRAN (R 3.6.0)
+    ##  crayon        1.3.4   2017-09-16 [1] CRAN (R 3.6.0)
+    ##  curl          4.0     2019-07-22 [1] CRAN (R 3.6.1)
+    ##  digest        0.6.20  2019-07-04 [1] CRAN (R 3.6.0)
+    ##  dplyr       * 0.8.3   2019-07-04 [1] CRAN (R 3.6.0)
+    ##  evaluate      0.14    2019-05-28 [1] CRAN (R 3.6.0)
+    ##  fansi         0.4.0   2018-10-05 [1] CRAN (R 3.6.0)
+    ##  glue          1.3.1   2019-03-12 [1] CRAN (R 3.6.0)
+    ##  hms           0.5.0   2019-07-09 [1] CRAN (R 3.6.0)
+    ##  htmltools     0.3.6   2017-04-28 [1] CRAN (R 3.6.0)
+    ##  knitr         1.24    2019-08-08 [1] CRAN (R 3.6.1)
+    ##  magrittr      1.5     2014-11-22 [1] CRAN (R 3.6.0)
+    ##  pillar        1.4.2   2019-06-29 [1] CRAN (R 3.6.0)
+    ##  pkgconfig     2.0.2   2018-08-16 [1] CRAN (R 3.6.0)
+    ##  purrr         0.3.2   2019-03-15 [1] CRAN (R 3.6.0)
+    ##  R6            2.4.0   2019-02-14 [1] CRAN (R 3.6.0)
+    ##  Rcpp          1.0.2   2019-07-25 [1] CRAN (R 3.6.0)
+    ##  readr         1.3.1   2018-12-21 [1] CRAN (R 3.6.0)
+    ##  rlang         0.4.0   2019-06-25 [1] CRAN (R 3.6.0)
+    ##  rmarkdown     1.14    2019-07-12 [1] CRAN (R 3.6.0)
+    ##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 3.6.0)
+    ##  stringi       1.4.3   2019-03-12 [1] CRAN (R 3.6.0)
+    ##  stringr       1.4.0   2019-02-10 [1] CRAN (R 3.6.0)
+    ##  tibble        2.1.3   2019-06-06 [1] CRAN (R 3.6.0)
+    ##  tidyselect    0.2.5   2018-10-11 [1] CRAN (R 3.6.0)
+    ##  utf8          1.1.4   2018-05-24 [1] CRAN (R 3.6.0)
+    ##  vctrs         0.2.0   2019-07-05 [1] CRAN (R 3.6.0)
+    ##  withr         2.1.2   2018-03-15 [1] CRAN (R 3.6.0)
+    ##  xfun          0.8     2019-06-25 [1] CRAN (R 3.6.0)
+    ##  yaml          2.2.0   2018-07-25 [1] CRAN (R 3.6.0)
+    ##  zeallot       0.1.0   2018-01-28 [1] CRAN (R 3.6.0)
     ## 
     ## [1] /Users/adamsparks/Library/R/3.x/library
-    ## [2] /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+    ## [2] /Library/Frameworks/R.framework/Versions/3.6/Resources/library

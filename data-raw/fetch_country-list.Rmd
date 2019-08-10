@@ -63,7 +63,8 @@ Write .rda file to disk.
 
 ```{r write, echo=TRUE, messages=FALSE}
 save(country_list, file = "../inst/extdata/country_list.rda",
-     compress = "bzip2")
+     compress = "bzip2",
+     version = 2)
 ```
 # Notes
 
