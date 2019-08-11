@@ -105,13 +105,12 @@
 #' Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
 #' 90m Database \url{http://srtm.csi.cgiar.org}}
 #'
-#' @return A data frame as a \code{\link[tibble]{tibble}} object of weather
-#' data.
+#' @return A data frame as a \code{\link[data.table]{data.table}} object of
+#' \acronym{GSOD} weather data.
 #'
 #' @seealso
 #' \code{\link{reformat_GSOD}}
 #'
-#' @importFrom magrittr %>%
 #' @export get_GSOD
 
 get_GSOD <- function(years,
@@ -151,14 +150,16 @@ get_GSOD <- function(years,
   load(system.file("extdata", "isd_history.rda", package = "GSODR")) # nocov
 
   # Validate user entered stations for existence in stations list from NCEI
-  lapply(
+  invisible(lapply(
     X = station,
     FUN = .validate_station,
     isd_history = isd_history,
     years = years
-  )
+  ))
 
-  # Download files from server -----------------------------------------------
+  # Download files from server -------------------------------------------------
+  # remove "-" from station to construct proper URL
+  station <- gsub("-", "", station)
   file_list <- .download_files(station, years)
 
   # Subset file_list for agroclimatology only stations -----------------------
@@ -181,7 +182,6 @@ get_GSOD <- function(years,
                            country_list,
                            file_list,
                            isd_history,
-                           cache_dir,
                            years)
   }
 
@@ -191,7 +191,7 @@ get_GSOD <- function(years,
       .validate_missing_days(max_missing, file_list)
   }
 
-  GSOD_XY <- apply_process_gz(file_list, isd_history)
+  GSOD_XY <- .apply_process_csv(file_list, isd_history)
 
   # remove any leftover files from download to prevent poluting a new run
   file.remove(list.files(tempdir(), pattern = ".gz$", full.names = TRUE))

@@ -5,7 +5,7 @@
 #' @return A `data.table` of well-formatted weather data
 #' @noRd
 
-.process_list <- function(xt, isd_history) {
+.process_GSOD <- function(x, isd_history) {
   # Import data from the website for indvidual stations or tempdir() for all ---
   DT <-
     data.table::fread(
@@ -102,10 +102,10 @@
   # Monteith JL (1973) Principles of environmental physics.
   #   Edward Arnold, London
   # EA derived from dew point
-  DT[, EA := round(0.61078 * eDTp((17.2694 * (DEWP)) /
+  DT[, EA := round(0.61078 * exp((17.2694 * (DEWP)) /
                                   ((DEWP) + 237.3)), 1)]
   # ES derived from average temperature
-  DT[, ES := round(0.61078 * eDTp((17.2694 * (TEMP)) /
+  DT[, ES := round(0.61078 * exp((17.2694 * (TEMP)) /
                                   ((TEMP) + 237.3)), 1)]
   # Calculate relative humidity
   DT[, RH := round(EA / ES * 100, 1)]

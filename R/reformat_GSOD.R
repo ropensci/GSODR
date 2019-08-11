@@ -77,12 +77,10 @@
 #' Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
 #' 90m Database \url{http://srtm.csi.cgiar.org}}
 #'
-#' @return A data frame as a \code{\link[tibble]{tibble}} object of weather
-#' data.
+#' @return A data frame as a \code{\link[data.table]{data.table}}} object of
+#' \acronym{GSOD} data.
 #'
 #' @seealso \code{\link{get_GSOD}}
-#'
-#' @importFrom magrittr %>%
 #'
 #' @export reformat_GSOD
 
@@ -93,10 +91,10 @@ reformat_GSOD <- function(dsn = NULL, file_list = NULL) {
   # If dsn !NULL, create a list of files to reformat
   if (!is.null(dsn)) {
     file_list <- list.files(path = dsn,
-                            pattern = "^.*\\.op.gz$",
+                            pattern = "^.*\\.csv$",
                             full.names = TRUE)
     if (length(file_list) == 0)
       stop("No files were found, please check your file location.")
   }
-  GSOD_XY <- apply_process_gz(file_list, isd_history)
+  GSOD_XY <- apply_process_csv(file_list, isd_history)
 }

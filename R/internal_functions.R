@@ -1,5 +1,4 @@
 
-
 #' Validate Years
 #'
 #' @param years User entered years for request
@@ -47,9 +46,9 @@
     )
   }
   BEGIN <-
-    as.numeric(substr(isd_history[isd_history[[12]] == station, ]$BEGIN, 1, 4))
+    as.numeric(substr(isd_history[isd_history[[12]] == station,]$BEGIN, 1, 4))
   END <-
-    as.numeric(substr(isd_history[isd_history[[12]] == station, ]$END, 1, 4))
+    as.numeric(substr(isd_history[isd_history[[12]] == station,]$END, 1, 4))
   if (min(years) < BEGIN | max(years) > END) {
     message("\nThis station, ",
             station,
@@ -155,15 +154,20 @@
           years,
           ".tar.gz"
         )
-      Map(
-        function(ftp, dest)
-          curl::curl_download(
-            url = ftp,
-            destfile = dest,
-            mode = "wb"
-          ),
-        url_list,
-        file.path(tempdir(), basename(url_list))
+      tryCatch(
+        Map(
+          function(url, dest)
+            curl::curl_download(
+              url = url,
+              destfile = dest,
+              mode = "wb"
+            ),
+          url_list,
+          file.path(tempdir(), basename(url_list))
+        ),
+        error = function(x)
+          stop(call. = FALSE,
+               "\nThe file downloads have failed. Please retry.\n")
       )
 
       tar_files <-
@@ -175,9 +179,6 @@
 
     if (!is.null(station)) {
       url_list <-
-        paste0("https://www.ncei.noaa.gov/data/global-summary-of-the-day/access/",
-               years)
-      url_list <-
         data.table::CJ(years, station, sorted = FALSE)[, paste0(
           "https://www.ncei.noaa.gov/data/global-summary-of-the-day/access/",
           years,
@@ -185,16 +186,20 @@
           station,
           ".csv"
         )]
-
-      Map(
-        function(ftp, dest)
-          curl::curl_download(
-            url = ftp,
-            destfile = dest,
-            mode = "wb"
-          ),
-        url_list,
-        file.path(tempdir(), basename(url_list))
+      tryCatch(
+        Map(
+          function(url, dest)
+            curl::curl_download(
+              url = url,
+              destfile = dest,
+              mode = "wb"
+            ),
+          url_list,
+          file.path(tempdir(), basename(url_list))
+        ),
+        error = function(x)
+          stop(call. = FALSE,
+               "\nThe file downloads have failed. Please retry.\n")
       )
     }
     GSOD_list <-
@@ -206,19 +211,25 @@
 #'
 #' @param x A `data.table` of GSOD data from .download_data
 #' @param isd_history isd_history file from NCEI
-#' @param cache_dir Directory for caching files
 #' @param years Years being requested
 #' @keywords internal
 #' @return A list of GSOD stations suitable for agroclimatology work
 #' @noRd
 
 .agroclimatology_list <-
-  function(GSOD_list, isd_history, cache_dir, years) {
+  function(GSOD_list, isd_history, years) {
     station_list <- isd_history[isd_history$LAT >= -60 &
-                                  isd_history$LAT <= 60,]$STNID
+                                  isd_history$LAT <= 60, ]$STNID
+
+    station_list <-
+      data.table::CJ(years, station, sorted = FALSE)[, paste0(tempdir(),
+                                                              station_list,
+                                                              "/",
+                                                              station,
+                                                              ".csv")]
     station_list <- do.call(paste0,
                             c(
-                              expand.grid(cache_dir, "/", station_list, "-",
+                              expand.grid(tempdir(), "/", station_list, "-",
                                           years, ".op.gz")
                             ))
     GSOD_list <- GSOD_list[GSOD_list %in% station_list]
@@ -232,7 +243,6 @@
 #' @param country_list Country list file provided by NCEI as a part of GSODR
 #' @param GSOD_list List of GSOD files to be subset
 #' @param isd_history isd_history.csv file from NCEI provided by GSODR
-#' @param cache_dir Cache directory for files
 #' @param years Years being requested
 #' @keywords internal
 #' @return A list of stations in the requested country
@@ -243,36 +253,34 @@
            country_list,
            GSOD_list,
            isd_history,
-           cache_dir,
            years) {
     station_list <-
-      isd_history[isd_history$CTRY == country, ]$STNID
+      isd_history[isd_history$CTRY == country,]$STNID
     station_list <- do.call(paste0,
-                            c(
-                              expand.grid(cache_dir,
-                                          "/",
-                                          station_list,
-                                          "-",
-                                          years,
-                                          ".op.gz")
-                            ))
+                            c(expand.grid(
+                              tempdir(),
+                              "/",
+                              station_list,
+                              "-",
+                              years,
+                              ".csv"
+                            )))
     GSOD_list <- GSOD_list[GSOD_list %in% station_list]
     return(GSOD_list)
     rm(station_list)
   }
-
 
 #' Process .gz Files in Parallel
 #'
 #' @param file_list List of GSOD files
 #' @param isd_history isd_history.csv file from NCEI provided by GSODR
 #' @keywords internal
-#' @return A `data.frame()` of GSOD weather data
+#' @return A `data.table()` of GSOD weather data
 #' @noRd
 
-apply_process_gz <- function(file_list, isd_history) {
-  future.apply::future_lapply(X = file_list,
-                              FUN = .process_gz,
-                              isd_history = isd_history)  %>%
-    dplyr::bind_rows()
+.apply_process_csv <- function(file_list, isd_history) {
+  x <- future.apply::future_lapply(X = file_list,
+                                   FUN = .process_GSOD,
+                                   isd_history = isd_history)
+  return(data.table::rbindlist(x))
 }
