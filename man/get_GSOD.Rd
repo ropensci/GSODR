@@ -53,7 +53,7 @@ Stations reporting a latitude of < -90 or > 90 or longitude of < -180 or >
 missing days to assure data quality and omitting stations with too many
 missing observations.
 
-All units are converted to International System of Units (SI), \emph{e.g.}
+All units are converted to International System of Units (SI), \emph{e.g.},
 Fahrenheit to Celsius and inches to millimetres.
 
 Alternative elevation measurements are supplied for missing values or values
