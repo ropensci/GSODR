@@ -77,7 +77,7 @@
 #' Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
 #' 90m Database \url{http://srtm.csi.cgiar.org}}
 #'
-#' @return A data frame as a \code{\link[data.table]{data.table}}} object of
+#' @return A data frame as a \code{\link[data.table]{data.table}} object of
 #' \acronym{GSOD} data.
 #'
 #' @seealso \code{\link{get_GSOD}}

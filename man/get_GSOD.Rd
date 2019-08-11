@@ -32,8 +32,8 @@ Set to \code{TRUE} to include only stations within the confines of these
 latitudes.}
 }
 \value{
-A data frame as a \code{\link[tibble]{tibble}} object of weather
-data.
+A data frame as a \code{\link[data.table]{data.table}} object of
+\acronym{GSOD} weather data.
 }
 \description{
 This function automates downloading, cleaning, reformatting of data from

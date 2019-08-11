@@ -14,8 +14,8 @@ for tidying.}
 tidying.}
 }
 \value{
-A data frame as a \code{\link[tibble]{tibble}} object of weather
-data.
+A data frame as a \code{\link[data.table]{data.table}} object of
+\acronym{GSOD} data.
 }
 \description{
 This function automates cleaning and reformatting of \acronym{GSOD} station
