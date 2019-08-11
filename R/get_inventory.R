@@ -58,7 +58,7 @@ print.GSODR.Info <- function(x, ...) {
 #'
 #' @param ftp_handle a `curl` FTP handle for downloading the inventory file
 #' @keywords internal
-#' @return A `tibble()` inventory of stations
+#' @return A `data.table()` inventory of stations
 #' @noRd
 
 .read_inventory <- function(ftp_handle) {
