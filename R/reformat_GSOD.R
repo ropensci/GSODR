@@ -39,7 +39,7 @@
 #' use this function.
 #'
 #' Note that \code{reformat_GSOD()} will attempt to reformat any ".csv" files
-#' found in the \par{dsn} that you provide.  If there are non-GSOD files present
+#' found in the \code{dsn} that you provide.  If there are non-GSOD files present
 #' this will lead to errors.
 #'
 #' For a complete list of the fields and description of the contents and units,

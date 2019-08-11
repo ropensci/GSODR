@@ -49,7 +49,7 @@ Depends:
 License: MIT + file LICENSE
 Imports: 
     curl,
-    data.table,
+    data.table (>= 1.11.6),
     future.apply,
     R.utils,
     stats,

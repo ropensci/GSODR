@@ -40,7 +40,7 @@ get_inventory <- function() {
   main_body <- .read_inventory(ftp_handle)
 
   return(main_body)
-  unlink(tempfile())
+  unlink(file.path(tempdir(), "inventory.txt"))
 }
 
 #' Prints GSODR.info object.
@@ -62,18 +62,17 @@ print.GSODR.Info <- function(x, ...) {
 #' @noRd
 
 .read_inventory <- function(ftp_handle) {
-  out <- tryCatch({
-    file_in <-
-      curl::curl_download(
-        "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt",
-        destfile = tempfile(),
-        quiet = TRUE,
-        handle = ftp_handle
-      )
+  tryCatch({
+    curl::curl_download(
+      "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt",
+      destfile = file.path(tempdir(), "inventory.txt"),
+      quiet = TRUE,
+      handle = ftp_handle
+    )
 
     main_body <-
-      data.table::fread(
-        file_in,
+      fread(
+        file.path(tempdir(), "inventory.txt"),
         skip = 8,
         col.names = c(
           "USAF",
@@ -94,19 +93,21 @@ print.GSODR.Info <- function(x, ...) {
         )
       )
 
-    main_body[, STATION := paste(main_body$USAF, main_body$WBAN)]
+    main_body[, STATION := paste0(main_body$USAF, main_body$WBAN)]
 
     main_body[, c(1:2) := NULL]
 
-    data.table::setcolorder(main_body, "STATION")
+    setcolorder(main_body, "STATION")
 
-    header <- readLines(file_in, n = 5)
+    header <-
+      readLines(file.path(tempdir(), "inventory.txt"), n = 5)
 
     # sift out the year and month
     year_month <- grep("[0-9]{4}", header)
 
-    year_month <- tools::toTitleCase(tolower(gsub("^([^\\D]*\\d+).*", "\\1",
-                                                  header[[year_month]])))
+    year_month <-
+      tools::toTitleCase(tolower(gsub("^([^\\D]*\\d+).*", "\\1",
+                                      header[[year_month]])))
     year_month <- gsub("Through ", "", year_month)
 
     class(main_body) <- c("GSODR.Info", class(main_body))

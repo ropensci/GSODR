@@ -191,7 +191,7 @@
 
     if (!is.null(station)) {
       url_list <-
-        data.table::CJ(years, station, sorted = FALSE)[, paste0(
+        CJ(years, station, sorted = FALSE)[, paste0(
           "https://www.ncei.noaa.gov/data/global-summary-of-the-day/access/",
           years,
           "/",
@@ -240,7 +240,7 @@
     station_list <- gsub("-", "", station_list)
 
     station_list <-
-      data.table::CJ(years, sorted = FALSE)[, paste0(tempdir(),
+      CJ(years, sorted = FALSE)[, paste0(tempdir(),
                                                      "/",
                                                      years,
                                                      "/",
@@ -273,7 +273,7 @@
       isd_history[isd_history$CTRY == country, ]$STNID
     station_list <- gsub("-", "", station_list)
     station_list <-
-      data.table::CJ(years, sorted = FALSE)[, paste0(tempdir(),
+      CJ(years, sorted = FALSE)[, paste0(tempdir(),
                                                      "/",
                                                      years,
                                                      "/",
@@ -296,5 +296,5 @@
   x <- future.apply::future_lapply(X = file_list,
                                    FUN = .process_GSOD,
                                    isd_history = isd_history)
-  return(data.table::rbindlist(x))
+  return(rbindlist(x))
 }

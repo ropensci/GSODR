@@ -8,51 +8,49 @@
 .process_GSOD <- function(x, isd_history) {
   # Import data from the website for indvidual stations or tempdir() for all ---
   DT <-
-    data.table::fread(
-      x
-    )
+    fread(x)
 
   # Replace 99.99 with NA
   for (col in names(DT)[names(DT) == "PRCP"]) {
-    data.table::set(DT,
-                    i = which(DT[[col]] == 99.99),
-                    j = col,
-                    value = NA)
+    set(DT,
+        i = which(DT[[col]] == 99.99),
+        j = col,
+        value = NA)
   }
 
   # Replace 999.9 with NA
   for (col in names(DT)[names(DT) %in% c("VISIB",
-                                       "WDSP",
-                                       "MDTSPD",
-                                       "GUST",
-                                       "SNDP",
-                                       "STP")]) {
-    data.table::set(DT,
-                    i = which(DT[[col]] == 999.9),
-                    j = col,
-                    value = NA)
+                                         "WDSP",
+                                         "MDTSPD",
+                                         "GUST",
+                                         "SNDP",
+                                         "STP")]) {
+    set(DT,
+        i = which(DT[[col]] == 999.9),
+        j = col,
+        value = NA)
   }
 
   # Replace 9999.99 with NA
   for (col in names(DT)[names(DT) %in% c("TEMP",
-                                       "DEWP",
-                                       "SLP",
-                                       "MADT",
-                                       "MIN")]) {
-    data.table::set(DT,
-                    i = which(DT[[col]] == 9999.9),
-                    j = col,
-                    value = NA)
+                                         "DEWP",
+                                         "SLP",
+                                         "MADT",
+                                         "MIN")]) {
+    set(DT,
+        i = which(DT[[col]] == 9999.9),
+        j = col,
+        value = NA)
   }
 
   # Replace " " with NA
   for (col in names(DT)[names(DT) %in% c("PRCP_ATTRIBUTES",
-                                       "MIN_ATTRIBUTES",
-                                       "MADT_ATTRIBUTES")]) {
-    data.table::set(DT,
-                    i = which(DT[[col]] == " "),
-                    j = col,
-                    value = NA)
+                                         "MIN_ATTRIBUTES",
+                                         "MADT_ATTRIBUTES")]) {
+    set(DT,
+        i = which(DT[[col]] == " "),
+        j = col,
+        value = NA)
   }
 
   # Add STNID col --------------------------------------------------------------
@@ -69,20 +67,22 @@
   DT[, c("DATE", "STATION") := NULL]
 
   # Convert numeric cols to be numeric -----------------------------------------
-  for (col in c("TEMP",
-                "DEWP",
-                "SLP",
-                "STP",
-                "WDSP",
-                "MDTSPD",
-                "GUST",
-                "VISIB",
-                "WDSP",
-                "MADT",
-                "MIN",
-                "PRCP",
-                "SNDP")) {
-    data.table::set(DT, j = col, value = as.numeric(DT[[col]]))
+  for (col in c(
+    "TEMP",
+    "DEWP",
+    "SLP",
+    "STP",
+    "WDSP",
+    "MDTSPD",
+    "GUST",
+    "VISIB",
+    "WDSP",
+    "MADT",
+    "MIN",
+    "PRCP",
+    "SNDP"
+  )) {
+    set(DT, j = col, value = as.numeric(DT[[col]]))
   }
 
   # Convert data to Metric units -----------------------------------------------
@@ -103,17 +103,18 @@
   #   Edward Arnold, London
   # EA derived from dew point
   DT[, EA := round(0.61078 * exp((17.2694 * (DEWP)) /
-                                  ((DEWP) + 237.3)), 1)]
+                                   ((DEWP) + 237.3)), 1)]
   # ES derived from average temperature
   DT[, ES := round(0.61078 * exp((17.2694 * (TEMP)) /
-                                  ((TEMP) + 237.3)), 1)]
+                                   ((TEMP) + 237.3)), 1)]
   # Calculate relative humidity
   DT[, RH := round(EA / ES * 100, 1)]
 
   # Join to the station and SRTM data-------------------------------------------
   DT <- DT[isd_history]
 
-data.table::setcolorder(DT,
+  setcolorder(
+    DT,
     c(
       "USAF",
       "WBAN",
