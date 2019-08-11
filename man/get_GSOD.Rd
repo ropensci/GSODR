@@ -11,17 +11,18 @@ get_GSOD(years, station = NULL, country = NULL, max_missing = NULL,
 \item{years}{Year(s) of weather data to download.}
 
 \item{station}{Optional. Specify a station or multiple stations for which to
-retrieve, check and clean weather data using \var{STNID}. The \acronym{NCEI}
-reports years for which the data are available. This function checks against
-these years. However, not all cases are properly documented and in some cases
-files may not exist on the \acronym{FTP} server even though it is indicated
-that data was recorded for the station for a particular year. If a station is
-specified that does not have an existing file on the server, this function
-will silently fail and move on to existing files for download and cleaning
-from the \acronym{FTP} server.}
+retrieve, check and clean weather data using \var{STATION}. The
+\acronym{NCEI} reports years for which the data are available. This function
+checks against these years. However, not all cases are properly documented
+and in some cases files may not exist for download even though it is
+indicated that data was recorded for the station for a particular year. If a
+station is specified that does not have an existing file on the server, this
+function will silently fail and move on to existing files for download and
+cleaning.}
 
 \item{country}{Optional. Specify a country for which to retrieve weather
-data; full name or \acronym{ISO} codes can be used.}
+data; full name or \acronym{ISO} codes can be used. All stations within the
+country will be returned.}
 
 \item{max_missing}{Optional. The maximum number of days allowed to be missing
 from a station's data before it is excluded from final file output.}
@@ -44,7 +45,7 @@ vapour pressure (ea) and relative humidity (RH) are calculated and returned
 in the final data frame.
 
 Parallel processing can be enabled using \code{\link[future]{plan}} to set
-up a parallel backend of your choice, e.g.,
+up a parallel backend of your choice, \emph{e.g.},
 \code{future::plan("multisession")}. See examples for more.
 }
 \details{
@@ -91,7 +92,7 @@ these data by others must provide this same notification.}
 \examples{
 \donttest{
 # Download weather station for Toowoomba, Queensland for 2010
-tbar <- get_GSOD(years = 2010, station = "955510-99999")
+tbar <- get_GSOD(years = 2010, station = "95551099999")
 
 tbar
 

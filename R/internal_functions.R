@@ -34,7 +34,7 @@
 #' @noRd
 
 .validate_station <- function(station, isd_history, years) {
-  if (!station %in% isd_history[[12]]) {
+  if (!station %in% isd_history[, "STATION"]) {
     stop(
       call. = FALSE,
       "\n",
@@ -47,9 +47,9 @@
     )
   }
   BEGIN <-
-    as.numeric(substr(isd_history[isd_history[[12]] == station, ]$BEGIN, 1, 4))
+    as.numeric(substr(isd_history[isd_history[, "STATION"] == station, ]$BEGIN, 1, 4))
   END <-
-    as.numeric(substr(isd_history[isd_history[[12]] == station, ]$END, 1, 4))
+    as.numeric(substr(isd_history[isd_history[, "STATION"] == station, ]$END, 1, 4))
   if (min(years) < BEGIN | max(years) > END) {
     message("\nThis station, ",
             station,

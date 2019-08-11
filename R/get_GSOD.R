@@ -10,7 +10,7 @@
 #' in the final data frame.
 #'
 #' Parallel processing can be enabled using \code{\link[future]{plan}} to set
-#' up a parallel backend of your choice, e.g.,
+#' up a parallel backend of your choice, \emph{e.g.},
 #' \code{future::plan("multisession")}. See examples for more.
 #'
 #' @details
@@ -55,16 +55,17 @@
 #'
 #' @param years Year(s) of weather data to download.
 #' @param station Optional. Specify a station or multiple stations for which to
-#' retrieve, check and clean weather data using \var{STNID}. The \acronym{NCEI}
-#' reports years for which the data are available. This function checks against
-#' these years. However, not all cases are properly documented and in some cases
-#' files may not exist on the \acronym{FTP} server even though it is indicated
-#' that data was recorded for the station for a particular year. If a station is
-#' specified that does not have an existing file on the server, this function
-#' will silently fail and move on to existing files for download and cleaning
-#' from the \acronym{FTP} server.
+#' retrieve, check and clean weather data using \var{STATION}. The
+#' \acronym{NCEI} reports years for which the data are available. This function
+#' checks against these years. However, not all cases are properly documented
+#' and in some cases files may not exist for download even though it is
+#' indicated that data was recorded for the station for a particular year. If a
+#' station is specified that does not have an existing file on the server, this
+#' function will silently fail and move on to existing files for download and
+#' cleaning.
 #' @param country Optional. Specify a country for which to retrieve weather
-#' data; full name or \acronym{ISO} codes can be used.
+#' data; full name or \acronym{ISO} codes can be used. All stations within the
+#' country will be returned.
 #' @param max_missing Optional. The maximum number of days allowed to be missing
 #' from a station's data before it is excluded from final file output.
 #' @param agroclimatology Optional. Logical. Only clean data for stations
@@ -75,7 +76,7 @@
 #' @examples
 #' \donttest{
 #' # Download weather station for Toowoomba, Queensland for 2010
-#' tbar <- get_GSOD(years = 2010, station = "955510-99999")
+#' tbar <- get_GSOD(years = 2010, station = "95551099999")
 #'
 #' tbar
 #'
@@ -159,7 +160,6 @@ get_GSOD <- function(years,
 
   # Download files from server -------------------------------------------------
   # remove "-" from station to construct proper URL
-  station <- gsub("-", "", station)
   file_list <- .download_files(station, years)
 
   # Subset file_list for agroclimatology only stations -----------------------
