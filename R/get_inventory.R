@@ -94,11 +94,11 @@ print.GSODR.Info <- function(x, ...) {
         )
       )
 
-    main_body[, STNID := paste(main_body$USAF, main_body$WBAN, sep = "-")]
+    main_body[, STATION := paste(main_body$USAF, main_body$WBAN)]
 
     main_body[, c(1:2) := NULL]
 
-    data.table::setcolorder(main_body, "STNID")
+    data.table::setcolorder(main_body, "STATION")
 
     header <- readLines(file_in, n = 5)
 
