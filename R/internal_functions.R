@@ -1,4 +1,5 @@
 
+
 #' Validate Years
 #'
 #' @param years User entered years for request
@@ -46,9 +47,9 @@
     )
   }
   BEGIN <-
-    as.numeric(substr(isd_history[isd_history[[12]] == station,]$BEGIN, 1, 4))
+    as.numeric(substr(isd_history[isd_history[[12]] == station, ]$BEGIN, 1, 4))
   END <-
-    as.numeric(substr(isd_history[isd_history[[12]] == station,]$END, 1, 4))
+    as.numeric(substr(isd_history[isd_history[[12]] == station, ]$END, 1, 4))
   if (min(years) < BEGIN | max(years) > END) {
     message("\nThis station, ",
             station,
@@ -172,9 +173,20 @@
 
       tar_files <-
         list.files(tempdir(), pattern = "*\\.tar.gz$", full.names = TRUE)
-      lapply(X = tar_files,
-             FUN = utils::untar,
-             exdir = tempdir())
+      for (i in tar_files) {
+        wd <- getwd()
+        setwd(tempdir())
+        year_dir <- substr(i, nchar(i) - 10, nchar(i) - 7)
+        utils::untar(i, exdir = year_dir)
+        setwd(wd)
+      }
+      GSOD_list <-
+        list.files(
+          tempdir(),
+          pattern = "*\\.csv$",
+          full.names = TRUE,
+          recursive = TRUE
+        )
     }
 
     if (!is.null(station)) {
@@ -187,6 +199,7 @@
           ".csv"
         )]
       tryCatch(
+        # need to prepend year to filename for downloads for multiple years
         Map(
           function(url, dest)
             curl::curl_download(
@@ -195,15 +208,19 @@
               mode = "wb"
             ),
           url_list,
-          file.path(tempdir(), basename(url_list))
+          file.path(
+            tempdir(),
+            substr(url_list, nchar(url_list) - 19, nchar(url_list) - 16), # year
+            basename(url_list) # filename
+          )
         ),
         error = function(x)
           stop(call. = FALSE,
                "\nThe file downloads have failed. Please retry.\n")
       )
+      GSOD_list <-
+        list.files(tempdir(), pattern = "*\\.csv$", full.names = TRUE)
     }
-    GSOD_list <-
-      list.files(tempdir(), pattern = "*\\.csv$", full.names = TRUE)
     return(GSOD_list)
   }
 
@@ -220,18 +237,16 @@
   function(GSOD_list, isd_history, years) {
     station_list <- isd_history[isd_history$LAT >= -60 &
                                   isd_history$LAT <= 60, ]$STNID
+    station_list <- gsub("-", "", station_list)
 
     station_list <-
-      data.table::CJ(years, station, sorted = FALSE)[, paste0(tempdir(),
-                                                              station_list,
-                                                              "/",
-                                                              station,
-                                                              ".csv")]
-    station_list <- do.call(paste0,
-                            c(
-                              expand.grid(tempdir(), "/", station_list, "-",
-                                          years, ".op.gz")
-                            ))
+      data.table::CJ(years, sorted = FALSE)[, paste0(tempdir(),
+                                                     "/",
+                                                     years,
+                                                     "/",
+                                                     station_list,
+                                                     ".csv")]
+
     GSOD_list <- GSOD_list[GSOD_list %in% station_list]
     rm(station_list)
     return(GSOD_list)
@@ -255,16 +270,15 @@
            isd_history,
            years) {
     station_list <-
-      isd_history[isd_history$CTRY == country,]$STNID
-    station_list <- do.call(paste0,
-                            c(expand.grid(
-                              tempdir(),
-                              "/",
-                              station_list,
-                              "-",
-                              years,
-                              ".csv"
-                            )))
+      isd_history[isd_history$CTRY == country, ]$STNID
+    station_list <- gsub("-", "", station_list)
+    station_list <-
+      data.table::CJ(years, sorted = FALSE)[, paste0(tempdir(),
+                                                     "/",
+                                                     years,
+                                                     "/",
+                                                     station_list,
+                                                     ".csv")]
     GSOD_list <- GSOD_list[GSOD_list %in% station_list]
     return(GSOD_list)
     rm(station_list)
