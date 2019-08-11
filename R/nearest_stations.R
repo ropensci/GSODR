@@ -2,7 +2,7 @@
 #' Find Nearest \acronym{GSOD} Stations to a Specified Latitude and Longitude
 #'
 #' Given latitude and longitude values entered as decimal degrees (DD), this
-#' function returns a list (atomic vector) of \acronym{STNID} values, which can
+#' function returns a list (atomic vector) of \acronym{STATION} values, which can
 #' be used in \code{\link{get_GSOD}} to query for specific stations as an
 #' argument in the \code{station} parameter of that function.
 #'
@@ -27,7 +27,7 @@
 #' n
 #'}
 #' @return \code{\link[base]{vector}} object of station identification numbers
-#' @author Adam H Sparks, \email{adamhsparks@@gmail.com}
+#' @author Adam H.e Sparks, \email{adamhsparks@@gmail.com}
 #' @export nearest_stations
 
 nearest_stations <- function(LAT, LON, distance) {
@@ -57,8 +57,8 @@ nearest_stations <- function(LAT, LON, distance) {
     )))
   }
 
-  nearby <- haversine_distance(isd_history["LAT"], isd_history["LON"], LAT, LON)
+  nearby <- haversine_distance(isd_history["LATITUDE"], isd_history["LONGITUDE"], LAT, LON)
 
   nearby <- which(nearby < distance)
-  return(isd_history[as.numeric(nearby), ]$STNID)
+  return(isd_history[as.numeric(nearby), ]$STATION)
 }

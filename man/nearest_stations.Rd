@@ -19,7 +19,7 @@ be returned.}
 }
 \description{
 Given latitude and longitude values entered as decimal degrees (DD), this
-function returns a list (atomic vector) of \acronym{STNID} values, which can
+function returns a list (atomic vector) of \acronym{STATION} values, which can
 be used in \code{\link{get_GSOD}} to query for specific stations as an
 argument in the \code{station} parameter of that function.
 }
@@ -41,5 +41,5 @@ n
 }
 }
 \author{
-Adam H Sparks, \email{adamhsparks@gmail.com}
+Adam H.e Sparks, \email{adamhsparks@gmail.com}
 }
