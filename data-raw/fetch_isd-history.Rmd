@@ -90,6 +90,9 @@ if (!require("sessioninfo")) {
   install.packages("sessioninfo", repos = "https://cran.rstudio.com/")
 }
 
+if (!require("skimr")) {
+  install.packages("skimr", repos = "https://cran.rstudio.com/")
+}
 
 library(magrittr) # comes with dplyr above
 
@@ -109,23 +112,23 @@ NE <- ne_countries(scale = 10)
 # download data
 stations <- read_csv(
   "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
-  col_types = "ccccccddddd",
+  col_types = "ccccccdddii",
   col_names = c("USAF", "WBAN", "STN_NAME", "CTRY", "STATE", "CALL",
                 "LAT", "LON", "ELEV_M", "BEGIN", "END"), skip = 1)
-
-stations[stations == -999] <- NA
-stations[stations == -999.9] <- NA
 ```
 
 ## Reformat and clean station data file from NCEI
 
 ```{r clean_and_reformat, echo=TRUE, cache=FALSE}
 # clean data
+stations[stations == -999] <- NA # sets any wonky elevation values to NA
+stations[stations == -999.9] <- NA # sets any wonky elevation values to NA
 stations <- stations[!is.na(stations$LAT) & !is.na(stations$LON), ]
 stations <- stations[stations$LAT != 0 & stations$LON != 0, ]
 stations <- stations[stations$LAT > -90 & stations$LAT < 90, ]
 stations <- stations[stations$LON > -180 & stations$LON < 180, ]
-stations$STNID <- as.character(paste(stations$USAF, stations$WBAN, sep = "-"))
+stations$STATION <- as.character(paste0(stations$USAF, stations$WBAN))
+
 ```
 
 ## Check data for inconsistencies
@@ -205,11 +208,11 @@ corrected_elev <- bind_rows(
     # in some cases the DEM represents areas where there is no station
     # check for that here and if no stations, go on to next iteration
     if (!is.null(sub_stations)) {
-      # use a 200m buffer to extract elevation from the DEM
+      # use a 100m buffer to extract elevation from the DEM
       
       sub_stations$ELEV_M_SRTM_90m <- 
         extract(dem, sub_stations,
-                buffer = 200,
+                buffer = 100,
                 fun = mean)
       
       # convert spatial object back to normal data frame and add new fields
@@ -227,6 +230,7 @@ corrected_elev <- bind_rows(
 # stop cluster
 stopCluster(cl)
 ```
+
 Some stations occur in areas where DEM has no data, in this case, use original
 station elevation for these stations.
 
@@ -243,7 +247,7 @@ elevation values. `STNID` is used for a left-join with the `stations` object.
 
 ```{r summarise_corrected}
 corrected_elev <- corrected_elev %>%
-  group_by(STNID) %>%
+  group_by(STATION) %>%
   summarise(ELEV_M_SRTM_90m = mean(ELEV_M_SRTM_90m))
 ```
 
@@ -269,14 +273,19 @@ stations <- mutate_if(
 # this will include stations below/above -60/60
 isd_history <- 
   left_join(stations, corrected_elev,
-            by = "STNID") %>% 
-  as_tibble() %>% 
-  mutate(BEGIN = as.integer(BEGIN),
-         END = as.integer(END))
+            by = "STATION")
 
-str(isd_history)
+# select the metadata columns of interest
+isd_history <-
+  isd_history[, c("STATION",
+                  "CTRY",
+                  "STATE",
+                  "BEGIN",
+                  "END",
+                  "ELEV_M",
+                  "ELEV_M_SRTM_90m")]
 
-isd_history
+skim(isd_history)
 ```
 
 # Figures
@@ -290,9 +299,10 @@ ggplot(data = isd_history,
   geom_point(alpha = 0.4,
              size = 0.5) +
   geom_abline(slope = 1,
-              colour = "white",
-              width = 2.5) +
-  ggtitle("Corrected elevation versus original elevation values.") +
+              colour = "blue",
+              size = 1.5,
+              alpha = 0.5) +
+  ggtitle("Corrected elevation versus original elevation values") +
   theme_ipsum()
 ```
 
@@ -311,8 +321,10 @@ locations.
 ```{r cleanup_and_.rda_file_creation, message=FALSE, echo=TRUE, warning=FALSE, error=FALSE}
 
 # write rda file to disk for use with GSODR package
-save(isd_history, file = "../inst/extdata/isd_history.rda",
-     compress = "bzip2")
+save(isd_history,
+     file = "../inst/extdata/isd_history.rda",
+     compress = "bzip2",
+     version = 2)
 ```
 
 # Notes
