@@ -43,7 +43,7 @@ countries <-
 
 countries <- read.fwf(textConnection(countries), widths = c(8, 59))
 
-names(countries) <- c("fips", "country")
+names(countries) <- c("fips", "country_name")
 countries <- countries[-1, ] # drop first row that contained colnames
 
 countries <-
@@ -61,26 +61,27 @@ FIPS code, country name, and ISO codes to function.
 
 ``` r
 country_list <- country_list[, c("fips",
-                                 "country",
+                                 "country_name",
                                  "iso2c",
                                  "iso3c")]
-data.table::setDT(country_list, key = "country")
+names(country_list) <- toupper(names(country_list))
+data.table::setDT(country_list, key = "FIPS")
 
 country_list
 ```
 
-    ##      fips        country iso2c iso3c
-    ##   1:   AF    AFGHANISTAN    AF   AFG
-    ##   2:   AL        ALBANIA    AL   ALB
-    ##   3:   AG        ALGERIA    DZ   DZA
-    ##   4:   AQ AMERICAN SAMOA    AS   ASM
-    ##   5:   AN        ANDORRA    AD   AND
-    ##  ---                                
-    ## 237:   WS  WESTERN SAMOA    WS   WSM
-    ## 238:   YM          YEMEN    YE   YEM
-    ## 239:   CG          ZAIRE    CD   COD
-    ## 240:   ZA         ZAMBIA    ZM   ZMB
-    ## 241:   ZI       ZIMBABWE    ZW   ZWE
+    ##      FIPS        COUNTRY_NAME ISO2C ISO3C
+    ##   1:   AA               ARUBA    AW   ABW
+    ##   2:   AC ANTIGUA AND BARBUDA    AG   ATG
+    ##   3:   AF         AFGHANISTAN    AF   AFG
+    ##   4:   AG             ALGERIA    DZ   DZA
+    ##   5:   AJ          AZERBAIJAN    AZ   AZE
+    ##  ---                                     
+    ## 237:   WS       WESTERN SAMOA    WS   WSM
+    ## 238:   WZ           SWAZILAND    SZ   SWZ
+    ## 239:   YM               YEMEN    YE   YEM
+    ## 240:   ZA              ZAMBIA    ZM   ZMB
+    ## 241:   ZI            ZIMBABWE    ZW   ZWE
 
 Write .rda file to disk.
 

@@ -278,6 +278,7 @@ isd_history <-
 # select the metadata columns of interest
 isd_history <-
   isd_history[, c("STATION",
+                  "STN_NAME",
                   "CTRY",
                   "STATE",
                   "BEGIN",
@@ -313,12 +314,17 @@ help avoid within cell and between cell variation the buffered values are the
 values that are included in the final data for distribution with the GSODR
 package following the approach of Hijmans *et al.* (2005).
 
+## Save final version to disk
+
 The final data frame for distribution with _GSODR_ includes the new elevation 
 values in the `ELEV_M_SRTM_90m` field along with the cleaned
 "isd-history.csv" data that removes stations that do not have valid x, y
-locations.
+locations as a `data.table` object.
 
 ```{r cleanup_and_.rda_file_creation, message=FALSE, echo=TRUE, warning=FALSE, error=FALSE}
+
+setDT(isd_history)
+setkey(isd_history, "STATION")
 
 # write rda file to disk for use with GSODR package
 save(isd_history,

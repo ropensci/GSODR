@@ -41,7 +41,7 @@ countries <-
 
 countries <- read.fwf(textConnection(countries), widths = c(8, 59))
 
-names(countries) <- c("fips", "country")
+names(countries) <- c("fips", "country_name")
 countries <- countries[-1, ] # drop first row that contained colnames
 
 countries <-
@@ -60,10 +60,11 @@ code, country name, and ISO codes to function.
 
 ```{r remove-uncessesary, echo=TRUE, messages=FALSE}
 country_list <- country_list[, c("fips",
-                                 "country",
+                                 "country_name",
                                  "iso2c",
                                  "iso3c")]
-data.table::setDT(country_list, key = "country")
+names(country_list) <- toupper(names(country_list))
+data.table::setDT(country_list, key = "FIPS")
 
 country_list
 ```
