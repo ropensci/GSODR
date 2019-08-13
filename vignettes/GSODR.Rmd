@@ -66,7 +66,7 @@ library(data.table)
 load(system.file("extdata", "country_list.rda", package = "GSODR"))
 load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 
-station_locations <- isd_history[country_list, on = c("CTRY" = "fips")]
+station_locations <- isd_history[country_list, on = c("CTRY" = "FIPS")]
 
 # create data.frame for Australia only
 Oz <- subset(station_locations, COUNTRY_NAME == "AUSTRALIA")
