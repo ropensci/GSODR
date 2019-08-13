@@ -28,7 +28,8 @@ data:
 
   * Stations where longitude is < -180˚ or > 180˚ are removed
 
-  * A new field, STNID, a concatenation of the USAF and WBAN fields, is added
+  * A new field, `STNID`, a concatenation of the USAF and WBAN fields, is
+  added
 
   * Stations are checked against Natural Earth 1:10 ADM0 cultural data, stations
 not mapping in the isd-history reported country are dropped
@@ -94,13 +95,21 @@ if (!require("skimr")) {
   install.packages("skimr", repos = "https://cran.rstudio.com/")
 }
 
+if (!require("data.table")) {
+  install.packages("data.table", repos = "https://cran.rstudio.com/")
+}
+
 library(magrittr) # comes with dplyr above
 
-dem_tiles <- list.files(path.expand("~/Data/CGIAR-CSI SRTM"), 
-                        pattern = glob2rx("*.tif"), full.names = TRUE)
+dem_tiles <- list.files(
+  path.expand("~/Data/CGIAR-CSI SRTM"),
+  pattern = glob2rx("*.tif"),
+  full.names = TRUE
+)
 crs <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
 cor_stations <- list()
-tf <- tempfile()
+tf <- tempfile(
+)
 ```
 
 ## Download data from Natural Earth and NCEI
@@ -113,8 +122,21 @@ NE <- ne_countries(scale = 10)
 stations <- read_csv(
   "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
   col_types = "ccccccdddii",
-  col_names = c("USAF", "WBAN", "STN_NAME", "CTRY", "STATE", "CALL",
-                "LAT", "LON", "ELEV_M", "BEGIN", "END"), skip = 1)
+  col_names = c(
+    "USAF",
+    "WBAN",
+    "STN_NAME",
+    "CTRY",
+    "STATE",
+    "CALL",
+    "LAT",
+    "LON",
+    "ELEV_M",
+    "BEGIN",
+    "END"
+  ),
+  skip = 1
+)
 ```
 
 ## Reformat and clean station data file from NCEI
@@ -123,12 +145,12 @@ stations <- read_csv(
 # clean data
 stations[stations == -999] <- NA # sets any wonky elevation values to NA
 stations[stations == -999.9] <- NA # sets any wonky elevation values to NA
-stations <- stations[!is.na(stations$LAT) & !is.na(stations$LON), ]
-stations <- stations[stations$LAT != 0 & stations$LON != 0, ]
-stations <- stations[stations$LAT > -90 & stations$LAT < 90, ]
-stations <- stations[stations$LON > -180 & stations$LON < 180, ]
-stations$STATION <- as.character(paste0(stations$USAF, stations$WBAN))
-
+stations <- stations[!is.na(stations$LAT) & !is.na(stations$LON),]
+stations <- stations[stations$LAT != 0 & stations$LON != 0,]
+stations <- stations[stations$LAT > -90 & stations$LAT < 90,]
+stations <- stations[stations$LON > -180 & stations$LON < 180,]
+stations$STNID <-
+  as.character(paste(stations$USAF, stations$WBAN, sep = "-"))
 ```
 
 ## Check data for inconsistencies
@@ -177,7 +199,8 @@ proj4string(xy) <- CRS(crs)
 # check for location in country
 point_check <- over(xy, NE)
 point_check <- as.data.frame(point_check)
-stations_discard <- point_check[point_check$FIPS %in% point_check$FIPS_10_ == FALSE, ]
+stations_discard <-
+  point_check[point_check$FIPS %in% point_check$FIPS_10_ == FALSE,]
 nrow(stations_discard)
 ```
 Zero observations (rows) in `stations_discard`, the data look good, no need to
@@ -236,9 +259,8 @@ station elevation for these stations.
 
 ```{r create corrected_elev}
 corrected_elev <- mutate(corrected_elev,
-                         ELEV_M_SRTM_90m = ifelse(
-                           is.na(ELEV_M_SRTM_90m),
-                           ELEV_M, ELEV_M_SRTM_90m))
+                         ELEV_M_SRTM_90m = ifelse(is.na(ELEV_M_SRTM_90m),
+                                                  ELEV_M, ELEV_M_SRTM_90m))
 ```
 
 In some cases duplicate stations occur, use the mean value of duplicate rows for
@@ -247,7 +269,7 @@ elevation values. `STNID` is used for a left-join with the `stations` object.
 
 ```{r summarise_corrected}
 corrected_elev <- corrected_elev %>%
-  group_by(STATION) %>%
+  group_by(STNID) %>%
   summarise(ELEV_M_SRTM_90m = mean(ELEV_M_SRTM_90m))
 ```
 
@@ -264,23 +286,24 @@ there is no SRTM data for these locations.
 
 ```{r join_corrected_elev}
 # convert any factors in stations object to character for left_join
-stations <- mutate_if(
-  as.data.frame(stations),
-  is.factor,
-  as.character)
+stations <- mutate_if(as.data.frame(stations),
+                      is.factor,
+                      as.character)
 
 # Perform left join to join corrected elevation with original station data,
 # this will include stations below/above -60/60
-isd_history <- 
+isd_history <-
   left_join(stations, corrected_elev,
-            by = "STATION")
+            by = "STNID")
 
 # select the metadata columns of interest
 isd_history <-
-  isd_history[, c("STATION",
+  isd_history[, c("STNID",
                   "STN_NAME",
                   "CTRY",
                   "STATE",
+                  "LAT",
+                  "LON",
                   "BEGIN",
                   "END",
                   "ELEV_M",
@@ -293,7 +316,7 @@ skim(isd_history)
 
 Visualise the corrected elevation values against the original elevation values.
 
-``````{r Buffered SRTM 90m vs Reported Elevation, echo=TRUE, fig.cap="GSOD Reported Elevation versus CGIAR-CSI SRTM Buffered Elevation", warning=FALSE}
+```{r Buffered SRTM 90m vs Reported Elevation, echo=TRUE, fig.cap="GSOD Reported Elevation versus CGIAR - CSI SRTM Buffered Elevation", warning=FALSE}
 ggplot(data = isd_history,
        aes(x = ELEV_M,
            y = ELEV_M_SRTM_90m)) +
@@ -322,9 +345,8 @@ values in the `ELEV_M_SRTM_90m` field along with the cleaned
 locations as a `data.table` object.
 
 ```{r cleanup_and_.rda_file_creation, message=FALSE, echo=TRUE, warning=FALSE, error=FALSE}
-
 setDT(isd_history)
-setkey(isd_history, "STATION")
+setkey(isd_history, "STNID")
 
 # write rda file to disk for use with GSODR package
 save(isd_history,

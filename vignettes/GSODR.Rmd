@@ -60,20 +60,20 @@ For more information see the description of the data provided by NCEI,
 _GSODR_ provides lists of weather station locations and elevation values. Using [_dplyr_](https://CRAN.R-project.org/package=dplyr), we can find all the
 stations in Australia.
 
-```{r, eval=TRUE}
+```{r, eval=FALSE}
 library(GSODR)
 library(data.table)
 load(system.file("extdata", "country_list.rda", package = "GSODR"))
 load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 
-station_locations <- isd_history[country_list, on = c("CTRY" = "fips")]
+station_locations <- isd_history[country_list, on = c("CTRY" = "FIPS")]
 
 # create data.frame for Australia only
 Oz <- subset(station_locations, COUNTRY_NAME == "AUSTRALIA")
 
 Oz
 
-subset(Oz, grepl("TOOWOOMBA", NAME))
+subset(Oz, grepl("TOOWOOMBA", STN_NAME))
 ```
 
 ## Download a Single Station and Year
@@ -82,7 +82,7 @@ Now that we've seen where the reporting stations are located, we can download
 weather data from the station Toowoomba, Queensland, Australia for 2010 by using
 the STNID in the `station` parameter of `get_GSOD()`.
 
-```{r, eval=TRUE}
+```{r, eval=FALSE}
 tbar <- get_GSOD(years = 2010, station = "955510-99999")
 
 tbar
@@ -102,6 +102,8 @@ actually have files on the server.
 tbar_stations <- nearest_stations(LAT = -27.5598,
                                   LON = 151.9507,
                                   distance = 50)
+
+tbar_stations
 
 tbar <- get_GSOD(years = 2010, station = tbar_stations)
 ```
@@ -124,7 +126,7 @@ tbar <- get_GSOD(years = 2010,
 Using the first data downloaded for a single station, 955510-99999, plot the
 temperature for 2010.
 
-```{r, eval=TRUE, fig.width = 7, fig.height = 7, fig.align = "center"}
+```{r, eval=FALSE, fig.width = 7, fig.height = 7, fig.align = "center"}
 library(ggplot2)
 library(lubridate)
 library(tidyr)
@@ -671,7 +673,7 @@ no/not reported) for the occurrence during the day;
 
 ## Appendix 2: Map of Current GSOD Station Locations
 
-```{r, eval=TRUE, message = FALSE, echo = FALSE, warning=FALSE, fig.width = 7, fig.height = 5, fig.align = "center"}
+```{r, eval=FALSE, message = FALSE, echo = FALSE, warning=FALSE, fig.width = 7, fig.height = 5, fig.align = "center"}
 if (requireNamespace("ggplot2", quietly = TRUE) &&
     requireNamespace("ggthemes", quietly = TRUE) &&
     requireNamespace("maps", quietly = TRUE) &&
