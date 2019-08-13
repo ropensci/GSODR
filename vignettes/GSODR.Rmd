@@ -498,7 +498,7 @@ library("GSODRdata")
 
 ## Elevation Values
 
-90 metre (90m) hole-filled SRTM digital elevation (Jarvis *et al.* 2008) was
+90 metre (90m) hole-filled SRTM digital elevation (Jarvis _et al._ 2008) was
 used to identify and correct/remove elevation errors in data for station
 locations between -60˚ and 60˚ latitude. This applies to cases here where
 elevation was missing in the reported values as well. In case the station
@@ -510,7 +510,7 @@ for more detail on the correction methods.
 
 ## WMO Resolution 40. NOAA Policy
 
-*Users of these data should take into account the following (from the [NCEI website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):*
+_Users of these data should take into account the following (from the [NCEI website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):_
 
 > "The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification." [WMO Resolution 40. NOAA Policy](https://public.wmo.int/en/our-mandate/what-we-do/data-exchange-and-technology-transfer)
 
