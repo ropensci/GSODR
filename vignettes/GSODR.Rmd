@@ -417,20 +417,21 @@ class(AUS_sqlite)
 
 # Using reformat_GSOD()
 
-You may have already downloaded GSOD data or may just wish to use an FTP client
+You may have already downloaded GSOD data or may just wish to use your browser
 to download the files from the server to you local disk and not use the
 capabilities of `get_GSOD()`. In that case the `reformat_GSOD()` function is
 useful.
 
 There are two ways, you can either provide `reformat_GSOD()` with a list of
 specified station files or you can supply it with a directory containing all of
-the "WBAN-WMO-YYYY.op.gz" station files that you wish to reformat.
+the "STATION.csv" station files or "YEAR.zip" annual files that you wish to
+reformat.
 
 ## Reformat a list of local files
 
 ```{r Ex15, eval=FALSE}
-y <- c("~/GSOD/gsod_1960/200490-99999-1960.op.gz",
-       "~/GSOD/gsod_1961/200490-99999-1961.op.gz")
+y <- c("~/GSOD/gsod_1960/20049099999.csv",
+       "~/GSOD/gsod_1961/20049099999.csv")
 x <- reformat_GSOD(file_list = y)
 ```
 
