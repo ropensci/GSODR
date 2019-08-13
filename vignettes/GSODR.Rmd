@@ -60,7 +60,7 @@ For more information see the description of the data provided by NCEI,
 _GSODR_ provides lists of weather station locations and elevation values. Using [_dplyr_](https://CRAN.R-project.org/package=dplyr), we can find all the
 stations in Australia.
 
-```{r, eval=TRUE}
+```{r Ex1, eval=TRUE}
 library(GSODR)
 library(data.table)
 load(system.file("extdata", "country_list.rda", package = "GSODR"))
@@ -82,7 +82,7 @@ Now that we've seen where the reporting stations are located, we can download
 weather data from the station Toowoomba, Queensland, Australia for 2010 by using
 the STNID in the `station` parameter of `get_GSOD()`.
 
-```{r, eval=TRUE}
+```{r Ex2, eval=TRUE}
 tbar <- get_GSOD(years = 2010, station = "955510-99999")
 
 tbar
@@ -98,7 +98,7 @@ stations of interest.
 There are missing stations in this query. Not all that are listed and queried
 actually have files on the server.
 
-```{r, eval=TRUE}
+```{r Ex3, eval=TRUE}
 tbar_stations <- nearest_stations(LAT = -27.5598,
                                   LON = 151.9507,
                                   distance = 50)
@@ -111,7 +111,7 @@ tbar <- get_GSOD(years = 2010, station = tbar_stations)
 If you wished to drop the stations, 949999-00170 and 949999-00183 from the
 query, you could do this.
 
-```{r, eval=TRUE}
+```{r Ex4, eval=TRUE}
 remove <- c("949999-00170", "949999-00183")
 
 tbar_stations <- tbar_stations[!tbar_stations %in% remove]
@@ -125,7 +125,7 @@ tbar <- get_GSOD(years = 2010,
 Using the first data downloaded for a single station, 955510-99999, plot the
 temperature for 2010.
 
-```{r, eval=TRUE, fig.width = 7, fig.height = 7, fig.align = "center"}
+```{r Ex5, eval=TRUE, fig.width = 7, fig.height = 7, fig.align = "center"}
 library(ggplot2)
 library(lubridate)
 library(tidyr)
@@ -159,7 +159,7 @@ as an argument for `future::plan()`, which will default to available local cores
 as workers for the run. This can greatly reduce the time necessary to process
 GSOD files.
 
-```{r, eval=TRUE}
+```{r Ex6, eval=TRUE}
 future::plan("multisession")
 global <- get_GSOD(years = 2010:2015)
 ```
@@ -183,10 +183,10 @@ For this example we convert the data to a _sp_ object. You might use this one
 to save GeoPackage or ESRI shapefiles for sharing or analysis in another GIS
 program.
 
-```{r spatial_convert, eval=TRUE}
+```{r Ex7, eval=TRUE}
 # get GSOD data
 library(sp)
-GSOD <- get_GSOD(years = 2015, country = "Australia")
+GSOD_sp <- get_GSOD(years = 2015, country = "Australia")
 
 # convert to SpatialPointsDataFrame
 coordinates(GSOD_sp) <- ~ LON + LAT
@@ -195,7 +195,7 @@ proj4string(GSOD_sp) <- CRS("+proj=longlat +datum=WGS84")
 str(GSOD_sp)
 ```
 
-```{r sp_str}
+```{r sp_str, eval=FALSE}
 #> Formal class 'SpatialPointsDataFrame' [package "sp"] with 5 slots
 #>   ..@ data       :Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	186977 obs. of  46 variables:
 #>   .. ..$ USAF            : chr [1:186977] "941000" "941000" "941000" "941000" ...
@@ -261,7 +261,7 @@ str(GSOD_sp)
 
 Using `writeOGR()` it is simple to save as a GeoPackage file.
 
-```{r sp_save_gpkg, eval=TRUE}
+```{r Ex8, eval=TRUE}
 library(rgdal)
 
 writeOGR(GSOD_sp,
@@ -272,7 +272,7 @@ writeOGR(GSOD_sp,
 
 Using `writeOGR()` it is simple to save as an ESRI shapefile.
 
-```{r sp_save_shp, eval=TRUE}
+```{r Ex9, eval=TRUE}
 writeOGR(GSOD_sp,
          dsn = path.expand("~/"),
          layer = "GSOD",
@@ -295,7 +295,7 @@ such as GDAL. A subset of simple features forms the GeoJSON standard.
 
 For this example, we convert the GSOD data to an _sf_ object.
 
-```{r convert_sf, eval=TRUE}
+```{r Ex10, eval=TRUE}
 library(sf)
 GSOD_SF <- st_as_sf(x = GSOD,
                     coords = c("LON", "LAT"),
@@ -304,7 +304,7 @@ GSOD_SF <- st_as_sf(x = GSOD,
 str(GSOD_SF)
 ```
 
-```{r sf_str, eval=TRUE}
+```{r sf_str, eval=FALSE}
 #> Classes ‘sf’ and 'data.frame':	186977 obs. of  47 variables:
 #>  $ USAF            : chr  "941000" "941000" "941000" "941000" ...
 #>  $ WBAN            : chr  "99999" "99999" "99999" "99999" ...
@@ -362,13 +362,13 @@ str(GSOD_SF)
 
 Writing a shapefile is a simple matter.
 
-```{r sf_save_shp, eval=TRUE}
+```{r Ex11, eval=TRUE}
 write_sf(GSOD_SF, "GSOD.shp") # silently overwrites
 ```
 
 As is writing a GeoPackage from the _sf_ object.
 
-```{r sf_save_gpkg, eval=TRUE}
+```{r Ex12, eval=TRUE}
 write_sf(GSOD_SF, "~/GSOD.gpkg") # silently overwrites
 ```
 
@@ -380,7 +380,7 @@ along with the file name. The layer to be specified is "GSOD", this is specified
 in the `get_GSOD()` function and will not change. The file name, specified in
 the dsn will, but the layer name will not.
 
-```{r, eval=TRUE}
+```{r Ex13, eval=TRUE}
 library(rgdal)
 #> Loading required package: sp
 #> rgdal: version: 1.1-10, (SVN revision 622)
@@ -409,7 +409,7 @@ existing R tools for SQLite files
 easy way is using _dplyr_. This option is much faster to load since it does not
 load the geometry.
 
-```{r, eval=TRUE}
+```{r Ex14, eval=TRUE}
 AUS_sqlite <- tbl(src_sqlite(path.expand("~/GSOD.gpkg")), "GSOD")
 class(AUS_sqlite)
 #> [1] "tbl_dbi"  "tbl_sql"  "tbl_lazy" "tbl"
@@ -428,7 +428,7 @@ the "WBAN-WMO-YYYY.op.gz" station files that you wish to reformat.
 
 ## Reformat a list of local files
 
-```{r, eval=TRUE}
+```{r Ex15, eval=FALSE}
 y <- c("~/GSOD/gsod_1960/200490-99999-1960.op.gz",
        "~/GSOD/gsod_1961/200490-99999-1961.op.gz")
 x <- reformat_GSOD(file_list = y)
@@ -436,7 +436,7 @@ x <- reformat_GSOD(file_list = y)
 
 ## Reformat all local files found in directory
 
-```{r, eval=TRUE}
+```{r Ex16, eval=FALSE}
 x <- reformat_GSOD(dsn = "~/GSOD/gsod_1960")
 ```
 
@@ -472,7 +472,7 @@ through to current.
 Following is an example of how to retrieve the inventory and check a station in
 Toowoomba, Queensland, Australia, which was used in an earlier example.
 
-```{r, eval=TRUE}
+```{r Ex17, eval=TRUE}
 inventory <- get_inventory()
 
 inventory
@@ -488,7 +488,7 @@ GSOD data provided by _GSODR_ are available as an R package, which can only be
 installed through GitHub due to the package size, 5.1Mb, being too large for
 CRAN.
 
-```{r, eval=TRUE}
+```{r Ex18, eval=TRUE}
 #install.packages("devtools")
 devtools::install_github("adamhsparks/GSODRdata")
 library("GSODRdata")
