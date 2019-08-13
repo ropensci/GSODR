@@ -1,7 +1,4 @@
 
-
-
-
 #' Validate Years
 #'
 #' @param years User entered years for request
@@ -202,72 +199,25 @@
           ".csv"
         )]
       tryCatch(
-        # need to prepend year to filename for downloads for multiple years
-        Map(
-          function(url, dest)
-            curl::curl_download(
-              url = url,
-              destfile = dest,
-              mode = "wb"
-            ),
-          url_list,
-          paste0(
-            tempdir(),
-            "/",
-            substr(url_list, nchar(url_list) - 20, nchar(url_list) - 16),
-            # year
-            "-",
-            basename(url_list) # filename
-          )
-        ),
-        error = function(x)
-          create_NA_DT <- function(station) {
-            DT <- data.table(
-              STNID = isd_history[isd_history$STNID == station]$STNID,
-              STN_NAME = isd_history[isd_history$STNID == station]$STN_NAME,
-              CTRY = isd_history[isd_history$STNID == station]$CTRY,
-              STATE = isd_history[isd_history$STNID == station]$STATE,
-              LATITUDE = isd_history[isd_history$STNID == station]$LATITUDE,
-              LONGITUDE = isd_history[isd_history$STNID == station]$LONGITUDE,
-              ELEVATION = isd_history[isd_history$STNID == station]$ELEV_M,
-              ELEV_M_SRTM_90m = isd_history[isd_history$STNID == station]$ELEV_M_SRTM_90m,
-              BEGIN = isd_history[isd_history$STNID == station]$BEGIN,
-              END = isd_history[isd_history$STNID == station]$END,
-              YEARMODA = as.Date(integer(length = 1), origin = "1970-01-01"),
-              YEAR = integer(length = 1),
-              MONTH = integer(length = 1),
-              DAY = integer(length = 1),
-              YDAY = integer(length = 1),
-              TEMP = double(length = 1),
-              TEMP_ATTRIBUTES = character(length = 1),
-              DEWP = double(length = 1),
-              DEWP_ATTRIBUTES = character(length = 1),
-              SLP = double(length = 1),
-              SLP_ATTRIBUTES = character(length = 1),
-              STP = double(length = 1),
-              STP_ATTRIBUTES = character(length = 1),
-              VISIB = double(length = 1),
-              VISIB_ATTRIBUTES = character(length = 1),
-              WDSP = double(length = 1),
-              WDSP_ATTRIBUTES = character(length = 1),
-              MAXSPD = double(length = 1),
-              GUST = double(length = 1),
-              MAX = double(length = 1),
-              MAX_ATTRIBUTES = character(length = 1),
-              MIN = double(length = 1),
-              MIN_ATTRIBUTES = character(length = 1),
-              PRCP = double(length = 1),
-              PRCP_ATTRIBUTES = character(length = 1),
-              SNDP = double(length = 1),
-              FRSHTT = character(length = 1),
-              EA = double(length = 1),
-              ES = double(length = 1),
-              RH = double(length = 1)
-            )
-            for (j in names(DT))
-              set(DT, which(DT[[j]] == 0), j, NA)
+        for (i in url_list) {
+          if (!httr::http_error(i)) { # check for an http error b4 proceeding
+            httr::GET(url = i, httr::write_disk(
+              paste0(
+                tempdir(),
+                "/",
+                substr(i, nchar(i) - 20, nchar(i) - 16), # year
+                "-",
+                basename(i) # filename
+              ),
+              overwrite = FALSE
+            ))
           }
+        },
+        error = function(x)
+          stop(call. = FALSE,
+               "\nThe file downloads have failed. Please restart.\n")
       )
+
       GSOD_list <-
         list.files(tempdir(), pattern = "*\\.csv$", full.names = TRUE)
     }

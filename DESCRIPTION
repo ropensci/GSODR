@@ -51,6 +51,7 @@ Imports:
     curl,
     data.table (>= 1.11.6),
     future.apply,
+    httr,
     R.utils,
     stats,
     utils
