@@ -1,7 +1,7 @@
 Fetch GSOD Country List and Merge with ISO Country Codes
 ================
 Adam H. Sparks
-2019-08-12
+2019-08-13
 
 # Introduction
 
@@ -121,7 +121,7 @@ Policy](http://www.wmo.int/pages/about/Resolution40.html)
     ##  collate  en_AU.UTF-8                 
     ##  ctype    en_AU.UTF-8                 
     ##  tz       Australia/Brisbane          
-    ##  date     2019-08-12                  
+    ##  date     2019-08-13                  
     ## 
     ## ─ Packages ──────────────────────────────────────────────────────────────
     ##  package     * version date       lib source        
@@ -133,7 +133,7 @@ Policy](http://www.wmo.int/pages/about/Resolution40.html)
     ##  digest        0.6.20  2019-07-04 [1] CRAN (R 3.6.0)
     ##  evaluate      0.14    2019-05-28 [1] CRAN (R 3.6.0)
     ##  htmltools     0.3.6   2017-04-28 [1] CRAN (R 3.6.0)
-    ##  knitr         1.24    2019-08-08 [1] CRAN (R 3.6.1)
+    ##  knitr         1.24    2019-08-08 [1] CRAN (R 3.6.0)
     ##  magrittr      1.5     2014-11-22 [1] CRAN (R 3.6.0)
     ##  Rcpp          1.0.2   2019-07-25 [1] CRAN (R 3.6.0)
     ##  rmarkdown     1.14    2019-07-12 [1] CRAN (R 3.6.0)
@@ -144,5 +144,4 @@ Policy](http://www.wmo.int/pages/about/Resolution40.html)
     ##  xfun          0.8     2019-06-25 [1] CRAN (R 3.6.0)
     ##  yaml          2.2.0   2018-07-25 [1] CRAN (R 3.6.0)
     ## 
-    ## [1] /Users/adamsparks/Library/R/3.x/library
-    ## [2] /Library/Frameworks/R.framework/Versions/3.6/Resources/library
+    ## [1] /Library/Frameworks/R.framework/Versions/3.6/Resources/library

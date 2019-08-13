@@ -76,7 +76,7 @@
 #' @examples
 #' \donttest{
 #' # Download weather station for Toowoomba, Queensland for 2010
-#' tbar <- get_GSOD(years = 2010, station = "95551099999")
+#' tbar <- get_GSOD(years = 2010, station = "955510-99999")
 #'
 #' tbar
 #'
@@ -191,11 +191,11 @@ get_GSOD <- function(years,
       .validate_missing_days(max_missing, file_list)
   }
 
-  GSOD_XY <- .apply_process_csv(file_list, isd_history)
+  GSOD <- .apply_process_csv(file_list, isd_history)
 
   # remove any leftover files from download to prevent poluting a new run
   file.remove(list.files(tempdir(), pattern = ".gz$", full.names = TRUE))
 
-  return(GSOD_XY)
+  return(GSOD)
 }
 

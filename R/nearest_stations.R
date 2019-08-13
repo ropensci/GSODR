@@ -27,11 +27,10 @@
 #' n
 #'}
 #' @return \code{\link[base]{vector}} object of station identification numbers
-#' @author Adam H.e Sparks, \email{adamhsparks@@gmail.com}
+#' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
 #' @export nearest_stations
 
 nearest_stations <- function(LAT, LON, distance) {
-
   # CRAN NOTE avoidance
   isd_history <- NULL
   # load current local copy of isd_history
@@ -57,8 +56,9 @@ nearest_stations <- function(LAT, LON, distance) {
     )))
   }
 
-  nearby <- haversine_distance(isd_history["LATITUDE"], isd_history["LONGITUDE"], LAT, LON)
+  nearby <-
+    haversine_distance(isd_history$LAT, isd_history$LON, LAT, LON)
 
   nearby <- which(nearby < distance)
-  return(isd_history[as.numeric(nearby), ]$STATION)
+  return(isd_history[as.numeric(nearby), ]$STNID)
 }

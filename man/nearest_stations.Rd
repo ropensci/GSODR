@@ -41,5 +41,5 @@ n
 }
 }
 \author{
-Adam H.e Sparks, \email{adamhsparks@gmail.com}
+Adam H. Sparks, \email{adamhsparks@gmail.com}
 }

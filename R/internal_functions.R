@@ -1,5 +1,7 @@
 
 
+
+
 #' Validate Years
 #'
 #' @param years User entered years for request
@@ -34,7 +36,7 @@
 #' @noRd
 
 .validate_station <- function(station, isd_history, years) {
-  if (!station %in% isd_history[, "STATION"]) {
+  if (!station %in% isd_history$STNID) {
     stop(
       call. = FALSE,
       "\n",
@@ -47,9 +49,9 @@
     )
   }
   BEGIN <-
-    as.numeric(substr(isd_history[isd_history[, "STATION"] == station, ]$BEGIN, 1, 4))
+    as.numeric(substr(isd_history[isd_history$STNID == station, ]$BEGIN, 1, 4))
   END <-
-    as.numeric(substr(isd_history[isd_history[, "STATION"] == station, ]$END, 1, 4))
+    as.numeric(substr(isd_history[isd_history$STNID == station, ]$END, 1, 4))
   if (min(years) < BEGIN | max(years) > END) {
     message("\nThis station, ",
             station,
@@ -190,6 +192,7 @@
     }
 
     if (!is.null(station)) {
+      station <- gsub("-", "", station)
       url_list <-
         CJ(years, station, sorted = FALSE)[, paste0(
           "https://www.ncei.noaa.gov/data/global-summary-of-the-day/access/",
@@ -208,15 +211,62 @@
               mode = "wb"
             ),
           url_list,
-          file.path(
+          paste0(
             tempdir(),
-            substr(url_list, nchar(url_list) - 19, nchar(url_list) - 16), # year
+            "/",
+            substr(url_list, nchar(url_list) - 20, nchar(url_list) - 16),
+            # year
+            "-",
             basename(url_list) # filename
           )
         ),
         error = function(x)
-          stop(call. = FALSE,
-               "\nThe file downloads have failed. Please retry.\n")
+          create_NA_DT <- function(station) {
+            DT <- data.table(
+              STNID = isd_history[isd_history$STNID == station]$STNID,
+              STN_NAME = isd_history[isd_history$STNID == station]$STN_NAME,
+              CTRY = isd_history[isd_history$STNID == station]$CTRY,
+              STATE = isd_history[isd_history$STNID == station]$STATE,
+              LATITUDE = isd_history[isd_history$STNID == station]$LATITUDE,
+              LONGITUDE = isd_history[isd_history$STNID == station]$LONGITUDE,
+              ELEVATION = isd_history[isd_history$STNID == station]$ELEV_M,
+              ELEV_M_SRTM_90m = isd_history[isd_history$STNID == station]$ELEV_M_SRTM_90m,
+              BEGIN = isd_history[isd_history$STNID == station]$BEGIN,
+              END = isd_history[isd_history$STNID == station]$END,
+              YEARMODA = as.Date(integer(length = 1), origin = "1970-01-01"),
+              YEAR = integer(length = 1),
+              MONTH = integer(length = 1),
+              DAY = integer(length = 1),
+              YDAY = integer(length = 1),
+              TEMP = double(length = 1),
+              TEMP_ATTRIBUTES = character(length = 1),
+              DEWP = double(length = 1),
+              DEWP_ATTRIBUTES = character(length = 1),
+              SLP = double(length = 1),
+              SLP_ATTRIBUTES = character(length = 1),
+              STP = double(length = 1),
+              STP_ATTRIBUTES = character(length = 1),
+              VISIB = double(length = 1),
+              VISIB_ATTRIBUTES = character(length = 1),
+              WDSP = double(length = 1),
+              WDSP_ATTRIBUTES = character(length = 1),
+              MAXSPD = double(length = 1),
+              GUST = double(length = 1),
+              MAX = double(length = 1),
+              MAX_ATTRIBUTES = character(length = 1),
+              MIN = double(length = 1),
+              MIN_ATTRIBUTES = character(length = 1),
+              PRCP = double(length = 1),
+              PRCP_ATTRIBUTES = character(length = 1),
+              SNDP = double(length = 1),
+              FRSHTT = character(length = 1),
+              EA = double(length = 1),
+              ES = double(length = 1),
+              RH = double(length = 1)
+            )
+            for (j in names(DT))
+              set(DT, which(DT[[j]] == 0), j, NA)
+          }
       )
       GSOD_list <-
         list.files(tempdir(), pattern = "*\\.csv$", full.names = TRUE)
@@ -241,11 +291,11 @@
 
     station_list <-
       CJ(years, sorted = FALSE)[, paste0(tempdir(),
-                                                     "/",
-                                                     years,
-                                                     "/",
-                                                     station_list,
-                                                     ".csv")]
+                                         "/",
+                                         years,
+                                         "/",
+                                         station_list,
+                                         ".csv")]
 
     GSOD_list <- GSOD_list[GSOD_list %in% station_list]
     rm(station_list)
@@ -274,11 +324,11 @@
     station_list <- gsub("-", "", station_list)
     station_list <-
       CJ(years, sorted = FALSE)[, paste0(tempdir(),
-                                                     "/",
-                                                     years,
-                                                     "/",
-                                                     station_list,
-                                                     ".csv")]
+                                         "/",
+                                         years,
+                                         "/",
+                                         station_list,
+                                         ".csv")]
     GSOD_list <- GSOD_list[GSOD_list %in% station_list]
     return(GSOD_list)
     rm(station_list)
@@ -294,7 +344,7 @@
 
 .apply_process_csv <- function(file_list, isd_history) {
   x <- future.apply::future_lapply(X = file_list,
-                                   FUN = .process_GSOD,
+                                   FUN = .process_csv,
                                    isd_history = isd_history)
   return(rbindlist(x))
 }

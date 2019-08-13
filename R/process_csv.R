@@ -1,3 +1,4 @@
+
 #' Processes GSOD data
 #'
 #' @param x A `data.table` generated from `.download_data()`
@@ -5,10 +6,10 @@
 #' @return A `data.table` of well-formatted weather data
 #' @noRd
 
-.process_GSOD <- function(x, isd_history) {
+.process_csv <- function(x, isd_history) {
   # Import data from the website for indvidual stations or tempdir() for all ---
   DT <-
-    fread(x)
+    fread(x, colClasses = c("FRSHTT" = "c"))
 
   # Replace 99.99 with NA
   for (col in names(DT)[names(DT) == "PRCP"]) {
@@ -35,7 +36,7 @@
   for (col in names(DT)[names(DT) %in% c("TEMP",
                                          "DEWP",
                                          "SLP",
-                                         "MADT",
+                                         "MAX",
                                          "MIN")]) {
     set(DT,
         i = which(DT[[col]] == 9999.9),
@@ -46,7 +47,7 @@
   # Replace " " with NA
   for (col in names(DT)[names(DT) %in% c("PRCP_ATTRIBUTES",
                                          "MIN_ATTRIBUTES",
-                                         "MADT_ATTRIBUTES")]) {
+                                         "MAX_ATTRIBUTES")]) {
     set(DT,
         i = which(DT[[col]] == " "),
         j = col,
@@ -54,7 +55,7 @@
   }
 
   # Add STNID col --------------------------------------------------------------
-  DT[, STNID := gsub('^(.{5})(.*)$', '\\1-\\2', DT$STATION)]
+  DT[, STNID := gsub('^(.{6})(.*)$', '\\1-\\2', DT$STATION)]
 
   # Add and convert date related columns ---------------------------------------
   DT[, YEARMODA := as.Date(DATE, format = "%Y-%m-%d")]
@@ -77,7 +78,7 @@
     "GUST",
     "VISIB",
     "WDSP",
-    "MADT",
+    "MAX",
     "MIN",
     "PRCP",
     "SNDP"
@@ -92,7 +93,7 @@
   DT[, MDTSPD := round(MDTSPD * 0.514444444, 1)]
   DT[, GUST := round(GUST * 0.514444444, 1)]
   DT[, VISIB := round(VISIB * 1.60934, 1)]
-  DT[, MADT := round((MADT - 32) * (5 / 9), 1)]
+  DT[, MAX := round((MAX - 32) * (5 / 9), 1)]
   DT[, MIN := round((MIN - 32) * (5 / 9), 1)]
   DT[, PRCP := round(PRCP * 25.4, 1)]
   DT[, SNDP := round(SNDP * 25.4, 1)]
@@ -111,18 +112,15 @@
   DT[, RH := round(EA / ES * 100, 1)]
 
   # Join to the station and SRTM data-------------------------------------------
-  DT <- DT[isd_history]
+  DT <- isd_history[DT, on = "STNID"]
 
   setcolorder(
     DT,
     c(
-      "USAF",
-      "WBAN",
       "STNID",
       "STN_NAME",
       "CTRY",
       "STATE",
-      "CALL",
       "LATITUDE",
       "LONGITUDE",
       "ELEVATION",
@@ -148,8 +146,8 @@
       "WDSP_ATTRIBUTES",
       "MDTSPD",
       "GUST",
-      "MADT",
-      "MADT_ATTRIBUTES",
+      "MAX",
+      "MAX_ATTRIBUTES",
       "MIN",
       "MIN_ATTRIBUTES",
       "PRCP",

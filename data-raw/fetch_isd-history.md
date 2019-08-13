@@ -1,7 +1,7 @@
 Fetch, Clean and Correct Altitude in GSOD ‘isd\_history.csv’ Data
 ================
 Adam H. Sparks
-2019-08-12
+2019-08-13
 
 # Introduction
 
@@ -22,8 +22,8 @@ result in the following changes to the data:
 
   - Stations where longitude is \< -180˚ or \> 180˚ are removed
 
-  - A new field, STNID, a concatenation of the USAF and WBAN fields, is
-    added
+  - A new field, `STNID`, a concatenation of the USAF and WBAN fields,
+    is added
 
   - Stations are checked against Natural Earth 1:10 ADM0 cultural data,
     stations not mapping in the isd-history reported country are dropped
@@ -90,13 +90,21 @@ if (!require("skimr")) {
   install.packages("skimr", repos = "https://cran.rstudio.com/")
 }
 
+if (!require("data.table")) {
+  install.packages("data.table", repos = "https://cran.rstudio.com/")
+}
+
 library(magrittr) # comes with dplyr above
 
-dem_tiles <- list.files(path.expand("~/Data/CGIAR-CSI SRTM"), 
-                        pattern = glob2rx("*.tif"), full.names = TRUE)
+dem_tiles <- list.files(
+  path.expand("~/Data/CGIAR-CSI SRTM"),
+  pattern = glob2rx("*.tif"),
+  full.names = TRUE
+)
 crs <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
 cor_stations <- list()
-tf <- tempfile()
+tf <- tempfile(
+)
 ```
 
 ## Download data from Natural Earth and NCEI
@@ -109,8 +117,21 @@ NE <- ne_countries(scale = 10)
 stations <- read_csv(
   "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
   col_types = "ccccccdddii",
-  col_names = c("USAF", "WBAN", "STN_NAME", "CTRY", "STATE", "CALL",
-                "LAT", "LON", "ELEV_M", "BEGIN", "END"), skip = 1)
+  col_names = c(
+    "USAF",
+    "WBAN",
+    "STN_NAME",
+    "CTRY",
+    "STATE",
+    "CALL",
+    "LAT",
+    "LON",
+    "ELEV_M",
+    "BEGIN",
+    "END"
+  ),
+  skip = 1
+)
 ```
 
 ## Reformat and clean station data file from NCEI
@@ -119,11 +140,12 @@ stations <- read_csv(
 # clean data
 stations[stations == -999] <- NA # sets any wonky elevation values to NA
 stations[stations == -999.9] <- NA # sets any wonky elevation values to NA
-stations <- stations[!is.na(stations$LAT) & !is.na(stations$LON), ]
-stations <- stations[stations$LAT != 0 & stations$LON != 0, ]
-stations <- stations[stations$LAT > -90 & stations$LAT < 90, ]
-stations <- stations[stations$LON > -180 & stations$LON < 180, ]
-stations$STATION <- as.character(paste0(stations$USAF, stations$WBAN))
+stations <- stations[!is.na(stations$LAT) & !is.na(stations$LON),]
+stations <- stations[stations$LAT != 0 & stations$LON != 0,]
+stations <- stations[stations$LAT > -90 & stations$LAT < 90,]
+stations <- stations[stations$LON > -180 & stations$LON < 180,]
+stations$STNID <-
+  as.character(paste(stations$USAF, stations$WBAN, sep = "-"))
 ```
 
 ## Check data for inconsistencies
@@ -173,7 +195,8 @@ proj4string(xy) <- CRS(crs)
 # check for location in country
 point_check <- over(xy, NE)
 point_check <- as.data.frame(point_check)
-stations_discard <- point_check[point_check$FIPS %in% point_check$FIPS_10_ == FALSE, ]
+stations_discard <-
+  point_check[point_check$FIPS %in% point_check$FIPS_10_ == FALSE,]
 nrow(stations_discard)
 ```
 
@@ -236,9 +259,8 @@ original station elevation for these stations.
 
 ``` r
 corrected_elev <- mutate(corrected_elev,
-                         ELEV_M_SRTM_90m = ifelse(
-                           is.na(ELEV_M_SRTM_90m),
-                           ELEV_M, ELEV_M_SRTM_90m))
+                         ELEV_M_SRTM_90m = ifelse(is.na(ELEV_M_SRTM_90m),
+                                                  ELEV_M, ELEV_M_SRTM_90m))
 ```
 
 In some cases duplicate stations occur, use the mean value of duplicate
@@ -248,7 +270,7 @@ and the new elevation values. `STNID` is used for a left-join with the
 
 ``` r
 corrected_elev <- corrected_elev %>%
-  group_by(STATION) %>%
+  group_by(STNID) %>%
   summarise(ELEV_M_SRTM_90m = mean(ELEV_M_SRTM_90m))
 ```
 
@@ -265,22 +287,24 @@ stations above/below 60/-60 latitude or buoys, `ELEV_M_SRTM_90m` will be
 
 ``` r
 # convert any factors in stations object to character for left_join
-stations <- mutate_if(
-  as.data.frame(stations),
-  is.factor,
-  as.character)
+stations <- mutate_if(as.data.frame(stations),
+                      is.factor,
+                      as.character)
 
 # Perform left join to join corrected elevation with original station data,
 # this will include stations below/above -60/60
-isd_history <- 
+isd_history <-
   left_join(stations, corrected_elev,
-            by = "STATION")
+            by = "STNID")
 
 # select the metadata columns of interest
 isd_history <-
-  isd_history[, c("STATION",
+  isd_history[, c("STNID",
+                  "STN_NAME",
                   "CTRY",
                   "STATE",
+                  "LAT",
+                  "LON",
                   "BEGIN",
                   "END",
                   "ELEV_M",
@@ -290,30 +314,35 @@ skim(isd_history)
 ```
 
     ## Skim summary statistics
-    ##  n obs: 28122 
-    ##  n variables: 7 
+    ##  n obs: 28123 
+    ##  n variables: 10 
     ## 
     ## ── Variable type:character ───────────────────────────────────────────────────────────────────────────────
     ##  variable missing complete     n min max empty n_unique
-    ##      CTRY     119    28003 28122   2   2     0      252
-    ##     STATE   21395     6727 28122   2   2     0       73
-    ##   STATION       0    28122 28122  11  11     0    28122
+    ##      CTRY     119    28004 28123   2   2     0      252
+    ##     STATE   21396     6727 28123   2   2     0       73
+    ##  STN_NAME       0    28123 28123   2  58     0    26104
+    ##     STNID       0    28123 28123  12  12     0    28123
     ## 
     ## ── Variable type:integer ─────────────────────────────────────────────────────────────────────────────────
     ##  variable missing complete     n  mean        sd      p0   p25   p50   p75
-    ##     BEGIN       0    28122 28122 2e+07 238536.97 1.9e+07 2e+07 2e+07 2e+07
-    ##       END       0    28122 28122 2e+07 191899.69 1.9e+07 2e+07 2e+07 2e+07
+    ##     BEGIN       0    28123 28123 2e+07 238545.21 1.9e+07 2e+07 2e+07 2e+07
+    ##       END       0    28123 28123 2e+07 191898.69 1.9e+07 2e+07 2e+07 2e+07
     ##   p100     hist
     ##  2e+07 ▁▁▃▇▇▅▇▇
     ##  2e+07 ▁▁▁▁▁▁▂▇
     ## 
     ## ── Variable type:numeric ─────────────────────────────────────────────────────────────────────────────────
-    ##         variable missing complete     n   mean     sd   p0  p25   p50 p75
-    ##           ELEV_M     211    27911 28122 364.16 564.86 -388 24.1 143.9 440
-    ##  ELEV_M_SRTM_90m    2922    25200 28122 382.5  580.86 -389 26   159   467
-    ##  p100     hist
-    ##  5304 ▇▂▁▁▁▁▁▁
-    ##  5280 ▇▂▁▁▁▁▁▁
+    ##         variable missing complete     n   mean     sd      p0    p25
+    ##           ELEV_M     211    27912 28123 364.17 564.85 -388     24.1 
+    ##  ELEV_M_SRTM_90m    2922    25201 28123 382.51 580.85 -389     26   
+    ##              LAT       0    28123 28123  31.11  28.73  -89     22.48
+    ##              LON       0    28123 28123  -3.58  87.89 -179.98 -83.47
+    ##     p50    p75    p100     hist
+    ##  143.9  440    5304    ▇▂▁▁▁▁▁▁
+    ##  159    467    5280    ▇▂▁▁▁▁▁▁
+    ##   39.3   49.9    83.65 ▁▁▂▂▂▆▇▁
+    ##    6.77  61.57  179.75 ▁▆▆▂▇▃▃▂
 
 # Figures
 
@@ -334,7 +363,7 @@ ggplot(data = isd_history,
   theme_ipsum()
 ```
 
-![GSOD Reported Elevation versus CGIAR-CSI SRTM Buffered
+![GSOD Reported Elevation versus CGIAR - CSI SRTM Buffered
 Elevation](fetch_isd-history_files/figure-gfm/Buffered%20SRTM%2090m%20vs%20Reported%20Elevation-1.png)
 
 Buffered versus non-buffered elevation values were previously checked
@@ -345,12 +374,17 @@ variation the buffered values are the values that are included in the
 final data for distribution with the GSODR package following the
 approach of Hijmans *et al.* (2005).
 
+## Save final version to disk
+
 The final data frame for distribution with *GSODR* includes the new
 elevation values in the `ELEV_M_SRTM_90m` field along with the cleaned
 “isd-history.csv” data that removes stations that do not have valid x,
-y locations.
+y locations as a `data.table` object.
 
 ``` r
+setDT(isd_history)
+setkey(isd_history, "STNID")
+
 # write rda file to disk for use with GSODR package
 save(isd_history,
      file = "../inst/extdata/isd_history.rda",
@@ -386,19 +420,20 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  collate  en_AU.UTF-8                 
     ##  ctype    en_AU.UTF-8                 
     ##  tz       Australia/Brisbane          
-    ##  date     2019-08-12                  
+    ##  date     2019-08-13                  
     ## 
     ## ─ Packages ──────────────────────────────────────────────────────────────
     ##  package            * version date       lib source        
     ##  assertthat           0.2.1   2019-03-21 [1] CRAN (R 3.6.0)
     ##  backports            1.1.4   2019-04-10 [1] CRAN (R 3.6.0)
-    ##  class                7.3-15  2019-01-01 [2] CRAN (R 3.6.1)
-    ##  classInt             0.3-3   2019-04-26 [1] CRAN (R 3.6.0)
+    ##  class                7.3-15  2019-01-01 [1] CRAN (R 3.6.1)
+    ##  classInt             0.4-1   2019-08-06 [1] CRAN (R 3.6.0)
     ##  cli                  1.1.0   2019-03-19 [1] CRAN (R 3.6.0)
-    ##  codetools            0.2-16  2018-12-24 [2] CRAN (R 3.6.1)
+    ##  codetools            0.2-16  2018-12-24 [1] CRAN (R 3.6.1)
     ##  colorspace           1.4-1   2019-03-18 [1] CRAN (R 3.6.0)
     ##  crayon               1.3.4   2017-09-16 [1] CRAN (R 3.6.0)
     ##  curl                 4.0     2019-07-22 [1] CRAN (R 3.6.0)
+    ##  data.table         * 1.12.2  2019-04-07 [1] CRAN (R 3.6.0)
     ##  DBI                  1.0.0   2018-05-02 [1] CRAN (R 3.6.0)
     ##  digest               0.6.20  2019-07-04 [1] CRAN (R 3.6.0)
     ##  doParallel         * 1.0.15  2019-08-02 [1] CRAN (R 3.6.0)
@@ -409,7 +444,7 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  extrafontdb          1.0     2012-06-11 [1] CRAN (R 3.6.0)
     ##  foreach            * 1.4.7   2019-07-27 [1] CRAN (R 3.6.0)
     ##  gdtools              0.1.9   2019-06-18 [1] CRAN (R 3.6.0)
-    ##  ggplot2            * 3.2.0   2019-06-16 [1] CRAN (R 3.6.0)
+    ##  ggplot2            * 3.2.1   2019-08-10 [1] CRAN (R 3.6.0)
     ##  glue                 1.3.1   2019-03-12 [1] CRAN (R 3.6.0)
     ##  gtable               0.3.0   2019-03-25 [1] CRAN (R 3.6.0)
     ##  highr                0.8     2019-03-20 [1] CRAN (R 3.6.0)
@@ -417,10 +452,10 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  hrbrthemes         * 0.6.0   2019-01-21 [1] CRAN (R 3.6.0)
     ##  htmltools            0.3.6   2017-04-28 [1] CRAN (R 3.6.0)
     ##  iterators          * 1.0.12  2019-07-26 [1] CRAN (R 3.6.0)
-    ##  KernSmooth           2.23-15 2015-06-29 [2] CRAN (R 3.6.1)
-    ##  knitr                1.23    2019-05-18 [1] CRAN (R 3.6.0)
+    ##  KernSmooth           2.23-15 2015-06-29 [1] CRAN (R 3.6.1)
+    ##  knitr                1.24    2019-08-08 [1] CRAN (R 3.6.0)
     ##  labeling             0.3     2014-08-23 [1] CRAN (R 3.6.0)
-    ##  lattice              0.20-38 2018-11-04 [2] CRAN (R 3.6.1)
+    ##  lattice              0.20-38 2018-11-04 [1] CRAN (R 3.6.1)
     ##  lazyeval             0.2.2   2019-03-15 [1] CRAN (R 3.6.0)
     ##  magrittr           * 1.5     2014-11-22 [1] CRAN (R 3.6.0)
     ##  munsell              0.5.0   2018-06-12 [1] CRAN (R 3.6.0)
@@ -428,14 +463,14 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  pkgconfig            2.0.2   2018-08-16 [1] CRAN (R 3.6.0)
     ##  purrr                0.3.2   2019-03-15 [1] CRAN (R 3.6.0)
     ##  R6                   2.4.0   2019-02-14 [1] CRAN (R 3.6.0)
-    ##  raster             * 2.9-23  2019-07-11 [1] CRAN (R 3.6.1)
+    ##  raster             * 2.9-23  2019-07-11 [1] CRAN (R 3.6.0)
     ##  Rcpp                 1.0.2   2019-07-25 [1] CRAN (R 3.6.0)
     ##  readr              * 1.3.1   2018-12-21 [1] CRAN (R 3.6.0)
     ##  rgdal                1.4-4   2019-05-29 [1] CRAN (R 3.6.0)
     ##  rlang                0.4.0   2019-06-25 [1] CRAN (R 3.6.0)
     ##  rmarkdown            1.14    2019-07-12 [1] CRAN (R 3.6.0)
     ##  rnaturalearth      * 0.1.0   2017-03-21 [1] CRAN (R 3.6.0)
-    ##  rnaturalearthhires   0.2.0   2019-04-16 [1] local         
+    ##  rnaturalearthhires   0.2.0   2019-08-13 [1] local         
     ##  Rttf2pt1             1.3.7   2018-06-29 [1] CRAN (R 3.6.0)
     ##  scales               1.0.0   2018-08-09 [1] CRAN (R 3.6.0)
     ##  sessioninfo        * 1.1.1   2018-11-05 [1] CRAN (R 3.6.0)
@@ -454,8 +489,7 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  yaml                 2.2.0   2018-07-25 [1] CRAN (R 3.6.0)
     ##  zeallot              0.1.0   2018-01-28 [1] CRAN (R 3.6.0)
     ## 
-    ## [1] /Users/U8004755/Library/R/3.x/library
-    ## [2] /Library/Frameworks/R.framework/Versions/3.6/Resources/library
+    ## [1] /Library/Frameworks/R.framework/Versions/3.6/Resources/library
 
 # References
 

@@ -92,7 +92,7 @@ these data by others must provide this same notification.}
 \examples{
 \donttest{
 # Download weather station for Toowoomba, Queensland for 2010
-tbar <- get_GSOD(years = 2010, station = "95551099999")
+tbar <- get_GSOD(years = 2010, station = "955510-99999")
 
 tbar
 
