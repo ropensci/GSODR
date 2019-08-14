@@ -6,7 +6,7 @@ output:
     toc: true
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{GSODR}
+  %\VignetteIndexEntry{Using Spatial R Packages}
   %\VignetteEncoding{UTF-8}
 ---
 
