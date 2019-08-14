@@ -75,8 +75,8 @@
       country <- toupper(trimws(country[1]))
       nc <- nchar(country)
       if (nc == 3) {
-        if (country %in% country_list$iso3c) {
-          c <- which(country == country_list$iso3c)
+        if (country %in% country_list$ISO3C) {
+          c <- which(country == country_list$ISO3C)
           country <- country_list[[c, 1]]
         } else {
           stop(call. = FALSE,
@@ -84,8 +84,8 @@
                "letter ISO country code\n")
         }
       } else if (nc == 2) {
-        if (country %in% country_list$iso2c) {
-          c <- which(country == country_list$iso2c)
+        if (country %in% country_list$ISO2C) {
+          c <- which(country == country_list$ISO2C)
           country <- country_list[[c, 1]]
         } else {
           stop(call. = FALSE,
