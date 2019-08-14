@@ -7,6 +7,35 @@
 #' @noRd
 
 .process_csv <- function(x, isd_history) {
+  # CRAN NOTE avoidance
+  "EA" <- #nocov begin
+    "ES" <-
+    "TEMP" <-
+    "DEWP" <-
+    "SLP" <-
+    "STP" <-
+    "WDSP" <-
+    "MXSPD" <-
+    "GUST" <-
+    "VISIB" <-
+    "WDSP" <-
+    "MAX" <-
+    "MIN" <-
+    "PRCP" <-
+    "SNDP" <-
+    "PRCP_ATTRIBUTES" <-
+    "MIN_ATTRIBUTES" <-
+    "MAX_ATTRIBUTES" <-
+    "STNID" <-
+    "YEARMODA" <-
+    "DATE" <-
+    "YEAR" <-
+    "MONTH" <-
+    "DAY" <-
+    "YDAY" <-
+    "RH" <-
+    NULL # nocov end
+
   # Import data from the website for indvidual stations or tempdir() for all ---
   DT <-
     fread(x, colClasses = c("FRSHTT" = "c"))
@@ -22,7 +51,7 @@
   # Replace 999.9 with NA
   for (col in names(DT)[names(DT) %in% c("VISIB",
                                          "WDSP",
-                                         "MDTSPD",
+                                         "MXSPD",
                                          "GUST",
                                          "SNDP",
                                          "STP")]) {
@@ -74,7 +103,7 @@
     "SLP",
     "STP",
     "WDSP",
-    "MDTSPD",
+    "MXSPD",
     "GUST",
     "VISIB",
     "WDSP",
@@ -87,10 +116,10 @@
   }
 
   # Convert data to Metric units -----------------------------------------------
-  DT[, TEMP := round((5 / 9) * (DT$TEMP - 32), 1)]
+  DT[, TEMP := round((5 / 9) * (TEMP - 32), 1)]
   DT[, DEWP := round((5 / 9) * (DEWP - 32), 1)]
   DT[, WDSP := round(WDSP * 0.514444444, 1)]
-  DT[, MDTSPD := round(MDTSPD * 0.514444444, 1)]
+  DT[, MXSPD := round(MXSPD * 0.514444444, 1)]
   DT[, GUST := round(GUST * 0.514444444, 1)]
   DT[, VISIB := round(VISIB * 1.60934, 1)]
   DT[, MAX := round((MAX - 32) * (5 / 9), 1)]
@@ -144,7 +173,7 @@
       "VISIB_ATTRIBUTES",
       "WDSP",
       "WDSP_ATTRIBUTES",
-      "MDTSPD",
+      "MXSPD",
       "GUST",
       "MAX",
       "MAX_ATTRIBUTES",
