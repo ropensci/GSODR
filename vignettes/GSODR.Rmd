@@ -45,10 +45,10 @@ the latest version as a message in the console and a tidy data frame of the
 stations' inventory for each month that data are reported.
 
 When reformatting data either with `get_GSOD()` or `reformat_GSOD()`, all units
-are converted to International System of Units (SI), _e.g._, inches to
-millimetres and Fahrenheit to Celsius. Data in the R session summarise each
-year by station, which also includes vapour pressure and relative humidity
-elements calculated from existing data in GSOD.
+are converted from United States Customary System (USCS) to International System
+of Units (SI), _e.g._, inches to millimetres and Fahrenheit to Celsius. Data in
+the R session summarise each year by station, which also includes vapour
+pressure and relative humidity elements calculated from existing data in GSOD.
 
 For more information see the description of the data provided by NCEI,
 <http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
@@ -159,9 +159,9 @@ as an argument for `future::plan()`, which will default to available local cores
 as workers for the run. This can greatly reduce the time necessary to process
 GSOD files.
 
-```{r Ex6, eval=TRUE}
+```{r Ex6, eval=FALSE}
 future::plan("multisession")
-global <- get_GSOD(years = 2010:2015)
+global <- get_GSOD(years = 2010:2011)
 summary(global)
 ```
 
@@ -178,7 +178,14 @@ specified station files or you can supply it with a directory containing all of
 the "STATION.csv" station files or "YEAR.zip" annual files that you wish to
 reformat.
 
+**Note** _Any_ .csv file provided to `reformat_GSOD()` will be imported, if it
+is not a GSOD data file, this will lead to an error. Make sure the directory
+and file lists are clean.
+
 ## Reformat a List of Local Files
+
+In this example two STATION.csv files are in subdirectorys of user's home
+directory and are listed for reformatting as a string.
 
 ```{r Ex15, eval=FALSE}
 y <- c("~/GSOD/gsod_1960/20049099999.csv",
@@ -186,7 +193,10 @@ y <- c("~/GSOD/gsod_1960/20049099999.csv",
 x <- reformat_GSOD(file_list = y)
 ```
 
-## Reformat all local files found in directory
+## Reformat all Local Files Found in Directory
+
+In this example all STATION.csv files in the subfolder GSOD/gsod_1960 will be
+imported and reformatted.
 
 ```{r Ex16, eval=FALSE}
 x <- reformat_GSOD(dsn = "~/GSOD/gsod_1960")
@@ -215,6 +225,14 @@ To update _GSODR's_ internal database of station locations simply use
 `update_station_list()`, which will update the internal station database
 according to the latest data available from the NCEI.
 
+```{r Ex17, eval=FALSE}
+update_station_list()
+
+inventory
+
+subset(inventory, STNID %in% "955510-99999")
+```
+
 # Using get_inventory()
 
 _GSODR_ provides a function, `get_inventory()` to retrieve an inventory of the
@@ -224,12 +242,10 @@ through to current.
 Following is an example of how to retrieve the inventory and check a station in
 Toowoomba, Queensland, Australia, which was used in an earlier example.
 
-```{r Ex17, eval=TRUE}
+```{r Ex18, eval=TRUE}
 inventory <- get_inventory()
 
-inventory
-
-subset(inventory, STNID %in% "955510-99999")
+subset(inventory, STATION %in% "95551099999")
 ```
 
 # Additional Climate Data Availability
@@ -240,7 +256,7 @@ GSOD data provided by _GSODR_ are available as an R package, which can only be
 installed through GitHub due to the package size, >5Mb, being too large for
 CRAN.
 
-```{r Ex18, eval=TRUE}
+```{r Ex19, eval=FALSE}
 #install.packages("devtools")
 devtools::install_github("adamhsparks/GSODRdata")
 library("GSODRdata")
@@ -347,17 +363,17 @@ sometimes not be the max for the calendar day. Missing = NA;
 
 - **MAX\_ATTRIBUTES** - Blank indicates max temp was taken from the explicit max temp
 report and not from the 'hourly' data. An "\*" indicates max temp was derived
-from the hourly data (i.e., highest hourly or synoptic-reported temperature);
+from the hourly data (_i.e._, highest hourly or synoptic-reported temperature);
 
 - **MIN** - Minimum temperature reported during the day converted to Celsius to
 tenths--time of min temp report varies by country and region, so this will
 sometimes not be the max for the calendar day. Missing = NA;
 
-- **MIN\_ATTRIBUTES** - Blank indicates max temp was taken from the explicit min temp report and not from the 'hourly' data. An "\*" indicates min temp was derived from the hourly data (i.e., highest hourly or synoptic-reported temperature);
+- **MIN\_ATTRIBUTES** - Blank indicates max temp was taken from the explicit min temp report and not from the 'hourly' data. An "\*" indicates min temp was derived from the hourly data (_i.e._, highest hourly or synoptic-reported temperature);
 
 - **PRCP** - Total precipitation (rain and/or melted snow) reported during the
 day converted to millimetres to hundredths; will usually not end with the
-midnight observation, i.e., may include latter part of previous day. A value of
+midnight observation, _i.e._, may include latter part of previous day. A value of
 ".00" indicates no measurable precipitation (includes a trace). Missing = NA;
 *Note: Many stations do not report '0' on days with no precipitation--
 therefore, 'NA' will often appear on these days. For example, a station may

@@ -209,7 +209,7 @@
                 "-",
                 basename(i) # filename
               ),
-              overwrite = FALSE
+              overwrite = TRUE
             ))
           }
         },

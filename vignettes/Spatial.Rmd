@@ -36,7 +36,7 @@ For this example we convert the data to a _sp_ object. You might use this one
 to save GeoPackage or ESRI shapefiles for sharing or analysis in another GIS
 program.
 
-```{r Ex7, eval=TRUE}
+```{r Ex7, eval=FALSE}
 # get GSOD data
 library(GSODR)
 library(sp)
@@ -116,7 +116,7 @@ str(GSOD_sp)
 
 Using `writeOGR()` it is simple to save as a GeoPackage file.
 
-```{r Ex8, eval=TRUE}
+```{r Ex8, eval=FALSE}
 library(rgdal)
 
 writeOGR(GSOD_sp,
@@ -127,7 +127,7 @@ writeOGR(GSOD_sp,
 
 Using `writeOGR()` it is simple to save as an ESRI shapefile.
 
-```{r Ex9, eval=TRUE}
+```{r Ex9, eval=FALSE}
 writeOGR(GSOD_sp,
          dsn = path.expand("~/"),
          layer = "GSOD",
@@ -150,7 +150,7 @@ such as GDAL. A subset of simple features forms the GeoJSON standard.
 
 For this example, we convert the GSOD data to an _sf_ object.
 
-```{r Ex10, eval=TRUE}
+```{r Ex10, eval=FALSE}
 library(sf)
 GSOD_SF <- st_as_sf(x = GSOD,
                     coords = c("LON", "LAT"),
@@ -217,13 +217,13 @@ str(GSOD_SF)
 
 Writing a shapefile is a simple matter.
 
-```{r Ex11, eval=TRUE}
+```{r Ex11, eval=FALSE}
 write_sf(GSOD_SF, "GSOD.shp") # silently overwrites
 ```
 
 As is writing a GeoPackage from the _sf_ object.
 
-```{r Ex12, eval=TRUE}
+```{r Ex12, eval=FALSE}
 write_sf(GSOD_SF, "~/GSOD.gpkg") # silently overwrites
 ```
 
@@ -235,7 +235,7 @@ along with the file name. The layer to be specified is "GSOD", this is specified
 in the `get_GSOD()` function and will not change. The file name, specified in
 the dsn will, but the layer name will not.
 
-```{r Ex13, eval=TRUE}
+```{r Ex13, eval=FALSE}
 library(rgdal)
 #> Loading required package: sp
 #> rgdal: version: 1.1-10, (SVN revision 622)
@@ -264,7 +264,7 @@ existing R tools for SQLite files
 easy way is using _dplyr_. This option is much faster to load since it does not
 load the geometry.
 
-```{r Ex14, eval=TRUE}
+```{r Ex14, eval=FALSE}
 AUS_sqlite <- tbl(src_sqlite(path.expand("~/GSOD.gpkg")), "GSOD")
 class(AUS_sqlite)
 #> [1] "tbl_dbi"  "tbl_sql"  "tbl_lazy" "tbl"

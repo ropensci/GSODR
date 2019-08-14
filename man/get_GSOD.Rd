@@ -88,6 +88,13 @@ their international commercial use.  They can be used within the U.S. or for
 non-commercial international activities without restriction. The non-U.S.
 data cannot be redistributed for commercial purposes. Re-distribution of
 these data by others must provide this same notification.}
+
+\pkg{GSODR} attempts to validate year and station combination requests,
+however, in certain cases the start and end date may encompass years where
+no data is available. In these cases no data will be returned. It is
+suggested that the user check the latest data availability for the station(s)
+desired using \link{get_inventory} as this list is frequently updated by the
+'NCEI' and is not shipped with \pkg{GSODR}.
 }
 \examples{
 \donttest{
