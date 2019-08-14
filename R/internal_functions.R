@@ -46,9 +46,9 @@
     )
   }
   BEGIN <-
-    as.numeric(substr(isd_history[isd_history$STNID == station, ]$BEGIN, 1, 4))
+    as.numeric(substr(isd_history[isd_history$STNID == station,]$BEGIN, 1, 4))
   END <-
-    as.numeric(substr(isd_history[isd_history$STNID == station, ]$END, 1, 4))
+    as.numeric(substr(isd_history[isd_history$STNID == station,]$END, 1, 4))
   if (min(years) < BEGIN | max(years) > END) {
     message("\nThis station, ",
             station,
@@ -146,7 +146,7 @@
 .download_files <-
   function(station,
            years) {
-    # download archive .tar.gz files
+    # if no station download annual zip files ----------------------------------
     if (is.null(station)) {
       url_list <-
         paste0(
@@ -154,22 +154,22 @@
           years,
           ".tar.gz"
         )
+
       tryCatch(
-        Map(
-          function(url, dest)
-            curl::curl_download(
-              url = url,
-              destfile = dest,
-              mode = "wb"
-            ),
-          url_list,
-          file.path(tempdir(), basename(url_list))
-        ),
+        for (i in url_list) {
+          if (!httr::http_error(i)) {
+            # check for an http error b4 proceeding
+            httr::GET(url = i,
+                      httr::write_disk(file.path(tempdir(), basename(i))),
+                      overwrite = TRUE)
+          }
+        },
         error = function(x)
           stop(call. = FALSE,
-               "\nThe file downloads have failed. Please retry.\n")
+               "\nThe file downloads have failed. Please restart.\n")
       )
 
+      # create a list of files that have been downloaded and untar them
       tar_files <-
         list.files(tempdir(), pattern = "*\\.tar.gz$", full.names = TRUE)
       for (i in tar_files) {
@@ -188,6 +188,7 @@
         )
     }
 
+    # if a station is provided, download its files -----------------------------
     if (!is.null(station)) {
       station <- gsub("-", "", station)
       url_list <-
@@ -200,12 +201,14 @@
         )]
       tryCatch(
         for (i in url_list) {
-          if (!httr::http_error(i)) { # check for an http error b4 proceeding
+          if (!httr::http_error(i)) {
+            # check for an http error b4 proceeding
             httr::GET(url = i, httr::write_disk(
               paste0(
                 tempdir(),
                 "/",
-                substr(i, nchar(i) - 20, nchar(i) - 16), # year
+                substr(i, nchar(i) - 20, nchar(i) - 16),
+                # year
                 "-",
                 basename(i) # filename
               ),
@@ -236,7 +239,7 @@
 .agroclimatology_list <-
   function(GSOD_list, isd_history, years) {
     station_list <- isd_history[isd_history$LAT >= -60 &
-                                  isd_history$LAT <= 60, ]$STNID
+                                  isd_history$LAT <= 60,]$STNID
     station_list <- gsub("-", "", station_list)
 
     station_list <-
@@ -270,7 +273,7 @@
            isd_history,
            years) {
     station_list <-
-      isd_history[isd_history$CTRY == country, ]$STNID
+      isd_history[isd_history$CTRY == country,]$STNID
     station_list <- gsub("-", "", station_list)
     station_list <-
       CJ(years, sorted = FALSE)[, paste0(tempdir(),
