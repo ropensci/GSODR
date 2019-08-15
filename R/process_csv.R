@@ -2,8 +2,9 @@
 #' Processes GSOD data
 #'
 #' @param x A `data.table` generated from `.download_data()`
-#' @param is
+#' @param isd_history Internal metadata file for station locations
 #' @return A `data.table` of well-formatted weather data
+#' @keywords internal
 #' @noRd
 
 .process_csv <- function(x, isd_history) {
@@ -40,9 +41,7 @@
     "I_HAIL" <-
     "I_THUNDER" <-
     "I_TORNADO_FUNNEL" <-
-    NULL
-
-  load(system.file("extdata", "isd_history.rda", package = "GSODR")) # nocov end
+    NULL # nocov end
 
   # Import data from the website for indvidual stations or tempdir() for all ---
   DT <-
