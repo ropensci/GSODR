@@ -40,7 +40,7 @@
   DT <-
     fread(x, colClasses = c("FRSHTT" = "c"))
 
-  # Replace 99.99 with NA
+  # Replace 9999.99 et al. with NA
   for (col in names(DT)[names(DT) == "PRCP"]) {
     set(DT,
         i = which(DT[[col]] == 99.99),
@@ -140,20 +140,21 @@
   # Calculate relative humidity
   DT[, RH := round(EA / ES * 100, 1)]
 
-  # Join to the station and SRTM data-------------------------------------------
+  # Join to the station and meta data-------------------------------------------
   DT <- isd_history[DT, on = "STNID"]
+
+  DT[, c("LAT", "LON", "STN_NAME") := NULL] # drop xtra columns from isd-history
 
   setcolorder(
     DT,
     c(
       "STNID",
-      "STN_NAME",
+      "NAME",
       "CTRY",
       "STATE",
       "LATITUDE",
       "LONGITUDE",
       "ELEVATION",
-      "ELEV_M_SRTM_90m",
       "BEGIN",
       "END",
       "YEARMODA",
