@@ -31,9 +31,9 @@ test_that("invalid stations are handled", {
 test_that("Station validations are properly handled for years available", {
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))
   stations <- isd_history
-  expect_message(.validate_station(station = "949999-00170",
-                                   stations,
-                                   years = 2010))
+  expect_error(.validate_station(station = "949999-00170",
+                                 stations,
+                                 years = 2010))
 })
 
 test_that("Station validations are properly handled for years available", {

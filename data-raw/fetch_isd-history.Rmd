@@ -18,10 +18,6 @@ The isd_history file details station metadata including the start and stop years
 ## Set up workspace
 
 ```{r set_up_workspace, echo=TRUE, message=FALSE, output=FALSE, warning=FALSE}
-if (!require("readr")) {
-  install.packages("readr", repos = "https://cran.rstudio.com/")
-}
-
 if (!require("sessioninfo")) {
   install.packages("sessioninfo", repos = "https://cran.rstudio.com/")
 }
@@ -47,6 +43,8 @@ isd_history <- fread("ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv")
 ```{r clean_and_reformat, echo=TRUE, cache=FALSE}
 # add STNID column
 isd_history[, STNID := paste(USAF, WBAN, sep = "-")]
+setcolorder(isd_history, "STNID")
+setnames(isd_history, "STATION NAME", "NAME")
 setkey(isd_history, "STNID")
 
 # remove extra columns

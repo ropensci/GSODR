@@ -15,10 +15,6 @@ for requests by country.
 ## Set up workspace
 
 ``` r
-if (!require("readr")) {
-  install.packages("readr", repos = "https://cran.rstudio.com/")
-}
-
 if (!require("sessioninfo")) {
   install.packages("sessioninfo", repos = "https://cran.rstudio.com/")
 }
@@ -36,38 +32,26 @@ if (!require("data.table")) {
 
 ``` r
 # download data
-isd_history <- read_csv(
-  "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
-  col_types = "ccccccdddii",
-  col_names = c(
-    "USAF",
-    "WBAN",
-    "STN_NAME",
-    "CTRY",
-    "STATE",
-    "CALL",
-    "LAT",
-    "LON",
-    "ELEV_M",
-    "BEGIN",
-    "END"
-  ),
-  skip = 1
-)
+isd_history <- fread("ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv")
 ```
 
 ## Add/drop columns and save to disk
 
 ``` r
 # add STNID column
-setDT(isd_history)
 isd_history[, STNID := paste(USAF, WBAN, sep = "-")]
-
-# clean data
-isd_history[, c("USAF", "WBAN", "ELEV_M") := NULL]
-
+setcolorder(isd_history, "STNID")
+setnames(isd_history, "STATION NAME", "NAME")
 setkey(isd_history, "STNID")
 
+# remove extra columns
+isd_history[, c("USAF", "WBAN", "ELEV_M") := NULL]
+```
+
+    ## Warning in `[.data.table`(isd_history, , `:=`(c("USAF", "WBAN",
+    ## "ELEV_M"), : Column 'ELEV_M' does not exist to remove
+
+``` r
 # write rda file to disk for use with GSODR package
 save(isd_history,
      file = "../inst/extdata/isd_history.rda",
@@ -108,25 +92,21 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ## ─ Packages ──────────────────────────────────────────────────────────────
     ##  package     * version date       lib source        
     ##  assertthat    0.2.1   2019-03-21 [1] CRAN (R 3.6.0)
-    ##  backports     1.1.4   2019-04-10 [1] CRAN (R 3.6.0)
     ##  cli           1.1.0   2019-03-19 [1] CRAN (R 3.6.0)
     ##  crayon        1.3.4   2017-09-16 [1] CRAN (R 3.6.0)
-    ##  curl          4.0     2019-07-22 [1] CRAN (R 3.6.0)
     ##  data.table  * 1.12.2  2019-04-07 [1] CRAN (R 3.6.0)
     ##  digest        0.6.20  2019-07-04 [1] CRAN (R 3.6.0)
     ##  dplyr         0.8.3   2019-07-04 [1] CRAN (R 3.6.0)
     ##  evaluate      0.14    2019-05-28 [1] CRAN (R 3.6.0)
     ##  glue          1.3.1   2019-03-12 [1] CRAN (R 3.6.0)
-    ##  hms           0.5.0   2019-07-09 [1] CRAN (R 3.6.0)
     ##  htmltools     0.3.6   2017-04-28 [1] CRAN (R 3.6.0)
-    ##  knitr         1.24    2019-08-08 [1] CRAN (R 3.6.0)
+    ##  knitr         1.24    2019-08-08 [1] CRAN (R 3.6.1)
     ##  magrittr      1.5     2014-11-22 [1] CRAN (R 3.6.0)
     ##  pillar        1.4.2   2019-06-29 [1] CRAN (R 3.6.0)
     ##  pkgconfig     2.0.2   2018-08-16 [1] CRAN (R 3.6.0)
     ##  purrr         0.3.2   2019-03-15 [1] CRAN (R 3.6.0)
     ##  R6            2.4.0   2019-02-14 [1] CRAN (R 3.6.0)
     ##  Rcpp          1.0.2   2019-07-25 [1] CRAN (R 3.6.0)
-    ##  readr       * 1.3.1   2018-12-21 [1] CRAN (R 3.6.0)
     ##  rlang         0.4.0   2019-06-25 [1] CRAN (R 3.6.0)
     ##  rmarkdown     1.14    2019-07-12 [1] CRAN (R 3.6.0)
     ##  sessioninfo * 1.1.1   2018-11-05 [1] CRAN (R 3.6.0)
@@ -135,10 +115,9 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  stringr       1.4.0   2019-02-10 [1] CRAN (R 3.6.0)
     ##  tibble        2.1.3   2019-06-06 [1] CRAN (R 3.6.0)
     ##  tidyselect    0.2.5   2018-10-11 [1] CRAN (R 3.6.0)
-    ##  vctrs         0.2.0   2019-07-05 [1] CRAN (R 3.6.0)
     ##  withr         2.1.2   2018-03-15 [1] CRAN (R 3.6.0)
     ##  xfun          0.8     2019-06-25 [1] CRAN (R 3.6.0)
     ##  yaml          2.2.0   2018-07-25 [1] CRAN (R 3.6.0)
-    ##  zeallot       0.1.0   2018-01-28 [1] CRAN (R 3.6.0)
     ## 
-    ## [1] /Library/Frameworks/R.framework/Versions/3.6/Resources/library
+    ## [1] /Users/adamsparks/Library/R/3.x/library
+    ## [2] /Library/Frameworks/R.framework/Versions/3.6/Resources/library

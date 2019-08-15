@@ -54,6 +54,8 @@ update_station_list <- function() {
 
   # add STNID column
   isd_history[, STNID := paste(USAF, WBAN, sep = "-")]
+  setcolorder(isd_history, "STNID")
+  setnames(isd_history, "STATION NAME", "NAME")
   setkey(isd_history, "STNID")
 
   # remove extra columns
