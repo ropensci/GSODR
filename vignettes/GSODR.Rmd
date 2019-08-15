@@ -40,9 +40,9 @@ the NCEI's FTP server updates the package's internal database of stations and
 their metadata.
 
 - `get_inventory()` - this function downloads the latest station inventory
-information from the NCEI's FTP server and returns the header information about
-the latest version as a message in the console and a tidy data frame of the
-stations' inventory for each month that data are reported.
+information from the NCEI's server and returns the header information about
+the latest version as a message in the console and a data frame of the stations'
+inventories for each year and month that data are reported.
 
 When reformatting data either with `get_GSOD()` or `reformat_GSOD()`, all units
 are converted from United States Customary System (USCS) to International System
@@ -57,8 +57,8 @@ For more information see the description of the data provided by NCEI,
 
 ## Find Stations in or near Toowoomba, Queensland, Australia
 
-_GSODR_ provides lists of weather station locations and elevation values. Using [_dplyr_](https://CRAN.R-project.org/package=dplyr), we can find all the
-stations in Australia.
+_GSODR_ provides lists of weather station locations and elevation values. It's
+easy to find all stations in Australia.
 
 ```{r Ex1, eval=TRUE}
 library(GSODR)
@@ -127,7 +127,6 @@ temperature for 2010.
 
 ```{r Ex5, eval=TRUE, fig.width = 7, fig.height = 7, fig.align = "center"}
 library(ggplot2)
-library(lubridate)
 library(tidyr)
 
 # Create a dataframe of just the date and temperature values that we want to
@@ -139,7 +138,7 @@ tbar_temps <-
   gather(tbar_temps, Measurement, gather_cols = TEMP:MIN)
 
 ggplot(data = tbar_temps, aes(
-  x = ymd(YEARMODA),
+  x = YEARMODA,
   y = value,
   colour = Measurement
 )) +
@@ -159,10 +158,9 @@ as an argument for `future::plan()`, which will default to available local cores
 as workers for the run. This can greatly reduce the time necessary to process
 GSOD files.
 
-```{r Ex6, eval=TRUE}
+```{r Ex6, eval=FALSE}
 future::plan("multisession")
 global <- get_GSOD(years = 2010:2011)
-summary(global)
 ```
 
 
@@ -277,7 +275,7 @@ _GSODR_ formatted data include the following fields and units:
 
 - **STNID** - Station number (WMO/DATSAV3 number) for the location;
 
-- **STN\_NAME** - Unique text identifier;
+- **NAME** - Unique text identifier;
 
 - **CTRY** - Country in which the station is located;
 
