@@ -38,11 +38,9 @@ Description: Provides automated downloading, parsing, cleaning, unit conversion
     vapour pressure ('ea') and relative humidity are calculated from the
     original data and included in the final data set.  The resulting metadata
     include station identification information, country, state, latitude,
-    longitude, elevation, weather observations and associated flags. Additional
-    data are included: a list of elevation values for stations between -60 and
-    60 degrees latitude derived from the Shuttle Radar Topography Measuring
-    Mission ('SRTM').  For information on the 'GSOD' data from 'NCEI', please
-    see the 'GSOD' 'readme.txt' file available from,
+    longitude, elevation, weather observations and associated flags.  For
+    information on the 'GSOD' data from 'NCEI', please see the 'GSOD'
+    'readme.txt' file available from,
     <http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt>.
 Depends:
     R (>= 3.3.0)
