@@ -32,5 +32,4 @@ test_that("nearest stations returns character value station IDs", {
     )
   )
   rm(n)
-
 })
