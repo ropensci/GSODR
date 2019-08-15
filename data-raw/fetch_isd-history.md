@@ -1,14 +1,25 @@
 Fetch, Clean and Correct Altitude in GSOD ‘isd\_history.csv’ Data
 ================
 Adam H. Sparks
-2019-08-15
+2019-08-16
 
 # Introduction
 
 The isd\_history file details station metadata including the start and
 stop years used by GSODR to pre-check requests before querying the
 server for download and the country code used by GSODR when subsetting
-for requests by country.
+for requests by country. The following changes are made to the raw data
+file for inclusion in *GSODR*:
+
+  - isd\_history where latitude or longitude are `NA` or both 0 are
+    removed
+
+  - isd\_history where latitude is \< -90˚ or \> 90˚ are removed
+
+  - isd\_history where longitude is \< -180˚ or \> 180˚ are removed
+
+  - A new field, STNID, a concatenation of the USAF and WBAN fields, is
+    added
 
 # Data Processing
 
@@ -28,11 +39,19 @@ if (!require("data.table")) {
 }
 ```
 
-## Download data from Natural Earth and NCEI
+## Download and clean data
 
 ``` r
 # download data
 isd_history <- fread("ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv")
+
+# clean data
+isd_history[isd_history == -999] <- NA
+isd_history[isd_history == -999.9] <- NA
+isd_history <- isd_history[!is.na(isd_history$LAT) & !is.na(isd_history$LON), ]
+isd_history <- isd_history[isd_history$LAT != 0 & isd_history$LON != 0, ]
+isd_history <- isd_history[isd_history$LAT > -90 & isd_history$LAT < 90, ]
+isd_history <- isd_history[isd_history$LON > -180 & isd_history$LON < 180, ]
 ```
 
 ## Add/drop columns and save to disk
@@ -44,8 +63,12 @@ setcolorder(isd_history, "STNID")
 setnames(isd_history, "STATION NAME", "NAME")
 setkey(isd_history, "STNID")
 
+# drop stations not in GSOD data
+isd_history[, STNID_len := nchar(STNID)]
+isd_history <- subset(isd_history, STNID_len == 12)
+
 # remove extra columns
-isd_history[, c("USAF", "WBAN", "ICAO", "ELEV(M)") := NULL]
+isd_history[, c("USAF", "WBAN", "ICAO", "ELEV(M)", "STNID_len") := NULL]
 ```
 
 ## View and save the data
@@ -54,30 +77,30 @@ isd_history[, c("USAF", "WBAN", "ICAO", "ELEV(M)") := NULL]
 isd_history
 ```
 
-    ##               STNID                                              NAME CTRY
-    ##     1: 007018-99999                                        WXPOD 7018     
-    ##     2: 007026-99999                                        WXPOD 7026   AF
-    ##     3: 007070-99999                                        WXPOD 7070   AF
-    ##     4: 008260-99999                                         WXPOD8270     
-    ##     5: 008268-99999                                         WXPOD8278   AF
-    ##    ---                                                                    
-    ## 29724:   A07355-241                         VIROQUA MUNICIPAL AIRPORT   US
-    ## 29725:   A07357-182 ELBOW LAKE MUNICIPAL PRIDE OF THE PRAIRIE AIRPORT   US
-    ## 29726:   A07359-240                              IONIA COUNTY AIRPORT   US
-    ## 29727:   A51255-445                       DEMOPOLIS MUNICIPAL AIRPORT   US
-    ## 29728:   A51256-451      BRANSON WEST MUNICIPAL EMERSON FIELD AIRPORT   US
-    ##        STATE    LAT     LON    BEGIN      END
-    ##     1:        0.000   0.000 20110309 20130730
-    ##     2:        0.000   0.000 20120713 20170822
-    ##     3:        0.000   0.000 20140923 20150926
-    ##     4:        0.000   0.000 20050101 20100731
-    ##     5:       32.950  65.567 20100519 20120323
-    ##    ---                                       
-    ## 29724:    WI 43.579 -90.913 20140731 20190811
-    ## 29725:    MN 45.986 -95.992 20140731 20190811
-    ## 29726:    MI 42.938 -85.061 20140731 20190811
-    ## 29727:    AL 32.464 -87.954 20140731 20190812
-    ## 29728:    MO 36.699 -93.402 20140731 20190811
+    ##               STNID                            NAME CTRY STATE    LAT
+    ##     1: 008268-99999                       WXPOD8278   AF       32.950
+    ##     2: 010010-99999             JAN MAYEN(NOR-NAVY)   NO       70.933
+    ##     3: 010014-99999                      SORSTOKKEN   NO       59.792
+    ##     4: 010015-99999                      BRINGELAND   NO       61.383
+    ##     5: 010016-99999                     RORVIK/RYUM   NO       64.850
+    ##    ---                                                               
+    ## 26800: A00023-63890 WHITEHOUSE NAVAL OUTLYING FIELD   US    FL 30.350
+    ## 26801: A00024-53848    CHOCTAW NAVAL OUTLYING FIELD   US    FL 30.507
+    ## 26802: A00026-94297                 COUPEVILLE/NOLF   US    WA 48.217
+    ## 26803: A00029-63820         EVERETT-STEWART AIRPORT   US    TN 36.380
+    ## 26804: A00032-25715                    ATKA AIRPORT   US    AK 52.220
+    ##             LON    BEGIN      END
+    ##     1:   65.567 20100519 20120323
+    ##     2:   -8.667 19310101 20190810
+    ##     3:    5.341 19861120 20190809
+    ##     4:    5.867 19870117 20081231
+    ##     5:   11.233 19870116 19910806
+    ##    ---                           
+    ## 26800:  -81.883 20070601 20190810
+    ## 26801:  -86.960 20070601 20190810
+    ## 26802: -122.633 20060324 20150514
+    ## 26803:  -88.985 20130627 20190811
+    ## 26804: -174.206 20060101 20190811
 
 ``` r
 # write rda file to disk for use with GSODR package
@@ -115,7 +138,7 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  collate  en_AU.UTF-8                 
     ##  ctype    en_AU.UTF-8                 
     ##  tz       Australia/Brisbane          
-    ##  date     2019-08-15                  
+    ##  date     2019-08-16                  
     ## 
     ## ─ Packages ──────────────────────────────────────────────────────────────
     ##  package     * version date       lib source        

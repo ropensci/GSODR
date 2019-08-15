@@ -1,5 +1,4 @@
 
-
 #' Download latest station list information and update internal database
 #'
 #' This function downloads the latest station list (isd-history.csv) from the
@@ -27,7 +26,7 @@
 #' @export update_station_list
 
 update_station_list <- function() {
-  "STNID" <- "USAF" <- "WBAN" <- NULL
+  "STNID" <- "USAF" <- "WBAN" <- "STNID_len" <- NULL
 
   message(
     "This will overwrite GSODR's current internal list of GSOD stations.\n",
@@ -48,9 +47,18 @@ update_station_list <- function() {
   original_timeout <- options("timeout")[[1]]
   options(timeout = 300)
   on.exit(options(timeout = original_timeout))
+
   # download data
-  isd_history <-
-    fread("ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv")
+  isd_history <- fread("ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv")
+
+  # clean data
+  isd_history[isd_history == -999] <- NA
+  isd_history[isd_history == -999.9] <- NA
+  isd_history <- isd_history[!is.na(isd_history$LAT) &
+                               !is.na(isd_history$LON), ]
+  isd_history <- isd_history[isd_history$LAT != 0 & isd_history$LON != 0, ]
+  isd_history <- isd_history[isd_history$LAT > -90 & isd_history$LAT < 90, ]
+  isd_history <- isd_history[isd_history$LON > -180 & isd_history$LON < 180, ]
 
   # add STNID column
   isd_history[, STNID := paste(USAF, WBAN, sep = "-")]
@@ -58,8 +66,12 @@ update_station_list <- function() {
   setnames(isd_history, "STATION NAME", "NAME")
   setkey(isd_history, "STNID")
 
+  # drop stations not in GSOD data
+  isd_history[, STNID_len := nchar(STNID)]
+  isd_history <- subset(isd_history, STNID_len == 12)
+
   # remove extra columns
-  isd_history[, c("USAF", "WBAN", "ICAO", "ELEV(M)") := NULL]
+  isd_history[, c("USAF", "WBAN", "ICAO", "ELEV(M)", "STNID_len") := NULL]
 
   # write rda file to disk for use with GSODR package
   fname <-

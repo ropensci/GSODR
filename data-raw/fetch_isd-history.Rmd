@@ -11,7 +11,15 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introduction
 
-The isd_history file details station metadata including the start and stop years used by GSODR to pre-check requests before querying the server for download and the country code used by GSODR when subsetting for requests by country.
+The isd_history file details station metadata including the start and stop years used by GSODR to pre-check requests before querying the server for download and the country code used by GSODR when subsetting for requests by country. The following changes are made to the raw data file for inclusion in _GSODR_:
+
+  * isd_history where latitude or longitude are `NA` or both 0 are removed
+
+  * isd_history where latitude is < -90˚ or > 90˚ are removed
+
+  * isd_history where longitude is < -180˚ or > 180˚ are removed
+
+  * A new field, STNID, a concatenation of the USAF and WBAN fields, is added
 
 # Data Processing
 
@@ -31,11 +39,19 @@ if (!require("data.table")) {
 }
 ```
 
-## Download data from Natural Earth and NCEI
+## Download and clean data
 
 ```{r download_NE_data, echo=TRUE, message=FALSE, warning=FALSE}
 # download data
 isd_history <- fread("ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv")
+
+# clean data
+isd_history[isd_history == -999] <- NA
+isd_history[isd_history == -999.9] <- NA
+isd_history <- isd_history[!is.na(isd_history$LAT) & !is.na(isd_history$LON), ]
+isd_history <- isd_history[isd_history$LAT != 0 & isd_history$LON != 0, ]
+isd_history <- isd_history[isd_history$LAT > -90 & isd_history$LAT < 90, ]
+isd_history <- isd_history[isd_history$LON > -180 & isd_history$LON < 180, ]
 ```
 
 ## Add/drop columns and save to disk
@@ -47,8 +63,12 @@ setcolorder(isd_history, "STNID")
 setnames(isd_history, "STATION NAME", "NAME")
 setkey(isd_history, "STNID")
 
+# drop stations not in GSOD data
+isd_history[, STNID_len := nchar(STNID)]
+isd_history <- subset(isd_history, STNID_len == 12)
+
 # remove extra columns
-isd_history[, c("USAF", "WBAN", "ICAO", "ELEV(M)") := NULL]
+isd_history[, c("USAF", "WBAN", "ICAO", "ELEV(M)", "STNID_len") := NULL]
 ```
 
 ## View and save the data

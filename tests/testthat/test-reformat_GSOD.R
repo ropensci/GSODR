@@ -5,7 +5,7 @@ test_that("reformat_GSOD file_list parameter reformats data properly", {
   skip_on_cran()
   do.call(file.remove, list(list.files(
     tempdir(),
-    pattern = ".gz$",
+    pattern = ".csv$",
     full.names = TRUE
   )))
 
@@ -19,9 +19,9 @@ test_that("reformat_GSOD file_list parameter reformats data properly", {
       ftp_skip_pasv_ip = TRUE
     )
 
-  ftp_base <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/1960/"
+  url_base <- "https://www.ncei.noaa.gov/data/global-summary-of-the-day/access/1960/"
   test_files <-
-    c("066000-99999-1960.op.gz", "066200-99999-1960.op.gz")
+    c("06600099999.csv", "06620099999.csv")
   destinations <- file.path(tempdir(), test_files)
 
   Map(
@@ -30,28 +30,28 @@ test_that("reformat_GSOD file_list parameter reformats data properly", {
                           handle = ftp_handle,
                           mode = "wb",
                           quiet = TRUE),
-    paste0(ftp_base, test_files),
+    paste0(url_base, test_files),
     destinations
   )
 
   file_list <- list.files(path = tempdir(),
-                          pattern = "^.*\\.op.gz$",
+                          pattern = "^.*\\.csv$",
                           full.names = TRUE)
   expect_equal(length(file_list), 2)
   expect_equal(basename(file_list),
-               c("066000-99999-1960.op.gz",
-                 "066200-99999-1960.op.gz"))
+               c("06600099999.csv",
+                 "06620099999.csv"))
 
   # check that provided a file list, the function works properly
   x <- reformat_GSOD(file_list = file_list)
   expect_equal(nrow(x), 722)
-  expect_length(x, 48)
+  expect_length(x, 44)
   expect_is(x, "data.frame")
 
   # check that provided a dsn only, the function works properly
   x <- reformat_GSOD(dsn = tempdir())
   expect_equal(nrow(x), 722)
-  expect_length(x, 48)
+  expect_length(x, 44)
   expect_is(x, "data.frame")
 
   unlink(destinations)
@@ -63,4 +63,3 @@ context("reformat_GSOD")
 test_that("reformat_GSOD stops if no files are found", {
   expect_error(reformat_GSOD(dsn = "/dev/NULL"))
 })
-
