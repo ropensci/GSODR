@@ -64,7 +64,7 @@ setDT(isd_history)
 isd_history[, STNID := paste(USAF, WBAN, sep = "-")]
 
 # clean data
-isd_history[, c("USAF", "WBAN", "STN_NAME", "LAT", "LON", "ELEV_M") := NULL]
+isd_history[, c("USAF", "WBAN", "ELEV_M") := NULL]
 
 setkey(isd_history, "STNID")
 
