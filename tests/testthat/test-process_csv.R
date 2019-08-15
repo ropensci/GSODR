@@ -31,7 +31,7 @@ test_that(
     agro_list <- .agroclimatology_list(GSOD_list,
                                        stations,
                                        years)
-    expect_length(agro_list, 7555)
+    expect_length(agro_list, 7587)
 
     RP_list <- .subset_country_list(country,
                                     country_list,
@@ -44,36 +44,34 @@ test_that(
     csv_file <- GSOD_list[[10]]
     csv_out <- .process_csv(csv_file, stations)
 
-    expect_length(csv_out, 48)
+    expect_length(csv_out, 44)
 
     expect_is(csv_out, "data.frame")
 
     expect_is(csv_out$STNID, "character")
-    expect_is(csv_out$STN_NAME, "character")
+    expect_is(csv_out$NAME, "character")
     expect_is(csv_out$CTRY, "character")
     expect_is(csv_out$STATE, "character")
-    expect_is(csv_out$LAT, "numeric")
-    expect_is(csv_out$LON, "numeric")
-    expect_is(csv_out$ELEV_M, "numeric")
-    expect_is(csv_out$BEGIN, "integer")
-    expect_is(csv_out$END, "integer")
+    expect_is(csv_out$LATITUDE, "numeric")
+    expect_is(csv_out$LONGITUDE, "numeric")
+    expect_is(csv_out$ELEVATION, "numeric")
     expect_is(csv_out$YEARMODA, "Date")
     expect_is(csv_out$YEAR, "integer")
     expect_is(csv_out$MONTH, "integer")
     expect_is(csv_out$DAY, "integer")
     expect_is(csv_out$YDAY, "integer")
     expect_is(csv_out$TEMP, "numeric")
-    expect_is(csv_out$TEMP_ATTRIBUTES, "integer")
+    expect_is(csv_out$TEMP_ATTRIBUTES, "character")
     expect_is(csv_out$DEWP, "numeric")
-    expect_is(csv_out$DEWP_ATTRIBUTES, "integer")
+    expect_is(csv_out$DEWP_ATTRIBUTES, "character")
     expect_is(csv_out$SLP, "numeric")
-    expect_is(csv_out$SLP_ATTRIBUTES, "integer")
+    expect_is(csv_out$SLP_ATTRIBUTES, "character")
     expect_is(csv_out$STP, "numeric")
-    expect_is(csv_out$STP_ATTRIBUTES, "integer")
+    expect_is(csv_out$STP_ATTRIBUTES, "character")
     expect_is(csv_out$VISIB, "numeric")
-    expect_is(csv_out$VISIB_ATTRIBUTES, "integer")
+    expect_is(csv_out$VISIB_ATTRIBUTES, "character")
     expect_is(csv_out$WDSP, "numeric")
-    expect_is(csv_out$WDSP_ATTRIBUTES, "integer")
+    expect_is(csv_out$WDSP_ATTRIBUTES, "character")
     expect_is(csv_out$MXSPD, "numeric")
     expect_is(csv_out$GUST, "numeric")
     expect_is(csv_out$MAX, "numeric")

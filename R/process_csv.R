@@ -2,7 +2,7 @@
 #' Processes GSOD data
 #'
 #' @param x A `data.table` generated from `.download_data()`
-#'
+#' @param is
 #' @return A `data.table` of well-formatted weather data
 #' @noRd
 
@@ -34,7 +34,15 @@
     "DAY" <-
     "YDAY" <-
     "RH" <-
-    NULL # nocov end
+    "I_FOG" <-
+    "I_RAIN_DRIZZLE" <-
+    "I_SNOW_ICE" <-
+    "I_HAIL" <-
+    "I_THUNDER" <-
+    "I_TORNADO_FUNNEL" <-
+    NULL
+
+  load(system.file("extdata", "isd_history.rda", package = "GSODR")) # nocov end
 
   # Import data from the website for indvidual stations or tempdir() for all ---
   DT <-
@@ -85,6 +93,7 @@
 
   # Add STNID col --------------------------------------------------------------
   DT[, STNID := gsub('^(.{6})(.*)$', '\\1-\\2', DT$STATION)]
+  setkey(DT, "STNID")
 
   # Add and convert date related columns ---------------------------------------
   DT[, YEARMODA := as.Date(DATE, format = "%Y-%m-%d")]
@@ -140,11 +149,22 @@
   # Calculate relative humidity
   DT[, RH := round(EA / ES * 100, 1)]
 
-  # Join to the station and meta data-------------------------------------------
-  DT <- isd_history[DT, on = "STNID"]
+  # Split FRSHTT into separate columns
+  DT[, I_FOG := as.integer(substr(1, 1, DT$FRSHTT))]
+  DT[, I_RAIN_DRIZZLE := as.integer(substr(2, 2, DT$FRSHTT))]
+  DT[, I_SNOW_ICE := as.integer(substr(3, 3, DT$FRSHTT))]
+  DT[, I_HAIL := as.integer(substr(4, 4, DT$FRSHTT))]
+  DT[, I_THUNDER := as.integer(substr(5, 5, DT$FRSHTT))]
+  DT[, I_TORNADO_FUNNEL := as.integer(substr(6, 6, DT$FRSHTT))]
+  DT[, FRSHTT := NULL]
 
-  DT[, c("LAT", "LON", "STN_NAME") := NULL] # drop xtra columns from isd-history
+  # Join with internal isd-history for CTRY column -----------------------------
+  DT <- isd_history[DT]
 
+  # drop extra cols
+  DT[, c("STN_NAME", "CALL", "LAT", "LON") := NULL]
+
+  # setcolorder ----------------------------------------------------------------
   setcolorder(
     DT,
     c(
@@ -183,7 +203,12 @@
       "PRCP",
       "PRCP_ATTRIBUTES",
       "SNDP",
-      "FRSHTT",
+      "I_FOG",
+      "I_RAIN_DRIZZLE",
+      "I_SNOW_ICE",
+      "I_HAIL",
+      "I_THUNDER",
+      "I_TORNADO_FUNNEL",
       "EA",
       "ES",
       "RH"
