@@ -93,11 +93,11 @@ print.GSODR.Info <- function(x, ...) {
         )
       )
 
-    main_body[, STATION := paste0(main_body$USAF, main_body$WBAN)]
+    main_body[, STNID := paste(main_body$USAF, main_body$WBAN, sep = "-")]
 
     main_body[, c(1:2) := NULL]
 
-    setcolorder(main_body, "STATION")
+    setcolorder(main_body, "STNID")
 
     header <-
       readLines(file.path(tempdir(), "inventory.txt"), n = 5)

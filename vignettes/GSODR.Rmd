@@ -245,7 +245,7 @@ Toowoomba, Queensland, Australia, which was used in an earlier example.
 ```{r Ex18, eval=TRUE}
 inventory <- get_inventory()
 
-subset(inventory, STATION %in% "95551099999")
+subset(inventory, STNID %in% "955510-99999")
 ```
 
 # Additional Climate Data Availability
