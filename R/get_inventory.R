@@ -70,6 +70,9 @@ print.GSODR.Info <- function(x, ...) {
       handle = ftp_handle
     )
 
+
+    "STNID"  <- NULL #nocov
+
     main_body <-
       fread(
         file.path(tempdir(), "inventory.txt"),

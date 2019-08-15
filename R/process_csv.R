@@ -40,7 +40,8 @@
     "I_SNOW_ICE" <-
     "I_HAIL" <-
     "I_THUNDER" <-
-    "I_TORNADO_FUNNEL" <-
+    "I_TORNADO_FUNNEL"
+    "FRSHTT" <-
     NULL # nocov end
 
   # Import data from the website for indvidual stations or tempdir() for all ---
