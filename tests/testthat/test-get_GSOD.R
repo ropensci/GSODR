@@ -198,7 +198,7 @@ test_that("unique stations are returned, tempdir() is cleaned up on exit", {
   b <- get_GSOD(years = 2010, station = "489260-99999")
   expect_false(isTRUE(
     list.files(tempdir(),
-               pattern = ".gz$",
+               pattern = ".csv$",
                full.names = TRUE)))
-  expect_equal(length(unique(b["USAF"])), 1)
+  expect_equal(length(unique(b$STNID)), 1)
 })

@@ -201,7 +201,7 @@ get_GSOD <- function(years,
   GSOD <- .apply_process_csv(file_list, isd_history)
 
   # remove any leftover files from download to prevent poluting a new run
-  file.remove(list.files(tempdir(), pattern = ".gz$", full.names = TRUE))
+  file.remove(list.files(tempdir(), pattern = ".csv$", full.names = TRUE))
 
   return(GSOD)
 }
