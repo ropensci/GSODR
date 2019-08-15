@@ -93,19 +93,6 @@ tbar
 AUS <- get_GSOD(years = 2010:2015, country = "Australia")
 
 AUS
-
-# Download agroclimatology data for 2015
-
-ag <- get_GSOD(years = 2015, agroclimatology = TRUE)
-
-ag
-
-# Download global data for 2010 to 2015
-
-global <- get_GSOD(years = 2010:2015, max_missing = 5)
-
-global
-
 }
 }
 \seealso{

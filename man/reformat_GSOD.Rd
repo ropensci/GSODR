@@ -70,7 +70,7 @@ these data by others must provide this same notification.}
 download.file(
   url =
     "https://www.ncei.noaa.gov/data/global-summary-of-the-day/access/2010/95551099999.csv",
-  destfile = file.path(tempdir(), "955510-99999-2010.op.gz"),
+  destfile = file.path(tempdir(), "95551099999.csv"),
   mode = "wb"
 )
 

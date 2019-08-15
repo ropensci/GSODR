@@ -60,7 +60,7 @@ For more information see the description of the data provided by NCEI,
 _GSODR_ provides lists of weather station locations and elevation values. Using [_dplyr_](https://CRAN.R-project.org/package=dplyr), we can find all the
 stations in Australia.
 
-```{r Ex1, eval=FALSE}
+```{r Ex1, eval=TRUE}
 library(GSODR)
 library(data.table)
 load(system.file("extdata", "country_list.rda", package = "GSODR"))
@@ -73,7 +73,7 @@ Oz <- subset(station_locations, COUNTRY_NAME == "AUSTRALIA")
 
 Oz
 
-subset(Oz, grepl("TOOWOOMBA", STN_NAME))
+subset(Oz, grepl("TOOWOOMBA", NAME))
 ```
 
 ## Download a Single Station and Year
@@ -82,7 +82,7 @@ Now that we've seen where the reporting stations are located, we can download
 weather data from the station Toowoomba, Queensland, Australia for 2010 by using
 the STNID in the `station` parameter of `get_GSOD()`.
 
-```{r Ex2, eval=FALSE}
+```{r Ex2, eval=TRUE}
 tbar <- get_GSOD(years = 2010, station = "955510-99999")
 
 tbar
@@ -98,7 +98,7 @@ stations of interest.
 There are missing stations in this query. Not all that are listed and queried
 actually have files on the server.
 
-```{r Ex3, eval=FALSE}
+```{r Ex3, eval=TRUE}
 tbar_stations <- nearest_stations(LAT = -27.5598,
                                   LON = 151.9507,
                                   distance = 50)
@@ -111,7 +111,7 @@ tbar <- get_GSOD(years = 2010, station = tbar_stations)
 If you wished to drop the stations, 949999-00170 and 949999-00183 from the
 query, you could do this.
 
-```{r Ex4, eval=FALSE}
+```{r Ex4, eval=TRUE}
 remove <- c("949999-00170", "949999-00183")
 
 tbar_stations <- tbar_stations[!tbar_stations %in% remove]
@@ -125,7 +125,7 @@ tbar <- get_GSOD(years = 2010,
 Using the first data downloaded for a single station, 955510-99999, plot the
 temperature for 2010.
 
-```{r Ex5, eval=FALSE, fig.width = 7, fig.height = 7, fig.align = "center"}
+```{r Ex5, eval=TRUE, fig.width = 7, fig.height = 7, fig.align = "center"}
 library(ggplot2)
 library(lubridate)
 library(tidyr)
@@ -159,7 +159,7 @@ as an argument for `future::plan()`, which will default to available local cores
 as workers for the run. This can greatly reduce the time necessary to process
 GSOD files.
 
-```{r Ex6, eval=FALSE}
+```{r Ex6, eval=TRUE}
 future::plan("multisession")
 global <- get_GSOD(years = 2010:2011)
 summary(global)
@@ -227,10 +227,6 @@ according to the latest data available from the NCEI.
 
 ```{r Ex17, eval=FALSE}
 update_station_list()
-
-inventory
-
-subset(inventory, STNID %in% "955510-99999")
 ```
 
 # Using get_inventory()
@@ -242,8 +238,10 @@ through to current.
 Following is an example of how to retrieve the inventory and check a station in
 Toowoomba, Queensland, Australia, which was used in an earlier example.
 
-```{r Ex18, eval=FALSE}
+```{r Ex18, eval=TRUE}
 inventory <- get_inventory()
+
+inventory
 
 subset(inventory, STNID %in% "955510-99999")
 ```
@@ -418,7 +416,7 @@ no/not reported) for the occurrence during the day;
 
 ## Appendix 2: Map of Current GSOD Station Locations
 
-```{r, eval=FALSE, message=FALSE, echo=FALSE, warning=FALSE, fig.width = 7, fig.height = 5, fig.align = "center"}
+```{r, eval=TRUE, message=FALSE, echo=FALSE, warning=FALSE, fig.width = 7, fig.height = 5, fig.align = "center"}
 if (requireNamespace("ggplot2", quietly = TRUE) &&
     requireNamespace("ggthemes", quietly = TRUE) &&
     requireNamespace("maps", quietly = TRUE) &&
