@@ -1,6 +1,6 @@
 
-context("get_GSOD")
-# Check that .process_gz works properly and returns a tibble
+context("process_csv()")
+# Check that .process_csv() works properly and returns a tibble
 test_that(
   ".download_files properly works, subsetting for country and
   agroclimatology works and .process_gz returns a tibble",
@@ -37,7 +37,7 @@ test_that(
                                     years)
     expect_length(RP_list, 54)
 
-    # Check that .process_gz returns a properly formatted tibble---
+    # Check that .process_gz returns a properly formatted data.table -----------
     csv_file <- GSOD_list[[10]]
     csv_out <- .process_csv(csv_file, stations)
 

@@ -162,7 +162,7 @@
   DT <- isd_history[DT]
 
   # drop extra cols
-  DT[, c("STN_NAME", "CALL", "LAT", "LON") := NULL]
+  DT[, c("i.NAME", "LAT", "LON") := NULL]
 
   # setcolorder ----------------------------------------------------------------
   setcolorder(
