@@ -60,7 +60,7 @@ For more information see the description of the data provided by NCEI,
 _GSODR_ provides lists of weather station locations and elevation values. Using [_dplyr_](https://CRAN.R-project.org/package=dplyr), we can find all the
 stations in Australia.
 
-```{r Ex1, eval=TRUE}
+```{r Ex1, eval=FALSE}
 library(GSODR)
 library(data.table)
 load(system.file("extdata", "country_list.rda", package = "GSODR"))
@@ -82,7 +82,7 @@ Now that we've seen where the reporting stations are located, we can download
 weather data from the station Toowoomba, Queensland, Australia for 2010 by using
 the STNID in the `station` parameter of `get_GSOD()`.
 
-```{r Ex2, eval=TRUE}
+```{r Ex2, eval=FALSE}
 tbar <- get_GSOD(years = 2010, station = "955510-99999")
 
 tbar
@@ -98,7 +98,7 @@ stations of interest.
 There are missing stations in this query. Not all that are listed and queried
 actually have files on the server.
 
-```{r Ex3, eval=TRUE}
+```{r Ex3, eval=FALSE}
 tbar_stations <- nearest_stations(LAT = -27.5598,
                                   LON = 151.9507,
                                   distance = 50)
@@ -111,7 +111,7 @@ tbar <- get_GSOD(years = 2010, station = tbar_stations)
 If you wished to drop the stations, 949999-00170 and 949999-00183 from the
 query, you could do this.
 
-```{r Ex4, eval=TRUE}
+```{r Ex4, eval=FALSE}
 remove <- c("949999-00170", "949999-00183")
 
 tbar_stations <- tbar_stations[!tbar_stations %in% remove]
@@ -125,7 +125,7 @@ tbar <- get_GSOD(years = 2010,
 Using the first data downloaded for a single station, 955510-99999, plot the
 temperature for 2010.
 
-```{r Ex5, eval=TRUE, fig.width = 7, fig.height = 7, fig.align = "center"}
+```{r Ex5, eval=FALSE, fig.width = 7, fig.height = 7, fig.align = "center"}
 library(ggplot2)
 library(lubridate)
 library(tidyr)
@@ -242,7 +242,7 @@ through to current.
 Following is an example of how to retrieve the inventory and check a station in
 Toowoomba, Queensland, Australia, which was used in an earlier example.
 
-```{r Ex18, eval=TRUE}
+```{r Ex18, eval=FALSE}
 inventory <- get_inventory()
 
 subset(inventory, STNID %in% "955510-99999")
@@ -264,18 +264,6 @@ library("GSODRdata")
 
 # Notes
 
-## Elevation Values
-
-90 metre (90m) hole-filled SRTM digital elevation (Jarvis _et al._ 2008) was
-used to identify and correct/remove elevation errors in data for station
-locations between -60˚ and 60˚ latitude. This applies to cases here where
-elevation was missing in the reported values as well. In case the station
-reported an elevation and the DEM does not, the station reported is taken. For
-stations beyond -60˚ and 60˚ latitude, the values are station reported values
-in every instance. See
-<https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md>
-for more detail on the correction methods.
-
 ## WMO Resolution 40. NOAA Policy
 
 _Users of these data should take into account the following (from the [NCEI website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):_
@@ -295,16 +283,13 @@ _GSODR_ formatted data include the following fields and units:
 
 - **CTRY** - Country in which the station is located;
 
-- **LAT** - Latitude. *Station dropped in cases where values are < -90 or > 90
+- **LATITUDE** - Latitude. *Station dropped in cases where values are < -90 or > 90
 degrees or Lat = 0 and Lon = 0*;
 
-- **LON** - Longitude. *Station dropped in cases where values are < -180 or >
+- **LONGITUDE** - Longitude. *Station dropped in cases where values are < -180 or >
 180 degrees or Lat = 0 and Lon = 0*;
 
-- **ELEV\_M** - Elevation in metres;
-
-- **ELEV\_M\_SRTM\_90m** - Elevation in metres corrected for possible errors,
-derived from the CGIAR-CSI SRTM 90m database (Jarvis et al. 2008);
+- **ELEVATION** - Elevation in metres;
 
 - **YEARMODA** - Date in YYYY-mm-dd format;
 
@@ -433,7 +418,7 @@ no/not reported) for the occurrence during the day;
 
 ## Appendix 2: Map of Current GSOD Station Locations
 
-```{r, eval=TRUE, message=FALSE, echo=FALSE, warning=FALSE, fig.width = 7, fig.height = 5, fig.align = "center"}
+```{r, eval=FALSE, message=FALSE, echo=FALSE, warning=FALSE, fig.width = 7, fig.height = 5, fig.align = "center"}
 if (requireNamespace("ggplot2", quietly = TRUE) &&
     requireNamespace("ggthemes", quietly = TRUE) &&
     requireNamespace("maps", quietly = TRUE) &&

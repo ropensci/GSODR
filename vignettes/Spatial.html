@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Adam H Sparks" />
+
+
+<title>Using Spatial R Packages with GSODR</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#header {
+text-align: center;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Using Spatial R Packages with GSODR</h1>
+<h4 class="author">Adam H Sparks</h4>
+
+
+<div id="TOC">
+<ul>
+<li><a href="#creating-spatial-files">Creating Spatial Files</a><ul>
+<li><a href="#convert-to-an-sp-spatialpointsdataframe">Convert to an <em>sp</em> SpatialPointsDataFrame</a></li>
+<li><a href="#saving-sp-objects">Saving <em>sp</em> objects</a></li>
+<li><a href="#converting-to-an-sf-object">Converting to an <em>sf</em> object</a></li>
+<li><a href="#saving-sf-objects">Saving <em>sf</em> objects</a></li>
+</ul></li>
+<li><a href="#references">References</a></li>
+</ul>
+</div>
+
+<div id="creating-spatial-files" class="section level1">
+<h1>Creating Spatial Files</h1>
+<p>Because the stations provide geospatial location information, it is possible to create a spatial file. <a href="http://www.geopackage.org">GeoPackage files</a> are a open, standards-based, platform-independent, portable, self-describing compact format for transferring geospatial information, which handle vector files much like shapefiles do, but eliminate many of the issues that shapefiles have with field names and the number of files.</p>
+<p>Converting the GSOD data to a spatial object is rather simple. In R there are two options, <em>sp</em> and <em>sf</em>. The <em>sp</em> format is older and more well established, but <em>sf</em> offers some new exciting possibilities.</p>
+<div id="convert-to-an-sp-spatialpointsdataframe" class="section level2">
+<h2>Convert to an <em>sp</em> SpatialPointsDataFrame</h2>
+<p>For this example we convert the data to a <em>sp</em> object. You might use this one to save GeoPackage or ESRI shapefiles for sharing or analysis in another GIS program.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># get GSOD data</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">library</span>(GSODR)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">library</span>(sp)</span>
+<span id="cb1-4"><a href="#cb1-4"></a>GSOD &lt;-<span class="st"> </span><span class="kw">get_GSOD</span>(<span class="dt">years =</span> <span class="dv">2015</span>, <span class="dt">country =</span> <span class="st">&quot;Australia&quot;</span>)</span>
+<span id="cb1-5"><a href="#cb1-5"></a></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="co"># convert to SpatialPointsDataFrame</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a>GSOD_sp &lt;-<span class="st"> </span>GSOD</span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="kw">coordinates</span>(GSOD_sp) &lt;-<span class="st"> </span><span class="er">~</span><span class="st"> </span>LON <span class="op">+</span><span class="st"> </span>LAT</span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="kw">proj4string</span>(GSOD_sp) &lt;-<span class="st"> </span><span class="kw">CRS</span>(<span class="st">&quot;+proj=longlat +datum=WGS84&quot;</span>)</span>
+<span id="cb1-10"><a href="#cb1-10"></a></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="kw">str</span>(GSOD_sp)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">#&gt; Formal class &#39;SpatialPointsDataFrame&#39; [package &quot;sp&quot;] with 5 slots</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="co">#&gt;   ..@ data       :Classes ‘tbl_df’, ‘tbl’ and &#39;data.frame&#39;:  186977 obs. of  46 variables:</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co">#&gt;   .. ..$ USAF            : chr [1:186977] &quot;941000&quot; &quot;941000&quot; &quot;941000&quot; &quot;941000&quot; ...</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="co">#&gt;   .. ..$ WBAN            : chr [1:186977] &quot;99999&quot; &quot;99999&quot; &quot;99999&quot; &quot;99999&quot; ...</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="co">#&gt;   .. ..$ STNID           : chr [1:186977] &quot;941000-99999&quot; &quot;941000-99999&quot; &quot;941000-99999&quot; &quot;941000-99999&quot; ...</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="co">#&gt;   .. ..$ NAME        : chr [1:186977] &quot;KALUMBURU&quot; &quot;KALUMBURU&quot; &quot;KALUMBURU&quot; &quot;KALUMBURU&quot; ...</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="co">#&gt;   .. ..$ CTRY            : chr [1:186977] &quot;AS&quot; &quot;AS&quot; &quot;AS&quot; &quot;AS&quot; ...</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="co">#&gt;   .. ..$ STATE           : chr [1:186977] NA NA NA NA ...</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="co">#&gt;   .. ..$ CALL            : chr [1:186977] NA NA NA NA ...</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="co">#&gt;   .. ..$ ELEV_M          : num [1:186977] 24 24 24 24 24 24 24 24 24 24 ...</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a><span class="co">#&gt;   .. ..$ ELEV_M_SRTM_90m : num [1:186977] 17 17 17 17 17 17 17 17 17 17 ...</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a><span class="co">#&gt;   .. ..$ </span><span class="re">BEGIN</span><span class="co">           : num [1:186977] 2e+07 2e+07 2e+07 2e+07 2e+07 ...</span></span>
+<span id="cb2-13"><a href="#cb2-13"></a><span class="co">#&gt;   .. ..$ </span><span class="re">END</span><span class="co">             : num [1:186977] 20171212 20171212 20171212 20171212 20171212 ...</span></span>
+<span id="cb2-14"><a href="#cb2-14"></a><span class="co">#&gt;   .. ..$ YEARMODA        : Date[1:186977], format: &quot;2015-01-01&quot; &quot;2015-01-02&quot; &quot;2015-01-03&quot; ...</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a><span class="co">#&gt;   .. ..$ YEAR            : chr [1:186977] &quot;2015&quot; &quot;2015&quot; &quot;2015&quot; &quot;2015&quot; ...</span></span>
+<span id="cb2-16"><a href="#cb2-16"></a><span class="co">#&gt;   .. ..$ MONTH           : chr [1:186977] &quot;01&quot; &quot;01&quot; &quot;01&quot; &quot;01&quot; ...</span></span>
+<span id="cb2-17"><a href="#cb2-17"></a><span class="co">#&gt;   .. ..$ DAY             : chr [1:186977] &quot;01&quot; &quot;02&quot; &quot;03&quot; &quot;04&quot; ...</span></span>
+<span id="cb2-18"><a href="#cb2-18"></a><span class="co">#&gt;   .. ..$ YDAY            : num [1:186977] 1 2 3 4 5 6 7 8 9 10 ...</span></span>
+<span id="cb2-19"><a href="#cb2-19"></a><span class="co">#&gt;   .. ..$ TEMP            : num [1:186977] 26.9 27.2 26.3 27.3 27.3 26.7 28.1 28.7 27.6 27.8 ...</span></span>
+<span id="cb2-20"><a href="#cb2-20"></a><span class="co">#&gt;   .. ..$ TEMP_CNT        : int [1:186977] 16 16 16 16 16 16 16 16 16 16 ...</span></span>
+<span id="cb2-21"><a href="#cb2-21"></a><span class="co">#&gt;   .. ..$ DEWP            : num [1:186977] 23.2 23.3 23.8 24.1 24.3 24 23.6 23.3 21.9 22.3 ...</span></span>
+<span id="cb2-22"><a href="#cb2-22"></a><span class="co">#&gt;   .. ..$ DEWP_CNT        : int [1:186977] 16 16 16 16 16 16 16 16 16 16 ...</span></span>
+<span id="cb2-23"><a href="#cb2-23"></a><span class="co">#&gt;   .. ..$ SLP             : num [1:186977] 1004 1003 1003 1002 1001 ...</span></span>
+<span id="cb2-24"><a href="#cb2-24"></a><span class="co">#&gt;   .. ..$ SLP_CNT         : int [1:186977] 16 16 16 16 16 16 16 16 16 16 ...</span></span>
+<span id="cb2-25"><a href="#cb2-25"></a><span class="co">#&gt;   .. ..$ STP             : num [1:186977] 1002 1000 NA 999 998 ...</span></span>
+<span id="cb2-26"><a href="#cb2-26"></a><span class="co">#&gt;   .. ..$ STP_CNT         : int [1:186977] 16 16 16 16 16 16 16 16 16 16 ...</span></span>
+<span id="cb2-27"><a href="#cb2-27"></a><span class="co">#&gt;   .. ..$ VISIB           : num [1:186977] NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span id="cb2-28"><a href="#cb2-28"></a><span class="co">#&gt;   .. ..$ VISIB_CNT       : int [1:186977] 0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span id="cb2-29"><a href="#cb2-29"></a><span class="co">#&gt;   .. ..$ WDSP            : num [1:186977] 1.7 2.2 1.7 2 2.6 3.4 4.5 5.9 4.4 2.4 ...</span></span>
+<span id="cb2-30"><a href="#cb2-30"></a><span class="co">#&gt;   .. ..$ WDSP_CNT        : int [1:186977] 16 16 16 16 16 16 16 16 16 16 ...</span></span>
+<span id="cb2-31"><a href="#cb2-31"></a><span class="co">#&gt;   .. ..$ MXSPD           : num [1:186977] 4.1 4.1 4.1 4.1 5.7 5.7 6.7 9.3 7.7 4.6 ...</span></span>
+<span id="cb2-32"><a href="#cb2-32"></a><span class="co">#&gt;   .. ..$ GUST            : num [1:186977] NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span id="cb2-33"><a href="#cb2-33"></a><span class="co">#&gt;   .. ..$ MAX             : num [1:186977] 31.5 31.3 29.2 32.1 31.4 28.6 30.2 31 32.7 32.9 ...</span></span>
+<span id="cb2-34"><a href="#cb2-34"></a><span class="co">#&gt;   .. ..$ MAX_FLAG        : chr [1:186977] NA NA NA NA ...</span></span>
+<span id="cb2-35"><a href="#cb2-35"></a><span class="co">#&gt;   .. ..$ MIN             : num [1:186977] 25 24.9 24.4 24.3 24.6 25.1 24.5 26.3 22.8 22.6 ...</span></span>
+<span id="cb2-36"><a href="#cb2-36"></a><span class="co">#&gt;   .. ..$ MIN_FLAG        : chr [1:186977] NA &quot;*&quot; &quot;*&quot; NA ...</span></span>
+<span id="cb2-37"><a href="#cb2-37"></a><span class="co">#&gt;   .. ..$ PRCP            : num [1:186977] 16.5 12.4 5.1 20.3 41.1 20.1 82.3 2.3 6.1 27.4 ...</span></span>
+<span id="cb2-38"><a href="#cb2-38"></a><span class="co">#&gt;   .. ..$ PRCP_FLAG       : chr [1:186977] &quot;G&quot; &quot;G&quot; &quot;G&quot; &quot;G&quot; ...</span></span>
+<span id="cb2-39"><a href="#cb2-39"></a><span class="co">#&gt;   .. ..$ SNDP            : num [1:186977] NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span id="cb2-40"><a href="#cb2-40"></a><span class="co">#&gt;   .. ..$ I_FOG           : int [1:186977] 0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span id="cb2-41"><a href="#cb2-41"></a><span class="co">#&gt;   .. ..$ I_RAIN_DRIZZLE  : int [1:186977] 1 1 1 1 1 1 1 1 1 0 ...</span></span>
+<span id="cb2-42"><a href="#cb2-42"></a><span class="co">#&gt;   .. ..$ I_SNOW_ICE      : int [1:186977] 0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span id="cb2-43"><a href="#cb2-43"></a><span class="co">#&gt;   .. ..$ I_HAIL          : int [1:186977] 0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span id="cb2-44"><a href="#cb2-44"></a><span class="co">#&gt;   .. ..$ I_THUNDER       : int [1:186977] 0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span id="cb2-45"><a href="#cb2-45"></a><span class="co">#&gt;   .. ..$ I_TORNADO_FUNNEL: int [1:186977] 0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span id="cb2-46"><a href="#cb2-46"></a><span class="co">#&gt;   .. ..$ EA              : num [1:186977] 2.8 2.9 2.9 3 3 3 2.9 2.9 2.6 2.7 ...</span></span>
+<span id="cb2-47"><a href="#cb2-47"></a><span class="co">#&gt;   .. ..$ ES              : num [1:186977] 3.5 3.6 3.4 3.6 3.6 3.5 3.8 3.9 3.7 3.7 ...</span></span>
+<span id="cb2-48"><a href="#cb2-48"></a><span class="co">#&gt;   .. ..$ RH              : num [1:186977] 80 80.6 85.3 83.3 83.3 85.7 76.3 74.4 70.3 73 ...</span></span>
+<span id="cb2-49"><a href="#cb2-49"></a><span class="co">#&gt;   ..@ coords.nrs : int [1:2] 9 8</span></span>
+<span id="cb2-50"><a href="#cb2-50"></a><span class="co">#&gt;   ..@ coords     : num [1:186977, 1:2] 127 127 127 127 127 ...</span></span>
+<span id="cb2-51"><a href="#cb2-51"></a><span class="co">#&gt;   .. ..- attr(*, &quot;dimnames&quot;)=List of 2</span></span>
+<span id="cb2-52"><a href="#cb2-52"></a><span class="co">#&gt;   .. .. ..$ : chr [1:186977] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; ...</span></span>
+<span id="cb2-53"><a href="#cb2-53"></a><span class="co">#&gt;   .. .. ..$ : chr [1:2] &quot;LON&quot; &quot;LAT&quot;</span></span>
+<span id="cb2-54"><a href="#cb2-54"></a><span class="co">#&gt;   ..@ bbox       : num [1:2, 1:2] 73.7 -54.5 159.1 -10.1</span></span>
+<span id="cb2-55"><a href="#cb2-55"></a><span class="co">#&gt;   .. ..- attr(*, &quot;dimnames&quot;)=List of 2</span></span>
+<span id="cb2-56"><a href="#cb2-56"></a><span class="co">#&gt;   .. .. ..$ : chr [1:2] &quot;LON&quot; &quot;LAT&quot;</span></span>
+<span id="cb2-57"><a href="#cb2-57"></a><span class="co">#&gt;   .. .. ..$ : chr [1:2] &quot;min&quot; &quot;max&quot;</span></span>
+<span id="cb2-58"><a href="#cb2-58"></a><span class="co">#&gt;   ..@ proj4string:Formal class &#39;CRS&#39; [package &quot;sp&quot;] with 1 slot</span></span>
+<span id="cb2-59"><a href="#cb2-59"></a><span class="co">#&gt;   .. .. ..@ projargs: chr &quot;+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0&quot;</span></span></code></pre></div>
+</div>
+<div id="saving-sp-objects" class="section level2">
+<h2>Saving <em>sp</em> objects</h2>
+<p>Using <code>writeOGR()</code> it is simple to save as a GeoPackage file.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">library</span>(rgdal)</span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="kw">writeOGR</span>(GSOD_sp,</span>
+<span id="cb3-4"><a href="#cb3-4"></a>         <span class="dt">dsn =</span> <span class="kw">path.expand</span>(<span class="st">&quot;~/&quot;</span>),</span>
+<span id="cb3-5"><a href="#cb3-5"></a>         <span class="dt">layer =</span> <span class="st">&quot;GSOD&quot;</span>,</span>
+<span id="cb3-6"><a href="#cb3-6"></a>         <span class="dt">driver =</span> <span class="st">&quot;GPKG&quot;</span>)</span></code></pre></div>
+<p>Using <code>writeOGR()</code> it is simple to save as an ESRI shapefile.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">writeOGR</span>(GSOD_sp,</span>
+<span id="cb4-2"><a href="#cb4-2"></a>         <span class="dt">dsn =</span> <span class="kw">path.expand</span>(<span class="st">&quot;~/&quot;</span>),</span>
+<span id="cb4-3"><a href="#cb4-3"></a>         <span class="dt">layer =</span> <span class="st">&quot;GSOD&quot;</span>,</span>
+<span id="cb4-4"><a href="#cb4-4"></a>         <span class="dt">driver =</span> <span class="st">&quot;ESRI Shapefile&quot;</span>)</span></code></pre></div>
+</div>
+<div id="converting-to-an-sf-object" class="section level2">
+<h2>Converting to an <em>sf</em> object</h2>
+<p>Simple features are an ISO defined standard that now have support in R. From the <a href="https://r-spatial.github.io/sf/articles/sf1.html"><em>sf</em> vignette</a>:</p>
+<blockquote>
+<p>Simple features or simple feature access refers to a formal standard (ISO 19125-1:2004) that describes how objects in the real world can be represented in computers, with emphasis on the spatial geometry of these objects. It also describes how such objects can be stored in and retrieved from databases, and which geometrical operations should be defined for them. The standard is widely implemented in spatial databases (such as PostGIS), commercial GIS (e.g., ESRI ArcGIS) and forms the vector data basis for libraries such as GDAL. A subset of simple features forms the GeoJSON standard.</p>
+</blockquote>
+<p>For this example, we convert the GSOD data to an <em>sf</em> object.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">library</span>(sf)</span>
+<span id="cb5-2"><a href="#cb5-2"></a>GSOD_SF &lt;-<span class="st"> </span><span class="kw">st_as_sf</span>(<span class="dt">x =</span> GSOD,</span>
+<span id="cb5-3"><a href="#cb5-3"></a>                    <span class="dt">coords =</span> <span class="kw">c</span>(<span class="st">&quot;LON&quot;</span>, <span class="st">&quot;LAT&quot;</span>),</span>
+<span id="cb5-4"><a href="#cb5-4"></a>                    <span class="dt">crs =</span> <span class="st">&quot;+proj=longlat +datum=WGS84&quot;</span>)</span>
+<span id="cb5-5"><a href="#cb5-5"></a></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="kw">str</span>(GSOD_SF)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">#&gt; Classes ‘sf’ and &#39;data.frame&#39;:   186977 obs. of  47 variables:</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="co">#&gt;  $ USAF            : chr  &quot;941000&quot; &quot;941000&quot; &quot;941000&quot; &quot;941000&quot; ...</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="co">#&gt;  $ WBAN            : chr  &quot;99999&quot; &quot;99999&quot; &quot;99999&quot; &quot;99999&quot; ...</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="co">#&gt;  $ STNID           : chr  &quot;941000-99999&quot; &quot;941000-99999&quot; &quot;941000-99999&quot; &quot;941000-99999&quot; ...</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="co">#&gt;  $ NAME        : chr  &quot;KALUMBURU&quot; &quot;KALUMBURU&quot; &quot;KALUMBURU&quot; &quot;KALUMBURU&quot; ...</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="co">#&gt;  $ CTRY            : chr  &quot;AS&quot; &quot;AS&quot; &quot;AS&quot; &quot;AS&quot; ...</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="co">#&gt;  $ STATE           : chr  NA NA NA NA ...</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="co">#&gt;  $ CALL            : chr  NA NA NA NA ...</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="co">#&gt;  $ ELEV_M          : num  24 24 24 24 24 24 24 24 24 24 ...</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="co">#&gt;  $ ELEV_M_SRTM_90m : num  17 17 17 17 17 17 17 17 17 17 ...</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="co">#&gt;  $ </span><span class="re">BEGIN</span><span class="co">           : num  2e+07 2e+07 2e+07 2e+07 2e+07 ...</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a><span class="co">#&gt;  $ </span><span class="re">END</span><span class="co">             : num  20171212 20171212 20171212 20171212 20171212 ...</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a><span class="co">#&gt;  $ YEARMODA        : Date, format: &quot;2015-01-01&quot; &quot;2015-01-02&quot; ...</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a><span class="co">#&gt;  $ YEAR            : chr  &quot;2015&quot; &quot;2015&quot; &quot;2015&quot; &quot;2015&quot; ...</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a><span class="co">#&gt;  $ MONTH           : chr  &quot;01&quot; &quot;01&quot; &quot;01&quot; &quot;01&quot; ...</span></span>
+<span id="cb6-16"><a href="#cb6-16"></a><span class="co">#&gt;  $ DAY             : chr  &quot;01&quot; &quot;02&quot; &quot;03&quot; &quot;04&quot; ...</span></span>
+<span id="cb6-17"><a href="#cb6-17"></a><span class="co">#&gt;  $ YDAY            : num  1 2 3 4 5 6 7 8 9 10 ...</span></span>
+<span id="cb6-18"><a href="#cb6-18"></a><span class="co">#&gt;  $ TEMP            : num  26.9 27.2 26.3 27.3 27.3 26.7 28.1 28.7 27.6 27.8 ...</span></span>
+<span id="cb6-19"><a href="#cb6-19"></a><span class="co">#&gt;  $ TEMP_CNT        : int  16 16 16 16 16 16 16 16 16 16 ...</span></span>
+<span id="cb6-20"><a href="#cb6-20"></a><span class="co">#&gt;  $ DEWP            : num  23.2 23.3 23.8 24.1 24.3 24 23.6 23.3 21.9 22.3 ...</span></span>
+<span id="cb6-21"><a href="#cb6-21"></a><span class="co">#&gt;  $ DEWP_CNT        : int  16 16 16 16 16 16 16 16 16 16 ...</span></span>
+<span id="cb6-22"><a href="#cb6-22"></a><span class="co">#&gt;  $ SLP             : num  1004 1003 1003 1002 1001 ...</span></span>
+<span id="cb6-23"><a href="#cb6-23"></a><span class="co">#&gt;  $ SLP_CNT         : int  16 16 16 16 16 16 16 16 16 16 ...</span></span>
+<span id="cb6-24"><a href="#cb6-24"></a><span class="co">#&gt;  $ STP             : num  1002 1000 NA 999 998 ...</span></span>
+<span id="cb6-25"><a href="#cb6-25"></a><span class="co">#&gt;  $ STP_CNT         : int  16 16 16 16 16 16 16 16 16 16 ...</span></span>
+<span id="cb6-26"><a href="#cb6-26"></a><span class="co">#&gt;  $ VISIB           : num  NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span id="cb6-27"><a href="#cb6-27"></a><span class="co">#&gt;  $ VISIB_CNT       : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span id="cb6-28"><a href="#cb6-28"></a><span class="co">#&gt;  $ WDSP            : num  1.7 2.2 1.7 2 2.6 3.4 4.5 5.9 4.4 2.4 ...</span></span>
+<span id="cb6-29"><a href="#cb6-29"></a><span class="co">#&gt;  $ WDSP_CNT        : int  16 16 16 16 16 16 16 16 16 16 ...</span></span>
+<span id="cb6-30"><a href="#cb6-30"></a><span class="co">#&gt;  $ MXSPD           : num  4.1 4.1 4.1 4.1 5.7 5.7 6.7 9.3 7.7 4.6 ...</span></span>
+<span id="cb6-31"><a href="#cb6-31"></a><span class="co">#&gt;  $ GUST            : num  NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span id="cb6-32"><a href="#cb6-32"></a><span class="co">#&gt;  $ MAX             : num  31.5 31.3 29.2 32.1 31.4 28.6 30.2 31 32.7 32.9 ...</span></span>
+<span id="cb6-33"><a href="#cb6-33"></a><span class="co">#&gt;  $ MAX_FLAG        : chr  NA NA NA NA ...</span></span>
+<span id="cb6-34"><a href="#cb6-34"></a><span class="co">#&gt;  $ MIN             : num  25 24.9 24.4 24.3 24.6 25.1 24.5 26.3 22.8 22.6 ...</span></span>
+<span id="cb6-35"><a href="#cb6-35"></a><span class="co">#&gt;  $ MIN_FLAG        : chr  NA &quot;*&quot; &quot;*&quot; NA ...</span></span>
+<span id="cb6-36"><a href="#cb6-36"></a><span class="co">#&gt;  $ PRCP            : num  16.5 12.4 5.1 20.3 41.1 20.1 82.3 2.3 6.1 27.4 ...</span></span>
+<span id="cb6-37"><a href="#cb6-37"></a><span class="co">#&gt;  $ PRCP_FLAG       : chr  &quot;G&quot; &quot;G&quot; &quot;G&quot; &quot;G&quot; ...</span></span>
+<span id="cb6-38"><a href="#cb6-38"></a><span class="co">#&gt;  $ SNDP            : num  NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span id="cb6-39"><a href="#cb6-39"></a><span class="co">#&gt;  $ I_FOG           : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span id="cb6-40"><a href="#cb6-40"></a><span class="co">#&gt;  $ I_RAIN_DRIZZLE  : int  1 1 1 1 1 1 1 1 1 0 ...</span></span>
+<span id="cb6-41"><a href="#cb6-41"></a><span class="co">#&gt;  $ I_SNOW_ICE      : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span id="cb6-42"><a href="#cb6-42"></a><span class="co">#&gt;  $ I_HAIL          : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span id="cb6-43"><a href="#cb6-43"></a><span class="co">#&gt;  $ I_THUNDER       : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span id="cb6-44"><a href="#cb6-44"></a><span class="co">#&gt;  $ I_TORNADO_FUNNEL: int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span id="cb6-45"><a href="#cb6-45"></a><span class="co">#&gt;  $ EA              : num  2.8 2.9 2.9 3 3 3 2.9 2.9 2.6 2.7 ...</span></span>
+<span id="cb6-46"><a href="#cb6-46"></a><span class="co">#&gt;  $ ES              : num  3.5 3.6 3.4 3.6 3.6 3.5 3.8 3.9 3.7 3.7 ...</span></span>
+<span id="cb6-47"><a href="#cb6-47"></a><span class="co">#&gt;  $ RH              : num  80 80.6 85.3 83.3 83.3 85.7 76.3 74.4 70.3 73 ...</span></span>
+<span id="cb6-48"><a href="#cb6-48"></a><span class="co">#&gt;  $ geometry        :sfc_POINT of length 186977; first list element: Classes &#39;XY&#39;, &#39;POINT&#39;, &#39;sfg&#39;  num [1:2] 126.6 -14.3</span></span>
+<span id="cb6-49"><a href="#cb6-49"></a><span class="co">#&gt;  - attr(*, &quot;sf_column&quot;)= chr &quot;geometry&quot;</span></span>
+<span id="cb6-50"><a href="#cb6-50"></a><span class="co">#&gt;  - attr(*, &quot;agr&quot;)= Factor w/ 3 levels &quot;constant&quot;,&quot;aggregate&quot;,..: NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span id="cb6-51"><a href="#cb6-51"></a><span class="co">#&gt;   ..- attr(*, &quot;names&quot;)= chr  &quot;USAF&quot; &quot;WBAN&quot; &quot;STNID&quot; &quot;NAME&quot; ...</span></span></code></pre></div>
+</div>
+<div id="saving-sf-objects" class="section level2">
+<h2>Saving <em>sf</em> objects</h2>
+<p>Writing a shapefile is a simple matter.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">write_sf</span>(GSOD_SF, <span class="st">&quot;GSOD.shp&quot;</span>) <span class="co"># silently overwrites</span></span></code></pre></div>
+<p>As is writing a GeoPackage from the <em>sf</em> object.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">write_sf</span>(GSOD_SF, <span class="st">&quot;~/GSOD.gpkg&quot;</span>) <span class="co"># silently overwrites</span></span></code></pre></div>
+<p>After getting weather stations for Australia and creating a GeoPackage file, <em>rgdal</em> can import the data into R again in a spatial format.</p>
+<p>Importing a GeoPackage file can be a bit tricky. The dsn will be the full path along with the file name. The layer to be specified is “GSOD”, this is specified in the <code>get_GSOD()</code> function and will not change. The file name, specified in the dsn will, but the layer name will not.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">library</span>(rgdal)</span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="co">#&gt; Loading required package: sp</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="co">#&gt; rgdal: version: 1.1-10, (SVN revision 622)</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="co">#&gt;  Geospatial Data Abstraction Library extensions to R successfully loaded</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="co">#&gt;  Loaded GDAL runtime: GDAL 1.11.5, released 2016/07/01</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="co">#&gt;  Path to GDAL shared files: /usr/local/Cellar/gdal/1.11.5_1/share/gdal</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="co">#&gt;  Loaded PROJ.4 runtime: Rel. 4.9.3, 15 August 2016, [PJ_VERSION: 493]</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="co">#&gt;  Path to PROJ.4 shared files: (autodetected)</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a><span class="co">#&gt;  Linking to sp version: 1.2-3</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a></span>
+<span id="cb9-11"><a href="#cb9-11"></a>AUS_stations &lt;-<span class="st"> </span><span class="kw">readOGR</span>(<span class="dt">dsn =</span> <span class="kw">path.expand</span>(<span class="st">&quot;~/GSOD.gpkg&quot;</span>), <span class="dt">layer =</span> <span class="st">&quot;GSOD&quot;</span>)</span>
+<span id="cb9-12"><a href="#cb9-12"></a><span class="co">#&gt; OGR data source with driver: GPKG</span></span>
+<span id="cb9-13"><a href="#cb9-13"></a><span class="co">#&gt; Source: &quot;/Users/asparks/AUS-2015.gpkg&quot;, layer: &quot;GSOD&quot;</span></span>
+<span id="cb9-14"><a href="#cb9-14"></a><span class="co">#&gt; with 186977 features</span></span>
+<span id="cb9-15"><a href="#cb9-15"></a><span class="co">#&gt; It has 46 fields</span></span>
+<span id="cb9-16"><a href="#cb9-16"></a></span>
+<span id="cb9-17"><a href="#cb9-17"></a><span class="kw">class</span>(AUS_stations)</span>
+<span id="cb9-18"><a href="#cb9-18"></a><span class="co">#&gt; [1] &quot;SpatialPointsDataFrame&quot;</span></span>
+<span id="cb9-19"><a href="#cb9-19"></a><span class="co">#&gt; attr(,&quot;package&quot;)</span></span>
+<span id="cb9-20"><a href="#cb9-20"></a><span class="co">#&gt; [1] &quot;sp&quot;</span></span></code></pre></div>
+<p>Since GeoPackage files are formatted as SQLite databases you can use the existing R tools for SQLite files <a href="https://jsta.github.io/2016/07/14/geopackage-r.html">(J. Stachelek 2016)</a>. One easy way is using <em>dplyr</em>. This option is much faster to load since it does not load the geometry.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>AUS_sqlite &lt;-<span class="st"> </span><span class="kw">tbl</span>(<span class="kw">src_sqlite</span>(<span class="kw">path.expand</span>(<span class="st">&quot;~/GSOD.gpkg&quot;</span>)), <span class="st">&quot;GSOD&quot;</span>)</span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="kw">class</span>(AUS_sqlite)</span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="co">#&gt; [1] &quot;tbl_dbi&quot;  &quot;tbl_sql&quot;  &quot;tbl_lazy&quot; &quot;tbl&quot;</span></span></code></pre></div>
+</div>
+</div>
+<div id="references" class="section level1">
+<h1>References</h1>
+<p>Stachelek, J. (2016) Using the Geopackage Format with R. URL: <a href="https://jsta.github.io/2016/07/14/geopackage-r.html" class="uri">https://jsta.github.io/2016/07/14/geopackage-r.html</a></p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

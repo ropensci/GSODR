@@ -55,7 +55,6 @@ test_that(
     expect_is(csv_out$LAT, "numeric")
     expect_is(csv_out$LON, "numeric")
     expect_is(csv_out$ELEV_M, "numeric")
-    expect_is(csv_out$ELEV_M_SRTM_90m, "numeric")
     expect_is(csv_out$BEGIN, "integer")
     expect_is(csv_out$END, "integer")
     expect_is(csv_out$YEARMODA, "Date")

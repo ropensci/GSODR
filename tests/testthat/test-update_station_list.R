@@ -35,8 +35,7 @@ test_that("update_station_list() downloads and imports proper file", {
       "ELEV_M",
       "BEGIN",
       "END",
-      "STNID",
-      "ELEV_M_SRTM_90m"
+      "STNID"
     )
   )
   expect_equal(options("timeout")[[1]], 60)

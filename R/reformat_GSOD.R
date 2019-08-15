@@ -8,12 +8,7 @@
 #' download page. Three new elements; saturation vapour pressure (es), actual
 #' vapour pressure (ea) and relative humidity are calculated and returned in the
 #' final data.  All units are converted to International System of Units (SI),
-#' \emph{e.g.}, Fahrenheit to Celsius and inches to millimetres.  Alternative
-#' elevation measurements are supplied for missing values or values found to be
-#' questionable based on the Consultative Group for International Agricultural
-#' Research's Consortium for Spatial Information group's (\acronym{CGIAR-CSI})
-#' Shuttle Radar Topography Mission 90 metre (\acronym{SRTM} 90m) digital
-#' elevation data based on \acronym{NASA}'s original \acronym{SRTM} 90m data.
+#' \emph{e.g.}, Fahrenheit to Celsius and inches to millimetres.
 #'
 #' Parallel processing can be enabled using \code{\link[future]{plan}} to set
 #' up a parallel backend of your choice, \emph{e.g.},
@@ -78,10 +73,6 @@
 #' }
 #'
 #' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
-#'
-#' @references {Jarvis, A., Reuter, H.I, Nelson, A., Guevara, E. (2008)
-#' Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
-#' 90m Database \url{http://srtm.csi.cgiar.org}}
 #'
 #' @return A data frame as a \code{\link[data.table]{data.table}} object of
 #' \acronym{GSOD} data.

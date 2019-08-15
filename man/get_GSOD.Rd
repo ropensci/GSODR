@@ -49,22 +49,8 @@ up a parallel backend of your choice, \emph{e.g.},
 \code{future::plan("multisession")}. See examples for more.
 }
 \details{
-Stations reporting a latitude of < -90 or > 90 or longitude of < -180 or >
-180 are removed. Stations may be individually checked for number of
-missing days to assure data quality and omitting stations with too many
-missing observations.
-
 All units are converted to International System of Units (SI), \emph{e.g.},
 Fahrenheit to Celsius and inches to millimetres.
-
-Alternative elevation measurements are supplied for missing values or values
-found to be questionable based on the Consultative Group for International
-Agricultural Research's Consortium for Spatial Information group's
-(\acronym{CGIAR-CSI}) Shuttle Radar Topography Mission 90 metre
-(\acronym{SRTM} 90m) digital elevation data based on \acronym{NASA}'s
-original \acronym{SRTM} 90m data. Further information on these data and
-methods can be found on \pkg{GSODR}'s
-\href{https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md}{GitHub repository}.
 
 Data summarise each year by station, which include vapour pressure and
 relative humidity elements calculated from existing data in \acronym{GSOD}.
@@ -124,14 +110,9 @@ global
 
 }
 }
-\references{
-{Jarvis, A., Reuter, H. I, Nelson, A., Guevara, E. (2008)
-Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
-90m Database \url{http://srtm.csi.cgiar.org}}
-}
 \seealso{
 \code{\link{reformat_GSOD}}
 }
 \author{
-Adam H Sparks, \email{adamhsparks@gmail.com}
+Adam H. Sparks, \email{adamhsparks@gmail.com}
 }
