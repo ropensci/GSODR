@@ -79,16 +79,14 @@
 #'
 #' AUS
 #'
-#' # Download agroclimatology data for 2015 using parallel processing
-#' future::plan("multisession")
+#' # Download agroclimatology data for 2015
+#'
 #' ag <- get_GSOD(years = 2015, agroclimatology = TRUE)
 #'
 #' ag
 #'
-#' # Download global data for 2010 to 2015 with a maximum allowed 5 missing days
-#' # of data using parallel processing
+#' # Download global data for 2010 to 2015
 #'
-#' future::plan("multisession")
 #' global <- get_GSOD(years = 2010:2015, max_missing = 5)
 #'
 #' global
