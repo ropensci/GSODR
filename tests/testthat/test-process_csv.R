@@ -15,9 +15,6 @@ test_that(
     agroclimatology <- TRUE
     country <- "RP"
     station <- NULL
-    cache_dir <- tempdir()
-    ftp_base <-
-      "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/%s/"
 
     load(system.file("extdata", "isd_history.rda", package = "GSODR"))
     stations <- isd_history
@@ -31,7 +28,7 @@ test_that(
     agro_list <- .agroclimatology_list(GSOD_list,
                                        stations,
                                        years)
-    expect_length(agro_list, 7587)
+    expect_length(agro_list, 7523)
 
     RP_list <- .subset_country_list(country,
                                     country_list,

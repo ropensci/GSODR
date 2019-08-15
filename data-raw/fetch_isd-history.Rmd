@@ -39,37 +39,18 @@ if (!require("data.table")) {
 
 ```{r download_NE_data, echo=TRUE, message=FALSE, warning=FALSE}
 # download data
-isd_history <- read_csv(
-  "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
-  col_types = "ccccccdddii",
-  col_names = c(
-    "USAF",
-    "WBAN",
-    "STN_NAME",
-    "CTRY",
-    "STATE",
-    "CALL",
-    "LAT",
-    "LON",
-    "ELEV_M",
-    "BEGIN",
-    "END"
-  ),
-  skip = 1
-)
+isd_history <- fread("ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv")
 ```
 
 ## Add/drop columns and save to disk
 
 ```{r clean_and_reformat, echo=TRUE, cache=FALSE}
 # add STNID column
-setDT(isd_history)
 isd_history[, STNID := paste(USAF, WBAN, sep = "-")]
-
-# clean data
-isd_history[, c("USAF", "WBAN", "ELEV_M") := NULL]
-
 setkey(isd_history, "STNID")
+
+# remove extra columns
+isd_history[, c("USAF", "WBAN", "ELEV_M") := NULL]
 
 # write rda file to disk for use with GSODR package
 save(isd_history,
