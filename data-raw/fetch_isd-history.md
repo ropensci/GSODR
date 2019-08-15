@@ -45,11 +45,39 @@ setnames(isd_history, "STATION NAME", "NAME")
 setkey(isd_history, "STNID")
 
 # remove extra columns
-isd_history[, c("USAF", "WBAN", "ELEV_M") := NULL]
+isd_history[, c("USAF", "WBAN", "ICAO", "ELEV(M)") := NULL]
 ```
 
-    ## Warning in `[.data.table`(isd_history, , `:=`(c("USAF", "WBAN",
-    ## "ELEV_M"), : Column 'ELEV_M' does not exist to remove
+## View and save the data
+
+``` r
+isd_history
+```
+
+    ##               STNID                                              NAME CTRY
+    ##     1: 007018-99999                                        WXPOD 7018     
+    ##     2: 007026-99999                                        WXPOD 7026   AF
+    ##     3: 007070-99999                                        WXPOD 7070   AF
+    ##     4: 008260-99999                                         WXPOD8270     
+    ##     5: 008268-99999                                         WXPOD8278   AF
+    ##    ---                                                                    
+    ## 29724:   A07355-241                         VIROQUA MUNICIPAL AIRPORT   US
+    ## 29725:   A07357-182 ELBOW LAKE MUNICIPAL PRIDE OF THE PRAIRIE AIRPORT   US
+    ## 29726:   A07359-240                              IONIA COUNTY AIRPORT   US
+    ## 29727:   A51255-445                       DEMOPOLIS MUNICIPAL AIRPORT   US
+    ## 29728:   A51256-451      BRANSON WEST MUNICIPAL EMERSON FIELD AIRPORT   US
+    ##        STATE    LAT     LON    BEGIN      END
+    ##     1:        0.000   0.000 20110309 20130730
+    ##     2:        0.000   0.000 20120713 20170822
+    ##     3:        0.000   0.000 20140923 20150926
+    ##     4:        0.000   0.000 20050101 20100731
+    ##     5:       32.950  65.567 20100519 20120323
+    ##    ---                                       
+    ## 29724:    WI 43.579 -90.913 20140731 20190811
+    ## 29725:    MN 45.986 -95.992 20140731 20190811
+    ## 29726:    MI 42.938 -85.061 20140731 20190811
+    ## 29727:    AL 32.464 -87.954 20140731 20190812
+    ## 29728:    MO 36.699 -93.402 20140731 20190811
 
 ``` r
 # write rda file to disk for use with GSODR package

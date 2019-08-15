@@ -59,7 +59,7 @@ update_station_list <- function() {
   setkey(isd_history, "STNID")
 
   # remove extra columns
-  isd_history[, c("USAF", "WBAN", "ELEV_M") := NULL]
+  isd_history[, c("USAF", "WBAN", "ICAO", "ELEV(M)") := NULL]
 
   # write rda file to disk for use with GSODR package
   fname <-

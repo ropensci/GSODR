@@ -48,7 +48,13 @@ setnames(isd_history, "STATION NAME", "NAME")
 setkey(isd_history, "STNID")
 
 # remove extra columns
-isd_history[, c("USAF", "WBAN", "ELEV_M") := NULL]
+isd_history[, c("USAF", "WBAN", "ICAO", "ELEV(M)") := NULL]
+```
+
+## View and save the data
+
+```{r view-and-save}
+isd_history
 
 # write rda file to disk for use with GSODR package
 save(isd_history,
