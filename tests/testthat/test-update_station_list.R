@@ -24,9 +24,7 @@ test_that("update_station_list() downloads and imports proper file", {
   expect_named(
     isd_history,
     c(
-      "USAF",
-      "WBAN",
-      "STN_NAME",
+      "NAME",
       "CTRY",
       "STATE",
       "CALL",

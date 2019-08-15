@@ -53,15 +53,12 @@ update_station_list <- function() {
   new_isd_history <- fread(
     "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
     col.names = c(
-      "USAF",
-      "WBAN",
       "STN_NAME",
       "CTRY",
       "STATE",
       "CALL",
       "LAT",
       "LON",
-      "ELEV_M",
       "BEGIN",
       "END"
     ),
@@ -105,15 +102,12 @@ update_station_list <- function() {
   # left join the old and new data
   isd_history <- old_isd_history[new_isd_history,
                                  on = c(
-                                   "USAF" = "USAF",
-                                   "WBAN" = "WBAN",
-                                   "STN_NAME" = "STN_NAME",
+                                   "NAME" = "STN_NAME",
                                    "CTRY" = "CTRY",
                                    "STATE" = "STATE",
                                    "CALL" = "CALL",
                                    "LAT" = "LAT",
                                    "LON" = "LON",
-                                   "ELEV_M" = "ELEV_M",
                                    "BEGIN" = "BEGIN",
                                    "END" = "END",
                                    "STNID" = "STNID"
