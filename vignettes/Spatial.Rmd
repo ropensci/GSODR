@@ -11,7 +11,7 @@ vignette: >
 ---
 
 ```{r check_packages, echo=FALSE, messages=FALSE, warning=FALSE}
-required <- c("ggplot2", "tidyr")
+required <- c("ggplot2", "tidyr", "raster", "rgdal", "sf", "dplyr")
 
 if (!all(unlist(lapply(required, function(pkg) requireNamespace(pkg, quietly = TRUE)))))
 knitr::opts_chunk$set(eval = FALSE, collapse = TRUE, comment = "#>", fig.width = 7, fig.height = 7, fig.align = "center")
