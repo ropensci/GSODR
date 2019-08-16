@@ -14,24 +14,19 @@ _GSODR_: Global Surface Summary of the Day (GSOD) Weather Data Client for R <img
 
 The GSOD or
 [Global Surface Summary of the Day (GSOD)](https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod)
-data provided by the US National Centers for Environmental Information
-(NCEI) are a valuable source of weather data with global coverage.
-However, the data files are cumbersome and difficult to work with.
-_GSODR_ aims to make it easy to find, transfer and format the data you
-need for use in analysis and provides five main functions for
-facilitating this:
+data provided by the US National Centers for Environmental Information (NCEI)
+are a valuable source of weather data with global coverage. 
+_GSODR_ aims to make it easy to find, transfer and format the data you need for
+use in analysis and provides five main functions for facilitating this:
 
 - `get_GSOD()` - this function queries and transfers files from the NCEI's
-FTP server, reformats them and returns a tidy data frame in R. **NOTE** If you 
-have used file exporting capabilities in versions prior to 1.2.0, these have
-been removed now in the latest version. This means less dependencies when
-installing. Examples of how to export the data are found in the GSODR vignette.
+FTP server, reformats them and returns a data frame in R.
 
 - `reformat_GSOD()` - this function takes individual station files from the
 local disk and re-formats them returning a tidy data frame in R
 
 - `nearest_stations()` - this function returns a vector of station IDs that fall
-within the given radius (kilometres) of a point given as latitude and longitude
+within the given radius (kilometres) of a point given as latitude and longitude.
 
 - `update_station_list()` - this function downloads the latest station list from
 the NCEI's FTP server updates the package's internal database of stations and
@@ -136,20 +131,6 @@ it as a clean data frame.
 
 ## Notes
 
-### Other Data Sources
-
-#### Elevation Values
-
-90&nbsp;m hole-filled SRTM digital elevation (Jarvis _et al._ 2008) was used
-to identify and correct/remove elevation errors in data for station
-locations between -60˚ and 60˚ latitude. This applies to cases here
-where elevation was missing in the reported values as well. In case the
-station reported an elevation and the DEM does not, the station reported
-is taken. For stations beyond -60˚ and 60˚ latitude, the values are
-station reported values in every instance. See
-<https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md>
-for more detail on the correction methods.
-
 ### WMO Resolution 40. NOAA Policy
 
 _Users of these data should take into account the following (from the [NCEI website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):_
@@ -176,11 +157,5 @@ _Users of these data should take into account the following (from the [NCEI webs
 - Please note that the _GSODR_ project is released with a
 [Contributor Code of Conduct](CONDUCT.md). By participating in the _GSODR_
 project you agree to abide by its terms.
-
-## References
-
-Jarvis, A., Reuter, H. I., Nelson, A., Guevara, E. (2008) Hole-filled
-SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m
-Database (<http://srtm.csi.cgiar.org>)
 
 [![ropensci](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org)
