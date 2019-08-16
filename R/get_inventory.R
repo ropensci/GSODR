@@ -26,9 +26,18 @@
 #' @export get_inventory
 
 get_inventory <- function() {
-  load(system.file("extdata", "isd_history.rda", package = "GSODR")) #nocov
+  load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 
-  main_body <- .read_inventory()
+  ftp_handle <-
+    curl::new_handle(
+      ftp_use_epsv = FALSE,
+      crlf = TRUE,
+      ssl_verifypeer = FALSE,
+      ftp_response_timeout = 30,
+      ftp_skip_pasv_ip = TRUE
+    )
+
+  main_body <- .read_inventory(ftp_handle)
 
   return(main_body)
   unlink(file.path(tempdir(), "inventory.txt"))
@@ -47,17 +56,26 @@ print.GSODR.Info <- function(x, ...) {
 
 #' Fetch and import NCEI station inventory
 #'
+#' @param ftp_handle a `curl` FTP handle for downloading the inventory file
 #' @keywords internal
 #' @return A `data.table()` inventory of stations
 #' @noRd
 
-.read_inventory <- function() {
+.read_inventory <- function(ftp_handle) {
   tryCatch({
+    curl::curl_download(
+      "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt",
+      destfile = file.path(tempdir(), "inventory.txt"),
+      quiet = TRUE,
+      handle = ftp_handle
+    )
+
+
     "STNID"  <- NULL #nocov
 
     main_body <-
       fread(
-        "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt",
+        file.path(tempdir(), "inventory.txt"),
         skip = 8,
         col.names = c(
           "USAF",
