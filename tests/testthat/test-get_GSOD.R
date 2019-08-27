@@ -222,7 +222,7 @@ test_that("unique stations are returned, tempdir() is cleaned up on exit", {
 test_that("agroclimatology data is returned as requested", {
   skip_on_cran()
   future::plan("multisession") # use parallel processing to make tests faster
-  a <- get_GSOD(years = 2010, agroclimatology = TRUE)
+  a <- get_GSOD(years = 1929, agroclimatology = TRUE)
   expect_lt(max(a$LATITUDE), 60)
   expect_gt(min(a$LATITUDE), -60)
 })
@@ -239,14 +239,25 @@ test_that("agroclimatology and station cannot be specified concurrently", {
 # Check that when specifying a country only that country is returned -----------
 test_that("only specified country is returned using FIPS and ISO codes", {
   skip_on_cran()
-  future::plan("multisession")
-
   a <- get_GSOD(years = 1929, country = "UK")
-  expect_equal(a$CTRY, "UK")
-
-  a <- get_GSOD(years = 1929, country = "GB")
-  expect_equal(a$CTRY, "UK")
-
-  a <- get_GSOD(years = 1929, country = "GBR")
-  expect_equal(a$CTRY, "UK")
+  expect_equal(a$CTRY[1], "UK")
 })
+
+test_that("only specified country is returned using 2 letter ISO codes", {
+  skip_on_cran()
+  a <- get_GSOD(years = 1930, country = "GB")
+  expect_equal(a$CTRY[1], "UK")
+})
+
+test_that("only specified country is returned using 3 letter ISO codes", {
+  skip_on_cran()
+  a <- get_GSOD(years = 1931, country = "GBR")
+  expect_equal(a$CTRY[1], "UK")
+})
+
+
+# Check that if an invalid station/year combo is selected, error result --------
+test_that("when year is selected for a station not providing it, error", {
+          expect_message(get_GSOD(years = 1950, station = "959360-99999"),
+                       regexp = "This station, 959360-99999, only provides")
+  })
