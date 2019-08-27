@@ -1,5 +1,4 @@
 
-
 #' Validate Years
 #'
 #' @param years User entered years for request
@@ -47,9 +46,9 @@
     )
   }
   BEGIN <-
-    as.numeric(substr(isd_history[isd_history$STNID == station, ]$BEGIN, 1, 4))
+    as.numeric(substr(isd_history[isd_history$STNID == station,]$BEGIN, 1, 4))
   END <-
-    as.numeric(substr(isd_history[isd_history$STNID == station, ]$END, 1, 4))
+    as.numeric(substr(isd_history[isd_history$STNID == station,]$END, 1, 4))
   if (min(years) < BEGIN | max(years) > END) {
     message("\nThis station, ",
             station,
@@ -120,7 +119,7 @@
   function(max_missing, file_list) {
     records <-
       unlist(lapply(X = paste0(file_list),
-             FUN = R.utils::countLines))
+                    FUN = R.utils::countLines))
     names(records) <- file_list
     year <- as.numeric(substr(
       file_list[1],
@@ -163,9 +162,11 @@
         for (i in url_list) {
           if (!httr::http_error(i)) {
             # check for an http error b4 proceeding
-            httr::GET(url = i,
-                      httr::write_disk(file.path(tempdir(), basename(i))),
-                      overwrite = TRUE)
+            curl::curl_download(
+              url = i,
+              destfile = file.path(tempdir(), basename(i)),
+              mode = "wb"
+            )
           }
         },
         error = function(x)
@@ -243,7 +244,7 @@
 .agroclimatology_list <-
   function(file_list, isd_history, years) {
     station_list <- isd_history[isd_history$LAT >= -60 &
-                                  isd_history$LAT <= 60, ]$STNID
+                                  isd_history$LAT <= 60,]$STNID
     station_list <- gsub("-", "", station_list)
 
     station_list <-
@@ -277,7 +278,7 @@
            isd_history,
            years) {
     station_list <-
-      isd_history[isd_history$CTRY == country, ]$STNID
+      isd_history[isd_history$CTRY == country,]$STNID
     station_list <- gsub("-", "", station_list)
     station_list <-
       CJ(years, sorted = FALSE)[, paste0(tempdir(),
