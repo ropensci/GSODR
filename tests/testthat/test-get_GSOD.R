@@ -173,7 +173,7 @@ test_that(
   {
     country_list <- NULL
     load(system.file("extdata", "country_list.rda", package = "GSODR"))
-    country <- "RP"
+    country <- "RZ"
     expect_error(.validate_country(country, country_list))
   }
 )
