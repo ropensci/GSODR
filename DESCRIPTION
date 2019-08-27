@@ -60,6 +60,7 @@ Suggests:
     future,
     ggplot2,
     gridExtra,
+    ggthemes,
     knitr,
     mapproj,
     maps,
@@ -73,7 +74,8 @@ Suggests:
     sf,
     sp,
     spacetime,
-    testthat
+    testthat,
+    tidyr
 RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
