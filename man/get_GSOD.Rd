@@ -21,8 +21,8 @@ function will silently fail and move on to existing files for download and
 cleaning.}
 
 \item{country}{Optional. Specify a country for which to retrieve weather
-data; full name or \acronym{ISO} codes can be used. All stations within the
-country will be returned.}
+data; full name, 2 or 3 letter \acronym{ISO} or 2 letter \acronym{FIPS} codes
+can be used. All stations within the specified country will be returned.}
 
 \item{max_missing}{Optional. The maximum number of days allowed to be missing
 from a station's data before it is excluded from final file output.}
