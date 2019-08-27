@@ -237,7 +237,7 @@
 #' @noRd
 
 .agroclimatology_list <-
-  function(GSOD_list, isd_history, years) {
+  function(file_list, isd_history, years) {
     station_list <- isd_history[isd_history$LAT >= -60 &
                                   isd_history$LAT <= 60,]$STNID
     station_list <- gsub("-", "", station_list)
@@ -250,9 +250,9 @@
                                          station_list,
                                          ".csv")]
 
-    GSOD_list <- GSOD_list[GSOD_list %in% station_list]
+    file_list <- file_list[file_list %in% station_list]
     rm(station_list)
-    return(GSOD_list)
+    return(file_list)
   }
 
 #' Subset Country List
@@ -269,7 +269,7 @@
 .subset_country_list <-
   function(country,
            country_list,
-           GSOD_list,
+           file_list,
            isd_history,
            years) {
     station_list <-
@@ -282,8 +282,8 @@
                                          "/",
                                          station_list,
                                          ".csv")]
-    GSOD_list <- GSOD_list[GSOD_list %in% station_list]
-    return(GSOD_list)
+    file_list <- file_list[file_list %in% station_list]
+    return(file_list)
     rm(station_list)
   }
 
