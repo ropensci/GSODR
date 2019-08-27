@@ -46,7 +46,7 @@ in the final data frame.
 
 Parallel processing can be enabled using \code{\link[future]{plan}} to set
 up a parallel backend of your choice, \emph{e.g.},
-\code{future::plan("multisession")}. See examples for more.
+\code{future::plan("multisession")}.
 }
 \details{
 All units are converted to International System of Units (SI), \emph{e.g.},
@@ -66,6 +66,13 @@ For more information see the description of the data provided by
 \acronym{NCEI}, \url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
 }
 \note{
+\pkg{GSODR} attempts to validate year and station combination requests,
+however, in certain cases the start and end date may encompass years where
+no data is available. In these cases no data will be returned. It is
+suggested that the user check the latest data availability for the station(s)
+desired using \link{get_inventory} as this list is frequently updated by the
+'NCEI' and is not shipped with \pkg{GSODR}.
+
 While \pkg{GSODR} does not distribute GSOD weather data, users of
 the data should note the conditions that the U.S. \acronym{NCEI} places upon
 the \acronym{GSOD} data.
@@ -74,13 +81,6 @@ their international commercial use.  They can be used within the U.S. or for
 non-commercial international activities without restriction. The non-U.S.
 data cannot be redistributed for commercial purposes. Re-distribution of
 these data by others must provide this same notification.}
-
-\pkg{GSODR} attempts to validate year and station combination requests,
-however, in certain cases the start and end date may encompass years where
-no data is available. In these cases no data will be returned. It is
-suggested that the user check the latest data availability for the station(s)
-desired using \link{get_inventory} as this list is frequently updated by the
-'NCEI' and is not shipped with \pkg{GSODR}.
 }
 \examples{
 \donttest{

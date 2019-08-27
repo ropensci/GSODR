@@ -11,7 +11,7 @@
 #'
 #' Parallel processing can be enabled using \code{\link[future]{plan}} to set
 #' up a parallel backend of your choice, \emph{e.g.},
-#' \code{future::plan("multisession")}. See examples for more.
+#' \code{future::plan("multisession")}.
 #'
 #' @details
 #'
@@ -30,15 +30,6 @@
 #'
 #' For more information see the description of the data provided by
 #' \acronym{NCEI}, \url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
-#'
-#' @note While \pkg{GSODR} does not distribute GSOD weather data, users of
-#' the data should note the conditions that the U.S. \acronym{NCEI} places upon
-#' the \acronym{GSOD} data.
-#' \dQuote{The following data and products may have conditions placed on
-#' their international commercial use.  They can be used within the U.S. or for
-#' non-commercial international activities without restriction. The non-U.S.
-#' data cannot be redistributed for commercial purposes. Re-distribution of
-#' these data by others must provide this same notification.}
 #'
 #' @param years Year(s) of weather data to download.
 #' @param station Optional. Specify a station or multiple stations for which to
@@ -66,6 +57,15 @@
 #' suggested that the user check the latest data availability for the station(s)
 #' desired using \link{get_inventory} as this list is frequently updated by the
 #' 'NCEI' and is not shipped with \pkg{GSODR}.
+#'
+#' @note While \pkg{GSODR} does not distribute GSOD weather data, users of
+#' the data should note the conditions that the U.S. \acronym{NCEI} places upon
+#' the \acronym{GSOD} data.
+#' \dQuote{The following data and products may have conditions placed on
+#' their international commercial use.  They can be used within the U.S. or for
+#' non-commercial international activities without restriction. The non-U.S.
+#' data cannot be redistributed for commercial purposes. Re-distribution of
+#' these data by others must provide this same notification.}
 #'
 #' @examples
 #' \donttest{
@@ -117,6 +117,11 @@ get_GSOD <- function(years,
       stop(call. = FALSE,
            "You cannot use `max_missing` with the current, incomplete year.")
     }
+  }
+
+  if (isTRUE(agroclimatology) & !is.null(station)) {
+    stop(call. = FALSE,
+         "You cannot specify a single station along with agroclimatology.")
   }
 
 # CRAN NOTE avoidance
