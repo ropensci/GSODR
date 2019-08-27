@@ -202,3 +202,11 @@ test_that("unique stations are returned, tempdir() is cleaned up on exit", {
                full.names = TRUE)))
   expect_equal(length(unique(b$STNID)), 1)
 })
+
+# Check that agroclimatology is returned when requested ------------------------
+test_that("agroclimatology data is returned as requested", {
+  future::plan("multisession") # use parallel processing to make tests faster
+  a <- get_GSOD(years = 2010, agroclimatology = TRUE)
+  expect_lt(max(a$LATITUDE), 60)
+  expect_gt(min(a$LATITUDE), -60)
+})
