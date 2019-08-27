@@ -117,23 +117,23 @@
 #' @noRd
 
 .validate_missing_days <-
-  function(max_missing, GSOD_list) {
+  function(max_missing, file_list) {
     records <-
-      lapply(X = paste0(GSOD_list),
-             FUN = R.utils::countLines)
-    names(records) <- GSOD_list
+      unlist(lapply(X = paste0(file_list),
+             FUN = R.utils::countLines))
+    names(records) <- file_list
     year <- as.numeric(substr(
-      basename(GSOD_list[1]),
-      start = nchar(basename(GSOD_list[1])) - 10 + 1,
-      stop  = nchar(basename(GSOD_list[1])) - 7 + 1
+      file_list[1],
+      start = nchar(file_list[1]) - 19,
+      stop  = nchar(file_list[1]) - 16
     ))
     ifelse(
       format(as.POSIXct(paste0(year, "-03-01")) - 1, "%d") != "29",
       allow <- 365 - max_missing,
       allow <- 366 - max_missing
     )
-    GSOD_list <- stats::na.omit(ifelse(records >= allow,
-                                       GSOD_list,
+    file_list <- stats::na.omit(ifelse(records >= allow,
+                                       file_list,
                                        NA))
   }
 

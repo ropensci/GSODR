@@ -169,6 +169,10 @@ get_GSOD <- function(years,
   if (!is.null(max_missing)) {
     file_list <-
       .validate_missing_days(max_missing, file_list)
+    if (length(file_list) == 0) {
+      stop(call. = FALSE,
+           "There were no stations that had a max of ", max_missing, " days.")
+    }
   }
 
   GSOD <- .apply_process_csv(file_list, isd_history)
