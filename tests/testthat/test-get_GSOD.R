@@ -210,3 +210,24 @@ test_that("agroclimatology data is returned as requested", {
   expect_lt(max(a$LATITUDE), 60)
   expect_gt(min(a$LATITUDE), -60)
 })
+
+# Check that agroclimatology and station cannot be specified concurrently ------
+test_that("agroclimatology and station cannot be specified concurrently", {
+  expect_error(get_GSOD(
+    years = 2010,
+    agroclimatology = TRUE,
+    station = "489300-99999"
+  ))
+})
+
+# Check that when specifying a country only that country is returned -----------
+test_that("only specified country is returned using FIPS and ISO codes", {
+  a <- get_GSOD(years = 1929, country = "UK")
+  expect_equal(a$CTRY, "UK")
+
+  a <- get_GSOD(years = 1929, country = "GB")
+  expect_equal(a$CTRY, "UK")
+
+  a <- get_GSOD(years = 1929, country = "GBR")
+  expect_equal(a$CTRY, "UK")
+})
