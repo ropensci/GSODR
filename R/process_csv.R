@@ -46,7 +46,7 @@
 
   # Import data from the website for indvidual stations or tempdir() for all ---
   DT <-
-    fread(x, colClasses = c("FRSHTT" = "c"))
+    fread(x, colClasses = c("STATION" = "c", "FRSHTT" = "c"))
 
   # Replace 9999.99 et al. with NA
   for (col in names(DT)[names(DT) == "PRCP"]) {
@@ -162,7 +162,8 @@
   DT <- isd_history[DT]
 
   # drop extra cols
-  DT[, c("i.NAME", "LAT", "LON") := NULL]
+  DT[, c("i.NAME", "LATITUDE", "LONGITUDE") := NULL]
+  setnames(DT, c("LAT", "LON"), c("LATITUDE", "LONGITUDE"))
 
   # setcolorder ----------------------------------------------------------------
   setcolorder(
