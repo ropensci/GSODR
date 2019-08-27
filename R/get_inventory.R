@@ -26,7 +26,7 @@
 #' @export get_inventory
 
 get_inventory <- function() {
-  load(system.file("extdata", "isd_history.rda", package = "GSODR"))
+  load(system.file("extdata", "isd_history.rda", package = "GSODR")) #nocov
 
   ftp_handle <-
     curl::new_handle(
@@ -37,31 +37,6 @@ get_inventory <- function() {
       ftp_skip_pasv_ip = TRUE
     )
 
-  main_body <- .read_inventory(ftp_handle)
-
-  return(main_body)
-  unlink(file.path(tempdir(), "inventory.txt"))
-}
-
-#' Prints GSODR.info object.
-#'
-#' @param x GSODR.info object
-#' @param ... ignored
-#' @export
-print.GSODR.Info <- function(x, ...) {
-  cat(attr(x, "GSODR.Inventory"))
-  NextMethod(x)
-  invisible(x)
-}
-
-#' Fetch and import NCEI station inventory
-#'
-#' @param ftp_handle a `curl` FTP handle for downloading the inventory file
-#' @keywords internal
-#' @return A `data.table()` inventory of stations
-#' @noRd
-
-.read_inventory <- function(ftp_handle) {
   tryCatch({
     curl::curl_download(
       "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt",
@@ -70,8 +45,7 @@ print.GSODR.Info <- function(x, ...) {
       handle = ftp_handle
     )
 
-
-    "STNID"  <- NULL #nocov
+    "STNID" <- NULL #nocov
 
     main_body <-
       fread(
@@ -98,7 +72,7 @@ print.GSODR.Info <- function(x, ...) {
 
     main_body[, STNID := paste(main_body$USAF, main_body$WBAN, sep = "-")]
 
-    main_body[, c(1:2) := NULL]
+    main_body[, c("USAF", "WBAN") := NULL]
 
     setcolorder(main_body, "STNID")
 
@@ -123,7 +97,6 @@ print.GSODR.Info <- function(x, ...) {
       year_month,
       "   \n"
     )
-    return(main_body)
   },
   error = function(cond) {
     stop(
@@ -133,4 +106,18 @@ print.GSODR.Info <- function(x, ...) {
       call. = FALSE
     )
   })
+
+  return(main_body)
+  unlink(file.path(tempdir(), "inventory.txt"))
+}
+
+#' Prints GSODR.info object.
+#'
+#' @param x GSODR.info object
+#' @param ... ignored
+#' @export
+print.GSODR.Info <- function(x, ...) {
+  cat(attr(x, "GSODR.Inventory"))
+  NextMethod(x)
+  invisible(x)
 }
