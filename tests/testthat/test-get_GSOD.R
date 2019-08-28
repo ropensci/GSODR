@@ -31,9 +31,9 @@ test_that("invalid stations are handled", {
 test_that("Station validations are properly handled for years available", {
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))
   stations <- isd_history
-  expect_message(.validate_station(station = "949999-00170",
-                                   stations,
-                                   years = 2010))
+  expect_error(.validate_station(station = "949999-00170",
+                                 stations,
+                                 years = 2010))
 })
 
 test_that("Station validations are properly handled for years available", {
@@ -56,19 +56,20 @@ test_that("missing days check allows stations with permissible days missing,
             too_short_2015 <-
               data.frame(c(rep(12, 300)), c(rep("X", 300)))
             df_list <- list(just_right_2015, too_short_2015)
+            dir.create(path = file.path(td, "2015"))
 
-            filenames <- c("just_right_2015", "too_short_2015")
+            filenames <- c("just_right0", "too_short00")
             sapply(1:length(df_list),
                    function(x)
                      write.csv(df_list[[x]],
-                               file = gzfile(paste0(
-                                 td, "/", filenames[x],
-                                 ".csv.gz"
-                               ))))
+                               file = paste0(td, "/2015/", filenames[x],
+                                             ".csv")))
             GSOD_list <-
-              list.files(path = td,
-                         pattern = ".2015.csv.gz$",
-                         full.names = TRUE)
+              list.files(
+                path = file.path(td, "2015"),
+                pattern = ".csv$",
+                full.names = TRUE
+              )
 
             if (!is.null(max_missing)) {
               GSOD_list_filtered <- .validate_missing_days(max_missing,
@@ -76,8 +77,11 @@ test_that("missing days check allows stations with permissible days missing,
             }
             expect_length(GSOD_list, 2)
             expect_match(basename(GSOD_list_filtered),
-                         "just_right_2015.csv.gz")
-            unlink(td)
+                         "just_right0.csv")
+            rm_files <-
+              list.files(file.path(td, "2015"), full.names = TRUE)
+            file.remove(rm_files)
+            file.remove(file.path(td, "2015"))
           })
 
 # Check missing days in leap years ---------------------------------------------
@@ -91,28 +95,39 @@ test_that("missing days check allows stations with permissible days missing,
             too_short_2016 <-
               data.frame(c(rep(12, 300)), c(rep("X", 300)))
             df_list <- list(just_right_2016, too_short_2016)
+            dir.create(path = file.path(td, "2016"))
 
-            filenames <- c("just_right_2016", "too_short_2016")
+            filenames <- c("just_right0", "too_short00")
             sapply(1:length(df_list),
                    function(x)
                      write.csv(df_list[[x]],
-                               file = gzfile(paste0(
-                                 td, "/", filenames[x],
-                                 ".csv.gz"
-                               ))))
+                               file = paste0(td, "/2016/", filenames[x],
+                                             ".csv")))
             GSOD_list <-
-              list.files(path = td,
-                         pattern = ".2016.csv.gz$",
-                         full.names = TRUE)
+              list.files(
+                path = file.path(td, "2016"),
+                pattern = ".csv$",
+                full.names = TRUE
+              )
             if (!is.null(max_missing)) {
               GSOD_list_filtered <- .validate_missing_days(max_missing,
                                                            GSOD_list)
             }
 
             expect_length(GSOD_list, 2)
-            expect_match(basename(GSOD_list_filtered), "just_right_2016.csv.gz")
-            unlink(td)
+            expect_match(basename(GSOD_list_filtered), "just_right0.csv")
+            rm_files <-
+              list.files(file.path(td, "2016"), full.names = TRUE)
+            file.remove(rm_files)
+            file.remove(file.path(td, "2016"))
           })
+
+# Check that stations are filtered for missing days ----------------------------
+# 1929 has no stations with a full 365 days, so none should be returned
+test_that("The 'max_missing' parameter filters out improper stations", {
+  expect_error(get_GSOD(years = 1929, max_missing = 1),
+               regexp = "There were no stations that had a max of.")
+})
 
 # Check that max_missing only accepts positive values --------------------------
 test_that("The 'max_missing' parameter will not accept NA values", {
@@ -159,10 +174,9 @@ test_that(
   {
     country_list <- NULL
     load(system.file("extdata", "country_list.rda", package = "GSODR"))
-    country <- "RP"
+    country <- "RZ"
     expect_error(.validate_country(country, country_list))
-  }
-)
+  })
 
 test_that(
   "Check validate country returns an error on invalid entry when two
@@ -172,8 +186,7 @@ test_that(
     load(system.file("extdata", "country_list.rda", package = "GSODR"))
     country <- "RPS"
     expect_error(.validate_country(country, country_list))
-  }
-)
+  })
 
 test_that("Timeout options are reset on get_GSOD() exit", {
   # get the original timeout value for net connections for last check to be sure
@@ -194,11 +207,56 @@ test_that("max_missing is not allowed for current year", {
 
 # Check that only unique stations returned, tempdir() is cleaned up on exit ----
 test_that("unique stations are returned, tempdir() is cleaned up on exit", {
+  skip_on_cran()
   a <- get_GSOD(years = 2010, station = "489300-99999")
   b <- get_GSOD(years = 2010, station = "489260-99999")
-  expect_false(isTRUE(
-    list.files(tempdir(),
-               pattern = ".gz$",
-               full.names = TRUE)))
-  expect_equal(length(unique(b["USAF"])), 1)
+  expect_false(isTRUE(list.files(
+    tempdir(),
+    pattern = ".csv$",
+    full.names = TRUE
+  )))
+  expect_equal(length(unique(b$STNID)), 1)
 })
+
+# Check that agroclimatology is returned when requested ------------------------
+test_that("agroclimatology data is returned as requested", {
+  skip_on_cran()
+  a <- get_GSOD(years = 1929, agroclimatology = TRUE)
+  expect_lt(max(a$LATITUDE), 60)
+  expect_gt(min(a$LATITUDE), -60)
+})
+
+# Check that agroclimatology and station cannot be specified concurrently ------
+test_that("agroclimatology and station cannot be specified concurrently", {
+  expect_error(get_GSOD(
+    years = 2010,
+    agroclimatology = TRUE,
+    station = "489300-99999"
+  ))
+})
+
+# Check that when specifying a country only that country is returned -----------
+test_that("only specified country is returned using FIPS and ISO codes", {
+  skip_on_cran()
+  a <- get_GSOD(years = 1929, country = "UK")
+  expect_equal(a$CTRY[1], "UK")
+})
+
+test_that("only specified country is returned using 2 letter ISO codes", {
+  skip_on_cran()
+  a <- get_GSOD(years = 1930, country = "GB")
+  expect_equal(a$CTRY[1], "UK")
+})
+
+test_that("only specified country is returned using 3 letter ISO codes", {
+  skip_on_cran()
+  a <- get_GSOD(years = 1931, country = "GBR")
+  expect_equal(a$CTRY[1], "UK")
+})
+
+
+# Check that if an invalid station/year combo is selected, error result --------
+test_that("when year is selected for a station not providing it, error", {
+          expect_message(get_GSOD(years = 1950, station = "959360-99999"),
+                       regexp = "This station, 959360-99999, only provides")
+  })

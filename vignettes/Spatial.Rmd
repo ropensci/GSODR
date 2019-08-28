@@ -1,0 +1,143 @@
+---
+title: "Using Spatial R Packages with GSODR"
+author: "Adam H Sparks"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Using Spatial R Packages}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r check_packages, echo=FALSE, messages=FALSE, warning=FALSE}
+required <- c("ggplot2", "tidyr", "raster", "rgdal", "sf", "dplyr")
+
+if (!all(unlist(lapply(required, function(pkg) requireNamespace(pkg, quietly = TRUE)))))
+knitr::opts_chunk$set(eval = FALSE, collapse = TRUE, comment = "#>", fig.width = 7, fig.height = 7, fig.align = "center")
+```
+
+# Creating Spatial Files
+
+Because the stations provide geospatial location information, it is possible to
+create a spatial file. [GeoPackage files](http://www.geopackage.org) are a open,
+standards-based, platform-independent, portable, self-describing compact
+format for transferring geospatial information, which handle vector files much
+like shapefiles do, but eliminate many of the issues that shapefiles have with
+field names and the number of files.
+
+Converting the GSOD data to a spatial object is rather simple. In R there are
+two options, _sp_ and _sf_. The _sp_ format is older and more well established,
+but _sf_ offers some new exciting possibilities.
+
+## Convert to an _sp_ SpatialPointsDataFrame
+
+For this example we convert the data to a _sp_ object. You might use this one
+to save GeoPackage or ESRI shapefiles for sharing or analysis in another GIS
+program.
+
+```{r Ex1, eval=FALSE}
+# get GSOD data
+library(GSODR)
+library(sp)
+GSOD <- get_GSOD(years = 2015, country = "Australia")
+
+# convert to SpatialPointsDataFrame
+GSOD_sp <- GSOD
+coordinates(GSOD_sp) <- ~ LONGITUDE + LATITUDE
+proj4string(GSOD_sp) <- CRS("+proj=longlat +datum=WGS84")
+```
+
+## Saving _sp_ objects
+
+Using `writeOGR()` it is simple to save as a GeoPackage file.
+
+```{r Ex2, eval=FALSE}
+library(rgdal)
+
+writeOGR(GSOD_sp,
+         dsn = path.expand("~/"),
+         layer = "GSOD",
+         driver = "GPKG")
+```
+
+Using `writeOGR()` it is simple to save as an ESRI shapefile.
+
+```{r Ex3, eval=FALSE}
+library(rgdal)
+writeOGR(GSOD_sp,
+         dsn = path.expand("~/"),
+         layer = "GSOD",
+         driver = "ESRI Shapefile")
+```
+
+## Converting to an _sf_ object
+
+Simple features are an ISO defined standard that now have support in R. From the
+[_sf_ vignette](https://r-spatial.github.io/sf/articles/sf1.html):
+
+> Simple features or simple feature access refers to a formal standard (ISO
+19125-1:2004) that describes how objects in the real world can be represented in
+computers, with emphasis on the spatial geometry of these objects. It also
+describes how such objects can be stored in and retrieved from databases, and
+which geometrical operations should be defined for them.
+The standard is widely implemented in spatial databases (such as PostGIS),
+commercial GIS (e.g., ESRI ArcGIS) and forms the vector data basis for libraries
+such as GDAL. A subset of simple features forms the GeoJSON standard.
+
+For this example, we convert the GSOD data to an _sf_ object.
+
+```{r Ex4, eval=FALSE}
+library(sf)
+GSOD_SF <- st_as_sf(x = GSOD,
+                    coords = c("LONGITUDE", "LATITUDE"),
+                    crs = "+proj=longlat +datum=WGS84")
+
+str(GSOD_SF)
+```
+
+## Saving _sf_ objects
+
+Writing a shapefile is a simple matter.
+
+```{r Ex5, eval=FALSE}
+write_sf(GSOD_SF, "GSOD.shp") # silently overwrites
+```
+
+As is writing a GeoPackage from the _sf_ object.
+
+```{r Ex7, eval=FALSE}
+write_sf(GSOD_SF, "~/GSOD.gpkg") # silently overwrites
+```
+
+After getting weather stations for Australia and creating a GeoPackage file,
+_rgdal_ can import the data into R again in a spatial format.
+
+Importing a GeoPackage file can be a bit tricky. The dsn will be the full path
+along with the file name. The layer to be specified is "GSOD", this is specified
+in the `get_GSOD()` function and will not change. The file name, specified in
+the dsn will, but the layer name will not.
+
+```{r Ex8, eval=FALSE}
+library(rgdal)
+
+AUS_stations <- readOGR(dsn = path.expand("~/GSOD.gpkg"), layer = "GSOD")
+
+class(AUS_stations)
+```
+
+Since GeoPackage files are formatted as SQLite databases you can use the
+existing R tools for SQLite files
+[(J. Stachelek 2016)](https://jsta.github.io/2016/07/14/geopackage-r.html). One
+easy way is using _dplyr_. This option is much faster to load since it does not
+load the geometry.
+
+```{r Ex, eval=FALSE}
+library(dplyr)
+AUS_sqlite <- tbl(src_sqlite(path.expand("~/GSOD.gpkg")), "GSOD")
+class(AUS_sqlite)
+```
+
+# References
+Stachelek, J. (2016) Using the Geopackage Format with R.
+URL: https://jsta.github.io/2016/07/14/geopackage-r.html

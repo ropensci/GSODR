@@ -2,7 +2,7 @@
 % Please edit documentation in R/update_station_list.R
 \name{update_station_list}
 \alias{update_station_list}
-\title{Download Latest Station List Information and Update Internal Database}
+\title{Download latest station list information and update internal database}
 \usage{
 update_station_list()
 }
@@ -10,9 +10,8 @@ update_station_list()
 This function downloads the latest station list (isd-history.csv) from the
 \acronym{NCEI} \acronym{FTP} server and updates the data distributed with
 \pkg{GSODR} to the latest stations available.  These data provide unique
-identifiers, country, state (if in U.S.), latitude, longitude, elevation and
-when weather observations begin and end.  Stations with invalid latitude and
-longitude values will not be included.
+identifiers, country, state (if in U.S.) and when weather observations begin
+and end.
 }
 \details{
 Care should be taken when using this function if reproducibility is necessary
@@ -32,5 +31,5 @@ update_station_list()
 
 }
 \author{
-Adam H Sparks, \email{adamhsparks@gmail.com}
+Adam H. Sparks, \email{adamhsparks@gmail.com}
 }

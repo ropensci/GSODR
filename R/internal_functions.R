@@ -1,5 +1,11 @@
-# Validation functions ---------------------------------------------------------
+
+#' Validate Years
+#'
+#' @param years User entered years for request
+#' @keywords internal
+#' @return None unless error in years being requested by users
 #' @noRd
+
 .validate_years <- function(years) {
   this_year <- 1900 + as.POSIXlt(Sys.Date())$year
   for (i in years) {
@@ -16,9 +22,18 @@
   }
 }
 
+
+#' Validate Station IDs
+#'
+#' @param station User entered station ID
+#' @param isd_history isd_history.csv from NCEI provided by GSODR
+#' @param years User entered years for query
+#' @keywords internal
+#' @return None unless an error with the years or invalid station ID
 #' @noRd
+
 .validate_station <- function(station, isd_history, years) {
-  if (!station %in% isd_history[[12]]) {
+  if (!station %in% isd_history$STNID) {
     stop(
       call. = FALSE,
       "\n",
@@ -31,9 +46,9 @@
     )
   }
   BEGIN <-
-    as.numeric(substr(isd_history[isd_history[[12]] == station,]$BEGIN, 1, 4))
+    as.numeric(substr(isd_history[isd_history$STNID == station,]$BEGIN, 1, 4))
   END <-
-    as.numeric(substr(isd_history[isd_history[[12]] == station,]$END, 1, 4))
+    as.numeric(substr(isd_history[isd_history$STNID == station,]$END, 1, 4))
   if (min(years) < BEGIN | max(years) > END) {
     message("\nThis station, ",
             station,
@@ -45,15 +60,23 @@
   }
 }
 
+
+#' Validate Country Requests
+#'
+#' @param country User requested country name
+#' @param country_list country_list file from NCEI provided by GSODR
+#' @keywords internal
+#' @return A validated country name
 #' @noRd
+
 .validate_country <-
   function(country, country_list) {
     if (!is.null(country)) {
       country <- toupper(trimws(country[1]))
       nc <- nchar(country)
       if (nc == 3) {
-        if (country %in% country_list$iso3c) {
-          c <- which(country == country_list$iso3c)
+        if (country %in% country_list$ISO3C) {
+          c <- which(country == country_list$ISO3C)
           country <- country_list[[c, 1]]
         } else {
           stop(call. = FALSE,
@@ -61,8 +84,11 @@
                "letter ISO country code\n")
         }
       } else if (nc == 2) {
-        if (country %in% country_list$iso2c) {
-          c <- which(country == country_list$iso2c)
+        if (country %in% country_list$ISO2C) {
+          c <- which(country == country_list$ISO2C)
+          country <- country_list[[c, 1]]
+        } else if (country %in% country_list$FIPS) {
+          c <- which(country == country_list$FIPS)
           country <- country_list[[c, 1]]
         } else {
           stop(call. = FALSE,
@@ -80,195 +106,203 @@
     }
   }
 
+
+#' Validate Data for Missing Days
+#'
+#' @param max_missing User entered maximum permissible missing days
+#' @param GSOD_list A list of GSOD files that have been downloaded from NCEI
+#' @keywords internal
+#' @return A validated `list()` of GSOD files that meet requirements for missing days
 #' @noRd
+
 .validate_missing_days <-
-  function(max_missing, GSOD_list) {
+  function(max_missing, file_list) {
     records <-
-      lapply(X = paste0(GSOD_list),
-             FUN = R.utils::countLines)
-    names(records) <- GSOD_list
+      unlist(lapply(X = paste0(file_list),
+                    FUN = R.utils::countLines))
+    names(records) <- file_list
     year <- as.numeric(substr(
-      basename(GSOD_list[1]),
-      start = nchar(basename(GSOD_list[1])) - 10 + 1,
-      stop  = nchar(basename(GSOD_list[1])) - 7 + 1
+      file_list[1],
+      start = nchar(file_list[1]) - 19,
+      stop  = nchar(file_list[1]) - 16
     ))
     ifelse(
       format(as.POSIXct(paste0(year, "-03-01")) - 1, "%d") != "29",
       allow <- 365 - max_missing,
       allow <- 366 - max_missing
     )
-    GSOD_list <- stats::na.omit(ifelse(records >= allow,
-                                       GSOD_list,
+    file_list <- stats::na.omit(ifelse(records >= allow,
+                                       file_list,
                                        NA))
   }
 
-# Function to download files from server ---------------------------------------
+
+#' Download GSOD Files from NCEI Server
+#'
+#' @param station Station ID being requested. Optional
+#' @param years Years being requested. Mandatory
+#' @keywords internal
+#' @return A list of data for processing before returning to user
+#'
 #' @noRd
+
 .download_files <-
-  function(ftp_base, station, years, cache_dir) {
+  function(station,
+           years) {
+    # if no station download annual zip files ----------------------------------
     if (is.null(station)) {
-      file_list <-
-        paste0(sprintf(ftp_base, years), "gsod_", years, ".tar")
+      url_list <-
+        paste0(
+          "https://www.ncei.noaa.gov/data/global-summary-of-the-day/archive/",
+          years,
+          ".tar.gz"
+        )
+
       tryCatch(
-        Map(
-          function(ftp, dest)
+        for (i in url_list) {
+          if (!httr::http_error(i)) {
+            # check for an http error b4 proceeding
             curl::curl_download(
-              url = ftp,
-              destfile = dest,
+              url = i,
+              destfile = file.path(tempdir(), basename(i)),
               mode = "wb"
-            ),
-          file_list,
-          file.path(cache_dir, basename(file_list))
-        ),
+            )
+          }
+        },
         error = function(x)
           stop(call. = FALSE,
                "\nThe file downloads have failed. Please restart.\n")
       )
+
+      # create a list of files that have been downloaded and untar them
       tar_files <-
-        list.files(cache_dir, pattern = "^gsod.*\\.tar$", full.names = TRUE)
-      purrr::map(.x = tar_files,
-                 .f = utils::untar,
-                 exdir = cache_dir)
+        list.files(tempdir(), pattern = "*\\.tar.gz$", full.names = TRUE)
+      for (i in tar_files) {
+        wd <- getwd()
+        setwd(tempdir())
+        year_dir <- substr(i, nchar(i) - 10, nchar(i) - 7)
+        utils::untar(i, exdir = year_dir)
+        setwd(wd)
+      }
       GSOD_list <-
-        list.files(cache_dir, pattern = "^.*\\.op.gz$", full.names = TRUE)
-    }
-    if (!is.null(station)) {
-      # Written by @hrbrmstr
-      max_retries <- 6
-      dir_list_handle <-
-        curl::new_handle(
-          ftp_use_epsv = FALSE,
-          crlf = TRUE,
-          dirlistonly = TRUE,
-          ssl_verifypeer = FALSE,
-          ftp_response_timeout = 30,
-          ftp_skip_pasv_ip = TRUE
+        list.files(
+          tempdir(),
+          pattern = "*\\.csv$",
+          full.names = TRUE,
+          recursive = TRUE
         )
-      s_curl_fetch_memory <- purrr::safely(curl::curl_fetch_memory)
-      retry_cfm <-
-        function(url, handle) {
-          i <- 0
-          repeat {
-            i <- i + 1
-            res <- s_curl_fetch_memory(url, handle = handle)
-            if (!is.null(res$result))
-              return(res$result)
-            if (i == max_retries) {
-              stop(
-                call. = FALSE,
-                "\nWe've tried to get the file(s) you requested six\n",
-                "times, but the server is not responding, so we are\n",
-                "unable to process your request now.\n",
-                "Please try again later.\n"
-              )
-            }
-          }
-        }
-      # Wrapping the disk writer (for the actual files)
-      # Note the use of the cache dir. It won't waste your bandwidth or the
-      # server's bandwidth or CPU if the file has already been retrieved.
-      s_curl_fetch_disk <- purrr::safely(curl::curl_fetch_disk)
-      retry_cfd <-
-        function(url, path) {
-          cache_file <- sprintf("%s/%s", cache_dir, basename(url))
-          if (file.exists(cache_file))
-            return()
-          i <- 0
-          repeat {
-            i <- i + 1
-            if (i == max_retries) {
-              stop(
-                call. = FALSE,
-                "\nWe've tried to get the file(s) you requested six\n",
-                "times, but the server is not responding, so we are\n",
-                "unable to process your request now.\n",
-                "Please try again later.\n"
-              )
-            }
-            res <- s_curl_fetch_disk(url, cache_file)
-            if (!is.null(res$result))
-              return()
-          }
-        }
-
-      pb <- dplyr::progress_estimated(length(years))
-      purrr::walk(years, function(yr) {
-        year_url <- sprintf(ftp_base, yr)
-        tmp <- retry_cfm(year_url, handle = dir_list_handle)
-        con <- rawConnection(tmp$content)
-        fils <- readLines(con)
-        close(con)
-        # sift out only the target stations
-        purrr::map(station, ~ grep(., fils, value = TRUE)) %>%
-          purrr::keep( ~ length(.) > 0) %>%
-          purrr::flatten_chr() -> fils
-
-        if (length(fils) > 0) {
-          # grab the station files
-          purrr::walk(paste0(year_url, fils), retry_cfd)
-          # progress bar
-          pb$tick()$print()
-        }
-        else {
-          message("\nThere are no files for station ID ",
-                  station,
-                  " in ",
-                  yr,
-                  ".\n")
-        }
-      })
     }
-    GSOD_list <-
-      list.files(path = cache_dir,
-                 pattern = "^.*\\.op.gz$",
-                 full.names = TRUE)
-  }
 
-# Agroclimatology: subset list of stations to process---------------------------
-.agroclimatology_list <-
-  function(GSOD_list, isd_history, cache_dir, years) {
-    station_list <- isd_history[isd_history$LAT >= -60 &
-                                  isd_history$LAT <= 60,]$STNID
-    station_list <- do.call(paste0,
-                            c(
-                              expand.grid(cache_dir, "/", station_list, "-",
-                                          years, ".op.gz")
-                            ))
-    GSOD_list <- GSOD_list[GSOD_list %in% station_list]
-    rm(station_list)
+    # if a station is provided, download its files -----------------------------
+    if (!is.null(station)) {
+      station <- gsub("-", "", station)
+      url_list <-
+        CJ(years, station, sorted = FALSE)[, paste0(
+          "https://www.ncei.noaa.gov/data/global-summary-of-the-day/access/",
+          years,
+          "/",
+          station,
+          ".csv"
+        )]
+      tryCatch(
+        for (i in url_list) {
+          if (!httr::http_error(i)) {
+            # check for an http error b4 proceeding
+            httr::GET(url = i, httr::write_disk(
+              paste0(
+                tempdir(),
+                "/",
+                substr(i, nchar(i) - 20, nchar(i) - 16),
+                # year
+                "-",
+                basename(i) # filename
+              ),
+              overwrite = TRUE
+            ))
+          }
+        },
+        error = function(x)
+          stop(call. = FALSE,
+               "\nThe file downloads have failed. Please restart.\n")
+      )
+
+      GSOD_list <-
+        list.files(tempdir(), pattern = "*\\.csv$", full.names = TRUE)
+    }
     return(GSOD_list)
   }
 
-# Specified country: subset list of stations to process ------------------------
+#' Agroclimatology List
+#'
+#' @param x A `data.table` of GSOD data from .download_data
+#' @param isd_history isd_history file from NCEI
+#' @param years Years being requested
+#' @keywords internal
+#' @return A list of GSOD stations suitable for agroclimatology work
+#' @noRd
+
+.agroclimatology_list <-
+  function(file_list, isd_history, years) {
+    station_list <- isd_history[isd_history$LAT >= -60 &
+                                  isd_history$LAT <= 60,]$STNID
+    station_list <- gsub("-", "", station_list)
+
+    station_list <-
+      CJ(years, sorted = FALSE)[, paste0(tempdir(),
+                                         "/",
+                                         years,
+                                         "/",
+                                         station_list,
+                                         ".csv")]
+
+    file_list <- file_list[file_list %in% station_list]
+    rm(station_list)
+    return(file_list)
+  }
+
+#' Subset Country List
+#'
+#' @param country Country of interest to subset on
+#' @param country_list Country list file provided by NCEI as a part of GSODR
+#' @param GSOD_list List of GSOD files to be subset
+#' @param isd_history isd_history.csv file from NCEI provided by GSODR
+#' @param years Years being requested
+#' @keywords internal
+#' @return A list of stations in the requested country
+#' @noRd
+
 .subset_country_list <-
   function(country,
            country_list,
-           GSOD_list,
+           file_list,
            isd_history,
-           cache_dir,
            years) {
-
     station_list <-
-      isd_history[isd_history$CTRY == country, ]$STNID
-    station_list <- do.call(paste0,
-                            c(
-                              expand.grid(cache_dir,
-                                          "/",
-                                          station_list,
-                                          "-",
-                                          years,
-                                          ".op.gz")
-                            ))
-    GSOD_list <- GSOD_list[GSOD_list %in% station_list]
-    return(GSOD_list)
+      isd_history[isd_history$CTRY == country,]$STNID
+    station_list <- gsub("-", "", station_list)
+    station_list <-
+      CJ(years, sorted = FALSE)[, paste0(tempdir(),
+                                         "/",
+                                         years,
+                                         "/",
+                                         station_list,
+                                         ".csv")]
+    file_list <- file_list[file_list %in% station_list]
+    return(file_list)
     rm(station_list)
   }
 
-# Clean and reformat list of station files from local disk in tempdir ----------
+#' Process .gz Files in Parallel
+#'
+#' @param file_list List of GSOD files
+#' @param isd_history isd_history.csv file from NCEI provided by GSODR
+#' @keywords internal
+#' @return A `data.table()` of GSOD weather data
+#' @noRd
 
-apply_process_gz <- function(file_list, isd_history) {
-  future.apply::future_lapply(X = file_list,
-                              FUN = .process_gz,
-                              isd_history = isd_history)  %>%
-    dplyr::bind_rows()
+.apply_process_csv <- function(file_list, isd_history) {
+  x <- future.apply::future_lapply(X = file_list,
+                                   FUN = .process_csv,
+                                   isd_history = isd_history)
+  return(rbindlist(x))
 }

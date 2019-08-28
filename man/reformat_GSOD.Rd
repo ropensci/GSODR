@@ -2,7 +2,7 @@
 % Please edit documentation in R/reformat_GSOD.R
 \name{reformat_GSOD}
 \alias{reformat_GSOD}
-\title{Tidy and Return a Data Frame of \acronym{GSOD} Weather from Local Data}
+\title{Tidy and return a data frame of \acronym{GSOD} weather from local storage}
 \usage{
 reformat_GSOD(dsn = NULL, file_list = NULL)
 }
@@ -14,41 +14,40 @@ for tidying.}
 tidying.}
 }
 \value{
-A data frame as a \code{\link[tibble]{tibble}} object of weather
-data.
+A data frame as a \code{\link[data.table]{data.table}} object of
+\acronym{GSOD} data.
 }
 \description{
 This function automates cleaning and reformatting of \acronym{GSOD} station
-files in\cr "WMO-WBAN-YYYY.op.gz" format that have been downloaded from the
-United States National Center for Environmental Information's
-(\acronym{NCEI}) \acronym{FTP} server. Three new elements; saturation vapour
-pressure (es), actual vapour pressure (ea) and relative humidity are
-calculated and returned in the final data as well.  All units are converted
-to International System of Units (SI), \emph{e.g.} Fahrenheit to Celsius and
-inches to millimetres.  Alternative elevation measurements are supplied for
-missing values or values found to be questionable based on the Consultative
-Group for International Agricultural Research's Consortium for Spatial
-Information group's (\acronym{CGIAR-CSI}) Shuttle Radar Topography Mission 90
-metre (\acronym{SRTM} 90m) digital elevation data based on \acronym{NASA}'s
-original \acronym{SRTM} 90m data.
+files in\cr "YEAR.tar.gz", provided that they have been untarred or
+"STATION.csv" format that have been downloaded from the #' United States
+National Center for Environmental Information's (\acronym{NCEI})
+download page. Three new elements; saturation vapour pressure (es), actual
+vapour pressure (ea) and relative humidity are calculated and returned in the
+final data.  All units are converted to International System of Units (SI),
+\emph{e.g.}, Fahrenheit to Celsius and inches to millimetres.
 }
 \details{
 Parallel processing can be enabled using \code{\link[future]{plan}} to set
-up a parallel backend of your choice, e.g.,
+up a parallel backend of your choice, \emph{e.g.},
 \code{future::plan("multisession")}.  See examples for more.
 
 If multiple stations are given, data are summarised for each year by station,
 which include vapour pressure and relative humidity elements calculated from
-existing data in \acronym{GSOD}. Else, single stations are tidied and a data
+existing data in \acronym{GSOD}.  Else, single stations are tidied and a data
 frame is returned.
 
 All missing values in resulting files are represented as \code{NA} regardless
 of which field they occur in.
 
-Only station files in the original ".op.gz" file format are supported by this
-function.  If you have downloaded the full annual "gsod_YYYY.tar" file you
+Only station files in the original "csv" file format are supported by this
+function.  If you have downloaded the full annual "YYYY.tar.gz" file you
 will need to extract the individual station files from the tar file first to
 use this function.
+
+Note that \code{reformat_GSOD()} will attempt to reformat any ".csv" files
+found in the \code{dsn} that you provide.  If there are non-GSOD files present
+this will lead to errors.
 
 For a complete list of the fields and description of the contents and units,
 please refer to Appendix 1 in the \pkg{GSODR} vignette,
@@ -68,10 +67,12 @@ these data by others must provide this same notification.}
 \donttest{
 
 # Download data to 'tempdir()'
-download.file(url =
-  "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/2010/955510-99999-2010.op.gz",
-     	destfile = file.path(tempdir(), "955510-99999-2010.op.gz"),
-     	mode = "wb")
+download.file(
+  url =
+    "https://www.ncei.noaa.gov/data/global-summary-of-the-day/access/2010/95551099999.csv",
+  destfile = file.path(tempdir(), "95551099999.csv"),
+  mode = "wb"
+)
 
 # Reformat station data files in R's tempdir() directory
 tbar <- reformat_GSOD(dsn = tempdir())
@@ -79,11 +80,6 @@ tbar <- reformat_GSOD(dsn = tempdir())
 tbar
 }
 
-}
-\references{
-{Jarvis, A., Reuter, H.I, Nelson, A., Guevara, E. (2008)
-Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
-90m Database \url{http://srtm.csi.cgiar.org}}
 }
 \seealso{
 For automated downloading and tidying see the \code{\link{get_GSOD}}
@@ -93,5 +89,5 @@ and expanding annual \acronym{GSOD} files and cleaning station files.
 \code{\link{get_GSOD}}
 }
 \author{
-Adam H Sparks, \email{adamhsparks@gmail.com}
+Adam H. Sparks, \email{adamhsparks@gmail.com}
 }

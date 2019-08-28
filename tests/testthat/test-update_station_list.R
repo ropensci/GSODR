@@ -20,23 +20,17 @@ test_that("update_station_list() downloads and imports proper file", {
   write(ans, f)
   expect_message(update_station_list())
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))
-  expect_equal(ncol(isd_history), 13)
+  expect_equal(ncol(isd_history), 8)
   expect_named(
     isd_history,
-    c(
-      "USAF",
-      "WBAN",
-      "STN_NAME",
+    c("STNID",
+      "NAME",
       "CTRY",
       "STATE",
-      "CALL",
       "LAT",
       "LON",
-      "ELEV_M",
       "BEGIN",
-      "END",
-      "STNID",
-      "ELEV_M_SRTM_90m"
+      "END"
     )
   )
   expect_equal(options("timeout")[[1]], 60)

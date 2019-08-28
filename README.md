@@ -14,24 +14,19 @@ _GSODR_: Global Surface Summary of the Day (GSOD) Weather Data Client for R <img
 
 The GSOD or
 [Global Surface Summary of the Day (GSOD)](https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod)
-data provided by the US National Centers for Environmental Information
-(NCEI) are a valuable source of weather data with global coverage.
-However, the data files are cumbersome and difficult to work with.
-_GSODR_ aims to make it easy to find, transfer and format the data you
-need for use in analysis and provides five main functions for
-facilitating this:
+data provided by the US National Centers for Environmental Information (NCEI)
+are a valuable source of weather data with global coverage. 
+_GSODR_ aims to make it easy to find, transfer and format the data you need for
+use in analysis and provides five main functions for facilitating this:
 
-- `get_GSOD()` - this function queries and transfers files from the NCEI's
-FTP server, reformats them and returns a tidy data frame in R. **NOTE** If you 
-have used file exporting capabilities in versions prior to 1.2.0, these have
-been removed now in the latest version. This means less dependencies when
-installing. Examples of how to export the data are found in the GSODR vignette.
+- `get_GSOD()` - this function queries and transfers files from the NCEI's web
+server, reformats them and returns a data frame in R.
 
 - `reformat_GSOD()` - this function takes individual station files from the
 local disk and re-formats them returning a tidy data frame in R
 
 - `nearest_stations()` - this function returns a vector of station IDs that fall
-within the given radius (kilometres) of a point given as latitude and longitude
+within the given radius (kilometres) of a point given as latitude and longitude.
 
 - `update_station_list()` - this function downloads the latest station list from
 the NCEI's FTP server updates the package's internal database of stations and
@@ -99,29 +94,29 @@ relies on [_GSODR_], but provides data in the package rather than downloading
 so it is faster (though available data may be out of date).
 
 [_rnoaa_](https://CRAN.R-project.org/package=rnoaa), from
-[rOpenSci](https://ropensci.github.io/rnoaa/) offers tools for interacting with
+[rOpenSci](https://docs.ropensci.org/rnoaa/) offers tools for interacting with
 and downloading weather data from the United States National Oceanic and
 Atmospheric Administration but lacks support for GSOD data.
 
 [_bomrang_](https://CRAN.R-project.org/package=bomrang), from
-[rOpenSci](https://ropensci.github.io/bomrang/) provides functions to interface
+[rOpenSci](https://docs.ropensci.org/bomrang/) provides functions to interface
 with Australia Government Bureau of Meteorology (BoM) data, fetching current and
 historical data including précis and marine forecasts, current weather data
 from stations, agriculture bulletin data, BoM 0900 or 1500 weather bulletins and
 satellite and radar imagery.
 
 [_riem_](https://CRAN.R-project.org/package=riem) from
-[rOpenSci](https://ropensci.github.io/riem/) allows to get weather data from
+[rOpenSci](https://docs.ropensci.org/riem/) allows to get weather data from
 Automated Surface Observing System (ASOS) stations (airports) in the whole world
 thanks to the Iowa Environment Mesonet website.
 
 [_weathercan_](https://CRAN.R-project.org/package=weathercan) from
-[rOpenSci](https://ropensci.github.io/weathercan/) makes it easier to search for
+[rOpenSci](https://docs.ropensci.org/weathercan/) makes it easier to search for
 and download multiple months/years of historical weather data from Environment
 and Climate Change Canada (ECCC) website.
 
 [_CliFlo_](https://CRAN.R-project.org/package=clifro) from
-[rOpenSci](https://github.com/ropensci/clifro/) is a web portal to the New Zealand
+[rOpenSci](https://docs.ropensci.org/clifro/) is a web portal to the New Zealand
 National Climate Database and provides public access (via subscription) to
 around 6,500 various climate stations (see <https://cliflo.niwa.co.nz/> for more
 information). Collating and manipulating data from CliFlo (hence clifro) and
@@ -135,20 +130,6 @@ selection of functions to fetch weather data from Weather Underground and return
 it as a clean data frame.
 
 ## Notes
-
-### Other Data Sources
-
-#### Elevation Values
-
-90&nbsp;m hole-filled SRTM digital elevation (Jarvis _et al._ 2008) was used
-to identify and correct/remove elevation errors in data for station
-locations between -60˚ and 60˚ latitude. This applies to cases here
-where elevation was missing in the reported values as well. In case the
-station reported an elevation and the DEM does not, the station reported
-is taken. For stations beyond -60˚ and 60˚ latitude, the values are
-station reported values in every instance. See
-<https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md>
-for more detail on the correction methods.
 
 ### WMO Resolution 40. NOAA Policy
 
@@ -176,11 +157,5 @@ _Users of these data should take into account the following (from the [NCEI webs
 - Please note that the _GSODR_ project is released with a
 [Contributor Code of Conduct](CONDUCT.md). By participating in the _GSODR_
 project you agree to abide by its terms.
-
-## References
-
-Jarvis, A., Reuter, H. I., Nelson, A., Guevara, E. (2008) Hole-filled
-SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m
-Database (<http://srtm.csi.cgiar.org>)
 
 [![ropensci](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org)

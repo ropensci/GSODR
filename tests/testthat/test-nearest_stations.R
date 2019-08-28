@@ -7,7 +7,7 @@ test_that("nearest stations returns character value station IDs", {
     nearest_stations(LAT = -27.5598,
                      LON = 151.9507,
                      distance = 100)
-  expect_length(n, 17)
+  expect_length(n, 9)
   expect_type(n, "character")
   expect_equal(
     n,
@@ -19,18 +19,9 @@ test_that("nearest stations returns character value station IDs", {
       "945550-99999",
       "945620-99999",
       "945951-99999",
-      "949999-00170",
-      "949999-00172",
-      "949999-00176",
-      "949999-00179",
-      "949999-00180",
-      "949999-00183",
-      "949999-00185",
-      "949999-00186",
       "955510-99999",
       "955550-99999"
     )
   )
   rm(n)
-
 })

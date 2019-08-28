@@ -11,17 +11,18 @@ get_GSOD(years, station = NULL, country = NULL, max_missing = NULL,
 \item{years}{Year(s) of weather data to download.}
 
 \item{station}{Optional. Specify a station or multiple stations for which to
-retrieve, check and clean weather data using \var{STNID}. The \acronym{NCEI}
-reports years for which the data are available. This function checks against
-these years. However, not all cases are properly documented and in some cases
-files may not exist on the \acronym{FTP} server even though it is indicated
-that data was recorded for the station for a particular year. If a station is
-specified that does not have an existing file on the server, this function
-will silently fail and move on to existing files for download and cleaning
-from the \acronym{FTP} server.}
+retrieve, check and clean weather data using \var{STATION}. The
+\acronym{NCEI} reports years for which the data are available. This function
+checks against these years. However, not all cases are properly documented
+and in some cases files may not exist for download even though it is
+indicated that data was recorded for the station for a particular year. If a
+station is specified that does not have an existing file on the server, this
+function will silently fail and move on to existing files for download and
+cleaning.}
 
 \item{country}{Optional. Specify a country for which to retrieve weather
-data; full name or \acronym{ISO} codes can be used.}
+data; full name, 2 or 3 letter \acronym{ISO} or 2 letter \acronym{FIPS} codes
+can be used. All stations within the specified country will be returned.}
 
 \item{max_missing}{Optional. The maximum number of days allowed to be missing
 from a station's data before it is excluded from final file output.}
@@ -32,8 +33,8 @@ Set to \code{TRUE} to include only stations within the confines of these
 latitudes.}
 }
 \value{
-A data frame as a \code{\link[tibble]{tibble}} object of weather
-data.
+A data frame as a \code{\link[data.table]{data.table}} object of
+\acronym{GSOD} weather data.
 }
 \description{
 This function automates downloading, cleaning, reformatting of data from
@@ -44,26 +45,12 @@ vapour pressure (ea) and relative humidity (RH) are calculated and returned
 in the final data frame.
 
 Parallel processing can be enabled using \code{\link[future]{plan}} to set
-up a parallel backend of your choice, e.g.,
-\code{future::plan("multisession")}. See examples for more.
+up a parallel backend of your choice, \emph{e.g.},
+\code{future::plan("multisession")}.
 }
 \details{
-Stations reporting a latitude of < -90 or > 90 or longitude of < -180 or >
-180 are removed. Stations may be individually checked for number of
-missing days to assure data quality and omitting stations with too many
-missing observations.
-
-All units are converted to International System of Units (SI), \emph{e.g.}
+All units are converted to International System of Units (SI), \emph{e.g.},
 Fahrenheit to Celsius and inches to millimetres.
-
-Alternative elevation measurements are supplied for missing values or values
-found to be questionable based on the Consultative Group for International
-Agricultural Research's Consortium for Spatial Information group's
-(\acronym{CGIAR-CSI}) Shuttle Radar Topography Mission 90 metre
-(\acronym{SRTM} 90m) digital elevation data based on \acronym{NASA}'s
-original \acronym{SRTM} 90m data. Further information on these data and
-methods can be found on \pkg{GSODR}'s
-\href{https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md}{GitHub repository}.
 
 Data summarise each year by station, which include vapour pressure and
 relative humidity elements calculated from existing data in \acronym{GSOD}.
@@ -79,6 +66,13 @@ For more information see the description of the data provided by
 \acronym{NCEI}, \url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
 }
 \note{
+\pkg{GSODR} attempts to validate year and station combination requests,
+however, in certain cases the start and end date may encompass years where
+no data is available. In these cases no data will be returned. It is
+suggested that the user check the latest data availability for the station(s)
+desired using \link{get_inventory} as this list is frequently updated by the
+'NCEI' and is not shipped with \pkg{GSODR}.
+
 While \pkg{GSODR} does not distribute GSOD weather data, users of
 the data should note the conditions that the U.S. \acronym{NCEI} places upon
 the \acronym{GSOD} data.
@@ -99,31 +93,11 @@ tbar
 AUS <- get_GSOD(years = 2010:2015, country = "Australia")
 
 AUS
-
-# Download agroclimatology data for 2015 using parallel processing
-future::plan("multisession")
-ag <- get_GSOD(years = 2015, agroclimatology = TRUE)
-
-ag
-
-# Download global data for 2010 to 2015 with a maximum allowed 5 missing days
-# of data using parallel processing
-
-future::plan("multisession")
-global <- get_GSOD(years = 2010:2015, max_missing = 5)
-
-global
-
 }
-}
-\references{
-{Jarvis, A., Reuter, H. I, Nelson, A., Guevara, E. (2008)
-Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
-90m Database \url{http://srtm.csi.cgiar.org}}
 }
 \seealso{
 \code{\link{reformat_GSOD}}
 }
 \author{
-Adam H Sparks, \email{adamhsparks@gmail.com}
+Adam H. Sparks, \email{adamhsparks@gmail.com}
 }
