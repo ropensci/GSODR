@@ -1,0 +1,22 @@
+language: r
+cache: packages
+r_check_args: --as-cran --run-donttest
+
+## Set up the matrix of different runs
+matrix:
+  include:
+  - r: release
+    env: R_CODECOV=true
+  - os: linux
+    r: devel
+
+after_failure:
+  - ./pkg-build.sh dump_logs
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change
+
+after_success:
+  - Rscript -e 'covr::codecov()'
