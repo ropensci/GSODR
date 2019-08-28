@@ -94,29 +94,29 @@ relies on [_GSODR_], but provides data in the package rather than downloading
 so it is faster (though available data may be out of date).
 
 [_rnoaa_](https://CRAN.R-project.org/package=rnoaa), from
-[rOpenSci](https://ropensci.github.io/rnoaa/) offers tools for interacting with
+[rOpenSci](https://docs.ropensci.org/rnoaa/) offers tools for interacting with
 and downloading weather data from the United States National Oceanic and
 Atmospheric Administration but lacks support for GSOD data.
 
 [_bomrang_](https://CRAN.R-project.org/package=bomrang), from
-[rOpenSci](https://ropensci.github.io/bomrang/) provides functions to interface
+[rOpenSci](https://docs.ropensci.org/bomrang/) provides functions to interface
 with Australia Government Bureau of Meteorology (BoM) data, fetching current and
 historical data including précis and marine forecasts, current weather data
 from stations, agriculture bulletin data, BoM 0900 or 1500 weather bulletins and
 satellite and radar imagery.
 
 [_riem_](https://CRAN.R-project.org/package=riem) from
-[rOpenSci](https://ropensci.github.io/riem/) allows to get weather data from
+[rOpenSci](https://docs.ropensci.org/riem/) allows to get weather data from
 Automated Surface Observing System (ASOS) stations (airports) in the whole world
 thanks to the Iowa Environment Mesonet website.
 
 [_weathercan_](https://CRAN.R-project.org/package=weathercan) from
-[rOpenSci](https://ropensci.github.io/weathercan/) makes it easier to search for
+[rOpenSci](https://docs.ropensci.org/weathercan/) makes it easier to search for
 and download multiple months/years of historical weather data from Environment
 and Climate Change Canada (ECCC) website.
 
 [_CliFlo_](https://CRAN.R-project.org/package=clifro) from
-[rOpenSci](https://github.com/ropensci/clifro/) is a web portal to the New Zealand
+[rOpenSci](https://docs.ropensci.org/clifro/) is a web portal to the New Zealand
 National Climate Database and provides public access (via subscription) to
 around 6,500 various climate stations (see <https://cliflo.niwa.co.nz/> for more
 information). Collating and manipulating data from CliFlo (hence clifro) and

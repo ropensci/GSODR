@@ -261,4 +261,3 @@ test_that("when year is selected for a station not providing it, error", {
           expect_message(get_GSOD(years = 1950, station = "959360-99999"),
                        regexp = "This station, 959360-99999, only provides")
   })
-
