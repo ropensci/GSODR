@@ -221,7 +221,6 @@ test_that("unique stations are returned, tempdir() is cleaned up on exit", {
 # Check that agroclimatology is returned when requested ------------------------
 test_that("agroclimatology data is returned as requested", {
   skip_on_cran()
-  future::plan("multisession") # use parallel processing to make tests faster
   a <- get_GSOD(years = 1929, agroclimatology = TRUE)
   expect_lt(max(a$LATITUDE), 60)
   expect_gt(min(a$LATITUDE), -60)
