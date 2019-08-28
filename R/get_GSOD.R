@@ -10,26 +10,13 @@
 #' in the final data frame.
 #'
 #' Parallel processing can be enabled using \code{\link[future]{plan}} to set
-#' up a parallel backend of your choice, e.g.,
-#' \code{future::plan("multisession")}. See examples for more.
+#' up a parallel backend of your choice, \emph{e.g.},
+#' \code{future::plan("multisession")}.
 #'
 #' @details
-#' Stations reporting a latitude of < -90 or > 90 or longitude of < -180 or >
-#' 180 are removed. Stations may be individually checked for number of
-#' missing days to assure data quality and omitting stations with too many
-#' missing observations.
 #'
-#' All units are converted to International System of Units (SI), \emph{e.g.}
+#' All units are converted to International System of Units (SI), \emph{e.g.},
 #' Fahrenheit to Celsius and inches to millimetres.
-#'
-#' Alternative elevation measurements are supplied for missing values or values
-#' found to be questionable based on the Consultative Group for International
-#' Agricultural Research's Consortium for Spatial Information group's
-#' (\acronym{CGIAR-CSI}) Shuttle Radar Topography Mission 90 metre
-#' (\acronym{SRTM} 90m) digital elevation data based on \acronym{NASA}'s
-#' original \acronym{SRTM} 90m data. Further information on these data and
-#' methods can be found on \pkg{GSODR}'s
-#' \href{https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md}{GitHub repository}.
 #'
 #' Data summarise each year by station, which include vapour pressure and
 #' relative humidity elements calculated from existing data in \acronym{GSOD}.
@@ -44,6 +31,33 @@
 #' For more information see the description of the data provided by
 #' \acronym{NCEI}, \url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
 #'
+#' @param years Year(s) of weather data to download.
+#' @param station Optional. Specify a station or multiple stations for which to
+#' retrieve, check and clean weather data using \var{STATION}. The
+#' \acronym{NCEI} reports years for which the data are available. This function
+#' checks against these years. However, not all cases are properly documented
+#' and in some cases files may not exist for download even though it is
+#' indicated that data was recorded for the station for a particular year. If a
+#' station is specified that does not have an existing file on the server, this
+#' function will silently fail and move on to existing files for download and
+#' cleaning.
+#' @param country Optional. Specify a country for which to retrieve weather
+#' data; full name, 2 or 3 letter \acronym{ISO} or 2 letter \acronym{FIPS} codes
+#' can be used. All stations within the specified country will be returned.
+#' @param max_missing Optional. The maximum number of days allowed to be missing
+#' from a station's data before it is excluded from final file output.
+#' @param agroclimatology Optional. Logical. Only clean data for stations
+#' between latitudes 60 and -60 for agroclimatology work, defaults to `FALSE`.
+#' Set to `TRUE` to include only stations within the confines of these
+#' latitudes.
+#'
+#' @note \pkg{GSODR} attempts to validate year and station combination requests,
+#' however, in certain cases the start and end date may encompass years where
+#' no data is available. In these cases no data will be returned. It is
+#' suggested that the user check the latest data availability for the station(s)
+#' desired using \link{get_inventory} as this list is frequently updated by the
+#' 'NCEI' and is not shipped with \pkg{GSODR}.
+#'
 #' @note While \pkg{GSODR} does not distribute GSOD weather data, users of
 #' the data should note the conditions that the U.S. \acronym{NCEI} places upon
 #' the \acronym{GSOD} data.
@@ -52,25 +66,6 @@
 #' non-commercial international activities without restriction. The non-U.S.
 #' data cannot be redistributed for commercial purposes. Re-distribution of
 #' these data by others must provide this same notification.}
-#'
-#' @param years Year(s) of weather data to download.
-#' @param station Optional. Specify a station or multiple stations for which to
-#' retrieve, check and clean weather data using \var{STNID}. The \acronym{NCEI}
-#' reports years for which the data are available. This function checks against
-#' these years. However, not all cases are properly documented and in some cases
-#' files may not exist on the \acronym{FTP} server even though it is indicated
-#' that data was recorded for the station for a particular year. If a station is
-#' specified that does not have an existing file on the server, this function
-#' will silently fail and move on to existing files for download and cleaning
-#' from the \acronym{FTP} server.
-#' @param country Optional. Specify a country for which to retrieve weather
-#' data; full name or \acronym{ISO} codes can be used.
-#' @param max_missing Optional. The maximum number of days allowed to be missing
-#' from a station's data before it is excluded from final file output.
-#' @param agroclimatology Optional. Logical. Only clean data for stations
-#' between latitudes 60 and -60 for agroclimatology work, defaults to `FALSE`.
-#' Set to `TRUE` to include only stations within the confines of these
-#' latitudes.
 #'
 #' @examples
 #' \donttest{
@@ -83,35 +78,15 @@
 #' AUS <- get_GSOD(years = 2010:2015, country = "Australia")
 #'
 #' AUS
-#'
-#' # Download agroclimatology data for 2015 using parallel processing
-#' future::plan("multisession")
-#' ag <- get_GSOD(years = 2015, agroclimatology = TRUE)
-#'
-#' ag
-#'
-#' # Download global data for 2010 to 2015 with a maximum allowed 5 missing days
-#' # of data using parallel processing
-#'
-#' future::plan("multisession")
-#' global <- get_GSOD(years = 2010:2015, max_missing = 5)
-#'
-#' global
-#'
 #' }
-#' @author Adam H Sparks, \email{adamhsparks@@gmail.com}
+#' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
 #'
-#' @references {Jarvis, A., Reuter, H. I, Nelson, A., Guevara, E. (2008)
-#' Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
-#' 90m Database \url{http://srtm.csi.cgiar.org}}
-#'
-#' @return A data frame as a \code{\link[tibble]{tibble}} object of weather
-#' data.
+#' @return A data frame as a \code{\link[data.table]{data.table}} object of
+#' \acronym{GSOD} weather data.
 #'
 #' @seealso
 #' \code{\link{reformat_GSOD}}
 #'
-#' @importFrom magrittr %>%
 #' @export get_GSOD
 
 get_GSOD <- function(years,
@@ -123,8 +98,7 @@ get_GSOD <- function(years,
   original_timeout <- options("timeout")[[1]]
   options(timeout = 300)
   on.exit(options(timeout = original_timeout))
-  cache_dir <- tempdir()
-  ftp_base <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/%s/"
+
   # Validate user inputs -------------------------------------------------------
   .validate_years(years)
   # Validate stations for missing days -----------------------------------------
@@ -145,6 +119,11 @@ get_GSOD <- function(years,
     }
   }
 
+  if (isTRUE(agroclimatology) & !is.null(station)) {
+    stop(call. = FALSE,
+         "You cannot specify a single station along with agroclimatology.")
+  }
+
 # CRAN NOTE avoidance
   isd_history <- NULL # nocov
 
@@ -152,20 +131,21 @@ get_GSOD <- function(years,
   load(system.file("extdata", "isd_history.rda", package = "GSODR")) # nocov
 
   # Validate user entered stations for existence in stations list from NCEI
-  purrr::walk(
-    .x = station,
-    .f = .validate_station,
+  invisible(lapply(
+    X = station,
+    FUN = .validate_station,
     isd_history = isd_history,
     years = years
-  )
+  ))
 
-  # Download files from server -----------------------------------------------
-  file_list <- .download_files(ftp_base, station, years, cache_dir)
+  # Download files from server -------------------------------------------------
+  # remove "-" from station to construct proper URL
+  file_list <- .download_files(station, years)
 
   # Subset file_list for agroclimatology only stations -----------------------
   if (isTRUE(agroclimatology)) {
     file_list <-
-      .agroclimatology_list(file_list, isd_history, cache_dir, years)
+      .agroclimatology_list(file_list, isd_history, years)
   }
 
   # Subset file_list for specified country -------------------------------------
@@ -182,7 +162,6 @@ get_GSOD <- function(years,
                            country_list,
                            file_list,
                            isd_history,
-                           cache_dir,
                            years)
   }
 
@@ -190,13 +169,17 @@ get_GSOD <- function(years,
   if (!is.null(max_missing)) {
     file_list <-
       .validate_missing_days(max_missing, file_list)
+    if (length(file_list) == 0) {
+      stop(call. = FALSE,
+           "There were no stations that had a max of ", max_missing, " days.")
+    }
   }
 
-  GSOD_XY <- apply_process_gz(file_list, isd_history)
+  GSOD <- .apply_process_csv(file_list, isd_history)
 
   # remove any leftover files from download to prevent poluting a new run
-  file.remove(list.files(tempdir(), pattern = ".gz$", full.names = TRUE))
+  file.remove(list.files(tempdir(), pattern = ".csv$", full.names = TRUE))
 
-  return(GSOD_XY)
+  return(GSOD)
 }
 

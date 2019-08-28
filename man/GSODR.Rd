@@ -25,10 +25,6 @@ information, state, country, latitude, longitude, elevation, weather
 observations and associated flags.
 }
 \details{
-Additional data are included: a list of elevation values for stations
-between -60 and 60 degrees latitude derived from the Shuttle Radar
-Topography Measuring Mission (\acronym{SRTM}).
-
 For information on the \acronym{GSOD} data from \acronym{NCEI}, please see
 the \acronym{GSOD} readme.txt file available from,
 \url{http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt}.
@@ -39,23 +35,6 @@ For climate data that have been formatted specifically for use with the
 \url{https://adamhsparks.github.io/GSODRdata/}. Four data frames of
 climate data are provided from various sources for \acronym{GSOD} station
 locations.
-}
-\references{
-Karger, D. N., Conrad, O., Bohner, J., Kawohl, T., Kreft, H., Soria-Auza,
-R. W., \emph{et al}. (2016) Climatologies at high resolution for the Earth
-land surface areas. \emph{arXiv preprint} \bold{arXiv:1607.00217}
-
-New, M., Lister, D., Hulme, M., Makin, I., (2002) A high-resolution data
-set of surface climate over global land areas. \emph{Climate Research}
-\bold{21}:1--25
-
-Sparks A., Hengl T., Nelson A. (2018) GSODRdata: Extra Climate Data for
-the GSODR Package. R package version 0.2.10,
-\url{https://adamhsparks.github.io/GSODRdata/index.html}.
-
-Wilson A. M., Jetz W. (2016) Remotely Sensed High-Resolution Global Cloud
-Dynamics for Predicting Ecosystem and Biodiversity Distributions.
-\emph{PLoS Biol} \bold{14(3)}: e1002415. doi:10.1371/journal. pbio.1002415
 }
 \seealso{
 \strong{GSODR functions:}

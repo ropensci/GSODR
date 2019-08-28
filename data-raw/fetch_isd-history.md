@@ -1,359 +1,113 @@
 Fetch, Clean and Correct Altitude in GSOD ‘isd\_history.csv’ Data
 ================
 Adam H. Sparks
-2019-01-18
+2019-08-16
 
 # Introduction
 
-This document details how the GSOD station history data file,
-[“isd-history.csv”](ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv),
-is fetched from the NCEI ftp server, error checked and new elevation
-values generated. The new elevation values are then saved for inclusion
-in package as `/extdata/isd_history.rda`. The resulting values are
-merged with the most recent station history data file from the NCEI when
-the user runs the `get_GSOD()` function. The resulting data frame of
-station information, based on the merging of the `corrected_elev` data
-frame with the most recently available “isd-history.csv” file, will
-result in the following changes to the data:
+The isd\_history file details station metadata including the start and
+stop years used by GSODR to pre-check requests before querying the
+server for download and the country code used by GSODR when subsetting
+for requests by country. The following changes are made to the raw data
+file for inclusion in *GSODR*:
 
-  - Stations where latitude or longitude are `NA` or both 0 are removed
+  - isd\_history where latitude or longitude are `NA` or both 0 are
+    removed
 
-  - Stations where latitude is \< -90˚ or \> 90˚ are removed
+  - isd\_history where latitude is \< -90˚ or \> 90˚ are removed
 
-  - Stations where longitude is \< -180˚ or \> 180˚ are removed
+  - isd\_history where longitude is \< -180˚ or \> 180˚ are removed
 
   - A new field, STNID, a concatenation of the USAF and WBAN fields, is
     added
-
-  - Stations are checked against Natural Earth 1:10 ADM0 cultural data,
-    stations not mapping in the isd-history reported country are dropped
-
-  - 90m hole-filled SRTM digital elevation (Jarvis *et al.* 2008) is
-    used to identify and correct/remove elevation errors in data for
-    station locations between -60˚ and 60˚ latitude. This applies to
-    cases here where elevation was missing in the reported values as
-    well. In case the station reported an elevation and the DEM does
-    not, the station reported value is taken. For stations beyond -60˚
-    and 60˚ latitude, the values are station reported values in every
-    instance for the 90m column.
 
 # Data Processing
 
 ## Set up workspace
 
 ``` r
-if (!require("dplyr")) {
-  install.packages("dplyr", repos = "https://cran.rstudio.com/")
-}
-
-if (!require("sp")) {
-  install.packages("sp", repos = "https://cran.rstudio.com/")
-}
-
-if (!require("parallel")) {
-  install.packages("parallel", repos = "https://cran.rstudio.com/")
-}
-
-if (!require("doParallel")) {
-  install.packages("doParallel", repos = "https://cran.rstudio.com/")
-}
-
-if (!require("foreach")) {
-  install.packages("foreach", repos = "https://cran.rstudio.com/")
-}
-
-if (!require("ggplot2")) {
-  install.packages("ggplot2", repos = "https://cran.rstudio.com/")
-}
-
-if (!require("raster")) {
-  install.packages("raster", repos = "https://cran.rstudio.com/")
-}
-
-if (!require("readr")) {
-  install.packages("readr", repos = "https://cran.rstudio.com/")
-}
-
-if (!require("rnaturalearth")) {
-  install.packages("rnaturalearth", repos = "https://cran.rstudio.com/")
-}
-
-if (!require("hrbrthemes")) {
-  install.packages("hrbrthemes", repos = "https://cran.rstudio.com/")
-}
-
 if (!require("sessioninfo")) {
   install.packages("sessioninfo", repos = "https://cran.rstudio.com/")
 }
 
+if (!require("skimr")) {
+  install.packages("skimr", repos = "https://cran.rstudio.com/")
+}
 
-library(magrittr) # comes with dplyr above
-
-dem_tiles <- list.files(path.expand("~/Data/CGIAR-CSI SRTM"), 
-                        pattern = glob2rx("*.tif"), full.names = TRUE)
-crs <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
-cor_stations <- list()
-tf <- tempfile()
+if (!require("data.table")) {
+  install.packages("data.table", repos = "https://cran.rstudio.com/")
+}
 ```
 
-## Download data from Natural Earth and NCEI
+## Download and clean data
 
 ``` r
-# import Natural Earth cultural 1:10m data
-NE <- ne_countries(scale = 10)
-
 # download data
-stations <- read_csv(
-  "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
-  col_types = "ccccccddddd",
-  col_names = c("USAF", "WBAN", "STN_NAME", "CTRY", "STATE", "CALL",
-                "LAT", "LON", "ELEV_M", "BEGIN", "END"), skip = 1)
+isd_history <- fread("ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv")
 
-stations[stations == -999] <- NA
-stations[stations == -999.9] <- NA
-```
-
-## Reformat and clean station data file from NCEI
-
-``` r
 # clean data
-stations <- stations[!is.na(stations$LAT) & !is.na(stations$LON), ]
-stations <- stations[stations$LAT != 0 & stations$LON != 0, ]
-stations <- stations[stations$LAT > -90 & stations$LAT < 90, ]
-stations <- stations[stations$LON > -180 & stations$LON < 180, ]
-stations$STNID <- as.character(paste(stations$USAF, stations$WBAN, sep = "-"))
+isd_history[isd_history == -999] <- NA
+isd_history[isd_history == -999.9] <- NA
+isd_history <- isd_history[!is.na(isd_history$LAT) & !is.na(isd_history$LON), ]
+isd_history <- isd_history[isd_history$LAT != 0 & isd_history$LON != 0, ]
+isd_history <- isd_history[isd_history$LAT > -90 & isd_history$LAT < 90, ]
+isd_history <- isd_history[isd_history$LON > -180 & isd_history$LON < 180, ]
 ```
 
-## Check data for inconsistencies
-
-### Check for country of station location
-
-GSOD data have some inconsistencies in them, some of this has been
-removed above with filtering. Further filtering is used remove stations
-reporting locations in countries that do not match the physical
-coordinates reported. Using [Natural Earth Data 1:10 Cultural
-Data](http://www.naturalearthdata.com/downloads/10m-cultural-vectors/),
-the stations reported countries are checked against the country in which
-the coordinates map.
-
-Also, reported elevation may differ from actual. Hijmans *et al.* (2005)
-created their own digital elevation model using Jarvis *et al.* (2004)
-and [GTOPO30 data](https://lta.cr.usgs.gov/GTOPO30) for areas where
-there was no SRTM data available (\>+/-60˚ latitude). Here only the
-hole-filled SRTM data, V4 (Jarvis *et al.* 2008) was used for correction
-of agroclimatology data (-60˚ to 60˚ latitude). Any incorrect station
-elevations beyond these values were ignored in this data set. Stations
-with incorrect elevation were identified using `raster::extract(x, y,
-buffer = 200, fun = mean)` so that surrounding cells are also used to
-determine the elevation at that point, reducing the chances of over or
-underestimating in mountainous areas. See Hijmans *et al.* (2005) for
-more detailed information on this methodology.
-
-The hole-filled SRTM data is large enough that it won’t all fit
-in-memory on most desktop computers. Using tiles allows this process to
-run on a modest machine with minimal effort but does take some time to
-loop through all of the tiles.
-
-Data can be downloaded from the
-[CGIAR-CSI’s](http://csi.cgiar.org/WhtIsCGIAR_CSI.asp) ftp server,
-[srtm.csi.cgiar.org](ftp://srtm.csi.cgiar.org), using an FTP client to
-facilitate this next
-step.
+## Add/drop columns and save to disk
 
 ``` r
-# quality check station locations for reported country and lat/lon position
-# agreement
+# add STNID column
+isd_history[, STNID := paste(USAF, WBAN, sep = "-")]
+setcolorder(isd_history, "STNID")
+setnames(isd_history, "STATION NAME", "NAME")
+setkey(isd_history, "STNID")
 
-# create spatial object to check for location
-xy <- as.data.frame(stations)
-coordinates(xy) <- ~ LON + LAT
-proj4string(xy) <- CRS(crs)
+# drop stations not in GSOD data
+isd_history[, STNID_len := nchar(STNID)]
+isd_history <- subset(isd_history, STNID_len == 12)
 
-# check for location in country
-point_check <- over(xy, NE)
-point_check <- as.data.frame(point_check)
-stations_discard <- point_check[point_check$FIPS %in% point_check$FIPS_10_ == FALSE, ]
-nrow(stations_discard)
+# remove extra columns
+isd_history[, c("USAF", "WBAN", "ICAO", "ELEV(M)", "STNID_len") := NULL]
 ```
 
-    ## [1] 0
-
-Zero observations (rows) in `stations_discard`, the data look good, no
-need to remove any
-
-### Elevation data supplement
-
-Next use the `raster::extract()` function to get the mean elevation data
-from the 90m elevation data and supplement the elevation data from the
-NCEI.
-
-``` r
-# create a spatial object for extracting elevation values using spatial points
-stations <- as.data.frame(stations)
-coordinates(stations) <- ~ LON + LAT
-proj4string(stations) <- CRS(crs)
-
-# set up cluster for parallel processing
-library(foreach)
-cl <- makeCluster(detectCores())
-registerDoParallel(cl)
-
-corrected_elev <- bind_rows(
-  foreach(i = dem_tiles, .packages = c("magrittr", "raster", "dplyr")) %dopar% {
-    # Load the DEM tile
-    dem <- raster(i)
-    sub_stations <- crop(stations, dem)
-    
-    # in some cases the DEM represents areas where there is no station
-    # check for that here and if no stations, go on to next iteration
-    if (!is.null(sub_stations)) {
-      # use a 200m buffer to extract elevation from the DEM
-      
-      sub_stations$ELEV_M_SRTM_90m <- 
-        extract(dem, sub_stations,
-                buffer = 200,
-                fun = mean)
-      
-      # convert spatial object back to normal data frame and add new fields
-      sub_stations <- as.data.frame(sub_stations)
-      
-      # set any factors back to character
-      sub_stations <- sub_stations %>%
-        mutate_if(is.factor, as.character)
-      
-      return(sub_stations)
-    }
-  }
-)
-
-# stop cluster
-stopCluster(cl)
-```
-
-Some stations occur in areas where DEM has no data, in this case, use
-original station elevation for these stations.
-
-``` r
-corrected_elev <- mutate(corrected_elev,
-                         ELEV_M_SRTM_90m = ifelse(
-                           is.na(ELEV_M_SRTM_90m),
-                           ELEV_M, ELEV_M_SRTM_90m))
-```
-
-In some cases duplicate stations occur, use the mean value of duplicate
-rows for corrected elevation and create a data frame with only `STNID`
-and the new elevation values. `STNID` is used for a left-join with the
-`stations` object.
-
-``` r
-corrected_elev <- corrected_elev %>%
-  group_by(STNID) %>%
-  summarise(ELEV_M_SRTM_90m = mean(ELEV_M_SRTM_90m))
-```
-
-Round `ELEV_M_SRTM_90m` field to whole number in cases where station
-reported data was used.
-
-``` r
-corrected_elev[, 2] <- round(corrected_elev[, 2], 0)
-```
-
-Left-join the new station elevation data with the `stations` object. For
-stations above/below 60/-60 latitude or buoys, `ELEV_M_SRTM_90m` will be
-`NA` as there is no SRTM data for these locations.
-
-``` r
-# convert any factors in stations object to character for left_join
-stations <- mutate_if(
-  as.data.frame(stations),
-  is.factor,
-  as.character)
-
-# Perform left join to join corrected elevation with original station data,
-# this will include stations below/above -60/60
-isd_history <- 
-  left_join(stations, corrected_elev,
-            by = "STNID") %>% 
-  as_tibble() %>% 
-  mutate(BEGIN = as.integer(BEGIN),
-         END = as.integer(END))
-
-str(isd_history)
-```
-
-    ## Classes 'tbl_df', 'tbl' and 'data.frame':    28104 obs. of  13 variables:
-    ##  $ USAF           : chr  "008268" "010010" "010014" "010015" ...
-    ##  $ WBAN           : chr  "99999" "99999" "99999" "99999" ...
-    ##  $ STN_NAME       : chr  "WXPOD8278" "JAN MAYEN(NOR-NAVY)" "SORSTOKKEN" "BRINGELAND" ...
-    ##  $ CTRY           : chr  "AF" "NO" "NO" "NO" ...
-    ##  $ STATE          : chr  NA NA NA NA ...
-    ##  $ CALL           : chr  NA "ENJA" "ENSO" NA ...
-    ##  $ LAT            : num  33 70.9 59.8 61.4 64.8 ...
-    ##  $ LON            : num  65.57 -8.67 5.34 5.87 11.23 ...
-    ##  $ ELEV_M         : num  1156.7 9 48.8 327 14 ...
-    ##  $ BEGIN          : int  20100519 19310101 19861120 19870117 19870116 19880320 19861109 19850601 19730101 19310103 ...
-    ##  $ END            : int  20120323 20190115 20190115 20081231 19910806 20050228 20190115 20190115 20140523 20041030 ...
-    ##  $ STNID          : chr  "008268-99999" "010010-99999" "010014-99999" "010015-99999" ...
-    ##  $ ELEV_M_SRTM_90m: num  1160 NA 48 NA NA 48 NA NA NA NA ...
+## View and save the data
 
 ``` r
 isd_history
 ```
 
-    ## # A tibble: 28,104 x 13
-    ##    USAF  WBAN  STN_NAME CTRY  STATE CALL    LAT    LON ELEV_M  BEGIN    END
-    ##    <chr> <chr> <chr>    <chr> <chr> <chr> <dbl>  <dbl>  <dbl>  <int>  <int>
-    ##  1 0082… 99999 WXPOD82… AF    <NA>  <NA>   33.0  65.6  1157.  2.01e7 2.01e7
-    ##  2 0100… 99999 JAN MAY… NO    <NA>  ENJA   70.9  -8.67    9   1.93e7 2.02e7
-    ##  3 0100… 99999 SORSTOK… NO    <NA>  ENSO   59.8   5.34   48.8 1.99e7 2.02e7
-    ##  4 0100… 99999 BRINGEL… NO    <NA>  <NA>   61.4   5.87  327   1.99e7 2.01e7
-    ##  5 0100… 99999 RORVIK/… NO    <NA>  <NA>   64.8  11.2    14   1.99e7 1.99e7
-    ##  6 0100… 99999 FRIGG    NO    <NA>  ENFR   60.0   2.25   48   1.99e7 2.01e7
-    ##  7 0100… 99999 VERLEGE… NO    <NA>  <NA>   80.0  16.2     8   1.99e7 2.02e7
-    ##  8 0100… 99999 HORNSUND NO    <NA>  <NA>   77    15.5    12   1.99e7 2.02e7
-    ##  9 0100… 99999 NY-ALES… NO    <NA>  ENAS   78.9  11.9     8   1.97e7 2.01e7
-    ## 10 0100… 99999 ISFJORD… SV    <NA>  <NA>   78.1  13.6     9   1.93e7 2.00e7
-    ## # … with 28,094 more rows, and 2 more variables: STNID <chr>,
-    ## #   ELEV_M_SRTM_90m <dbl>
-
-# Figures
-
-Visualise the corrected elevation values against the original elevation
-values.
-
-``` r
-ggplot(data = isd_history,
-       aes(x = ELEV_M,
-           y = ELEV_M_SRTM_90m)) +
-  geom_point(alpha = 0.4,
-             size = 0.5) +
-  geom_abline(slope = 1,
-              colour = "white",
-              width = 2.5) +
-  ggtitle("Corrected elevation versus original elevation values.") +
-  theme_ipsum()
-```
-
-![GSOD Reported Elevation versus CGIAR-CSI SRTM Buffered
-Elevation](fetch_isd-history_files/figure-gfm/Buffered%20SRTM%2090m%20vs%20Reported%20Elevation-1.png)
-
-Buffered versus non-buffered elevation values were previously checked
-and found not to be different while also not showing any discernible
-geographic patterns. However, the buffered elevation data are higher
-than the non-buffered data. To help avoid within cell and between cell
-variation the buffered values are the values that are included in the
-final data for distribution with the GSODR package following the
-approach of Hijmans *et al.* (2005).
-
-The final data frame for distribution with *GSODR* includes the new
-elevation values in the `ELEV_M_SRTM_90m` field along with the cleaned
-“isd-history.csv” data that removes stations that do not have valid x,
-y locations.
+    ##               STNID                            NAME CTRY STATE    LAT
+    ##     1: 008268-99999                       WXPOD8278   AF       32.950
+    ##     2: 010010-99999             JAN MAYEN(NOR-NAVY)   NO       70.933
+    ##     3: 010014-99999                      SORSTOKKEN   NO       59.792
+    ##     4: 010015-99999                      BRINGELAND   NO       61.383
+    ##     5: 010016-99999                     RORVIK/RYUM   NO       64.850
+    ##    ---                                                               
+    ## 26800: A00023-63890 WHITEHOUSE NAVAL OUTLYING FIELD   US    FL 30.350
+    ## 26801: A00024-53848    CHOCTAW NAVAL OUTLYING FIELD   US    FL 30.507
+    ## 26802: A00026-94297                 COUPEVILLE/NOLF   US    WA 48.217
+    ## 26803: A00029-63820         EVERETT-STEWART AIRPORT   US    TN 36.380
+    ## 26804: A00032-25715                    ATKA AIRPORT   US    AK 52.220
+    ##             LON    BEGIN      END
+    ##     1:   65.567 20100519 20120323
+    ##     2:   -8.667 19310101 20190810
+    ##     3:    5.341 19861120 20190809
+    ##     4:    5.867 19870117 20081231
+    ##     5:   11.233 19870116 19910806
+    ##    ---                           
+    ## 26800:  -81.883 20070601 20190810
+    ## 26801:  -86.960 20070601 20190810
+    ## 26802: -122.633 20060324 20150514
+    ## 26803:  -88.985 20130627 20190811
+    ## 26804: -174.206 20060101 20190811
 
 ``` r
 # write rda file to disk for use with GSODR package
-save(isd_history, file = "../inst/extdata/isd_history.rda",
-     compress = "bzip2")
+save(isd_history,
+     file = "../inst/extdata/isd_history.rda",
+     compress = "bzip2",
+     version = 2)
 ```
 
 # Notes
@@ -376,91 +130,45 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
 
     ## ─ Session info ──────────────────────────────────────────────────────────
     ##  setting  value                       
-    ##  version  R version 3.5.2 (2018-12-20)
-    ##  os       macOS Mojave 10.14.2        
-    ##  system   x86_64, darwin18.2.0        
+    ##  version  R version 3.6.1 (2019-07-05)
+    ##  os       macOS Mojave 10.14.6        
+    ##  system   x86_64, darwin15.6.0        
     ##  ui       X11                         
     ##  language (EN)                        
     ##  collate  en_AU.UTF-8                 
     ##  ctype    en_AU.UTF-8                 
     ##  tz       Australia/Brisbane          
-    ##  date     2019-01-18                  
+    ##  date     2019-08-16                  
     ## 
     ## ─ Packages ──────────────────────────────────────────────────────────────
-    ##  package            * version date       lib source        
-    ##  assertthat           0.2.0   2017-04-11 [1] CRAN (R 3.5.2)
-    ##  bindr                0.1.1   2018-03-13 [1] CRAN (R 3.5.2)
-    ##  bindrcpp           * 0.2.2   2018-03-29 [1] CRAN (R 3.5.2)
-    ##  class                7.3-14  2015-08-30 [3] CRAN (R 3.5.2)
-    ##  classInt             0.3-1   2018-12-18 [1] CRAN (R 3.5.2)
-    ##  cli                  1.0.1   2018-09-25 [1] CRAN (R 3.5.2)
-    ##  codetools            0.2-15  2016-10-05 [3] CRAN (R 3.5.2)
-    ##  colorspace           1.4-0   2019-01-13 [1] CRAN (R 3.5.2)
-    ##  crayon               1.3.4   2017-09-16 [1] CRAN (R 3.5.2)
-    ##  curl                 3.3     2019-01-10 [1] CRAN (R 3.5.2)
-    ##  DBI                  1.0.0   2018-05-02 [1] CRAN (R 3.5.2)
-    ##  digest               0.6.18  2018-10-10 [1] CRAN (R 3.5.2)
-    ##  doParallel         * 1.0.14  2018-09-24 [1] CRAN (R 3.5.2)
-    ##  dplyr              * 0.7.8   2018-11-10 [1] CRAN (R 3.5.2)
-    ##  e1071                1.7-0   2018-07-28 [1] CRAN (R 3.5.2)
-    ##  evaluate             0.12    2018-10-09 [1] CRAN (R 3.5.2)
-    ##  extrafont            0.17    2014-12-08 [1] CRAN (R 3.5.2)
-    ##  extrafontdb          1.0     2012-06-11 [1] CRAN (R 3.5.2)
-    ##  fansi                0.4.0   2018-10-05 [1] CRAN (R 3.5.2)
-    ##  foreach            * 1.4.4   2017-12-12 [1] CRAN (R 3.5.2)
-    ##  ggplot2            * 3.1.0   2018-10-25 [1] CRAN (R 3.5.2)
-    ##  glue                 1.3.0   2018-07-17 [1] CRAN (R 3.5.2)
-    ##  gtable               0.2.0   2016-02-26 [1] CRAN (R 3.5.2)
-    ##  highr                0.7     2018-06-09 [1] CRAN (R 3.5.2)
-    ##  hms                  0.4.2   2018-03-10 [1] CRAN (R 3.5.2)
-    ##  hrbrthemes         * 0.5.0.1 2018-08-19 [1] CRAN (R 3.5.2)
-    ##  htmltools            0.3.6   2017-04-28 [1] CRAN (R 3.5.2)
-    ##  iterators          * 1.0.10  2018-07-13 [1] CRAN (R 3.5.2)
-    ##  knitr                1.21    2018-12-10 [1] CRAN (R 3.5.2)
-    ##  labeling             0.3     2014-08-23 [1] CRAN (R 3.5.2)
-    ##  lattice              0.20-38 2018-11-04 [3] CRAN (R 3.5.2)
-    ##  lazyeval             0.2.1   2017-10-29 [1] CRAN (R 3.5.2)
-    ##  magrittr           * 1.5     2014-11-22 [1] CRAN (R 3.5.2)
-    ##  munsell              0.5.0   2018-06-12 [1] CRAN (R 3.5.2)
-    ##  pillar               1.3.1   2018-12-15 [1] CRAN (R 3.5.2)
-    ##  pkgconfig            2.0.2   2018-08-16 [1] CRAN (R 3.5.2)
-    ##  plyr                 1.8.4   2016-06-08 [1] CRAN (R 3.5.2)
-    ##  purrr                0.2.5   2018-05-29 [1] CRAN (R 3.5.2)
-    ##  R6                   2.3.0   2018-10-04 [1] CRAN (R 3.5.2)
-    ##  raster             * 2.8-4   2018-11-03 [1] CRAN (R 3.5.2)
-    ##  Rcpp                 1.0.0   2018-11-07 [1] CRAN (R 3.5.2)
-    ##  readr              * 1.3.1   2018-12-21 [1] CRAN (R 3.5.2)
-    ##  rgdal                1.3-6   2018-10-16 [1] CRAN (R 3.5.2)
-    ##  rlang                0.3.1   2019-01-08 [1] CRAN (R 3.5.2)
-    ##  rmarkdown            1.11    2018-12-08 [1] CRAN (R 3.5.2)
-    ##  rnaturalearth      * 0.1.0   2017-03-21 [1] CRAN (R 3.5.2)
-    ##  rnaturalearthhires   0.2.0   2018-11-19 [1] local         
-    ##  Rttf2pt1             1.3.7   2018-06-29 [1] CRAN (R 3.5.2)
-    ##  scales               1.0.0   2018-08-09 [1] CRAN (R 3.5.2)
-    ##  sessioninfo        * 1.1.1   2018-11-05 [1] CRAN (R 3.5.2)
-    ##  sf                   0.7-2   2018-12-20 [1] CRAN (R 3.5.2)
-    ##  sp                 * 1.3-1   2018-06-05 [1] CRAN (R 3.5.2)
-    ##  stringi              1.2.4   2018-07-20 [1] CRAN (R 3.5.2)
-    ##  stringr              1.3.1   2018-05-10 [1] CRAN (R 3.5.2)
-    ##  tibble               2.0.1   2019-01-12 [1] CRAN (R 3.5.2)
-    ##  tidyselect           0.2.5   2018-10-11 [1] CRAN (R 3.5.2)
-    ##  units                0.6-2   2018-12-05 [1] CRAN (R 3.5.2)
-    ##  utf8                 1.1.4   2018-05-24 [1] CRAN (R 3.5.2)
-    ##  withr                2.1.2   2018-03-15 [1] CRAN (R 3.5.2)
-    ##  xfun                 0.4     2018-10-23 [1] CRAN (R 3.5.2)
-    ##  yaml                 2.2.0   2018-07-25 [1] CRAN (R 3.5.2)
+    ##  package     * version date       lib source        
+    ##  assertthat    0.2.1   2019-03-21 [1] CRAN (R 3.6.0)
+    ##  cli           1.1.0   2019-03-19 [1] CRAN (R 3.6.0)
+    ##  crayon        1.3.4   2017-09-16 [1] CRAN (R 3.6.0)
+    ##  data.table  * 1.12.2  2019-04-07 [1] CRAN (R 3.6.0)
+    ##  digest        0.6.20  2019-07-04 [1] CRAN (R 3.6.0)
+    ##  dplyr         0.8.3   2019-07-04 [1] CRAN (R 3.6.0)
+    ##  evaluate      0.14    2019-05-28 [1] CRAN (R 3.6.0)
+    ##  glue          1.3.1   2019-03-12 [1] CRAN (R 3.6.0)
+    ##  htmltools     0.3.6   2017-04-28 [1] CRAN (R 3.6.0)
+    ##  knitr         1.24    2019-08-08 [1] CRAN (R 3.6.1)
+    ##  magrittr      1.5     2014-11-22 [1] CRAN (R 3.6.0)
+    ##  pillar        1.4.2   2019-06-29 [1] CRAN (R 3.6.0)
+    ##  pkgconfig     2.0.2   2018-08-16 [1] CRAN (R 3.6.0)
+    ##  purrr         0.3.2   2019-03-15 [1] CRAN (R 3.6.0)
+    ##  R6            2.4.0   2019-02-14 [1] CRAN (R 3.6.0)
+    ##  Rcpp          1.0.2   2019-07-25 [1] CRAN (R 3.6.0)
+    ##  rlang         0.4.0   2019-06-25 [1] CRAN (R 3.6.0)
+    ##  rmarkdown     1.14    2019-07-12 [1] CRAN (R 3.6.0)
+    ##  sessioninfo * 1.1.1   2018-11-05 [1] CRAN (R 3.6.0)
+    ##  skimr       * 1.0.7   2019-06-20 [1] CRAN (R 3.6.0)
+    ##  stringi       1.4.3   2019-03-12 [1] CRAN (R 3.6.0)
+    ##  stringr       1.4.0   2019-02-10 [1] CRAN (R 3.6.0)
+    ##  tibble        2.1.3   2019-06-06 [1] CRAN (R 3.6.0)
+    ##  tidyselect    0.2.5   2018-10-11 [1] CRAN (R 3.6.0)
+    ##  withr         2.1.2   2018-03-15 [1] CRAN (R 3.6.0)
+    ##  xfun          0.8     2019-06-25 [1] CRAN (R 3.6.0)
+    ##  yaml          2.2.0   2018-07-25 [1] CRAN (R 3.6.0)
     ## 
-    ## [1] /Users/U8004755/Library/R/3.x/library
-    ## [2] /usr/local/lib/R/3.5/site-library
-    ## [3] /usr/local/Cellar/r/3.5.2/lib/R/library
-
-# References
-
-Hijmans, RJ, SJ Cameron, JL Parra, PG Jones, A Jarvis, 2005, Very High
-Resolution Interpolated Climate Surfaces for Global Land Areas.
-*International Journal of Climatology*. 25: 1965-1978.
-[DOI:10.1002/joc.1276](http://dx.doi.org/10.1002/joc.1276)
-
-Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled SRTM for
-the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
-(<http://srtm.csi.cgiar.org>)
+    ## [1] /Users/adamsparks/Library/R/3.x/library
+    ## [2] /Library/Frameworks/R.framework/Versions/3.6/Resources/library

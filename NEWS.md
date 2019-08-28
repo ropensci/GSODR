@@ -1,5 +1,9 @@
+# GSODR 1.3.2.9000
+
+- Implement better error handling when attempting to fetch station inventories
 
 # GSODR 1.3.2
+
 ## Bug fixes
 
 - Fixes a bug where extra data could be appended to dataframe. See
