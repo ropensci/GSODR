@@ -10,6 +10,16 @@ matrix:
   - os: linux
     r: devel
 
+addons:
+  apt:
+    sources:
+      - sourceline: 'ppa:ubuntugis/ppa'
+    packages:
+      - libudunits2-dev
+      - libproj-dev
+      - libgeos-dev
+      - libgdal-dev
+
 after_failure:
   - ./pkg-build.sh dump_logs
 
