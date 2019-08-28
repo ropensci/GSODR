@@ -84,8 +84,6 @@ the STNID in the `station` parameter of `get_GSOD()`.
 
 ```{r Ex2, eval=TRUE}
 tbar <- get_GSOD(years = 2010, station = "955510-99999")
-
-tbar
 ```
 
 ### Using nearest_stations()
@@ -98,12 +96,10 @@ stations of interest.
 There are missing stations in this query. Not all that are listed and queried
 actually have files on the server.
 
-```{r Ex3, eval=FALSE}
+```{r Ex3, eval=TRUE}
 tbar_stations <- nearest_stations(LAT = -27.5598,
                                   LON = 151.9507,
                                   distance = 50)
-
-tbar_stations
 
 tbar <- get_GSOD(years = 2010, station = tbar_stations)
 ```
