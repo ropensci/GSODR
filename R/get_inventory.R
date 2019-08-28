@@ -28,6 +28,10 @@
 get_inventory <- function() {
   load(system.file("extdata", "isd_history.rda", package = "GSODR")) #nocov
 
+  original_timeout <- options("timeout")[[1]]
+  options(timeout = 300)
+  on.exit(options(timeout = original_timeout))
+
   ftp_handle <-
     curl::new_handle(
       ftp_use_epsv = FALSE,
