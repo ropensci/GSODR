@@ -1,28 +1,43 @@
 # Test environments
 
-  -  macOS, R version 3.5.1 (2018-07-02)
+  -  macOS, R version 3.6.1 (2019-07-05)
 
-  -  Ubuntu Linux 18.04.1, R version 3.5.1 (2018-07-02)
+  -  Ubuntu Linux 18.04.1, R version 3.6.1 (2019-07-05)
 
-  -  win-builder, R Under development (unstable) (2019-01-14 r75992)
+  -  win-builder, R Under development (unstable) ()
 
-  -  win-builder, R version 3.5.1 (2018-04-23)
+  -  win-builder, R version 3.6.1 (2019-07-05)
 
 
 # R CMD check results
 
 0 errors | 0 warnings | 1 note
 
-# New Patch Release
+# New Major Release
 
 ## Bug fixes
 
-- Fixes a bug where extra data could be appended to dataframe. See
-<https://github.com/ropensci/GSODR/issues/49>. This also means that when you are
-retrieving large amounts of data, e.g. global data for 20+ years, you won't fill
-up your hard disk space due to the raw data before processing.
+- `get_GSOD()` now uses https rather than FTP server, correcting bug where the
+data could not be downloaded any longer
+
+## Major changes
+
+- Corrected elevation values are no longer available from GSODR, this makes
+package updates much easier
+
+- Objects are returned as `data.table` objects
 
 ## Minor changes
+
+- Implement better error handling when attempting to fetch station inventories
+
+- Reduced package dependencies
+
+- Improved vignettes
+
+- Users may now specify country by FIPS code when using `get_GSOD()`
+
+- Improved test coverage
 
 - Update internal database of station locations
 
