@@ -98,7 +98,7 @@ stations of interest.
 There are missing stations in this query. Not all that are listed and queried
 actually have files on the server.
 
-```{r Ex3, eval=TRUE}
+```{r Ex3, eval=FALSE}
 tbar_stations <- nearest_stations(LAT = -27.5598,
                                   LON = 151.9507,
                                   distance = 50)
@@ -236,7 +236,7 @@ through to current.
 Following is an example of how to retrieve the inventory and check a station in
 Toowoomba, Queensland, Australia, which was used in an earlier example.
 
-```{r Ex18, eval=TRUE}
+```{r Ex18, eval=FALSE}
 inventory <- get_inventory()
 
 inventory

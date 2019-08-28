@@ -1,4 +1,4 @@
-[![CircleCI Build Status](https://circleci.com/gh/ropensci/GSODR.svg?style=shield)](https://circleci.com/gh/ropensci/GSODR)
+[![Build Status](https://travis-ci.org/ropensci/GSODR.svg?branch=master)](https://travis-ci.org/ropensci/GSODR)
 [![Build status](https://ci.appveyor.com/api/projects/status/s09kh2nj59o35ob1?svg=true)](https://ci.appveyor.com/project/adamhsparks/gsodr)
 [![codecov](https://codecov.io/gh/ropensci/GSODR/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/GSODR)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.439850.svg)](https://doi.org/10.5281/zenodo.439850)
