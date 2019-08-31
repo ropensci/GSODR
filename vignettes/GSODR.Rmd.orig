@@ -84,6 +84,7 @@ the STNID in the `station` parameter of `get_GSOD()`.
 
 ```{r Ex2, eval=TRUE}
 tbar <- get_GSOD(years = 2010, station = "955510-99999")
+summary(tbar)
 ```
 
 ### Using nearest_stations()
@@ -97,23 +98,23 @@ There are missing stations in this query. Not all that are listed and queried
 actually have files on the server.
 
 ```{r Ex3, eval=TRUE}
+library(skimr)
 tbar_stations <- nearest_stations(LAT = -27.5598,
                                   LON = 151.9507,
                                   distance = 50)
 
 tbar <- get_GSOD(years = 2010, station = tbar_stations)
+skim(tbar)
 ```
 
 If you wished to drop the stations, 949999-00170 and 949999-00183 from the
-query, you could do this.
+query, you could do this and run the `get_GSOD()` query with the new station
+names.
 
-```{r Ex4, eval=TRUE}
+```{r Ex4, eval=FALSE}
 remove <- c("949999-00170", "949999-00183")
 
 tbar_stations <- tbar_stations[!tbar_stations %in% remove]
-
-tbar <- get_GSOD(years = 2010,
-                 station = tbar_stations)
 ```
 
 ## Plot Maximum and Minimum Temperature Values
@@ -142,7 +143,7 @@ ggplot(data = tbar_temps, aes(
   scale_color_brewer(type = "qual", na.value = "black") +
   scale_y_continuous(name = "Temperature") +
   scale_x_date(name = "Date") +
-  theme_bw()
+  theme_tufte()
 ```
 
 ## Download and Process Files in Parallel
@@ -154,11 +155,12 @@ as an argument for `future::plan()`, which will default to available local cores
 as workers for the run. This can greatly reduce the time necessary to process
 GSOD files.
 
-```{r Ex6, eval=FALSE}
+```{r Ex6, eval=TRUE}
 future::plan("multisession")
 global <- get_GSOD(years = 2010:2011)
-```
 
+skim(global)
+```
 
 # Using reformat_GSOD()
 
@@ -232,7 +234,7 @@ through to current.
 Following is an example of how to retrieve the inventory and check a station in
 Toowoomba, Queensland, Australia, which was used in an earlier example.
 
-```{r Ex18, eval=FALSE}
+```{r Ex18, eval=TRUE}
 inventory <- get_inventory()
 
 inventory
@@ -249,7 +251,13 @@ installed through GitHub due to the package size, >5Mb, being too large for
 CRAN.
 
 ```{r Ex19, eval=FALSE}
-#install.packages("devtools")
+if (!require(devtools)) {
+  install.packages(
+    "devtools",
+    repos = c(CRAN = "https://cloud.r-project.org/")
+  )
+  library(devtools)
+}
 devtools::install_github("adamhsparks/GSODRdata")
 library("GSODRdata")
 ```
@@ -426,7 +434,7 @@ if (requireNamespace("ggplot2", quietly = TRUE) &&
   library(GSODR)
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))
   world_map <- map_data("world")
-  
+
   GSOD_stations <- ggplot(isd_history, aes(x = LON, y = LAT)) +
     geom_polygon(
       data = world_map,
@@ -440,7 +448,7 @@ if (requireNamespace("ggplot2", quietly = TRUE) &&
     theme_map() +
     labs(title = "GSOD Station Locations",
          caption = "Data: US NCEI GSOD and CIA World DataBank II")
-  
+
   # Using the gridExtra and grid packages add a neatline to the map
   grid.arrange(GSOD_stations, ncol = 1)
   grid.rect(

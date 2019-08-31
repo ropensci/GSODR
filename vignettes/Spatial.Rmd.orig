@@ -11,7 +11,7 @@ vignette: >
 ---
 
 ```{r check_packages, echo=FALSE, messages=FALSE, warning=FALSE}
-required <- c("ggplot2", "tidyr", "raster", "rgdal", "sf", "dplyr")
+required <- c("rgdal", "sf", "dplyr")
 
 if (!all(unlist(lapply(required, function(pkg) requireNamespace(pkg, quietly = TRUE)))))
 knitr::opts_chunk$set(eval = FALSE, collapse = TRUE, comment = "#>", fig.width = 7, fig.height = 7, fig.align = "center")
@@ -36,7 +36,7 @@ For this example we convert the data to a _sp_ object. You might use this one
 to save GeoPackage or ESRI shapefiles for sharing or analysis in another GIS
 program.
 
-```{r Ex1, eval=FALSE}
+```{r Ex1, eval=TRUE}
 # get GSOD data
 library(GSODR)
 library(sp)
@@ -52,7 +52,7 @@ proj4string(GSOD_sp) <- CRS("+proj=longlat +datum=WGS84")
 
 Using `writeOGR()` it is simple to save as a GeoPackage file.
 
-```{r Ex2, eval=FALSE}
+```{r Ex2, eval=TRUE}
 library(rgdal)
 
 writeOGR(GSOD_sp,
@@ -63,7 +63,7 @@ writeOGR(GSOD_sp,
 
 Using `writeOGR()` it is simple to save as an ESRI shapefile.
 
-```{r Ex3, eval=FALSE}
+```{r Ex3, eval=TRUE}
 library(rgdal)
 writeOGR(GSOD_sp,
          dsn = path.expand("~/"),
@@ -87,7 +87,7 @@ such as GDAL. A subset of simple features forms the GeoJSON standard.
 
 For this example, we convert the GSOD data to an _sf_ object.
 
-```{r Ex4, eval=FALSE}
+```{r Ex4, eval=TRUE}
 library(sf)
 GSOD_SF <- st_as_sf(x = GSOD,
                     coords = c("LONGITUDE", "LATITUDE"),
@@ -118,7 +118,7 @@ along with the file name. The layer to be specified is "GSOD", this is specified
 in the `get_GSOD()` function and will not change. The file name, specified in
 the dsn will, but the layer name will not.
 
-```{r Ex8, eval=FALSE}
+```{r Ex8, eval=TRUE}
 library(rgdal)
 
 AUS_stations <- readOGR(dsn = path.expand("~/GSOD.gpkg"), layer = "GSOD")
@@ -132,7 +132,7 @@ existing R tools for SQLite files
 easy way is using _dplyr_. This option is much faster to load since it does not
 load the geometry.
 
-```{r Ex, eval=FALSE}
+```{r Ex, eval=TRUE}
 library(dplyr)
 AUS_sqlite <- tbl(src_sqlite(path.expand("~/GSOD.gpkg")), "GSOD")
 class(AUS_sqlite)

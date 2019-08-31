@@ -72,6 +72,7 @@ Suggests:
     rmarkdown,
     roxygen2 (>= 6.1.0),
     sf,
+    skimr,
     sp,
     spacetime,
     testthat,
