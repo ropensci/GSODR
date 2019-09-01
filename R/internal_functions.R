@@ -64,40 +64,40 @@
 #' Validate Country Requests
 #'
 #' @param country User requested country name
-#' @param country_list country_list file from NCEI provided by GSODR
+#' @param isd_history Data provided from NCEI on stations' locations and years
 #' @keywords internal
 #' @return A validated country name
 #' @noRd
 
 .validate_country <-
-  function(country, country_list) {
+  function(country, isd_history) {
     if (!is.null(country)) {
       country <- toupper(trimws(country[1]))
       nc <- nchar(country)
       if (nc == 3) {
-        if (country %in% country_list$ISO3C) {
-          c <- which(country == country_list$ISO3C)
-          country <- country_list[[c, 1]]
+        if (country %in% isd_history$ISO3C) {
+          c <- which(country == isd_history$ISO3C)
+          country <- isd_history[[c, 1]]
         } else {
           stop(call. = FALSE,
                "\nPlease provide a valid name or 2 or 3 ",
                "letter ISO country code\n")
         }
       } else if (nc == 2) {
-        if (country %in% country_list$ISO2C) {
-          c <- which(country == country_list$ISO2C)
-          country <- country_list[[c, 1]]
-        } else if (country %in% country_list$FIPS) {
-          c <- which(country == country_list$FIPS)
-          country <- country_list[[c, 1]]
+        if (country %in% isd_history$ISO2C) {
+          c <- which(country == isd_history$ISO2C)
+          country <- isd_history[[c, 1]]
+        } else if (country %in% isd_history$FIPS) {
+          c <- which(country == isd_history$FIPS)
+          country <- isd_history[[c, 1]]
         } else {
           stop(call. = FALSE,
                "\nPlease provide a valid name or 2 or 3 ",
                "\nletter ISO country code")
         }
-      } else if (country %in% country_list$COUNTRY_NAME) {
-        c <- which(country == country_list$COUNTRY_NAME)
-        country <- country_list[[c, 1]]
+      } else if (country %in% isd_history$COUNTRY_NAME) {
+        c <- which(country == isd_history$COUNTRY_NAME)
+        country <- isd_history[[c, 1]]
       } else {
         stop(call. = FALSE,
              "\nPlease provide a valid name or 2 or 3 ",
@@ -263,7 +263,6 @@
 #' Subset Country List
 #'
 #' @param country Country of interest to subset on
-#' @param country_list Country list file provided by NCEI as a part of GSODR
 #' @param GSOD_list List of GSOD files to be subset
 #' @param isd_history isd_history.csv file from NCEI provided by GSODR
 #' @param years Years being requested
@@ -273,7 +272,6 @@
 
 .subset_country_list <-
   function(country,
-           country_list,
            file_list,
            isd_history,
            years) {

@@ -67,18 +67,15 @@ easy to find all stations in Australia.
 
 ```{r Ex1, eval=TRUE, message=FALSE}
 library(GSODR)
-library(data.table)
-load(system.file("extdata", "country_list.rda", package = "GSODR"))
-load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 
-station_locations <-
-  isd_history[country_list, on = c("CTRY" = "FIPS")]
+load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 
 # create data.frame for Australia only
 Oz <- subset(station_locations, COUNTRY_NAME == "AUSTRALIA")
 
 Oz
 
+# Look for a specific town in Australia
 subset(Oz, grepl("TOOWOOMBA", NAME))
 ```
 

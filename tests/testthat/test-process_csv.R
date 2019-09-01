@@ -19,7 +19,7 @@ test_that(
     load(system.file("extdata", "isd_history.rda", package = "GSODR"))
     stations <- isd_history
 
-    load(system.file("extdata", "country_list.rda",
+    load(system.file("extdata", "isd_history.rda",
                      package = "GSODR"))
 
     GSOD_list <- .download_files(station,
@@ -31,7 +31,6 @@ test_that(
     expect_length(agro_list, 7491)
 
     RP_list <- .subset_country_list(country,
-                                    country_list,
                                     GSOD_list,
                                     stations,
                                     years)

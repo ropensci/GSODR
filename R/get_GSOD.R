@@ -152,17 +152,14 @@ get_GSOD <- function(years,
   if (!is.null(country)) {
     # Load country list
     # CRAN NOTE avoidance
-    country_list <- NULL # nocov
-    load(system.file("extdata", "country_list.rda", package = "GSODR")) # nocov
 
-    country <- .validate_country(country, country_list)
+    country <- .validate_country(country, isd_history)
 
     file_list <-
-      .subset_country_list(country,
-                           country_list,
-                           file_list,
-                           isd_history,
-                           years)
+      .subset_country_list(country = country,
+                           isd_history = isd_history,
+                           file_list = file_list,
+                           years = years)
   }
 
   # Validate stations for missing days -----------------------------------------
