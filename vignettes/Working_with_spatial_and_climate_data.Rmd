@@ -17,34 +17,17 @@ vignette: >
 
 ```r
 library(GSODR)
+library(sf)
 PHL <-
   get_GSOD(years = 2010,
            country = "Philippines",
            max_missing = 5)
-```
 
-```
-## Registered S3 method overwritten by 'R.oo':
-##   method        from       
-##   throw.default R.methodsS3
-```
-
-```r
 PHL <- st_as_sf(x = PHL,
-                coords = c("LON", "LAT"),
+                coords = c("LONGITUDE", "LATITUDE"),
                 crs = "+proj=longlat +datum=WGS84")
-```
 
-```
-## Error in `[.data.frame`(x, i): undefined columns selected
-```
-
-```r
 write_sf(PHL, "~/PHL-2010.gpkg")
-```
-
-```
-## Error in st_sf(x, ..., agr = agr, sf_column_name = sf_column_name): no simple features geometry column present
 ```
 
 ## Example - Use the GeoPackage File to Create a KML File
@@ -56,73 +39,31 @@ open with Google Earth and visualise the data spatially and over time.
 ```r
 library(rgdal)
 library(spacetime)
-```
-
-```
-## Registered S3 method overwritten by 'xts':
-##   method     from
-##   as.zoo.xts zoo
-```
-
-```r
 library(plotKML)
-```
 
-```
-## plotKML version 0.5-9 (2019-01-04)
-```
-
-```
-## URL: http://plotkml.r-forge.r-project.org/
-```
-
-```r
 layers <- ogrListLayers(dsn = path.expand("~/PHL-2010.gpkg"))
-```
-
-```
-## Error in ogrListLayers(dsn = path.expand("~/PHL-2010.gpkg")): Cannot open data source
-```
-
-```r
 pnts <- readOGR(dsn = path.expand("~/PHL-2010.gpkg"), layers[1])
 ```
 
 ```
-## Error in readOGR(dsn = path.expand("~/PHL-2010.gpkg"), layers[1]): object 'layers' not found
+## OGR data source with driver: GPKG 
+## Source: "/Users/adamsparks/PHL-2010.gpkg", layer: "PHL-2010"
+## with 4709 features
+## It has 42 fields
 ```
 
 ```r
 # Plot results in Google Earth as a spacetime object:
 pnts$DATE = as.Date(paste(pnts$YEAR, pnts$MONTH, pnts$DAY, sep = "-"))
-```
-
-```
-## Error in paste(pnts$YEAR, pnts$MONTH, pnts$DAY, sep = "-"): object 'pnts' not found
-```
-
-```r
 row.names(pnts) <- paste("point", 1:nrow(pnts), sep = "")
-```
 
-```
-## Error in nrow(pnts): object 'pnts' not found
-```
-
-```r
 tmp_ST <- STIDF(
   sp = as(pnts, "SpatialPoints"),
   time = pnts$DATE - 0.5,
   data = pnts@data[, c("TEMP", "STNID")],
   endTime = pnts$DATE + 0.5
 )
-```
 
-```
-## Error in as.POSIXct(endTime): object 'pnts' not found
-```
-
-```r
 shape = "http://maps.google.com/mapfiles/kml/pal2/icon18.png"
 
 kml(
@@ -134,13 +75,7 @@ kml(
   file.name = "Temperatures_PHL_2010-2010.kml",
   folder.name = "TEMP"
 )
-```
 
-```
-## Error in kml(tmp_ST, dtime = 24 * 3600, colour = TEMP, shape = shape, : object 'tmp_ST' not found
-```
-
-```r
 system("zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml")
 ```
 
@@ -172,11 +107,6 @@ if (!require(devtools)) {
   library(devtools)
 }
 devtools::install_github("adamhsparks/GSODRdata")
-```
-
-```
-## Skipping install of 'GSODRdata' from a github remote, the SHA1 (fd505088) has not changed since last install.
-##   Use `force = TRUE` to force installation
 ```
 
 Now that the extra data have been installed, take a look at the CHELSA data that
@@ -248,86 +178,36 @@ join the CHELSA and _GSODR_ data for plotting.
 library(dplyr)
 library(ggplot2)
 library(reshape2)
-```
 
-```
-## 
-## Attaching package: 'reshape2'
-```
-
-```
-## The following object is masked from 'package:tidyr':
-## 
-##     smiths
-```
-
-```
-## The following objects are masked from 'package:data.table':
-## 
-##     dcast, melt
-```
-
-```r
 cnames <- paste0("CHELSA_temp_", 1:12, "_1979-2013")
 clim_temp <- CHELSA[CHELSA$STNID %in% pnts$STNID,
                     paste(c("STNID", cnames))]
-```
-
-```
-## Error in CHELSA$STNID %in% pnts$STNID: object 'pnts' not found
-```
-
-```r
 clim_temp_df <- data.frame(
   STNID = rep(clim_temp$STNID, 12),
   MONTHC = as.vector(sapply(1:12, rep,
                             times = nrow(clim_temp))),
   CHELSA_TEMP = as.vector(unlist(clim_temp[, cnames]))
 )
-```
 
-```
-## Error in data.frame(STNID = rep(clim_temp$STNID, 12), MONTHC = as.vector(sapply(1:12, : object 'clim_temp' not found
-```
-
-```r
 pnts$MONTHC <- as.numeric(paste(pnts$MONTH))
-```
-
-```
-## Error in paste(pnts$MONTH): object 'pnts' not found
-```
-
-```r
 temp <-
   left_join(pnts@data, clim_temp_df, by = c("STNID", "MONTHC"))
 ```
 
 ```
-## Error in left_join(pnts@data, clim_temp_df, by = c("STNID", "MONTHC")): object 'pnts' not found
+## Warning: Column `STNID` joining factors with different levels, coercing to
+## character vector
 ```
 
 ```r
 temp <- temp %>%
   group_by(MONTH) %>%
   mutate(AVG_DAILY_TEMP = round(mean(TEMP), 1))
-```
 
-```
-## Error in eval(lhs, parent, parent): object 'temp' not found
-```
-
-```r
 df_melt <-
   na.omit(melt(temp[, c("STNID", "DATE", "CHELSA_TEMP", "TEMP", "AVG_DAILY_TEMP")],
                id = c("DATE", "STNID")))
-```
 
-```
-## Error in melt(temp[, c("STNID", "DATE", "CHELSA_TEMP", "TEMP", "AVG_DAILY_TEMP")], : object 'temp' not found
-```
-
-```r
 ggplot(df_melt, aes(x = DATE, y = value)) +
   geom_point(aes(color = variable), alpha = 0.2) +
   scale_x_date(date_labels = "%b") +
@@ -339,9 +219,7 @@ ggplot(df_melt, aes(x = DATE, y = value)) +
   theme_tufte()
 ```
 
-```
-## Error in ggplot(df_melt, aes(x = DATE, y = value)): object 'df_melt' not found
-```
+![plot of chunk comparison](comparison-1.png)
 
 # Notes
 

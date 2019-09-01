@@ -128,7 +128,7 @@ tbar_stations <- tbar_stations[!tbar_stations %in% remove]
 Using the first data downloaded for a single station, 955510-99999, plot the
 temperature for 2010.
 
-```{r Ex5, eval=TRUE, fig.width = 7, fig.height = 7, fig.align = "center", fig.path = "vignettes/figures/"}
+```{r Ex5, eval=TRUE, fig.width = 7, fig.height = 7, fig.align = "center", fig.path = "vignettes/"}
 library(ggplot2)
 library(ggthemes)
 library(tidyr)
@@ -427,7 +427,7 @@ no/not reported) for the occurrence during the day;
 
 ## Appendix 2: Map of Current GSOD Station Locations
 
-```{r, eval=TRUE, message=FALSE, echo=FALSE, warning=FALSE, fig.width = 7, fig.height = 5, fig.align = "center", fig.path = "vignettes/figures/"}
+```{r, eval=TRUE, message=FALSE, echo=FALSE, warning=FALSE, fig.width = 7, fig.height = 5, fig.align = "center", fig.path = "vignettes/"}
 if (requireNamespace("maps", quietly = TRUE) &&
     requireNamespace("mapproj", quietly = TRUE) &&
     requireNamespace("gridExtra", quietly = TRUE) &&

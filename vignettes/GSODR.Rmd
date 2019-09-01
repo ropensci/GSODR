@@ -60,6 +60,13 @@ easy to find all stations in Australia.
 ```r
 library(GSODR)
 library(data.table)
+```
+
+```
+## data.table 1.12.2 using 4 threads (see ?getDTthreads).  Latest news: r-datatable.com
+```
+
+```r
 load(system.file("extdata", "country_list.rda", package = "GSODR"))
 load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 
@@ -121,6 +128,26 @@ the STNID in the `station` parameter of `get_GSOD()`.
 
 ```r
 library(skimr)
+```
+
+```
+## 
+## Attaching package: 'skimr'
+```
+
+```
+## The following object is masked from 'package:knitr':
+## 
+##     kable
+```
+
+```
+## The following object is masked from 'package:stats':
+## 
+##     filter
+```
+
+```r
 tbar <- get_GSOD(years = 2010, station = "955510-99999")
 skim(tbar)
 ```
@@ -373,7 +400,7 @@ ggplot(data = tbar_temps, aes(x = YEARMODA,
   theme_tufte()
 ```
 
-<img src="figures/Ex5-1.png" title="plot of chunk Ex5" alt="plot of chunk Ex5" style="display: block; margin: auto;" />
+<img src="Ex5-1.png" title="plot of chunk Ex5" alt="plot of chunk Ex5" style="display: block; margin: auto;" />
 
 ## Download and Process Files in Parallel
 
@@ -566,20 +593,38 @@ Toowoomba, Queensland, Australia, which was used in an earlier example.
 
 ```r
 inventory <- get_inventory()
-```
 
-```
-## Error: There was a problem retrieving the inventory file. Perhaps 
-## the server is not responding currently or there is no 
-## Internet connection. Please try again later.
-```
-
-```r
 inventory
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'inventory' not found
+##    *** FEDERAL CLIMATE COMPLEX INTEGRATED SURFACE DATA INVENTORY ***   
+##     This inventory provides the number of weather observations by   
+##     STATION-YEAR-MONTH for beginning of record through August 2019    
+##                STNID YEAR  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP
+##      1: 007018-99999 2011    0    0 2104 2797 2543 2614  382    0    0
+##      2: 007018-99999 2013    0    0    0    0    0    0  710    0    0
+##      3: 007026-99999 2012    0    0    0    0    0    0  367    0    0
+##      4: 007026-99999 2014    0    0    0    0    0    0  180    0    4
+##      5: 007026-99999 2016    0    0    0    0    0  794    0    0    0
+##     ---                                                               
+## 629792:   A51256-451 2015 2196 1866 2206 1909 2215 2090 2202 2191 2128
+## 629793:   A51256-451 2016 2185 2047 2175 2131 2213 2139 2209 2216 2131
+## 629794:   A51256-451 2017 2192 1883 2204 1910 2145 2113 2218 2204 2082
+## 629795:   A51256-451 2018 2192 1887 2194 2113 2151 2095 2202 2197 1816
+## 629796:   A51256-451 2019 2188 2000 2143 2105 2187 2131 2174 2013    0
+##          OCT  NOV  DEC
+##      1:    0    0    0
+##      2:    0    0    0
+##      3:    0    0    7
+##      4:    0  552    0
+##      5:    0    0    0
+##     ---               
+## 629792: 2192 2097 2093
+## 629793: 2196 2131 1665
+## 629794: 2192 2103 2174
+## 629795: 2195 2063 2178
+## 629796:    0    0    0
 ```
 
 ```r
@@ -587,7 +632,33 @@ subset(inventory, STNID %in% "955510-99999")
 ```
 
 ```
-## Error in subset(inventory, STNID %in% "955510-99999"): object 'inventory' not found
+##    *** FEDERAL CLIMATE COMPLEX INTEGRATED SURFACE DATA INVENTORY ***   
+##     This inventory provides the number of weather observations by   
+##     STATION-YEAR-MONTH for beginning of record through August 2019    
+##            STNID YEAR JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC
+##  1: 955510-99999 1998   0   0 222 223 221 211 226 217 222 234 215 230
+##  2: 955510-99999 1999 213 201 235 224 244 229 239 247 236 246 233 243
+##  3: 955510-99999 2000 241 227 247 238 246 237 245 240 236 248 239 248
+##  4: 955510-99999 2001 245 223 246 238 239 236 243 240 237 236 235 246
+##  5: 955510-99999 2002 245 219 246 236 243 229 243 246 227 238 233 246
+##  6: 955510-99999 2003 244 217 220 232 235 233 246 242 218 239 225 245
+##  7: 955510-99999 2004 240 227 241 229 233 224 235 244 235 244 235 245
+##  8: 955510-99999 2005 241 221 242 240 247 239 247 247 234 242 239 246
+##  9: 955510-99999 2006 245 223 246 232 241 238 247 247 239 247 240 247
+## 10: 955510-99999 2007 247 222 244 240 248 240 244 244 239 247 237 246
+## 11: 955510-99999 2008 247 228 248 239 248 239 248 247 239 247 238 248
+## 12: 955510-99999 2009 245 222 246 235 244 237 248 248 239 248 239 248
+## 13: 955510-99999 2010 248 223 248 240 244 240 242 247 240 248 240 247
+## 14: 955510-99999 2011 247 224 247 240 247 240 248 247 239 248 239 248
+## 15: 955510-99999 2012 248 232 248 240 248 240 248 247 240 248 240 245
+## 16: 955510-99999 2013 236 220 247 233 248 239 252 247 238 248 239 246
+## 17: 955510-99999 2014 243 224 247 240 246 239 246 247 240 247 240 248
+## 18: 955510-99999 2015 248 222 248  72 247 240 247 248 239 247 238 247
+## 19: 955510-99999 2016 246 228 245 240 246 240 248 248 238 248 239 248
+## 20: 955510-99999 2017 247 224 248 240 248 239 248 247 239 248 240 248
+## 21: 955510-99999 2018 248 224 248 239 247 240 246 247 218 244 190 248
+## 22: 955510-99999 2019 247 224 245 240 214 240 248 231   0   0   0   0
+##            STNID YEAR JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC
 ```
 
 # Additional Climate Data Availability
@@ -771,4 +842,4 @@ no/not reported) for the occurrence during the day;
 
 ## Appendix 2: Map of Current GSOD Station Locations
 
-<img src="figures/unnamed-chunk-1-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" style="display: block; margin: auto;" />
+<img src="unnamed-chunk-1-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" style="display: block; margin: auto;" />

@@ -45,15 +45,16 @@ directory and link it with climate data from the _GSODRdata_ package.
 Download data for Philippines for year 2010 and generate a spatial, year summary
 file, PHL-2010.gpkg, in the user's home directory.
 
-```{r get-data, eval=TRUE}
+```{r get-data, eval=TRUE, message=FALSE}
 library(GSODR)
+library(sf)
 PHL <-
   get_GSOD(years = 2010,
            country = "Philippines",
            max_missing = 5)
 
 PHL <- st_as_sf(x = PHL,
-                coords = c("LON", "LAT"),
+                coords = c("LONGITUDE", "LATITUDE"),
                 crs = "+proj=longlat +datum=WGS84")
 
 write_sf(PHL, "~/PHL-2010.gpkg")
@@ -64,7 +65,7 @@ write_sf(PHL, "~/PHL-2010.gpkg")
 Using the GeoPackage that was just created, you can now create a KML file to
 open with Google Earth and visualise the data spatially and over time.
 
-```{r spatial-layers, eval=TRUE}
+```{r spatial-layers, eval=TRUE, message=FALSE}
 library(rgdal)
 library(spacetime)
 library(plotKML)
@@ -118,7 +119,7 @@ CHELSA is based on a quasi-mechanistical statistical downscaling of the ERA inte
 
 See http://chelsa-climate.org for more information on these data.
 
-```{r devtools, eval=TRUE}
+```{r devtools, eval=TRUE, message=FALSE}
 if (!require(devtools)) {
   install.packages("devtools",
                    repos = c(CRAN = "https://cloud.r-project.org/"))
@@ -130,7 +131,7 @@ devtools::install_github("adamhsparks/GSODRdata")
 Now that the extra data have been installed, take a look at the CHELSA data that
 are one of the data sets included in the _GSODRdata_ package.
 
-```{r GSODRdata, eval=TRUE}
+```{r GSODRdata, eval=TRUE, message=FALSE}
 library(GSODRdata)
 
 str(CHELSA)
@@ -140,7 +141,7 @@ Compare the GSOD weather data from the Philippines with climatic data provided
 by the _GSODRdata_ package in the CHELSA data set using `dplyr` functions to
 join the CHELSA and _GSODR_ data for plotting.
 
-```{r comparison, eval=TRUE, fig.path = "vignettes/figure/"}
+```{r comparison, eval=TRUE, fig.path = "vignettes/", message=FALSE}
 library(dplyr)
 library(ggplot2)
 library(reshape2)
