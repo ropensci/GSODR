@@ -7,18 +7,22 @@ data could not be downloaded any longer
 
 ## Major changes
 
-- Corrected elevation values are no longer available from GSODR, this makes
-package updates much easier
+- Corrected elevation values are no longer available from GSODR
 
 - Objects are returned as `data.table` objects
 
 ## Minor changes
 
+- `get_inventory()` now uses https rather than FTP server
+
+- `update_station_list()` now uses https rather than FTP server
+
 - Implement better error handling when attempting to fetch station inventories
 
 - Reduced package dependencies
 
-- Improved vignettes
+- Improved vignettes that are pre-compiled for faster package installation and
+updated content with linting and error corrections
 
 - Users may now specify country by FIPS code when using `get_GSOD()`
 
