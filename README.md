@@ -111,7 +111,7 @@ Automated Surface Observing System (ASOS) stations (airports) in the whole world
 thanks to the Iowa Environment Mesonet website.
 
 [_weathercan_](https://CRAN.R-project.org/package=weathercan) from
-[rOpenSci](https://docs.ropensci.org/weathercan/) makes it easier to search for
+[rOpenSci](https://github.com/ropensci/weathercan) makes it easier to search for
 and download multiple months/years of historical weather data from Environment
 and Climate Change Canada (ECCC) website.
 
