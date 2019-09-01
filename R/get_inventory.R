@@ -32,28 +32,12 @@ get_inventory <- function() {
   options(timeout = 300)
   on.exit(options(timeout = original_timeout))
 
-  ftp_handle <-
-    curl::new_handle(
-      ftp_use_epsv = FALSE,
-      crlf = TRUE,
-      ssl_verifypeer = FALSE,
-      ftp_response_timeout = 30,
-      ftp_skip_pasv_ip = TRUE
-    )
-
   tryCatch({
-    curl::curl_download(
-      "https://www1.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt",
-      destfile = file.path(tempdir(), "inventory.txt"),
-      quiet = TRUE,
-      handle = ftp_handle
-    )
-
     "STNID" <- NULL #nocov
 
     main_body <-
       fread(
-        file.path(tempdir(), "inventory.txt"),
+        "https://www1.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt",
         skip = 8,
         col.names = c(
           "USAF",
