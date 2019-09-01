@@ -34,6 +34,12 @@ if (!require("skimr")) {
   install.packages("skimr", repos = "https://cran.rstudio.com/")
 }
 
+if (!require("countrycode"))
+{
+  install.packages("countrycode",
+                   repos = c(CRAN = "https://cran.rstudio.com"))
+}
+
 if (!require("data.table")) {
   install.packages("data.table", repos = "https://cran.rstudio.com/")
 }
@@ -69,6 +75,30 @@ isd_history <- subset(isd_history, STNID_len == 12)
 
 # remove extra columns
 isd_history[, c("USAF", "WBAN", "ICAO", "ELEV(M)", "STNID_len") := NULL]
+```
+
+## Add country names based on FIPS
+
+```{r merge-country, eval=TRUE, message=FALSE}
+isd_history <-
+  isd_history[countrycode::codelist, on = c("CTRY" = "fips")]
+
+isd_history <- isd_history[, c(
+  "STNID",
+  "NAME",
+  "LAT",
+  "LON",
+  "CTRY",
+  "STATE",
+  "BEGIN",
+  "END",
+  "country.name.en",
+  "iso2c",
+  "iso3c"
+)]
+
+names(isd_history) <- toupper(names(isd_history))
+setnames(isd_history, "CTRY", "FIPS")
 ```
 
 ## View and save the data

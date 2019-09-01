@@ -1,16 +1,6 @@
 
 # GSODR data-raw contents
 
-## Fetch country-list
-
-This document details how to fetch the country list provided by the NCEI for
-the GSOD stations from the server and merge it with ISO codes from the
-[_countrycode_](https://cran.r-project.org/package=countrycode)
-package for inclusion in the _GSODR_ package in /data/country-list.rda. These
-codes are used when a user selects a single country for a data query.
-
-[fetch_country-list.md](fetch_country-list.md)
-
 ## Fetch isd-history
 
 This document details how the GSOD station history data file,

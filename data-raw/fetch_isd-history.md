@@ -1,7 +1,7 @@
 Fetch, Clean and Correct Altitude in GSOD ‘isd\_history.csv’ Data
 ================
 Adam H. Sparks
-2019-09-01
+2019-09-02
 
 # Introduction
 
@@ -32,6 +32,12 @@ if (!require("sessioninfo")) {
 
 if (!require("skimr")) {
   install.packages("skimr", repos = "https://cran.rstudio.com/")
+}
+
+if (!require("countrycode"))
+{
+  install.packages("countrycode",
+                   repos = c(CRAN = "https://cran.rstudio.com"))
 }
 
 if (!require("data.table")) {
@@ -71,36 +77,60 @@ isd_history <- subset(isd_history, STNID_len == 12)
 isd_history[, c("USAF", "WBAN", "ICAO", "ELEV(M)", "STNID_len") := NULL]
 ```
 
+## Add country names based on FIPS
+
+``` r
+isd_history <-
+  isd_history[countrycode::codelist, on = c("CTRY" = "fips")]
+
+isd_history <- isd_history[, c(
+  "STNID",
+  "NAME",
+  "LAT",
+  "LON",
+  "CTRY",
+  "STATE",
+  "BEGIN",
+  "END",
+  "country.name.en",
+  "iso2c",
+  "iso3c"
+)]
+
+names(isd_history) <- toupper(names(isd_history))
+setnames(isd_history, "CTRY", "FIPS")
+```
+
 ## View and save the data
 
 ``` r
 isd_history
 ```
 
-    ##               STNID                            NAME CTRY STATE    LAT
-    ##     1: 008268-99999                       WXPOD8278   AF       32.950
-    ##     2: 010010-99999             JAN MAYEN(NOR-NAVY)   NO       70.933
-    ##     3: 010014-99999                      SORSTOKKEN   NO       59.792
-    ##     4: 010015-99999                      BRINGELAND   NO       61.383
-    ##     5: 010016-99999                     RORVIK/RYUM   NO       64.850
-    ##    ---                                                               
-    ## 26801: A00023-63890 WHITEHOUSE NAVAL OUTLYING FIELD   US    FL 30.350
-    ## 26802: A00024-53848    CHOCTAW NAVAL OUTLYING FIELD   US    FL 30.507
-    ## 26803: A00026-94297                 COUPEVILLE/NOLF   US    WA 48.217
-    ## 26804: A00029-63820         EVERETT-STEWART AIRPORT   US    TN 36.380
-    ## 26805: A00032-25715                    ATKA AIRPORT   US    AK 52.220
-    ##             LON    BEGIN      END
-    ##     1:   65.567 20100519 20120323
-    ##     2:   -8.667 19310101 20190829
-    ##     3:    5.341 19861120 20190829
-    ##     4:    5.867 19870117 20081231
-    ##     5:   11.233 19870116 19910806
-    ##    ---                           
-    ## 26801:  -81.883 20070601 20190829
-    ## 26802:  -86.960 20070601 20190829
-    ## 26803: -122.633 20060324 20150514
-    ## 26804:  -88.985 20130627 20190830
-    ## 26805: -174.206 20060101 20190830
+    ##               STNID          NAME     LAT    LON FIPS STATE    BEGIN
+    ##     1: 008268-99999     WXPOD8278  32.950 65.567   AF       20100519
+    ##     2: 409000-99999        DARWAZ  38.433 70.800   AF       19730304
+    ##     3: 409010-99999       KHWAHAN  37.883 70.217   AF       19730629
+    ##     4: 409030-99999   KHWAJA-GHAR  37.083 69.433   AF       20010925
+    ##     5: 409040-99999      FAIZABAD  37.117 70.517   AF       19730304
+    ##    ---                                                              
+    ## 26689: 679770-99999 BUFFALO RANGE -21.008 31.579   ZI       19651201
+    ## 26690: 679790-99999          ZAKA -20.333 31.467   ZI       19870307
+    ## 26691: 679830-99999      CHIPINGE -20.200 32.617   ZI       19490103
+    ## 26692: 679890-99999        RUPISI -20.417 32.317   ZI       19620701
+    ## 26693: 679910-99999    BEITBRIDGE -22.217 30.000   ZI       19620701
+    ##             END COUNTRY.NAME.EN ISO2C ISO3C
+    ##     1: 20120323     Afghanistan    AF   AFG
+    ##     2: 20070905     Afghanistan    AF   AFG
+    ##     3: 20070608     Afghanistan    AF   AFG
+    ##     4: 20010925     Afghanistan    AF   AFG
+    ##     5: 20130703     Afghanistan    AF   AFG
+    ##    ---                                     
+    ## 26689: 20190829        Zimbabwe    ZW   ZWE
+    ## 26690: 20190829        Zimbabwe    ZW   ZWE
+    ## 26691: 20190829        Zimbabwe    ZW   ZWE
+    ## 26692: 19680630        Zimbabwe    ZW   ZWE
+    ## 26693: 20190829        Zimbabwe    ZW   ZWE
 
 ``` r
 # write rda file to disk for use with GSODR package
@@ -138,12 +168,13 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  collate  en_AU.UTF-8                 
     ##  ctype    en_AU.UTF-8                 
     ##  tz       Australia/Brisbane          
-    ##  date     2019-09-01                  
+    ##  date     2019-09-02                  
     ## 
     ## ─ Packages ──────────────────────────────────────────────────────────────
     ##  package     * version date       lib source        
     ##  assertthat    0.2.1   2019-03-21 [1] CRAN (R 3.6.0)
     ##  cli           1.1.0   2019-03-19 [1] CRAN (R 3.6.0)
+    ##  countrycode * 1.1.0   2018-10-27 [1] CRAN (R 3.6.0)
     ##  crayon        1.3.4   2017-09-16 [1] CRAN (R 3.6.0)
     ##  curl          4.0     2019-07-22 [1] CRAN (R 3.6.1)
     ##  data.table  * 1.12.2  2019-04-07 [1] CRAN (R 3.6.0)
