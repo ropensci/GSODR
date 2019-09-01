@@ -50,6 +50,7 @@ countries <-
   data.frame(lapply(countries, as.character), stringsAsFactors = FALSE)
 countries <-
   data.frame(lapply(countries, trimws), stringsAsFactors = FALSE)
+countries$country_name <- toupper(countries$country_name)
 
 country_list <- merge(x = countries,
                       y =  countrycode::codelist,
@@ -71,17 +72,17 @@ country_list
 ```
 
     ##      FIPS   COUNTRY_NAME ISO2C ISO3C
-    ##   1:   AF    Afghanistan    AF   AFG
-    ##   2:   AG        Algeria    DZ   DZA
-    ##   3:   AJ     Azerbaijan    AZ   AZE
-    ##   4:   AM        Armenia    AM   ARM
-    ##   5:   AO         Angola    AO   AGO
+    ##   1:   AF    AFGHANISTAN    AF   AFG
+    ##   2:   AG        ALGERIA    DZ   DZA
+    ##   3:   AJ     AZERBAIJAN    AZ   AZE
+    ##   4:   AM        ARMENIA    AM   ARM
+    ##   5:   AO         ANGOLA    AO   AGO
     ##  ---                                
-    ## 199:   WI Western Sahara    EH   ESH
-    ## 200:   WS          Samoa    WS   WSM
-    ## 201:   YM          Yemen    YE   YEM
-    ## 202:   ZA         Zambia    ZM   ZMB
-    ## 203:   ZI       Zimbabwe    ZW   ZWE
+    ## 199:   WI WESTERN SAHARA    EH   ESH
+    ## 200:   WS          SAMOA    WS   WSM
+    ## 201:   YM          YEMEN    YE   YEM
+    ## 202:   ZA         ZAMBIA    ZM   ZMB
+    ## 203:   ZI       ZIMBABWE    ZW   ZWE
 
 Write .rda file to disk.
 

@@ -48,6 +48,7 @@ countries <-
   data.frame(lapply(countries, as.character), stringsAsFactors = FALSE)
 countries <-
   data.frame(lapply(countries, trimws), stringsAsFactors = FALSE)
+countries$country_name <- toupper(countries$country_name)
 
 country_list <- merge(x = countries,
                       y =  countrycode::codelist,
