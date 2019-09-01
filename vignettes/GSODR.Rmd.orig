@@ -41,8 +41,8 @@ local disk and re-formats them returning a tidy data frame in R
 within the given radius (kilometres) of a point given as latitude and longitude
 
 - `update_station_list()` - this function downloads the latest station list from
-the NCEI's FTP server updates the package's internal database of stations and
-their metadata.
+the NCEI's server updates the package's internal database of stations and their
+metadata.
 
 - `get_inventory()` - this function downloads the latest station inventory
 information from the NCEI's server and returns the header information about
