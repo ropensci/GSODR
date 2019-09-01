@@ -48,8 +48,25 @@ update_station_list <- function() {
   options(timeout = 300)
   on.exit(options(timeout = original_timeout))
 
+  ftp_handle <-
+    curl::new_handle(
+      ftp_use_epsv = FALSE,
+      crlf = TRUE,
+      ssl_verifypeer = FALSE,
+      ftp_response_timeout = 30,
+      ftp_skip_pasv_ip = TRUE
+    )
+
+  tryCatch({
+    curl::curl_download(
+      "https://www1.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
+      destfile = file.path(tempdir(), "isd-history.csv"),
+      quiet = TRUE,
+      handle = ftp_handle
+    )
+
   # download data
-  isd_history <- fread("https://www1.ncdc.noaa.gov/pub/data/noaa/isd-history.csv")
+  isd_history <- fread(file.path(tempdir(), "isd-history.csv"))
 
   # clean data
   isd_history[isd_history == -999] <- NA
@@ -80,4 +97,14 @@ update_station_list <- function() {
        file = fname,
        compress = "bzip2",
        version = 2)
+  },
+
+  error = function(cond) {
+    stop(
+      "There was a problem retrieving the station list file. Perhaps \n",
+      "the server is not responding currently or there is no \n",
+      "Internet connection. Please try again later.",
+      call. = FALSE
+    )
+  })
 }
