@@ -41,7 +41,7 @@ if (!require("data.table"))
 countries <-
   readLines("https://www1.ncdc.noaa.gov/pub/data/igra/igra2-country-list.txt")[-2]
 
-countries <- read.fwf(textConnection(countries), widths = c(8, 59))
+countries <- read.fwf(textConnection(countries), widths = c(3, 59))
 
 names(countries) <- c("fips", "country_name")
 countries <- countries[-1, ] # drop first row that contained colnames
@@ -70,7 +70,18 @@ data.table::setDT(country_list, key = "FIPS")
 country_list
 ```
 
-    ## Empty data.table (0 rows and 4 cols): FIPS,COUNTRY_NAME,ISO2C,ISO3C
+    ##      FIPS   COUNTRY_NAME ISO2C ISO3C
+    ##   1:   AF    Afghanistan    AF   AFG
+    ##   2:   AG        Algeria    DZ   DZA
+    ##   3:   AJ     Azerbaijan    AZ   AZE
+    ##   4:   AM        Armenia    AM   ARM
+    ##   5:   AO         Angola    AO   AGO
+    ##  ---                                
+    ## 199:   WI Western Sahara    EH   ESH
+    ## 200:   WS          Samoa    WS   WSM
+    ## 201:   YM          Yemen    YE   YEM
+    ## 202:   ZA         Zambia    ZM   ZMB
+    ## 203:   ZI       Zimbabwe    ZW   ZWE
 
 Write .rda file to disk.
 

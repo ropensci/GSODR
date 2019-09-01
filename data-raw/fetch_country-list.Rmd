@@ -39,7 +39,7 @@ if (!require("data.table"))
 countries <-
   readLines("https://www1.ncdc.noaa.gov/pub/data/igra/igra2-country-list.txt")[-2]
 
-countries <- read.fwf(textConnection(countries), widths = c(8, 59))
+countries <- read.fwf(textConnection(countries), widths = c(3, 59))
 
 names(countries) <- c("fips", "country_name")
 countries <- countries[-1, ] # drop first row that contained colnames
