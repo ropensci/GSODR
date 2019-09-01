@@ -43,7 +43,7 @@ get_inventory <- function() {
 
   tryCatch({
     curl::curl_download(
-      "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt",
+      "https://www1.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt",
       destfile = file.path(tempdir(), "inventory.txt"),
       quiet = TRUE,
       handle = ftp_handle

@@ -18,7 +18,7 @@
 #' \code{load(system.file("extdata", "isd_history.rda", package = "GSODR"))}
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' update_station_list()
 #' }
 #'
@@ -49,7 +49,7 @@ update_station_list <- function() {
   on.exit(options(timeout = original_timeout))
 
   # download data
-  isd_history <- fread("ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv")
+  isd_history <- fread("https://www1.ncdc.noaa.gov/pub/data/noaa/isd-history.csv")
 
   # clean data
   isd_history[isd_history == -999] <- NA
