@@ -37,7 +37,7 @@ if (!require("data.table"))
 
 ```{r read-table, echo=TRUE, messages=FALSE}
 countries <-
-  readLines("ftp://ftp.ncdc.noaa.gov/pub/data/noaa/country-list.txt")[-2]
+  readLines("https://www1.ncdc.noaa.gov/pub/data/igra/igra2-country-list.txt")[-2]
 
 countries <- read.fwf(textConnection(countries), widths = c(8, 59))
 

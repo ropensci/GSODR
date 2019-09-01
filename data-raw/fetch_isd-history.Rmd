@@ -43,7 +43,7 @@ if (!require("data.table")) {
 
 ```{r download_NE_data, echo=TRUE, message=FALSE, warning=FALSE}
 # download data
-isd_history <- fread("ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv")
+isd_history <- fread("https://www1.ncdc.noaa.gov/pub/data/noaa/isd-history.csv")
 
 # clean data
 isd_history[isd_history == -999] <- NA

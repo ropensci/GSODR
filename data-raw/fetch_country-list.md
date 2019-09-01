@@ -1,7 +1,7 @@
 Fetch GSOD Country List and Merge with ISO Country Codes
 ================
 Adam H. Sparks
-2019-08-13
+2019-09-01
 
 # Introduction
 
@@ -39,7 +39,7 @@ if (!require("data.table"))
 
 ``` r
 countries <-
-  readLines("ftp://ftp.ncdc.noaa.gov/pub/data/noaa/country-list.txt")[-2]
+  readLines("https://www1.ncdc.noaa.gov/pub/data/igra/igra2-country-list.txt")[-2]
 
 countries <- read.fwf(textConnection(countries), widths = c(8, 59))
 
@@ -70,18 +70,7 @@ data.table::setDT(country_list, key = "FIPS")
 country_list
 ```
 
-    ##      FIPS        COUNTRY_NAME ISO2C ISO3C
-    ##   1:   AA               ARUBA    AW   ABW
-    ##   2:   AC ANTIGUA AND BARBUDA    AG   ATG
-    ##   3:   AF         AFGHANISTAN    AF   AFG
-    ##   4:   AG             ALGERIA    DZ   DZA
-    ##   5:   AJ          AZERBAIJAN    AZ   AZE
-    ##  ---                                     
-    ## 237:   WS       WESTERN SAMOA    WS   WSM
-    ## 238:   WZ           SWAZILAND    SZ   SWZ
-    ## 239:   YM               YEMEN    YE   YEM
-    ## 240:   ZA              ZAMBIA    ZM   ZMB
-    ## 241:   ZI            ZIMBABWE    ZW   ZWE
+    ## Empty data.table (0 rows and 4 cols): FIPS,COUNTRY_NAME,ISO2C,ISO3C
 
 Write .rda file to disk.
 
@@ -121,7 +110,7 @@ Policy](http://www.wmo.int/pages/about/Resolution40.html)
     ##  collate  en_AU.UTF-8                 
     ##  ctype    en_AU.UTF-8                 
     ##  tz       Australia/Brisbane          
-    ##  date     2019-08-13                  
+    ##  date     2019-09-01                  
     ## 
     ## ─ Packages ──────────────────────────────────────────────────────────────
     ##  package     * version date       lib source        
@@ -133,15 +122,16 @@ Policy](http://www.wmo.int/pages/about/Resolution40.html)
     ##  digest        0.6.20  2019-07-04 [1] CRAN (R 3.6.0)
     ##  evaluate      0.14    2019-05-28 [1] CRAN (R 3.6.0)
     ##  htmltools     0.3.6   2017-04-28 [1] CRAN (R 3.6.0)
-    ##  knitr         1.24    2019-08-08 [1] CRAN (R 3.6.0)
+    ##  knitr         1.24    2019-08-08 [1] CRAN (R 3.6.1)
     ##  magrittr      1.5     2014-11-22 [1] CRAN (R 3.6.0)
     ##  Rcpp          1.0.2   2019-07-25 [1] CRAN (R 3.6.0)
-    ##  rmarkdown     1.14    2019-07-12 [1] CRAN (R 3.6.0)
+    ##  rmarkdown     1.15    2019-08-21 [1] CRAN (R 3.6.0)
     ##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 3.6.0)
     ##  stringi       1.4.3   2019-03-12 [1] CRAN (R 3.6.0)
     ##  stringr       1.4.0   2019-02-10 [1] CRAN (R 3.6.0)
     ##  withr         2.1.2   2018-03-15 [1] CRAN (R 3.6.0)
-    ##  xfun          0.8     2019-06-25 [1] CRAN (R 3.6.0)
+    ##  xfun          0.9     2019-08-21 [1] CRAN (R 3.6.0)
     ##  yaml          2.2.0   2018-07-25 [1] CRAN (R 3.6.0)
     ## 
-    ## [1] /Library/Frameworks/R.framework/Versions/3.6/Resources/library
+    ## [1] /Users/adamsparks/Library/R/3.x/library
+    ## [2] /Library/Frameworks/R.framework/Versions/3.6/Resources/library
