@@ -32,8 +32,8 @@ local disk and re-formats them returning a tidy data frame in R
 within the given radius (kilometres) of a point given as latitude and longitude
 
 - `update_station_list()` - this function downloads the latest station list from
-the NCEI's FTP server updates the package's internal database of stations and
-their metadata.
+the NCEI's server updates the package's internal database of stations and their
+metadata.
 
 - `get_inventory()` - this function downloads the latest station inventory
 information from the NCEI's server and returns the header information about
@@ -379,14 +379,6 @@ temperature for 2010.
 
 ```r
 library(ggplot2)
-```
-
-```
-## Find out what's changed in ggplot2 at
-## https://github.com/tidyverse/ggplot2/releases.
-```
-
-```r
 library(tidyr)
 
 # Create a dataframe of just the date and temperature values that we want to
