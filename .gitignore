@@ -22,3 +22,5 @@ inst/doc
 
 generate.rb
 *.code-workspace
+doc
+Meta

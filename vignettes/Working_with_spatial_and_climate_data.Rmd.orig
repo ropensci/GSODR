@@ -11,11 +11,15 @@ vignette: >
 ---
 
 ```{r check_packages, echo=FALSE, messages=FALSE, warning=FALSE}
-required <- c("spacetime", "plotKML", "GSODRdata", "reshape2", "rgdal")
+required <-
+  c("spacetime", "plotKML", "GSODRdata", "reshape2", "rgdal")
 
-if (!all(unlist(lapply(required, function(pkg) requireNamespace(pkg, quietly = TRUE)))))
-  knitr::opts_chunk$set(eval = FALSE, collapse = TRUE, comment = "#>", fig.width = 7, fig.height = 7, fig.align = "center")
-```
+if (!all(unlist(lapply(required, function(pkg)
+  requireNamespace(pkg, quietly = TRUE)))))
+  knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>"
+  )```
 
 # Introduction
 
@@ -43,11 +47,14 @@ file, PHL-2010.gpkg, in the user's home directory.
 
 ```{r get-data, eval=TRUE}
 library(GSODR)
-PHL <- get_GSOD(years = 2010, country = "Philippines", max_missing = 5)
+PHL <-
+  get_GSOD(years = 2010,
+           country = "Philippines",
+           max_missing = 5)
 
 PHL <- st_as_sf(x = PHL,
-                        coords = c("LON", "LAT"),
-                        crs = "+proj=longlat +datum=WGS84")
+                coords = c("LON", "LAT"),
+                crs = "+proj=longlat +datum=WGS84")
 
 write_sf(PHL, "~/PHL-2010.gpkg")
 ```
@@ -69,15 +76,24 @@ pnts <- readOGR(dsn = path.expand("~/PHL-2010.gpkg"), layers[1])
 pnts$DATE = as.Date(paste(pnts$YEAR, pnts$MONTH, pnts$DAY, sep = "-"))
 row.names(pnts) <- paste("point", 1:nrow(pnts), sep = "")
 
-tmp_ST <- STIDF(sp = as(pnts, "SpatialPoints"),
-                time = pnts$DATE - 0.5,
-                data = pnts@data[, c("TEMP", "STNID")],
-                endTime = pnts$DATE + 0.5)
+tmp_ST <- STIDF(
+  sp = as(pnts, "SpatialPoints"),
+  time = pnts$DATE - 0.5,
+  data = pnts@data[, c("TEMP", "STNID")],
+  endTime = pnts$DATE + 0.5
+)
 
 shape = "http://maps.google.com/mapfiles/kml/pal2/icon18.png"
 
-kml(tmp_ST, dtime = 24 * 3600, colour = TEMP, shape = shape, labels = TEMP,
-    file.name = "Temperatures_PHL_2010-2010.kml", folder.name = "TEMP")
+kml(
+  tmp_ST,
+  dtime = 24 * 3600,
+  colour = TEMP,
+  shape = shape,
+  labels = TEMP,
+  file.name = "Temperatures_PHL_2010-2010.kml",
+  folder.name = "TEMP"
+)
 
 system("zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml")
 ```
@@ -104,10 +120,8 @@ See http://chelsa-climate.org for more information on these data.
 
 ```{r devtools, eval=TRUE}
 if (!require(devtools)) {
-  install.packages(
-    "devtools",
-    repos = c(CRAN = "https://cloud.r-project.org/")
-  )
+  install.packages("devtools",
+                   repos = c(CRAN = "https://cloud.r-project.org/"))
   library(devtools)
 }
 devtools::install_github("adamhsparks/GSODRdata")
@@ -123,10 +137,10 @@ str(CHELSA)
 ```
 
 Compare the GSOD weather data from the Philippines with climatic data provided
-by the _GSODR_ package in the `CHELSA` data set using `dplyr` functions to join
-the CHELSA and _GSODR_ data for plotting.
+by the _GSODRdata_ package in the CHELSA data set using `dplyr` functions to
+join the CHELSA and _GSODR_ data for plotting.
 
-```{r comparison, eval=TRUE}
+```{r comparison, eval=TRUE, fig.path = "vignettes/figure/"}
 library(dplyr)
 library(ggplot2)
 library(reshape2)

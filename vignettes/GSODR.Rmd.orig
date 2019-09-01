@@ -13,13 +13,18 @@ vignette: >
 ```{r check_packages, echo=FALSE, messages=FALSE, warning=FALSE}
 required <- c("ggplot2", "tidyr")
 
-if (!all(unlist(lapply(required, function(pkg) requireNamespace(pkg, quietly = TRUE)))))
-knitr::opts_chunk$set(eval = FALSE, collapse = TRUE, comment = "#>", fig.width = 7, fig.height = 7, fig.align = "center")
+if (!all(unlist(lapply(required, function(pkg)
+  requireNamespace(pkg, quietly = TRUE)))))
+  knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>"
+  )
 ```
 
 # Introduction
 
-The GSOD or [Global Surface Summary of the Day (GSOD)](https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/)
+The GSOD or [Global Surface Summary of the Day
+(GSOD)](https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/)
 data provided by the US National Centers for Environmental Information (NCEI)
 are a valuable source of weather data with global coverage. However, the data
 files are cumbersome and difficult to work with. _GSODR_ aims to make it easy to
@@ -66,7 +71,8 @@ library(data.table)
 load(system.file("extdata", "country_list.rda", package = "GSODR"))
 load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 
-station_locations <- isd_history[country_list, on = c("CTRY" = "FIPS")]
+station_locations <-
+  isd_history[country_list, on = c("CTRY" = "FIPS")]
 
 # create data.frame for Australia only
 Oz <- subset(station_locations, COUNTRY_NAME == "AUSTRALIA")
@@ -83,8 +89,9 @@ weather data from the station Toowoomba, Queensland, Australia for 2010 by using
 the STNID in the `station` parameter of `get_GSOD()`.
 
 ```{r Ex2, eval=TRUE}
+library(skimr)
 tbar <- get_GSOD(years = 2010, station = "955510-99999")
-summary(tbar)
+skim(tbar)
 ```
 
 ### Using nearest_stations()
@@ -98,7 +105,6 @@ There are missing stations in this query. Not all that are listed and queried
 actually have files on the server.
 
 ```{r Ex3, eval=TRUE}
-library(skimr)
 tbar_stations <- nearest_stations(LAT = -27.5598,
                                   LON = 151.9507,
                                   distance = 50)
@@ -122,8 +128,9 @@ tbar_stations <- tbar_stations[!tbar_stations %in% remove]
 Using the first data downloaded for a single station, 955510-99999, plot the
 temperature for 2010.
 
-```{r Ex5, eval=TRUE, fig.width = 7, fig.height = 7, fig.align = "center"}
+```{r Ex5, eval=TRUE, fig.width = 7, fig.height = 7, fig.align = "center", fig.path = "vignettes/figures/"}
 library(ggplot2)
+library(ggthemes)
 library(tidyr)
 
 # Create a dataframe of just the date and temperature values that we want to
@@ -134,11 +141,9 @@ tbar_temps <- tbar[, c("YEARMODA", "TEMP", "MAX", "MIN")]
 tbar_temps <-
   gather(tbar_temps, Measurement, gather_cols = TEMP:MIN)
 
-ggplot(data = tbar_temps, aes(
-  x = YEARMODA,
-  y = value,
-  colour = Measurement
-)) +
+ggplot(data = tbar_temps, aes(x = YEARMODA,
+                              y = value,
+                              colour = Measurement)) +
   geom_line() +
   scale_color_brewer(type = "qual", na.value = "black") +
   scale_y_continuous(name = "Temperature") +
@@ -283,11 +288,11 @@ _GSODR_ formatted data include the following fields and units:
 
 - **CTRY** - Country in which the station is located;
 
-- **LATITUDE** - Latitude. *Station dropped in cases where values are < -90 or > 90
-degrees or Lat = 0 and Lon = 0*;
+- **LATITUDE** - Latitude. *Station dropped in cases where values are < -90 or >
+90 degrees or Lat = 0 and Lon = 0*;
 
-- **LONGITUDE** - Longitude. *Station dropped in cases where values are < -180 or >
-180 degrees or Lat = 0 and Lon = 0*;
+- **LONGITUDE** - Longitude. *Station dropped in cases where values are < -180
+or > 180 degrees or Lat = 0 and Lon = 0*;
 
 - **ELEVATION** - Elevation in metres;
 
@@ -310,13 +315,13 @@ temperature;
 - **DEWP** - Mean daily dew point converted to degrees C to tenths. Missing =
 NA;
 
-- **DEWP\_ATTRIBUTES** - Number of observations used in calculating mean daily dew
-point;
+- **DEWP\_ATTRIBUTES** - Number of observations used in calculating mean daily
+dew point;
 
 - **SLP** - Mean sea level pressure in millibars to tenths. Missing = NA;
 
-- **SLP\_ATTRIBUTES** - Number of observations used in calculating mean sea level
-pressure;
+- **SLP\_ATTRIBUTES** - Number of observations used in calculating mean sea
+level pressure;
 
 - **STP** - Mean station pressure for the day in millibars to tenths. Missing
 = NA;
@@ -333,8 +338,8 @@ visibility;
 - **WDSP** - Mean daily wind speed value converted to metres/second to tenths.
 Missing = NA;
 
-- **WDSP\_ATTRIBUTES** - Number of observations used in calculating mean daily wind
-speed;
+- **WDSP\_ATTRIBUTES** - Number of observations used in calculating mean daily
+wind speed;
 
 - **MXSPD** - Maximum sustained wind speed reported for the day converted to
 metres/second to tenths. Missing = NA;
@@ -346,20 +351,24 @@ to tenths. Missing = NA;
 tenths--time of max temp report varies by country and region, so this will
 sometimes not be the max for the calendar day. Missing = NA;
 
-- **MAX\_ATTRIBUTES** - Blank indicates max temp was taken from the explicit max temp
-report and not from the 'hourly' data. An "\*" indicates max temp was derived
-from the hourly data (_i.e._, highest hourly or synoptic-reported temperature);
+- **MAX\_ATTRIBUTES** - Blank indicates max temp was taken from the explicit max
+temp report and not from the 'hourly' data. An "\*" indicates max temp was
+derived from the hourly data (_i.e._, highest hourly or synoptic-reported
+temperature);
 
 - **MIN** - Minimum temperature reported during the day converted to Celsius to
 tenths--time of min temp report varies by country and region, so this will
 sometimes not be the max for the calendar day. Missing = NA;
 
-- **MIN\_ATTRIBUTES** - Blank indicates max temp was taken from the explicit min temp report and not from the 'hourly' data. An "\*" indicates min temp was derived from the hourly data (_i.e._, highest hourly or synoptic-reported temperature);
+- **MIN\_ATTRIBUTES** - Blank indicates max temp was taken from the explicit min
+temp report and not from the 'hourly' data. An "\*" indicates min temp was
+derived from the hourly data (_i.e._, highest hourly or synoptic-reported
+temperature);
 
 - **PRCP** - Total precipitation (rain and/or melted snow) reported during the
 day converted to millimetres to hundredths; will usually not end with the
-midnight observation, _i.e._, may include latter part of previous day. A value of
-".00" indicates no measurable precipitation (includes a trace). Missing = NA;
+midnight observation, _i.e._, may include latter part of previous day. A value
+of ".00" indicates no measurable precipitation (includes a trace). Missing = NA;
 *Note: Many stations do not report '0' on days with no precipitation--
 therefore, 'NA' will often appear on these days. For example, a station may
 only report a 6-hour amount for the period during which rain fell.* See
@@ -418,16 +427,13 @@ no/not reported) for the occurrence during the day;
 
 ## Appendix 2: Map of Current GSOD Station Locations
 
-```{r, eval=TRUE, message=FALSE, echo=FALSE, warning=FALSE, fig.width = 7, fig.height = 5, fig.align = "center"}
-if (requireNamespace("ggplot2", quietly = TRUE) &&
-    requireNamespace("ggthemes", quietly = TRUE) &&
-    requireNamespace("maps", quietly = TRUE) &&
+```{r, eval=TRUE, message=FALSE, echo=FALSE, warning=FALSE, fig.width = 7, fig.height = 5, fig.align = "center", fig.path = "vignettes/figures/"}
+if (requireNamespace("maps", quietly = TRUE) &&
     requireNamespace("mapproj", quietly = TRUE) &&
     requireNamespace("gridExtra", quietly = TRUE) &&
     requireNamespace("grid", quietly = TRUE)) {
   library(ggplot2)
   library(mapproj)
-  library(ggthemes)
   library(maps)
   library(grid)
   library(gridExtra)
