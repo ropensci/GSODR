@@ -98,7 +98,11 @@ isd_history <- isd_history[, c(
 )]
 
 names(isd_history) <- toupper(names(isd_history))
-setnames(isd_history, "CTRY", "FIPS")
+setnames(
+  isd_history,
+  old = c("CTRY", "COUNTRY.NAME.EN"),
+  new = c("FIPS", "COUNTRY_NAME")
+)
 ```
 
 ## View and save the data
@@ -119,18 +123,18 @@ isd_history
     ## 26691: 679830-99999      CHIPINGE -20.200 32.617   ZI       19490103
     ## 26692: 679890-99999        RUPISI -20.417 32.317   ZI       19620701
     ## 26693: 679910-99999    BEITBRIDGE -22.217 30.000   ZI       19620701
-    ##             END COUNTRY.NAME.EN ISO2C ISO3C
-    ##     1: 20120323     Afghanistan    AF   AFG
-    ##     2: 20070905     Afghanistan    AF   AFG
-    ##     3: 20070608     Afghanistan    AF   AFG
-    ##     4: 20010925     Afghanistan    AF   AFG
-    ##     5: 20130703     Afghanistan    AF   AFG
-    ##    ---                                     
-    ## 26689: 20190829        Zimbabwe    ZW   ZWE
-    ## 26690: 20190829        Zimbabwe    ZW   ZWE
-    ## 26691: 20190829        Zimbabwe    ZW   ZWE
-    ## 26692: 19680630        Zimbabwe    ZW   ZWE
-    ## 26693: 20190829        Zimbabwe    ZW   ZWE
+    ##             END COUNTRY_NAME ISO2C ISO3C
+    ##     1: 20120323  Afghanistan    AF   AFG
+    ##     2: 20070905  Afghanistan    AF   AFG
+    ##     3: 20070608  Afghanistan    AF   AFG
+    ##     4: 20010925  Afghanistan    AF   AFG
+    ##     5: 20130703  Afghanistan    AF   AFG
+    ##    ---                                  
+    ## 26689: 20190829     Zimbabwe    ZW   ZWE
+    ## 26690: 20190829     Zimbabwe    ZW   ZWE
+    ## 26691: 20190829     Zimbabwe    ZW   ZWE
+    ## 26692: 19680630     Zimbabwe    ZW   ZWE
+    ## 26693: 20190829     Zimbabwe    ZW   ZWE
 
 ``` r
 # write rda file to disk for use with GSODR package

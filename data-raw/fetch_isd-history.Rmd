@@ -98,7 +98,11 @@ isd_history <- isd_history[, c(
 )]
 
 names(isd_history) <- toupper(names(isd_history))
-setnames(isd_history, "CTRY", "FIPS")
+setnames(
+  isd_history,
+  old = c("CTRY", "COUNTRY.NAME.EN"),
+  new = c("FIPS", "COUNTRY_NAME")
+)
 ```
 
 ## View and save the data
