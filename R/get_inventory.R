@@ -2,7 +2,7 @@
 #' Download and return a data frame of \acronym{GSOD} weather station data inventories
 #'
 #' The \acronym{NCEI} maintains a document,
-#' \url{ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt}, which lists
+#' \url{https://www1.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt}, which lists
 #' the number of weather observations by station-year-month from the beginning
 #' of the stations' records.  This function retrieves that document and prints
 #' an information header displaying the last update time with a data frame of
@@ -28,21 +28,15 @@
 get_inventory <- function() {
   load(system.file("extdata", "isd_history.rda", package = "GSODR")) #nocov
 
-  ftp_handle <-
-    curl::new_handle(
-      ftp_use_epsv = FALSE,
-      crlf = TRUE,
-      ssl_verifypeer = FALSE,
-      ftp_response_timeout = 30,
-      ftp_skip_pasv_ip = TRUE
-    )
+  original_timeout <- options("timeout")[[1]]
+  options(timeout = 300)
+  on.exit(options(timeout = original_timeout))
 
   tryCatch({
     curl::curl_download(
-      "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt",
+      "https://www1.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt",
       destfile = file.path(tempdir(), "inventory.txt"),
-      quiet = TRUE,
-      handle = ftp_handle
+      quiet = TRUE
     )
 
     "STNID" <- NULL #nocov

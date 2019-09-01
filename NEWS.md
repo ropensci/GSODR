@@ -1,6 +1,34 @@
-# GSODR 1.3.2.9000
+# GSODR 2.0.0
+
+## Bug fixes
+
+- `get_GSOD()` now uses https rather than FTP server, correcting bug where the
+data could not be downloaded any longer
+
+## Major changes
+
+- Corrected elevation values are no longer available from GSODR
+
+- Objects are returned as `data.table` objects
+
+## Minor changes
+
+- `get_inventory()` now uses https rather than FTP server
+
+- `update_station_list()` now uses https rather than FTP server
 
 - Implement better error handling when attempting to fetch station inventories
+
+- Reduced package dependencies
+
+- Improved vignettes that are pre-compiled for faster package installation and
+updated content with linting and error corrections
+
+- Users may now specify country by FIPS code when using `get_GSOD()`
+
+- Improved test coverage
+
+- Update internal database of station locations
 
 # GSODR 1.3.2
 

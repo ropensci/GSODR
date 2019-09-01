@@ -40,9 +40,9 @@
       paste0(station),
       " is not a valid station ID number, please check your entry.\n",
       "Valid Station IDs can be found in the isd-history.txt file\n",
-      "available from the US NCEI FTP server by combining the USAF and\n",
+      "available from the US NCEI server by combining the USAF and\n",
       "WBAN columns, e.g. '007005' '99999' is '007005-99999' from this\n",
-      "file <ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.txt>\n"
+      "file <https://www1.ncdc.noaa.gov/pub/data/noaa/isd-history.txt>\n"
     )
   }
   BEGIN <-
@@ -80,7 +80,7 @@
           country <- country_list[[c, 1]]
         } else {
           stop(call. = FALSE,
-               "\nPlease provide a valid name or 2 or 3",
+               "\nPlease provide a valid name or 2 or 3 ",
                "letter ISO country code\n")
         }
       } else if (nc == 2) {
@@ -92,7 +92,7 @@
           country <- country_list[[c, 1]]
         } else {
           stop(call. = FALSE,
-               "\nPlease provide a valid name or 2 or 3",
+               "\nPlease provide a valid name or 2 or 3 ",
                "\nletter ISO country code")
         }
       } else if (country %in% country_list$COUNTRY_NAME) {
@@ -100,7 +100,7 @@
         country <- country_list[[c, 1]]
       } else {
         stop(call. = FALSE,
-             "\nPlease provide a valid name or 2 or 3",
+             "\nPlease provide a valid name or 2 or 3 ",
              "letter ISO country code\n")
       }
     }

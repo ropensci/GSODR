@@ -2,10 +2,9 @@
 #' Download latest station list information and update internal database
 #'
 #' This function downloads the latest station list (isd-history.csv) from the
-#' \acronym{NCEI} \acronym{FTP} server and updates the data distributed with
-#' \pkg{GSODR} to the latest stations available.  These data provide unique
-#' identifiers, country, state (if in U.S.) and when weather observations begin
-#'  and end.
+#' \acronym{NCEI} server and updates the data distributed with \pkg{GSODR} to
+#' the latest stations available.  These data provide unique identifiers,
+#' country, state (if in U.S.) and when weather observations begin and end.
 #'
 #' Care should be taken when using this function if reproducibility is necessary
 #' as different machines with the same version of \pkg{GSODR} can end up with
@@ -48,36 +47,53 @@ update_station_list <- function() {
   options(timeout = 300)
   on.exit(options(timeout = original_timeout))
 
-  # download data
-  isd_history <- fread("ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv")
+  tryCatch({
+    # download data
+    isd_history <-
+      fread("https://www1.ncdc.noaa.gov/pub/data/noaa/isd-history.csv")
 
-  # clean data
-  isd_history[isd_history == -999] <- NA
-  isd_history[isd_history == -999.9] <- NA
-  isd_history <- isd_history[!is.na(isd_history$LAT) &
-                               !is.na(isd_history$LON), ]
-  isd_history <- isd_history[isd_history$LAT != 0 & isd_history$LON != 0, ]
-  isd_history <- isd_history[isd_history$LAT > -90 & isd_history$LAT < 90, ]
-  isd_history <- isd_history[isd_history$LON > -180 & isd_history$LON < 180, ]
+    # clean data
+    isd_history[isd_history == -999] <- NA
+    isd_history[isd_history == -999.9] <- NA
+    isd_history <- isd_history[!is.na(isd_history$LAT) &
+                                 !is.na(isd_history$LON), ]
+    isd_history <-
+      isd_history[isd_history$LAT != 0 & isd_history$LON != 0, ]
+    isd_history <-
+      isd_history[isd_history$LAT > -90 & isd_history$LAT < 90, ]
+    isd_history <-
+      isd_history[isd_history$LON > -180 & isd_history$LON < 180, ]
 
-  # add STNID column
-  isd_history[, STNID := paste(USAF, WBAN, sep = "-")]
-  setcolorder(isd_history, "STNID")
-  setnames(isd_history, "STATION NAME", "NAME")
-  setkey(isd_history, "STNID")
+    # add STNID column
+    isd_history[, STNID := paste(USAF, WBAN, sep = "-")]
+    setcolorder(isd_history, "STNID")
+    setnames(isd_history, "STATION NAME", "NAME")
+    setkey(isd_history, "STNID")
 
-  # drop stations not in GSOD data
-  isd_history[, STNID_len := nchar(STNID)]
-  isd_history <- subset(isd_history, STNID_len == 12)
+    # drop stations not in GSOD data
+    isd_history[, STNID_len := nchar(STNID)]
+    isd_history <- subset(isd_history, STNID_len == 12)
 
-  # remove extra columns
-  isd_history[, c("USAF", "WBAN", "ICAO", "ELEV(M)", "STNID_len") := NULL]
+    # remove extra columns
+    isd_history[, c("USAF", "WBAN", "ICAO", "ELEV(M)", "STNID_len") := NULL]
 
-  # write rda file to disk for use with GSODR package
-  fname <-
-    system.file("extdata", "isd_history.rda", package = "GSODR")
-  save(isd_history,
-       file = fname,
-       compress = "bzip2",
-       version = 2)
+    # write rda file to disk for use with GSODR package
+    fname <-
+      system.file("extdata", "isd_history.rda", package = "GSODR")
+    save(
+      isd_history,
+      file = fname,
+      compress = "bzip2",
+      version = 2
+    )
+  },
+
+  error = function(cond) {
+    stop(
+      "There was a problem retrieving the station list file. Perhaps \n",
+      "the server is not responding currently or there is no \n",
+      "Internet connection. Please try again later.",
+      call. = FALSE
+    )
+  })
 }
