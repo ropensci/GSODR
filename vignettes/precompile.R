@@ -30,8 +30,11 @@ library(devtools)
 build_vignettes()
 
 # move resource files to /doc
-resources <- list.files("vignettes/", pattern = ".png$", full.names = TRUE)
-file.copy(from = resources, to = "doc", overwrite =  TRUE)
+resources <-
+  list.files("vignettes/", pattern = ".png$", full.names = TRUE)
+file.copy(from = resources,
+          to = "doc",
+          overwrite =  TRUE)
 
 # clean up stray files
 unlink("vignettes/Temperatures_PHL_2010-2010.kmz")
