@@ -80,7 +80,7 @@
           country <- country_list[[c, 1]]
         } else {
           stop(call. = FALSE,
-               "\nPlease provide a valid name or 2 or 3",
+               "\nPlease provide a valid name or 2 or 3 ",
                "letter ISO country code\n")
         }
       } else if (nc == 2) {
@@ -92,7 +92,7 @@
           country <- country_list[[c, 1]]
         } else {
           stop(call. = FALSE,
-               "\nPlease provide a valid name or 2 or 3",
+               "\nPlease provide a valid name or 2 or 3 ",
                "\nletter ISO country code")
         }
       } else if (country %in% country_list$COUNTRY_NAME) {
@@ -100,7 +100,7 @@
         country <- country_list[[c, 1]]
       } else {
         stop(call. = FALSE,
-             "\nPlease provide a valid name or 2 or 3",
+             "\nPlease provide a valid name or 2 or 3 ",
              "letter ISO country code\n")
       }
     }
