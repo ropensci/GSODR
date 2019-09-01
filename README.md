@@ -29,12 +29,12 @@ local disk and re-formats them returning a tidy data frame in R
 within the given radius (kilometres) of a point given as latitude and longitude.
 
 - `update_station_list()` - this function downloads the latest station list from
-the NCEI's FTP server updates the package's internal database of stations and
-their metadata.
+the NCEI's server updates the package's internal database of stations and their
+metadata.
 
 - `get_inventory()` - this function downloads the latest station inventory
-information from the NCEI's FTP server and returns the header information about
-the latest version as a message in the console and a tidy data frame of the
+information from the NCEI's server and returns the header information about the
+latest version as a message in the console and a tidy data frame of the
 stations' inventory for each month that data are reported.
 
 When reformatting data either with `get_GSOD()` or `reformat_GSOD()`, all units

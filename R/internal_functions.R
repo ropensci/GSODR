@@ -40,9 +40,9 @@
       paste0(station),
       " is not a valid station ID number, please check your entry.\n",
       "Valid Station IDs can be found in the isd-history.txt file\n",
-      "available from the US NCEI FTP server by combining the USAF and\n",
+      "available from the US NCEI server by combining the USAF and\n",
       "WBAN columns, e.g. '007005' '99999' is '007005-99999' from this\n",
-      "file <ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.txt>\n"
+      "file <https://www1.ncdc.noaa.gov/pub/data/noaa/isd-history.txt>\n"
     )
   }
   BEGIN <-

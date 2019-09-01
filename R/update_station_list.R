@@ -2,10 +2,9 @@
 #' Download latest station list information and update internal database
 #'
 #' This function downloads the latest station list (isd-history.csv) from the
-#' \acronym{NCEI} \acronym{FTP} server and updates the data distributed with
-#' \pkg{GSODR} to the latest stations available.  These data provide unique
-#' identifiers, country, state (if in U.S.) and when weather observations begin
-#'  and end.
+#' \acronym{NCEI} server and updates the data distributed with \pkg{GSODR} to
+#' the latest stations available.  These data provide unique identifiers,
+#' country, state (if in U.S.) and when weather observations begin and end.
 #'
 #' Care should be taken when using this function if reproducibility is necessary
 #' as different machines with the same version of \pkg{GSODR} can end up with
