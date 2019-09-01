@@ -8,10 +8,9 @@ update_station_list()
 }
 \description{
 This function downloads the latest station list (isd-history.csv) from the
-\acronym{NCEI} \acronym{FTP} server and updates the data distributed with
-\pkg{GSODR} to the latest stations available.  These data provide unique
-identifiers, country, state (if in U.S.) and when weather observations begin
-and end.
+\acronym{NCEI} server and updates the data distributed with \pkg{GSODR} to
+the latest stations available.  These data provide unique identifiers,
+country, state (if in U.S.) and when weather observations begin and end.
 }
 \details{
 Care should be taken when using this function if reproducibility is necessary
