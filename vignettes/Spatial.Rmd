@@ -1,12 +1,12 @@
 ---
-title: "Using Spatial R Packages with GSODR"
+title: "Using GSODR with sf"
 author: "Adam H Sparks"
 output:
   rmarkdown::html_vignette:
     toc: true
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{Using Spatial R Packages}
+  %\VignetteIndexEntry{Using GSODR with sf}
   %\VignetteEncoding{UTF-8}
 ---
 
@@ -20,75 +20,6 @@ standards-based, platform-independent, portable, self-describing compact
 format for transferring geospatial information, which handle vector files much
 like shapefiles do, but eliminate many of the issues that shapefiles have with
 field names and the number of files.
-
-Converting the GSOD data to a spatial object is rather simple. In R there are
-two options, _sp_ and _sf_. The _sp_ format is older and more well established,
-but _sf_ offers some new exciting possibilities.
-
-## Convert to an _sp_ SpatialPointsDataFrame
-
-For this example we convert the data to a _sp_ object. You might use this one
-to save GeoPackage or ESRI shapefiles for sharing or analysis in another GIS
-program.
-
-
-```r
-# get GSOD data
-library(GSODR)
-library(sp)
-GSOD <- get_GSOD(years = 2015, country = "Australia")
-
-# convert to SpatialPointsDataFrame
-GSOD_sp <- GSOD
-coordinates(GSOD_sp) <- ~ LONGITUDE + LATITUDE
-proj4string(GSOD_sp) <- CRS("+proj=longlat +datum=WGS84")
-```
-
-## Saving _sp_ objects
-
-Using `writeOGR()` it is simple to save as a GeoPackage file.
-
-
-```r
-library(rgdal)
-```
-
-```
-## rgdal: version: 1.4-4, (SVN revision 833)
-##  Geospatial Data Abstraction Library extensions to R successfully loaded
-##  Loaded GDAL runtime: GDAL 2.1.3, released 2017/20/01
-##  Path to GDAL shared files: /Users/adamsparks/Library/R/3.x/library/sf/gdal
-##  GDAL binary built with GEOS: FALSE 
-##  Loaded PROJ.4 runtime: Rel. 4.9.3, 15 August 2016, [PJ_VERSION: 493]
-##  Path to PROJ.4 shared files: /Users/adamsparks/Library/R/3.x/library/sf/proj
-##  Linking to sp version: 1.3-1
-```
-
-```r
-writeOGR(GSOD_sp,
-         dsn = path.expand("~/"),
-         layer = "GSOD",
-         driver = "GPKG")
-```
-
-```
-## Error in writeOGR(GSOD_sp, dsn = path.expand("~/"), layer = "GSOD", driver = "GPKG"): Creation of output file failed
-```
-
-Using `writeOGR()` it is simple to save as an ESRI shapefile.
-
-
-```r
-library(rgdal)
-writeOGR(GSOD_sp,
-         dsn = path.expand("~/"),
-         layer = "GSOD",
-         driver = "ESRI Shapefile")
-```
-
-```
-## Error in writeOGR(GSOD_sp, dsn = path.expand("~/"), layer = "GSOD", driver = "ESRI Shapefile"): layer exists, use a new layer name
-```
 
 ## Converting to an _sf_ object
 
@@ -109,13 +40,6 @@ For this example, we convert the GSOD data to an _sf_ object.
 
 ```r
 library(sf)
-```
-
-```
-## Linking to GEOS 3.6.1, GDAL 2.1.3, PROJ 4.9.3
-```
-
-```r
 GSOD_SF <- st_as_sf(x = GSOD,
                     coords = c("LONGITUDE", "LATITUDE"),
                     crs = "+proj=longlat +datum=WGS84")
@@ -131,7 +55,7 @@ str(GSOD_SF)
 ##  $ STATE           : chr  "" "" "" "" ...
 ##  $ ELEVATION       : num  24 24 24 24 24 24 24 24 24 24 ...
 ##  $ BEGIN           : int  20010912 20010912 20010912 20010912 20010912 20010912 20010912 20010912 20010912 20010912 ...
-##  $ END             : int  20190810 20190810 20190810 20190810 20190810 20190810 20190810 20190810 20190810 20190810 ...
+##  $ END             : int  20190829 20190829 20190829 20190829 20190829 20190829 20190829 20190829 20190829 20190829 ...
 ##  $ YEARMODA        : Date, format: "2015-01-01" "2015-01-02" ...
 ##  $ YEAR            : int  2015 2015 2015 2015 2015 2015 2015 2015 2015 2015 ...
 ##  $ MONTH           : int  1 1 1 1 1 1 1 1 1 1 ...
@@ -179,45 +103,43 @@ Writing a shapefile is a simple matter.
 
 
 ```r
-write_sf(GSOD_SF, "GSOD.shp") # silently overwrites
+write_sf(obj = GSOD_SF, dsn = file.path(tempdir(), "GSOD.shp"))
+```
+
+```
+## Warning in abbreviate_shapefile_names(obj): Field names abbreviated for
+## ESRI Shapefile driver
 ```
 
 As is writing a GeoPackage from the _sf_ object.
 
 
 ```r
-write_sf(GSOD_SF, "~/GSOD.gpkg") # silently overwrites
+write_sf(obj = GSOD_SF, dsn = file.path(tempdir(), "GSOD.gpkg"))
 ```
 
 After getting weather stations for Australia and creating a GeoPackage file,
-_rgdal_ can import the data into R again in a spatial format.
-
-Importing a GeoPackage file can be a bit tricky. The dsn will be the full path
-along with the file name. The layer to be specified is "GSOD", this is specified
-in the `get_GSOD()` function and will not change. The file name, specified in
-the dsn will, but the layer name will not.
+_sf_ can import the data into R again in a spatial format.
 
 
 ```r
 library(rgdal)
 
-AUS_stations <- readOGR(dsn = path.expand("~/GSOD.gpkg"), layer = "GSOD")
-```
+AUS_stations <-
+  st_read(dsn = file.path(tempdir(), "GSOD.gpkg")), layer = "GSOD")
 
-```
-## Error in ogrInfo(dsn = dsn, layer = layer, encoding = encoding, use_iconv = use_iconv, : Cannot open data source
-```
-
-```r
 class(AUS_stations)
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'AUS_stations' not found
+## Error: <text>:4:51: unexpected ','
+## 3: AUS_stations <-
+## 4:   st_read(dsn = file.path(tempdir(), "GSOD.gpkg")),
+##                                                      ^
 ```
 
-Since GeoPackage files are formatted as SQLite databases you can use the
-existing R tools for SQLite files
+Since GeoPackage files are formatted as SQLite databases you can also use other
+R tools for SQLite files
 [(J. Stachelek 2016)](https://jsta.github.io/2016/07/14/geopackage-r.html). One
 easy way is using _dplyr_. This option is much faster to load since it does not
 load the geometry.
@@ -225,51 +147,13 @@ load the geometry.
 
 ```r
 library(dplyr)
-```
-
-```
-## 
-## Attaching package: 'dplyr'
-```
-
-```
-## The following object is masked from 'package:gridExtra':
-## 
-##     combine
-```
-
-```
-## The following objects are masked from 'package:data.table':
-## 
-##     between, first, last
-```
-
-```
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-```
-
-```
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-```
-
-```r
-AUS_sqlite <- tbl(src_sqlite(path.expand("~/GSOD.gpkg")), "GSOD")
-```
-
-```
-## `path` must already exist, unless `create` = TRUE
-```
-
-```r
+AUS_sqlite <- tbl(src_sqlite(file.path(tempdir(), "GSOD.gpkg")), "GSOD")
 class(AUS_sqlite)
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'AUS_sqlite' not found
+## [1] "tbl_SQLiteConnection" "tbl_dbi"              "tbl_sql"             
+## [4] "tbl_lazy"             "tbl"
 ```
 
 # References

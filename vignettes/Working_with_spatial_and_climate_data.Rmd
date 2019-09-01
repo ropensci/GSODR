@@ -27,7 +27,7 @@ PHL <- st_as_sf(x = PHL,
                 coords = c("LONGITUDE", "LATITUDE"),
                 crs = "+proj=longlat +datum=WGS84")
 
-write_sf(PHL, "~/PHL-2010.gpkg")
+write_sf(obj = PHL, dsn = file.path(tempdir(), "/PHL-2010.gpkg"))
 ```
 
 ## Example - Use the GeoPackage File to Create a KML File
@@ -41,18 +41,9 @@ library(rgdal)
 library(spacetime)
 library(plotKML)
 
-layers <- ogrListLayers(dsn = path.expand("~/PHL-2010.gpkg"))
-pnts <- readOGR(dsn = path.expand("~/PHL-2010.gpkg"), layers[1])
-```
+layers <- ogrListLayers(dsn = file.path(tempdir(), "PHL-2010.gpkg"))
+pnts <- readOGR(dsn = file.path(tempdir(), ("PHL-2010.gpkg"), layers[1])
 
-```
-## OGR data source with driver: GPKG 
-## Source: "/Users/adamsparks/PHL-2010.gpkg", layer: "PHL-2010"
-## with 4709 features
-## It has 42 fields
-```
-
-```r
 # Plot results in Google Earth as a spacetime object:
 pnts$DATE = as.Date(paste(pnts$YEAR, pnts$MONTH, pnts$DAY, sep = "-"))
 row.names(pnts) <- paste("point", 1:nrow(pnts), sep = "")
@@ -77,6 +68,13 @@ kml(
 )
 
 system("zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml")
+```
+
+```
+## Error: <text>:9:1: unexpected symbol
+## 8: # Plot results in Google Earth as a spacetime object:
+## 9: pnts
+##    ^
 ```
 
 ## Example - Compare the GSOD Weather Data From the Philippines With Climate
