@@ -176,7 +176,7 @@ ggplot(df_melt, aes(x = DATE, y = value)) +
   labs(colour = "") +
   scale_color_brewer(palette = "Dark2") +
   facet_wrap(~ STNID) +
-  theme_tufte()
+  theme_classic()
 ```
 
 # Notes

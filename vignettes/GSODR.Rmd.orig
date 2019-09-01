@@ -130,7 +130,6 @@ temperature for 2010.
 
 ```{r Ex5, eval=TRUE, fig.width = 7, fig.height = 7, fig.align = "center", fig.path = "vignettes/"}
 library(ggplot2)
-library(ggthemes)
 library(tidyr)
 
 # Create a dataframe of just the date and temperature values that we want to
@@ -148,7 +147,7 @@ ggplot(data = tbar_temps, aes(x = YEARMODA,
   scale_color_brewer(type = "qual", na.value = "black") +
   scale_y_continuous(name = "Temperature") +
   scale_x_date(name = "Date") +
-  theme_tufte()
+  theme_classic()
 ```
 
 ## Download and Process Files in Parallel
@@ -451,7 +450,7 @@ if (requireNamespace("maps", quietly = TRUE) &&
     geom_point(color = "red",
                size = 0.05) +
     coord_map(xlim = c(-180, 180)) +
-    theme_map() +
+    theme_void() +
     labs(title = "GSOD Station Locations",
          caption = "Data: US NCEI GSOD and CIA World DataBank II")
 
