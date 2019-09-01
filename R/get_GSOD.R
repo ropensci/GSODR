@@ -74,8 +74,8 @@
 #'
 #' tbar
 #'
-#' # Download data for Australia from 2010 to 2015
-#' AUS <- get_GSOD(years = 2010:2015, country = "Australia")
+#' # Download data for Australia from 2010 to 2011
+#' AUS <- get_GSOD(years = 2010:2011, country = "Australia")
 #'
 #' AUS
 #' }

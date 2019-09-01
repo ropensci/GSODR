@@ -11,7 +11,7 @@ A \code{\link[data.table]{data.table}} object of station inventories
 }
 \description{
 The \acronym{NCEI} maintains a document,
-\url{ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt}, which lists
+\url{https://www1.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt}, which lists
 the number of weather observations by station-year-month from the beginning
 of the stations' records.  This function retrieves that document and prints
 an information header displaying the last update time with a data frame of
