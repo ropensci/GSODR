@@ -33,11 +33,17 @@ get_inventory <- function() {
   on.exit(options(timeout = original_timeout))
 
   tryCatch({
+    curl::curl_download(
+      "https://www1.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt",
+      destfile = file.path(tempdir(), "inventory.txt"),
+      quiet = TRUE
+    )
+
     "STNID" <- NULL #nocov
 
     main_body <-
       fread(
-        "https://www1.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt",
+        file.path(tempdir(), "inventory.txt"),
         skip = 8,
         col.names = c(
           "USAF",
