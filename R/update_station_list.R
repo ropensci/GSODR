@@ -43,10 +43,6 @@ update_station_list <- function() {
          call. = FALSE)
   }
 
-  original_timeout <- options("timeout")[[1]]
-  options(timeout = 300)
-  on.exit(options(timeout = original_timeout))
-
   tryCatch({
     # download data
     isd_history <-

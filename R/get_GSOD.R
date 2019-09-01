@@ -94,10 +94,6 @@ get_GSOD <- function(years,
                      country = NULL,
                      max_missing = NULL,
                      agroclimatology = FALSE) {
-  # Create objects for use in retrieving files ---------------------------------
-  original_timeout <- options("timeout")[[1]]
-  options(timeout = 300)
-  on.exit(options(timeout = original_timeout))
 
   # Validate user inputs -------------------------------------------------------
   .validate_years(years)

@@ -188,17 +188,6 @@ test_that(
     expect_error(.validate_country(country, isd_history))
   })
 
-test_that("Timeout options are reset on get_GSOD() exit", {
-  # get the original timeout value for net connections for last check to be sure
-  # get_GSOD() resets on exit.
-  skip_on_cran()
-  original_timeout <- options("timeout")[[1]]
-  x <- get_GSOD(years = 2010, station = "945520-99999")
-  expect_is(x, "data.frame")
-  expect_equal(options("timeout")[[1]], original_timeout)
-  rm(x)
-})
-
 # Check that max_missing is not allowed for current year -----------------------
 test_that("max_missing is not allowed for current year", {
   years <- 1983:format(Sys.Date(), "%Y")
