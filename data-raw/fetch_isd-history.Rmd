@@ -97,12 +97,16 @@ isd_history <- isd_history[, c(
   "iso3c"
 )]
 
+# set colnames to upper case
 names(isd_history) <- toupper(names(isd_history))
 setnames(
   isd_history,
   old = c("CTRY", "COUNTRY.NAME.EN"),
   new = c("FIPS", "COUNTRY_NAME")
 )
+
+# set country names to be upper case for easier internal verifications
+isd_history[, COUNTRY_NAME := toupper(COUNTRY_NAME)]
 ```
 
 ## View and save the data
