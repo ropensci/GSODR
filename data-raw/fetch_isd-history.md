@@ -101,8 +101,8 @@ isd_history <- isd_history[, c(
 names(isd_history) <- toupper(names(isd_history))
 setnames(
   isd_history,
-  old = c("CTRY", "COUNTRY.NAME.EN"),
-  new = c("FIPS", "COUNTRY_NAME")
+  old = "COUNTRY.NAME.EN",
+  new = "COUNTRY_NAME"
 )
 
 # set country names to be upper case for easier internal verifications
@@ -115,7 +115,7 @@ isd_history[, COUNTRY_NAME := toupper(COUNTRY_NAME)]
 isd_history
 ```
 
-    ##               STNID          NAME     LAT    LON FIPS STATE    BEGIN
+    ##               STNID          NAME     LAT    LON CTRY STATE    BEGIN
     ##     1: 008268-99999     WXPOD8278  32.950 65.567   AF       20100519
     ##     2: 409000-99999        DARWAZ  38.433 70.800   AF       19730304
     ##     3: 409010-99999       KHWAHAN  37.883 70.217   AF       19730629
@@ -184,14 +184,14 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  cli           1.1.0   2019-03-19 [1] CRAN (R 3.6.0)
     ##  countrycode * 1.1.0   2018-10-27 [1] CRAN (R 3.6.0)
     ##  crayon        1.3.4   2017-09-16 [1] CRAN (R 3.6.0)
-    ##  curl          4.0     2019-07-22 [1] CRAN (R 3.6.1)
+    ##  curl          4.0     2019-07-22 [1] CRAN (R 3.6.0)
     ##  data.table  * 1.12.2  2019-04-07 [1] CRAN (R 3.6.0)
     ##  digest        0.6.20  2019-07-04 [1] CRAN (R 3.6.0)
     ##  dplyr         0.8.3   2019-07-04 [1] CRAN (R 3.6.0)
     ##  evaluate      0.14    2019-05-28 [1] CRAN (R 3.6.0)
     ##  glue          1.3.1   2019-03-12 [1] CRAN (R 3.6.0)
     ##  htmltools     0.3.6   2017-04-28 [1] CRAN (R 3.6.0)
-    ##  knitr         1.24    2019-08-08 [1] CRAN (R 3.6.1)
+    ##  knitr         1.24    2019-08-08 [1] CRAN (R 3.6.0)
     ##  magrittr      1.5     2014-11-22 [1] CRAN (R 3.6.0)
     ##  pillar        1.4.2   2019-06-29 [1] CRAN (R 3.6.0)
     ##  pkgconfig     2.0.2   2018-08-16 [1] CRAN (R 3.6.0)
@@ -199,7 +199,7 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  R6            2.4.0   2019-02-14 [1] CRAN (R 3.6.0)
     ##  Rcpp          1.0.2   2019-07-25 [1] CRAN (R 3.6.0)
     ##  rlang         0.4.0   2019-06-25 [1] CRAN (R 3.6.0)
-    ##  rmarkdown     1.15    2019-08-21 [1] CRAN (R 3.6.0)
+    ##  rmarkdown     1.14    2019-07-12 [1] CRAN (R 3.6.0)
     ##  sessioninfo * 1.1.1   2018-11-05 [1] CRAN (R 3.6.0)
     ##  skimr       * 1.0.7   2019-06-20 [1] CRAN (R 3.6.0)
     ##  stringi       1.4.3   2019-03-12 [1] CRAN (R 3.6.0)
@@ -207,8 +207,7 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  tibble        2.1.3   2019-06-06 [1] CRAN (R 3.6.0)
     ##  tidyselect    0.2.5   2018-10-11 [1] CRAN (R 3.6.0)
     ##  withr         2.1.2   2018-03-15 [1] CRAN (R 3.6.0)
-    ##  xfun          0.9     2019-08-21 [1] CRAN (R 3.6.0)
+    ##  xfun          0.8     2019-06-25 [1] CRAN (R 3.6.0)
     ##  yaml          2.2.0   2018-07-25 [1] CRAN (R 3.6.0)
     ## 
-    ## [1] /Users/adamsparks/Library/R/3.x/library
-    ## [2] /Library/Frameworks/R.framework/Versions/3.6/Resources/library
+    ## [1] /Library/Frameworks/R.framework/Versions/3.6/Resources/library
