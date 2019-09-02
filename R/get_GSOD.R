@@ -125,6 +125,7 @@ get_GSOD <- function(years,
 
   # Load station list
   load(system.file("extdata", "isd_history.rda", package = "GSODR")) # nocov
+  setkeyv(isd_history, "STNID")
 
   # Validate user entered stations for existence in stations list from NCEI
   invisible(lapply(

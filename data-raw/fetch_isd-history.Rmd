@@ -67,7 +67,6 @@ isd_history <- isd_history[isd_history$LON > -180 & isd_history$LON < 180, ]
 isd_history[, STNID := paste(USAF, WBAN, sep = "-")]
 setcolorder(isd_history, "STNID")
 setnames(isd_history, "STATION NAME", "NAME")
-setkey(isd_history, "STNID")
 
 # drop stations not in GSOD data
 isd_history[, STNID_len := nchar(STNID)]
