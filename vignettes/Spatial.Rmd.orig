@@ -44,10 +44,17 @@ The standard is widely implemented in spatial databases (such as PostGIS),
 commercial GIS (e.g., ESRI ArcGIS) and forms the vector data basis for libraries
 such as GDAL. A subset of simple features forms the GeoJSON standard.
 
-For this example, we convert the GSOD data to an _sf_ object.
+For this example, we convert the GSOD data for Australia in 2017 to an _sf_
+object.
 
-```{r Ex4, eval=TRUE, message=FALSE}
+```{r spatial_Ex1, eval=TRUE, message=FALSE}
+library(GSODR)
+library(future)
 library(sf)
+
+plan("multisession")
+GSOD <- get_GSOD(years = 2017, country = "AUS")
+
 GSOD_SF <- st_as_sf(x = GSOD,
                     coords = c("LONGITUDE", "LATITUDE"),
                     crs = "+proj=longlat +datum=WGS84")
