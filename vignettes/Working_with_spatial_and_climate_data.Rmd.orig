@@ -57,7 +57,7 @@ PHL <- st_as_sf(x = PHL,
                 coords = c("LONGITUDE", "LATITUDE"),
                 crs = "+proj=longlat +datum=WGS84")
 
-write_sf(obj = PHL, dsn = file.path(tempdir(), "/PHL-2010.gpkg"))
+write_sf(obj = PHL, dsn = file.path(tempdir(), "PHL-2010.gpkg"))
 ```
 
 ## Example - Use the GeoPackage File to Create a KML File
