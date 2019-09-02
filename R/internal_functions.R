@@ -77,7 +77,7 @@
       if (nc == 3) {
         if (country %in% isd_history$ISO3C) {
           c <- which(country == isd_history$ISO3C)
-          country <- as.character(isd_history[c, "FIPS"][1])
+          country <- as.character(isd_history[c, "CTRY"][1])
         } else {
           stop(call. = FALSE,
                "\nPlease provide a valid name or 2 or 3 ",
@@ -86,10 +86,10 @@
       } else if (nc == 2) {
         if (country %in% isd_history$ISO2C) {
           c <- which(country == isd_history$ISO2C)
-          country <- as.character(isd_history[c, "FIPS"][1])
-        } else if (country %in% isd_history$FIPS) {
-          c <- which(country == isd_history$FIPS)
-          country <- as.character(isd_history[c, "FIPS"][1])
+          country <- as.character(isd_history[c, "CTRY"][1])
+        } else if (country %in% isd_history$CTRY) {
+          c <- which(country == isd_history$CTRY)
+          country <- as.character(isd_history[c, "CTRY"][1])
         } else {
           stop(call. = FALSE,
                "\nPlease provide a valid name or 2 or 3 ",
@@ -97,7 +97,7 @@
         }
       } else if (country %in% isd_history$COUNTRY_NAME) {
         c <- which(country == isd_history$COUNTRY_NAME)
-        country <- as.character(isd_history[c, "FIPS"][1])
+        country <- as.character(isd_history[c, "CTRY"][1])
       } else {
         stop(call. = FALSE,
              "\nPlease provide a valid name or 2 or 3 ",
