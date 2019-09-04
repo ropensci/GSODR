@@ -4,7 +4,7 @@
 
   -  Ubuntu Linux 18.04.1, R version 3.6.1 (2019-07-05)
 
-  -  win-builder, R Under development (unstable) ()
+  -  win-builder,R Under development (unstable) (2019-09-02 r77130)
 
   -  win-builder, R version 3.6.1 (2019-07-05)
 
