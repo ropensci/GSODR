@@ -59,41 +59,54 @@ easy to find all stations in Australia.
 
 ```r
 library(GSODR)
-library(data.table)
-load(system.file("extdata", "country_list.rda", package = "GSODR"))
+
 load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 
-station_locations <-
-  isd_history[country_list, on = c("CTRY" = "FIPS")]
-```
-
-```
-## Error in vecseq(f__, len__, if (allow.cartesian || notjoin || !anyDuplicated(f__, : Join results in 27441 rows; more than 27008 = nrow(x)+nrow(i). Check for duplicate key values in i each of which join to the same group in x over and over again. If that's ok, try by=.EACHI to run j for each group to avoid the large allocation. If you are sure you wish to proceed, rerun with allow.cartesian=TRUE. Otherwise, please search for this error message in the FAQ, Wiki, Stack Overflow and data.table issue tracker for advice.
-```
-
-```r
 # create data.frame for Australia only
-Oz <- subset(station_locations, COUNTRY_NAME == "AUSTRALIA")
-```
+Oz <- subset(isd_history, COUNTRY_NAME == "AUSTRALIA")
 
-```
-## Error in subset(station_locations, COUNTRY_NAME == "AUSTRALIA"): object 'station_locations' not found
-```
-
-```r
 Oz
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'Oz' not found
+##              STNID                         NAME     LAT     LON CTRY STATE
+##    1: 695023-99999          HORN ISLAND   (HID) -10.583 142.300   AS      
+##    2: 749430-99999           AIDELAIDE RIVER SE -13.300 131.133   AS      
+##    3: 749432-99999    BATCHELOR FIELD AUSTRALIA -13.049 131.066   AS      
+##    4: 749438-99999         IRON RANGE AUSTRALIA -12.700 143.300   AS      
+##    5: 749439-99999     MAREEBA AS/HOEVETT FIELD -17.050 145.400   AS      
+##   ---                                                                     
+## 1038: 959890-99999      BICHENO (COUNCIL DEPOT) -41.867 148.300   AS      
+## 1039: 959950-99999 LORD HOWE ISLAND WINDY POINT -31.533 159.067   AS      
+## 1040: 959970-99999    HEARD ISLAND (ATLAS COVE) -53.017  73.400   AS      
+## 1041: 996600-99999          ENVIRONM BUOY 55011 -40.800 144.300   AS      
+## 1042: 999999-82101               NORTHWEST CAPE -22.333 114.050   AS      
+##          BEGIN      END COUNTRY_NAME ISO2C ISO3C
+##    1: 19420804 20030816    AUSTRALIA    AU   AUS
+##    2: 19430228 19440821    AUSTRALIA    AU   AUS
+##    3: 19421231 19430610    AUSTRALIA    AU   AUS
+##    4: 19420917 19440930    AUSTRALIA    AU   AUS
+##    5: 19420630 19440630    AUSTRALIA    AU   AUS
+##   ---                                           
+## 1038: 19650101 20190602    AUSTRALIA    AU   AUS
+## 1039: 20120920 20190831    AUSTRALIA    AU   AUS
+## 1040: 19980301 20121220    AUSTRALIA    AU   AUS
+## 1041: 19930221 19970403    AUSTRALIA    AU   AUS
+## 1042: 19680305 19680430    AUSTRALIA    AU   AUS
 ```
 
 ```r
+# Look for a specific town in Australia
 subset(Oz, grepl("TOOWOOMBA", NAME))
 ```
 
 ```
-## Error in subset(Oz, grepl("TOOWOOMBA", NAME)): object 'Oz' not found
+##           STNID              NAME     LAT     LON CTRY STATE    BEGIN
+## 1: 945510-99999         TOOWOOMBA -27.583 151.933   AS       19561231
+## 2: 955510-99999 TOOWOOMBA AIRPORT -27.550 151.917   AS       19980301
+##         END COUNTRY_NAME ISO2C ISO3C
+## 1: 20120503    AUSTRALIA    AU   AUS
+## 2: 20190831    AUSTRALIA    AU   AUS
 ```
 
 ## Download a Single Station and Year
@@ -353,14 +366,12 @@ ggplot(data = tbar_temps, aes(x = YEARMODA,
   scale_color_brewer(type = "qual", na.value = "black") +
   scale_y_continuous(name = "Temperature") +
   scale_x_date(name = "Date") +
-  ggtitle(title = "Max, min and mean temperatures for Toowoomba, Qld, AU",
+  ggtitle(label = "Max, min and mean temperatures for Toowoomba, Qld, AU",
           subtitle = "Data: U.S. NCEI GSOD") +
   theme_classic()
 ```
 
-```
-## Error in ggtitle(title = "Max, min and mean temperatures for Toowoomba, Qld, AU", : unused argument (title = "Max, min and mean temperatures for Toowoomba, Qld, AU")
-```
+<img src="Ex5-1.png" title="plot of chunk Ex5" alt="plot of chunk Ex5" style="display: block; margin: auto;" />
 
 ## Download and Process Files in Parallel
 
@@ -381,97 +392,97 @@ skim(global)
 
 ```
 ## Skim summary statistics
-##  n obs: 10950723 
+##  n obs: 7245807 
 ##  n variables: 44 
 ## 
 ## ── Variable type:character ─────────────────────────────────────────────────────────────
-##          variable missing complete        n min max   empty n_unique
-##              CTRY  720903 10229820 10950723   0   2     436      241
-##   DEWP_ATTRIBUTES       0 10950723 10950723   2   2       0       22
-##    MAX_ATTRIBUTES 6948374  4002349 10950723   1   1       0        1
-##    MIN_ATTRIBUTES 6090555  4860168 10950723   1   1       0        1
-##              NAME  720903 10229820 10950723   2  58       0    12230
-##   PRCP_ATTRIBUTES  994665  9956058 10950723   1   1       0        9
-##    SLP_ATTRIBUTES       0 10950723 10950723   2   2       0       22
-##             STATE  720903 10229820 10950723   0   2 8339689       67
-##             STNID       0 10950723 10950723  12  12       0    13343
-##    STP_ATTRIBUTES       0 10950723 10950723   2   2       0       22
-##   TEMP_ATTRIBUTES       0 10950723 10950723   2   2       0       21
-##  VISIB_ATTRIBUTES       0 10950723 10950723   2   2       0       22
-##   WDSP_ATTRIBUTES       0 10950723 10950723   2   2       0       22
+##          variable missing complete       n min max   empty n_unique
+##              CTRY  448502  6797305 7245807   2   2       0      233
+##   DEWP_ATTRIBUTES       0  7245807 7245807   2   2       0       22
+##    MAX_ATTRIBUTES 4625406  2620401 7245807   1   1       0        1
+##    MIN_ATTRIBUTES 3938865  3306942 7245807   1   1       0        1
+##              NAME  448502  6797305 7245807   2  53       0    10765
+##   PRCP_ATTRIBUTES  707510  6538297 7245807   1   1       0        9
+##    SLP_ATTRIBUTES       0  7245807 7245807   2   2       0       22
+##             STATE  448502  6797305 7245807   0   2 5489797       65
+##             STNID       0  7245807 7245807  12  12       0    11752
+##    STP_ATTRIBUTES       0  7245807 7245807   2   2       0       22
+##   TEMP_ATTRIBUTES       0  7245807 7245807   2   2       0       21
+##  VISIB_ATTRIBUTES       0  7245807 7245807   2   2       0       22
+##   WDSP_ATTRIBUTES       0  7245807 7245807   2   2       0       22
 ## 
 ## ── Variable type:Date ──────────────────────────────────────────────────────────────────
-##  variable missing complete        n        min        max     median
-##  YEARMODA       0 10950723 10950723 2010-01-01 2015-12-31 2011-07-04
+##  variable missing complete       n        min        max     median
+##  YEARMODA       0  7245807 7245807 2010-01-01 2011-12-31 2010-12-25
 ##  n_unique
-##      1095
+##       730
 ## 
 ## ── Variable type:integer ───────────────────────────────────────────────────────────────
-##          variable  missing complete        n     mean        sd
-##             BEGIN   720903 10229820 10950723 2e+07    246499.72
-##               DAY        0 10950723 10950723    15.69      8.83
-##               END   720903 10229820 10950723 2e+07     11292.55
-##             I_FOG  6848379  4102344 10950723     1         0   
-##            I_HAIL 10950723        0 10950723   NaN        NA   
-##    I_RAIN_DRIZZLE 10950723        0 10950723   NaN        NA   
-##        I_SNOW_ICE 10950723        0 10950723   NaN        NA   
-##         I_THUNDER 10950723        0 10950723   NaN        NA   
-##  I_TORNADO_FUNNEL 10950723        0 10950723   NaN        NA   
-##             MONTH        0 10950723 10950723     6.58      3.46
-##              YDAY        0 10950723 10950723   184.7     105.91
-##              YEAR        0 10950723 10950723  2012.02      2.17
-##           p0   p25   p50   p75  p100     hist
-##      1.9e+07 2e+07 2e+07 2e+07 2e+07 ▁▁▂▆▂▆▃▇
-##      1           8    16    23    31 ▇▇▇▇▆▇▇▇
-##  2e+07       2e+07 2e+07 2e+07 2e+07 ▁▁▁▁▁▁▁▇
-##      1           1     1     1     1 ▁▁▁▇▁▁▁▁
-##     NA          NA    NA    NA    NA         
-##     NA          NA    NA    NA    NA         
-##     NA          NA    NA    NA    NA         
-##     NA          NA    NA    NA    NA         
-##     NA          NA    NA    NA    NA         
-##      1           3     7    10    12 ▇▅▇▃▅▇▅▇
-##      1          90   187   277   365 ▇▇▇▇▇▇▇▇
-##   2010        2010  2011  2015  2015 ▇▇▁▁▁▁▁▇
+##          variable missing complete       n     mean        sd          p0
+##             BEGIN  448502  6797305 7245807 2e+07    246278.31     1.9e+07
+##               DAY       0  7245807 7245807    15.73      8.79     1      
+##               END  448502  6797305 7245807 2e+07     13408.72 2e+07      
+##             I_FOG 4419747  2826060 7245807     1         0        1      
+##            I_HAIL 7245807        0 7245807   NaN        NA       NA      
+##    I_RAIN_DRIZZLE 7245807        0 7245807   NaN        NA       NA      
+##        I_SNOW_ICE 7245807        0 7245807   NaN        NA       NA      
+##         I_THUNDER 7245807        0 7245807   NaN        NA       NA      
+##  I_TORNADO_FUNNEL 7245807        0 7245807   NaN        NA       NA      
+##             MONTH       0  7245807 7245807     6.55      3.45     1      
+##              YDAY       0  7245807 7245807   183.73    105.4      1      
+##              YEAR       0  7245807 7245807  2010.49      0.5   2010      
+##    p25   p50   p75  p100     hist
+##  2e+07 2e+07 2e+07 2e+07 ▁▁▂▅▃▅▃▇
+##      8    16    23    31 ▇▇▇▇▆▇▇▇
+##  2e+07 2e+07 2e+07 2e+07 ▁▁▁▁▁▁▁▇
+##      1     1     1     1 ▁▁▁▇▁▁▁▁
+##     NA    NA    NA    NA         
+##     NA    NA    NA    NA         
+##     NA    NA    NA    NA         
+##     NA    NA    NA    NA         
+##     NA    NA    NA    NA         
+##      4     7    10    12 ▇▅▇▃▅▇▅▇
+##     92   184   275   365 ▇▇▇▇▇▇▇▇
+##   2010  2010  2011  2011 ▇▁▁▁▁▁▁▇
 ## 
 ## ── Variable type:numeric ───────────────────────────────────────────────────────────────
-##   variable  missing complete        n    mean     sd       p0     p25
-##       DEWP   497725 10452998 10950723    6.46  11.96   -83.8    -0.5 
-##         EA   497725 10452998 10950723    1.23   0.84     0       0.6 
-##  ELEVATION    28178 10922545 10950723  359.9  554.5   -999.9    29.56
-##         ES        0 10950723 10950723    1.87   1.25     0       0.9 
-##       GUST  8429619  2521104 10950723   12.11   4.06     5       9.3 
-##   LATITUDE   720903 10229820 10950723   32.85  28.41   -89      25.37
-##  LONGITUDE   720903 10229820 10950723    5.37  86.28  -179.98  -79.07
-##        MAX     7621 10943102 10950723   17.69  13.57   -78.7     9   
-##        MIN     7331 10943392 10950723    7.58  12.86   -81.8     0.3 
-##      MXSPD   619188 10331535 10950723    6.12   3.35     0.1     4   
-##       PRCP   994665  9956058 10950723    1.93   7.65     0       0   
-##         RH   547664 10403059 10950723   69.33  19.68     0      57.9 
-##        SLP  4144703  6806020 10950723 1014.31   9.32   902.8  1009.2 
-##       SNDP 10298552   652171 10950723  258.33 272.57    10.2    61   
-##        STP  3841715  7109008 10950723  558.73 462.3      0      12.1 
-##       TEMP        0 10950723 10950723   12.51  12.96   -79.3     4.8 
-##      VISIB  2598361  8352362 10950723   15.8    9.85     0      10   
-##       WDSP   488933 10461790 10950723    3.31   2.35     0       1.7 
+##   variable missing complete       n    mean     sd       p0     p25
+##       DEWP  398663  6847144 7245807    6.42  12.03   -82.9    -0.7 
+##         EA  398663  6847144 7245807    1.24   0.84     0       0.6 
+##  ELEVATION   15064  7230743 7245807  355.61 554.09  -999.9    28   
+##         ES       0  7245807 7245807    1.87   1.25     0       0.9 
+##       GUST 5496881  1748926 7245807   12.06   4.1      5       9.3 
+##   LATITUDE  448502  6797305 7245807   32.42  28.58   -89      25.08
+##  LONGITUDE  448502  6797305 7245807    3.72  87.13  -179.98  -80.27
+##        MAX    5294  7240513 7245807   17.63  13.66   -78.3     9   
+##        MIN    4628  7241179 7245807    7.58  12.96   -81.8     0.2 
+##      MXSPD  391661  6854146 7245807    6.11   3.32     0.5     4   
+##       PRCP  707510  6538297 7245807    1.89   7.64     0       0   
+##         RH  430581  6815226 7245807   69.19  19.77     0      57.7 
+##        SLP 2744059  4501748 7245807 1013.99   9.2    910.2  1008.9 
+##       SNDP 6856908   388899 7245807  258.71 264.92    10.2    71.1 
+##        STP 2727697  4518110 7245807  560.11 462.18     0      11.9 
+##       TEMP       0  7245807 7245807   12.47  13.06   -79.3     4.7 
+##      VISIB 1709680  5536127 7245807   15.81   9.8      0      10   
+##       WDSP  318576  6927231 7245807    3.3    2.35     0       1.7 
 ##      p50     p75    p100     hist
 ##     7.4    15.1    32.2  ▁▁▁▁▁▅▇▃
 ##     1       1.7     4.8  ▇▇▅▃▂▁▁▁
-##   145     428    7070    ▁▇▁▁▁▁▁▁
-##     1.6     2.7     8.8  ▇▇▅▃▁▁▁▁
+##   140.51  418    7018    ▁▇▁▁▁▁▁▁
+##     1.6     2.8     8.8  ▇▇▅▃▁▁▁▁
 ##    11.3    14      59.6  ▇▅▁▁▁▁▁▁
-##    41.06   50.9    83.65 ▁▁▁▁▂▅▇▂
-##    12.82   72.67  179.75 ▁▅▅▂▇▂▃▂
-##    19.5    28.5    56    ▁▁▁▁▃▇▇▁
-##     8.9    17      42.7  ▁▁▁▁▂▇▇▁
+##    40.65   50.56   83.65 ▁▁▁▁▂▅▇▁
+##    11.21   71.85  179.75 ▁▅▅▂▇▂▅▂
+##    19.4    28.4    56    ▁▁▁▁▃▇▇▁
+##     8.9    17.1    42.7  ▁▁▁▁▂▇▇▁
 ##     5.7     7.7    49.8  ▇▅▁▁▁▁▁▁
-##     0       0.3   495    ▇▁▁▁▁▁▁▁
-##    72.2    83.3   100    ▁▁▁▃▅▇▇▅
-##  1014    1019.5  1078.8  ▁▁▁▁▆▇▁▁
-##   180.3   370.8  2989.6  ▇▂▁▁▁▁▁▁
-##   880.9   977.7   999.8  ▆▁▁▁▁▁▁▇
-##    13.9    22.6    43.3  ▁▁▁▁▂▆▇▂
-##    14.2    16.7   160    ▇▁▁▁▁▁▁▁
+##     0       0.3   481.1  ▇▁▁▁▁▁▁▁
+##    72      83.3   100    ▁▁▁▃▅▇▇▅
+##  1013.7  1019.1  1077.7  ▁▁▁▁▇▆▁▁
+##   190.5   370.8  2989.6  ▇▂▁▁▁▁▁▁
+##   882.9   977.8   999.8  ▆▁▁▁▁▁▁▇
+##    13.9    22.7    43.3  ▁▁▁▁▂▆▇▂
+##    14      16.7   160    ▇▁▁▁▁▁▁▁
 ##     2.8     4.3    49.3  ▇▁▁▁▁▁▁▁
 ```
 
@@ -560,7 +571,7 @@ inventory
 ```
 ##    *** FEDERAL CLIMATE COMPLEX INTEGRATED SURFACE DATA INVENTORY ***   
 ##     This inventory provides the number of weather observations by   
-##     STATION-YEAR-MONTH for beginning of record through August 2019    
+##     STATION-YEAR-MONTH for beginning of record through September 2019    
 ##                STNID YEAR  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP
 ##      1: 007018-99999 2011    0    0 2104 2797 2543 2614  382    0    0
 ##      2: 007018-99999 2013    0    0    0    0    0    0  710    0    0
@@ -568,11 +579,11 @@ inventory
 ##      4: 007026-99999 2014    0    0    0    0    0    0  180    0    4
 ##      5: 007026-99999 2016    0    0    0    0    0  794    0    0    0
 ##     ---                                                               
-## 629792:   A51256-451 2015 2196 1866 2206 1909 2215 2090 2202 2191 2128
-## 629793:   A51256-451 2016 2185 2047 2175 2131 2213 2139 2209 2216 2131
-## 629794:   A51256-451 2017 2192 1883 2204 1910 2145 2113 2218 2204 2082
-## 629795:   A51256-451 2018 2192 1887 2194 2113 2151 2095 2202 2197 1816
-## 629796:   A51256-451 2019 2188 2000 2143 2105 2187 2131 2174 2013    0
+## 629794:   A51256-451 2015 2196 1866 2206 1909 2215 2090 2202 2191 2128
+## 629795:   A51256-451 2016 2185 2047 2175 2131 2213 2139 2209 2216 2131
+## 629796:   A51256-451 2017 2192 1883 2204 1910 2145 2113 2218 2204 2082
+## 629797:   A51256-451 2018 2192 1887 2194 2113 2151 2095 2202 2197 1816
+## 629798:   A51256-451 2019 2188 2000 2143 2105 2187 2131 2174 2080    1
 ##          OCT  NOV  DEC
 ##      1:    0    0    0
 ##      2:    0    0    0
@@ -580,11 +591,11 @@ inventory
 ##      4:    0  552    0
 ##      5:    0    0    0
 ##     ---               
-## 629792: 2192 2097 2093
-## 629793: 2196 2131 1665
-## 629794: 2192 2103 2174
-## 629795: 2195 2063 2178
-## 629796:    0    0    0
+## 629794: 2192 2097 2093
+## 629795: 2196 2131 1665
+## 629796: 2192 2103 2174
+## 629797: 2195 2063 2178
+## 629798:    0    0    0
 ```
 
 ```r
@@ -594,7 +605,7 @@ subset(inventory, STNID %in% "955510-99999")
 ```
 ##    *** FEDERAL CLIMATE COMPLEX INTEGRATED SURFACE DATA INVENTORY ***   
 ##     This inventory provides the number of weather observations by   
-##     STATION-YEAR-MONTH for beginning of record through August 2019    
+##     STATION-YEAR-MONTH for beginning of record through September 2019    
 ##            STNID YEAR JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC
 ##  1: 955510-99999 1998   0   0 222 223 221 211 226 217 222 234 215 230
 ##  2: 955510-99999 1999 213 201 235 224 244 229 239 247 236 246 233 243
@@ -617,7 +628,7 @@ subset(inventory, STNID %in% "955510-99999")
 ## 19: 955510-99999 2016 246 228 245 240 246 240 248 248 238 248 239 248
 ## 20: 955510-99999 2017 247 224 248 240 248 239 248 247 239 248 240 248
 ## 21: 955510-99999 2018 248 224 248 239 247 240 246 247 218 244 190 248
-## 22: 955510-99999 2019 247 224 245 240 214 240 248 231   0   0   0   0
+## 22: 955510-99999 2019 247 224 245 240 214 240 248 246   0   0   0   0
 ##            STNID YEAR JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC
 ```
 
@@ -663,11 +674,11 @@ _GSODR_ formatted data include the following fields and units:
 
 - **CTRY** - Country in which the station is located;
 
-- **LATITUDE** - Latitude. *Station dropped in cases where values are < -90 or >
-90 degrees or Lat = 0 and Lon = 0*;
+- **LAT** - Latitude. *Station dropped in cases where values are < -90 or > 90
+degrees or Lat = 0 and Lon = 0*;
 
-- **LONGITUDE** - Longitude. *Station dropped in cases where values are < -180
-or > 180 degrees or Lat = 0 and Lon = 0*;
+- **LON** - Longitude. *Station dropped in cases where values are < -180 or >
+180 degrees or Lat = 0 and Lon = 0*;
 
 - **ELEVATION** - Elevation in metres;
 

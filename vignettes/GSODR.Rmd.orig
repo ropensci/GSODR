@@ -71,7 +71,7 @@ library(GSODR)
 load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 
 # create data.frame for Australia only
-Oz <- subset(station_locations, COUNTRY_NAME == "AUSTRALIA")
+Oz <- subset(isd_history, COUNTRY_NAME == "AUSTRALIA")
 
 Oz
 
@@ -144,7 +144,7 @@ ggplot(data = tbar_temps, aes(x = YEARMODA,
   scale_color_brewer(type = "qual", na.value = "black") +
   scale_y_continuous(name = "Temperature") +
   scale_x_date(name = "Date") +
-  ggtitle(title = "Max, min and mean temperatures for Toowoomba, Qld, AU",
+  ggtitle(label = "Max, min and mean temperatures for Toowoomba, Qld, AU",
           subtitle = "Data: U.S. NCEI GSOD") +
   theme_classic()
 ```
@@ -286,11 +286,11 @@ _GSODR_ formatted data include the following fields and units:
 
 - **CTRY** - Country in which the station is located;
 
-- **LATITUDE** - Latitude. *Station dropped in cases where values are < -90 or >
-90 degrees or Lat = 0 and Lon = 0*;
+- **LAT** - Latitude. *Station dropped in cases where values are < -90 or > 90
+degrees or Lat = 0 and Lon = 0*;
 
-- **LONGITUDE** - Longitude. *Station dropped in cases where values are < -180
-or > 180 degrees or Lat = 0 and Lon = 0*;
+- **LON** - Longitude. *Station dropped in cases where values are < -180 or >
+180 degrees or Lat = 0 and Lon = 0*;
 
 - **ELEVATION** - Elevation in metres;
 

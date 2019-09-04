@@ -16,10 +16,9 @@ required <-
 
 if (!all(unlist(lapply(required, function(pkg)
   requireNamespace(pkg, quietly = TRUE)))))
-  knitr::opts_chunk$set(
-    collapse = TRUE,
-    comment = "#>"
-  )```
+  knitr::opts_chunk$set(collapse = TRUE,
+                        comment = "#>")
+```
 
 # Introduction
 
@@ -53,9 +52,11 @@ PHL <-
            country = "Philippines",
            max_missing = 5)
 
-PHL <- st_as_sf(x = PHL,
-                coords = c("LONGITUDE", "LATITUDE"),
-                crs = "+proj=longlat +datum=WGS84")
+PHL <- st_as_sf(
+  x = PHL,
+  coords = c("LONGITUDE", "LATITUDE"),
+  crs = "+proj=longlat +datum=WGS84"
+)
 
 write_sf(obj = PHL, dsn = file.path(tempdir(), "PHL-2010.gpkg"))
 ```
@@ -71,7 +72,8 @@ library(spacetime)
 library(plotKML)
 
 layers <- ogrListLayers(dsn = file.path(tempdir(), "PHL-2010.gpkg"))
-pnts <- readOGR(dsn = file.path(tempdir(), ("PHL-2010.gpkg"), layers[1])
+pnts <-
+  readOGR(dsn = file.path(tempdir(), "PHL-2010.gpkg"), layers[1])
 
 # Plot results in Google Earth as a spacetime object:
 pnts$DATE = as.Date(paste(pnts$YEAR, pnts$MONTH, pnts$DAY, sep = "-"))
@@ -133,8 +135,9 @@ are one of the data sets included in the _GSODRdata_ package.
 
 ```{r GSODRdata, eval=TRUE, message=FALSE}
 library(GSODRdata)
+library(skimr)
 
-str(CHELSA)
+skim(CHELSA)
 ```
 
 Compare the GSOD weather data from the Philippines with climatic data provided
@@ -175,7 +178,7 @@ ggplot(df_melt, aes(x = DATE, y = value)) +
   xlab("Month") +
   labs(colour = "") +
   scale_color_brewer(palette = "Dark2") +
-  facet_wrap(~ STNID) +
+  facet_wrap( ~ STNID) +
   theme_classic()
 ```
 

@@ -83,7 +83,7 @@ _sf_ can import the data into R again in a spatial format.
 library(rgdal)
 
 AUS_stations <-
-  st_read(dsn = file.path(tempdir(), "GSOD.gpkg")), layer = "GSOD")
+  st_read(dsn = file.path(tempdir(), "GSOD.gpkg"), layer = "GSOD")
 
 class(AUS_stations)
 ```
