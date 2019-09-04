@@ -44,7 +44,7 @@ directory and link it with climate data from the _GSODRdata_ package.
 Download data for Philippines for year 2010 and generate a spatial, year summary
 file, PHL-2010.gpkg, in the user's home directory.
 
-```{r get-data, eval=TRUE, message=FALSE}
+```{r get-data, eval=TRUE, messages=FALSE}
 library(GSODR)
 library(sf)
 PHL <-
