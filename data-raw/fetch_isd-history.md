@@ -1,7 +1,7 @@
 Fetch, Clean and Correct Altitude in GSOD ‘isd\_history.csv’ Data
 ================
 Adam H. Sparks
-2019-09-02
+2019-09-04
 
 # Introduction
 
@@ -72,6 +72,9 @@ setnames(isd_history, "STATION NAME", "NAME")
 isd_history[, STNID_len := nchar(STNID)]
 isd_history <- subset(isd_history, STNID_len == 12)
 
+# remove stations where LAT or LON is NA
+isd_history <- na.omit(isd_history, cols = c("LAT", "LON"))
+
 # remove extra columns
 isd_history[, c("USAF", "WBAN", "ICAO", "ELEV(M)", "STNID_len") := NULL]
 ```
@@ -133,11 +136,11 @@ isd_history
     ##     4: 20010925  AFGHANISTAN    AF   AFG
     ##     5: 20130703  AFGHANISTAN    AF   AFG
     ##    ---                                  
-    ## 26689: 20190829     ZIMBABWE    ZW   ZWE
-    ## 26690: 20190829     ZIMBABWE    ZW   ZWE
-    ## 26691: 20190829     ZIMBABWE    ZW   ZWE
+    ## 26689: 20190831     ZIMBABWE    ZW   ZWE
+    ## 26690: 20190830     ZIMBABWE    ZW   ZWE
+    ## 26691: 20190831     ZIMBABWE    ZW   ZWE
     ## 26692: 19680630     ZIMBABWE    ZW   ZWE
-    ## 26693: 20190829     ZIMBABWE    ZW   ZWE
+    ## 26693: 20190831     ZIMBABWE    ZW   ZWE
 
 ``` r
 # write rda file to disk for use with GSODR package
@@ -175,7 +178,7 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  collate  en_AU.UTF-8                 
     ##  ctype    en_AU.UTF-8                 
     ##  tz       Australia/Brisbane          
-    ##  date     2019-09-02                  
+    ##  date     2019-09-04                  
     ## 
     ## ─ Packages ──────────────────────────────────────────────────────────────
     ##  package     * version date       lib source        
@@ -183,14 +186,14 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  cli           1.1.0   2019-03-19 [1] CRAN (R 3.6.0)
     ##  countrycode * 1.1.0   2018-10-27 [1] CRAN (R 3.6.0)
     ##  crayon        1.3.4   2017-09-16 [1] CRAN (R 3.6.0)
-    ##  curl          4.0     2019-07-22 [1] CRAN (R 3.6.0)
+    ##  curl          4.0     2019-07-22 [1] CRAN (R 3.6.1)
     ##  data.table  * 1.12.2  2019-04-07 [1] CRAN (R 3.6.0)
     ##  digest        0.6.20  2019-07-04 [1] CRAN (R 3.6.0)
     ##  dplyr         0.8.3   2019-07-04 [1] CRAN (R 3.6.0)
     ##  evaluate      0.14    2019-05-28 [1] CRAN (R 3.6.0)
     ##  glue          1.3.1   2019-03-12 [1] CRAN (R 3.6.0)
     ##  htmltools     0.3.6   2017-04-28 [1] CRAN (R 3.6.0)
-    ##  knitr         1.24    2019-08-08 [1] CRAN (R 3.6.0)
+    ##  knitr         1.24    2019-08-08 [1] CRAN (R 3.6.1)
     ##  magrittr      1.5     2014-11-22 [1] CRAN (R 3.6.0)
     ##  pillar        1.4.2   2019-06-29 [1] CRAN (R 3.6.0)
     ##  pkgconfig     2.0.2   2018-08-16 [1] CRAN (R 3.6.0)
@@ -198,7 +201,7 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  R6            2.4.0   2019-02-14 [1] CRAN (R 3.6.0)
     ##  Rcpp          1.0.2   2019-07-25 [1] CRAN (R 3.6.0)
     ##  rlang         0.4.0   2019-06-25 [1] CRAN (R 3.6.0)
-    ##  rmarkdown     1.14    2019-07-12 [1] CRAN (R 3.6.0)
+    ##  rmarkdown     1.15    2019-08-21 [1] CRAN (R 3.6.0)
     ##  sessioninfo * 1.1.1   2018-11-05 [1] CRAN (R 3.6.0)
     ##  skimr       * 1.0.7   2019-06-20 [1] CRAN (R 3.6.0)
     ##  stringi       1.4.3   2019-03-12 [1] CRAN (R 3.6.0)
@@ -206,7 +209,8 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  tibble        2.1.3   2019-06-06 [1] CRAN (R 3.6.0)
     ##  tidyselect    0.2.5   2018-10-11 [1] CRAN (R 3.6.0)
     ##  withr         2.1.2   2018-03-15 [1] CRAN (R 3.6.0)
-    ##  xfun          0.8     2019-06-25 [1] CRAN (R 3.6.0)
+    ##  xfun          0.9     2019-08-21 [1] CRAN (R 3.6.0)
     ##  yaml          2.2.0   2018-07-25 [1] CRAN (R 3.6.0)
     ## 
-    ## [1] /Library/Frameworks/R.framework/Versions/3.6/Resources/library
+    ## [1] /Users/adamsparks/Library/R/3.x/library
+    ## [2] /Library/Frameworks/R.framework/Versions/3.6/Resources/library
