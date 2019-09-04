@@ -18,7 +18,6 @@ addons:
     packages:
       - libudunits2-dev
       - libproj-dev
-      - libgeos-dev
       - libgdal-dev
 
 after_failure:
