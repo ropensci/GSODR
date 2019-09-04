@@ -62,5 +62,5 @@ weather station data inventories
 }
 }
 \author{
-Adam Sparks, Tomislav Hengl and Andrew Nelson
+Adam H. Sparks, Tomislav Hengl and Andrew Nelson
 }
