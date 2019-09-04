@@ -155,7 +155,7 @@ _Users of these data should take into account the following (from the [NCEI webs
   DOI: 10.21105/joss.00177.
   
 - Please note that the _GSODR_ project is released with a
-[Contributor Code of Conduct](CONDUCT.md). By participating in the _GSODR_
-project you agree to abide by its terms.
+[Contributor Code of Conduct](https://github.com/ropensci/GSODR/blob/master/CONDUCT.md)
+By participating in the _GSODR_ project you agree to abide by its terms.
 
 [![ropensci](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org)
