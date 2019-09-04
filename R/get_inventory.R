@@ -28,10 +28,6 @@
 get_inventory <- function() {
   load(system.file("extdata", "isd_history.rda", package = "GSODR")) #nocov
 
-  original_timeout <- options("timeout")[[1]]
-  options(timeout = 300)
-  on.exit(options(timeout = original_timeout))
-
   tryCatch({
     curl::curl_download(
       "https://www1.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt",

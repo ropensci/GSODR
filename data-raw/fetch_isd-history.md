@@ -1,7 +1,7 @@
 Fetch, Clean and Correct Altitude in GSOD ‘isd\_history.csv’ Data
 ================
 Adam H. Sparks
-2019-09-01
+2019-09-04
 
 # Introduction
 
@@ -34,6 +34,12 @@ if (!require("skimr")) {
   install.packages("skimr", repos = "https://cran.rstudio.com/")
 }
 
+if (!require("countrycode"))
+{
+  install.packages("countrycode",
+                   repos = c(CRAN = "https://cran.rstudio.com"))
+}
+
 if (!require("data.table")) {
   install.packages("data.table", repos = "https://cran.rstudio.com/")
 }
@@ -44,14 +50,6 @@ if (!require("data.table")) {
 ``` r
 # download data
 isd_history <- fread("https://www1.ncdc.noaa.gov/pub/data/noaa/isd-history.csv")
-
-# clean data
-isd_history[isd_history == -999] <- NA
-isd_history[isd_history == -999.9] <- NA
-isd_history <- isd_history[!is.na(isd_history$LAT) & !is.na(isd_history$LON), ]
-isd_history <- isd_history[isd_history$LAT != 0 & isd_history$LON != 0, ]
-isd_history <- isd_history[isd_history$LAT > -90 & isd_history$LAT < 90, ]
-isd_history <- isd_history[isd_history$LON > -180 & isd_history$LON < 180, ]
 ```
 
 ## Add/drop columns and save to disk
@@ -61,14 +59,56 @@ isd_history <- isd_history[isd_history$LON > -180 & isd_history$LON < 180, ]
 isd_history[, STNID := paste(USAF, WBAN, sep = "-")]
 setcolorder(isd_history, "STNID")
 setnames(isd_history, "STATION NAME", "NAME")
-setkey(isd_history, "STNID")
 
 # drop stations not in GSOD data
 isd_history[, STNID_len := nchar(STNID)]
 isd_history <- subset(isd_history, STNID_len == 12)
 
+# remove stations where LAT or LON is NA
+isd_history <- na.omit(isd_history, cols = c("LAT", "LON"))
+
 # remove extra columns
 isd_history[, c("USAF", "WBAN", "ICAO", "ELEV(M)", "STNID_len") := NULL]
+```
+
+## Add country names based on FIPS
+
+``` r
+isd_history <-
+  isd_history[countrycode::codelist, on = c("CTRY" = "fips")]
+
+isd_history <- isd_history[, c(
+  "STNID",
+  "NAME",
+  "LAT",
+  "LON",
+  "CTRY",
+  "STATE",
+  "BEGIN",
+  "END",
+  "country.name.en",
+  "iso2c",
+  "iso3c"
+)]
+
+# clean data
+isd_history[isd_history == -999] <- NA
+isd_history[isd_history == -999.9] <- NA
+isd_history <- isd_history[!is.na(isd_history$LAT) & !is.na(isd_history$LON), ]
+isd_history <- isd_history[isd_history$LAT != 0 & isd_history$LON != 0, ]
+isd_history <- isd_history[isd_history$LAT > -90 & isd_history$LAT < 90, ]
+isd_history <- isd_history[isd_history$LON > -180 & isd_history$LON < 180, ]
+
+# set colnames to upper case
+names(isd_history) <- toupper(names(isd_history))
+setnames(
+  isd_history,
+  old = "COUNTRY.NAME.EN",
+  new = "COUNTRY_NAME"
+)
+
+# set country names to be upper case for easier internal verifications
+isd_history[, COUNTRY_NAME := toupper(COUNTRY_NAME)]
 ```
 
 ## View and save the data
@@ -77,30 +117,30 @@ isd_history[, c("USAF", "WBAN", "ICAO", "ELEV(M)", "STNID_len") := NULL]
 isd_history
 ```
 
-    ##               STNID                            NAME CTRY STATE    LAT
-    ##     1: 008268-99999                       WXPOD8278   AF       32.950
-    ##     2: 010010-99999             JAN MAYEN(NOR-NAVY)   NO       70.933
-    ##     3: 010014-99999                      SORSTOKKEN   NO       59.792
-    ##     4: 010015-99999                      BRINGELAND   NO       61.383
-    ##     5: 010016-99999                     RORVIK/RYUM   NO       64.850
-    ##    ---                                                               
-    ## 26801: A00023-63890 WHITEHOUSE NAVAL OUTLYING FIELD   US    FL 30.350
-    ## 26802: A00024-53848    CHOCTAW NAVAL OUTLYING FIELD   US    FL 30.507
-    ## 26803: A00026-94297                 COUPEVILLE/NOLF   US    WA 48.217
-    ## 26804: A00029-63820         EVERETT-STEWART AIRPORT   US    TN 36.380
-    ## 26805: A00032-25715                    ATKA AIRPORT   US    AK 52.220
-    ##             LON    BEGIN      END
-    ##     1:   65.567 20100519 20120323
-    ##     2:   -8.667 19310101 20190829
-    ##     3:    5.341 19861120 20190829
-    ##     4:    5.867 19870117 20081231
-    ##     5:   11.233 19870116 19910806
-    ##    ---                           
-    ## 26801:  -81.883 20070601 20190829
-    ## 26802:  -86.960 20070601 20190829
-    ## 26803: -122.633 20060324 20150514
-    ## 26804:  -88.985 20130627 20190830
-    ## 26805: -174.206 20060101 20190830
+    ##               STNID          NAME     LAT    LON CTRY STATE    BEGIN
+    ##     1: 008268-99999     WXPOD8278  32.950 65.567   AF       20100519
+    ##     2: 409000-99999        DARWAZ  38.433 70.800   AF       19730304
+    ##     3: 409010-99999       KHWAHAN  37.883 70.217   AF       19730629
+    ##     4: 409030-99999   KHWAJA-GHAR  37.083 69.433   AF       20010925
+    ##     5: 409040-99999      FAIZABAD  37.117 70.517   AF       19730304
+    ##    ---                                                              
+    ## 26645: 679770-99999 BUFFALO RANGE -21.008 31.579   ZI       19651201
+    ## 26646: 679790-99999          ZAKA -20.333 31.467   ZI       19870307
+    ## 26647: 679830-99999      CHIPINGE -20.200 32.617   ZI       19490103
+    ## 26648: 679890-99999        RUPISI -20.417 32.317   ZI       19620701
+    ## 26649: 679910-99999    BEITBRIDGE -22.217 30.000   ZI       19620701
+    ##             END COUNTRY_NAME ISO2C ISO3C
+    ##     1: 20120323  AFGHANISTAN    AF   AFG
+    ##     2: 20070905  AFGHANISTAN    AF   AFG
+    ##     3: 20070608  AFGHANISTAN    AF   AFG
+    ##     4: 20010925  AFGHANISTAN    AF   AFG
+    ##     5: 20130703  AFGHANISTAN    AF   AFG
+    ##    ---                                  
+    ## 26645: 20190831     ZIMBABWE    ZW   ZWE
+    ## 26646: 20190830     ZIMBABWE    ZW   ZWE
+    ## 26647: 20190831     ZIMBABWE    ZW   ZWE
+    ## 26648: 19680630     ZIMBABWE    ZW   ZWE
+    ## 26649: 20190831     ZIMBABWE    ZW   ZWE
 
 ``` r
 # write rda file to disk for use with GSODR package
@@ -138,12 +178,13 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  collate  en_AU.UTF-8                 
     ##  ctype    en_AU.UTF-8                 
     ##  tz       Australia/Brisbane          
-    ##  date     2019-09-01                  
+    ##  date     2019-09-04                  
     ## 
     ## ─ Packages ──────────────────────────────────────────────────────────────
     ##  package     * version date       lib source        
     ##  assertthat    0.2.1   2019-03-21 [1] CRAN (R 3.6.0)
     ##  cli           1.1.0   2019-03-19 [1] CRAN (R 3.6.0)
+    ##  countrycode * 1.1.0   2018-10-27 [1] CRAN (R 3.6.0)
     ##  crayon        1.3.4   2017-09-16 [1] CRAN (R 3.6.0)
     ##  curl          4.0     2019-07-22 [1] CRAN (R 3.6.1)
     ##  data.table  * 1.12.2  2019-04-07 [1] CRAN (R 3.6.0)

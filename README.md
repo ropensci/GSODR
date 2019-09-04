@@ -20,10 +20,10 @@ _GSODR_ aims to make it easy to find, transfer and format the data you need for
 use in analysis and provides five main functions for facilitating this:
 
 - `get_GSOD()` - this function queries and transfers files from the NCEI's web
-server, reformats them and returns a data frame in R.
+server, reformats them and returns a data frame.
 
 - `reformat_GSOD()` - this function takes individual station files from the
-local disk and re-formats them returning a tidy data frame in R
+local disk and re-formats them returning a data frame.
 
 - `nearest_stations()` - this function returns a vector of station IDs that fall
 within the given radius (kilometres) of a point given as latitude and longitude.
