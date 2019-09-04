@@ -1,0 +1,105 @@
+---
+title: "Using GSODR with sf"
+author: "Adam H Sparks"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Using GSODR with sf}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r check_packages, echo=FALSE, messages=FALSE, warning=FALSE}
+required <- c("sf", "dplyr")
+
+if (!all(unlist(lapply(required, function(pkg)
+  requireNamespace(pkg, quietly = TRUE)))))
+  knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>"
+  )
+```
+
+# Creating Spatial Files
+
+Because the stations provide geospatial location information, it is possible to
+create a spatial file. [GeoPackage files](http://www.geopackage.org) are a open,
+standards-based, platform-independent, portable, self-describing compact
+format for transferring geospatial information, which handle vector files much
+like shapefiles do, but eliminate many of the issues that shapefiles have with
+field names and the number of files.
+
+## Converting to an _sf_ object
+
+Simple features are an ISO defined standard that now have support in R. From the
+[_sf_ vignette](https://r-spatial.github.io/sf/articles/sf1.html):
+
+> Simple features or simple feature access refers to a formal standard (ISO
+19125-1:2004) that describes how objects in the real world can be represented in
+computers, with emphasis on the spatial geometry of these objects. It also
+describes how such objects can be stored in and retrieved from databases, and
+which geometrical operations should be defined for them.
+The standard is widely implemented in spatial databases (such as PostGIS),
+commercial GIS (e.g., ESRI ArcGIS) and forms the vector data basis for libraries
+such as GDAL. A subset of simple features forms the GeoJSON standard.
+
+For this example, we convert the GSOD data for Australia in 2017 to an _sf_
+object.
+
+```{r spatial_Ex1, eval=TRUE, message=FALSE}
+library(GSODR)
+library(future)
+library(sf)
+
+plan("multisession")
+GSOD <- get_GSOD(years = 2017, country = "AUS")
+
+GSOD_SF <- st_as_sf(x = GSOD,
+                    coords = c("LONGITUDE", "LATITUDE"),
+                    crs = "+proj=longlat +datum=WGS84")
+
+str(GSOD_SF)
+```
+
+## Saving _sf_ objects
+
+Writing a shapefile is a simple matter.
+
+```{r Ex5, eval=TRUE, message=FALSE}
+write_sf(obj = GSOD_SF, dsn = file.path(tempdir(), "GSOD.shp"))
+```
+
+As is writing a GeoPackage from the _sf_ object.
+
+```{r Ex7, eval=TRUE, message=FALSE}
+write_sf(obj = GSOD_SF, dsn = file.path(tempdir(), "GSOD.gpkg"))
+```
+
+After getting weather stations for Australia and creating a GeoPackage file,
+_sf_ can import the data into R again in a spatial format.
+
+```{r Ex8, eval=TRUE, message=FALSE}
+library(rgdal)
+
+AUS_stations <-
+  st_read(dsn = file.path(tempdir(), "GSOD.gpkg"), layer = "GSOD")
+
+class(AUS_stations)
+```
+
+Since GeoPackage files are formatted as SQLite databases you can also use other
+R tools for SQLite files
+[(J. Stachelek 2016)](https://jsta.github.io/2016/07/14/geopackage-r.html). One
+easy way is using _dplyr_. This option is much faster to load since it does not
+load the geometry.
+
+```{r Ex, eval=TRUE, message=FALSE}
+library(dplyr)
+AUS_sqlite <- tbl(src_sqlite(file.path(tempdir(), "GSOD.gpkg")), "GSOD")
+class(AUS_sqlite)
+```
+
+# References
+Stachelek, J. (2016) Using the Geopackage Format with R.
+URL: https://jsta.github.io/2016/07/14/geopackage-r.html

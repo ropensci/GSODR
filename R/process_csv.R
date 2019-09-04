@@ -93,7 +93,6 @@
 
   # Add STNID col --------------------------------------------------------------
   DT[, STNID := gsub('^(.{6})(.*)$', '\\1-\\2', DT$STATION)]
-  setkey(DT, "STNID")
 
   # Add and convert date related columns ---------------------------------------
   DT[, YEARMODA := as.Date(DATE, format = "%Y-%m-%d")]
@@ -159,6 +158,7 @@
   DT[, FRSHTT := NULL]
 
   # Join with internal isd-history for CTRY column -----------------------------
+  setkey(DT, STNID)
   DT <- isd_history[DT]
 
   # drop extra cols
@@ -215,5 +215,7 @@
       "RH"
     )
   )
+  # drop extra cols before returning object
+  DT[, c("COUNTRY_NAME", "ISO2C", "ISO3C") := NULL]
   return(DT)
 }

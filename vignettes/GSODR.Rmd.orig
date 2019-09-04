@@ -1,0 +1,464 @@
+---
+title: "GSODR"
+author: "Adam H Sparks"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{GSODR}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r check_packages, echo=FALSE, messages=FALSE, warning=FALSE}
+required <- c("ggplot2", "tidyr")
+
+if (!all(unlist(lapply(required, function(pkg)
+  requireNamespace(pkg, quietly = TRUE)))))
+  knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>"
+  )
+```
+
+# Introduction
+
+The GSOD or [Global Surface Summary of the Day
+(GSOD)](https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/)
+data provided by the US National Centers for Environmental Information (NCEI)
+are a valuable source of weather data with global coverage. However, the data
+files are cumbersome and difficult to work with. _GSODR_ aims to make it easy to
+find, transfer and format the data you need for use in analysis and provides
+four main functions for facilitating this:
+
+- `get_GSOD()` - this function queries and transfers files from the NCEI's
+webpage, reformats them and returns a tidy data frame in R
+
+- `reformat_GSOD()` - this function takes individual station files from the
+local disk and re-formats them returning a tidy data frame in R
+
+- `nearest_stations()` - this function returns a vector of station IDs that fall
+within the given radius (kilometres) of a point given as latitude and longitude
+
+- `update_station_list()` - this function downloads the latest station list from
+the NCEI's server updates the package's internal database of stations and their
+metadata.
+
+- `get_inventory()` - this function downloads the latest station inventory
+information from the NCEI's server and returns the header information about
+the latest version as a message in the console and a data frame of the stations'
+inventories for each year and month that data are reported.
+
+When reformatting data either with `get_GSOD()` or `reformat_GSOD()`, all units
+are converted from United States Customary System (USCS) to International System
+of Units (SI), _e.g._, inches to millimetres and Fahrenheit to Celsius. Data in
+the R session summarise each year by station, which also includes vapour
+pressure and relative humidity elements calculated from existing data in GSOD.
+
+For more information see the description of the data provided by NCEI,
+<http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
+
+# Using get_GSOD()
+
+## Find Stations in or near Toowoomba, Queensland, Australia
+
+_GSODR_ provides lists of weather station locations and elevation values. It's
+easy to find all stations in Australia.
+
+```{r Ex1, eval=TRUE, message=FALSE}
+library(GSODR)
+
+load(system.file("extdata", "isd_history.rda", package = "GSODR"))
+
+# create data.frame for Australia only
+Oz <- subset(isd_history, COUNTRY_NAME == "AUSTRALIA")
+
+Oz
+
+# Look for a specific town in Australia
+subset(Oz, grepl("TOOWOOMBA", NAME))
+```
+
+## Download a Single Station and Year
+
+Now that we've seen where the reporting stations are located, we can download
+weather data from the station Toowoomba, Queensland, Australia for 2010 by using
+the STNID in the `station` parameter of `get_GSOD()`.
+
+```{r Ex2, eval=TRUE, message=FALSE}
+library(skimr)
+tbar <- get_GSOD(years = 2010, station = "955510-99999")
+skim(tbar)
+```
+
+### Using nearest_stations()
+
+Using the `nearest_stations()` function, you can find stations closest to a
+given point specified by latitude and longitude in decimal degrees. This can be
+used to generate a vector to pass along to `get_GSOD()` and download the
+stations of interest.
+
+There are missing stations in this query. Not all that are listed and queried
+actually have files on the server.
+
+```{r Ex3, eval=TRUE, message=FALSE}
+tbar_stations <- nearest_stations(LAT = -27.5598,
+                                  LON = 151.9507,
+                                  distance = 50)
+
+tbar <- get_GSOD(years = 2010, station = tbar_stations)
+skim(tbar)
+```
+
+If you wished to drop the stations, 949999-00170 and 949999-00183 from the
+query, you could do this and run the `get_GSOD()` query with the new station
+names.
+
+```{r Ex4, eval=FALSE}
+remove <- c("949999-00170", "949999-00183")
+
+tbar_stations <- tbar_stations[!tbar_stations %in% remove]
+```
+
+## Plot Maximum and Minimum Temperature Values
+
+Using the first data downloaded for a single station, 955510-99999, plot the
+temperature for 2010.
+
+```{r Ex5, eval=TRUE, fig.width = 7, fig.height = 7, fig.align = "center", fig.path = "vignettes/", message=FALSE}
+library(ggplot2)
+library(tidyr)
+
+# Create a dataframe of just the date and temperature values that we want to
+# plot
+tbar_temps <- tbar[, c("YEARMODA", "TEMP", "MAX", "MIN")]
+
+# Gather the data from wide to long
+tbar_temps <-
+  gather(tbar_temps, Measurement, gather_cols = TEMP:MIN)
+
+ggplot(data = tbar_temps, aes(x = YEARMODA,
+                              y = value,
+                              colour = Measurement)) +
+  geom_line() +
+  scale_color_brewer(type = "qual", na.value = "black") +
+  scale_y_continuous(name = "Temperature") +
+  scale_x_date(name = "Date") +
+  ggtitle(label = "Max, min and mean temperatures for Toowoomba, Qld, AU",
+          subtitle = "Data: U.S. NCEI GSOD") +
+  theme_classic()
+```
+
+## Download and Process Files in Parallel
+
+`GSODR` supports the [`future`]( https://CRAN.R-project.org/package=future)
+package for parallel processing on varied platforms with the user determining
+the parallel back end to be used. The most simple way is to use `multisession`
+as an argument for `future::plan()`, which will default to available local cores
+as workers for the run. This can greatly reduce the time necessary to process
+GSOD files.
+
+```{r Ex6, eval=TRUE, message=FALSE}
+future::plan("multisession")
+global <- get_GSOD(years = 2010:2011)
+
+skim(global)
+```
+
+# Using reformat_GSOD()
+
+You may have already downloaded GSOD data or may just wish to use your browser
+to download the files from the server to you local disk and not use the
+capabilities of `get_GSOD()`. In that case the `reformat_GSOD()` function is
+useful.
+
+There are two ways, you can either provide `reformat_GSOD()` with a list of
+specified station files or you can supply it with a directory containing all of
+the "STATION.csv" station files or "YEAR.zip" annual files that you wish to
+reformat.
+
+**Note** _Any_ .csv file provided to `reformat_GSOD()` will be imported, if it
+is not a GSOD data file, this will lead to an error. Make sure the directory
+and file lists are clean.
+
+## Reformat a List of Local Files
+
+In this example two STATION.csv files are in subdirectories of user's home
+directory and are listed for reformatting as a string.
+
+```{r Ex15, eval=FALSE}
+y <- c("~/GSOD/gsod_1960/20049099999.csv",
+       "~/GSOD/gsod_1961/20049099999.csv")
+x <- reformat_GSOD(file_list = y)
+```
+
+## Reformat all Local Files Found in Directory
+
+In this example all STATION.csv files in the sub-folder GSOD/gsod_1960 will be
+imported and reformatted.
+
+```{r Ex16, eval=FALSE}
+x <- reformat_GSOD(dsn = "~/GSOD/gsod_1960")
+```
+
+# Using update_station_list()
+
+_GSODR_ uses internal databases of station data from the NCEI to provide
+location and other metadata, _e.g._ elevation, station names, WMO codes, etc. to
+make the process of querying for weather data faster. This database is created
+and packaged with _GSODR_ for distribution and is updated with new releases.
+Users have the option of updating these databases after installing _GSODR_.
+While this option gives the users the ability to keep the database up-to-date
+and gives _GSODR's_ authors flexibility in maintaining it, this also means that
+reproducibility may be affected since the same version of _GSODR_ may have
+different databases on different machines. If reproducibility is necessary,
+care should be taken to ensure that the version of the databases is the same
+across different machines.
+
+The database file `isd_history.rda` can be located on your local system by using
+the following command, `paste0(.libPaths(), "/GSODR/extdata")[1]`, unless you
+have specified another location for library installations and
+installed _GSODR_ there, in which case it would still be in `GSODR/extdata`.
+
+To update _GSODR's_ internal database of station locations simply use
+`update_station_list()`, which will update the internal station database
+according to the latest data available from the NCEI.
+
+```{r Ex17, eval=FALSE}
+update_station_list()
+```
+
+# Using get_inventory()
+
+_GSODR_ provides a function, `get_inventory()` to retrieve an inventory of the
+number of weather observations by station-year-month for the beginning of record
+through to current.
+
+Following is an example of how to retrieve the inventory and check a station in
+Toowoomba, Queensland, Australia, which was used in an earlier example.
+
+```{r Ex18, eval=TRUE, message=FALSE}
+inventory <- get_inventory()
+
+inventory
+
+subset(inventory, STNID %in% "955510-99999")
+```
+
+# Additional Climate Data Availability
+
+Additional climate data,
+[_GSODRdata_](https://github.com/adamhsparks/GSODRdata), formatted for use with
+GSOD data provided by _GSODR_ are available as an R package, which can only be
+installed through GitHub due to the package size, >5Mb, being too large for
+CRAN.
+
+```{r Ex19, eval=FALSE}
+if (!require(devtools)) {
+  install.packages(
+    "devtools",
+    repos = c(CRAN = "https://cloud.r-project.org/")
+  )
+  library(devtools)
+}
+devtools::install_github("adamhsparks/GSODRdata")
+library("GSODRdata")
+```
+
+# Notes
+
+## WMO Resolution 40. NOAA Policy
+
+_Users of these data should take into account the following (from the [NCEI website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):_
+
+> "The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification." [WMO Resolution 40. NOAA Policy](https://public.wmo.int/en/our-mandate/what-we-do/data-exchange-and-technology-transfer)
+
+# Appendices
+
+Appendix 1: GSODR Final Data Format, Contents and Units
+------------------------------
+
+_GSODR_ formatted data include the following fields and units:
+
+- **STNID** - Station number (WMO/DATSAV3 number) for the location;
+
+- **NAME** - Unique text identifier;
+
+- **CTRY** - Country in which the station is located;
+
+- **LAT** - Latitude. *Station dropped in cases where values are < -90 or > 90
+degrees or Lat = 0 and Lon = 0*;
+
+- **LON** - Longitude. *Station dropped in cases where values are < -180 or >
+180 degrees or Lat = 0 and Lon = 0*;
+
+- **ELEVATION** - Elevation in metres;
+
+- **YEARMODA** - Date in YYYY-mm-dd format;
+
+- **YEAR** - The year (YYYY);
+
+- **MONTH** - The month (mm);
+
+- **DAY** - The day (dd);
+
+- **YDAY** - Sequential day of year (not in original GSOD);
+
+- **TEMP** - Mean daily temperature converted to degrees C to tenths. Missing =
+NA;
+
+- **TEMP\_ATTRIBUTES** - Number of observations used in calculating mean daily
+temperature;
+
+- **DEWP** - Mean daily dew point converted to degrees C to tenths. Missing =
+NA;
+
+- **DEWP\_ATTRIBUTES** - Number of observations used in calculating mean daily
+dew point;
+
+- **SLP** - Mean sea level pressure in millibars to tenths. Missing = NA;
+
+- **SLP\_ATTRIBUTES** - Number of observations used in calculating mean sea
+level pressure;
+
+- **STP** - Mean station pressure for the day in millibars to tenths. Missing
+= NA;
+
+- **STP\_ATTRIBUTES** - Number of observations used in calculating mean station
+pressure;
+
+- **VISIB** - Mean visibility for the day converted to kilometres to tenths
+Missing = NA;
+
+- **VISIB\_ATTRIBUTES** - Number of observations used in calculating mean daily
+visibility;
+
+- **WDSP** - Mean daily wind speed value converted to metres/second to tenths.
+Missing = NA;
+
+- **WDSP\_ATTRIBUTES** - Number of observations used in calculating mean daily
+wind speed;
+
+- **MXSPD** - Maximum sustained wind speed reported for the day converted to
+metres/second to tenths. Missing = NA;
+
+- **GUST** - Maximum wind gust reported for the day converted to metres/second
+to tenths. Missing = NA;
+
+- **MAX** - Maximum temperature reported during the day converted to Celsius to
+tenths--time of max temp report varies by country and region, so this will
+sometimes not be the max for the calendar day. Missing = NA;
+
+- **MAX\_ATTRIBUTES** - Blank indicates max temp was taken from the explicit max
+temp report and not from the 'hourly' data. An "\*" indicates max temp was
+derived from the hourly data (_i.e._, highest hourly or synoptic-reported
+temperature);
+
+- **MIN** - Minimum temperature reported during the day converted to Celsius to
+tenths--time of min temp report varies by country and region, so this will
+sometimes not be the max for the calendar day. Missing = NA;
+
+- **MIN\_ATTRIBUTES** - Blank indicates max temp was taken from the explicit min
+temp report and not from the 'hourly' data. An "\*" indicates min temp was
+derived from the hourly data (_i.e._, highest hourly or synoptic-reported
+temperature);
+
+- **PRCP** - Total precipitation (rain and/or melted snow) reported during the
+day converted to millimetres to hundredths; will usually not end with the
+midnight observation, _i.e._, may include latter part of previous day. A value
+of ".00" indicates no measurable precipitation (includes a trace). Missing = NA;
+*Note: Many stations do not report '0' on days with no precipitation--
+therefore, 'NA' will often appear on these days. For example, a station may
+only report a 6-hour amount for the period during which rain fell.* See
+`FLAGS_PRCP` column for source of data;
+
+- **PRCP\_ATTRIBUTES** -
+
+    - A = 1 report of 6-hour precipitation amount;
+
+    - B = Summation of 2 reports of 6-hour precipitation amount;
+
+    - C = Summation of 3 reports of 6-hour precipitation amount;
+
+    - D = Summation of 4 reports of 6-hour precipitation amount;
+
+    - E = 1 report of 12-hour precipitation amount;
+
+    - F = Summation of 2 reports of 12-hour precipitation amount;
+
+    - G = 1 report of 24-hour precipitation amount;
+
+    - H = Station reported '0' as the amount for the day (e.g. from 6-hour
+    reports), but also reported at least one occurrence of precipitation in
+    hourly observations--this could indicate a rrace occurred, but should be
+    considered as incomplete data for the day;
+
+    - I = Station did not report any precipitation data for the day and did not
+    report any occurrences of precipitation in its hourly observations--it's
+    still possible that precipitation occurred but was not reported;
+
+- **SNDP** - Snow depth in millimetres to tenths. Missing = NA;
+
+- **I\_FOG** - Indicator for fog, (1 = yes, 0 = no/not reported) for the
+occurrence during the day;
+
+- **I\_RAIN\_DRIZZLE** - Indicator for rain or drizzle, (1 = yes, 0 =
+no/not reported) for the occurrence during the day;
+
+- **I\_SNOW\_ICE** - Indicator for snow or ice pellets, (1 = yes, 0 =
+no/not reported) for the occurrence during the day;
+
+- **I\_HAIL** - Indicator for hail, (1 = yes, 0 = no/not reported) for the
+occurrence during the day;
+
+- **I\_THUNDER** - Indicator for thunder, (1 = yes, 0 = no/not reported) for the
+occurrence during the day;
+
+- **I_TORNADO_FUNNEL** - Indicator for tornado or funnel cloud, (1 = yes, 0 =
+no/not reported) for the occurrence during the day;
+
+- **EA** - Mean daily actual vapour pressure;
+
+- **ES** - Mean daily saturation vapour pressure;
+
+- **RH** - Mean daily relative humidity.
+
+## Appendix 2: Map of Current GSOD Station Locations
+
+```{r, eval=TRUE, message=FALSE, echo=FALSE, warning=FALSE, fig.width = 7, fig.height = 5, fig.align = "center", fig.path = "vignettes/"}
+if (requireNamespace("maps", quietly = TRUE) &&
+    requireNamespace("mapproj", quietly = TRUE) &&
+    requireNamespace("gridExtra", quietly = TRUE) &&
+    requireNamespace("grid", quietly = TRUE)) {
+  library(mapproj)
+  library(maps)
+  library(grid)
+  library(gridExtra)
+  load(system.file("extdata", "isd_history.rda", package = "GSODR"))
+  world_map <- map_data("world")
+
+  GSOD_stations <- ggplot(isd_history, aes(x = LON, y = LAT)) +
+    geom_polygon(
+      data = world_map,
+      aes(x = long, y = lat, group = group),
+      color = grey(0.7),
+      fill = NA
+    ) +
+    geom_point(color = "red",
+               size = 0.05) +
+    coord_map(xlim = c(-180, 180)) +
+    theme_void() +
+    labs(title = "GSOD Station Locations",
+         caption = "Data: US NCEI GSOD and CIA World DataBank II")
+
+  # Using the gridExtra and grid packages add a neatline to the map
+  grid.arrange(GSOD_stations, ncol = 1)
+  grid.rect(
+    width = 0.98,
+    height = 0.98,
+    gp = grid::gpar(lwd = 0.25,
+                    col = "black",
+                    fill = NA)
+  )
+}
+```

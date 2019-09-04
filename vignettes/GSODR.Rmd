@@ -10,16 +10,12 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r check_packages, echo=FALSE, messages=FALSE, warning=FALSE}
-required <- c("ggplot2", "tidyr")
 
-if (!all(unlist(lapply(required, function(pkg) requireNamespace(pkg, quietly = TRUE)))))
-knitr::opts_chunk$set(eval = FALSE, collapse = TRUE, comment = "#>", fig.width = 7, fig.height = 7, fig.align = "center")
-```
 
 # Introduction
 
-The GSOD or [Global Surface Summary of the Day (GSOD)](https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/)
+The GSOD or [Global Surface Summary of the Day
+(GSOD)](https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/)
 data provided by the US National Centers for Environmental Information (NCEI)
 are a valuable source of weather data with global coverage. However, the data
 files are cumbersome and difficult to work with. _GSODR_ aims to make it easy to
@@ -36,8 +32,8 @@ local disk and re-formats them returning a tidy data frame in R
 within the given radius (kilometres) of a point given as latitude and longitude
 
 - `update_station_list()` - this function downloads the latest station list from
-the NCEI's FTP server updates the package's internal database of stations and
-their metadata.
+the NCEI's server updates the package's internal database of stations and their
+metadata.
 
 - `get_inventory()` - this function downloads the latest station inventory
 information from the NCEI's server and returns the header information about
@@ -60,20 +56,57 @@ For more information see the description of the data provided by NCEI,
 _GSODR_ provides lists of weather station locations and elevation values. It's
 easy to find all stations in Australia.
 
-```{r Ex1, eval=TRUE}
+
+```r
 library(GSODR)
-library(data.table)
-load(system.file("extdata", "country_list.rda", package = "GSODR"))
+
 load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 
-station_locations <- isd_history[country_list, on = c("CTRY" = "FIPS")]
-
 # create data.frame for Australia only
-Oz <- subset(station_locations, COUNTRY_NAME == "AUSTRALIA")
+Oz <- subset(isd_history, COUNTRY_NAME == "AUSTRALIA")
 
 Oz
+```
 
+```
+##              STNID                         NAME     LAT     LON CTRY STATE
+##    1: 695023-99999          HORN ISLAND   (HID) -10.583 142.300   AS      
+##    2: 749430-99999           AIDELAIDE RIVER SE -13.300 131.133   AS      
+##    3: 749432-99999    BATCHELOR FIELD AUSTRALIA -13.049 131.066   AS      
+##    4: 749438-99999         IRON RANGE AUSTRALIA -12.700 143.300   AS      
+##    5: 749439-99999     MAREEBA AS/HOEVETT FIELD -17.050 145.400   AS      
+##   ---                                                                     
+## 1038: 959890-99999      BICHENO (COUNCIL DEPOT) -41.867 148.300   AS      
+## 1039: 959950-99999 LORD HOWE ISLAND WINDY POINT -31.533 159.067   AS      
+## 1040: 959970-99999    HEARD ISLAND (ATLAS COVE) -53.017  73.400   AS      
+## 1041: 996600-99999          ENVIRONM BUOY 55011 -40.800 144.300   AS      
+## 1042: 999999-82101               NORTHWEST CAPE -22.333 114.050   AS      
+##          BEGIN      END COUNTRY_NAME ISO2C ISO3C
+##    1: 19420804 20030816    AUSTRALIA    AU   AUS
+##    2: 19430228 19440821    AUSTRALIA    AU   AUS
+##    3: 19421231 19430610    AUSTRALIA    AU   AUS
+##    4: 19420917 19440930    AUSTRALIA    AU   AUS
+##    5: 19420630 19440630    AUSTRALIA    AU   AUS
+##   ---                                           
+## 1038: 19650101 20190602    AUSTRALIA    AU   AUS
+## 1039: 20120920 20190831    AUSTRALIA    AU   AUS
+## 1040: 19980301 20121220    AUSTRALIA    AU   AUS
+## 1041: 19930221 19970403    AUSTRALIA    AU   AUS
+## 1042: 19680305 19680430    AUSTRALIA    AU   AUS
+```
+
+```r
+# Look for a specific town in Australia
 subset(Oz, grepl("TOOWOOMBA", NAME))
+```
+
+```
+##           STNID              NAME     LAT     LON CTRY STATE    BEGIN
+## 1: 945510-99999         TOOWOOMBA -27.583 151.933   AS       19561231
+## 2: 955510-99999 TOOWOOMBA AIRPORT -27.550 151.917   AS       19980301
+##         END COUNTRY_NAME ISO2C ISO3C
+## 1: 20120503    AUSTRALIA    AU   AUS
+## 2: 20190831    AUSTRALIA    AU   AUS
 ```
 
 ## Download a Single Station and Year
@@ -82,10 +115,105 @@ Now that we've seen where the reporting stations are located, we can download
 weather data from the station Toowoomba, Queensland, Australia for 2010 by using
 the STNID in the `station` parameter of `get_GSOD()`.
 
-```{r Ex2, eval=TRUE}
-tbar <- get_GSOD(years = 2010, station = "955510-99999")
 
-tbar
+```r
+library(skimr)
+tbar <- get_GSOD(years = 2010, station = "955510-99999")
+skim(tbar)
+```
+
+```
+## Skim summary statistics
+##  n obs: 365 
+##  n variables: 44 
+## 
+## ── Variable type:character ─────────────────────────────────────────────────────────────
+##          variable missing complete   n min max empty n_unique
+##              CTRY       0      365 365   2   2     0        1
+##   DEWP_ATTRIBUTES       0      365 365   2   2     0        6
+##    MAX_ATTRIBUTES     351       14 365   1   1     0        1
+##    MIN_ATTRIBUTES     212      153 365   1   1     0        1
+##              NAME       0      365 365  17  17     0        1
+##   PRCP_ATTRIBUTES       1      364 365   1   1     0        5
+##    SLP_ATTRIBUTES       0      365 365   2   2     0        4
+##             STATE       0      365 365   0   0   365        1
+##             STNID       0      365 365  12  12     0        1
+##    STP_ATTRIBUTES       0      365 365   2   2     0        4
+##   TEMP_ATTRIBUTES       0      365 365   2   2     0        4
+##  VISIB_ATTRIBUTES       0      365 365   2   2     0        6
+##   WDSP_ATTRIBUTES       0      365 365   2   2     0        4
+## 
+## ── Variable type:Date ──────────────────────────────────────────────────────────────────
+##  variable missing complete   n        min        max     median n_unique
+##  YEARMODA       0      365 365 2010-01-01 2010-12-31 2010-07-02      365
+## 
+## ── Variable type:integer ───────────────────────────────────────────────────────────────
+##          variable missing complete   n     mean     sd    p0   p25   p50
+##             BEGIN       0      365 365 2e+07      0    2e+07 2e+07 2e+07
+##               DAY       0      365 365    15.72   8.81     1     8    16
+##               END       0      365 365 2e+07      0    2e+07 2e+07 2e+07
+##             I_FOG     365        0 365   NaN     NA       NA    NA    NA
+##            I_HAIL     365        0 365   NaN     NA       NA    NA    NA
+##    I_RAIN_DRIZZLE     365        0 365   NaN     NA       NA    NA    NA
+##        I_SNOW_ICE     365        0 365   NaN     NA       NA    NA    NA
+##         I_THUNDER     365        0 365   NaN     NA       NA    NA    NA
+##  I_TORNADO_FUNNEL     365        0 365   NaN     NA       NA    NA    NA
+##             MONTH       0      365 365     6.53   3.45     1     4     7
+##              YDAY       0      365 365   183    105.51     1    92   183
+##              YEAR       0      365 365  2010      0     2010  2010  2010
+##    p75  p100     hist
+##  2e+07 2e+07 ▁▁▁▇▁▁▁▁
+##     23    31 ▇▇▇▇▆▇▇▇
+##  2e+07 2e+07 ▁▁▁▇▁▁▁▁
+##     NA    NA         
+##     NA    NA         
+##     NA    NA         
+##     NA    NA         
+##     NA    NA         
+##     NA    NA         
+##     10    12 ▇▅▇▃▅▇▅▇
+##    274   365 ▇▇▇▇▇▇▇▇
+##   2010  2010 ▁▁▁▇▁▁▁▁
+## 
+## ── Variable type:numeric ───────────────────────────────────────────────────────────────
+##   variable missing complete   n    mean    sd      p0     p25     p50
+##       DEWP       4      361 365   11.83  4.86   -2.6     8.7    13.1 
+##         EA       4      361 365    1.45  0.42    0.5     1.1     1.5 
+##  ELEVATION       0      365 365  642     0     642     642     642   
+##         ES       0      365 365    1.93  0.5     0.9     1.5     2   
+##       GUST     365        0 365  NaN    NA      NA      NA      NA   
+##   LATITUDE       0      365 365  -27.55  0     -27.55  -27.55  -27.55
+##  LONGITUDE       0      365 365  151.92  0     151.92  151.92  151.92
+##        MAX       0      365 365   21.62  4.65   10.3    17.9    21.9 
+##        MIN       0      365 365   12.13  4.8     0.1     8.2    13.2 
+##      MXSPD       0      365 365    8.29  2.29    3.6     6.7     8.2 
+##       PRCP       1      364 365    3.02  9.32    0       0       0   
+##         RH       4      361 365   75.16 12.42   32      66.7    76.9 
+##        SLP       0      365 365 1017.67  5.09 1003.5  1014.1  1018   
+##       SNDP     365        0 365  NaN    NA      NA      NA      NA   
+##        STP       0      365 365  944.68  4.19  932.6   942.1   944.9 
+##       TEMP       0      365 365   16.45  4.21    6.2    12.9    17.3 
+##      VISIB     264      101 365   14.98  9.14    0.5     7.4    12.6 
+##       WDSP       0      365 365    5.93  1.97    2.2     4.4     5.7 
+##      p75    p100     hist
+##    15.4    20.3  ▁▂▃▃▅▇▇▂
+##     1.7     2.4  ▂▃▅▅▆▇▃▁
+##   642     642    ▁▁▁▇▁▁▁▁
+##     2.3     3.3  ▂▆▃▇▆▂▂▁
+##    NA      NA            
+##   -27.55  -27.55 ▁▁▁▇▁▁▁▁
+##   151.92  151.92 ▁▁▁▇▁▁▁▁
+##    24.6    35.1  ▁▃▆▆▇▃▁▁
+##    16.4    21.4  ▁▂▅▅▅▇▇▁
+##     9.8    17    ▂▆▆▇▂▁▁▁
+##     1      86.6  ▇▁▁▁▁▁▁▁
+##    83.3   100    ▁▁▂▃▆▇▅▂
+##  1021    1031    ▁▂▃▅▇▅▂▁
+##    NA      NA            
+##   947.4   955.6  ▁▂▃▆▇▅▂▁
+##    19.5    25.7  ▁▃▆▅▇▇▅▂
+##    23.3    36    ▅▆▇▃▃▇▂▂
+##     7.2    15.3  ▃▇▇▅▁▁▁▁
 ```
 
 ### Using nearest_stations()
@@ -98,26 +226,119 @@ stations of interest.
 There are missing stations in this query. Not all that are listed and queried
 actually have files on the server.
 
-```{r Ex3, eval=TRUE}
+
+```r
 tbar_stations <- nearest_stations(LAT = -27.5598,
                                   LON = 151.9507,
                                   distance = 50)
 
-tbar_stations
-
 tbar <- get_GSOD(years = 2010, station = tbar_stations)
+skim(tbar)
+```
+
+```
+## Skim summary statistics
+##  n obs: 1095 
+##  n variables: 44 
+## 
+## ── Variable type:character ─────────────────────────────────────────────────────────────
+##          variable missing complete    n min max empty n_unique
+##              CTRY       0     1095 1095   2   2     0        1
+##   DEWP_ATTRIBUTES       0     1095 1095   2   2     0       10
+##    MAX_ATTRIBUTES    1052       43 1095   1   1     0        1
+##    MIN_ATTRIBUTES     634      461 1095   1   1     0        1
+##              NAME       0     1095 1095   5  31     0        3
+##   PRCP_ATTRIBUTES       1     1094 1095   1   1     0        5
+##    SLP_ATTRIBUTES       0     1095 1095   2   2     0        9
+##             STATE       0     1095 1095   0   0  1095        1
+##             STNID       0     1095 1095  12  12     0        3
+##    STP_ATTRIBUTES       0     1095 1095   2   2     0        9
+##   TEMP_ATTRIBUTES       0     1095 1095   2   2     0        8
+##  VISIB_ATTRIBUTES       0     1095 1095   2   2     0        6
+##   WDSP_ATTRIBUTES       0     1095 1095   2   2     0        8
+## 
+## ── Variable type:Date ──────────────────────────────────────────────────────────────────
+##  variable missing complete    n        min        max     median n_unique
+##  YEARMODA       0     1095 1095 2010-01-01 2010-12-31 2010-07-02      365
+## 
+## ── Variable type:integer ───────────────────────────────────────────────────────────────
+##          variable missing complete    n     mean        sd    p0   p25
+##             BEGIN       0     1095 1095 2e+07    131241.93 2e+07 2e+07
+##               DAY       0     1095 1095    15.72      8.8      1     8
+##               END       0     1095 1095 2e+07         0    2e+07 2e+07
+##             I_FOG    1095        0 1095   NaN        NA       NA    NA
+##            I_HAIL    1095        0 1095   NaN        NA       NA    NA
+##    I_RAIN_DRIZZLE    1095        0 1095   NaN        NA       NA    NA
+##        I_SNOW_ICE    1095        0 1095   NaN        NA       NA    NA
+##         I_THUNDER    1095        0 1095   NaN        NA       NA    NA
+##  I_TORNADO_FUNNEL    1095        0 1095   NaN        NA       NA    NA
+##             MONTH       0     1095 1095     6.53      3.45     1     4
+##              YDAY       0     1095 1095   183       105.41     1    92
+##              YEAR       0     1095 1095  2010         0     2010  2010
+##    p50   p75  p100     hist
+##  2e+07 2e+07 2e+07 ▇▁▁▁▁▁▇▇
+##     16    23    31 ▇▇▇▇▆▇▇▇
+##  2e+07 2e+07 2e+07 ▁▁▁▇▁▁▁▁
+##     NA    NA    NA         
+##     NA    NA    NA         
+##     NA    NA    NA         
+##     NA    NA    NA         
+##     NA    NA    NA         
+##     NA    NA    NA         
+##      7    10    12 ▇▅▇▃▅▇▅▇
+##    183   274   365 ▇▇▇▇▇▇▇▇
+##   2010  2010  2010 ▁▁▁▇▁▁▁▁
+## 
+## ── Variable type:numeric ───────────────────────────────────────────────────────────────
+##   variable missing complete    n    mean      sd      p0     p25     p50
+##       DEWP       4     1091 1095   12.34   5.12    -3.7     8.95   13.5 
+##         EA       4     1091 1095    1.5    0.46     0.5     1.1     1.5 
+##  ELEVATION       0     1095 1095  380.97 224.57    94      94     406.9 
+##         ES       0     1095 1095    2.12   0.62     0.9     1.6     2.1 
+##       GUST    1095        0 1095  NaN     NA       NA      NA      NA   
+##   LATITUDE       0     1095 1095  -27.5    0.066  -27.55  -27.55  -27.55
+##  LONGITUDE       0     1095 1095  152      0.25   151.74  151.74  151.92
+##        MAX       0     1095 1095   24.03   5.09    10.3    20.5    24   
+##        MIN       0     1095 1095   12.13   5.64    -6       7.6    13.3 
+##      MXSPD       0     1095 1095    7.13   2.42     1.5     5.1     6.7 
+##       PRCP       1     1094 1095    2.79   8.68     0       0       0   
+##         RH       4     1091 1095   71.38  11.86    32      64.3    71.4 
+##        SLP     365      730 1095 1017.38   5.13  1003    1013.9  1017.7 
+##       SNDP    1095        0 1095  NaN     NA       NA      NA      NA   
+##        STP     365      730 1095  957.4   13.44   932.6   944.9   956.6 
+##       TEMP       0     1095 1095   17.78   4.74     5.9    14.2    18.2 
+##      VISIB     797      298 1095   21.42   8.86     0.5    14.6    24.55
+##       WDSP       0     1095 1095    4.47   1.97     0.6     2.95    4.1 
+##      p75    p100     hist
+##    16.2    22.4  ▁▁▃▃▅▇▆▁
+##     1.8     2.7  ▂▆▆▇▆▆▂▁
+##   642     642    ▇▁▁▁▇▁▁▇
+##     2.5     4    ▂▇▇▇▆▃▁▁
+##    NA      NA            
+##   -27.41  -27.41 ▇▁▁▁▁▁▁▃
+##   152.33  152.33 ▇▁▇▁▁▁▁▇
+##    27.5    39.2  ▁▃▆▇▇▃▂▁
+##    16.7    23.7  ▁▁▃▆▅▇▇▁
+##     8.7    17    ▁▆▇▆▅▁▁▁
+##     0.5    86.6  ▇▁▁▁▁▁▁▁
+##    80     100    ▁▁▂▅▇▆▃▁
+##  1020.7  1031    ▁▂▃▆▇▅▂▁
+##    NA      NA            
+##   970.38  981.9  ▂▇▇▁▂▆▇▂
+##    21.4    28.8  ▁▃▆▆▇▇▃▁
+##    29.58   36    ▁▂▂▂▂▅▇▁
+##     5.6    15.3  ▃▇▆▃▁▁▁▁
 ```
 
 If you wished to drop the stations, 949999-00170 and 949999-00183 from the
-query, you could do this.
+query, you could do this and run the `get_GSOD()` query with the new station
+names.
 
-```{r Ex4, eval=TRUE}
+
+```r
 remove <- c("949999-00170", "949999-00183")
 
 tbar_stations <- tbar_stations[!tbar_stations %in% remove]
-
-tbar <- get_GSOD(years = 2010,
-                 station = tbar_stations)
 ```
 
 ## Plot Maximum and Minimum Temperature Values
@@ -125,7 +346,8 @@ tbar <- get_GSOD(years = 2010,
 Using the first data downloaded for a single station, 955510-99999, plot the
 temperature for 2010.
 
-```{r Ex5, eval=TRUE, fig.width = 7, fig.height = 7, fig.align = "center"}
+
+```r
 library(ggplot2)
 library(tidyr)
 
@@ -137,17 +359,19 @@ tbar_temps <- tbar[, c("YEARMODA", "TEMP", "MAX", "MIN")]
 tbar_temps <-
   gather(tbar_temps, Measurement, gather_cols = TEMP:MIN)
 
-ggplot(data = tbar_temps, aes(
-  x = YEARMODA,
-  y = value,
-  colour = Measurement
-)) +
+ggplot(data = tbar_temps, aes(x = YEARMODA,
+                              y = value,
+                              colour = Measurement)) +
   geom_line() +
   scale_color_brewer(type = "qual", na.value = "black") +
   scale_y_continuous(name = "Temperature") +
   scale_x_date(name = "Date") +
-  theme_bw()
+  ggtitle(label = "Max, min and mean temperatures for Toowoomba, Qld, AU",
+          subtitle = "Data: U.S. NCEI GSOD") +
+  theme_classic()
 ```
+
+<img src="Ex5-1.png" title="plot of chunk Ex5" alt="plot of chunk Ex5" style="display: block; margin: auto;" />
 
 ## Download and Process Files in Parallel
 
@@ -158,11 +382,109 @@ as an argument for `future::plan()`, which will default to available local cores
 as workers for the run. This can greatly reduce the time necessary to process
 GSOD files.
 
-```{r Ex6, eval=FALSE}
+
+```r
 future::plan("multisession")
 global <- get_GSOD(years = 2010:2011)
+
+skim(global)
 ```
 
+```
+## Skim summary statistics
+##  n obs: 7245807 
+##  n variables: 44 
+## 
+## ── Variable type:character ─────────────────────────────────────────────────────────────
+##          variable missing complete       n min max   empty n_unique
+##              CTRY  448502  6797305 7245807   2   2       0      233
+##   DEWP_ATTRIBUTES       0  7245807 7245807   2   2       0       22
+##    MAX_ATTRIBUTES 4625406  2620401 7245807   1   1       0        1
+##    MIN_ATTRIBUTES 3938865  3306942 7245807   1   1       0        1
+##              NAME  448502  6797305 7245807   2  53       0    10765
+##   PRCP_ATTRIBUTES  707510  6538297 7245807   1   1       0        9
+##    SLP_ATTRIBUTES       0  7245807 7245807   2   2       0       22
+##             STATE  448502  6797305 7245807   0   2 5489797       65
+##             STNID       0  7245807 7245807  12  12       0    11752
+##    STP_ATTRIBUTES       0  7245807 7245807   2   2       0       22
+##   TEMP_ATTRIBUTES       0  7245807 7245807   2   2       0       21
+##  VISIB_ATTRIBUTES       0  7245807 7245807   2   2       0       22
+##   WDSP_ATTRIBUTES       0  7245807 7245807   2   2       0       22
+## 
+## ── Variable type:Date ──────────────────────────────────────────────────────────────────
+##  variable missing complete       n        min        max     median
+##  YEARMODA       0  7245807 7245807 2010-01-01 2011-12-31 2010-12-25
+##  n_unique
+##       730
+## 
+## ── Variable type:integer ───────────────────────────────────────────────────────────────
+##          variable missing complete       n     mean        sd          p0
+##             BEGIN  448502  6797305 7245807 2e+07    246278.31     1.9e+07
+##               DAY       0  7245807 7245807    15.73      8.79     1      
+##               END  448502  6797305 7245807 2e+07     13408.72 2e+07      
+##             I_FOG 4419747  2826060 7245807     1         0        1      
+##            I_HAIL 7245807        0 7245807   NaN        NA       NA      
+##    I_RAIN_DRIZZLE 7245807        0 7245807   NaN        NA       NA      
+##        I_SNOW_ICE 7245807        0 7245807   NaN        NA       NA      
+##         I_THUNDER 7245807        0 7245807   NaN        NA       NA      
+##  I_TORNADO_FUNNEL 7245807        0 7245807   NaN        NA       NA      
+##             MONTH       0  7245807 7245807     6.55      3.45     1      
+##              YDAY       0  7245807 7245807   183.73    105.4      1      
+##              YEAR       0  7245807 7245807  2010.49      0.5   2010      
+##    p25   p50   p75  p100     hist
+##  2e+07 2e+07 2e+07 2e+07 ▁▁▂▅▃▅▃▇
+##      8    16    23    31 ▇▇▇▇▆▇▇▇
+##  2e+07 2e+07 2e+07 2e+07 ▁▁▁▁▁▁▁▇
+##      1     1     1     1 ▁▁▁▇▁▁▁▁
+##     NA    NA    NA    NA         
+##     NA    NA    NA    NA         
+##     NA    NA    NA    NA         
+##     NA    NA    NA    NA         
+##     NA    NA    NA    NA         
+##      4     7    10    12 ▇▅▇▃▅▇▅▇
+##     92   184   275   365 ▇▇▇▇▇▇▇▇
+##   2010  2010  2011  2011 ▇▁▁▁▁▁▁▇
+## 
+## ── Variable type:numeric ───────────────────────────────────────────────────────────────
+##   variable missing complete       n    mean     sd       p0     p25
+##       DEWP  398663  6847144 7245807    6.42  12.03   -82.9    -0.7 
+##         EA  398663  6847144 7245807    1.24   0.84     0       0.6 
+##  ELEVATION   15064  7230743 7245807  355.61 554.09  -999.9    28   
+##         ES       0  7245807 7245807    1.87   1.25     0       0.9 
+##       GUST 5496881  1748926 7245807   12.06   4.1      5       9.3 
+##   LATITUDE  448502  6797305 7245807   32.42  28.58   -89      25.08
+##  LONGITUDE  448502  6797305 7245807    3.72  87.13  -179.98  -80.27
+##        MAX    5294  7240513 7245807   17.63  13.66   -78.3     9   
+##        MIN    4628  7241179 7245807    7.58  12.96   -81.8     0.2 
+##      MXSPD  391661  6854146 7245807    6.11   3.32     0.5     4   
+##       PRCP  707510  6538297 7245807    1.89   7.64     0       0   
+##         RH  430581  6815226 7245807   69.19  19.77     0      57.7 
+##        SLP 2744059  4501748 7245807 1013.99   9.2    910.2  1008.9 
+##       SNDP 6856908   388899 7245807  258.71 264.92    10.2    71.1 
+##        STP 2727697  4518110 7245807  560.11 462.18     0      11.9 
+##       TEMP       0  7245807 7245807   12.47  13.06   -79.3     4.7 
+##      VISIB 1709680  5536127 7245807   15.81   9.8      0      10   
+##       WDSP  318576  6927231 7245807    3.3    2.35     0       1.7 
+##      p50     p75    p100     hist
+##     7.4    15.1    32.2  ▁▁▁▁▁▅▇▃
+##     1       1.7     4.8  ▇▇▅▃▂▁▁▁
+##   140.51  418    7018    ▁▇▁▁▁▁▁▁
+##     1.6     2.8     8.8  ▇▇▅▃▁▁▁▁
+##    11.3    14      59.6  ▇▅▁▁▁▁▁▁
+##    40.65   50.56   83.65 ▁▁▁▁▂▅▇▁
+##    11.21   71.85  179.75 ▁▅▅▂▇▂▅▂
+##    19.4    28.4    56    ▁▁▁▁▃▇▇▁
+##     8.9    17.1    42.7  ▁▁▁▁▂▇▇▁
+##     5.7     7.7    49.8  ▇▅▁▁▁▁▁▁
+##     0       0.3   481.1  ▇▁▁▁▁▁▁▁
+##    72      83.3   100    ▁▁▁▃▅▇▇▅
+##  1013.7  1019.1  1077.7  ▁▁▁▁▇▆▁▁
+##   190.5   370.8  2989.6  ▇▂▁▁▁▁▁▁
+##   882.9   977.8   999.8  ▆▁▁▁▁▁▁▇
+##    13.9    22.7    43.3  ▁▁▁▁▂▆▇▂
+##    14      16.7   160    ▇▁▁▁▁▁▁▁
+##     2.8     4.3    49.3  ▇▁▁▁▁▁▁▁
+```
 
 # Using reformat_GSOD()
 
@@ -185,7 +507,8 @@ and file lists are clean.
 In this example two STATION.csv files are in subdirectories of user's home
 directory and are listed for reformatting as a string.
 
-```{r Ex15, eval=FALSE}
+
+```r
 y <- c("~/GSOD/gsod_1960/20049099999.csv",
        "~/GSOD/gsod_1961/20049099999.csv")
 x <- reformat_GSOD(file_list = y)
@@ -196,7 +519,8 @@ x <- reformat_GSOD(file_list = y)
 In this example all STATION.csv files in the sub-folder GSOD/gsod_1960 will be
 imported and reformatted.
 
-```{r Ex16, eval=FALSE}
+
+```r
 x <- reformat_GSOD(dsn = "~/GSOD/gsod_1960")
 ```
 
@@ -223,7 +547,8 @@ To update _GSODR's_ internal database of station locations simply use
 `update_station_list()`, which will update the internal station database
 according to the latest data available from the NCEI.
 
-```{r Ex17, eval=FALSE}
+
+```r
 update_station_list()
 ```
 
@@ -236,12 +561,75 @@ through to current.
 Following is an example of how to retrieve the inventory and check a station in
 Toowoomba, Queensland, Australia, which was used in an earlier example.
 
-```{r Ex18, eval=TRUE}
+
+```r
 inventory <- get_inventory()
 
 inventory
+```
 
+```
+##    *** FEDERAL CLIMATE COMPLEX INTEGRATED SURFACE DATA INVENTORY ***   
+##     This inventory provides the number of weather observations by   
+##     STATION-YEAR-MONTH for beginning of record through September 2019    
+##                STNID YEAR  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP
+##      1: 007018-99999 2011    0    0 2104 2797 2543 2614  382    0    0
+##      2: 007018-99999 2013    0    0    0    0    0    0  710    0    0
+##      3: 007026-99999 2012    0    0    0    0    0    0  367    0    0
+##      4: 007026-99999 2014    0    0    0    0    0    0  180    0    4
+##      5: 007026-99999 2016    0    0    0    0    0  794    0    0    0
+##     ---                                                               
+## 629794:   A51256-451 2015 2196 1866 2206 1909 2215 2090 2202 2191 2128
+## 629795:   A51256-451 2016 2185 2047 2175 2131 2213 2139 2209 2216 2131
+## 629796:   A51256-451 2017 2192 1883 2204 1910 2145 2113 2218 2204 2082
+## 629797:   A51256-451 2018 2192 1887 2194 2113 2151 2095 2202 2197 1816
+## 629798:   A51256-451 2019 2188 2000 2143 2105 2187 2131 2174 2080    1
+##          OCT  NOV  DEC
+##      1:    0    0    0
+##      2:    0    0    0
+##      3:    0    0    7
+##      4:    0  552    0
+##      5:    0    0    0
+##     ---               
+## 629794: 2192 2097 2093
+## 629795: 2196 2131 1665
+## 629796: 2192 2103 2174
+## 629797: 2195 2063 2178
+## 629798:    0    0    0
+```
+
+```r
 subset(inventory, STNID %in% "955510-99999")
+```
+
+```
+##    *** FEDERAL CLIMATE COMPLEX INTEGRATED SURFACE DATA INVENTORY ***   
+##     This inventory provides the number of weather observations by   
+##     STATION-YEAR-MONTH for beginning of record through September 2019    
+##            STNID YEAR JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC
+##  1: 955510-99999 1998   0   0 222 223 221 211 226 217 222 234 215 230
+##  2: 955510-99999 1999 213 201 235 224 244 229 239 247 236 246 233 243
+##  3: 955510-99999 2000 241 227 247 238 246 237 245 240 236 248 239 248
+##  4: 955510-99999 2001 245 223 246 238 239 236 243 240 237 236 235 246
+##  5: 955510-99999 2002 245 219 246 236 243 229 243 246 227 238 233 246
+##  6: 955510-99999 2003 244 217 220 232 235 233 246 242 218 239 225 245
+##  7: 955510-99999 2004 240 227 241 229 233 224 235 244 235 244 235 245
+##  8: 955510-99999 2005 241 221 242 240 247 239 247 247 234 242 239 246
+##  9: 955510-99999 2006 245 223 246 232 241 238 247 247 239 247 240 247
+## 10: 955510-99999 2007 247 222 244 240 248 240 244 244 239 247 237 246
+## 11: 955510-99999 2008 247 228 248 239 248 239 248 247 239 247 238 248
+## 12: 955510-99999 2009 245 222 246 235 244 237 248 248 239 248 239 248
+## 13: 955510-99999 2010 248 223 248 240 244 240 242 247 240 248 240 247
+## 14: 955510-99999 2011 247 224 247 240 247 240 248 247 239 248 239 248
+## 15: 955510-99999 2012 248 232 248 240 248 240 248 247 240 248 240 245
+## 16: 955510-99999 2013 236 220 247 233 248 239 252 247 238 248 239 246
+## 17: 955510-99999 2014 243 224 247 240 246 239 246 247 240 247 240 248
+## 18: 955510-99999 2015 248 222 248  72 247 240 247 248 239 247 238 247
+## 19: 955510-99999 2016 246 228 245 240 246 240 248 248 238 248 239 248
+## 20: 955510-99999 2017 247 224 248 240 248 239 248 247 239 248 240 248
+## 21: 955510-99999 2018 248 224 248 239 247 240 246 247 218 244 190 248
+## 22: 955510-99999 2019 247 224 245 240 214 240 248 246   0   0   0   0
+##            STNID YEAR JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC
 ```
 
 # Additional Climate Data Availability
@@ -252,8 +640,15 @@ GSOD data provided by _GSODR_ are available as an R package, which can only be
 installed through GitHub due to the package size, >5Mb, being too large for
 CRAN.
 
-```{r Ex19, eval=FALSE}
-#install.packages("devtools")
+
+```r
+if (!require(devtools)) {
+  install.packages(
+    "devtools",
+    repos = c(CRAN = "https://cloud.r-project.org/")
+  )
+  library(devtools)
+}
 devtools::install_github("adamhsparks/GSODRdata")
 library("GSODRdata")
 ```
@@ -279,10 +674,10 @@ _GSODR_ formatted data include the following fields and units:
 
 - **CTRY** - Country in which the station is located;
 
-- **LATITUDE** - Latitude. *Station dropped in cases where values are < -90 or > 90
+- **LAT** - Latitude. *Station dropped in cases where values are < -90 or > 90
 degrees or Lat = 0 and Lon = 0*;
 
-- **LONGITUDE** - Longitude. *Station dropped in cases where values are < -180 or >
+- **LON** - Longitude. *Station dropped in cases where values are < -180 or >
 180 degrees or Lat = 0 and Lon = 0*;
 
 - **ELEVATION** - Elevation in metres;
@@ -306,13 +701,13 @@ temperature;
 - **DEWP** - Mean daily dew point converted to degrees C to tenths. Missing =
 NA;
 
-- **DEWP\_ATTRIBUTES** - Number of observations used in calculating mean daily dew
-point;
+- **DEWP\_ATTRIBUTES** - Number of observations used in calculating mean daily
+dew point;
 
 - **SLP** - Mean sea level pressure in millibars to tenths. Missing = NA;
 
-- **SLP\_ATTRIBUTES** - Number of observations used in calculating mean sea level
-pressure;
+- **SLP\_ATTRIBUTES** - Number of observations used in calculating mean sea
+level pressure;
 
 - **STP** - Mean station pressure for the day in millibars to tenths. Missing
 = NA;
@@ -329,8 +724,8 @@ visibility;
 - **WDSP** - Mean daily wind speed value converted to metres/second to tenths.
 Missing = NA;
 
-- **WDSP\_ATTRIBUTES** - Number of observations used in calculating mean daily wind
-speed;
+- **WDSP\_ATTRIBUTES** - Number of observations used in calculating mean daily
+wind speed;
 
 - **MXSPD** - Maximum sustained wind speed reported for the day converted to
 metres/second to tenths. Missing = NA;
@@ -342,20 +737,24 @@ to tenths. Missing = NA;
 tenths--time of max temp report varies by country and region, so this will
 sometimes not be the max for the calendar day. Missing = NA;
 
-- **MAX\_ATTRIBUTES** - Blank indicates max temp was taken from the explicit max temp
-report and not from the 'hourly' data. An "\*" indicates max temp was derived
-from the hourly data (_i.e._, highest hourly or synoptic-reported temperature);
+- **MAX\_ATTRIBUTES** - Blank indicates max temp was taken from the explicit max
+temp report and not from the 'hourly' data. An "\*" indicates max temp was
+derived from the hourly data (_i.e._, highest hourly or synoptic-reported
+temperature);
 
 - **MIN** - Minimum temperature reported during the day converted to Celsius to
 tenths--time of min temp report varies by country and region, so this will
 sometimes not be the max for the calendar day. Missing = NA;
 
-- **MIN\_ATTRIBUTES** - Blank indicates max temp was taken from the explicit min temp report and not from the 'hourly' data. An "\*" indicates min temp was derived from the hourly data (_i.e._, highest hourly or synoptic-reported temperature);
+- **MIN\_ATTRIBUTES** - Blank indicates max temp was taken from the explicit min
+temp report and not from the 'hourly' data. An "\*" indicates min temp was
+derived from the hourly data (_i.e._, highest hourly or synoptic-reported
+temperature);
 
 - **PRCP** - Total precipitation (rain and/or melted snow) reported during the
 day converted to millimetres to hundredths; will usually not end with the
-midnight observation, _i.e._, may include latter part of previous day. A value of
-".00" indicates no measurable precipitation (includes a trace). Missing = NA;
+midnight observation, _i.e._, may include latter part of previous day. A value
+of ".00" indicates no measurable precipitation (includes a trace). Missing = NA;
 *Note: Many stations do not report '0' on days with no precipitation--
 therefore, 'NA' will often appear on these days. For example, a station may
 only report a 6-hour amount for the period during which rain fell.* See
@@ -414,45 +813,4 @@ no/not reported) for the occurrence during the day;
 
 ## Appendix 2: Map of Current GSOD Station Locations
 
-```{r, eval=TRUE, message=FALSE, echo=FALSE, warning=FALSE, fig.width = 7, fig.height = 5, fig.align = "center"}
-if (requireNamespace("ggplot2", quietly = TRUE) &&
-    requireNamespace("ggthemes", quietly = TRUE) &&
-    requireNamespace("maps", quietly = TRUE) &&
-    requireNamespace("mapproj", quietly = TRUE) &&
-    requireNamespace("gridExtra", quietly = TRUE) &&
-    requireNamespace("grid", quietly = TRUE)) {
-  library(ggplot2)
-  library(mapproj)
-  library(ggthemes)
-  library(maps)
-  library(grid)
-  library(gridExtra)
-  library(GSODR)
-  load(system.file("extdata", "isd_history.rda", package = "GSODR"))
-  world_map <- map_data("world")
-  
-  GSOD_stations <- ggplot(isd_history, aes(x = LON, y = LAT)) +
-    geom_polygon(
-      data = world_map,
-      aes(x = long, y = lat, group = group),
-      color = grey(0.7),
-      fill = NA
-    ) +
-    geom_point(color = "red",
-               size = 0.05) +
-    coord_map(xlim = c(-180, 180)) +
-    theme_map() +
-    labs(title = "GSOD Station Locations",
-         caption = "Data: US NCEI GSOD and CIA World DataBank II")
-  
-  # Using the gridExtra and grid packages add a neatline to the map
-  grid.arrange(GSOD_stations, ncol = 1)
-  grid.rect(
-    width = 0.98,
-    height = 0.98,
-    gp = grid::gpar(lwd = 0.25,
-                    col = "black",
-                    fill = NA)
-  )
-}
-```
+<img src="unnamed-chunk-1-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" style="display: block; margin: auto;" />

@@ -20,3 +20,5 @@ vignettes/figure
 ^_pkgdown\.yml$
 ^\.circleci$
 ^GSODR.code-workspace$
+^doc$
+^Meta$

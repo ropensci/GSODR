@@ -1,4 +1,4 @@
-[![CircleCI Build Status](https://circleci.com/gh/ropensci/GSODR.svg?style=shield)](https://circleci.com/gh/ropensci/GSODR)
+[![Build Status](https://travis-ci.org/ropensci/GSODR.svg?branch=master)](https://travis-ci.org/ropensci/GSODR)
 [![Build status](https://ci.appveyor.com/api/projects/status/s09kh2nj59o35ob1?svg=true)](https://ci.appveyor.com/project/adamhsparks/gsodr)
 [![codecov](https://codecov.io/gh/ropensci/GSODR/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/GSODR)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.439850.svg)](https://doi.org/10.5281/zenodo.439850)
@@ -20,21 +20,21 @@ _GSODR_ aims to make it easy to find, transfer and format the data you need for
 use in analysis and provides five main functions for facilitating this:
 
 - `get_GSOD()` - this function queries and transfers files from the NCEI's web
-server, reformats them and returns a data frame in R.
+server, reformats them and returns a data frame.
 
 - `reformat_GSOD()` - this function takes individual station files from the
-local disk and re-formats them returning a tidy data frame in R
+local disk and re-formats them returning a data frame.
 
 - `nearest_stations()` - this function returns a vector of station IDs that fall
 within the given radius (kilometres) of a point given as latitude and longitude.
 
 - `update_station_list()` - this function downloads the latest station list from
-the NCEI's FTP server updates the package's internal database of stations and
-their metadata.
+the NCEI's server updates the package's internal database of stations and their
+metadata.
 
 - `get_inventory()` - this function downloads the latest station inventory
-information from the NCEI's FTP server and returns the header information about
-the latest version as a message in the console and a tidy data frame of the
+information from the NCEI's server and returns the header information about the
+latest version as a message in the console and a tidy data frame of the
 stations' inventory for each month that data are reported.
 
 When reformatting data either with `get_GSOD()` or `reformat_GSOD()`, all units
@@ -111,7 +111,7 @@ Automated Surface Observing System (ASOS) stations (airports) in the whole world
 thanks to the Iowa Environment Mesonet website.
 
 [_weathercan_](https://CRAN.R-project.org/package=weathercan) from
-[rOpenSci](https://docs.ropensci.org/weathercan/) makes it easier to search for
+[rOpenSci](https://github.com/ropensci/weathercan) makes it easier to search for
 and download multiple months/years of historical weather data from Environment
 and Climate Change Canada (ECCC) website.
 

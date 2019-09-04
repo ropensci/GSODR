@@ -10,14 +10,6 @@ test_that("reformat_GSOD file_list parameter reformats data properly", {
   )))
 
   # set up options for curl
-  ftp_handle <-
-    curl::new_handle(
-      ftp_use_epsv = FALSE,
-      crlf = TRUE,
-      ssl_verifypeer = FALSE,
-      ftp_response_timeout = 30,
-      ftp_skip_pasv_ip = TRUE
-    )
 
   url_base <- "https://www.ncei.noaa.gov/data/global-summary-of-the-day/access/1960/"
   test_files <-
@@ -27,7 +19,6 @@ test_that("reformat_GSOD file_list parameter reformats data properly", {
   Map(
     function(u, d)
       curl::curl_download(u, d,
-                          handle = ftp_handle,
                           mode = "wb",
                           quiet = TRUE),
     paste0(url_base, test_files),

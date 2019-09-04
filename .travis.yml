@@ -1,3 +1,4 @@
+dist: xenial
 language: r
 cache: packages
 r_check_args: --as-cran --run-donttest
@@ -9,6 +10,15 @@ matrix:
     env: R_CODECOV=true
   - os: linux
     r: devel
+
+addons:
+  apt:
+    sources:
+      - sourceline: 'ppa:ubuntugis/ppa'
+    packages:
+      - libudunits2-dev
+      - libproj-dev
+      - libgdal-dev
 
 after_failure:
   - ./pkg-build.sh dump_logs
