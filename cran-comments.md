@@ -39,7 +39,7 @@ package updates much easier
 
 - Improved test coverage
 
-- Update internal database of station locations
+- Updated internal database of station locations
 
 # Reverse dependencies
 
