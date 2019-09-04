@@ -31,7 +31,7 @@
 #'
 #' @name GSODR
 #'
-#' @author Adam Sparks, Tomislav Hengl and Andrew Nelson
+#' @author Adam H. Sparks, Tomislav Hengl and Andrew Nelson
 #'
 #' @seealso
 #'
@@ -54,7 +54,7 @@
 #'
 #' \strong{Useful links:}
 #' \itemize{
-#' \item{Static documentation at \url{https://ropensci.github.io/GSODR/}}
+#' \item{Static documentation at \url{https://docs.ropensci.org/GSODR/}}
 #' \item{Development repository at \url{https://github.com/ropensci/GSODR}}
 #' \item{Report bugs at \url{https://github.com/ropensci/GSODR/issues}}
 #' }
