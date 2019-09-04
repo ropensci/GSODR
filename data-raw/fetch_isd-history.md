@@ -50,14 +50,6 @@ if (!require("data.table")) {
 ``` r
 # download data
 isd_history <- fread("https://www1.ncdc.noaa.gov/pub/data/noaa/isd-history.csv")
-
-# clean data
-isd_history[isd_history == -999] <- NA
-isd_history[isd_history == -999.9] <- NA
-isd_history <- isd_history[!is.na(isd_history$LAT) & !is.na(isd_history$LON), ]
-isd_history <- isd_history[isd_history$LAT != 0 & isd_history$LON != 0, ]
-isd_history <- isd_history[isd_history$LAT > -90 & isd_history$LAT < 90, ]
-isd_history <- isd_history[isd_history$LON > -180 & isd_history$LON < 180, ]
 ```
 
 ## Add/drop columns and save to disk
@@ -99,6 +91,14 @@ isd_history <- isd_history[, c(
   "iso3c"
 )]
 
+# clean data
+isd_history[isd_history == -999] <- NA
+isd_history[isd_history == -999.9] <- NA
+isd_history <- isd_history[!is.na(isd_history$LAT) & !is.na(isd_history$LON), ]
+isd_history <- isd_history[isd_history$LAT != 0 & isd_history$LON != 0, ]
+isd_history <- isd_history[isd_history$LAT > -90 & isd_history$LAT < 90, ]
+isd_history <- isd_history[isd_history$LON > -180 & isd_history$LON < 180, ]
+
 # set colnames to upper case
 names(isd_history) <- toupper(names(isd_history))
 setnames(
@@ -124,11 +124,11 @@ isd_history
     ##     4: 409030-99999   KHWAJA-GHAR  37.083 69.433   AF       20010925
     ##     5: 409040-99999      FAIZABAD  37.117 70.517   AF       19730304
     ##    ---                                                              
-    ## 26689: 679770-99999 BUFFALO RANGE -21.008 31.579   ZI       19651201
-    ## 26690: 679790-99999          ZAKA -20.333 31.467   ZI       19870307
-    ## 26691: 679830-99999      CHIPINGE -20.200 32.617   ZI       19490103
-    ## 26692: 679890-99999        RUPISI -20.417 32.317   ZI       19620701
-    ## 26693: 679910-99999    BEITBRIDGE -22.217 30.000   ZI       19620701
+    ## 26645: 679770-99999 BUFFALO RANGE -21.008 31.579   ZI       19651201
+    ## 26646: 679790-99999          ZAKA -20.333 31.467   ZI       19870307
+    ## 26647: 679830-99999      CHIPINGE -20.200 32.617   ZI       19490103
+    ## 26648: 679890-99999        RUPISI -20.417 32.317   ZI       19620701
+    ## 26649: 679910-99999    BEITBRIDGE -22.217 30.000   ZI       19620701
     ##             END COUNTRY_NAME ISO2C ISO3C
     ##     1: 20120323  AFGHANISTAN    AF   AFG
     ##     2: 20070905  AFGHANISTAN    AF   AFG
@@ -136,11 +136,11 @@ isd_history
     ##     4: 20010925  AFGHANISTAN    AF   AFG
     ##     5: 20130703  AFGHANISTAN    AF   AFG
     ##    ---                                  
-    ## 26689: 20190831     ZIMBABWE    ZW   ZWE
-    ## 26690: 20190830     ZIMBABWE    ZW   ZWE
-    ## 26691: 20190831     ZIMBABWE    ZW   ZWE
-    ## 26692: 19680630     ZIMBABWE    ZW   ZWE
-    ## 26693: 20190831     ZIMBABWE    ZW   ZWE
+    ## 26645: 20190831     ZIMBABWE    ZW   ZWE
+    ## 26646: 20190830     ZIMBABWE    ZW   ZWE
+    ## 26647: 20190831     ZIMBABWE    ZW   ZWE
+    ## 26648: 19680630     ZIMBABWE    ZW   ZWE
+    ## 26649: 20190831     ZIMBABWE    ZW   ZWE
 
 ``` r
 # write rda file to disk for use with GSODR package
