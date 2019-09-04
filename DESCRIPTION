@@ -44,6 +44,7 @@ Depends:
     R (>= 3.3.0)
 License: MIT + file LICENSE
 Imports: 
+    countrycode,
     curl,
     data.table (>= 1.11.6),
     future.apply,
@@ -63,7 +64,6 @@ Suggests:
     plotKML,
     reshape2,
     rgdal (>= 1.1-9),
-    rgeos,
     rmarkdown,
     roxygen2 (>= 6.1.0),
     sf,

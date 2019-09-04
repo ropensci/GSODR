@@ -94,10 +94,6 @@ get_GSOD <- function(years,
                      country = NULL,
                      max_missing = NULL,
                      agroclimatology = FALSE) {
-  # Create objects for use in retrieving files ---------------------------------
-  original_timeout <- options("timeout")[[1]]
-  options(timeout = 300)
-  on.exit(options(timeout = original_timeout))
 
   # Validate user inputs -------------------------------------------------------
   .validate_years(years)
@@ -129,6 +125,7 @@ get_GSOD <- function(years,
 
   # Load station list
   load(system.file("extdata", "isd_history.rda", package = "GSODR")) # nocov
+  setkeyv(isd_history, "STNID")
 
   # Validate user entered stations for existence in stations list from NCEI
   invisible(lapply(
@@ -152,17 +149,14 @@ get_GSOD <- function(years,
   if (!is.null(country)) {
     # Load country list
     # CRAN NOTE avoidance
-    country_list <- NULL # nocov
-    load(system.file("extdata", "country_list.rda", package = "GSODR")) # nocov
 
-    country <- .validate_country(country, country_list)
+    country <- .validate_country(country, isd_history)
 
     file_list <-
-      .subset_country_list(country,
-                           country_list,
-                           file_list,
-                           isd_history,
-                           years)
+      .subset_country_list(country = country,
+                           isd_history = isd_history,
+                           file_list = file_list,
+                           years = years)
   }
 
   # Validate stations for missing days -----------------------------------------

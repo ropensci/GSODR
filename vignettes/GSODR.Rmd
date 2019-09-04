@@ -59,39 +59,28 @@ easy to find all stations in Australia.
 
 ```r
 library(GSODR)
-library(data.table)
-```
 
-```
-## data.table 1.12.2 using 4 threads (see ?getDTthreads).  Latest news: r-datatable.com
-```
-
-```r
-load(system.file("extdata", "country_list.rda", package = "GSODR"))
 load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 
-station_locations <-
-  isd_history[country_list, on = c("CTRY" = "FIPS")]
-
 # create data.frame for Australia only
-Oz <- subset(station_locations, COUNTRY_NAME == "AUSTRALIA")
+Oz <- subset(isd_history, COUNTRY_NAME == "AUSTRALIA")
 
 Oz
 ```
 
 ```
-##              STNID                         NAME CTRY STATE     LAT     LON
-##    1: 695023-99999          HORN ISLAND   (HID)   AS       -10.583 142.300
-##    2: 749430-99999           AIDELAIDE RIVER SE   AS       -13.300 131.133
-##    3: 749432-99999    BATCHELOR FIELD AUSTRALIA   AS       -13.049 131.066
-##    4: 749438-99999         IRON RANGE AUSTRALIA   AS       -12.700 143.300
-##    5: 749439-99999     MAREEBA AS/HOEVETT FIELD   AS       -17.050 145.400
+##              STNID                         NAME     LAT     LON CTRY STATE
+##    1: 695023-99999          HORN ISLAND   (HID) -10.583 142.300   AS      
+##    2: 749430-99999           AIDELAIDE RIVER SE -13.300 131.133   AS      
+##    3: 749432-99999    BATCHELOR FIELD AUSTRALIA -13.049 131.066   AS      
+##    4: 749438-99999         IRON RANGE AUSTRALIA -12.700 143.300   AS      
+##    5: 749439-99999     MAREEBA AS/HOEVETT FIELD -17.050 145.400   AS      
 ##   ---                                                                     
-## 1038: 959890-99999      BICHENO (COUNCIL DEPOT)   AS       -41.867 148.300
-## 1039: 959950-99999 LORD HOWE ISLAND WINDY POINT   AS       -31.533 159.067
-## 1040: 959970-99999    HEARD ISLAND (ATLAS COVE)   AS       -53.017  73.400
-## 1041: 996600-99999          ENVIRONM BUOY 55011   AS       -40.800 144.300
-## 1042: 999999-82101               NORTHWEST CAPE   AS       -22.333 114.050
+## 1038: 959890-99999      BICHENO (COUNCIL DEPOT) -41.867 148.300   AS      
+## 1039: 959950-99999 LORD HOWE ISLAND WINDY POINT -31.533 159.067   AS      
+## 1040: 959970-99999    HEARD ISLAND (ATLAS COVE) -53.017  73.400   AS      
+## 1041: 996600-99999          ENVIRONM BUOY 55011 -40.800 144.300   AS      
+## 1042: 999999-82101               NORTHWEST CAPE -22.333 114.050   AS      
 ##          BEGIN      END COUNTRY_NAME ISO2C ISO3C
 ##    1: 19420804 20030816    AUSTRALIA    AU   AUS
 ##    2: 19430228 19440821    AUSTRALIA    AU   AUS
@@ -100,23 +89,24 @@ Oz
 ##    5: 19420630 19440630    AUSTRALIA    AU   AUS
 ##   ---                                           
 ## 1038: 19650101 20190602    AUSTRALIA    AU   AUS
-## 1039: 20120920 20190810    AUSTRALIA    AU   AUS
+## 1039: 20120920 20190831    AUSTRALIA    AU   AUS
 ## 1040: 19980301 20121220    AUSTRALIA    AU   AUS
 ## 1041: 19930221 19970403    AUSTRALIA    AU   AUS
 ## 1042: 19680305 19680430    AUSTRALIA    AU   AUS
 ```
 
 ```r
+# Look for a specific town in Australia
 subset(Oz, grepl("TOOWOOMBA", NAME))
 ```
 
 ```
-##           STNID              NAME CTRY STATE     LAT     LON    BEGIN
-## 1: 945510-99999         TOOWOOMBA   AS       -27.583 151.933 19561231
-## 2: 955510-99999 TOOWOOMBA AIRPORT   AS       -27.550 151.917 19980301
+##           STNID              NAME     LAT     LON CTRY STATE    BEGIN
+## 1: 945510-99999         TOOWOOMBA -27.583 151.933   AS       19561231
+## 2: 955510-99999 TOOWOOMBA AIRPORT -27.550 151.917   AS       19980301
 ##         END COUNTRY_NAME ISO2C ISO3C
 ## 1: 20120503    AUSTRALIA    AU   AUS
-## 2: 20190810    AUSTRALIA    AU   AUS
+## 2: 20190831    AUSTRALIA    AU   AUS
 ```
 
 ## Download a Single Station and Year
@@ -128,26 +118,6 @@ the STNID in the `station` parameter of `get_GSOD()`.
 
 ```r
 library(skimr)
-```
-
-```
-## 
-## Attaching package: 'skimr'
-```
-
-```
-## The following object is masked from 'package:knitr':
-## 
-##     kable
-```
-
-```
-## The following object is masked from 'package:stats':
-## 
-##     filter
-```
-
-```r
 tbar <- get_GSOD(years = 2010, station = "955510-99999")
 skim(tbar)
 ```
@@ -396,6 +366,8 @@ ggplot(data = tbar_temps, aes(x = YEARMODA,
   scale_color_brewer(type = "qual", na.value = "black") +
   scale_y_continuous(name = "Temperature") +
   scale_x_date(name = "Date") +
+  ggtitle(label = "Max, min and mean temperatures for Toowoomba, Qld, AU",
+          subtitle = "Data: U.S. NCEI GSOD") +
   theme_classic()
 ```
 
@@ -425,14 +397,14 @@ skim(global)
 ## 
 ## ── Variable type:character ─────────────────────────────────────────────────────────────
 ##          variable missing complete       n min max   empty n_unique
-##              CTRY  443875  6801932 7245807   0   2     436      241
+##              CTRY  448502  6797305 7245807   2   2       0      233
 ##   DEWP_ATTRIBUTES       0  7245807 7245807   2   2       0       22
 ##    MAX_ATTRIBUTES 4625406  2620401 7245807   1   1       0        1
 ##    MIN_ATTRIBUTES 3938865  3306942 7245807   1   1       0        1
-##              NAME  443875  6801932 7245807   2  53       0    10780
+##              NAME  448502  6797305 7245807   2  53       0    10765
 ##   PRCP_ATTRIBUTES  707510  6538297 7245807   1   1       0        9
 ##    SLP_ATTRIBUTES       0  7245807 7245807   2   2       0       22
-##             STATE  443875  6801932 7245807   0   2 5492833       67
+##             STATE  448502  6797305 7245807   0   2 5489797       65
 ##             STNID       0  7245807 7245807  12  12       0    11752
 ##    STP_ATTRIBUTES       0  7245807 7245807   2   2       0       22
 ##   TEMP_ATTRIBUTES       0  7245807 7245807   2   2       0       21
@@ -447,9 +419,9 @@ skim(global)
 ## 
 ## ── Variable type:integer ───────────────────────────────────────────────────────────────
 ##          variable missing complete       n     mean        sd          p0
-##             BEGIN  443875  6801932 7245807 2e+07    246262.43     1.9e+07
+##             BEGIN  448502  6797305 7245807 2e+07    246278.31     1.9e+07
 ##               DAY       0  7245807 7245807    15.73      8.79     1      
-##               END  443875  6801932 7245807 2e+07     13424.91 2e+07      
+##               END  448502  6797305 7245807 2e+07     13408.72 2e+07      
 ##             I_FOG 4419747  2826060 7245807     1         0        1      
 ##            I_HAIL 7245807        0 7245807   NaN        NA       NA      
 ##    I_RAIN_DRIZZLE 7245807        0 7245807   NaN        NA       NA      
@@ -480,8 +452,8 @@ skim(global)
 ##  ELEVATION   15064  7230743 7245807  355.61 554.09  -999.9    28   
 ##         ES       0  7245807 7245807    1.87   1.25     0       0.9 
 ##       GUST 5496881  1748926 7245807   12.06   4.1      5       9.3 
-##   LATITUDE  443875  6801932 7245807   32.4   28.58   -89      25.04
-##  LONGITUDE  443875  6801932 7245807    3.74  87.15  -179.98  -80.27
+##   LATITUDE  448502  6797305 7245807   32.42  28.58   -89      25.08
+##  LONGITUDE  448502  6797305 7245807    3.72  87.13  -179.98  -80.27
 ##        MAX    5294  7240513 7245807   17.63  13.66   -78.3     9   
 ##        MIN    4628  7241179 7245807    7.58  12.96   -81.8     0.2 
 ##      MXSPD  391661  6854146 7245807    6.11   3.32     0.5     4   
@@ -499,8 +471,8 @@ skim(global)
 ##   140.51  418    7018    ▁▇▁▁▁▁▁▁
 ##     1.6     2.8     8.8  ▇▇▅▃▁▁▁▁
 ##    11.3    14      59.6  ▇▅▁▁▁▁▁▁
-##    40.65   50.55   83.65 ▁▁▁▁▂▅▇▁
-##    11.23   71.85  179.75 ▁▅▅▂▇▂▅▂
+##    40.65   50.56   83.65 ▁▁▁▁▂▅▇▁
+##    11.21   71.85  179.75 ▁▅▅▂▇▂▅▂
 ##    19.4    28.4    56    ▁▁▁▁▃▇▇▁
 ##     8.9    17.1    42.7  ▁▁▁▁▂▇▇▁
 ##     5.7     7.7    49.8  ▇▅▁▁▁▁▁▁
@@ -599,7 +571,7 @@ inventory
 ```
 ##    *** FEDERAL CLIMATE COMPLEX INTEGRATED SURFACE DATA INVENTORY ***   
 ##     This inventory provides the number of weather observations by   
-##     STATION-YEAR-MONTH for beginning of record through August 2019    
+##     STATION-YEAR-MONTH for beginning of record through September 2019    
 ##                STNID YEAR  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP
 ##      1: 007018-99999 2011    0    0 2104 2797 2543 2614  382    0    0
 ##      2: 007018-99999 2013    0    0    0    0    0    0  710    0    0
@@ -607,11 +579,11 @@ inventory
 ##      4: 007026-99999 2014    0    0    0    0    0    0  180    0    4
 ##      5: 007026-99999 2016    0    0    0    0    0  794    0    0    0
 ##     ---                                                               
-## 629792:   A51256-451 2015 2196 1866 2206 1909 2215 2090 2202 2191 2128
-## 629793:   A51256-451 2016 2185 2047 2175 2131 2213 2139 2209 2216 2131
-## 629794:   A51256-451 2017 2192 1883 2204 1910 2145 2113 2218 2204 2082
-## 629795:   A51256-451 2018 2192 1887 2194 2113 2151 2095 2202 2197 1816
-## 629796:   A51256-451 2019 2188 2000 2143 2105 2187 2131 2174 2013    0
+## 629794:   A51256-451 2015 2196 1866 2206 1909 2215 2090 2202 2191 2128
+## 629795:   A51256-451 2016 2185 2047 2175 2131 2213 2139 2209 2216 2131
+## 629796:   A51256-451 2017 2192 1883 2204 1910 2145 2113 2218 2204 2082
+## 629797:   A51256-451 2018 2192 1887 2194 2113 2151 2095 2202 2197 1816
+## 629798:   A51256-451 2019 2188 2000 2143 2105 2187 2131 2174 2080    1
 ##          OCT  NOV  DEC
 ##      1:    0    0    0
 ##      2:    0    0    0
@@ -619,11 +591,11 @@ inventory
 ##      4:    0  552    0
 ##      5:    0    0    0
 ##     ---               
-## 629792: 2192 2097 2093
-## 629793: 2196 2131 1665
-## 629794: 2192 2103 2174
-## 629795: 2195 2063 2178
-## 629796:    0    0    0
+## 629794: 2192 2097 2093
+## 629795: 2196 2131 1665
+## 629796: 2192 2103 2174
+## 629797: 2195 2063 2178
+## 629798:    0    0    0
 ```
 
 ```r
@@ -633,7 +605,7 @@ subset(inventory, STNID %in% "955510-99999")
 ```
 ##    *** FEDERAL CLIMATE COMPLEX INTEGRATED SURFACE DATA INVENTORY ***   
 ##     This inventory provides the number of weather observations by   
-##     STATION-YEAR-MONTH for beginning of record through August 2019    
+##     STATION-YEAR-MONTH for beginning of record through September 2019    
 ##            STNID YEAR JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC
 ##  1: 955510-99999 1998   0   0 222 223 221 211 226 217 222 234 215 230
 ##  2: 955510-99999 1999 213 201 235 224 244 229 239 247 236 246 233 243
@@ -656,7 +628,7 @@ subset(inventory, STNID %in% "955510-99999")
 ## 19: 955510-99999 2016 246 228 245 240 246 240 248 248 238 248 239 248
 ## 20: 955510-99999 2017 247 224 248 240 248 239 248 247 239 248 240 248
 ## 21: 955510-99999 2018 248 224 248 239 247 240 246 247 218 244 190 248
-## 22: 955510-99999 2019 247 224 245 240 214 240 248 231   0   0   0   0
+## 22: 955510-99999 2019 247 224 245 240 214 240 248 246   0   0   0   0
 ##            STNID YEAR JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC
 ```
 
@@ -702,11 +674,11 @@ _GSODR_ formatted data include the following fields and units:
 
 - **CTRY** - Country in which the station is located;
 
-- **LATITUDE** - Latitude. *Station dropped in cases where values are < -90 or >
-90 degrees or Lat = 0 and Lon = 0*;
+- **LAT** - Latitude. *Station dropped in cases where values are < -90 or > 90
+degrees or Lat = 0 and Lon = 0*;
 
-- **LONGITUDE** - Longitude. *Station dropped in cases where values are < -180
-or > 180 degrees or Lat = 0 and Lon = 0*;
+- **LON** - Longitude. *Station dropped in cases where values are < -180 or >
+180 degrees or Lat = 0 and Lon = 0*;
 
 - **ELEVATION** - Elevation in metres;
 
