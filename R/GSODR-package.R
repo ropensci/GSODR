@@ -1,5 +1,5 @@
 
-#' Global Surface Summary of the Day (\acronym{GSOD}) Weather Data Client
+#' Global surface summary of the day (\acronym{GSOD}) weather data client
 #'
 #' Provides automated downloading, parsing, cleaning, unit conversion and
 #' formatting of Global Surface Summary of the Day (\acronym{GSOD}) weather data
