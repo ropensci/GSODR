@@ -41,7 +41,7 @@ Description: Provides automated downloading, parsing, cleaning, unit conversion
     'readme.txt' file available from,
     <http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt>.
 Depends:
-    R (>= 3.3.0)
+    R (>= 3.5.0)
 License: MIT + file LICENSE
 Imports: 
     countrycode,
