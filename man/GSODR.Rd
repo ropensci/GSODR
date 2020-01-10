@@ -3,7 +3,6 @@
 \docType{package}
 \name{GSODR}
 \alias{GSODR}
-\alias{GSODR-package}
 \title{Global Surface Summary of the Day (\acronym{GSOD}) Weather Data Client}
 \source{
 \url{https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/}
