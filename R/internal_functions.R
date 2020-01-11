@@ -151,8 +151,8 @@
 .download_files <-
   function(station,
            years) {
-    # if no station or station > 10 download annual zip files ------------------
-    if (is.null(station) | length(station) > 10) {
+    # if no station or > stations, download annual zip files -------------------
+    if (is.null(station) | (length(station) * length(years)) > 10) {
       url_list <-
         paste0(
           "https://www.ncei.noaa.gov/data/global-summary-of-the-day/archive/",
