@@ -1,4 +1,21 @@
 # GSODR (development version)
+ 
+## Bug fixes
+
+* Corrects internal bug that prevented GSOD files from being parsed
+
+## Minor changes
+
+* Update vignette to use latest functions from tidyr, _i.e._
+`tidyr::pivot_longer()`
+
+* Update internal station list to latest
+
+* Tidy up documentation, mainly fix functions' title capitalisation
+
+## Major changes
+
+* Requires R >= 3.5.0 due to the storage of .Rds files using the latest version
 
 # GSODR 2.0.0
 
