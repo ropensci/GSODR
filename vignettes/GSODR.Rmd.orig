@@ -79,7 +79,7 @@ Oz
 subset(Oz, grepl("TOOWOOMBA", NAME))
 ```
 
-## Download a Single Station and Year
+## Download a Single Station and Year Using get_GSOD()
 
 Now that we've seen where the reporting stations are located, we can download
 weather data from the station Toowoomba, Queensland, Australia for 2010 by using
@@ -91,7 +91,7 @@ tbar <- get_GSOD(years = 2010, station = "955510-99999")
 skim(tbar)
 ```
 
-### Using nearest_stations()
+## Using nearest_stations() to Download Multiple Stations at Once
 
 Using the `nearest_stations()` function, you can find stations closest to a
 given point specified by latitude and longitude in decimal degrees. This can be
