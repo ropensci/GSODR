@@ -62,8 +62,8 @@ str(GSOD_SF)
 ##  $ STATE           : chr  "" "" "" "" ...
 ##  $ ELEVATION       : num  24 24 24 24 24 24 24 24 24 24 ...
 ##  $ BEGIN           : int  20010912 20010912 20010912 20010912 20010912 20010912 20010912 20010912 20010912 20010912 ...
-##  $ END             : int  20190831 20190831 20190831 20190831 20190831 20190831 20190831 20190831 20190831 20190831 ...
-##  $ YEARMODA        : Date, format: "2017-01-01" "2017-01-02" ...
+##  $ END             : int  20200107 20200107 20200107 20200107 20200107 20200107 20200107 20200107 20200107 20200107 ...
+##  $ YEARMODA        : Date, format: "2017-01-01" ...
 ##  $ YEAR            : int  2017 2017 2017 2017 2017 2017 2017 2017 2017 2017 ...
 ##  $ MONTH           : int  1 1 1 1 1 1 1 1 1 1 ...
 ##  $ DAY             : int  1 2 3 4 5 6 7 8 9 10 ...
@@ -114,8 +114,8 @@ write_sf(obj = GSOD_SF, dsn = file.path(tempdir(), "GSOD.shp"))
 ```
 
 ```
-## Warning in abbreviate_shapefile_names(obj): Field names abbreviated for
-## ESRI Shapefile driver
+## Warning in abbreviate_shapefile_names(obj): Field names abbreviated
+## for ESRI Shapefile driver
 ```
 
 As is writing a GeoPackage from the _sf_ object.
@@ -137,7 +137,7 @@ AUS_stations <-
 ```
 
 ```
-## Reading layer `GSOD' from data source `/private/var/folders/_x/gqh2xrvn4qb0qs5d8795n8vr0000gn/T/RtmpS2DFky/GSOD.gpkg' using driver `GPKG'
+## Reading layer `GSOD' from data source `/private/var/folders/yv/4xy6zs3x5qsgj96389nkjvtw0000gn/T/RtmpFRWu1r/GSOD.gpkg' using driver `GPKG'
 ## Simple feature collection with 182508 features and 42 fields
 ## geometry type:  POINT
 ## dimension:      XY
@@ -168,8 +168,9 @@ class(AUS_sqlite)
 ```
 
 ```
-## [1] "tbl_SQLiteConnection" "tbl_dbi"              "tbl_sql"             
-## [4] "tbl_lazy"             "tbl"
+## [1] "tbl_SQLiteConnection" "tbl_dbi"             
+## [3] "tbl_sql"              "tbl_lazy"            
+## [5] "tbl"
 ```
 
 # References
