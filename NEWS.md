@@ -13,6 +13,12 @@
 
 * Tidy up documentation, mainly fix functions' title capitalisation
 
+* `get_GSOD()` checks the number of stations being requested. If the number is
+>10, the entire annual file will be downloaded and requested stations will then
+be selected and returned. This saves time by reducing the number of requests
+made to the server. Users should not see any difference other than quicker
+responses for a large number of requested stations.
+
 ## Major changes
 
 * Requires R >= 3.5.0 due to the storage of .Rds files using the latest version
