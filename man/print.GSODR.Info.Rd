@@ -7,7 +7,7 @@
 \method{print}{GSODR.Info}(x, ...)
 }
 \arguments{
-\item{x}{GSODR.info object}
+\item{x}{GSODR.Info object}
 
 \item{...}{ignored}
 }
