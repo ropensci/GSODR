@@ -27,7 +27,9 @@
 #' @export get_inventory
 
 get_inventory <- function() {
+  "STNID" <- isd_history <- NULL #nocov
   load(system.file("extdata", "isd_history.rda", package = "GSODR")) #nocov
+  setkeyv(isd_history, "STNID")
 
   tryCatch({
     curl::curl_download(
@@ -35,8 +37,6 @@ get_inventory <- function() {
       destfile = file.path(tempdir(), "inventory.txt"),
       quiet = TRUE
     )
-
-    "STNID" <- NULL #nocov
 
     main_body <-
       fread(
@@ -62,6 +62,7 @@ get_inventory <- function() {
       )
 
     main_body[, STNID := paste(main_body$USAF, main_body$WBAN, sep = "-")]
+    setkeyv(main_body, "STNID")
 
     main_body[, c("USAF", "WBAN") := NULL]
 
@@ -78,15 +79,15 @@ get_inventory <- function() {
                                       header[[year_month]])))
     year_month <- gsub("Through ", "", year_month)
 
+    main_body <- isd_history[main_body, on = "STNID"]
+
     class(main_body) <- c("GSODR.Info", class(main_body))
 
     # add attributes for printing df
     attr(main_body, "GSODR.Inventory") <- c(
-      "   *** FEDERAL CLIMATE COMPLEX INTEGRATED SURFACE DATA INVENTORY ***   \n",
-      "   This inventory provides the number of weather observations by   \n",
-      "   STATION-YEAR-MONTH for beginning of record through",
-      year_month,
-      "   \n"
+      "  *** FEDERAL CLIMATE COMPLEX INTEGRATED SURFACE DATA INVENTORY ***  \n",
+      "  This inventory provides the number of weather observations by  \n",
+      "  STATION-YEAR-MONTH for beginning of record through", year_month, "  \n"
     )
   },
   error = function(cond) {
@@ -104,7 +105,7 @@ get_inventory <- function() {
 
 #' Prints GSODR.info object.
 #'
-#' @param x GSODR.info object
+#' @param x GSODR.Info object
 #' @param ... ignored
 #' @export
 print.GSODR.Info <- function(x, ...) {
