@@ -21,7 +21,7 @@ Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     person("Gwenael", "Giboire", role = "ctb",
     email = "gwenael.giboire@oda-groupe.com",
     comment = "Several bug reports in early versions and testing feedback"),
-    person("Łukasz","Pawlik", role = "ctb", email = "lukpawlik@gmail.com", 
+    person("Łukasz", "Pawlik", role = "ctb", email = "lukpawlik@gmail.com", 
     comment = "Reported bug in windspeed conversion calculation"),
     person("Ross","Darnell", role = "ctb",
     email = "Ross.Darnell@data61.csiro.au", comment = "Reported bug in 'Windows
