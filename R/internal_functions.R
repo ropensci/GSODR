@@ -1,6 +1,4 @@
 
-
-
 #' Validate Years
 #'
 #' @param years User entered years for request
@@ -9,6 +7,10 @@
 #' @noRd
 
 .validate_years <- function(years) {
+  if (class(years) == "character") {
+    stop(call. = FALSE,
+         "Years must be entered as a numeric value.")
+  }
   this_year <- 1900 + as.POSIXlt(Sys.Date())$year
   for (i in years) {
     if (i <= 0) {
