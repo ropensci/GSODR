@@ -433,6 +433,12 @@
     },
     {
       "@type": "Person",
+      "givenName": "Taras",
+      "familyName": "Kaduk",
+      "email": "taras.kaduk@gmail.com"
+    },
+    {
+      "@type": "Person",
       "givenName": "Gwenael",
       "familyName": "Giboire",
       "email": "gwenael.giboire@oda-groupe.com"
