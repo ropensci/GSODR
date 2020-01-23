@@ -2,7 +2,14 @@
  
 ## Bug fixes
 
-* Corrects internal bug that prevented GSOD files from being parsed
+* Corrects internal bug that provided a warning message when GSOD files were
+parsed
+
+* Fixes bug where not all files downloaded were cleaned up on the function
+exit
+
+* Fixes bug where station inventories from `get_inventory()` lacked the
+location metadata, _i.e._ country and other geographic information
 
 ## Minor changes
 
