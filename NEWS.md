@@ -6,7 +6,7 @@
 parsed
 
 * Fixes bug where not all files downloaded were cleaned up on the function
-exit
+exit when fetching station inventories
 
 * Fixes bug where station inventories from `get_inventory()` lacked the
 location metadata, _i.e._ country and other geographic information
