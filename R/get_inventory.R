@@ -99,8 +99,8 @@ get_inventory <- function() {
     )
   })
 
-  return(main_body)
   unlink(file.path(tempdir(), "inventory.txt"))
+  return(main_body)
 }
 
 #' Prints GSODR.info object.
