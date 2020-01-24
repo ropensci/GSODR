@@ -2,7 +2,8 @@
 % Please edit documentation in R/get_inventory.R
 \name{get_inventory}
 \alias{get_inventory}
-\title{Download and return a data frame of \acronym{GSOD} weather station data inventories}
+\title{Download and return a data frame of \acronym{GSOD} weather station data
+inventories}
 \usage{
 get_inventory()
 }

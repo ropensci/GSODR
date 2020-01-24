@@ -79,7 +79,7 @@ Oz
 subset(Oz, grepl("TOOWOOMBA", NAME))
 ```
 
-## Download a Single Station and Year
+## Download a Single Station and Year Using get_GSOD()
 
 Now that we've seen where the reporting stations are located, we can download
 weather data from the station Toowoomba, Queensland, Australia for 2010 by using
@@ -91,15 +91,12 @@ tbar <- get_GSOD(years = 2010, station = "955510-99999")
 skim(tbar)
 ```
 
-### Using nearest_stations()
+## Using nearest_stations() to Download Multiple Stations at Once
 
 Using the `nearest_stations()` function, you can find stations closest to a
 given point specified by latitude and longitude in decimal degrees. This can be
 used to generate a vector to pass along to `get_GSOD()` and download the
 stations of interest.
-
-There are missing stations in this query. Not all that are listed and queried
-actually have files on the server.
 
 ```{r Ex3, eval=TRUE, message=FALSE}
 tbar_stations <- nearest_stations(LAT = -27.5598,
@@ -108,16 +105,6 @@ tbar_stations <- nearest_stations(LAT = -27.5598,
 
 tbar <- get_GSOD(years = 2010, station = tbar_stations)
 skim(tbar)
-```
-
-If you wished to drop the stations, 949999-00170 and 949999-00183 from the
-query, you could do this and run the `get_GSOD()` query with the new station
-names.
-
-```{r Ex4, eval=FALSE}
-remove <- c("949999-00170", "949999-00183")
-
-tbar_stations <- tbar_stations[!tbar_stations %in% remove]
 ```
 
 ## Plot Maximum and Minimum Temperature Values
@@ -135,7 +122,7 @@ tbar_temps <- tbar[, c("YEARMODA", "TEMP", "MAX", "MIN")]
 
 # Gather the data from wide to long
 tbar_temps <-
-  gather(tbar_temps, Measurement, gather_cols = TEMP:MIN)
+  pivot_longer(tbar_temps, cols = TEMP:MIN, names_to = "Measurement")
 
 ggplot(data = tbar_temps, aes(x = YEARMODA,
                               y = value,

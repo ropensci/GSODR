@@ -7,6 +7,10 @@
 #' @noRd
 
 .validate_years <- function(years) {
+  if (class(years) == "character") {
+    stop(call. = FALSE,
+         "Years must be entered as a numeric value.")
+  }
   this_year <- 1900 + as.POSIXlt(Sys.Date())$year
   for (i in years) {
     if (i <= 0) {
@@ -149,8 +153,8 @@
 .download_files <-
   function(station,
            years) {
-    # if no station download annual zip files ----------------------------------
-    if (is.null(station)) {
+    # if no station or station > 10 download annual zip files ------------------
+    if (is.null(station) | length(station) > 10) {
       url_list <-
         paste0(
           "https://www.ncei.noaa.gov/data/global-summary-of-the-day/archive/",
@@ -184,6 +188,7 @@
         utils::untar(i, exdir = year_dir)
         setwd(wd)
       }
+
       GSOD_list <-
         list.files(
           tempdir(),
@@ -191,6 +196,24 @@
           full.names = TRUE,
           recursive = TRUE
         )
+
+      if (is.null(station)) {
+        return(GSOD_list)
+      } else {
+        # Get a cartesian join of all stations of interest and all years
+        files_stations <-
+          CJ(years, station, sorted = FALSE)[, paste0(tempdir(),
+                                                      "/",
+                                                      years,
+                                                      "/",
+                                                      gsub("-", "", station),
+                                                      ".csv")]
+
+        GSOD_list <-
+          subset(GSOD_list, GSOD_list %in% files_stations)
+
+        return(GSOD_list)
+      }
     }
 
     # if a station is provided, download its files -----------------------------

@@ -46,7 +46,7 @@
 
   # Import data from the website for indvidual stations or tempdir() for all ---
   DT <-
-    fread(x, colClasses = c("STATION" = "c", "FRSHTT" = "c"))
+    fread(x, colClasses = c("STATION" = "character", "FRSHTT" = "character"))
 
   # Replace 9999.99 et al. with NA
   for (col in names(DT)[names(DT) == "PRCP"]) {

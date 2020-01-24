@@ -114,13 +114,12 @@ isd_history[, COUNTRY_NAME := toupper(COUNTRY_NAME)]
 ## View and save the data
 
 ```{r view-and-save}
-isd_history
+str(isd_history)
 
 # write rda file to disk for use with GSODR package
 save(isd_history,
      file = "../inst/extdata/isd_history.rda",
-     compress = "bzip2",
-     version = 2)
+     compress = "bzip2")
 ```
 
 # Notes

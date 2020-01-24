@@ -1,7 +1,7 @@
 Fetch, Clean and Correct Altitude in GSOD ‘isd\_history.csv’ Data
 ================
 Adam H. Sparks
-2019-09-04
+2020-01-10
 
 # Introduction
 
@@ -114,40 +114,28 @@ isd_history[, COUNTRY_NAME := toupper(COUNTRY_NAME)]
 ## View and save the data
 
 ``` r
-isd_history
+str(isd_history)
 ```
 
-    ##               STNID          NAME     LAT    LON CTRY STATE    BEGIN
-    ##     1: 008268-99999     WXPOD8278  32.950 65.567   AF       20100519
-    ##     2: 409000-99999        DARWAZ  38.433 70.800   AF       19730304
-    ##     3: 409010-99999       KHWAHAN  37.883 70.217   AF       19730629
-    ##     4: 409030-99999   KHWAJA-GHAR  37.083 69.433   AF       20010925
-    ##     5: 409040-99999      FAIZABAD  37.117 70.517   AF       19730304
-    ##    ---                                                              
-    ## 26645: 679770-99999 BUFFALO RANGE -21.008 31.579   ZI       19651201
-    ## 26646: 679790-99999          ZAKA -20.333 31.467   ZI       19870307
-    ## 26647: 679830-99999      CHIPINGE -20.200 32.617   ZI       19490103
-    ## 26648: 679890-99999        RUPISI -20.417 32.317   ZI       19620701
-    ## 26649: 679910-99999    BEITBRIDGE -22.217 30.000   ZI       19620701
-    ##             END COUNTRY_NAME ISO2C ISO3C
-    ##     1: 20120323  AFGHANISTAN    AF   AFG
-    ##     2: 20070905  AFGHANISTAN    AF   AFG
-    ##     3: 20070608  AFGHANISTAN    AF   AFG
-    ##     4: 20010925  AFGHANISTAN    AF   AFG
-    ##     5: 20130703  AFGHANISTAN    AF   AFG
-    ##    ---                                  
-    ## 26645: 20190831     ZIMBABWE    ZW   ZWE
-    ## 26646: 20190830     ZIMBABWE    ZW   ZWE
-    ## 26647: 20190831     ZIMBABWE    ZW   ZWE
-    ## 26648: 19680630     ZIMBABWE    ZW   ZWE
-    ## 26649: 20190831     ZIMBABWE    ZW   ZWE
+    ## Classes 'data.table' and 'data.frame':   26673 obs. of  11 variables:
+    ##  $ STNID       : chr  "008268-99999" "409000-99999" "409010-99999" "409030-99999" ...
+    ##  $ NAME        : chr  "WXPOD8278" "DARWAZ" "KHWAHAN" "KHWAJA-GHAR" ...
+    ##  $ LAT         : num  33 38.4 37.9 37.1 37.1 ...
+    ##  $ LON         : num  65.6 70.8 70.2 69.4 70.5 ...
+    ##  $ CTRY        : chr  "AF" "AF" "AF" "AF" ...
+    ##  $ STATE       : chr  "" "" "" "" ...
+    ##  $ BEGIN       : int  20100519 19730304 19730629 20010925 19730304 20171229 19730701 19730101 19800316 19730101 ...
+    ##  $ END         : int  20120323 20070905 20070608 20010925 20130703 20171229 20090511 20130313 20010828 20200107 ...
+    ##  $ COUNTRY_NAME: chr  "AFGHANISTAN" "AFGHANISTAN" "AFGHANISTAN" "AFGHANISTAN" ...
+    ##  $ ISO2C       : chr  "AF" "AF" "AF" "AF" ...
+    ##  $ ISO3C       : chr  "AFG" "AFG" "AFG" "AFG" ...
+    ##  - attr(*, ".internal.selfref")=<externalptr>
 
 ``` r
 # write rda file to disk for use with GSODR package
 save(isd_history,
      file = "../inst/extdata/isd_history.rda",
-     compress = "bzip2",
-     version = 2)
+     compress = "bzip2")
 ```
 
 # Notes
@@ -168,49 +156,52 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
 
 ## R System Information
 
-    ## ─ Session info ──────────────────────────────────────────────────────────
+    ## ─ Session info ───────────────────────────────────────────────────────────────
     ##  setting  value                       
-    ##  version  R version 3.6.1 (2019-07-05)
-    ##  os       macOS Mojave 10.14.6        
+    ##  version  R version 3.6.2 (2019-12-12)
+    ##  os       macOS Catalina 10.15.2      
     ##  system   x86_64, darwin15.6.0        
     ##  ui       X11                         
     ##  language (EN)                        
     ##  collate  en_AU.UTF-8                 
     ##  ctype    en_AU.UTF-8                 
     ##  tz       Australia/Brisbane          
-    ##  date     2019-09-04                  
+    ##  date     2020-01-10                  
     ## 
-    ## ─ Packages ──────────────────────────────────────────────────────────────
+    ## ─ Packages ───────────────────────────────────────────────────────────────────
     ##  package     * version date       lib source        
     ##  assertthat    0.2.1   2019-03-21 [1] CRAN (R 3.6.0)
-    ##  cli           1.1.0   2019-03-19 [1] CRAN (R 3.6.0)
+    ##  base64enc     0.1-3   2015-07-28 [1] CRAN (R 3.6.0)
+    ##  cli           2.0.1   2020-01-08 [1] CRAN (R 3.6.2)
     ##  countrycode * 1.1.0   2018-10-27 [1] CRAN (R 3.6.0)
     ##  crayon        1.3.4   2017-09-16 [1] CRAN (R 3.6.0)
-    ##  curl          4.0     2019-07-22 [1] CRAN (R 3.6.1)
-    ##  data.table  * 1.12.2  2019-04-07 [1] CRAN (R 3.6.0)
-    ##  digest        0.6.20  2019-07-04 [1] CRAN (R 3.6.0)
+    ##  curl          4.3     2019-12-02 [1] CRAN (R 3.6.0)
+    ##  data.table  * 1.12.8  2019-12-09 [1] CRAN (R 3.6.0)
+    ##  digest        0.6.23  2019-11-23 [1] CRAN (R 3.6.0)
     ##  dplyr         0.8.3   2019-07-04 [1] CRAN (R 3.6.0)
     ##  evaluate      0.14    2019-05-28 [1] CRAN (R 3.6.0)
+    ##  fansi         0.4.1   2020-01-08 [1] CRAN (R 3.6.2)
     ##  glue          1.3.1   2019-03-12 [1] CRAN (R 3.6.0)
-    ##  htmltools     0.3.6   2017-04-28 [1] CRAN (R 3.6.0)
-    ##  knitr         1.24    2019-08-08 [1] CRAN (R 3.6.1)
+    ##  htmltools     0.4.0   2019-10-04 [1] CRAN (R 3.6.0)
+    ##  jsonlite      1.6     2018-12-07 [1] CRAN (R 3.6.0)
+    ##  knitr         1.26    2019-11-12 [1] CRAN (R 3.6.0)
     ##  magrittr      1.5     2014-11-22 [1] CRAN (R 3.6.0)
-    ##  pillar        1.4.2   2019-06-29 [1] CRAN (R 3.6.0)
-    ##  pkgconfig     2.0.2   2018-08-16 [1] CRAN (R 3.6.0)
-    ##  purrr         0.3.2   2019-03-15 [1] CRAN (R 3.6.0)
-    ##  R6            2.4.0   2019-02-14 [1] CRAN (R 3.6.0)
-    ##  Rcpp          1.0.2   2019-07-25 [1] CRAN (R 3.6.0)
-    ##  rlang         0.4.0   2019-06-25 [1] CRAN (R 3.6.0)
-    ##  rmarkdown     1.15    2019-08-21 [1] CRAN (R 3.6.0)
+    ##  pillar        1.4.3   2019-12-20 [1] CRAN (R 3.6.0)
+    ##  pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 3.6.0)
+    ##  purrr         0.3.3   2019-10-18 [1] CRAN (R 3.6.0)
+    ##  R6            2.4.1   2019-11-12 [1] CRAN (R 3.6.0)
+    ##  Rcpp          1.0.3   2019-11-08 [1] CRAN (R 3.6.0)
+    ##  repr          1.0.2   2019-12-16 [1] CRAN (R 3.6.0)
+    ##  rlang         0.4.2   2019-11-23 [1] CRAN (R 3.6.0)
+    ##  rmarkdown     2.0     2019-12-12 [1] CRAN (R 3.6.0)
     ##  sessioninfo * 1.1.1   2018-11-05 [1] CRAN (R 3.6.0)
-    ##  skimr       * 1.0.7   2019-06-20 [1] CRAN (R 3.6.0)
-    ##  stringi       1.4.3   2019-03-12 [1] CRAN (R 3.6.0)
+    ##  skimr       * 2.0.2   2019-11-26 [1] CRAN (R 3.6.0)
+    ##  stringi       1.4.4   2020-01-09 [1] CRAN (R 3.6.2)
     ##  stringr       1.4.0   2019-02-10 [1] CRAN (R 3.6.0)
     ##  tibble        2.1.3   2019-06-06 [1] CRAN (R 3.6.0)
     ##  tidyselect    0.2.5   2018-10-11 [1] CRAN (R 3.6.0)
     ##  withr         2.1.2   2018-03-15 [1] CRAN (R 3.6.0)
-    ##  xfun          0.9     2019-08-21 [1] CRAN (R 3.6.0)
+    ##  xfun          0.11    2019-11-12 [1] CRAN (R 3.6.0)
     ##  yaml          2.2.0   2018-07-25 [1] CRAN (R 3.6.0)
     ## 
-    ## [1] /Users/adamsparks/Library/R/3.x/library
-    ## [2] /Library/Frameworks/R.framework/Versions/3.6/Resources/library
+    ## [1] /Library/Frameworks/R.framework/Versions/3.6/Resources/library

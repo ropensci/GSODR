@@ -105,8 +105,7 @@ update_station_list <- function() {
     save(
       isd_history,
       file = fname,
-      compress = "bzip2",
-      version = 2
+      compress = "bzip2"
     )
   },
 

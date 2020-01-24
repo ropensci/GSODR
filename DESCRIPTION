@@ -1,7 +1,7 @@
 Package: GSODR
 Type: Package
 Title: Global Surface Summary of the Day ('GSOD') Weather Data Client
-Version: 2.0.0
+Version: 2.0.1
 Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     email = "adamhsparks@gmail.com",
     comment = c(ORCID = "0000-0002-0061-8359")),
@@ -14,14 +14,18 @@ Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     person("Hugh", "Parsonage", role = c("cph", "ctb"),
     email = "hugh.parsonage@gmail.com",
     comment = c(ORCID = "0000-0003-4055-0835")),
-    person("Gwenael", "Giboire", email = "gwenael.giboire@oda-groupe.com",
-    role = "ctb",
+    person("Taras", "Kaduk", role = "ctb",
+    email = "taras.kaduk@gmail.com",
+    comment = "Suggestion for handling bulk station downloads more
+    efficiently"),
+    person("Gwenael", "Giboire", role = "ctb",
+    email = "gwenael.giboire@oda-groupe.com",
     comment = "Several bug reports in early versions and testing feedback"),
-    person("Łukasz","Pawlik", email = "lukpawlik@gmail.com", role = "ctb",
+    person("Łukasz", "Pawlik", role = "ctb", email = "lukpawlik@gmail.com", 
     comment = "Reported bug in windspeed conversion calculation"),
-    person("Ross","Darnell", email = "Ross.Darnell@data61.csiro.au",
-    role = "ctb", comment = "Reported bug in 'Windows OS' versions causing
-    'GSOD' data untarring to fail"))
+    person("Ross","Darnell", role = "ctb",
+    email = "Ross.Darnell@data61.csiro.au", comment = "Reported bug in 'Windows
+    OS' versions causing 'GSOD' data untarring to fail"))
 URL: https://docs.ropensci.org/GSODR/
 BugReports: https://github.com/ropensci/GSODR/issues
 Description: Provides automated downloading, parsing, cleaning, unit conversion
@@ -41,7 +45,7 @@ Description: Provides automated downloading, parsing, cleaning, unit conversion
     'readme.txt' file available from,
     <http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt>.
 Depends:
-    R (>= 3.3.0)
+    R (>= 3.5.0)
 License: MIT + file LICENSE
 Imports: 
     countrycode,
@@ -72,7 +76,7 @@ Suggests:
     spacetime,
     testthat,
     tidyr
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
 NeedsCompilation: no

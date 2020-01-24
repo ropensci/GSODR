@@ -1,13 +1,12 @@
 # Test environments
 
-  -  macOS, R version 3.6.1 (2019-07-05)
+  -  macOS, R version 3.6.2 (2019-12-12)
 
-  -  Ubuntu Linux 18.04.1, R version 3.6.1 (2019-07-05)
+  -  Manjaro Linux, R version 3.6.2 (2019-12-12)
 
-  -  win-builder,R Under development (unstable) (2019-09-02 r77130)
+  -  win-builder, R Under development (unstable) (2020-01-07 r77633)
 
-  -  win-builder, R version 3.6.1 (2019-07-05)
-
+  -  win-builder, R version 3.6.2 (2019-12-12)
 
 # R CMD check results
 
@@ -17,29 +16,18 @@
 
 ## Bug fixes
 
-- `get_GSOD()` now uses https rather than FTP server, correcting bug where the
-data could not be downloaded any longer
+* Corrects internal bug that provided a warning message when GSOD files were
+parsed
+
+* Fixes bug where not all files downloaded were cleaned up on the function
+exit when fetching station inventories
+
+* Fixes bug where station inventories from `get_inventory()` lacked the
+location metadata, _i.e._ country and other geographic information
 
 ## Major changes
 
-- Corrected elevation values are no longer available from GSODR, this makes
-package updates much easier
-
-- Objects are returned as `data.table` objects
-
-## Minor changes
-
-- Implement better error handling when attempting to fetch station inventories
-
-- Reduced package dependencies
-
-- Improved vignettes
-
-- Users may now specify country by FIPS code when using `get_GSOD()`
-
-- Improved test coverage
-
-- Updated internal database of station locations
+* Requires R >= 3.5.0 due to the storage of .Rds files using the latest version
 
 # Reverse dependencies
 

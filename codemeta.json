@@ -35,16 +35,16 @@
   "keywords": ["US-NCEI", "meteorological-data", "global-weather", "weather", "weather-data", "meteorology", "station-data", "surface-weather", "data-access", "US-NCDC"],
   "license": "https://spdx.org/licenses/MIT",
   "title": "GSODR",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "name": "GSODR: Global Surface Summary of the Day ('GSOD') Weather Data Client",
   "issueTracker": "https://github.com/ropensci/GSODR/issues",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "3.6.1",
+    "version": "3.6.2",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 3.6.1 (2019-07-05)",
+  "runtimePlatform": "R version 3.6.2 (2019-12-12)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -297,7 +297,7 @@
       "@type": "SoftwareApplication",
       "identifier": "R",
       "name": "R",
-      "version": ">= 3.3.0"
+      "version": ">= 3.5.0"
     },
     {
       "@type": "SoftwareApplication",
@@ -384,8 +384,8 @@
     }
   ],
   "contIntegration": "https://travis-ci.org/ropensci/GSODR",
-  "releaseNotes": "https://github.com/adamhsparks/GSODR/blob/master/NEWS.md",
-  "readme": "https://github.com/adamhsparks/GSODR/blob/master/README.md",
+  "releaseNotes": "https://github.com/ropensci/GSODR/blob/master/NEWS.md",
+  "readme": "https://github.com/ropensci/GSODR/blob/devel/README.md",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -430,6 +430,12 @@
       "familyName": "Parsonage",
       "email": "hugh.parsonage@gmail.com",
       "@id": "https://orcid.org/0000-0003-4055-0835"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Taras",
+      "familyName": "Kaduk",
+      "email": "taras.kaduk@gmail.com"
     },
     {
       "@type": "Person",
