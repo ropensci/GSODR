@@ -8,7 +8,7 @@
 #' Three additional useful elements: saturation vapour pressure (es), actual
 #' vapour pressure (ea) and relative humidity (RH) are calculated and returned
 #' in the final data frame using the August-Roche-Magnus approximation (Alduchov
-#' and Eskridge 1995).
+#' and Eskridge 1996).
 #'
 #' Parallel processing can be enabled using \code{\link[future]{plan}} to set
 #' up a parallel backend of your choice, \emph{e.g.},
