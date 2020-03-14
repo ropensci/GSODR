@@ -14,29 +14,18 @@ vignette: >
 
 # Creating Spatial Files
 
-Because the stations provide geospatial location information, it is possible to
-create a spatial file. [GeoPackage files](http://www.geopackage.org) are a open,
-standards-based, platform-independent, portable, self-describing compact
-format for transferring geospatial information, which handle vector files much
-like shapefiles do, but eliminate many of the issues that shapefiles have with
-field names and the number of files.
+Because the stations provide geospatial location information, it is possible to create a spatial file. [GeoPackage files](http://www.geopackage.org) are a open, standards-based, platform-independent, portable, self-describing compact format for transferring geospatial information, which handle vector files much like shapefiles do, but eliminate many of the issues that shapefiles have with field names and the number of files.
 
 ## Converting to an _sf_ object
 
-Simple features are an ISO defined standard that now have support in R. From the
-[_sf_ vignette](https://r-spatial.github.io/sf/articles/sf1.html):
+Simple features are an ISO defined standard that now have support in R. From the [_sf_ vignette](https://r-spatial.github.io/sf/articles/sf1.html):
 
-> Simple features or simple feature access refers to a formal standard (ISO
-19125-1:2004) that describes how objects in the real world can be represented in
-computers, with emphasis on the spatial geometry of these objects. It also
-describes how such objects can be stored in and retrieved from databases, and
-which geometrical operations should be defined for them.
-The standard is widely implemented in spatial databases (such as PostGIS),
-commercial GIS (e.g., ESRI ArcGIS) and forms the vector data basis for libraries
-such as GDAL. A subset of simple features forms the GeoJSON standard.
+> Simple features or simple feature access refers to a formal standard (ISO19125-1:2004) that describes how objects in the real world can be represented in computers, with emphasis on the spatial geometry of these objects.
+It also describes how such objects can be stored in and retrieved from databases, and which geometrical operations should be defined for them.
+The standard is widely implemented in spatial databases (such as PostGIS), commercial GIS (e.g., ESRI ArcGIS) and forms the vector data basis for libraries such as GDAL.
+A subset of simple features forms the GeoJSON standard.
 
-For this example, we convert the GSOD data for Australia in 2017 to an _sf_
-object.
+For this example, we convert the GSOD data for Australia in 2017 to an _sf_ object.
 
 
 ```r
@@ -46,7 +35,89 @@ library(sf)
 
 plan("multisession")
 GSOD <- get_GSOD(years = 2017, country = "AUS")
+```
 
+```
+## Warning in serialize(data, node$con): 'package:stats' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:utils' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:stats' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:utils' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:stats' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:utils' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:stats' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:utils' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:stats' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:utils' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:stats' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:utils' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:stats' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:utils' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:stats' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:utils' may not be
+## available when loading
+```
+
+```r
 GSOD_SF <- st_as_sf(x = GSOD,
                     coords = c("LONGITUDE", "LATITUDE"),
                     crs = "+proj=longlat +datum=WGS84")
@@ -62,7 +133,7 @@ str(GSOD_SF)
 ##  $ STATE           : chr  "" "" "" "" ...
 ##  $ ELEVATION       : num  24 24 24 24 24 24 24 24 24 24 ...
 ##  $ BEGIN           : int  20010912 20010912 20010912 20010912 20010912 20010912 20010912 20010912 20010912 20010912 ...
-##  $ END             : int  20200107 20200107 20200107 20200107 20200107 20200107 20200107 20200107 20200107 20200107 ...
+##  $ END             : int  20200310 20200310 20200310 20200310 20200310 20200310 20200310 20200310 20200310 20200310 ...
 ##  $ YEARMODA        : Date, format: "2017-01-01" ...
 ##  $ YEAR            : int  2017 2017 2017 2017 2017 2017 2017 2017 2017 2017 ...
 ##  $ MONTH           : int  1 1 1 1 1 1 1 1 1 1 ...
@@ -125,8 +196,7 @@ As is writing a GeoPackage from the _sf_ object.
 write_sf(obj = GSOD_SF, dsn = file.path(tempdir(), "GSOD.gpkg"))
 ```
 
-After getting weather stations for Australia and creating a GeoPackage file,
-_sf_ can import the data into R again in a spatial format.
+After getting weather stations for Australia and creating a GeoPackage file, _sf_ can import the data into R again in a spatial format.
 
 
 ```r
@@ -137,7 +207,7 @@ AUS_stations <-
 ```
 
 ```
-## Reading layer `GSOD' from data source `/private/var/folders/yv/4xy6zs3x5qsgj96389nkjvtw0000gn/T/Rtmpx5NMsg/GSOD.gpkg' using driver `GPKG'
+## Reading layer `GSOD' from data source `/private/var/folders/yv/4xy6zs3x5qsgj96389nkjvtw0000gn/T/RtmpEinr0P/GSOD.gpkg' using driver `GPKG'
 ## Simple feature collection with 182508 features and 42 fields
 ## geometry type:  POINT
 ## dimension:      XY
@@ -154,11 +224,9 @@ class(AUS_stations)
 ## [1] "sf"         "data.frame"
 ```
 
-Since GeoPackage files are formatted as SQLite databases you can also use other
-R tools for SQLite files
-[(J. Stachelek 2016)](https://jsta.github.io/2016/07/14/geopackage-r.html). One
-easy way is using _dplyr_. This option is much faster to load since it does not
-load the geometry.
+Since GeoPackage files are formatted as SQLite databases you can also use other R tools for SQLite files
+[(J. Stachelek 2016)](https://jsta.github.io/2016/07/14/geopackage-r.html).
+One easy way is using _dplyr_. This option is much faster to load since it does not load the geometry.
 
 
 ```r

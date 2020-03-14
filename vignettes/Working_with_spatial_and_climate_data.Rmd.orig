@@ -22,27 +22,17 @@ if (!all(unlist(lapply(required, function(pkg)
 
 # Introduction
 
-The GSOD data allow for users to use spatial methods with it. Using various
-R packages such as _sf_, you can save data as a GeoPackage file which can be
-read by most GIS software packages or in R using R's GIS capabilities with
-other contributed packages as well.
+The GSOD data allow for users to use spatial methods with it.
+Using various R packages such as _sf_, you can save data as a GeoPackage file which can be read by most GIS software packages or in R using R's GIS capabilities with other contributed packages as well.
 
-Following is an example of how you might download and save GSOD annual data for
-a given country, Philippines in this example, and convert it into a KML file for
-viewing in GoogleEarth. The second portion uses the same GeoPackage file to
-import the data back into R and combine the GSOD data with CHELSA data from the
-[GSODRdata package](https://github.com/adamhsparks/GSODRdata) available from
-GitHub and plot the station temperatures for daily GSOD, average monthly GSOD
-and CHELSA temperatures (1979-2013).
+Following is an example of how you might download and save GSOD annual data for a given country, Philippines in this example, and convert it into a KML file for viewing in GoogleEarth.
+The second portion uses the same GeoPackage file to import the data back into R and combine the GSOD data with CHELSA data from the [GSODRdata package](https://github.com/adamhsparks/GSODRdata) available from GitHub and plot the station temperatures for daily GSOD, average monthly GSOD and CHELSA temperatures (1979-2013).
 
 ## Example - Download and Plot Data for a Single Country
 
-This example will demonstrate how to download data for Philippines for year 2010
-and generate a spatial, year summary file, PHL-2010.gpkg, in the user's home
-directory and link it with climate data from the _GSODRdata_ package.
+This example will demonstrate how to download data for Philippines for year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in the user's home directory and link it with climate data from the _GSODRdata_ package.
 
-Download data for Philippines for year 2010 and generate a spatial, year summary
-file, PHL-2010.gpkg, in the user's home directory.
+Download data for Philippines for year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in the user's home directory.
 
 ```{r get-data, eval=TRUE, messages=FALSE}
 library(GSODR)
@@ -63,8 +53,7 @@ write_sf(obj = PHL, dsn = file.path(tempdir(), "PHL-2010.gpkg"))
 
 ## Example - Use the GeoPackage File to Create a KML File
 
-Using the GeoPackage that was just created, you can now create a KML file to
-open with Google Earth and visualise the data spatially and over time.
+Using the GeoPackage that was just created, you can now create a KML file to open with Google Earth and visualise the data spatially and over time.
 
 ```{r spatial-layers, eval=TRUE, message=FALSE}
 library(rgdal)
@@ -101,17 +90,12 @@ kml(
 system("zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml")
 ```
 
-## Example - Compare the GSOD Weather Data From the Philippines With Climate
-Data Provided by the _GSODRdata_ Package.
+## Example - Compare the GSOD Weather Data From the Philippines With Climate Data Provided by the _GSODRdata_ Package.
 
-The [`GSODRdata`](https://adamhsparks.github.io/GSODRdata/) package provides
-climate data from four climate data sets that have been formatted for easy use
-with the _GSODR_ package. Following is a description how to install the
-_GSODRdata_ package and use it to visualise the weather data for the Philippines
-in 2010 against CHELSA data.
+The [`GSODRdata`](https://adamhsparks.github.io/GSODRdata/) package provides climate data from four climate data sets that have been formatted for easy use with the _GSODR_ package.
+Following is a description how to install the _GSODRdata_ package and use it to visualise the weather data for the Philippines in 2010 against CHELSA data.
 
-CHELSA (Climatologies at High resolution for the Earth’s Land Surface Areas) are
-climate data at 30 arc seconds for the Earth's land surface areas.
+CHELSA (Climatologies at High resolution for the Earth’s Land Surface Areas) are climate data at 30 arc seconds for the Earth's land surface areas.
 
 **Description of CHELSA data from CHELSA website**
 
@@ -130,8 +114,7 @@ if (!require(devtools)) {
 devtools::install_github("adamhsparks/GSODRdata")
 ```
 
-Now that the extra data have been installed, take a look at the CHELSA data that
-are one of the data sets included in the _GSODRdata_ package.
+Now that the extra data have been installed, take a look at the CHELSA data that are one of the data sets included in the _GSODRdata_ package.
 
 ```{r GSODRdata, eval=TRUE, message=FALSE}
 library(GSODRdata)
@@ -140,9 +123,7 @@ library(skimr)
 skim(CHELSA)
 ```
 
-Compare the GSOD weather data from the Philippines with climatic data provided
-by the _GSODRdata_ package in the CHELSA data set using `dplyr` functions to
-join the CHELSA and _GSODR_ data for plotting.
+Compare the GSOD weather data from the Philippines with climatic data provided by the _GSODRdata_ package in the CHELSA data set using `dplyr` functions to join the CHELSA and _GSODR_ data for plotting.
 
 ```{r comparison, eval=TRUE, fig.path = "vignettes/", message=FALSE}
 library(dplyr)
@@ -196,13 +177,13 @@ on the MODIS snow products (MOD10A2). <http://chelsa-climate.org/>
 
 *Users of these data should take into account the following (from the [NCEI website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):*
 
-> "The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification." [WMO Resolution 40. NOAA Policy](https://public.wmo.int/en/our-mandate/what-we-do/data-exchange-and-technology-transfer)
+> "The following data and products may have conditions placed on their international commercial use.
+They can be used within the U.S. or for non-commercial international activities without restriction.
+The non-U.S. data cannot be redistributed for commercial purposes.
+Re-distribution of these data by others must provide this same notification." [WMO Resolution 40. NOAA Policy](https://public.wmo.int/en/our-mandate/what-we-do/data-exchange-and-technology-transfer)
 
 # References
 
-Karger, D. N., Conrad, O., Bohner, J., Kawohl, T., Kreft, H., Soria-Auza, R. W.,
-*et al*. (2016) Climatologies at high resolution for the Earth land surface
-areas. *arXiv preprint* **arXiv:1607.00217**. (<http://chelsa-climate.org/>)
+Karger, D. N., Conrad, O., Bohner, J., Kawohl, T., Kreft, H., Soria-Auza, R. W., *et al*. (2016) Climatologies at high resolution for the Earth land surface areas. *arXiv preprint* **arXiv:1607.00217**. (<http://chelsa-climate.org/>)
 
-Stachelek, J. (2016) Using the Geopackage Format with R.
-URL: https://jsta.github.io/2016/07/14/geopackage-r.html
+Stachelek, J. (2016) Using the Geopackage Format with R. URL: https://jsta.github.io/2016/07/14/geopackage-r.html

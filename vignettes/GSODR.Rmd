@@ -15,47 +15,31 @@ bibliography: references.bib
 
 # Introduction
 
-The GSOD or [Global Surface Summary of the Day
-(GSOD)](https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/)
-data provided by the US National Centers for Environmental Information (NCEI)
-are a valuable source of weather data with global coverage. However, the data
-files are cumbersome and difficult to work with. _GSODR_ aims to make it easy to
-find, transfer and format the data you need for use in analysis and provides
-four main functions for facilitating this:
+The GSOD or [Global Surface Summary of the Day (GSOD)](https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/) data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage.
+However, the data files are cumbersome and difficult to work with.
+_GSODR_ aims to make it easy to find, transfer and format the data you need for use in analysis and provides four main functions for facilitating this:
 
-- `get_GSOD()` - this function queries and transfers files from the NCEI's
-webpage, reformats them and returns a tidy data frame in R
+- `get_GSOD()` - this function queries and transfers files from the NCEI's webpage, reformats them and returns a tidy data frame in R
 
-- `reformat_GSOD()` - this function takes individual station files from the
-local disk and re-formats them returning a tidy data frame in R
+- `reformat_GSOD()` - this function takes individual station files from the local disk and re-formats them returning a tidy data frame in R
 
-- `nearest_stations()` - this function returns a vector of station IDs that fall
-within the given radius (kilometres) of a point given as latitude and longitude
+- `nearest_stations()` - this function returns a vector of station IDs that fall within the given radius (kilometres) of a point given as latitude and longitude
 
-- `update_station_list()` - this function downloads the latest station list from
-the NCEI's server updates the package's internal database of stations and their
-metadata.
+- `update_station_list()` - this function downloads the latest station list from the NCEI's server updates the package's internal database of stations and their metadata.
 
-- `get_inventory()` - this function downloads the latest station inventory
-information from the NCEI's server and returns the header information about
-the latest version as a message in the console and a data frame of the stations'
-inventories for each year and month that data are reported.
+- `get_inventory()` - this function downloads the latest station inventory information from the NCEI's server and returns the header information about the latest version as a message in the console and a data frame of the stations' inventories for each year and month that data are reported.
 
-When reformatting data either with `get_GSOD()` or `reformat_GSOD()`, all units
-are converted from United States Customary System (USCS) to International System
-of Units (SI), _e.g._, inches to millimetres and Fahrenheit to Celsius. Data in
-the R session summarise each year by station, which also includes vapour
-pressure and relative humidity elements calculated from existing data in GSOD.
+When reformatting data either with `get_GSOD()` or `reformat_GSOD()`, all units are converted from United States Customary System (USCS) to International System of Units (SI), _e.g._, inches to millimetres and Fahrenheit to Celsius.
+Data in the R session summarise each year by station, which also includes vapour pressure and relative humidity elements calculated from existing data in GSOD.
 
-For more information see the description of the data provided by NCEI,
-<http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
+For more information see the description of the data provided by NCEI, <http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
 
 # Using get_GSOD()
 
 ## Find Stations in or near Toowoomba, Queensland, Australia
 
-_GSODR_ provides lists of weather station locations and elevation values. It's
-easy to find all stations in Australia.
+_GSODR_ provides lists of weather station locations and elevation values.
+It's easy to find all stations in Australia.
 
 
 ```r
@@ -89,8 +73,8 @@ Oz
 ##    4:       19420917 19440930    AUSTRALIA    AU   AUS
 ##    5:       19420630 19440630    AUSTRALIA    AU   AUS
 ##   ---                                                 
-## 1038:       19650101 20200106    AUSTRALIA    AU   AUS
-## 1039:       20120920 20200107    AUSTRALIA    AU   AUS
+## 1038:       19650101 20200309    AUSTRALIA    AU   AUS
+## 1039:       20120920 20200310    AUSTRALIA    AU   AUS
 ## 1040:       19980301 20121220    AUSTRALIA    AU   AUS
 ## 1041:       19930221 19970403    AUSTRALIA    AU   AUS
 ## 1042:       19680305 19680430    AUSTRALIA    AU   AUS
@@ -107,19 +91,30 @@ subset(Oz, grepl("TOOWOOMBA", NAME))
 ## 2: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS       19980301
 ##         END COUNTRY_NAME ISO2C ISO3C
 ## 1: 20120503    AUSTRALIA    AU   AUS
-## 2: 20200107    AUSTRALIA    AU   AUS
+## 2: 20200310    AUSTRALIA    AU   AUS
 ```
 
 ## Download a Single Station and Year Using get_GSOD()
 
-Now that we've seen where the reporting stations are located, we can download
-weather data from the station Toowoomba, Queensland, Australia for 2010 by using
-the STNID in the `station` parameter of `get_GSOD()`.
+Now that we've seen where the reporting stations are located, we can download weather data from the station Toowoomba, Queensland, Australia for 2010 by using the STNID in the `station` parameter of `get_GSOD()`.
 
 
 ```r
 library(skimr)
 tbar <- get_GSOD(years = 2010, station = "955510-99999")
+```
+
+```
+## Warning in serialize(data, node$con): 'package:stats' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:utils' may not be
+## available when loading
+```
+
+```r
 skim(tbar)
 ```
 
@@ -172,7 +167,7 @@ skim(tbar)
 |LONGITUDE        |         0|          1.00|      151.92|   0.00|      151.92|      151.92|      151.92|      151.92|      151.92|▁▁▇▁▁ |
 |ELEVATION        |         0|          1.00|      642.00|   0.00|      642.00|      642.00|      642.00|      642.00|      642.00|▁▁▇▁▁ |
 |BEGIN            |         0|          1.00| 19980301.00|   0.00| 19980301.00| 19980301.00| 19980301.00| 19980301.00| 19980301.00|▁▁▇▁▁ |
-|END              |         0|          1.00| 20200107.00|   0.00| 20200107.00| 20200107.00| 20200107.00| 20200107.00| 20200107.00|▁▁▇▁▁ |
+|END              |         0|          1.00| 20200310.00|   0.00| 20200310.00| 20200310.00| 20200310.00| 20200310.00| 20200310.00|▁▁▇▁▁ |
 |YEAR             |         0|          1.00|     2010.00|   0.00|     2010.00|     2010.00|     2010.00|     2010.00|     2010.00|▁▁▇▁▁ |
 |MONTH            |         0|          1.00|        6.53|   3.45|        1.00|        4.00|        7.00|       10.00|       12.00|▇▅▅▅▇ |
 |DAY              |         0|          1.00|       15.72|   8.81|        1.00|        8.00|       16.00|       23.00|       31.00|▇▇▇▇▆ |
@@ -201,10 +196,8 @@ skim(tbar)
 
 ## Using nearest_stations() to Download Multiple Stations at Once
 
-Using the `nearest_stations()` function, you can find stations closest to a
-given point specified by latitude and longitude in decimal degrees. This can be
-used to generate a vector to pass along to `get_GSOD()` and download the
-stations of interest.
+Using the `nearest_stations()` function, you can find stations closest to a given point specified by latitude and longitude in decimal degrees.
+This can be used to generate a vector to pass along to `get_GSOD()` and download the stations of interest.
 
 
 ```r
@@ -213,6 +206,39 @@ tbar_stations <- nearest_stations(LAT = -27.5598,
                                   distance = 50)
 
 tbar <- get_GSOD(years = 2010, station = tbar_stations)
+```
+
+```
+## Warning in serialize(data, node$con): 'package:stats' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:utils' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:stats' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:utils' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:stats' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:utils' may not be
+## available when loading
+```
+
+```r
 skim(tbar)
 ```
 
@@ -265,7 +291,7 @@ skim(tbar)
 |LONGITUDE        |         0|          1.00|      152.00|      0.25|      151.74|      151.74|      151.92|      152.33|      152.33|▇▇▁▁▇ |
 |ELEVATION        |         0|          1.00|      380.97|    224.57|       94.00|       94.00|      406.90|      642.00|      642.00|▇▁▇▁▇ |
 |BEGIN            |         0|          1.00| 19913687.00| 131241.93| 19730430.00| 19730430.00| 19980301.00| 20030330.00| 20030330.00|▃▁▁▁▇ |
-|END              |         0|          1.00| 20200107.00|      0.00| 20200107.00| 20200107.00| 20200107.00| 20200107.00| 20200107.00|▁▁▇▁▁ |
+|END              |         0|          1.00| 20200310.00|      0.00| 20200310.00| 20200310.00| 20200310.00| 20200310.00| 20200310.00|▁▁▇▁▁ |
 |YEAR             |         0|          1.00|     2010.00|      0.00|     2010.00|     2010.00|     2010.00|     2010.00|     2010.00|▁▁▇▁▁ |
 |MONTH            |         0|          1.00|        6.53|      3.45|        1.00|        4.00|        7.00|       10.00|       12.00|▇▅▅▅▇ |
 |DAY              |         0|          1.00|       15.72|      8.80|        1.00|        8.00|       16.00|       23.00|       31.00|▇▇▇▇▆ |
@@ -326,117 +352,189 @@ ggplot(data = tbar_temps, aes(x = YEARMODA,
 
 ## Download and Process Files in Parallel
 
-`GSODR` supports the [`future`]( https://CRAN.R-project.org/package=future)
-package for parallel processing on varied platforms with the user determining
-the parallel back end to be used. The most simple way is to use `multisession`
-as an argument for `future::plan()`, which will default to available local cores
-as workers for the run. This can greatly reduce the time necessary to process
-GSOD files.
+`GSODR` supports the [`future`]( https://CRAN.R-project.org/package=future) package for parallel processing on varied platforms with the user determining the parallel back end to be used.
+The most simple way is to use `multisession` as an argument for `future::plan()`, which will default to available local cores as workers for the run.
+This can greatly reduce the time necessary to process GSOD files.
 
 
 ```r
 future::plan("multisession")
 global <- get_GSOD(years = 2010:2011)
+```
 
+```
+## Warning in serialize(data, node$con): 'package:stats' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:utils' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:stats' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:utils' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:stats' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:utils' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:stats' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:utils' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:stats' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:utils' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:stats' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:utils' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:stats' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:utils' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:stats' may not be
+## available when loading
+```
+
+```
+## Warning in serialize(data, node$con): 'package:utils' may not be
+## available when loading
+```
+
+```r
 skim(global)
 ```
 
 
-|                         |         |
-|:------------------------|:--------|
-|Name                     |global   |
-|Number of rows           |11193950 |
-|Number of columns        |44       |
-|_______________________  |         |
-|Column type frequency:   |         |
-|character                |13       |
-|Date                     |1        |
-|numeric                  |30       |
-|________________________ |         |
-|Group variables          |None     |
+|                         |        |
+|:------------------------|:-------|
+|Name                     |global  |
+|Number of rows           |7174677 |
+|Number of columns        |44      |
+|_______________________  |        |
+|Column type frequency:   |        |
+|character                |13      |
+|Date                     |1       |
+|numeric                  |30      |
+|________________________ |        |
+|Group variables          |None    |
 
 
 **Variable type: character**
 
 |skim_variable    | n_missing| complete_rate| min| max|   empty| n_unique| whitespace|
 |:----------------|---------:|-------------:|---:|---:|-------:|--------:|----------:|
-|STNID            |         0|          1.00|  12|  12|       0|    13363|          0|
-|NAME             |    754831|          0.93|   2|  58|       0|    12219|          0|
-|CTRY             |    754831|          0.93|   2|   2|       0|      230|          0|
-|STATE            |    754831|          0.93|   0|   2| 8573701|       65|          0|
-|TEMP_ATTRIBUTES  |         0|          1.00|   2|   2|       0|       21|    3671884|
-|DEWP_ATTRIBUTES  |         0|          1.00|   2|   2|       0|       22|    4093953|
-|SLP_ATTRIBUTES   |         0|          1.00|   2|   2|       0|       22|    7877864|
-|STP_ATTRIBUTES   |         0|          1.00|   2|   2|       0|       22|    7489633|
-|VISIB_ATTRIBUTES |         0|          1.00|   2|   2|       0|       22|    5845721|
-|WDSP_ATTRIBUTES  |         0|          1.00|   2|   2|       0|       22|    4045454|
-|MAX_ATTRIBUTES   |   7010582|          0.37|   1|   1|       0|        1|          0|
-|MIN_ATTRIBUTES   |   6357778|          0.43|   1|   1|       0|        1|          0|
-|PRCP_ATTRIBUTES  |   1014050|          0.91|   1|   1|       0|        9|          0|
+|STNID            |         0|          1.00|  12|  12|       0|    11325|          0|
+|NAME             |    479443|          0.93|   2|  50|       0|    10363|          0|
+|CTRY             |    479443|          0.93|   2|   2|       0|      230|          0|
+|STATE            |    479443|          0.93|   0|   2| 5422379|       65|          0|
+|TEMP_ATTRIBUTES  |         0|          1.00|   2|   2|       0|       21|    2489667|
+|DEWP_ATTRIBUTES  |         0|          1.00|   2|   2|       0|       22|    2824750|
+|SLP_ATTRIBUTES   |         0|          1.00|   2|   2|       0|       22|    5292224|
+|STP_ATTRIBUTES   |         0|          1.00|   2|   2|       0|       22|    5124390|
+|VISIB_ATTRIBUTES |         0|          1.00|   2|   2|       0|       22|    3640096|
+|WDSP_ATTRIBUTES  |         0|          1.00|   2|   2|       0|       22|    2747493|
+|MAX_ATTRIBUTES   |   4623953|          0.36|   1|   1|       0|        1|          0|
+|MIN_ATTRIBUTES   |   3937634|          0.45|   1|   1|       0|        1|          0|
+|PRCP_ATTRIBUTES  |    707360|          0.90|   1|   1|       0|        9|          0|
 
 
 **Variable type: Date**
 
 |skim_variable | n_missing| complete_rate|min        |max        |median     | n_unique|
 |:-------------|---------:|-------------:|:----------|:----------|:----------|--------:|
-|YEARMODA      |         0|             1|2010-01-01 |2017-12-31 |2011-07-24 |     1095|
+|YEARMODA      |         0|             1|2010-01-01 |2011-12-31 |2010-12-29 |      730|
 
 
 **Variable type: numeric**
 
 |skim_variable    | n_missing| complete_rate|        mean|        sd|         p0|         p25|         p50|         p75|        p100|hist  |
 |:----------------|---------:|-------------:|-----------:|---------:|----------:|-----------:|-----------:|-----------:|-----------:|:-----|
-|LATITUDE         |    754831|          0.93|       31.98|     28.91|      -89.0|       23.18|       40.70|       50.63|       83.65|▁▂▂▇▅ |
-|LONGITUDE        |    754831|          0.93|        6.00|     85.75|     -180.0|      -77.17|       12.83|       73.30|      179.75|▂▆▇▅▅ |
-|ELEVATION        |     19353|          1.00|      363.58|    553.92|     -999.9|       30.78|      149.00|      438.00|     7026.00|▇▂▁▁▁ |
-|BEGIN            |    754831|          0.93| 19771413.70| 249368.79| 19010101.0| 19550702.00| 19740924.00| 20030827.00| 20171207.00|▁▃▅▆▇ |
-|END              |    754831|          0.93| 20197724.43|  11518.71| 20100125.0| 20200107.00| 20200107.00| 20200107.00| 20200109.00|▁▁▁▁▇ |
-|YEAR             |         0|          1.00|     2012.83|      3.15|     2010.0|     2010.00|     2011.00|     2017.00|     2017.00|▇▁▁▁▅ |
-|MONTH            |         0|          1.00|        6.54|      3.45|        1.0|        4.00|        7.00|       10.00|       12.00|▇▅▅▅▇ |
-|DAY              |         0|          1.00|       15.72|      8.80|        1.0|        8.00|       16.00|       23.00|       31.00|▇▇▇▇▆ |
-|YDAY             |         0|          1.00|      183.37|    105.49|        1.0|       92.00|      183.00|      275.00|      365.00|▇▇▇▇▇ |
-|TEMP             |         0|          1.00|       12.66|     12.97|      -81.5|        4.80|       14.20|       22.90|       43.30|▁▁▁▇▆ |
-|DEWP             |    464302|          0.96|        6.56|     12.00|      -82.9|       -0.60|        7.60|       15.20|       32.20|▁▁▁▇▇ |
-|SLP              |   4171993|          0.63|     1014.13|      9.15|      916.3|     1009.00|     1013.80|     1019.30|     1077.70|▁▁▇▇▁ |
-|STP              |   3806764|          0.66|      565.67|    461.26|        0.0|       12.10|      888.20|      977.70|      999.80|▆▁▁▁▇ |
-|VISIB            |   2739411|          0.76|       15.85|      9.89|        0.0|       10.00|       14.20|       16.90|      160.00|▇▁▁▁▁ |
-|WDSP             |    468649|          0.96|        3.26|      2.30|        0.0|        1.70|        2.70|        4.30|       49.30|▇▁▁▁▁ |
-|MXSPD            |    600305|          0.95|        6.06|      3.29|        0.1|        4.00|        5.70|        7.70|       49.80|▇▁▁▁▁ |
-|GUST             |   8349685|          0.25|       11.94|      4.09|        5.0|        9.00|       11.30|       13.90|       59.60|▇▁▁▁▁ |
-|MAX              |      7567|          1.00|       17.89|     13.60|      -80.2|        9.20|       20.00|       28.80|       56.00|▁▁▂▇▃ |
-|MIN              |      7339|          1.00|        7.69|     12.86|      -82.2|        0.30|        9.00|       17.20|       42.70|▁▁▁▇▃ |
-|PRCP             |   1014050|          0.91|        1.94|      7.73|        0.0|        0.00|        0.00|        0.30|      490.00|▇▁▁▁▁ |
-|SNDP             |  10497885|          0.06|      256.80|    267.26|       10.2|       61.00|      180.30|      370.80|     2989.60|▇▁▁▁▁ |
-|I_FOG            |   6900315|          0.38|        1.00|      0.00|        1.0|        1.00|        1.00|        1.00|        1.00|▁▁▇▁▁ |
-|I_RAIN_DRIZZLE   |  11193950|          0.00|         NaN|       NaN|         NA|          NA|          NA|          NA|          NA|      |
-|I_SNOW_ICE       |  11193950|          0.00|         NaN|       NaN|         NA|          NA|          NA|          NA|          NA|      |
-|I_HAIL           |  11193950|          0.00|         NaN|       NaN|         NA|          NA|          NA|          NA|          NA|      |
-|I_THUNDER        |  11193950|          0.00|         NaN|       NaN|         NA|          NA|          NA|          NA|          NA|      |
-|I_TORNADO_FUNNEL |  11193950|          0.00|         NaN|       NaN|         NA|          NA|          NA|          NA|          NA|      |
-|EA               |    464302|          0.96|        1.24|      0.84|        0.0|        0.60|        1.00|        1.70|        4.80|▇▆▂▁▁ |
-|ES               |         0|          1.00|        1.88|      1.25|        0.0|        0.90|        1.60|        2.80|        8.80|▇▅▂▁▁ |
-|RH               |    464302|          0.96|       69.03|     18.33|        0.2|       58.70|       72.40|       82.60|      100.00|▁▁▃▇▆ |
+|LATITUDE         |    479443|          0.93|       32.30|     28.72|      -89.0|       24.72|       40.65|       50.58|       83.65|▁▂▂▇▅ |
+|LONGITUDE        |    479443|          0.93|        4.95|     86.99|     -180.0|      -79.73|       12.20|       73.40|      179.75|▂▆▇▅▅ |
+|ELEVATION        |      6825|          1.00|      359.37|    556.30|     -999.9|       29.00|      143.86|      424.30|     7018.00|▇▂▁▁▁ |
+|BEGIN            |    479443|          0.93| 19763685.31| 246237.35| 19010101.0| 19550301.00| 19731004.00| 20020326.00| 20111212.00|▁▂▅▅▇ |
+|END              |    479443|          0.93| 20196917.05|  14164.48| 20100125.0| 20200310.00| 20200310.00| 20200310.00| 20200312.00|▁▁▁▁▇ |
+|YEAR             |         0|          1.00|     2010.50|      0.50|     2010.0|     2010.00|     2010.00|     2011.00|     2011.00|▇▁▁▁▇ |
+|MONTH            |         0|          1.00|        6.55|      3.45|        1.0|        4.00|        7.00|       10.00|       12.00|▇▅▅▅▇ |
+|DAY              |         0|          1.00|       15.73|      8.79|        1.0|        8.00|       16.00|       23.00|       31.00|▇▇▇▇▆ |
+|YDAY             |         0|          1.00|      183.70|    105.42|        1.0|       92.00|      184.00|      275.00|      365.00|▇▇▇▇▇ |
+|TEMP             |         0|          1.00|       12.47|     13.10|      -79.3|        4.70|       14.00|       22.70|       43.30|▁▁▁▇▅ |
+|DEWP             |    361081|          0.95|        6.41|     12.05|      -82.9|       -0.70|        7.40|       15.10|       32.20|▁▁▁▇▇ |
+|SLP              |   2742534|          0.62|     1014.00|      9.20|      925.9|     1008.90|     1013.70|     1019.10|     1077.70|▁▁▇▅▁ |
+|STP              |   2666250|          0.63|      559.60|    462.23|        0.0|       11.90|      882.20|      977.70|      999.80|▆▁▁▁▇ |
+|VISIB            |   1649499|          0.77|       15.82|      9.80|        0.0|       10.00|       14.00|       16.70|      160.00|▇▁▁▁▁ |
+|WDSP             |    313857|          0.96|        3.27|      2.32|        0.0|        1.70|        2.80|        4.30|       49.30|▇▁▁▁▁ |
+|MXSPD            |    387117|          0.95|        6.08|      3.30|        0.5|        4.00|        5.70|        7.70|       49.80|▇▁▁▁▁ |
+|GUST             |   5427149|          0.24|       12.06|      4.10|        5.0|        9.30|       11.30|       14.00|       59.60|▇▂▁▁▁ |
+|MAX              |      5257|          1.00|       17.66|     13.70|      -78.3|        9.00|       19.50|       28.50|       56.00|▁▁▂▇▃ |
+|MIN              |      4589|          1.00|        7.55|     13.00|      -81.8|        0.10|        8.90|       17.10|       42.70|▁▁▁▇▃ |
+|PRCP             |    707360|          0.90|        1.91|      7.67|        0.0|        0.00|        0.00|        0.30|      481.10|▇▁▁▁▁ |
+|SNDP             |   6785917|          0.05|      258.74|    264.96|       10.2|       71.10|      190.50|      370.80|     2989.60|▇▁▁▁▁ |
+|I_FOG            |   4347339|          0.39|        1.00|      0.00|        1.0|        1.00|        1.00|        1.00|        1.00|▁▁▇▁▁ |
+|I_RAIN_DRIZZLE   |   7174677|          0.00|         NaN|       NaN|         NA|          NA|          NA|          NA|          NA|      |
+|I_SNOW_ICE       |   7174677|          0.00|         NaN|       NaN|         NA|          NA|          NA|          NA|          NA|      |
+|I_HAIL           |   7174677|          0.00|         NaN|       NaN|         NA|          NA|          NA|          NA|          NA|      |
+|I_THUNDER        |   7174677|          0.00|         NaN|       NaN|         NA|          NA|          NA|          NA|          NA|      |
+|I_TORNADO_FUNNEL |   7174677|          0.00|         NaN|       NaN|         NA|          NA|          NA|          NA|          NA|      |
+|EA               |    361081|          0.95|        1.23|      0.84|        0.0|        0.60|        1.00|        1.70|        4.80|▇▆▂▁▁ |
+|ES               |         0|          1.00|        1.87|      1.25|        0.0|        0.90|        1.60|        2.80|        8.80|▇▅▂▁▁ |
+|RH               |    361081|          0.95|       69.04|     18.28|        0.9|       58.80|       72.40|       82.50|      100.00|▁▁▃▇▆ |
 
 # Using reformat_GSOD()
 
-You may have already downloaded GSOD data or may just wish to use your browser
-to download the files from the server to you local disk and not use the
-capabilities of `get_GSOD()`. In that case the `reformat_GSOD()` function is
-useful.
+You may have already downloaded GSOD data or may just wish to use your browser to download the files from the server to you local disk and not use the capabilities of `get_GSOD()`.
+In that case the `reformat_GSOD()` function is useful.
 
-There are two ways, you can either provide `reformat_GSOD()` with a list of
-specified station files or you can supply it with a directory containing all of
-the "STATION.csv" station files or "YEAR.zip" annual files that you wish to
-reformat.
+There are two ways, you can either provide `reformat_GSOD()` with a list of specified station files or you can supply it with a directory containing all of the "STATION.csv" station files or "YEAR.zip" annual files that you wish to reformat.
 
-**Note** _Any_ .csv file provided to `reformat_GSOD()` will be imported, if it
-is not a GSOD data file, this will lead to an error. Make sure the directory
-and file lists are clean.
+**Note** _Any_ .csv file provided to `reformat_GSOD()` will be imported, if it is not a GSOD data file, this will lead to an error.
+Make sure the directory and file lists are clean.
 
 ## Reformat a List of Local Files
 
-In this example two STATION.csv files are in subdirectories of user's home
-directory and are listed for reformatting as a string.
+In this example two STATION.csv files are in subdirectories of user's home directory and are listed for reformatting as a string.
 
 
 ```r
@@ -447,8 +545,7 @@ x <- reformat_GSOD(file_list = y)
 
 ## Reformat all Local Files Found in Directory
 
-In this example all STATION.csv files in the sub-folder GSOD/gsod_1960 will be
-imported and reformatted.
+In this example all STATION.csv files in the sub-folder GSOD/gsod_1960 will be imported and reformatted.
 
 
 ```r
@@ -457,26 +554,15 @@ x <- reformat_GSOD(dsn = "~/GSOD/gsod_1960")
 
 # Using update_station_list()
 
-_GSODR_ uses internal databases of station data from the NCEI to provide
-location and other metadata, _e.g._ elevation, station names, WMO codes, etc. to
-make the process of querying for weather data faster. This database is created
-and packaged with _GSODR_ for distribution and is updated with new releases.
+_GSODR_ uses internal databases of station data from the NCEI to provide location and other metadata, _e.g._ elevation, station names, WMO codes, etc. to make the process of querying for weather data faster.
+This database is created and packaged with _GSODR_ for distribution and is updated with new releases.
 Users have the option of updating these databases after installing _GSODR_.
-While this option gives the users the ability to keep the database up-to-date
-and gives _GSODR's_ authors flexibility in maintaining it, this also means that
-reproducibility may be affected since the same version of _GSODR_ may have
-different databases on different machines. If reproducibility is necessary,
-care should be taken to ensure that the version of the databases is the same
-across different machines.
+While this option gives the users the ability to keep the database up-to-date and gives _GSODR's_ authors flexibility in maintaining it, this also means that reproducibility may be affected since the same version of _GSODR_ may have different databases on different machines.
+If reproducibility is necessary, care should be taken to ensure that the version of the databases is the same across different machines.
 
-The database file `isd_history.rda` can be located on your local system by using
-the following command, `paste0(.libPaths(), "/GSODR/extdata")[1]`, unless you
-have specified another location for library installations and
-installed _GSODR_ there, in which case it would still be in `GSODR/extdata`.
+The database file `isd_history.rda` can be located on your local system by using the following command, `paste0(.libPaths(), "/GSODR/extdata")[1]`, unless you have specified another location for library installations and installed _GSODR_ there, in which case it would still be in `GSODR/extdata`.
 
-To update _GSODR's_ internal database of station locations simply use
-`update_station_list()`, which will update the internal station database
-according to the latest data available from the NCEI.
+To update _GSODR's_ internal database of station locations simply use `update_station_list()`, which will update the internal station database according to the latest data available from the NCEI.
 
 
 ```r
@@ -485,12 +571,9 @@ update_station_list()
 
 # Using get_inventory()
 
-_GSODR_ provides a function, `get_inventory()` to retrieve an inventory of the
-number of weather observations by station-year-month for the beginning of record
-through to current.
+_GSODR_ provides a function, `get_inventory()` to retrieve an inventory of the number of weather observations by station-year-month for the beginning of record through to current.
 
-Following is an example of how to retrieve the inventory and check a station in
-Toowoomba, Queensland, Australia, which was used in an earlier example.
+Following is an example of how to retrieve the inventory and check a station in Toowoomba, Queensland, Australia, which was used in an earlier example.
 
 
 ```r
@@ -575,29 +658,29 @@ subset(inventory, STNID %in% "955510-99999")
 ## 23: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS       19980301
 ##            STNID              NAME    LAT   LON CTRY STATE    BEGIN
 ##          END COUNTRY_NAME ISO2C ISO3C YEAR JAN FEB MAR APR MAY JUN
-##  1: 20200107    AUSTRALIA    AU   AUS 1998   0   0 222 223 221 211
-##  2: 20200107    AUSTRALIA    AU   AUS 1999 213 201 235 224 244 229
-##  3: 20200107    AUSTRALIA    AU   AUS 2000 241 227 247 238 246 237
-##  4: 20200107    AUSTRALIA    AU   AUS 2001 245 223 246 238 239 236
-##  5: 20200107    AUSTRALIA    AU   AUS 2002 245 219 246 236 243 229
-##  6: 20200107    AUSTRALIA    AU   AUS 2003 244 217 220 232 235 233
-##  7: 20200107    AUSTRALIA    AU   AUS 2004 240 227 241 229 233 224
-##  8: 20200107    AUSTRALIA    AU   AUS 2005 241 221 242 240 247 239
-##  9: 20200107    AUSTRALIA    AU   AUS 2006 245 223 246 232 241 238
-## 10: 20200107    AUSTRALIA    AU   AUS 2007 247 222 244 240 248 240
-## 11: 20200107    AUSTRALIA    AU   AUS 2008 247 228 248 239 248 239
-## 12: 20200107    AUSTRALIA    AU   AUS 2009 245 222 246 235 244 237
-## 13: 20200107    AUSTRALIA    AU   AUS 2010 248 223 248 240 244 240
-## 14: 20200107    AUSTRALIA    AU   AUS 2011 247 224 247 240 247 240
-## 15: 20200107    AUSTRALIA    AU   AUS 2012 248 232 248 240 248 240
-## 16: 20200107    AUSTRALIA    AU   AUS 2013 236 220 247 233 248 239
-## 17: 20200107    AUSTRALIA    AU   AUS 2014 243 224 247 240 246 239
-## 18: 20200107    AUSTRALIA    AU   AUS 2015 248 222 248  72 247 240
-## 19: 20200107    AUSTRALIA    AU   AUS 2016 246 228 245 240 246 240
-## 20: 20200107    AUSTRALIA    AU   AUS 2017 247 224 248 240 248 239
-## 21: 20200107    AUSTRALIA    AU   AUS 2018 248 224 248 239 247 240
-## 22: 20200107    AUSTRALIA    AU   AUS 2019 247 224 245 240 245 240
-## 23: 20200107    AUSTRALIA    AU   AUS 2020 246 232  79   0   0   0
+##  1: 20200310    AUSTRALIA    AU   AUS 1998   0   0 222 223 221 211
+##  2: 20200310    AUSTRALIA    AU   AUS 1999 213 201 235 224 244 229
+##  3: 20200310    AUSTRALIA    AU   AUS 2000 241 227 247 238 246 237
+##  4: 20200310    AUSTRALIA    AU   AUS 2001 245 223 246 238 239 236
+##  5: 20200310    AUSTRALIA    AU   AUS 2002 245 219 246 236 243 229
+##  6: 20200310    AUSTRALIA    AU   AUS 2003 244 217 220 232 235 233
+##  7: 20200310    AUSTRALIA    AU   AUS 2004 240 227 241 229 233 224
+##  8: 20200310    AUSTRALIA    AU   AUS 2005 241 221 242 240 247 239
+##  9: 20200310    AUSTRALIA    AU   AUS 2006 245 223 246 232 241 238
+## 10: 20200310    AUSTRALIA    AU   AUS 2007 247 222 244 240 248 240
+## 11: 20200310    AUSTRALIA    AU   AUS 2008 247 228 248 239 248 239
+## 12: 20200310    AUSTRALIA    AU   AUS 2009 245 222 246 235 244 237
+## 13: 20200310    AUSTRALIA    AU   AUS 2010 248 223 248 240 244 240
+## 14: 20200310    AUSTRALIA    AU   AUS 2011 247 224 247 240 247 240
+## 15: 20200310    AUSTRALIA    AU   AUS 2012 248 232 248 240 248 240
+## 16: 20200310    AUSTRALIA    AU   AUS 2013 236 220 247 233 248 239
+## 17: 20200310    AUSTRALIA    AU   AUS 2014 243 224 247 240 246 239
+## 18: 20200310    AUSTRALIA    AU   AUS 2015 248 222 248  72 247 240
+## 19: 20200310    AUSTRALIA    AU   AUS 2016 246 228 245 240 246 240
+## 20: 20200310    AUSTRALIA    AU   AUS 2017 247 224 248 240 248 239
+## 21: 20200310    AUSTRALIA    AU   AUS 2018 248 224 248 239 247 240
+## 22: 20200310    AUSTRALIA    AU   AUS 2019 247 224 245 240 245 240
+## 23: 20200310    AUSTRALIA    AU   AUS 2020 246 232  79   0   0   0
 ##          END COUNTRY_NAME ISO2C ISO3C YEAR JAN FEB MAR APR MAY JUN
 ##     JUL AUG SEP OCT NOV DEC
 ##  1: 226 217 222 234 215 230
@@ -629,10 +712,7 @@ subset(inventory, STNID %in% "955510-99999")
 # Additional Climate Data Availability
 
 Additional climate data,
-[_GSODRdata_](https://github.com/adamhsparks/GSODRdata), formatted for use with
-GSOD data provided by _GSODR_ are available as an R package, which can only be
-installed through GitHub due to the package size, >5Mb, being too large for
-CRAN.
+[_GSODRdata_](https://github.com/adamhsparks/GSODRdata), formatted for use with GSOD data provided by _GSODR_ are available as an R package, which can only be installed through GitHub due to the package size, >5Mb, being too large for CRAN.
 
 
 ```r
@@ -653,12 +733,14 @@ library("GSODRdata")
 
 _Users of these data should take into account the following (from the [NCEI website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):_
 
-> "The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification." [WMO Resolution 40. NOAA Policy](https://public.wmo.int/en/our-mandate/what-we-do/data-exchange-and-technology-transfer)
+> "The following data and products may have conditions placed on their international commercial use.
+They can be used within the U.S. or for non-commercial international activities without restriction.
+The non-U.S. data cannot be redistributed for commercial purposes.
+Re-distribution of these data by others must provide this same notification." [WMO Resolution 40. NOAA Policy](https://public.wmo.int/en/our-mandate/what-we-do/data-exchange-and-technology-transfer)
 
 # Appendices
 
-Appendix 1: GSODR Final Data Format, Contents and Units
-------------------------------
+## Appendix 1: GSODR Final Data Format, Contents and Units
 
 _GSODR_ formatted data include the following fields and units:
 
@@ -668,11 +750,9 @@ _GSODR_ formatted data include the following fields and units:
 
 - **CTRY** - Country in which the station is located;
 
-- **LAT** - Latitude. *Station dropped in cases where values are < -90 or > 90
-degrees or Lat = 0 and Lon = 0*;
+- **LAT** - Latitude. *Station dropped in cases where values are < -90 or > 90 degrees or Lat = 0 and Lon = 0*;
 
-- **LON** - Longitude. *Station dropped in cases where values are < -180 or >
-180 degrees or Lat = 0 and Lon = 0*;
+- **LON** - Longitude. *Station dropped in cases where values are < -180 or > 180 degrees or Lat = 0 and Lon = 0*;
 
 - **ELEVATION** - Elevation in metres;
 
@@ -686,73 +766,60 @@ degrees or Lat = 0 and Lon = 0*;
 
 - **YDAY** - Sequential day of year (not in original GSOD);
 
-- **TEMP** - Mean daily temperature converted to degrees C to tenths. Missing =
-NA;
+- **TEMP** - Mean daily temperature converted to degrees C to tenths.
+Missing = `NA`;
 
-- **TEMP\_ATTRIBUTES** - Number of observations used in calculating mean daily
-temperature;
+- **TEMP\_ATTRIBUTES** - Number of observations used in calculating mean daily temperature;
 
-- **DEWP** - Mean daily dew point converted to degrees C to tenths. Missing =
-NA;
+- **DEWP** - Mean daily dew point converted to degrees C to tenths.
+Missing = `NA`;
 
-- **DEWP\_ATTRIBUTES** - Number of observations used in calculating mean daily
-dew point;
+- **DEWP\_ATTRIBUTES** - Number of observations used in calculating mean daily dew point;
 
-- **SLP** - Mean sea level pressure in millibars to tenths. Missing = NA;
+- **SLP** - Mean sea level pressure in millibars to tenths.
+Missing = `NA`;
 
-- **SLP\_ATTRIBUTES** - Number of observations used in calculating mean sea
-level pressure;
+- **SLP\_ATTRIBUTES** - Number of observations used in calculating mean sea level pressure;
 
-- **STP** - Mean station pressure for the day in millibars to tenths. Missing
-= NA;
+- **STP** - Mean station pressure for the day in millibars to tenths.
+Missing = `NA`;
 
-- **STP\_ATTRIBUTES** - Number of observations used in calculating mean station
-pressure;
+- **STP\_ATTRIBUTES** - Number of observations used in calculating mean station pressure;
 
-- **VISIB** - Mean visibility for the day converted to kilometres to tenths
-Missing = NA;
+- **VISIB** - Mean visibility for the day converted to kilometres to tenths.
+Missing = `NA`;
 
-- **VISIB\_ATTRIBUTES** - Number of observations used in calculating mean daily
-visibility;
+- **VISIB\_ATTRIBUTES** - Number of observations used in calculating mean daily visibility;
 
 - **WDSP** - Mean daily wind speed value converted to metres/second to tenths.
+Missing = `NA`;
+
+- **WDSP\_ATTRIBUTES** - Number of observations used in calculating mean daily wind speed;
+
+- **MXSPD** - Maximum sustained wind speed reported for the day converted to metres/second to tenths.
+Missing = `NA`;
+
+- **GUST** - Maximum wind gust reported for the day converted to metres/second to tenths.
+Missing = `NA`;
+
+- **MAX** - Maximum temperature reported during the day converted to Celsius to tenths--time of max temp report varies by country and region, so this will sometimes not be the max for the calendar day.
+Missing = `NA`;
+
+- **MAX\_ATTRIBUTES** - Blank indicates max temp was taken from the explicit max temp report and not from the 'hourly' data.
+An "\*" indicates max temp was derived from the hourly data (_i.e._, highest hourly or synoptic-reported temperature);
+
+- **MIN** - Minimum temperature reported during the day converted to Celsius to tenths--time of min temp report varies by country and region, so this will sometimes not be the max for the calendar day.
+Missing = `NA`;
+
+- **MIN\_ATTRIBUTES** - Blank indicates max temp was taken from the explicit min temp report and not from the 'hourly' data.
+An "\*" indicates min temp was derived from the hourly data (_i.e._, highest hourly or synoptic-reported temperature);
+
+- **PRCP** - Total precipitation (rain and/or melted snow) reported during the day converted to millimetres to hundredths; will usually not end with the midnight observation, _i.e._, may include latter part of previous day.
+A value of ".00" indicates no measurable precipitation (includes a trace).
 Missing = NA;
-
-- **WDSP\_ATTRIBUTES** - Number of observations used in calculating mean daily
-wind speed;
-
-- **MXSPD** - Maximum sustained wind speed reported for the day converted to
-metres/second to tenths. Missing = NA;
-
-- **GUST** - Maximum wind gust reported for the day converted to metres/second
-to tenths. Missing = NA;
-
-- **MAX** - Maximum temperature reported during the day converted to Celsius to
-tenths--time of max temp report varies by country and region, so this will
-sometimes not be the max for the calendar day. Missing = NA;
-
-- **MAX\_ATTRIBUTES** - Blank indicates max temp was taken from the explicit max
-temp report and not from the 'hourly' data. An "\*" indicates max temp was
-derived from the hourly data (_i.e._, highest hourly or synoptic-reported
-temperature);
-
-- **MIN** - Minimum temperature reported during the day converted to Celsius to
-tenths--time of min temp report varies by country and region, so this will
-sometimes not be the max for the calendar day. Missing = NA;
-
-- **MIN\_ATTRIBUTES** - Blank indicates max temp was taken from the explicit min
-temp report and not from the 'hourly' data. An "\*" indicates min temp was
-derived from the hourly data (_i.e._, highest hourly or synoptic-reported
-temperature);
-
-- **PRCP** - Total precipitation (rain and/or melted snow) reported during the
-day converted to millimetres to hundredths; will usually not end with the
-midnight observation, _i.e._, may include latter part of previous day. A value
-of ".00" indicates no measurable precipitation (includes a trace). Missing = NA;
-*Note: Many stations do not report '0' on days with no precipitation--
-therefore, 'NA' will often appear on these days. For example, a station may
-only report a 6-hour amount for the period during which rain fell.* See
-`FLAGS_PRCP` column for source of data;
+*Note: Many stations do not report '0' on days with no precipitation-- therefore, `NA` will often appear on these days.
+For example, a station may only report a 6-hour amount for the period during which rain fell.*
+See `FLAGS_PRCP` column for source of data;
 
 - **PRCP\_ATTRIBUTES** -
 
@@ -770,40 +837,33 @@ only report a 6-hour amount for the period during which rain fell.* See
 
     - G = 1 report of 24-hour precipitation amount;
 
-    - H = Station reported '0' as the amount for the day (e.g. from 6-hour
-    reports), but also reported at least one occurrence of precipitation in
-    hourly observations--this could indicate a rrace occurred, but should be
-    considered as incomplete data for the day;
+    - H = Station reported '0' as the amount for the day (e.g. from 6-hour reports), but also reported at least one occurrence of precipitation in hourly observations--this could indicate a rrace occurred, but should be considered as incomplete data for the day;
 
-    - I = Station did not report any precipitation data for the day and did not
-    report any occurrences of precipitation in its hourly observations--it's
-    still possible that precipitation occurred but was not reported;
+    - I = Station did not report any precipitation data for the day and did not report any occurrences of precipitation in its hourly observations--it's still possible that precipitation occurred but was not reported;
 
-- **SNDP** - Snow depth in millimetres to tenths. Missing = NA;
+- **SNDP** - Snow depth in millimetres to tenths.
+Missing = `NA`;
 
-- **I\_FOG** - Indicator for fog, (1 = yes, 0 = no/not reported) for the
-occurrence during the day;
+- **I\_FOG** - Indicator for fog, (1 = yes, 0 = no/not reported) for the occurrence during the day;
 
-- **I\_RAIN\_DRIZZLE** - Indicator for rain or drizzle, (1 = yes, 0 =
-no/not reported) for the occurrence during the day;
+- **I\_RAIN\_DRIZZLE** - Indicator for rain or drizzle, (1 = yes, 0 = no/not reported) for the occurrence during the day;
 
-- **I\_SNOW\_ICE** - Indicator for snow or ice pellets, (1 = yes, 0 =
-no/not reported) for the occurrence during the day;
+- **I\_SNOW\_ICE** - Indicator for snow or ice pellets, (1 = yes, 0 = no/not reported) for the occurrence during the day;
 
-- **I\_HAIL** - Indicator for hail, (1 = yes, 0 = no/not reported) for the
-occurrence during the day;
+- **I\_HAIL** - Indicator for hail, (1 = yes, 0 = no/not reported) for the occurrence during the day;
 
-- **I\_THUNDER** - Indicator for thunder, (1 = yes, 0 = no/not reported) for the
-occurrence during the day;
+- **I\_THUNDER** - Indicator for thunder, (1 = yes, 0 = no/not reported) for the occurrence during the day;
 
-- **I_TORNADO_FUNNEL** - Indicator for tornado or funnel cloud, (1 = yes, 0 =
-no/not reported) for the occurrence during the day;
+- **I_TORNADO_FUNNEL** - Indicator for tornado or funnel cloud, (1 = yes, 0 = no/not reported) for the occurrence during the day;
 
-- **EA** - Mean daily actual vapour pressure as calculated using August-Roche-Magnus approximation [@Alduchov1996];
+- **EA** - Mean daily actual vapour pressure as calculated using improved August-Roche-Magnus approximation [@Alduchov1996].
+Missing = `NA`;
 
-- **ES** - Mean daily saturation vapour pressure as calculated using August-Roche-Magnus approximation  [@Alduchov1996];
+- **ES** - Mean daily saturation vapour pressure as calculated using improved August-Roche-Magnus approximation  [@Alduchov1996].
+Missing = `NA`;
 
-- **RH** - Mean daily relative humidity as calculated using August-Roche-Magnus approximation [@Alduchov1996].
+- **RH** - Mean daily relative humidity as calculated using improved August-Roche-Magnus approximation [@Alduchov1996].
+Missing = `NA`.
 
 ## Appendix 2: Map of Current GSOD Station Locations
 
