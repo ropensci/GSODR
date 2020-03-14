@@ -46,7 +46,8 @@
 
   # Import data from the website for indvidual stations or tempdir() for all ---
   DT <-
-    fread(x, colClasses = c("STATION" = "character", "FRSHTT" = "character"))
+    fread(x,
+          colClasses = c("STATION" = "character", "FRSHTT" = "character"))
 
   # Replace 9999.99 et al. with NA
   for (col in names(DT)[names(DT) == "PRCP"]) {
@@ -135,18 +136,18 @@
   DT[, PRCP := round(PRCP * 25.4, 1)]
   DT[, SNDP := round(SNDP * 25.4, 1)]
 
-  # Compute EA, ES and RH vars--------------------------------------------------
-  # Mean actual (EA) and mean saturation vapour pressure (ES)
-  # Monteith JL (1973) Principles of environmental physics.
-  #   Edward Arnold, London
+  # Calculate EA, ES and RH using August-Roche-Magnus approximation ------------
+  # Oleg A. Alduchov and Robert E. Eskridge 1995
+  # https://doi.org/10.1175/1520-0450(1996)035<0601:IMFAOS>2.0.CO;2
   # EA derived from dew point
-  DT[, EA := round(0.61078 * exp((17.2694 * (DEWP)) /
-                                   ((DEWP) + 237.3)), 1)]
+  DT[, EA := round(0.61094 * exp((17.625 * (DEWP)) /
+                                   ((DEWP) + 243.04)), 1)]
   # ES derived from average temperature
-  DT[, ES := round(0.61078 * exp((17.2694 * (TEMP)) /
-                                   ((TEMP) + 237.3)), 1)]
-  # Calculate relative humidity
-  DT[, RH := round(EA / ES * 100, 1)]
+  DT[, ES := round(0.61094 * exp((17.625 * (TEMP)) /
+                                   ((TEMP) + 243.04)), 1)]
+  DT[, RH := round(100 * (exp((17.625 * DEWP) / (243.04 + DEWP)) /
+                            exp((17.625 * (TEMP)) / (243.04 + (TEMP)))),
+                   1)]
 
   # Split FRSHTT into separate columns
   DT[, I_FOG := as.integer(substr(1, 1, DT$FRSHTT))]
