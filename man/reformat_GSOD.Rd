@@ -18,7 +18,14 @@ A data frame as a \code{\link[data.table]{data.table}} object of
 \acronym{GSOD} data.
 }
 \description{
-
+This function automates cleaning and reformatting of \acronym{GSOD} station
+files in\cr \dQuote{YEAR.tar.gz}, provided that they have been untarred or
+\dQuote{STATION.csv} format that have been downloaded from the United States
+National Center for Environmental Information's (\acronym{NCEI})
+download page.  Three new elements; saturation vapour pressure (\sQuote{es}),
+actual vapour pressure (\sQuote{ea}) and relative humidity are calculated and
+returned in the final data.  All units are converted to International System
+of Units (SI), \emph{e.g.}, Fahrenheit to Celsius and inches to millimetres.
 }
 \details{
 Parallel processing can be enabled using \code{\link[future]{plan}} to set

@@ -2,7 +2,7 @@
 #' Tidy and return a data frame of GSOD weather from local storage
 #'
 #' This function automates cleaning and reformatting of \acronym{GSOD} station
-#' files in\cr \dQuote{YEAR.tar.gz", provided that they have been untarred or
+#' files in\cr \dQuote{YEAR.tar.gz}, provided that they have been untarred or
 #' \dQuote{STATION.csv} format that have been downloaded from the United States
 #' National Center for Environmental Information's (\acronym{NCEI})
 #' download page.  Three new elements; saturation vapour pressure (\sQuote{es}),
