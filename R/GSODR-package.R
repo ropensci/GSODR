@@ -1,5 +1,5 @@
 
-#' Global surface summary of the day (\acronym{GSOD}) weather data client
+#' Global surface summary of the day (GSOD) weather data client
 #'
 #' Provides automated downloading, parsing, cleaning, unit conversion and
 #' formatting of Global Surface Summary of the Day (\acronym{GSOD}) weather data
@@ -10,11 +10,11 @@
 #' missing days defined by the user, where stations with too many missing
 #' observations are omitted.  Only stations with valid reported latitude and
 #' longitude values are permitted in the final data.  Additional useful
-#' elements, saturation vapour pressure ('es'), actual vapour pressure ('ea')
-#' and relative humidity (RH) are calculated from the original data and included
-#' in the final data set.  The resulting data include station identification
-#' information, state, country, latitude, longitude, elevation, weather
-#' observations and associated flags.
+#' elements, saturation vapour pressure (\sQuote{es}), actual vapour pressure
+#' (\sQuote{ea}) and relative humidity (\sQuote{RH}) are calculated from the
+#' original data and included in the final data set.  The resulting data include
+#' station identification information, state, country, latitude, longitude,
+#' elevation, weather observations and associated flags.
 #'
 #' For information on the \acronym{GSOD} data from \acronym{NCEI}, please see
 #' the \acronym{GSOD} readme.txt file available from,
@@ -23,7 +23,7 @@
 #' For climate data that have been formatted specifically for use with the
 #' \pkg{GSODR} package, please see the \pkg{GSODRdata} package
 #' (Sparks \emph{et al}.) available from GitHub:
-#' \url{https://adamhsparks.github.io/GSODRdata/}. Four data frames of
+#' \url{https://adamhsparks.github.io/GSODRdata/}.  Four data frames of
 #' climate data are provided from various sources for \acronym{GSOD} station
 #' locations.
 #'

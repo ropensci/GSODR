@@ -3,7 +3,7 @@
 \name{get_inventory}
 \alias{get_inventory}
 \title{Download and return a data frame of \acronym{GSOD} weather station data
-inventories}
+ inventories}
 \usage{
 get_inventory()
 }
