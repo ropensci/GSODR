@@ -29,7 +29,7 @@ test_that(
     agro_list <- .agroclimatology_list(GSOD_list,
                                        stations,
                                        years)
-    expect_length(agro_list, 7477)
+    expect_length(agro_list, 7480)
 
     RP_list <- .subset_country_list(country,
                                     GSOD_list,
