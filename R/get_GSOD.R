@@ -7,7 +7,8 @@
 #' \href{https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/}{US National Centers for Environmental Information (NCEI)},
 #' Three additional useful elements: saturation vapour pressure (es), actual
 #' vapour pressure (ea) and relative humidity (RH) are calculated and returned
-#' in the final data frame.
+#' in the final data frame using the August-Roche-Magnus approximation (Alduchov
+#' and Eskridge 1995).
 #'
 #' Parallel processing can be enabled using \code{\link[future]{plan}} to set
 #' up a parallel backend of your choice, \emph{e.g.},
@@ -80,6 +81,12 @@
 #' AUS
 #' }
 #' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
+#'
+#' @section References:
+#'
+#' Alduchov, O.A. and Eskridge, R.E., 1996. Improved Magnus form approximation
+#' of saturation vapor pressure. Journal of Applied Aeteorology, 35(4),
+#' pp.601-609.
 #'
 #' @return A data frame as a \code{\link[data.table]{data.table}} object of
 #' \acronym{GSOD} weather data.
