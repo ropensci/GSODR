@@ -8,6 +8,7 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteIndexEntry{GSODR}
   %\VignetteEncoding{UTF-8}
+bibliography: references.bib
 ---
 
 ```{r check_packages, echo=FALSE, messages=FALSE, warning=FALSE}
@@ -404,11 +405,11 @@ occurrence during the day;
 - **I_TORNADO_FUNNEL** - Indicator for tornado or funnel cloud, (1 = yes, 0 =
 no/not reported) for the occurrence during the day;
 
-- **EA** - Mean daily actual vapour pressure;
+- **EA** - Mean daily actual vapour pressure as calculated using August-Roche-Magnus approximation [@Alduchov1996];
 
-- **ES** - Mean daily saturation vapour pressure;
+- **ES** - Mean daily saturation vapour pressure as calculated using August-Roche-Magnus approximation  [@Alduchov1996];
 
-- **RH** - Mean daily relative humidity.
+- **RH** - Mean daily relative humidity as calculated using August-Roche-Magnus approximation [@Alduchov1996].
 
 ## Appendix 2: Map of Current GSOD Station Locations
 
@@ -449,3 +450,6 @@ if (requireNamespace("maps", quietly = TRUE) &&
   )
 }
 ```
+
+# References
+
