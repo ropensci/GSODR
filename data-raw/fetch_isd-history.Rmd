@@ -11,7 +11,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introduction
 
-The isd_history file details station metadata including the start and stop years used by GSODR to pre-check requests before querying the server for download and the country code used by GSODR when subsetting for requests by country. The following changes are made to the raw data file for inclusion in _GSODR_:
+The isd_history file details station metadata including the start and stop years used by GSODR to pre-check requests before querying the server for download and the country code used by GSODR when subsetting for requests by country.
+The following changes are made to the raw data file for inclusion in _GSODR_:
 
   * isd_history where latitude or longitude are `NA` or both 0 are removed
 
@@ -124,7 +125,7 @@ save(isd_history,
 
 # Notes
 
-## NOAA Policy
+## NOAA policy
 
 Users of these data should take into account the following (from the
 [NCEI website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)): 
