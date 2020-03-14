@@ -77,7 +77,6 @@ Suggests:
     testthat,
     tidyr
 RoxygenNote: 7.1.0
-Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
 NeedsCompilation: no
 Repository: CRAN

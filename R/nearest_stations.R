@@ -1,5 +1,5 @@
 
-#' Find nearest \acronym{GSOD} stations to a specified latitude and longitude
+#' Find nearest GSOD stations to a specified latitude and longitude
 #'
 #' Given latitude and longitude values entered as decimal degrees (DD), this
 #' function returns a list (atomic vector) of \acronym{STATION} values, which
