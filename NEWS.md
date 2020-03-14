@@ -2,32 +2,26 @@
 
 ## Major changes
 
-* Implement new calculations for EA, ES and RH using improved August-Roche-Magnus approximation (Aluchov & Eskridge 1996).
+* Implement new calculations for EA, ES and RH using improved August-Roche-Magnus approximation (Alduchov & Eskridge 1996).
 HT Rich Ianonne for his use in [stationaRy](https://cran.r-project.org/package=stationaRy).
 This will result in different EA, ES and RH calculations from the prior versions of GSODR.
-However, this new implementation should be more accurate as discussed in (Aluchov & Eskridge 1996).
+However, this new implementation should be more accurate as discussed in (Alduchov & Eskridge 1996).
 
-> Alduchov, O.A. and Eskridge, R.E., 1996. Improved Magnus form approximation
-of saturation vapor pressure. Journal of Applied Aeteorology, 35(4),
-pp.601-609.
+> Alduchov, O.A. and Eskridge, R.E., 1996. Improved Magnus form approximation of saturation vapor pressure. Journal of Applied Aeteorology, 35(4), pp.601-609.
 
 # GSODR v2.0.1
  
 ## Bug fixes
 
-* Corrects internal bug that provided a warning message when GSOD files were
-parsed
+* Corrects internal bug that provided a warning message when GSOD files were parsed
 
-* Fixes bug where not all files downloaded were cleaned up on the function
-exit when fetching station inventories
+* Fixes bug where not all files downloaded were cleaned up on the function exit when fetching station inventories
 
-* Fixes bug where station inventories from `get_inventory()` lacked the
-location metadata, _i.e._ country and other geographic information
+* Fixes bug where station inventories from `get_inventory()` lacked the location metadata, _i.e._ country and other geographic information
 
 ## Minor changes
 
-* Update vignette to use latest functions from tidyr, _i.e._
-`tidyr::pivot_longer()`
+* Update vignette to use latest functions from tidyr, _i.e._ `tidyr::pivot_longer()`
 
 * Update internal station list to latest
 
