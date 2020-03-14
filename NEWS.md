@@ -79,7 +79,7 @@ updated content with linting and error corrections
 
 ## Bug fixes
 
-* Fixes a bug where extra data could be appended to dataframe. See
+* Fixes a bug where extra data could be appended to data frame. See
 <https://github.com/ropensci/GSODR/issues/49>.
 This also means that when you are retrieving large amounts of data, _e.g._ global data for 20+ years, you won't fill up your hard disk space due to the raw data before processing.
 
@@ -136,7 +136,7 @@ This allows for end users to use a parallel process of their choice.
 
 * Adds metadata header to the `tibble` returned by `get_inventory()`
 
-* Remove startup message to conform with rOpenSci guidelines
+* Remove start-up message to conform with rOpenSci guidelines
 
 * Remove extra code, clean up code-chunks and use `hrbrthemes::theme_ipsum()`
   for
@@ -210,7 +210,7 @@ This allows for end users to use a parallel process of their choice.
 
 ## Bug fixes
 
-  * Fix startup message formatting
+  * Fix start-up message formatting
 
   * Correct ORCID comment in author field of DESCRIPTION
 
@@ -274,7 +274,7 @@ This allows for end users to use a parallel process of their choice.
 
   * Fix bug where prior server queries would be pre/appended to subsequent queries
 
-  * Fix bug where invalid stations would return an empty dataframe, should stop and return message about checking the `station` value supplied to `get_GSOD()` and check if data are available for the years requested
+  * Fix bug where invalid stations would return an empty data frame, should stop and return message about checking the `station` value supplied to `get_GSOD()` and check if data are available for the years requested
 
 ## Minor changes
 
@@ -291,13 +291,13 @@ This allows for end users to use a parallel process of their choice.
 
 ## Bug fixes
 
-  * Fix bug where WSPD (mean windspeed) conversion was miscalculated
+  * Fix bug where WSPD (mean wind-speed) conversion was miscalculated
 
 # GSODR 1.0.5
 
 ## Major changes
 
-  * Add welcome message on startup regarding data use and sharing
+  * Add welcome message on start-up regarding data use and sharing
 
   * Update internal stations list
 
@@ -530,7 +530,7 @@ This allows for end users to use a parallel process of their choice.
   * stations.rda now includes a field for "corrected" elevation using hole-filled SRTM data from Jarvis et al. 2008, see [https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md](https://github.com/ropensci/GSODR/blob/devel/data-raw/fetch_isd-history.md) for a description
 
   * Set NA or missing values in CSV or shapefile to -9999 from -9999.99 to
-    align with other data sources such as Worldclim
+    align with other data sources such as WorldClim
 
 ## Minor changes
 
