@@ -22,10 +22,12 @@ This function automates cleaning and reformatting of \acronym{GSOD} station
 files in\cr \dQuote{YEAR.tar.gz}, provided that they have been untarred or
 \dQuote{STATION.csv} format that have been downloaded from the United States
 National Center for Environmental Information's (\acronym{NCEI})
-download page.  Three new elements; saturation vapour pressure (\sQuote{es}),
-actual vapour pressure (\sQuote{ea}) and relative humidity are calculated and
-returned in the final data.  All units are converted to International System
-of Units (SI), \emph{e.g.}, Fahrenheit to Celsius and inches to millimetres.
+download page.  Three additional useful elements: saturation vapour pressure
+(es), actual vapour pressure (ea) and relative humidity (RH) are calculated
+and returned in the final data frame using the improved August-Roche-Magnus
+approximation (Alduchov and Eskridge 1996).  All units are converted to
+International System of Units (SI), \emph{e.g.}, Fahrenheit to Celsius and
+inches to millimetres.
 }
 \details{
 Parallel processing can be enabled using \code{\link[future]{plan}} to set
@@ -64,6 +66,14 @@ non-commercial international activities without restriction. The non-U.S.
 data cannot be redistributed for commercial purposes.  Re-distribution of
 these data by others must provide this same notification.}
 }
+\section{References}{
+
+
+Alduchov, O.A. and Eskridge, R.E., 1996. Improved Magnus form approximation
+of saturation vapor pressure. Journal of Applied Aeteorology, 35(4),
+pp.601-609.
+}
+
 \examples{
 \donttest{
 
