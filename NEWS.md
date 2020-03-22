@@ -9,6 +9,12 @@ However, this new implementation should be more accurate as discussed in (Alduch
 
 > Alduchov, O.A. and Eskridge, R.E., 1996. Improved Magnus form approximation of saturation vapor pressure. Journal of Applied Aeteorology, 35(4), pp.601-609.
 
+## Minor changes
+
+* Update internal station list to latest
+
+* Enhanced documentation
+
 # GSODR v2.0.1
  
 ## Bug fixes
