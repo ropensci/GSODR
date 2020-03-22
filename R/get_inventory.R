@@ -1,6 +1,5 @@
 
-#' Download and return a data frame of \acronym{GSOD} weather station data
-#'  inventories
+#' Download and Return a data.table Object GSOD Weather Station Data Inventories
 #'
 #' The \acronym{NCEI} maintains a document,
 #' \url{https://www1.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt}, which lists

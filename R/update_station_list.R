@@ -1,5 +1,5 @@
 
-#' Download latest station list information and update internal database
+#' Download Latest Station List Metadata and Update Internal Database
 #'
 #' This function downloads the latest station list (isd-history.csv) from the
 #' \acronym{NCEI} server and updates the data distributed with \pkg{GSODR} to
