@@ -3,8 +3,7 @@ context("process_csv()")
 # Check that .process_csv() works properly and returns a tibble
 test_that(
   ".download_files properly works, subsetting for country and
-  agroclimatology works and .process_gz returns a tibble",
-  {
+  agroclimatology works and .process_gz returns a tibble", {
     skip_on_cran()
     do.call(file.remove, list(list.files(
       tempdir(),

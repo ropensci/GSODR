@@ -114,10 +114,8 @@ get_GSOD <- function(years,
     }
   }
 
-  if (!is.null(max_missing))
-  {
-    if (format(Sys.Date(), "%Y") %in% years)
-    {
+  if (!is.null(max_missing)) {
+    if (format(Sys.Date(), "%Y") %in% years) {
       stop(call. = FALSE,
            "You cannot use `max_missing` with the current, incomplete year.")
     }
@@ -184,4 +182,3 @@ get_GSOD <- function(years,
 
   return(GSOD)
 }
-

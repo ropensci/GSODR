@@ -47,8 +47,7 @@ test_that("Station validations are properly handled for years available", {
 
 # Check missing days in non-leap years -----------------------------------------
 test_that("missing days check allows stations with permissible days missing,
-          non-leap year",
-          {
+          non-leap year", {
             max_missing <- 5
             td <- tempdir()
             just_right_2015 <-
@@ -59,7 +58,7 @@ test_that("missing days check allows stations with permissible days missing,
             dir.create(path = file.path(td, "2015"))
 
             filenames <- c("just_right0", "too_short00")
-            sapply(1:length(df_list),
+            sapply(seq_len(length(df_list)),
                    function(x)
                      write.csv(df_list[[x]],
                                file = paste0(td, "/2015/", filenames[x],
@@ -86,8 +85,7 @@ test_that("missing days check allows stations with permissible days missing,
 
 # Check missing days in leap years ---------------------------------------------
 test_that("missing days check allows stations with permissible days missing,
-          leap year",
-          {
+          leap year", {
             max_missing <- 5
             td <- tempdir()
             just_right_2016 <-
@@ -98,7 +96,7 @@ test_that("missing days check allows stations with permissible days missing,
             dir.create(path = file.path(td, "2016"))
 
             filenames <- c("just_right0", "too_short00")
-            sapply(1:length(df_list),
+            sapply(seq_len(length(df_list)),
                    function(x)
                      write.csv(df_list[[x]],
                                file = paste0(td, "/2016/", filenames[x],
@@ -160,8 +158,7 @@ test_that("Check validate country returns a two letter code", {
 
 # Check validate country returns an error on invalid entry----------------------
 test_that("Check validate country returns an error on invalid entry when
-          mispelled",
-          {
+          mispelled", {
             isd_history <- NULL
             load(system.file("extdata", "isd_history.rda", package = "GSODR"))
             country <- "Philipines"
@@ -170,8 +167,7 @@ test_that("Check validate country returns an error on invalid entry when
 
 test_that(
   "Check validate country returns an error on invalid entry when two
-  two characters are used that are not in the list",
-  {
+  two characters are used that are not in the list", {
     isd_history <- NULL
     load(system.file("extdata", "isd_history.rda", package = "GSODR"))
     country <- "RZ"
@@ -180,8 +176,7 @@ test_that(
 
 test_that(
   "Check validate country returns an error on invalid entry when two
-  three characters are used that are not in the list",
-  {
+  three characters are used that are not in the list", {
     isd_history <- NULL
     load(system.file("extdata", "isd_history.rda", package = "GSODR"))
     country <- "RPS"

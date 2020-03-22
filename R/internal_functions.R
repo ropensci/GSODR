@@ -50,9 +50,9 @@
     )
   }
   BEGIN <-
-    as.numeric(substr(isd_history[isd_history$STNID == station,]$BEGIN, 1, 4))
+    as.numeric(substr(isd_history[isd_history$STNID == station, ]$BEGIN, 1, 4))
   END <-
-    as.numeric(substr(isd_history[isd_history$STNID == station,]$END, 1, 4))
+    as.numeric(substr(isd_history[isd_history$STNID == station, ]$END, 1, 4))
   if (min(years) < BEGIN | max(years) > END) {
     message("\nThis station, ",
             station,
@@ -116,7 +116,8 @@
 #' @param max_missing User entered maximum permissible missing days
 #' @param GSOD_list A list of GSOD files that have been downloaded from NCEI
 #' @keywords internal
-#' @return A validated `list()` of GSOD files that meet requirements for missing days
+#' @return A validated `list()` of GSOD files that meet requirements for missing
+#' days
 #' @noRd
 
 .validate_missing_days <-
@@ -267,7 +268,7 @@
 .agroclimatology_list <-
   function(file_list, isd_history, years) {
     station_list <- isd_history[isd_history$LAT >= -60 &
-                                  isd_history$LAT <= 60,]$STNID
+                                  isd_history$LAT <= 60, ]$STNID
     station_list <- gsub("-", "", station_list)
 
     station_list <-
@@ -299,7 +300,7 @@
            isd_history,
            years) {
     station_list <-
-      isd_history[isd_history$CTRY == country,]$STNID
+      isd_history[isd_history$CTRY == country, ]$STNID
     station_list <- gsub("-", "", station_list)
     station_list <-
       CJ(years, sorted = FALSE)[, paste0(tempdir(),
