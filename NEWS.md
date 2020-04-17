@@ -3,11 +3,11 @@
 ## Major changes
 
 * Implement new calculations for EA, ES and RH using improved August-Roche-Magnus approximation (Alduchov & Eskridge 1996).
-HT Rich Ianonne for his use in [stationaRy](https://cran.r-project.org/package=stationaRy).
+HT Rich Iannone for his use in [stationaRy](https://cran.r-project.org/package=stationaRy).
 This will result in different EA, ES and RH calculations from the prior versions of GSODR.
 However, this new implementation should be more accurate as discussed in (Alduchov & Eskridge 1996).
 
-> Alduchov, O.A. and Eskridge, R.E., 1996. Improved Magnus form approximation of saturation vapor pressure. Journal of Applied Aeteorology, 35(4), pp.601-609.
+> Alduchov, O.A. and Eskridge, R.E., 1996. Improved Magnus form approximation of saturation vapor pressure. Journal of Applied Meteorology and Climatology, 35(4), pp.601-609.
 
 ## Minor changes
 

@@ -79,6 +79,7 @@ Suggests:
     tidyr
 RoxygenNote: 7.1.0
 Encoding: UTF-8
+Language: en-AU
 NeedsCompilation: no
 Repository: CRAN
 LazyData: FALSE
