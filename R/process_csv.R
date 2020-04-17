@@ -93,7 +93,7 @@
   }
 
   # Add STNID col --------------------------------------------------------------
-  DT[, STNID := gsub("^(.{6})(.*)$', '\\1-\\2", DT$STATION)]
+  DT[, STNID := gsub("^(.{6})(.*)$", "\\1-\\2", DT$STATION)]
 
   # Add and convert date related columns ---------------------------------------
   DT[, YEARMODA := as.Date(DATE, format = "%Y-%m-%d")]
