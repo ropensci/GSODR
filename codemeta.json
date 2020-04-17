@@ -35,7 +35,7 @@
   "keywords": ["US-NCEI", "meteorological-data", "global-weather", "weather", "weather-data", "meteorology", "station-data", "surface-weather", "data-access", "US-NCDC"],
   "license": "https://spdx.org/licenses/MIT",
   "title": "GSODR",
-  "version": "2.0.1.9000",
+  "version": "2.1.0",
   "name": "GSODR: Global Surface Summary of the Day ('GSOD') Weather Data Client",
   "issueTracker": "https://github.com/ropensci/GSODR/issues",
   "programmingLanguage": {
