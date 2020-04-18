@@ -47,9 +47,9 @@ install_github("ropensci/GSODR")
 
 There are several other sources of weather data and ways of retrieving them through R. Several are also [rOpenSci](https://ropensci.org) projects.
 
-The [_**GSODTools**_](https://github.com/environmentalinformatics-marburg/GSODTools) by [Florian Detsch](https://github.com/fdetsch) is an R package that offers similar functionality as _GSODR_, but also has the ability to graph the data and working with data for time series analysis.
+The [_**GSODTools**_](https://github.com/environmentalinformatics-marburg/GSODTools) by [Florian Detsch](https://github.com/fdetsch) is an R package that offers similar functionality as _**GSODR**_, but also has the ability to graph the data and working with data for time series analysis.
 
-The [_**gsod**_](https://github.com/databrew/gsod) package from [DataBrew](http://www.databrew.cc/posts/gsod.html) aims to streamline the way that researchers and data scientists interact with and utilize weather data and relies on [_GSODR_], but provides data in the package rather than downloading so it is faster (though available data may be out of date).
+The [_**gsod**_](https://github.com/databrew/gsod) package from [DataBrew](http://www.databrew.cc/posts/gsod.html) aims to streamline the way that researchers and data scientists interact with and utilise weather data and relies on _**GSODR**_, but provides data in the package rather than downloading so it is faster (though available data may be out of date).
 
 [_**rnoaa**_](https://CRAN.R-project.org/package=rnoaa), from [rOpenSci](https://docs.ropensci.org/rnoaa/) offers tools for interacting with and downloading weather data from the United States National Oceanic and Atmospheric Administration but lacks support for GSOD data.
 
@@ -61,7 +61,7 @@ The [_**gsod**_](https://github.com/databrew/gsod) package from [DataBrew](http:
 
 [_**weathercan**_](https://CRAN.R-project.org/package=weathercan) from [rOpenSci](https://github.com/ropensci/weathercan) makes it easier to search for and download multiple months/years of historical weather data from Environment and Climate Change Canada (ECCC) website.
 
-[_**CliFro**_](https://CRAN.R-project.org/package=clifro) from [rOpenSci](https://docs.ropensci.org/clifro/) is a web portal to the New Zealand National Climate Database and provides public access (via subscription) to around 6,500 various climate stations (see <https://cliflo.niwa.co.nz/> for more information). Collating and manipulating data from CliFlo (hence clifro) and importing into R for further analysis, exploration and visualisation is now straightforward and coherent. The user is required to have an Internet connection, and a current CliFlo subscription (free) if data from stations, other than the public Reefton electronic weather station, is sought.
+[_**clifro**_](https://CRAN.R-project.org/package=clifro) from [rOpenSci](https://docs.ropensci.org/clifro/) is a web portal to the New Zealand National Climate Database and provides public access (via subscription) to around 6,500 various climate stations (see <https://cliflo.niwa.co.nz/> for more information). Collating and manipulating data from CliFlo (hence clifro) and importing into R for further analysis, exploration and visualisation is now straightforward and coherent. The user is required to have an Internet connection, and a current CliFlo subscription (free) if data from stations, other than the public Reefton electronic weather station, is sought.
 
 [_**weatherData**_](https://CRAN.R-project.org/package=weatherData) provides a selection of functions to fetch weather data from Weather Underground and return it as a clean data frame.
 
