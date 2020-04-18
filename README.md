@@ -8,7 +8,7 @@
 [![](https://badges.ropensci.org/79_status.svg)](https://github.com/ropensci/onboarding/issues/79)
 <!-- badges: end -->
 
- # _GSODR_: Global Surface Summary of the Day (GSOD) Weather Data Client for R <img style="float: right;" src="man/figures/logo.png">
+ # <img style="float: right;" src="man/figures/logo.png"> _GSODR_: Global Surface Summary of the Day (GSOD) Weather Data Client for R
 
 ## Introduction
 
