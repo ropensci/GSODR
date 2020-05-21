@@ -71,7 +71,7 @@ jobs:
           brew uninstall --ignore-dependencies postgresql
           brew tap osgeo/osgeo4mac
           brew update
-          brew install osgeo-gdal osgeo-proj
+          brew install osgeo-gdal osgeo-proj udunits
 
       - name: Install dependencies
         run: |
