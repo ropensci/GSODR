@@ -73,8 +73,6 @@ The [_**gsod**_](https://github.com/databrew/gsod) package from [DataBrew](http:
 
 [_**clifro**_](https://CRAN.R-project.org/package=clifro) from [rOpenSci](https://docs.ropensci.org/clifro/) is a web portal to the New Zealand National Climate Database and provides public access (via subscription) to around 6,500 various climate stations (see <https://cliflo.niwa.co.nz/> for more information). Collating and manipulating data from CliFlo (hence clifro) and importing into R for further analysis, exploration and visualisation is now straightforward and coherent. The user is required to have an Internet connection, and a current CliFlo subscription (free) if data from stations, other than the public Reefton electronic weather station, is sought.
 
-[_**weatherData**_](https://CRAN.R-project.org/package=weatherData) provides a selection of functions to fetch weather data from Weather Underground and return it as a clean data frame.
-
 ## Notes
 
 ### WMO Resolution 40\. NOAA Policy
