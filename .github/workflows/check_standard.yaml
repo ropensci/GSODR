@@ -68,6 +68,7 @@ jobs:
         env:
           RHUB_PLATFORM: macos-highsierra-release
         run: |
+          brew uninstall --ignore-dependencies postgresql
           brew tap osgeo/osgeo4mac
           brew update
           brew install osgeo-gdal osgeo-proj
