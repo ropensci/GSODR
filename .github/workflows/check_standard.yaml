@@ -63,6 +63,14 @@ jobs:
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
           sudo -s eval "$sysreqs"
 
+        if: runner.os == 'macos'
+        env:
+          RHUB_PLATFORM: macos-highsierra-release
+        run: |
+          brew tap cask osgeo/osgeo4mac
+          brew update
+          brew install osgeo-gdal osgeo-proj
+
       - name: Install dependencies
         run: |
           remotes::install_deps(dependencies = TRUE)
