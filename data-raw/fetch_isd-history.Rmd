@@ -76,7 +76,7 @@ isd_history[, c("USAF", "WBAN", "ICAO", "ELEV(M)", "STNID_len") := NULL]
 
 ```{r merge-country, eval=TRUE, message=FALSE}
 isd_history <-
-  isd_history[countrycode::codelist, on = c("CTRY" = "fips")]
+  isd_history[as.data.table(countrycode::codelist), on = c("CTRY" = "fips")]
 
 isd_history <- isd_history[, c(
   "STNID",
