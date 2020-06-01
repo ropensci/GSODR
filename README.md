@@ -6,9 +6,12 @@
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) 
 [![JOSS](http://joss.theoj.org/papers/10.21105/joss.00177/status.svg)](http://joss.theoj.org/papers/14021f4e4931cdaab4ea41be27df2df6) 
 [![](https://badges.ropensci.org/79_status.svg)](https://github.com/ropensci/onboarding/issues/79)
+[![tic](https://github.com/ropensci/GSODR/workflows/tic/badge.svg?branch=master)](https://github.com/ropensci/GSODR/actions)
 <!-- badges: end -->
 
- # _GSODR_: Global Surface Summary of the Day (GSOD) Weather Data Client for R ![](man/figures/logo.png)
+# _GSODR_: Global Surface Summary of the Day (GSOD) Weather Data Client for R
+
+<img style="float: right;" src="man/figures/logo.png">
 
 ## Introduction
 
@@ -71,8 +74,6 @@ The [_**gsod**_](https://github.com/databrew/gsod) package from [DataBrew](http:
 
 [_**clifro**_](https://CRAN.R-project.org/package=clifro) from [rOpenSci](https://docs.ropensci.org/clifro/) is a web portal to the New Zealand National Climate Database and provides public access (via subscription) to around 6,500 various climate stations (see <https://cliflo.niwa.co.nz/> for more information). Collating and manipulating data from CliFlo (hence clifro) and importing into R for further analysis, exploration and visualisation is now straightforward and coherent. The user is required to have an Internet connection, and a current CliFlo subscription (free) if data from stations, other than the public Reefton electronic weather station, is sought.
 
-[_**weatherData**_](https://CRAN.R-project.org/package=weatherData) provides a selection of functions to fetch weather data from Weather Underground and return it as a clean data frame.
-
 ## Notes
 
 ### WMO Resolution 40\. NOAA Policy
@@ -95,4 +96,4 @@ _Users of these data should take into account the following (from the [NCEI webs
 
 ## References
 
-Alduchov, O.A. and Eskridge, R.E., 1996\. Improved Magnus form approximation of saturation vapor pressure. Journal of Applied Meteorology and Climatology, 35(4), pp.601-609 DOI: <10.1175%2F1520-0450%281996%29035%3C0601%3AIMFAOS%3E2.0.CO%3B2>.
+Alduchov, O.A. and Eskridge, R.E., 1996. Improved Magnus form approximation of saturation vapor pressure. Journal of Applied Meteorology and Climatology, 35(4), pp. 601-609 DOI: 10.1175/1520-0450(1996)035<0601:IMFAOS>2.0.CO;2.
