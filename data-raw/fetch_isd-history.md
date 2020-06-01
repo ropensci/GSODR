@@ -26,23 +26,10 @@ file for inclusion in *GSODR*:
 ## Set up workspace
 
 ``` r
-if (!require("sessioninfo")) {
-  install.packages("sessioninfo", repos = "https://cran.rstudio.com/")
+if (!require("pacman")) {
+  install.packages("pacman", repos = "https://cran.rstudio.com/")
 }
-
-if (!require("skimr")) {
-  install.packages("skimr", repos = "https://cran.rstudio.com/")
-}
-
-if (!require("countrycode"))
-{
-  install.packages("countrycode",
-                   repos = c(CRAN = "https://cran.rstudio.com"))
-}
-
-if (!require("data.table")) {
-  install.packages("data.table", repos = "https://cran.rstudio.com/")
-}
+pacman::p_load("sessioninfo", "skimr", "countrycode", "data.table")
 ```
 
 ## Download and clean data
@@ -75,7 +62,7 @@ isd_history[, c("USAF", "WBAN", "ICAO", "ELEV(M)", "STNID_len") := NULL]
 
 ``` r
 isd_history <-
-  isd_history[as.data.table(countrycode::codelist), on = c("CTRY" = "fips")]
+  isd_history[setDT(countrycode::codelist), on = c("CTRY" = "fips")]
 
 isd_history <- isd_history[, c(
   "STNID",
@@ -190,6 +177,7 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  knitr         1.28    2020-02-06 [1] CRAN (R 4.0.0)                     
     ##  lifecycle     0.2.0   2020-03-06 [1] CRAN (R 4.0.0)                     
     ##  magrittr      1.5     2014-11-22 [1] CRAN (R 4.0.0)                     
+    ##  pacman      * 0.5.1   2019-03-11 [1] CRAN (R 4.0.0)                     
     ##  pillar        1.4.4   2020-05-05 [1] CRAN (R 4.0.0)                     
     ##  pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 4.0.0)                     
     ##  prompt        1.0.0   2020-04-25 [1] Github (gaborcsardi/prompt@b332c42)

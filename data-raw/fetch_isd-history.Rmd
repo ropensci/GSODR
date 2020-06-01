@@ -27,23 +27,10 @@ The following changes are made to the raw data file for inclusion in _GSODR_:
 ## Set up workspace
 
 ```{r set_up_workspace, echo=TRUE, message=FALSE, output=FALSE, warning=FALSE}
-if (!require("sessioninfo")) {
-  install.packages("sessioninfo", repos = "https://cran.rstudio.com/")
+if (!require("pacman")) {
+  install.packages("pacman", repos = "https://cran.rstudio.com/")
 }
-
-if (!require("skimr")) {
-  install.packages("skimr", repos = "https://cran.rstudio.com/")
-}
-
-if (!require("countrycode"))
-{
-  install.packages("countrycode",
-                   repos = c(CRAN = "https://cran.rstudio.com"))
-}
-
-if (!require("data.table")) {
-  install.packages("data.table", repos = "https://cran.rstudio.com/")
-}
+pacman::p_load("sessioninfo", "skimr", "countrycode", "data.table")
 ```
 
 ## Download and clean data
@@ -76,7 +63,7 @@ isd_history[, c("USAF", "WBAN", "ICAO", "ELEV(M)", "STNID_len") := NULL]
 
 ```{r merge-country, eval=TRUE, message=FALSE}
 isd_history <-
-  isd_history[as.data.table(countrycode::codelist), on = c("CTRY" = "fips")]
+  isd_history[setDT(countrycode::codelist), on = c("CTRY" = "fips")]
 
 isd_history <- isd_history[, c(
   "STNID",
