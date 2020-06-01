@@ -62,7 +62,8 @@ update_station_list <- function() {
     isd_history[, c("USAF", "WBAN", "ICAO", "ELEV(M)", "STNID_len") := NULL]
 
     isd_history <-
-      isd_history[countrycode::codelist, on = c("CTRY" = "fips")]
+      isd_history[data.table::setDT(countrycode::codelist),
+                  on = c("CTRY" = "fips")]
 
     isd_history <- isd_history[, c(
       "STNID",
