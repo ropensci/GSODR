@@ -1,5 +1,9 @@
 # GSODR (development version)
 
+## Bug fixes 
+
+* Fix bug where station metadata files could not be updated
+
 # GSODR v2.1.0
 
 ## Major changes
