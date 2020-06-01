@@ -6,6 +6,7 @@
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) 
 [![JOSS](http://joss.theoj.org/papers/10.21105/joss.00177/status.svg)](http://joss.theoj.org/papers/14021f4e4931cdaab4ea41be27df2df6) 
 [![](https://badges.ropensci.org/79_status.svg)](https://github.com/ropensci/onboarding/issues/79)
+[![tic](https://github.com/ropensci/GSODR/workflows/tic/badge.svg?branch=master)](https://github.com/ropensci/GSODR/actions)
 <!-- badges: end -->
 
 # _GSODR_: Global Surface Summary of the Day (GSOD) Weather Data Client for R

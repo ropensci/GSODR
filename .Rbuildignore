@@ -22,3 +22,5 @@ vignettes/figure
 ^GSODR.code-workspace$
 ^doc$
 ^Meta$
+^\.ccache$
+^tic\.R$
