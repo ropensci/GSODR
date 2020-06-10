@@ -1,25 +1,27 @@
-Fetch, Clean and Correct Altitude in GSOD ‘isd\_history.csv’ Data
+Fetch and Clean ‘isd\_history.csv’ File
 ================
 Adam H. Sparks
-2020-06-01
+2020-06-10
 
 # Introduction
 
-The isd\_history file details station metadata including the start and
-stop years used by GSODR to pre-check requests before querying the
-server for download and the country code used by GSODR when subsetting
-for requests by country. The following changes are made to the raw data
-file for inclusion in *GSODR*:
+The isd\_history.csv file details GSOD station metadata. These data
+include the start and stop years used by *GSODR* to pre-check requests
+before querying the server for download and the country code used by
+*GSODR* when subsetting for requests by country. The following checks
+are performed on the raw data file before inclusion in *GSODR*,
 
-  - isd\_history where latitude or longitude are `NA` or both 0 are
-    removed
-
-  - isd\_history where latitude is \< -90˚ or \> 90˚ are removed
-
-  - isd\_history where longitude is \< -180˚ or \> 180˚ are removed
+  - Check for valid lon and lat values;
+    
+      - isd\_history where latitude or longitude are `NA` or both 0 are
+        removed leaving only properly georeferenced stations,
+    
+      - isd\_history where latitude is \< -90˚ or \> 90˚ are removed,
+    
+      - isd\_history where longitude is \< -180˚ or \> 180˚ are removed.
 
   - A new field, STNID, a concatenation of the USAF and WBAN fields, is
-    added
+    added.
 
 # Data Processing
 
@@ -112,7 +114,7 @@ str(isd_history)
     ##  $ CTRY        : chr  "AF" "AF" "AF" "AF" ...
     ##  $ STATE       : chr  "" "" "" "" ...
     ##  $ BEGIN       : int  20100519 19730304 19730629 20010925 19730304 20171229 19730701 19730101 19800316 19730101 ...
-    ##  $ END         : int  20120323 20070905 20070608 20010925 20130703 20171229 20090511 20130313 20010828 20200529 ...
+    ##  $ END         : int  20120323 20070905 20070608 20010925 20130703 20171229 20090511 20130313 20010828 20200607 ...
     ##  $ COUNTRY_NAME: chr  "AFGHANISTAN" "AFGHANISTAN" "AFGHANISTAN" "AFGHANISTAN" ...
     ##  $ ISO2C       : chr  "AF" "AF" "AF" "AF" ...
     ##  $ ISO3C       : chr  "AFG" "AFG" "AFG" "AFG" ...
@@ -145,7 +147,7 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
 
     ## ─ Session info ───────────────────────────────────────────────────────────────
     ##  setting  value                       
-    ##  version  R version 4.0.0 (2020-04-24)
+    ##  version  R version 4.0.1 (2020-06-06)
     ##  os       macOS Catalina 10.15.5      
     ##  system   x86_64, darwin17.0          
     ##  ui       X11                         
@@ -153,7 +155,7 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  collate  en_AU.UTF-8                 
     ##  ctype    en_AU.UTF-8                 
     ##  tz       Australia/Brisbane          
-    ##  date     2020-06-01                  
+    ##  date     2020-06-10                  
     ## 
     ## ─ Packages ───────────────────────────────────────────────────────────────────
     ##  package     * version date       lib source                             
@@ -194,7 +196,7 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  stringr       1.4.0   2019-02-10 [1] CRAN (R 4.0.0)                     
     ##  tibble        3.0.1   2020-04-20 [1] CRAN (R 4.0.0)                     
     ##  tidyselect    1.1.0   2020-05-11 [1] CRAN (R 4.0.0)                     
-    ##  vctrs         0.3.0   2020-05-11 [1] CRAN (R 4.0.0)                     
+    ##  vctrs         0.3.1   2020-06-05 [1] CRAN (R 4.0.0)                     
     ##  withr         2.2.0   2020-04-20 [1] CRAN (R 4.0.0)                     
     ##  xfun          0.14    2020-05-20 [1] CRAN (R 4.0.0)                     
     ##  yaml          2.2.1   2020-02-01 [1] CRAN (R 4.0.0)                     

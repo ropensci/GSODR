@@ -1,5 +1,5 @@
 ---
-title: "Fetch, Clean and Correct Altitude in GSOD 'isd_history.csv' Data"
+title: "Fetch and Clean 'isd_history.csv' File"
 author: "Adam H. Sparks"
 date: "`r Sys.Date()`"
 output: github_document
@@ -11,16 +11,19 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introduction
 
-The isd_history file details station metadata including the start and stop years used by GSODR to pre-check requests before querying the server for download and the country code used by GSODR when subsetting for requests by country.
-The following changes are made to the raw data file for inclusion in _GSODR_:
+The isd_history.csv file details GSOD station metadata.
+These data include the start and stop years used by _GSODR_ to pre-check requests before querying the server for download and the country code used by _GSODR_ when subsetting for requests by country.
+The following checks are performed on the raw data file before inclusion in _GSODR_,
 
-  * isd_history where latitude or longitude are `NA` or both 0 are removed
+  * Check for valid lon and lat values;
+    
+      * isd_history where latitude or longitude are `NA` or both 0 are removed leaving only properly georeferenced stations,
 
-  * isd_history where latitude is < -90˚ or > 90˚ are removed
+      * isd_history where latitude is < -90˚ or > 90˚ are removed,
 
-  * isd_history where longitude is < -180˚ or > 180˚ are removed
+      * isd_history where longitude is < -180˚ or > 180˚ are removed.
 
-  * A new field, STNID, a concatenation of the USAF and WBAN fields, is added
+  * A new field, STNID, a concatenation of the USAF and WBAN fields, is added.
 
 # Data Processing
 
