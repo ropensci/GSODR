@@ -11,7 +11,8 @@
 #' different versions of the isd_history.csv file internally.
 #'
 #' There is no need to use this unless you know that a station exists in the
-#' \pkg{GSODR} data that is not available in the self-contained database.
+#' isd_history.csv file that is not available in \pkg{GSODR's} self-contained
+#' database.
 #'
 #' To directly access these data, use: \cr
 #' \code{load(system.file("extdata", "isd_history.rda", package = "GSODR"))}
