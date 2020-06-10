@@ -35,89 +35,7 @@ library(sf)
 
 plan("multisession")
 GSOD <- get_GSOD(years = 2017, country = "AUS")
-```
 
-```
-## Warning in serialize(data, node$con): 'package:stats' may not be
-## available when loading
-```
-
-```
-## Warning in serialize(data, node$con): 'package:utils' may not be
-## available when loading
-```
-
-```
-## Warning in serialize(data, node$con): 'package:stats' may not be
-## available when loading
-```
-
-```
-## Warning in serialize(data, node$con): 'package:utils' may not be
-## available when loading
-```
-
-```
-## Warning in serialize(data, node$con): 'package:stats' may not be
-## available when loading
-```
-
-```
-## Warning in serialize(data, node$con): 'package:utils' may not be
-## available when loading
-```
-
-```
-## Warning in serialize(data, node$con): 'package:stats' may not be
-## available when loading
-```
-
-```
-## Warning in serialize(data, node$con): 'package:utils' may not be
-## available when loading
-```
-
-```
-## Warning in serialize(data, node$con): 'package:stats' may not be
-## available when loading
-```
-
-```
-## Warning in serialize(data, node$con): 'package:utils' may not be
-## available when loading
-```
-
-```
-## Warning in serialize(data, node$con): 'package:stats' may not be
-## available when loading
-```
-
-```
-## Warning in serialize(data, node$con): 'package:utils' may not be
-## available when loading
-```
-
-```
-## Warning in serialize(data, node$con): 'package:stats' may not be
-## available when loading
-```
-
-```
-## Warning in serialize(data, node$con): 'package:utils' may not be
-## available when loading
-```
-
-```
-## Warning in serialize(data, node$con): 'package:stats' may not be
-## available when loading
-```
-
-```
-## Warning in serialize(data, node$con): 'package:utils' may not be
-## available when loading
-```
-
-```r
 GSOD_SF <- st_as_sf(x = GSOD,
                     coords = c("LONGITUDE", "LATITUDE"),
                     crs = "+proj=longlat +datum=WGS84")
@@ -133,8 +51,8 @@ str(GSOD_SF)
 ##  $ STATE           : chr  "" "" "" "" ...
 ##  $ ELEVATION       : num  24 24 24 24 24 24 24 24 24 24 ...
 ##  $ BEGIN           : int  20010912 20010912 20010912 20010912 20010912 20010912 20010912 20010912 20010912 20010912 ...
-##  $ END             : int  20200310 20200310 20200310 20200310 20200310 20200310 20200310 20200310 20200310 20200310 ...
-##  $ YEARMODA        : Date, format: "2017-01-01" ...
+##  $ END             : int  20200607 20200607 20200607 20200607 20200607 20200607 20200607 20200607 20200607 20200607 ...
+##  $ YEARMODA        : Date, format: "2017-01-01" "2017-01-02" "2017-01-03" "2017-01-04" ...
 ##  $ YEAR            : int  2017 2017 2017 2017 2017 2017 2017 2017 2017 2017 ...
 ##  $ MONTH           : int  1 1 1 1 1 1 1 1 1 1 ...
 ##  $ DAY             : int  1 2 3 4 5 6 7 8 9 10 ...
@@ -172,7 +90,7 @@ str(GSOD_SF)
 ##  $ geometry        :sfc_POINT of length 182508; first list element:  'XY' num  126.6 -14.3
 ##  - attr(*, "sf_column")= chr "geometry"
 ##  - attr(*, "agr")= Factor w/ 3 levels "constant","aggregate",..: NA NA NA NA NA NA NA NA NA NA ...
-##   ..- attr(*, "names")= chr  "STNID" "NAME" "CTRY" "STATE" ...
+##   ..- attr(*, "names")= chr [1:42] "STNID" "NAME" "CTRY" "STATE" ...
 ```
 
 ## Saving _sf_ objects
@@ -185,8 +103,7 @@ write_sf(obj = GSOD_SF, dsn = file.path(tempdir(), "GSOD.shp"))
 ```
 
 ```
-## Warning in abbreviate_shapefile_names(obj): Field names abbreviated
-## for ESRI Shapefile driver
+## Warning in abbreviate_shapefile_names(obj): Field names abbreviated for ESRI Shapefile driver
 ```
 
 As is writing a GeoPackage from the _sf_ object.
@@ -207,13 +124,12 @@ AUS_stations <-
 ```
 
 ```
-## Reading layer `GSOD' from data source `/private/var/folders/yv/4xy6zs3x5qsgj96389nkjvtw0000gn/T/RtmpEinr0P/GSOD.gpkg' using driver `GPKG'
+## Reading layer `GSOD' from data source `/private/var/folders/yv/4xy6zs3x5qsgj96389nkjvtw0000gn/T/Rtmp3H12Mk/GSOD.gpkg' using driver `GPKG'
 ## Simple feature collection with 182508 features and 42 fields
 ## geometry type:  POINT
 ## dimension:      XY
 ## bbox:           xmin: 113.6 ymin: -54.5 xmax: 159.1 ymax: -10.05
-## epsg (SRID):    4326
-## proj4string:    +proj=longlat +datum=WGS84 +no_defs
+## CRS:            4326
 ```
 
 ```r
@@ -232,13 +148,21 @@ One easy way is using _dplyr_. This option is much faster to load since it does 
 ```r
 library(dplyr)
 AUS_sqlite <- tbl(src_sqlite(file.path(tempdir(), "GSOD.gpkg")), "GSOD")
+```
+
+```
+## Warning: `src_sqlite()` is deprecated as of dplyr 1.0.0.
+## Please use `tbl()` directly with a database connection
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_warnings()` to see where this warning was generated.
+```
+
+```r
 class(AUS_sqlite)
 ```
 
 ```
-## [1] "tbl_SQLiteConnection" "tbl_dbi"             
-## [3] "tbl_sql"              "tbl_lazy"            
-## [5] "tbl"
+## [1] "tbl_SQLiteConnection" "tbl_dbi"              "tbl_sql"              "tbl_lazy"             "tbl"
 ```
 
 # References

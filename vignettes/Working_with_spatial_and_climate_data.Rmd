@@ -34,89 +34,7 @@ PHL <-
   get_GSOD(years = 2010,
            country = "Philippines",
            max_missing = 5)
-```
 
-```
-## Warning in serialize(data, node$con): 'package:stats' may not be
-## available when loading
-```
-
-```
-## Warning in serialize(data, node$con): 'package:utils' may not be
-## available when loading
-```
-
-```
-## Warning in serialize(data, node$con): 'package:stats' may not be
-## available when loading
-```
-
-```
-## Warning in serialize(data, node$con): 'package:utils' may not be
-## available when loading
-```
-
-```
-## Warning in serialize(data, node$con): 'package:stats' may not be
-## available when loading
-```
-
-```
-## Warning in serialize(data, node$con): 'package:utils' may not be
-## available when loading
-```
-
-```
-## Warning in serialize(data, node$con): 'package:stats' may not be
-## available when loading
-```
-
-```
-## Warning in serialize(data, node$con): 'package:utils' may not be
-## available when loading
-```
-
-```
-## Warning in serialize(data, node$con): 'package:stats' may not be
-## available when loading
-```
-
-```
-## Warning in serialize(data, node$con): 'package:utils' may not be
-## available when loading
-```
-
-```
-## Warning in serialize(data, node$con): 'package:stats' may not be
-## available when loading
-```
-
-```
-## Warning in serialize(data, node$con): 'package:utils' may not be
-## available when loading
-```
-
-```
-## Warning in serialize(data, node$con): 'package:stats' may not be
-## available when loading
-```
-
-```
-## Warning in serialize(data, node$con): 'package:utils' may not be
-## available when loading
-```
-
-```
-## Warning in serialize(data, node$con): 'package:stats' may not be
-## available when loading
-```
-
-```
-## Warning in serialize(data, node$con): 'package:utils' may not be
-## available when loading
-```
-
-```r
 PHL <- st_as_sf(
   x = PHL,
   coords = c("LONGITUDE", "LATITUDE"),
@@ -135,20 +53,20 @@ Using the GeoPackage that was just created, you can now create a KML file to ope
 library(rgdal)
 library(spacetime)
 library(plotKML)
+#> Error: package or namespace load failed for 'plotKML' in dyn.load(file, DLLpath = DLLpath, ...):
+#>  unable to load shared object '/Users/adamsparks/.R/library/gstat/libs/gstat.so':
+#>   dlopen(/Users/adamsparks/.R/library/gstat/libs/gstat.so, 6): Library not loaded: /usr/local/gfortran/lib/libgfortran.3.dylib
+#>   Referenced from: /Users/adamsparks/.R/library/gstat/libs/gstat.so
+#>   Reason: image not found
 
 layers <- ogrListLayers(dsn = file.path(tempdir(), "PHL-2010.gpkg"))
 pnts <-
   readOGR(dsn = file.path(tempdir(), "PHL-2010.gpkg"), layers[1])
-```
+#> OGR data source with driver: GPKG 
+#> Source: "/private/var/folders/yv/4xy6zs3x5qsgj96389nkjvtw0000gn/T/Rtmp3H12Mk/PHL-2010.gpkg", layer: "PHL-2010"
+#> with 4709 features
+#> It has 42 fields
 
-```
-## OGR data source with driver: GPKG 
-## Source: "/private/var/folders/yv/4xy6zs3x5qsgj96389nkjvtw0000gn/T/RtmpEinr0P/PHL-2010.gpkg", layer: "PHL-2010"
-## with 4709 features
-## It has 42 fields
-```
-
-```r
 # Plot results in Google Earth as a spacetime object:
 pnts$DATE = as.Date(paste(pnts$YEAR, pnts$MONTH, pnts$DAY, sep = "-"))
 row.names(pnts) <- paste("point", 1:nrow(pnts), sep = "")
@@ -171,6 +89,7 @@ kml(
   file.name = "Temperatures_PHL_2010-2010.kml",
   folder.name = "TEMP"
 )
+#> Error in kml(tmp_ST, dtime = 24 * 3600, colour = TEMP, shape = shape, : could not find function "kml"
 
 system("zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml")
 ```
@@ -302,14 +221,7 @@ clim_temp_df <- data.frame(
 pnts$MONTHC <- as.numeric(paste(pnts$MONTH))
 temp <-
   left_join(pnts@data, clim_temp_df, by = c("STNID", "MONTHC"))
-```
 
-```
-## Warning: Column `STNID` joining factors with different levels,
-## coercing to character vector
-```
-
-```r
 temp <- temp %>%
   group_by(MONTH) %>%
   mutate(AVG_DAILY_TEMP = round(mean(TEMP), 1))
