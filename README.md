@@ -14,7 +14,8 @@
 
 ## Introduction
 
-The GSOD or [Global Surface Summary of the Day (GSOD)](https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod) data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage. _**GSODR**_ aims to make it easy to find, transfer and format the data you need for use in analysis and provides five main functions for facilitating this:
+The GSOD or [Global Surface Summary of the Day (GSOD)](https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod) data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage.
+_**GSODR**_ aims to make it easy to find, transfer and format the data you need for use in analysis and provides five main functions for facilitating this:
 
 - `get_GSOD()` - this function queries and transfers files from the NCEI's web server, reformats them and returns a data frame.
 
@@ -26,7 +27,10 @@ The GSOD or [Global Surface Summary of the Day (GSOD)](https://data.noaa.gov/dat
 
 - `get_inventory()` - this function downloads the latest station inventory information from the NCEI's server and returns the header information about the latest version as a message in the console and a tidy data frame of the stations' inventory for each month that data are reported.
 
-When reformatting data either with `get_GSOD()` or `reformat_GSOD()`, all units are converted to International System of Units (SI), _e.g._, inches to millimetres and Fahrenheit to Celsius. File output is returned as a `data.table` object, summarising each year by station, which also includes vapour pressure and relative humidity elements calculated from existing data in GSOD. Additional data are calculated by this R package using the original data and included in the final data. These include vapour pressure (ea and es) and relative humidity calculated using the improved August-Roche-Magnus approximation (Alduchov and Eskridge 1996).
+When reformatting data either with `get_GSOD()` or `reformat_GSOD()`, all units are converted to International System of Units (SI), _e.g._, inches to millimetres and Fahrenheit to Celsius.
+File output is returned as a `data.table` object, summarising each year by station, which also includes vapour pressure and relative humidity elements calculated from existing data in GSOD.
+Additional data are calculated by this R package using the original data and included in the final data.
+These include vapour pressure (ea and es) and relative humidity calculated using the improved August-Roche-Magnus approximation (Alduchov and Eskridge 1996).
 
 For more information see the description of the data provided by NCEI, <http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
 
@@ -42,7 +46,9 @@ install.packages("GSODR")
 
 ### Development Version
 
-A development version is available from from GitHub. If you wish to install the development version that may have new features or bug fixes before the CRAN version does (but also may not work properly), please install the [remotes](https://github.com/r-lib/remotes) package, available from CRAN. We strive to keep the master branch on GitHub functional and working properly.
+A development version is available from from GitHub.
+If you wish to install the development version that may have new features or bug fixes before the CRAN version does (but also may not work properly), please install the [remotes](https://github.com/r-lib/remotes) package, available from CRAN.
+We strive to keep the main branch on GitHub functional and working properly.
 
 ```r
 if (!require("remotes")) {
@@ -55,7 +61,8 @@ install_github("ropensci/GSODR")
 
 ## Other Sources of Weather Data in R
 
-There are several other sources of weather data and ways of retrieving them through R. Several are also [rOpenSci](https://ropensci.org) projects.
+There are several other sources of weather data and ways of retrieving them through R.
+Several are also [rOpenSci](https://ropensci.org) projects.
 
 The [_**GSODTools**_](https://github.com/environmentalinformatics-marburg/GSODTools) by [Florian Detsch](https://github.com/fdetsch) is an R package that offers similar functionality as _**GSODR**_, but also has the ability to graph the data and working with data for time series analysis.
 
@@ -63,7 +70,8 @@ The [_**gsod**_](https://github.com/databrew/gsod) package from [DataBrew](http:
 
 [_**rnoaa**_](https://CRAN.R-project.org/package=rnoaa), from [rOpenSci](https://docs.ropensci.org/rnoaa/) offers tools for interacting with and downloading weather data from the United States National Oceanic and Atmospheric Administration but lacks support for GSOD data.
 
-[_**stationaRy**_](https://cran.r-project.org/package=stationaRy), from Richard Iannone offers hourly meteorological data from stations located all over the world. There is a wealth of data available, with historic weather data accessible from nearly 30,000 stations.
+[_**stationaRy**_](https://cran.r-project.org/package=stationaRy), from Richard Iannone offers hourly meteorological data from stations located all over the world.
+There is a wealth of data available, with historic weather data accessible from nearly 30,000 stations.
 
 [_**bomrang**_](https://CRAN.R-project.org/package=bomrang), from [rOpenSci](https://docs.ropensci.org/bomrang/) provides functions to interface with Australia Government Bureau of Meteorology (BoM) data, fetching current and historical data including précis and marine forecasts, current weather data from stations, agriculture bulletin data, BoM 0900 or 1500 weather bulletins and satellite and radar imagery.
 
@@ -71,7 +79,9 @@ The [_**gsod**_](https://github.com/databrew/gsod) package from [DataBrew](http:
 
 [_**weathercan**_](https://CRAN.R-project.org/package=weathercan) from [rOpenSci](https://github.com/ropensci/weathercan) makes it easier to search for and download multiple months/years of historical weather data from Environment and Climate Change Canada (ECCC) website.
 
-[_**clifro**_](https://CRAN.R-project.org/package=clifro) from [rOpenSci](https://docs.ropensci.org/clifro/) is a web portal to the New Zealand National Climate Database and provides public access (via subscription) to around 6,500 various climate stations (see <https://cliflo.niwa.co.nz/> for more information). Collating and manipulating data from CliFlo (hence clifro) and importing into R for further analysis, exploration and visualisation is now straightforward and coherent. The user is required to have an Internet connection, and a current CliFlo subscription (free) if data from stations, other than the public Reefton electronic weather station, is sought.
+[_**clifro**_](https://CRAN.R-project.org/package=clifro) from [rOpenSci](https://docs.ropensci.org/clifro/) is a web portal to the New Zealand National Climate Database and provides public access (via subscription) to around 6,500 various climate stations (see <https://cliflo.niwa.co.nz/> for more information).
+Collating and manipulating data from CliFlo (hence clifro) and importing into R for further analysis, exploration and visualisation is now straightforward and coherent.
+The user is required to have an Internet connection, and a current CliFlo subscription (free) if data from stations, other than the public Reefton electronic weather station, is sought.
 
 ## Notes
 
