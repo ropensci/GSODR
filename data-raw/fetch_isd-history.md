@@ -1,7 +1,7 @@
 Fetch and Clean ‘isd\_history.csv’ File
 ================
 Adam H. Sparks
-2020-06-10
+2020-06-12
 
 # Introduction
 
@@ -114,7 +114,7 @@ str(isd_history)
     ##  $ CTRY        : chr  "AF" "AF" "AF" "AF" ...
     ##  $ STATE       : chr  "" "" "" "" ...
     ##  $ BEGIN       : int  20100519 19730304 19730629 20010925 19730304 20171229 19730701 19730101 19800316 19730101 ...
-    ##  $ END         : int  20120323 20070905 20070608 20010925 20130703 20171229 20090511 20130313 20010828 20200607 ...
+    ##  $ END         : int  20120323 20070905 20070608 20010925 20130703 20171229 20090511 20130313 20010828 20200609 ...
     ##  $ COUNTRY_NAME: chr  "AFGHANISTAN" "AFGHANISTAN" "AFGHANISTAN" "AFGHANISTAN" ...
     ##  $ ISO2C       : chr  "AF" "AF" "AF" "AF" ...
     ##  $ ISO3C       : chr  "AFG" "AFG" "AFG" "AFG" ...
@@ -155,7 +155,7 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  collate  en_AU.UTF-8                 
     ##  ctype    en_AU.UTF-8                 
     ##  tz       Australia/Brisbane          
-    ##  date     2020-06-10                  
+    ##  date     2020-06-12                  
     ## 
     ## ─ Packages ───────────────────────────────────────────────────────────────────
     ##  package     * version date       lib source                             
@@ -166,7 +166,7 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
     ##  countrycode * 1.2.0   2020-05-22 [1] CRAN (R 4.0.0)                     
     ##  crayon        1.3.4   2017-09-16 [1] CRAN (R 4.0.0)                     
     ##  curl          4.3     2019-12-02 [1] CRAN (R 4.0.0)                     
-    ##  data.table  * 1.12.9  2020-05-28 [1] local                              
+    ##  data.table  * 1.12.8  2019-12-09 [1] CRAN (R 4.0.0)                     
     ##  digest        0.6.25  2020-02-23 [1] CRAN (R 4.0.0)                     
     ##  dplyr         1.0.0   2020-05-29 [1] CRAN (R 4.0.0)                     
     ##  ellipsis      0.3.1   2020-05-15 [1] CRAN (R 4.0.0)                     
