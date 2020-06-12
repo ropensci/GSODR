@@ -1,8 +1,6 @@
-
-# _GSODR_
+# _GSODR_ <img style="float: right;" src="man/figures/logo.png">
 
 <!-- badges: start -->
-<img style="float: right;" src="man/figures/logo.png">
 [![tic](https://github.com/ropensci/GSODR/workflows/tic/badge.svg?branch=master)](https://github.com/ropensci/GSODR/actions)
 [![codecov](https://codecov.io/gh/ropensci/GSODR/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/GSODR)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.439850.svg)](https://doi.org/10.5281/zenodo.439850) 
@@ -11,6 +9,8 @@
 [![JOSS](http://joss.theoj.org/papers/10.21105/joss.00177/status.svg)](http://joss.theoj.org/papers/14021f4e4931cdaab4ea41be27df2df6) 
 [![](https://badges.ropensci.org/79_status.svg)](https://github.com/ropensci/onboarding/issues/79)
 <!-- badges: end -->
+
+--------------------
 
 ## A Global Surface Summary of the Day (GSOD) Weather Data Client for R
 
