@@ -58,7 +58,6 @@ Imports:
     stats,
     utils
 Suggests:
-    covr,
     dplyr,
     future,
     ggplot2,
@@ -66,15 +65,9 @@ Suggests:
     knitr,
     mapproj,
     maps,
-    plotKML,
-    reshape2,
-    rgdal (>= 1.1-9),
+    remotes,
     rmarkdown,
     roxygen2 (>= 6.1.0),
-    sf,
-    skimr,
-    sp,
-    spacetime,
     testthat,
     tidyr
 RoxygenNote: 7.1.0
