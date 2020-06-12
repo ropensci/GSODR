@@ -35,16 +35,16 @@
   "keywords": ["US-NCEI", "meteorological-data", "global-weather", "weather", "weather-data", "meteorology", "station-data", "surface-weather", "data-access", "US-NCDC"],
   "license": "https://spdx.org/licenses/MIT",
   "title": "GSODR",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "name": "GSODR: Global Surface Summary of the Day ('GSOD') Weather Data Client",
   "issueTracker": "https://github.com/ropensci/GSODR/issues",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "3.6.3",
+    "version": "4.0.1",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 3.6.3 (2020-02-29)",
+  "runtimePlatform": "R version 4.0.1 (2020-06-06)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -385,7 +385,7 @@
   ],
   "contIntegration": "https://travis-ci.org/ropensci/GSODR",
   "releaseNotes": "https://github.com/ropensci/GSODR/blob/master/NEWS.md",
-  "readme": "https://github.com/ropensci/GSODR/blob/master/README.md",
+  "readme": "https://github.com/ropensci/GSODR/blob/main/README.md",
   "citation": [
     {
       "@type": "ScholarlyArticle",

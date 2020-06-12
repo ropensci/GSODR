@@ -1,8 +1,14 @@
-# GSODR (development version)
+# GSODR 2.1.1
 
 ## Bug fixes 
 
 * Fix bug where station metadata files could not be updated
+
+## Minor changes
+
+* Update internal station list to latest
+
+* Correct an error in documentation for `update_station_list()`
 
 # GSODR v2.1.0
 
