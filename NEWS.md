@@ -154,7 +154,7 @@ This allows for end users to use a parallel process of their choice.
 
 * Remove extra code, clean up code-chunks and use `hrbrthemes::theme_ipsum()`
   for
-  [data-raw/fetch_isd-history.md](https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md)
+  [data-raw/fetch_isd-history.md](https://github.com/ropensci/GSODR/blob/main/data-raw/fetch_isd-history.md)
 
 # GSODR 1.2.2
 
@@ -541,7 +541,7 @@ This allows for end users to use a parallel process of their choice.
 
   * stations.rda is compressed
 
-  * stations.rda now includes a field for "corrected" elevation using hole-filled SRTM data from Jarvis et al. 2008, see [https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md](https://github.com/ropensci/GSODR/blob/devel/data-raw/fetch_isd-history.md) for a description
+  * stations.rda now includes a field for "corrected" elevation using hole-filled SRTM data from Jarvis et al. 2008, see [https://github.com/ropensci/GSODR/blob/main/data-raw/fetch_isd-history.md](https://github.com/ropensci/GSODR/blob/devel/data-raw/fetch_isd-history.md) for a description
 
   * Set NA or missing values in CSV or shapefile to -9999 from -9999.99 to
     align with other data sources such as WorldClim
