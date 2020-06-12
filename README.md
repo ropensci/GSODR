@@ -1,4 +1,6 @@
 
+# _GSODR_
+
 <!-- badges: start -->
 <img style="float: right;" src="man/figures/logo.png">
 [![tic](https://github.com/ropensci/GSODR/workflows/tic/badge.svg?branch=master)](https://github.com/ropensci/GSODR/actions)
@@ -10,7 +12,7 @@
 [![](https://badges.ropensci.org/79_status.svg)](https://github.com/ropensci/onboarding/issues/79)
 <!-- badges: end -->
 
-# _GSODR_: Global Surface Summary of the Day (GSOD) Weather Data Client for R
+## A Global Surface Summary of the Day (GSOD) Weather Data Client for R
 
 ## Introduction
 
@@ -34,7 +36,7 @@ These include vapour pressure (ea and es) and relative humidity calculated using
 
 For more information see the description of the data provided by NCEI, <http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
 
-## Quick Start Install
+## How to Install
 
 ### Stable Version
 
