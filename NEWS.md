@@ -10,6 +10,8 @@
 
 * Correct an error in documentation for `update_station_list()`
 
+* Remove spatial vignettes to slim down Suggests and make CI maintenance easier
+
 # GSODR v2.1.0
 
 ## Major changes
