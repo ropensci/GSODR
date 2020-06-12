@@ -51,7 +51,7 @@ _GSODR_ provides lists of weather station locations and elevation values.
 It's easy to find all stations in Australia.
 
 ```{r Ex1, eval=TRUE, message=FALSE}
-library(GSODR)
+library("GSODR")
 
 load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 
@@ -69,9 +69,8 @@ subset(Oz, grepl("TOOWOOMBA", NAME))
 Now that we've seen where the reporting stations are located, we can download weather data from the station Toowoomba, Queensland, Australia for 2010 by using the STNID in the `station` parameter of `get_GSOD()`.
 
 ```{r Ex2, eval=TRUE, message=FALSE}
-library(skimr)
 tbar <- get_GSOD(years = 2010, station = "955510-99999")
-skim(tbar)
+str(tbar)
 ```
 
 ## Using nearest_stations() to Download Multiple Stations at Once
@@ -85,7 +84,7 @@ tbar_stations <- nearest_stations(LAT = -27.5598,
                                   distance = 50)
 
 tbar <- get_GSOD(years = 2010, station = tbar_stations)
-skim(tbar)
+str(tbar)
 ```
 
 ## Plot Maximum and Minimum Temperature Values
@@ -94,8 +93,8 @@ Using the first data downloaded for a single station, 955510-99999, plot the
 temperature for 2010.
 
 ```{r Ex5, eval=TRUE, fig.width = 7, fig.height = 7, fig.align = "center", fig.path = "vignettes/", message=FALSE}
-library(ggplot2)
-library(tidyr)
+library("ggplot2")
+library("tidyr")
 
 # Create a dataframe of just the date and temperature values that we want to
 # plot
@@ -127,7 +126,7 @@ This can greatly reduce the time necessary to process GSOD files.
 future::plan("multisession")
 global <- get_GSOD(years = 2010:2011)
 
-skim(global)
+str(global)
 ```
 
 # Using reformat_GSOD()
@@ -194,14 +193,14 @@ Additional climate data,
 [_GSODRdata_](https://github.com/adamhsparks/GSODRdata), formatted for use with GSOD data provided by _GSODR_ are available as an R package, which can only be installed through GitHub due to the package size, >5Mb, being too large for CRAN.
 
 ```{r Ex19, eval=FALSE}
-if (!require(devtools)) {
+if (!require(remotes)) {
   install.packages(
     "devtools",
     repos = c(CRAN = "https://cloud.r-project.org/")
   )
-  library(devtools)
+  library("remotes")
 }
-devtools::install_github("adamhsparks/GSODRdata")
+remotes::install_github("adamhsparks/GSODRdata")
 library("GSODRdata")
 ```
 
@@ -334,11 +333,9 @@ Missing = `NA`;
 
 - **I_TORNADO_FUNNEL** - Indicator for tornado or funnel cloud, (1 = yes, 0 = no/not reported) for the occurrence during the day;
 
-- **EA** - Mean daily actual vapour pressure as calculated using improved August-Roche-Magnus approximation [@Alduchov1996].
-Missing = `NA`;
+- **EA** - Mean daily actual vapour pressure as calculated using improved August-Roche-Magnus approximation [@Alduchov1996]. Missing = `NA`;
 
-- **ES** - Mean daily saturation vapour pressure as calculated using improved August-Roche-Magnus approximation  [@Alduchov1996].
-Missing = `NA`;
+- **ES** - Mean daily saturation vapour pressure as calculated using improved August-Roche-Magnus approximation [@Alduchov1996]. Missing = `NA`;
 
 - **RH** - Mean daily relative humidity as calculated using improved August-Roche-Magnus approximation [@Alduchov1996].
 Missing = `NA`.
@@ -350,10 +347,10 @@ if (requireNamespace("maps", quietly = TRUE) &&
     requireNamespace("mapproj", quietly = TRUE) &&
     requireNamespace("gridExtra", quietly = TRUE) &&
     requireNamespace("grid", quietly = TRUE)) {
-  library(mapproj)
-  library(maps)
-  library(grid)
-  library(gridExtra)
+  library("mapproj")
+  library("maps")
+  library("grid")
+  library("gridExtra")
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))
   world_map <- map_data("world")
 
@@ -384,4 +381,3 @@ if (requireNamespace("maps", quietly = TRUE) &&
 ```
 
 # References
-

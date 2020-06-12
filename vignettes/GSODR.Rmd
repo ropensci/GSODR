@@ -43,7 +43,7 @@ It's easy to find all stations in Australia.
 
 
 ```r
-library(GSODR)
+library("GSODR")
 
 load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 
@@ -54,18 +54,30 @@ Oz
 ```
 
 ```
-##              STNID                         NAME    LAT   LON CTRY STATE    BEGIN      END COUNTRY_NAME ISO2C ISO3C
-##    1: 695023-99999          HORN ISLAND   (HID) -10.58 142.3   AS       19420804 20030816    AUSTRALIA    AU   AUS
-##    2: 749430-99999           AIDELAIDE RIVER SE -13.30 131.1   AS       19430228 19440821    AUSTRALIA    AU   AUS
-##    3: 749432-99999    BATCHELOR FIELD AUSTRALIA -13.05 131.1   AS       19421231 19430610    AUSTRALIA    AU   AUS
-##    4: 749438-99999         IRON RANGE AUSTRALIA -12.70 143.3   AS       19420917 19440930    AUSTRALIA    AU   AUS
-##    5: 749439-99999     MAREEBA AS/HOEVETT FIELD -17.05 145.4   AS       19420630 19440630    AUSTRALIA    AU   AUS
-##   ---                                                                                                             
-## 1038: 959890-99999      BICHENO (COUNCIL DEPOT) -41.87 148.3   AS       19650101 20200606    AUSTRALIA    AU   AUS
-## 1039: 959950-99999 LORD HOWE ISLAND WINDY POINT -31.53 159.1   AS       20120920 20200607    AUSTRALIA    AU   AUS
-## 1040: 959970-99999    HEARD ISLAND (ATLAS COVE) -53.02  73.4   AS       19980301 20121220    AUSTRALIA    AU   AUS
-## 1041: 996600-99999          ENVIRONM BUOY 55011 -40.80 144.3   AS       19930221 19970403    AUSTRALIA    AU   AUS
-## 1042: 999999-82101               NORTHWEST CAPE -22.33 114.0   AS       19680305 19680430    AUSTRALIA    AU   AUS
+##              STNID                         NAME    LAT   LON CTRY
+##    1: 695023-99999          HORN ISLAND   (HID) -10.58 142.3   AS
+##    2: 749430-99999           AIDELAIDE RIVER SE -13.30 131.1   AS
+##    3: 749432-99999    BATCHELOR FIELD AUSTRALIA -13.05 131.1   AS
+##    4: 749438-99999         IRON RANGE AUSTRALIA -12.70 143.3   AS
+##    5: 749439-99999     MAREEBA AS/HOEVETT FIELD -17.05 145.4   AS
+##   ---                                                            
+## 1038: 959890-99999      BICHENO (COUNCIL DEPOT) -41.87 148.3   AS
+## 1039: 959950-99999 LORD HOWE ISLAND WINDY POINT -31.53 159.1   AS
+## 1040: 959970-99999    HEARD ISLAND (ATLAS COVE) -53.02  73.4   AS
+## 1041: 996600-99999          ENVIRONM BUOY 55011 -40.80 144.3   AS
+## 1042: 999999-82101               NORTHWEST CAPE -22.33 114.0   AS
+##       STATE    BEGIN      END COUNTRY_NAME ISO2C ISO3C
+##    1:       19420804 20030816    AUSTRALIA    AU   AUS
+##    2:       19430228 19440821    AUSTRALIA    AU   AUS
+##    3:       19421231 19430610    AUSTRALIA    AU   AUS
+##    4:       19420917 19440930    AUSTRALIA    AU   AUS
+##    5:       19420630 19440630    AUSTRALIA    AU   AUS
+##   ---                                                 
+## 1038:       19650101 20200606    AUSTRALIA    AU   AUS
+## 1039:       20120920 20200607    AUSTRALIA    AU   AUS
+## 1040:       19980301 20121220    AUSTRALIA    AU   AUS
+## 1041:       19930221 19970403    AUSTRALIA    AU   AUS
+## 1042:       19680305 19680430    AUSTRALIA    AU   AUS
 ```
 
 ```r
@@ -74,9 +86,12 @@ subset(Oz, grepl("TOOWOOMBA", NAME))
 ```
 
 ```
-##           STNID              NAME    LAT   LON CTRY STATE    BEGIN      END COUNTRY_NAME ISO2C ISO3C
-## 1: 945510-99999         TOOWOOMBA -27.58 151.9   AS       19561231 20120503    AUSTRALIA    AU   AUS
-## 2: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS       19980301 20200607    AUSTRALIA    AU   AUS
+##           STNID              NAME    LAT   LON CTRY STATE    BEGIN
+## 1: 945510-99999         TOOWOOMBA -27.58 151.9   AS       19561231
+## 2: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS       19980301
+##         END COUNTRY_NAME ISO2C ISO3C
+## 1: 20120503    AUSTRALIA    AU   AUS
+## 2: 20200607    AUSTRALIA    AU   AUS
 ```
 
 ## Download a Single Station and Year Using get_GSOD()
@@ -85,86 +100,58 @@ Now that we've seen where the reporting stations are located, we can download we
 
 
 ```r
-library(skimr)
 tbar <- get_GSOD(years = 2010, station = "955510-99999")
-skim(tbar)
+str(tbar)
 ```
 
-
-|                         |     |
-|:------------------------|:----|
-|Name                     |tbar |
-|Number of rows           |365  |
-|Number of columns        |44   |
-|_______________________  |     |
-|Column type frequency:   |     |
-|character                |13   |
-|Date                     |1    |
-|numeric                  |30   |
-|________________________ |     |
-|Group variables          |None |
-
-
-**Variable type: character**
-
-|skim_variable    | n_missing| complete_rate| min| max| empty| n_unique| whitespace|
-|:----------------|---------:|-------------:|---:|---:|-----:|--------:|----------:|
-|STNID            |         0|          1.00|  12|  12|     0|        1|          0|
-|NAME             |         0|          1.00|  17|  17|     0|        1|          0|
-|CTRY             |         0|          1.00|   2|   2|     0|        1|          0|
-|STATE            |         0|          1.00|   0|   0|   365|        1|          0|
-|TEMP_ATTRIBUTES  |         0|          1.00|   2|   2|     0|        4|        365|
-|DEWP_ATTRIBUTES  |         0|          1.00|   2|   2|     0|        6|        365|
-|SLP_ATTRIBUTES   |         0|          1.00|   2|   2|     0|        4|        365|
-|STP_ATTRIBUTES   |         0|          1.00|   2|   2|     0|        4|        365|
-|VISIB_ATTRIBUTES |         0|          1.00|   2|   2|     0|        6|        365|
-|WDSP_ATTRIBUTES  |         0|          1.00|   2|   2|     0|        4|        365|
-|MAX_ATTRIBUTES   |       351|          0.04|   1|   1|     0|        1|          0|
-|MIN_ATTRIBUTES   |       212|          0.42|   1|   1|     0|        1|          0|
-|PRCP_ATTRIBUTES  |         1|          1.00|   1|   1|     0|        5|          0|
-
-
-**Variable type: Date**
-
-|skim_variable | n_missing| complete_rate|min        |max        |median     | n_unique|
-|:-------------|---------:|-------------:|:----------|:----------|:----------|--------:|
-|YEARMODA      |         0|             1|2010-01-01 |2010-12-31 |2010-07-02 |      365|
-
-
-**Variable type: numeric**
-
-|skim_variable    | n_missing| complete_rate|        mean|     sd|          p0|         p25|         p50|         p75|        p100|hist  |
-|:----------------|---------:|-------------:|-----------:|------:|-----------:|-----------:|-----------:|-----------:|-----------:|:-----|
-|LATITUDE         |         0|          1.00|      -27.55|   0.00|      -27.55|      -27.55|      -27.55|      -27.55|      -27.55|▁▁▇▁▁ |
-|LONGITUDE        |         0|          1.00|      151.92|   0.00|      151.92|      151.92|      151.92|      151.92|      151.92|▁▁▇▁▁ |
-|ELEVATION        |         0|          1.00|      642.00|   0.00|      642.00|      642.00|      642.00|      642.00|      642.00|▁▁▇▁▁ |
-|BEGIN            |         0|          1.00| 19980301.00|   0.00| 19980301.00| 19980301.00| 19980301.00| 19980301.00| 19980301.00|▁▁▇▁▁ |
-|END              |         0|          1.00| 20200607.00|   0.00| 20200607.00| 20200607.00| 20200607.00| 20200607.00| 20200607.00|▁▁▇▁▁ |
-|YEAR             |         0|          1.00|     2010.00|   0.00|     2010.00|     2010.00|     2010.00|     2010.00|     2010.00|▁▁▇▁▁ |
-|MONTH            |         0|          1.00|        6.53|   3.45|        1.00|        4.00|        7.00|       10.00|       12.00|▇▅▅▅▇ |
-|DAY              |         0|          1.00|       15.72|   8.81|        1.00|        8.00|       16.00|       23.00|       31.00|▇▇▇▇▆ |
-|YDAY             |         0|          1.00|      183.00| 105.51|        1.00|       92.00|      183.00|      274.00|      365.00|▇▇▇▇▇ |
-|TEMP             |         0|          1.00|       16.45|   4.21|        6.20|       12.90|       17.30|       19.50|       25.70|▂▆▇▇▂ |
-|DEWP             |         4|          0.99|       11.83|   4.86|       -2.60|        8.70|       13.10|       15.40|       20.30|▁▃▃▇▅ |
-|SLP              |         0|          1.00|     1017.67|   5.09|     1003.50|     1014.10|     1018.00|     1021.00|     1031.00|▁▃▇▅▁ |
-|STP              |         0|          1.00|      944.68|   4.19|      932.60|      942.10|      944.90|      947.40|      955.60|▁▃▇▆▁ |
-|VISIB            |       264|          0.28|       14.98|   9.14|        0.50|        7.40|       12.60|       23.30|       36.00|▇▇▅▆▂ |
-|WDSP             |         0|          1.00|        5.93|   1.97|        2.20|        4.40|        5.70|        7.20|       15.30|▆▇▃▁▁ |
-|MXSPD            |         0|          1.00|        8.29|   2.29|        3.60|        6.70|        8.20|        9.80|       17.00|▅▇▅▁▁ |
-|GUST             |       365|          0.00|         NaN|     NA|          NA|          NA|          NA|          NA|          NA|      |
-|MAX              |         0|          1.00|       21.62|   4.65|       10.30|       17.90|       21.90|       24.60|       35.10|▂▆▇▃▁ |
-|MIN              |         0|          1.00|       12.13|   4.80|        0.10|        8.20|       13.20|       16.40|       21.40|▂▅▅▇▃ |
-|PRCP             |         1|          1.00|        3.02|   9.32|        0.00|        0.00|        0.00|        1.00|       86.60|▇▁▁▁▁ |
-|SNDP             |       365|          0.00|         NaN|     NA|          NA|          NA|          NA|          NA|          NA|      |
-|I_FOG            |       365|          0.00|         NaN|     NA|          NA|          NA|          NA|          NA|          NA|      |
-|I_RAIN_DRIZZLE   |       365|          0.00|         NaN|     NA|          NA|          NA|          NA|          NA|          NA|      |
-|I_SNOW_ICE       |       365|          0.00|         NaN|     NA|          NA|          NA|          NA|          NA|          NA|      |
-|I_HAIL           |       365|          0.00|         NaN|     NA|          NA|          NA|          NA|          NA|          NA|      |
-|I_THUNDER        |       365|          0.00|         NaN|     NA|          NA|          NA|          NA|          NA|          NA|      |
-|I_TORNADO_FUNNEL |       365|          0.00|         NaN|     NA|          NA|          NA|          NA|          NA|          NA|      |
-|EA               |         4|          0.99|        1.44|   0.42|        0.50|        1.10|        1.50|        1.70|        2.40|▃▅▇▇▁ |
-|ES               |         0|          1.00|        1.93|   0.50|        0.90|        1.50|        2.00|        2.30|        3.30|▃▇▇▃▁ |
-|RH               |         4|          0.99|       75.23|  12.29|       32.70|       67.20|       77.20|       83.40|       97.40|▁▁▅▇▅ |
+```
+## Classes 'data.table' and 'data.frame':	365 obs. of  44 variables:
+##  $ STNID           : chr  "955510-99999" "955510-99999" "955510-99999" "955510-99999" ...
+##  $ NAME            : chr  "TOOWOOMBA AIRPORT" "TOOWOOMBA AIRPORT" "TOOWOOMBA AIRPORT" "TOOWOOMBA AIRPORT" ...
+##  $ CTRY            : chr  "AS" "AS" "AS" "AS" ...
+##  $ STATE           : chr  "" "" "" "" ...
+##  $ LATITUDE        : num  -27.6 -27.6 -27.6 -27.6 -27.6 ...
+##  $ LONGITUDE       : num  152 152 152 152 152 ...
+##  $ ELEVATION       : num  642 642 642 642 642 642 642 642 642 642 ...
+##  $ BEGIN           : int  19980301 19980301 19980301 19980301 19980301 19980301 19980301 19980301 19980301 19980301 ...
+##  $ END             : int  20200607 20200607 20200607 20200607 20200607 20200607 20200607 20200607 20200607 20200607 ...
+##  $ YEARMODA        : Date, format: "2010-01-01" ...
+##  $ YEAR            : int  2010 2010 2010 2010 2010 2010 2010 2010 2010 2010 ...
+##  $ MONTH           : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ DAY             : int  1 2 3 4 5 6 7 8 9 10 ...
+##  $ YDAY            : int  1 2 3 4 5 6 7 8 9 10 ...
+##  $ TEMP            : num  21.2 23.2 21.4 18.9 20.5 21.9 21.3 20.9 21.9 22.3 ...
+##  $ TEMP_ATTRIBUTES : chr  " 8" " 8" " 8" " 8" ...
+##  $ DEWP            : num  17.9 19.4 18.9 16.4 16.4 18.7 17.4 17.1 16.2 14.9 ...
+##  $ DEWP_ATTRIBUTES : chr  " 8" " 8" " 8" " 8" ...
+##  $ SLP             : num  1013 1010 1012 1016 1016 ...
+##  $ SLP_ATTRIBUTES  : chr  " 8" " 8" " 8" " 8" ...
+##  $ STP             : num  942 939 941 944 944 ...
+##  $ STP_ATTRIBUTES  : chr  " 8" " 8" " 8" " 8" ...
+##  $ VISIB           : num  NA NA 14.3 23.3 NA NA NA NA NA NA ...
+##  $ VISIB_ATTRIBUTES: chr  " 0" " 0" " 6" " 4" ...
+##  $ WDSP            : num  4.3 3.7 7.6 8.7 7.5 6.3 7.8 7.5 6.8 6.3 ...
+##  $ WDSP_ATTRIBUTES : chr  " 8" " 8" " 8" " 8" ...
+##  $ MXSPD           : num  6.7 5.1 10.3 10.3 10.8 7.7 8.7 8.7 8.2 7.2 ...
+##  $ GUST            : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ MAX             : num  25.8 26.5 28.7 24.1 24.6 26.8 26.1 26.5 27.4 28.7 ...
+##  $ MAX_ATTRIBUTES  : chr  NA NA NA NA ...
+##  $ MIN             : num  17.8 19.1 19.3 16.9 16.7 17.5 19.1 18.5 17.8 17.7 ...
+##  $ MIN_ATTRIBUTES  : chr  NA NA "*" "*" ...
+##  $ PRCP            : num  1.5 0.3 19.8 1 0.3 0 0.3 2.5 0 0 ...
+##  $ PRCP_ATTRIBUTES : chr  "G" "G" "G" "G" ...
+##  $ SNDP            : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ I_FOG           : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ I_RAIN_DRIZZLE  : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ I_SNOW_ICE      : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ I_HAIL          : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ I_THUNDER       : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ I_TORNADO_FUNNEL: int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ EA              : num  2 2.2 2.2 1.9 1.9 2.2 2 1.9 1.8 1.7 ...
+##  $ ES              : num  2.5 2.8 2.5 2.2 2.4 2.6 2.5 2.5 2.6 2.7 ...
+##  $ RH              : num  81.5 79.2 85.7 85.4 77.3 82.1 78.5 78.9 70.1 62.9 ...
+##  - attr(*, ".internal.selfref")=<externalptr>
+```
 
 ## Using nearest_stations() to Download Multiple Stations at Once
 
@@ -178,84 +165,57 @@ tbar_stations <- nearest_stations(LAT = -27.5598,
                                   distance = 50)
 
 tbar <- get_GSOD(years = 2010, station = tbar_stations)
-skim(tbar)
+str(tbar)
 ```
 
-
-|                         |     |
-|:------------------------|:----|
-|Name                     |tbar |
-|Number of rows           |1095 |
-|Number of columns        |44   |
-|_______________________  |     |
-|Column type frequency:   |     |
-|character                |13   |
-|Date                     |1    |
-|numeric                  |30   |
-|________________________ |     |
-|Group variables          |None |
-
-
-**Variable type: character**
-
-|skim_variable    | n_missing| complete_rate| min| max| empty| n_unique| whitespace|
-|:----------------|---------:|-------------:|---:|---:|-----:|--------:|----------:|
-|STNID            |         0|          1.00|  12|  12|     0|        3|          0|
-|NAME             |         0|          1.00|   5|  31|     0|        3|          0|
-|CTRY             |         0|          1.00|   2|   2|     0|        1|          0|
-|STATE            |         0|          1.00|   0|   0|  1095|        1|          0|
-|TEMP_ATTRIBUTES  |         0|          1.00|   2|   2|     0|        8|        730|
-|DEWP_ATTRIBUTES  |         0|          1.00|   2|   2|     0|       10|        730|
-|SLP_ATTRIBUTES   |         0|          1.00|   2|   2|     0|        9|        730|
-|STP_ATTRIBUTES   |         0|          1.00|   2|   2|     0|        9|        730|
-|VISIB_ATTRIBUTES |         0|          1.00|   2|   2|     0|        6|       1095|
-|WDSP_ATTRIBUTES  |         0|          1.00|   2|   2|     0|        8|        730|
-|MAX_ATTRIBUTES   |      1052|          0.04|   1|   1|     0|        1|          0|
-|MIN_ATTRIBUTES   |       634|          0.42|   1|   1|     0|        1|          0|
-|PRCP_ATTRIBUTES  |         1|          1.00|   1|   1|     0|        5|          0|
-
-
-**Variable type: Date**
-
-|skim_variable | n_missing| complete_rate|min        |max        |median     | n_unique|
-|:-------------|---------:|-------------:|:----------|:----------|:----------|--------:|
-|YEARMODA      |         0|             1|2010-01-01 |2010-12-31 |2010-07-02 |      365|
-
-
-**Variable type: numeric**
-
-|skim_variable    | n_missing| complete_rate|        mean|        sd|          p0|         p25|         p50|         p75|        p100|hist  |
-|:----------------|---------:|-------------:|-----------:|---------:|-----------:|-----------:|-----------:|-----------:|-----------:|:-----|
-|LATITUDE         |         0|          1.00|      -27.50|      0.07|      -27.55|      -27.55|      -27.55|      -27.41|      -27.41|▇▁▁▁▃ |
-|LONGITUDE        |         0|          1.00|      152.00|      0.25|      151.74|      151.74|      151.92|      152.33|      152.33|▇▇▁▁▇ |
-|ELEVATION        |         0|          1.00|      380.97|    224.57|       94.00|       94.00|      406.90|      642.00|      642.00|▇▁▇▁▇ |
-|BEGIN            |         0|          1.00| 19913687.00| 131241.93| 19730430.00| 19730430.00| 19980301.00| 20030330.00| 20030330.00|▃▁▁▁▇ |
-|END              |         0|          1.00| 20200607.00|      0.00| 20200607.00| 20200607.00| 20200607.00| 20200607.00| 20200607.00|▁▁▇▁▁ |
-|YEAR             |         0|          1.00|     2010.00|      0.00|     2010.00|     2010.00|     2010.00|     2010.00|     2010.00|▁▁▇▁▁ |
-|MONTH            |         0|          1.00|        6.53|      3.45|        1.00|        4.00|        7.00|       10.00|       12.00|▇▅▅▅▇ |
-|DAY              |         0|          1.00|       15.72|      8.80|        1.00|        8.00|       16.00|       23.00|       31.00|▇▇▇▇▆ |
-|YDAY             |         0|          1.00|      183.00|    105.41|        1.00|       92.00|      183.00|      274.00|      365.00|▇▇▇▇▇ |
-|TEMP             |         0|          1.00|       17.78|      4.74|        5.90|       14.20|       18.20|       21.40|       28.80|▂▆▇▇▂ |
-|DEWP             |         4|          1.00|       12.34|      5.12|       -3.70|        8.95|       13.50|       16.20|       22.40|▁▂▃▇▃ |
-|SLP              |       365|          0.67|     1017.38|      5.13|     1003.00|     1013.90|     1017.70|     1020.70|     1031.00|▁▅▇▅▁ |
-|STP              |       365|          0.67|      957.40|     13.44|      932.60|      944.90|      956.60|      970.38|      981.90|▃▇▁▇▃ |
-|VISIB            |       797|          0.27|       21.42|      8.86|        0.50|       14.60|       24.55|       29.58|       36.00|▃▃▃▇▇ |
-|WDSP             |         0|          1.00|        4.47|      1.97|        0.60|        2.95|        4.10|        5.60|       15.30|▆▇▂▁▁ |
-|MXSPD            |         0|          1.00|        7.13|      2.42|        1.50|        5.10|        6.70|        8.70|       17.00|▃▇▅▁▁ |
-|GUST             |      1095|          0.00|         NaN|        NA|          NA|          NA|          NA|          NA|          NA|      |
-|MAX              |         0|          1.00|       24.03|      5.09|       10.30|       20.50|       24.00|       27.50|       39.20|▁▆▇▃▁ |
-|MIN              |         0|          1.00|       12.13|      5.64|       -6.00|        7.60|       13.30|       16.70|       23.70|▁▂▅▇▃ |
-|PRCP             |         1|          1.00|        2.79|      8.68|        0.00|        0.00|        0.00|        0.50|       86.60|▇▁▁▁▁ |
-|SNDP             |      1095|          0.00|         NaN|        NA|          NA|          NA|          NA|          NA|          NA|      |
-|I_FOG            |      1095|          0.00|         NaN|        NA|          NA|          NA|          NA|          NA|          NA|      |
-|I_RAIN_DRIZZLE   |      1095|          0.00|         NaN|        NA|          NA|          NA|          NA|          NA|          NA|      |
-|I_SNOW_ICE       |      1095|          0.00|         NaN|        NA|          NA|          NA|          NA|          NA|          NA|      |
-|I_HAIL           |      1095|          0.00|         NaN|        NA|          NA|          NA|          NA|          NA|          NA|      |
-|I_THUNDER        |      1095|          0.00|         NaN|        NA|          NA|          NA|          NA|          NA|          NA|      |
-|I_TORNADO_FUNNEL |      1095|          0.00|         NaN|        NA|          NA|          NA|          NA|          NA|          NA|      |
-|EA               |         4|          1.00|        1.50|      0.46|        0.50|        1.10|        1.50|        1.80|        2.70|▃▅▇▅▁ |
-|ES               |         0|          1.00|        2.11|      0.62|        0.90|        1.60|        2.10|        2.50|        4.00|▆▇▇▃▁ |
-|RH               |         4|          1.00|       71.40|     11.71|       30.60|       64.40|       71.40|       79.70|       97.40|▁▂▇▇▃ |
+```
+## Classes 'data.table' and 'data.frame':	1095 obs. of  44 variables:
+##  $ STNID           : chr  "945520-99999" "945520-99999" "945520-99999" "945520-99999" ...
+##  $ NAME            : chr  "OAKEY" "OAKEY" "OAKEY" "OAKEY" ...
+##  $ CTRY            : chr  "AS" "AS" "AS" "AS" ...
+##  $ STATE           : chr  "" "" "" "" ...
+##  $ LATITUDE        : num  -27.4 -27.4 -27.4 -27.4 -27.4 ...
+##  $ LONGITUDE       : num  152 152 152 152 152 ...
+##  $ ELEVATION       : num  407 407 407 407 407 ...
+##  $ BEGIN           : int  19730430 19730430 19730430 19730430 19730430 19730430 19730430 19730430 19730430 19730430 ...
+##  $ END             : int  20200607 20200607 20200607 20200607 20200607 20200607 20200607 20200607 20200607 20200607 ...
+##  $ YEARMODA        : Date, format: "2010-01-01" ...
+##  $ YEAR            : int  2010 2010 2010 2010 2010 2010 2010 2010 2010 2010 ...
+##  $ MONTH           : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ DAY             : int  1 2 3 4 5 6 7 8 9 10 ...
+##  $ YDAY            : int  1 2 3 4 5 6 7 8 9 10 ...
+##  $ TEMP            : num  23.4 26.2 24.5 21.6 22.6 24.7 24 23.3 24.4 25.1 ...
+##  $ TEMP_ATTRIBUTES : chr  "16" "16" "16" "16" ...
+##  $ DEWP            : num  18.4 19.4 19.4 16.8 16.9 18.7 17.1 17.1 15.7 13.6 ...
+##  $ DEWP_ATTRIBUTES : chr  "16" "16" "16" "16" ...
+##  $ SLP             : num  1012 1009 1011 1015 1015 ...
+##  $ SLP_ATTRIBUTES  : chr  "16" "16" "16" "16" ...
+##  $ STP             : num  967 964 966 969 969 ...
+##  $ STP_ATTRIBUTES  : chr  "16" "16" "16" "16" ...
+##  $ VISIB           : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ VISIB_ATTRIBUTES: chr  " 0" " 0" " 0" " 0" ...
+##  $ WDSP            : num  4.3 4.1 6.1 7.5 4.4 4.3 5.8 6.2 5.6 4.5 ...
+##  $ WDSP_ATTRIBUTES : chr  "16" "16" "16" "16" ...
+##  $ MXSPD           : num  7.2 6.2 8.7 9.8 7.7 6.2 8.2 9.3 7.7 7.2 ...
+##  $ GUST            : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ MAX             : num  28.5 31.2 33.6 27.1 27.8 30.4 30 30.5 31.9 33.2 ...
+##  $ MAX_ATTRIBUTES  : chr  NA NA NA NA ...
+##  $ MIN             : num  19.5 20.5 21.3 18.8 18.4 18.6 20.6 18.6 17.2 16.2 ...
+##  $ MIN_ATTRIBUTES  : chr  NA NA "*" "*" ...
+##  $ PRCP            : num  0.5 0 3.3 0 0 0 0 0.3 0 0 ...
+##  $ PRCP_ATTRIBUTES : chr  "G" "G" "G" "G" ...
+##  $ SNDP            : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ I_FOG           : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ I_RAIN_DRIZZLE  : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ I_SNOW_ICE      : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ I_HAIL          : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ I_THUNDER       : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ I_TORNADO_FUNNEL: int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ EA              : num  2.1 2.2 2.2 1.9 1.9 2.2 1.9 1.9 1.8 1.6 ...
+##  $ ES              : num  2.9 3.4 3.1 2.6 2.7 3.1 3 2.9 3.1 3.2 ...
+##  $ RH              : num  73.5 66.2 73.3 74.2 70.2 69.3 65.3 68.2 58.4 48.9 ...
+##  - attr(*, ".internal.selfref")=<externalptr>
+```
 
 ## Plot Maximum and Minimum Temperature Values
 
@@ -264,8 +224,8 @@ temperature for 2010.
 
 
 ```r
-library(ggplot2)
-library(tidyr)
+library("ggplot2")
+library("tidyr")
 
 # Create a dataframe of just the date and temperature values that we want to
 # plot
@@ -300,84 +260,57 @@ This can greatly reduce the time necessary to process GSOD files.
 future::plan("multisession")
 global <- get_GSOD(years = 2010:2011)
 
-skim(global)
+str(global)
 ```
 
-
-|                         |        |
-|:------------------------|:-------|
-|Name                     |global  |
-|Number of rows           |7174677 |
-|Number of columns        |44      |
-|_______________________  |        |
-|Column type frequency:   |        |
-|character                |13      |
-|Date                     |1       |
-|numeric                  |30      |
-|________________________ |        |
-|Group variables          |None    |
-
-
-**Variable type: character**
-
-|skim_variable    | n_missing| complete_rate| min| max|   empty| n_unique| whitespace|
-|:----------------|---------:|-------------:|---:|---:|-------:|--------:|----------:|
-|STNID            |         0|          1.00|  12|  12|       0|    11325|          0|
-|NAME             |    479443|          0.93|   2|  50|       0|    10363|          0|
-|CTRY             |    479443|          0.93|   2|   2|       0|      230|          0|
-|STATE            |    479443|          0.93|   0|   2| 5422379|       65|          0|
-|TEMP_ATTRIBUTES  |         0|          1.00|   2|   2|       0|       21|    2489667|
-|DEWP_ATTRIBUTES  |         0|          1.00|   2|   2|       0|       22|    2824750|
-|SLP_ATTRIBUTES   |         0|          1.00|   2|   2|       0|       22|    5292224|
-|STP_ATTRIBUTES   |         0|          1.00|   2|   2|       0|       22|    5124390|
-|VISIB_ATTRIBUTES |         0|          1.00|   2|   2|       0|       22|    3640096|
-|WDSP_ATTRIBUTES  |         0|          1.00|   2|   2|       0|       22|    2747493|
-|MAX_ATTRIBUTES   |   4623953|          0.36|   1|   1|       0|        1|          0|
-|MIN_ATTRIBUTES   |   3937634|          0.45|   1|   1|       0|        1|          0|
-|PRCP_ATTRIBUTES  |    707360|          0.90|   1|   1|       0|        9|          0|
-
-
-**Variable type: Date**
-
-|skim_variable | n_missing| complete_rate|min        |max        |median     | n_unique|
-|:-------------|---------:|-------------:|:----------|:----------|:----------|--------:|
-|YEARMODA      |         0|             1|2010-01-01 |2011-12-31 |2010-12-29 |      730|
-
-
-**Variable type: numeric**
-
-|skim_variable    | n_missing| complete_rate|        mean|        sd|         p0|         p25|         p50|         p75|        p100|hist  |
-|:----------------|---------:|-------------:|-----------:|---------:|----------:|-----------:|-----------:|-----------:|-----------:|:-----|
-|LATITUDE         |    479443|          0.93|       32.30|     28.72|      -89.0|       24.72|       40.65|       50.58|       83.65|▁▂▂▇▅ |
-|LONGITUDE        |    479443|          0.93|        4.95|     86.99|     -180.0|      -79.73|       12.20|       73.40|      179.75|▂▆▇▅▅ |
-|ELEVATION        |      6825|          1.00|      359.37|    556.30|     -999.9|       29.00|      143.86|      424.30|     7018.00|▇▂▁▁▁ |
-|BEGIN            |    479443|          0.93| 19763685.31| 246237.35| 19010101.0| 19550301.00| 19731004.00| 20020326.00| 20111212.00|▁▂▅▅▇ |
-|END              |    479443|          0.93| 20197219.37|  14210.17| 20100125.0| 20200607.00| 20200607.00| 20200607.00| 20200609.00|▁▁▁▁▇ |
-|YEAR             |         0|          1.00|     2010.50|      0.50|     2010.0|     2010.00|     2010.00|     2011.00|     2011.00|▇▁▁▁▇ |
-|MONTH            |         0|          1.00|        6.55|      3.45|        1.0|        4.00|        7.00|       10.00|       12.00|▇▅▅▅▇ |
-|DAY              |         0|          1.00|       15.73|      8.79|        1.0|        8.00|       16.00|       23.00|       31.00|▇▇▇▇▆ |
-|YDAY             |         0|          1.00|      183.70|    105.42|        1.0|       92.00|      184.00|      275.00|      365.00|▇▇▇▇▇ |
-|TEMP             |         0|          1.00|       12.47|     13.10|      -79.3|        4.70|       14.00|       22.70|       43.30|▁▁▁▇▅ |
-|DEWP             |    361081|          0.95|        6.41|     12.05|      -82.9|       -0.70|        7.40|       15.10|       32.20|▁▁▁▇▇ |
-|SLP              |   2742534|          0.62|     1014.00|      9.20|      925.9|     1008.90|     1013.70|     1019.10|     1077.70|▁▁▇▅▁ |
-|STP              |   2666250|          0.63|      559.60|    462.23|        0.0|       11.90|      882.20|      977.70|      999.80|▆▁▁▁▇ |
-|VISIB            |   1649499|          0.77|       15.82|      9.80|        0.0|       10.00|       14.00|       16.70|      160.00|▇▁▁▁▁ |
-|WDSP             |    313857|          0.96|        3.27|      2.32|        0.0|        1.70|        2.80|        4.30|       49.30|▇▁▁▁▁ |
-|MXSPD            |    387117|          0.95|        6.08|      3.30|        0.5|        4.00|        5.70|        7.70|       49.80|▇▁▁▁▁ |
-|GUST             |   5427149|          0.24|       12.06|      4.10|        5.0|        9.30|       11.30|       14.00|       59.60|▇▂▁▁▁ |
-|MAX              |      5257|          1.00|       17.66|     13.70|      -78.3|        9.00|       19.50|       28.50|       56.00|▁▁▂▇▃ |
-|MIN              |      4589|          1.00|        7.55|     13.00|      -81.8|        0.10|        8.90|       17.10|       42.70|▁▁▁▇▃ |
-|PRCP             |    707360|          0.90|        1.91|      7.67|        0.0|        0.00|        0.00|        0.30|      481.10|▇▁▁▁▁ |
-|SNDP             |   6785917|          0.05|      258.74|    264.96|       10.2|       71.10|      190.50|      370.80|     2989.60|▇▁▁▁▁ |
-|I_FOG            |   4347339|          0.39|        1.00|      0.00|        1.0|        1.00|        1.00|        1.00|        1.00|▁▁▇▁▁ |
-|I_RAIN_DRIZZLE   |   7174677|          0.00|         NaN|        NA|         NA|          NA|          NA|          NA|          NA|      |
-|I_SNOW_ICE       |   7174677|          0.00|         NaN|        NA|         NA|          NA|          NA|          NA|          NA|      |
-|I_HAIL           |   7174677|          0.00|         NaN|        NA|         NA|          NA|          NA|          NA|          NA|      |
-|I_THUNDER        |   7174677|          0.00|         NaN|        NA|         NA|          NA|          NA|          NA|          NA|      |
-|I_TORNADO_FUNNEL |   7174677|          0.00|         NaN|        NA|         NA|          NA|          NA|          NA|          NA|      |
-|EA               |    361081|          0.95|        1.23|      0.84|        0.0|        0.60|        1.00|        1.70|        4.80|▇▆▂▁▁ |
-|ES               |         0|          1.00|        1.87|      1.25|        0.0|        0.90|        1.60|        2.80|        8.80|▇▅▂▁▁ |
-|RH               |    361081|          0.95|       69.04|     18.28|        0.9|       58.80|       72.40|       82.50|      100.00|▁▁▃▇▆ |
+```
+## Classes 'data.table' and 'data.frame':	11193950 obs. of  44 variables:
+##  $ STNID           : chr  "008260-99999" "008260-99999" "008260-99999" "008260-99999" ...
+##  $ NAME            : chr  NA NA NA NA ...
+##  $ CTRY            : chr  NA NA NA NA ...
+##  $ STATE           : chr  NA NA NA NA ...
+##  $ LATITUDE        : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ LONGITUDE       : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ ELEVATION       : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ BEGIN           : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ END             : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ YEARMODA        : Date, format: "2010-01-01" ...
+##  $ YEAR            : int  2010 2010 2010 2010 2010 2010 2010 2010 2010 2010 ...
+##  $ MONTH           : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ DAY             : int  1 2 3 4 5 6 7 8 9 10 ...
+##  $ YDAY            : int  1 2 3 4 5 6 7 8 9 10 ...
+##  $ TEMP            : num  0.6 -0.4 -1.9 -2.4 -3.1 -1.2 2.4 -3.2 -5.6 -7.2 ...
+##  $ TEMP_ATTRIBUTES : chr  "24" "24" "23" "24" ...
+##  $ DEWP            : num  -0.4 -1.1 -4.5 -6.3 -7.8 -6.7 -5.3 -5.9 -11.3 -15.2 ...
+##  $ DEWP_ATTRIBUTES : chr  "24" "24" "22" "24" ...
+##  $ SLP             : num  NA NA 1021 NA NA ...
+##  $ SLP_ATTRIBUTES  : chr  " 0" " 0" " 5" " 0" ...
+##  $ STP             : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ STP_ATTRIBUTES  : chr  " 0" " 0" " 0" " 0" ...
+##  $ VISIB           : num  11.4 6.1 5.6 15.4 15.1 14.6 10.6 13.7 15.6 16.1 ...
+##  $ VISIB_ATTRIBUTES: chr  "24" "24" "23" "24" ...
+##  $ WDSP            : num  2.6 4 7.8 6.2 2.4 4.3 4.4 2.6 4.1 2.3 ...
+##  $ WDSP_ATTRIBUTES : chr  "24" "24" "23" "24" ...
+##  $ MXSPD           : num  6.7 7.7 13.4 9.3 4.6 7.2 11.3 8.2 6.7 5.1 ...
+##  $ GUST            : num  10.8 11.3 19.5 14.4 NA 9.3 17 10.8 8.7 7.2 ...
+##  $ MAX             : num  4.4 6 12 0 5 10.6 9 0 -3 4 ...
+##  $ MAX_ATTRIBUTES  : chr  NA "*" "*" "*" ...
+##  $ MIN             : num  -7 -7 -9 -10 -9 -11.7 -6 -9.4 -14 -13 ...
+##  $ MIN_ATTRIBUTES  : chr  "*" "*" "*" "*" ...
+##  $ PRCP            : num  2.3 0.3 0 0.3 0 NA 1.3 0 0.3 0.3 ...
+##  $ PRCP_ATTRIBUTES : chr  "G" "G" "G" "G" ...
+##  $ SNDP            : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ I_FOG           : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ I_RAIN_DRIZZLE  : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ I_SNOW_ICE      : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ I_HAIL          : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ I_THUNDER       : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ I_TORNADO_FUNNEL: int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ EA              : num  0.6 0.6 0.4 0.4 0.3 0.4 0.4 0.4 0.3 0.2 ...
+##  $ ES              : num  0.6 0.6 0.5 0.5 0.5 0.6 0.7 0.5 0.4 0.4 ...
+##  $ RH              : num  93 95 82.4 74.6 70 66.2 56.8 81.6 64.2 52.8 ...
+##  - attr(*, ".internal.selfref")=<externalptr>
+```
 
 # Using reformat_GSOD()
 
@@ -443,30 +376,42 @@ inventory
 ##   *** FEDERAL CLIMATE COMPLEX INTEGRATED SURFACE DATA INVENTORY ***  
 ##    This inventory provides the number of weather observations by  
 ##    STATION-YEAR-MONTH for beginning of record through June 2020   
-##                STNID NAME LAT LON CTRY STATE BEGIN END COUNTRY_NAME ISO2C ISO3C YEAR  JAN  FEB  MAR  APR  MAY  JUN  JUL
-##      1: 007018-99999 <NA>  NA  NA <NA>  <NA>    NA  NA         <NA>  <NA>  <NA> 2011    0    0 2104 2797 2543 2614  382
-##      2: 007018-99999 <NA>  NA  NA <NA>  <NA>    NA  NA         <NA>  <NA>  <NA> 2013    0    0    0    0    0    0  710
-##      3: 007026-99999 <NA>  NA  NA <NA>  <NA>    NA  NA         <NA>  <NA>  <NA> 2012    0    0    0    0    0    0  367
-##      4: 007026-99999 <NA>  NA  NA <NA>  <NA>    NA  NA         <NA>  <NA>  <NA> 2014    0    0    0    0    0    0  180
-##      5: 007026-99999 <NA>  NA  NA <NA>  <NA>    NA  NA         <NA>  <NA>  <NA> 2016    0    0    0    0    0  794    0
-##     ---                                                                                                                
-## 643181:   A51256-451 <NA>  NA  NA <NA>  <NA>    NA  NA         <NA>  <NA>  <NA> 2016 2185 2047 2175 2131 2213 2139 2209
-## 643182:   A51256-451 <NA>  NA  NA <NA>  <NA>    NA  NA         <NA>  <NA>  <NA> 2017 2192 1883 2204 1910 2145 2113 2218
-## 643183:   A51256-451 <NA>  NA  NA <NA>  <NA>    NA  NA         <NA>  <NA>  <NA> 2018 2192 1887 2194 2113 2151 2095 2202
-## 643184:   A51256-451 <NA>  NA  NA <NA>  <NA>    NA  NA         <NA>  <NA>  <NA> 2019 2188 2000 2143 2105 2187 2124 2184
-## 643185:   A51256-451 <NA>  NA  NA <NA>  <NA>    NA  NA         <NA>  <NA>  <NA> 2020 2162 1437 2144 2125 2199  505    0
-##          AUG  SEP  OCT  NOV  DEC
-##      1:    0    0    0    0    0
-##      2:    0    0    0    0    0
-##      3:    0    0    0    0    7
-##      4:    0    4    0  552    0
-##      5:    0    0    0    0    0
-##     ---                         
-## 643181: 2216 2131 2196 2131 1665
-## 643182: 2204 2082 2192 2103 2174
-## 643183: 2197 1816 2195 2063 2178
-## 643184: 2138 2077 1872 1508 2159
-## 643185:    0    0    0    0    0
+##                STNID NAME LAT LON CTRY STATE BEGIN END
+##      1: 007018-99999 <NA>  NA  NA <NA>  <NA>    NA  NA
+##      2: 007018-99999 <NA>  NA  NA <NA>  <NA>    NA  NA
+##      3: 007026-99999 <NA>  NA  NA <NA>  <NA>    NA  NA
+##      4: 007026-99999 <NA>  NA  NA <NA>  <NA>    NA  NA
+##      5: 007026-99999 <NA>  NA  NA <NA>  <NA>    NA  NA
+##     ---                                               
+## 643185:   A51256-451 <NA>  NA  NA <NA>  <NA>    NA  NA
+## 643186:   A51256-451 <NA>  NA  NA <NA>  <NA>    NA  NA
+## 643187:   A51256-451 <NA>  NA  NA <NA>  <NA>    NA  NA
+## 643188:   A51256-451 <NA>  NA  NA <NA>  <NA>    NA  NA
+## 643189:   A51256-451 <NA>  NA  NA <NA>  <NA>    NA  NA
+##         COUNTRY_NAME ISO2C ISO3C YEAR  JAN  FEB  MAR  APR  MAY
+##      1:         <NA>  <NA>  <NA> 2011    0    0 2104 2797 2543
+##      2:         <NA>  <NA>  <NA> 2013    0    0    0    0    0
+##      3:         <NA>  <NA>  <NA> 2012    0    0    0    0    0
+##      4:         <NA>  <NA>  <NA> 2014    0    0    0    0    0
+##      5:         <NA>  <NA>  <NA> 2016    0    0    0    0    0
+##     ---                                                       
+## 643185:         <NA>  <NA>  <NA> 2016 2185 2047 2175 2131 2213
+## 643186:         <NA>  <NA>  <NA> 2017 2192 1883 2204 1910 2145
+## 643187:         <NA>  <NA>  <NA> 2018 2192 1887 2194 2113 2151
+## 643188:         <NA>  <NA>  <NA> 2019 2188 2000 2143 2105 2187
+## 643189:         <NA>  <NA>  <NA> 2020 2162 1437 2144 2125 2199
+##          JUN  JUL  AUG  SEP  OCT  NOV  DEC
+##      1: 2614  382    0    0    0    0    0
+##      2:    0  710    0    0    0    0    0
+##      3:    0  367    0    0    0    0    7
+##      4:    0  180    0    4    0  552    0
+##      5:  794    0    0    0    0    0    0
+##     ---                                   
+## 643185: 2139 2209 2216 2131 2196 2131 1665
+## 643186: 2113 2218 2204 2082 2192 2103 2174
+## 643187: 2095 2202 2197 1816 2195 2063 2178
+## 643188: 2124 2184 2138 2077 1872 1508 2159
+## 643189:  556    0    0    0    0    0    0
 ```
 
 ```r
@@ -477,31 +422,56 @@ subset(inventory, STNID %in% "955510-99999")
 ##   *** FEDERAL CLIMATE COMPLEX INTEGRATED SURFACE DATA INVENTORY ***  
 ##    This inventory provides the number of weather observations by  
 ##    STATION-YEAR-MONTH for beginning of record through June 2020   
-##            STNID              NAME    LAT   LON CTRY STATE    BEGIN      END COUNTRY_NAME ISO2C ISO3C YEAR JAN FEB MAR
-##  1: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS       19980301 20200607    AUSTRALIA    AU   AUS 1998   0   0 222
-##  2: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS       19980301 20200607    AUSTRALIA    AU   AUS 1999 213 201 235
-##  3: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS       19980301 20200607    AUSTRALIA    AU   AUS 2000 241 227 247
-##  4: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS       19980301 20200607    AUSTRALIA    AU   AUS 2001 245 223 246
-##  5: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS       19980301 20200607    AUSTRALIA    AU   AUS 2002 245 219 246
-##  6: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS       19980301 20200607    AUSTRALIA    AU   AUS 2003 244 217 220
-##  7: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS       19980301 20200607    AUSTRALIA    AU   AUS 2004 240 227 241
-##  8: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS       19980301 20200607    AUSTRALIA    AU   AUS 2005 241 221 242
-##  9: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS       19980301 20200607    AUSTRALIA    AU   AUS 2006 245 223 246
-## 10: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS       19980301 20200607    AUSTRALIA    AU   AUS 2007 247 222 244
-## 11: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS       19980301 20200607    AUSTRALIA    AU   AUS 2008 247 228 248
-## 12: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS       19980301 20200607    AUSTRALIA    AU   AUS 2009 245 222 246
-## 13: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS       19980301 20200607    AUSTRALIA    AU   AUS 2010 248 223 248
-## 14: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS       19980301 20200607    AUSTRALIA    AU   AUS 2011 247 224 247
-## 15: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS       19980301 20200607    AUSTRALIA    AU   AUS 2012 248 232 248
-## 16: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS       19980301 20200607    AUSTRALIA    AU   AUS 2013 236 220 247
-## 17: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS       19980301 20200607    AUSTRALIA    AU   AUS 2014 243 224 247
-## 18: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS       19980301 20200607    AUSTRALIA    AU   AUS 2015 248 222 248
-## 19: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS       19980301 20200607    AUSTRALIA    AU   AUS 2016 246 228 245
-## 20: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS       19980301 20200607    AUSTRALIA    AU   AUS 2017 247 224 248
-## 21: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS       19980301 20200607    AUSTRALIA    AU   AUS 2018 248 224 248
-## 22: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS       19980301 20200607    AUSTRALIA    AU   AUS 2019 247 224 245
-## 23: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS       19980301 20200607    AUSTRALIA    AU   AUS 2020 246 232 248
-##            STNID              NAME    LAT   LON CTRY STATE    BEGIN      END COUNTRY_NAME ISO2C ISO3C YEAR JAN FEB MAR
+##            STNID              NAME    LAT   LON CTRY STATE
+##  1: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS      
+##  2: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS      
+##  3: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS      
+##  4: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS      
+##  5: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS      
+##  6: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS      
+##  7: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS      
+##  8: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS      
+##  9: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS      
+## 10: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS      
+## 11: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS      
+## 12: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS      
+## 13: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS      
+## 14: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS      
+## 15: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS      
+## 16: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS      
+## 17: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS      
+## 18: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS      
+## 19: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS      
+## 20: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS      
+## 21: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS      
+## 22: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS      
+## 23: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS      
+##            STNID              NAME    LAT   LON CTRY STATE
+##        BEGIN      END COUNTRY_NAME ISO2C ISO3C YEAR JAN FEB MAR
+##  1: 19980301 20200607    AUSTRALIA    AU   AUS 1998   0   0 222
+##  2: 19980301 20200607    AUSTRALIA    AU   AUS 1999 213 201 235
+##  3: 19980301 20200607    AUSTRALIA    AU   AUS 2000 241 227 247
+##  4: 19980301 20200607    AUSTRALIA    AU   AUS 2001 245 223 246
+##  5: 19980301 20200607    AUSTRALIA    AU   AUS 2002 245 219 246
+##  6: 19980301 20200607    AUSTRALIA    AU   AUS 2003 244 217 220
+##  7: 19980301 20200607    AUSTRALIA    AU   AUS 2004 240 227 241
+##  8: 19980301 20200607    AUSTRALIA    AU   AUS 2005 241 221 242
+##  9: 19980301 20200607    AUSTRALIA    AU   AUS 2006 245 223 246
+## 10: 19980301 20200607    AUSTRALIA    AU   AUS 2007 247 222 244
+## 11: 19980301 20200607    AUSTRALIA    AU   AUS 2008 247 228 248
+## 12: 19980301 20200607    AUSTRALIA    AU   AUS 2009 245 222 246
+## 13: 19980301 20200607    AUSTRALIA    AU   AUS 2010 248 223 248
+## 14: 19980301 20200607    AUSTRALIA    AU   AUS 2011 247 224 247
+## 15: 19980301 20200607    AUSTRALIA    AU   AUS 2012 248 232 248
+## 16: 19980301 20200607    AUSTRALIA    AU   AUS 2013 236 220 247
+## 17: 19980301 20200607    AUSTRALIA    AU   AUS 2014 243 224 247
+## 18: 19980301 20200607    AUSTRALIA    AU   AUS 2015 248 222 248
+## 19: 19980301 20200607    AUSTRALIA    AU   AUS 2016 246 228 245
+## 20: 19980301 20200607    AUSTRALIA    AU   AUS 2017 247 224 248
+## 21: 19980301 20200607    AUSTRALIA    AU   AUS 2018 248 224 248
+## 22: 19980301 20200607    AUSTRALIA    AU   AUS 2019 247 224 245
+## 23: 19980301 20200607    AUSTRALIA    AU   AUS 2020 246 232 248
+##        BEGIN      END COUNTRY_NAME ISO2C ISO3C YEAR JAN FEB MAR
 ##     APR MAY JUN JUL AUG SEP OCT NOV DEC
 ##  1: 223 221 211 226 217 222 234 215 230
 ##  2: 224 244 229 239 247 236 246 233 243
@@ -525,7 +495,7 @@ subset(inventory, STNID %in% "955510-99999")
 ## 20: 240 248 239 248 247 239 248 240 248
 ## 21: 239 247 240 246 247 218 244 190 248
 ## 22: 240 245 240 248 247 240 248 237 248
-## 23: 238 248  54   0   0   0   0   0   0
+## 23: 238 248  70   0   0   0   0   0   0
 ##     APR MAY JUN JUL AUG SEP OCT NOV DEC
 ```
 
@@ -536,14 +506,14 @@ Additional climate data,
 
 
 ```r
-if (!require(devtools)) {
+if (!require(remotes)) {
   install.packages(
     "devtools",
     repos = c(CRAN = "https://cloud.r-project.org/")
   )
-  library(devtools)
+  library("remotes")
 }
-devtools::install_github("adamhsparks/GSODRdata")
+remotes::install_github("adamhsparks/GSODRdata")
 library("GSODRdata")
 ```
 
@@ -676,11 +646,9 @@ Missing = `NA`;
 
 - **I_TORNADO_FUNNEL** - Indicator for tornado or funnel cloud, (1 = yes, 0 = no/not reported) for the occurrence during the day;
 
-- **EA** - Mean daily actual vapour pressure as calculated using improved August-Roche-Magnus approximation [@Alduchov1996].
-Missing = `NA`;
+- **EA** - Mean daily actual vapour pressure as calculated using improved August-Roche-Magnus approximation [@Alduchov1996]. Missing = `NA`;
 
-- **ES** - Mean daily saturation vapour pressure as calculated using improved August-Roche-Magnus approximation  [@Alduchov1996].
-Missing = `NA`;
+- **ES** - Mean daily saturation vapour pressure as calculated using improved August-Roche-Magnus approximation [@Alduchov1996]. Missing = `NA`;
 
 - **RH** - Mean daily relative humidity as calculated using improved August-Roche-Magnus approximation [@Alduchov1996].
 Missing = `NA`.
@@ -690,4 +658,3 @@ Missing = `NA`.
 <img src="unnamed-chunk-1-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" style="display: block; margin: auto;" />
 
 # References
-
