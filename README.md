@@ -1,4 +1,4 @@
-# _GSODR_ <img style="float: right;" src="man/figures/logo.png">
+# _GSODR_ <img src="man/figures/logo.png" align="right" />
 
 <!-- badges: start -->
 [![tic](https://github.com/ropensci/GSODR/workflows/tic/badge.svg?branch=master)](https://github.com/ropensci/GSODR/actions)
