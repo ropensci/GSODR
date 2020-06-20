@@ -7,11 +7,12 @@
 reformat_GSOD(dsn = NULL, file_list = NULL)
 }
 \arguments{
-\item{dsn}{User supplied file path to location of data files on local disk
-for tidying.}
+\item{dsn}{User supplied full file path to location of data files on local
+disk for tidying.}
 
-\item{file_list}{User supplied list of files of data on local disk for
-tidying.}
+\item{file_list}{User supplied list of file paths to individual files of data
+on local disk for tidying.  Ignored if \code{dsn} is set.  Use if there are
+other files in the \code{dsn} that you do not wish to reformat.}
 }
 \value{
 A data frame as a \code{\link[data.table]{data.table}} object of
@@ -33,6 +34,7 @@ inches to millimetres.
 Parallel processing can be enabled using \code{\link[future]{plan}} to set
 up a parallel backend of your choice, \emph{e.g.},
 \code{future::plan("multisession")}.  See Examples for more.
+
 
 
 If multiple stations are given, data are summarised for each year by station,

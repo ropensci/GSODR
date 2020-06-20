@@ -11,7 +11,8 @@ test_that("reformat_GSOD file_list parameter reformats data properly", {
 
   # set up options for curl
 
-  url_base <- "https://www.ncei.noaa.gov/data/global-summary-of-the-day/access/1960/"
+  url_base <-
+    "https://www.ncei.noaa.gov/data/global-summary-of-the-day/access/1960/"
   test_files <-
     c("06600099999.csv", "06620099999.csv")
   destinations <- file.path(tempdir(), test_files)
@@ -44,6 +45,11 @@ test_that("reformat_GSOD file_list parameter reformats data properly", {
   expect_equal(nrow(x), 722)
   expect_length(x, 44)
   expect_is(x, "data.frame")
+
+  # Check that a message is emitted when both dsn and file_list are set --------
+  expect_message(reformat_GSOD(dsn = tempdir(),
+                               file_list = file_list),
+                 regexp = "\nYou have specified both `file_list` and `dsn`. *")
 
   unlink(destinations)
 })

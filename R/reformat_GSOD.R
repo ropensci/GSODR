@@ -16,12 +16,14 @@
 #' up a parallel backend of your choice, \emph{e.g.},
 #' \code{future::plan("multisession")}.  See Examples for more.
 #'
-#' @param dsn User supplied file path to location of data files on local disk
-#' for tidying.
-#' @param file_list User supplied list of files of data on local disk for
-#' tidying.
+#' @param dsn User supplied full file path to location of data files on local
+#'  disk for tidying.
+#' @param file_list User supplied list of file paths to individual files of data
+#'  on local disk for tidying.  Ignored if \code{dsn} is set.  Use if there are
+#'  other files in the \code{dsn} that you do not wish to reformat.
 #'
 #' @details
+#'
 #' If multiple stations are given, data are summarised for each year by station,
 #' which include vapour pressure and relative humidity elements calculated from
 #' existing data in \acronym{GSOD}.  Else, a single station is tidied and a data
@@ -92,6 +94,13 @@ reformat_GSOD <- function(dsn = NULL, file_list = NULL) {
   isd_history <- NULL # nocov
   load(system.file("extdata", "isd_history.rda", package = "GSODR")) # nocov
   setkeyv(isd_history, "STNID")
+
+  # If both dsn and file_path are set, emit message that only dsn is used
+  if (!is.null(dsn) & !is.null(file_list)) {
+    message("\nYou have specified both `file_list` and `dsn`.\n",
+            "Proceeding with using only the value from `dsn`.\n",
+            "See `?reformat_GSOD` if this behaviour was not expected.\n")
+  }
 
   # If dsn !NULL, create a list of files to reformat
   if (!is.null(dsn)) {
