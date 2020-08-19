@@ -1,5 +1,4 @@
 
-
 #' Find Nearest GSOD Stations to a Specified Latitude and Longitude
 #'
 #' Given latitude and longitude values entered as decimal degrees (DD), this
@@ -62,5 +61,11 @@ nearest_stations <- function(LAT, LON, distance) {
     haversine_distance(isd_history$LAT, isd_history$LON, LAT, LON)
 
   nearby <- which(nearby < distance)
-  return(isd_history[as.numeric(nearby), ]$STNID)
+
+  DT <-
+    setDT(data.frame(isd_history[as.numeric(nearby),]$STNID, as.numeric(nearby)))
+
+  DT[order(as.numeric.nearby.)]
+
+  return(DT[[1]])
 }
