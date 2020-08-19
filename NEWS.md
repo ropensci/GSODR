@@ -1,5 +1,13 @@
 # GSODR (development version)
 
+## Bug fixes
+
+* Fix bug where `nearest_stations()` did not always return the nearest station as the first value in the vector
+
+## Minor changes
+
+* Update internal isd-history database, adding 11 stations
+
 # GSODR 2.1.1
 
 ## Bug fixes 
