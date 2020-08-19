@@ -1,4 +1,5 @@
 
+
 #' Find Nearest GSOD Stations to a Specified Latitude and Longitude
 #'
 #' Given latitude and longitude values entered as decimal degrees (DD), this
@@ -26,7 +27,8 @@
 #' n <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 100)
 #' n
 #'}
-#' @return \code{\link[base]{vector}} object of station identification numbers
+#' @return A class \code{\link[base]{character}} \code{\link[base]{vector}}
+#'  object of station identification numbers in increasing order.
 #' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
 #' @export nearest_stations
 

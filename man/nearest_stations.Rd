@@ -15,7 +15,8 @@ nearest_stations(LAT, LON, distance)
 be returned.}
 }
 \value{
-\code{\link[base]{vector}} object of station identification numbers
+A class \code{\link[base]{character}} \code{\link[base]{vector}}
+ object of station identification numbers in increasing order.
 }
 \description{
 Given latitude and longitude values entered as decimal degrees (DD), this

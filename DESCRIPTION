@@ -70,7 +70,7 @@ Suggests:
     roxygen2 (>= 6.1.0),
     testthat,
     tidyr
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Encoding: UTF-8
 Language: en-AU
 NeedsCompilation: no
