@@ -15,14 +15,18 @@ nearest_stations(LAT, LON, distance)
 be returned.}
 }
 \value{
-A class \code{\link[base]{character}} \code{\link[base]{vector}}
- object of station identification numbers in increasing order.
+By default a class \code{\link[base]{character}}
+ \code{\link[base]{vector}} object of station identification numbers.
+ in order from nearest to farthest in increasing order. If \code{return_full}
+ is \code{TRUE}, a \code{\link[data.table]{data.table}} with full station
+ metadata including the distance from the user specified coordinates is
+ returned.
 }
 \description{
 Given latitude and longitude values entered as decimal degrees (DD), this
-function returns a list (atomic vector) of \acronym{STATION} values, which
-can be used in \code{\link{get_GSOD}} to query for specific stations as an
-argument in the \code{station} parameter of that function.
+function returns a list (\code{\link[base]{atomic}} vector) of station ID
+values, which can be used in \code{\link{get_GSOD}} to query for specific
+stations as an argument in the \code{station} parameter of that function.
 }
 \note{
 The \acronym{GSOD} data, which are downloaded and manipulated by
