@@ -1,4 +1,4 @@
-# GSODR (development version)
+# GSODR 2.1.2
 
 ## Bug fixes
 
