@@ -2,7 +2,7 @@
 #' Find nearest GSOD stations to a specified latitude and longitude
 #'
 #' Given latitude and longitude values entered as decimal degrees (DD), this
-#' function returns a list (\code{\link[base]{atomic}} vector) of station ID
+#' function returns a list (as an atomic vector) of station ID
 #' values, which can be used in \code{\link{get_GSOD}} to query for specific
 #' stations as an argument in the \code{station} parameter of that function.
 #'
