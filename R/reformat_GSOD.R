@@ -1,5 +1,5 @@
 
-#' Tidy and Return a data.table Object of GSOD Weather From Local Storage
+#' Tidy and return a data.table object of GSOD weather from local storage
 #'
 #' This function automates cleaning and reformatting of \acronym{GSOD} station
 #' files in\cr \dQuote{YEAR.tar.gz}, provided that they have been untarred or

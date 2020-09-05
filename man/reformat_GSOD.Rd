@@ -2,7 +2,7 @@
 % Please edit documentation in R/reformat_GSOD.R
 \name{reformat_GSOD}
 \alias{reformat_GSOD}
-\title{Tidy and Return a data.table Object of GSOD Weather From Local Storage}
+\title{Tidy and return a data.table object of GSOD weather from local storage}
 \usage{
 reformat_GSOD(dsn = NULL, file_list = NULL)
 }

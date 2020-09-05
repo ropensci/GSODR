@@ -1,5 +1,5 @@
 
-#' Processes GSOD Data
+#' Processes GSOD data
 #'
 #' @param x A `data.table` generated from `.download_data()`
 #' @param isd_history Internal metadata file for station locations

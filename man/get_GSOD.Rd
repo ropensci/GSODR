@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_GSOD.R
 \name{get_GSOD}
 \alias{get_GSOD}
-\title{Download and Return a data.table Object of GSOD Weather Data}
+\title{Download and return a data.table object of GSOD weather data}
 \usage{
 get_GSOD(
   years,
@@ -65,7 +65,7 @@ All missing values in resulting files are represented as \code{NA}
 regardless of which field they occur in.
 
 For a complete list of the fields and description of the contents and units,
-please refer to Appendix 1 in the \pkg{GSODR} vignette,
+please refer to Appendix 1 in the \CRANpkg{GSODR} vignette,
 \code{vignette("GSODR", package = "GSODR")}.
 
 For more information see the description of the data provided by

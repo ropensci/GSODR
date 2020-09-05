@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_inventory.R
 \name{get_inventory}
 \alias{get_inventory}
-\title{Download and Return a data.table Object GSOD Weather Station Data Inventories}
+\title{Download and return a data.table object GSOD weather station data inventories}
 \usage{
 get_inventory()
 }

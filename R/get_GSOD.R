@@ -1,5 +1,5 @@
 
-#' Download and Return a data.table Object of GSOD Weather Data
+#' Download and return a data.table object of GSOD weather data
 #'
 #' @description
 #' This function automates downloading, cleaning, reformatting of data from
@@ -26,7 +26,7 @@
 #' regardless of which field they occur in.
 #'
 #' For a complete list of the fields and description of the contents and units,
-#' please refer to Appendix 1 in the \pkg{GSODR} vignette,
+#' please refer to Appendix 1 in the \CRANpkg{GSODR} vignette,
 #' \code{vignette("GSODR", package = "GSODR")}.
 #'
 #' For more information see the description of the data provided by
