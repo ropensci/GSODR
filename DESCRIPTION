@@ -24,8 +24,14 @@ Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     person("Łukasz", "Pawlik", role = "ctb", email = "lukpawlik@gmail.com", 
     comment = "Reported bug in windspeed conversion calculation"),
     person("Ross","Darnell", role = "ctb",
-    email = "Ross.Darnell@data61.csiro.au", comment = "Reported bug in 'Windows
-    OS' versions causing 'GSOD' data untarring to fail"))
+    email = "Ross.Darnell@data61.csiro.au", comment = c(
+    "Reported bug in 'Windows OS' versions causing 'GSOD' data untarring to
+    fail",
+    ORCID = "0000-0002-7973-6322")),
+    person("Tyler", "Widdison", role = "ctb",
+    email = "Tyler.Widdison@usav.org", comment = "Reported bug where
+    `nearest_stations()` did not return stations in order of nearest to
+    farthest."))
 URL: https://docs.ropensci.org/GSODR/
 BugReports: https://github.com/ropensci/GSODR/issues
 Description: Provides automated downloading, parsing, cleaning, unit conversion

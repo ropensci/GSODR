@@ -50,8 +50,11 @@ Other contributors:
     efficiently) [contributor]
   \item Gwenael Giboire \email{gwenael.giboire@oda-groupe.com} (Several bug reports in early versions and testing feedback) [contributor]
   \item Łukasz Pawlik \email{lukpawlik@gmail.com} (Reported bug in windspeed conversion calculation) [contributor]
-  \item Ross Darnell \email{Ross.Darnell@data61.csiro.au} (Reported bug in 'Windows
-    OS' versions causing 'GSOD' data untarring to fail) [contributor]
+  \item Ross Darnell \email{Ross.Darnell@data61.csiro.au} (\href{https://orcid.org/0000-0002-7973-6322}{ORCID}) (Reported bug in 'Windows OS' versions causing 'GSOD' data untarring to
+    fail) [contributor]
+  \item Tyler Widdison \email{Tyler.Widdison@usav.org} (Reported bug where
+    `nearest_stations()` did not return stations in order of nearest to
+    farthest.) [contributor]
 }
 
 }
