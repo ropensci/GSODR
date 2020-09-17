@@ -23,7 +23,7 @@ _**GSODR**_ aims to make it easy to find, transfer and format the data you need 
 
 - `reformat_GSOD()` - this function takes individual station files from the local disk and re-formats them returning a data frame.
 
-- `nearest_stations()` - this function returns a vector of station IDs that fall within the given radius (kilometres) of a point given as latitude and longitude.
+- `nearest_stations()` - this function returns a vector of station IDs that fall within the given radius (kilometres) of a point given as latitude and longitude in order from nearest to farthest.
 
 - `update_station_list()` - this function downloads the latest station list from the NCEI's server updates the package's internal database of stations and their metadata.
 
