@@ -1,7 +1,7 @@
 Fetch and Clean ‘isd\_history.csv’ File
 ================
 Adam H. Sparks
-2020-09-06
+2020-09-17
 
 Introduction
 ============
@@ -113,7 +113,7 @@ View and save the data
     ##  $ CTRY        : chr  "AF" "AF" "AF" "AF" ...
     ##  $ STATE       : chr  "" "" "" "" ...
     ##  $ BEGIN       : int  20100519 19730304 19730629 20010925 19730304 20171229 19730701 19730101 19800316 19730101 ...
-    ##  $ END         : int  20120323 20070905 20070608 20010925 20130703 20171229 20090511 20130313 20010828 20200902 ...
+    ##  $ END         : int  20120323 20070905 20070608 20010925 20130703 20171229 20090511 20130313 20010828 20200914 ...
     ##  $ COUNTRY_NAME: chr  "AFGHANISTAN" "AFGHANISTAN" "AFGHANISTAN" "AFGHANISTAN" ...
     ##  $ ISO2C       : chr  "AF" "AF" "AF" "AF" ...
     ##  $ ISO3C       : chr  "AFG" "AFG" "AFG" "AFG" ...
@@ -155,7 +155,7 @@ R System Information
     ##  collate  en_AU.UTF-8                 
     ##  ctype    en_AU.UTF-8                 
     ##  tz       Australia/Brisbane          
-    ##  date     2020-09-06                  
+    ##  date     2020-09-17                  
     ## 
     ## ─ Packages ───────────────────────────────────────────────────────────────────
     ##  package     * version date       lib source        
@@ -174,7 +174,7 @@ R System Information
     ##  generics      0.0.2   2018-11-29 [1] CRAN (R 4.0.2)
     ##  glue          1.4.2   2020-08-27 [1] CRAN (R 4.0.2)
     ##  htmltools     0.5.0   2020-06-16 [1] CRAN (R 4.0.2)
-    ##  jsonlite      1.7.0   2020-06-25 [1] CRAN (R 4.0.2)
+    ##  jsonlite      1.7.1   2020-09-07 [1] CRAN (R 4.0.2)
     ##  knitr         1.29    2020-06-23 [1] CRAN (R 4.0.2)
     ##  lifecycle     0.2.0   2020-03-06 [1] CRAN (R 4.0.2)
     ##  magrittr      1.5     2014-11-22 [1] CRAN (R 4.0.2)
@@ -188,13 +188,13 @@ R System Information
     ##  rmarkdown     2.3     2020-06-18 [1] CRAN (R 4.0.2)
     ##  sessioninfo * 1.1.1   2018-11-05 [1] CRAN (R 4.0.2)
     ##  skimr       * 2.1.2   2020-07-06 [1] CRAN (R 4.0.2)
-    ##  stringi       1.4.6   2020-02-17 [1] CRAN (R 4.0.2)
+    ##  stringi       1.5.3   2020-09-09 [1] CRAN (R 4.0.2)
     ##  stringr       1.4.0   2019-02-10 [1] CRAN (R 4.0.2)
     ##  tibble        3.0.3   2020-07-10 [1] CRAN (R 4.0.2)
     ##  tidyselect    1.1.0   2020-05-11 [1] CRAN (R 4.0.2)
     ##  vctrs         0.3.4   2020-08-29 [1] CRAN (R 4.0.2)
     ##  withr         2.2.0   2020-04-20 [1] CRAN (R 4.0.2)
-    ##  xfun          0.16    2020-07-24 [1] CRAN (R 4.0.2)
+    ##  xfun          0.17    2020-09-09 [1] CRAN (R 4.0.2)
     ##  yaml          2.2.1   2020-02-01 [1] CRAN (R 4.0.2)
     ## 
     ## [1] /Users/adamsparks/.R/library
