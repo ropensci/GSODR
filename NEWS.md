@@ -445,7 +445,7 @@ This allows for end users to use a parallel process of their choice.
   * New data layers are provided through a separate package, [`GSODRdata`](https://github.com/adamhsparks/GSODRdata), which provide
     climate data formatted for use with GSODR.
 
-     * CHELSA (climatic surfaces at 1 km resolution), <http://chelsa-climate.org/>,
+     * CHELSA (climatic surfaces at 1 km resolution), <https://chelsa-climate.org/>,
 
      * MODCF  * Remotely sensed high-resolution global cloud dynamics for predicting ecosystem and biodiversity distributions (<http://www.earthenv.org/cloud>),
 
@@ -545,7 +545,7 @@ This allows for end users to use a parallel process of their choice.
   * Fix bug with connection timing out for single station queries commit: [a126641e00dc7acc21844ff0436e5702f8b6e04a](https://github.com/ropensci/GSODR/commit/a126641e00dc7acc21844ff0436e5702f8b6e04a)
 
   * Somehow the previously working function that checked country names broke with the `toupper()` function.
-  A new [function from juba](http://stackoverflow.com/questions/16516593/convert-from-lowercase-to-uppercase-all-values-in-all-character-variables-in-dat) fixes this issue and users can now select country again
+  A new [function from juba](https://stackoverflow.com/questions/16516593/convert-from-lowercase-to-uppercase-all-values-in-all-character-variables-in-dat) fixes this issue and users can now select country again
 
   * User entered values for a single station are now checked against actual station values for validity
 
@@ -646,7 +646,7 @@ This allows for end users to use a parallel process of their choice.
 
   * Bug fix where WDSP was mistyped as WDPS causing the creation of a new column,   rather than the conversion of the existing
 
-  * Use write.csv, not readr::write_csv due to issue converting double to string: <https://github.com/hadley/readr/issues/387>
+  * Use write.csv, not readr::write_csv due to issue converting double to string: <https://github.com/tidyverse/readr/issues/387>
 
 # GSODR 0.1.1
 

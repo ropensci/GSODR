@@ -5,9 +5,9 @@
 [![codecov](https://codecov.io/gh/ropensci/GSODR/branch/main/graph/badge.svg)](https://codecov.io/gh/ropensci/GSODR)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.439850.svg)](https://doi.org/10.5281/zenodo.439850) 
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/GSODR)](https://cran.r-project.org/package=GSODR)
-[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) 
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) 
 [![JOSS](http://joss.theoj.org/papers/10.21105/joss.00177/status.svg)](http://joss.theoj.org/papers/14021f4e4931cdaab4ea41be27df2df6) 
-[![](https://badges.ropensci.org/79_status.svg)](https://github.com/ropensci/onboarding/issues/79)
+[![](https://badges.ropensci.org/79_status.svg)](https://github.com/ropensci/software-review/issues/79)
 <!-- badges: end -->
 
 --------------------
@@ -68,7 +68,7 @@ Several are also [rOpenSci](https://ropensci.org) projects.
 
 The [_**GSODTools**_](https://github.com/environmentalinformatics-marburg/GSODTools) by [Florian Detsch](https://github.com/fdetsch) is an R package that offers similar functionality as _**GSODR**_, but also has the ability to graph the data and working with data for time series analysis.
 
-The [_**gsod**_](https://github.com/databrew/gsod) package from [DataBrew](http://www.databrew.cc/posts/gsod.html) aims to streamline the way that researchers and data scientists interact with and utilise weather data and relies on _**GSODR**_, but provides data in the package rather than downloading so it is faster (though available data may be out of date).
+The [_**gsod**_](https://github.com/databrew/gsod) package from [DataBrew](https://www.databrew.cc/posts/gsod.html) aims to streamline the way that researchers and data scientists interact with and utilise weather data and relies on _**GSODR**_, but provides data in the package rather than downloading so it is faster (though available data may be out of date).
 
 [_**rnoaa**_](https://CRAN.R-project.org/package=rnoaa), from [rOpenSci](https://docs.ropensci.org/rnoaa/) offers tools for interacting with and downloading weather data from the United States National Oceanic and Atmospheric Administration but lacks support for GSOD data.
 
