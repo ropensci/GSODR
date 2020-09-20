@@ -24,7 +24,7 @@ if (!all(unlist(lapply(required, function(pkg)
 
 # Introduction
 
-The GSOD or [Global Surface Summary of the Day (GSOD)](https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/) data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage.
+The GSOD or [Global Surface Summary of the Day (GSOD)](https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod) data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage.
 However, the data files are cumbersome and difficult to work with.
 _GSODR_ aims to make it easy to find, transfer and format the data you need for use in analysis and provides four main functions for facilitating this:
 
@@ -208,7 +208,7 @@ library("GSODRdata")
 
 ## WMO Resolution 40. NOAA Policy
 
-_Users of these data should take into account the following (from the [NCEI website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):_
+_Users of these data should take into account the following (from the [NCEI website](https://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):_
 
 > "The following data and products may have conditions placed on their international commercial use.
 They can be used within the U.S. or for non-commercial international activities without restriction.
