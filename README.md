@@ -34,7 +34,7 @@ File output is returned as a `data.table` object, summarising each year by stati
 Additional data are calculated by this R package using the original data and included in the final data.
 These include vapour pressure (ea and es) and relative humidity calculated using the improved August-Roche-Magnus approximation (Alduchov and Eskridge 1996).
 
-For more information see the description of the data provided by NCEI, <http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
+For more information see the description of the data provided by NCEI, <https://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
 
 ## How to Install
 
