@@ -8,6 +8,8 @@
 
 * Update internal isd-history database, adding 11 stations
 
+* Fix any links that redirect found in DESCRIPTION, documentation or other materials in the package
+
 # GSODR 2.1.1
 
 ## Bug fixes 
