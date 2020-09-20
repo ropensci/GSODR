@@ -61,11 +61,11 @@ Oz
 ##    4: 749438-99999         IRON RANGE AUSTRALIA -12.70 143.3   AS
 ##    5: 749439-99999     MAREEBA AS/HOEVETT FIELD -17.05 145.4   AS
 ##   ---                                                            
-## 1038: 959890-99999      BICHENO (COUNCIL DEPOT) -41.87 148.3   AS
-## 1039: 959950-99999 LORD HOWE ISLAND WINDY POINT -31.53 159.1   AS
-## 1040: 959970-99999    HEARD ISLAND (ATLAS COVE) -53.02  73.4   AS
-## 1041: 996600-99999          ENVIRONM BUOY 55011 -40.80 144.3   AS
-## 1042: 999999-82101               NORTHWEST CAPE -22.33 114.0   AS
+## 1043: 959890-99999      BICHENO (COUNCIL DEPOT) -41.87 148.3   AS
+## 1044: 959950-99999 LORD HOWE ISLAND WINDY POINT -31.53 159.1   AS
+## 1045: 959970-99999    HEARD ISLAND (ATLAS COVE) -53.02  73.4   AS
+## 1046: 996600-99999          ENVIRONM BUOY 55011 -40.80 144.3   AS
+## 1047: 999999-82101               NORTHWEST CAPE -22.33 114.0   AS
 ##       STATE    BEGIN      END COUNTRY_NAME ISO2C ISO3C
 ##    1:       19420804 20030816    AUSTRALIA    AU   AUS
 ##    2:       19430228 19440821    AUSTRALIA    AU   AUS
@@ -73,11 +73,11 @@ Oz
 ##    4:       19420917 19440930    AUSTRALIA    AU   AUS
 ##    5:       19420630 19440630    AUSTRALIA    AU   AUS
 ##   ---                                                 
-## 1038:       19650101 20200608    AUSTRALIA    AU   AUS
-## 1039:       20120920 20200609    AUSTRALIA    AU   AUS
-## 1040:       19980301 20121220    AUSTRALIA    AU   AUS
-## 1041:       19930221 19970403    AUSTRALIA    AU   AUS
-## 1042:       19680305 19680430    AUSTRALIA    AU   AUS
+## 1043:       19650101 20200915    AUSTRALIA    AU   AUS
+## 1044:       20120920 20200917    AUSTRALIA    AU   AUS
+## 1045:       19980301 20121220    AUSTRALIA    AU   AUS
+## 1046:       19930221 19970403    AUSTRALIA    AU   AUS
+## 1047:       19680305 19680430    AUSTRALIA    AU   AUS
 ```
 
 ```r
@@ -91,7 +91,7 @@ subset(Oz, grepl("TOOWOOMBA", NAME))
 ## 2: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS       19980301
 ##         END COUNTRY_NAME ISO2C ISO3C
 ## 1: 20120503    AUSTRALIA    AU   AUS
-## 2: 20200609    AUSTRALIA    AU   AUS
+## 2: 20200917    AUSTRALIA    AU   AUS
 ```
 
 ## Download a Single Station and Year Using get_GSOD()
@@ -114,7 +114,7 @@ str(tbar)
 ##  $ LONGITUDE       : num  152 152 152 152 152 ...
 ##  $ ELEVATION       : num  642 642 642 642 642 642 642 642 642 642 ...
 ##  $ BEGIN           : int  19980301 19980301 19980301 19980301 19980301 19980301 19980301 19980301 19980301 19980301 ...
-##  $ END             : int  20200609 20200609 20200609 20200609 20200609 20200609 20200609 20200609 20200609 20200609 ...
+##  $ END             : int  20200917 20200917 20200917 20200917 20200917 20200917 20200917 20200917 20200917 20200917 ...
 ##  $ YEARMODA        : Date, format: "2010-01-01" ...
 ##  $ YEAR            : int  2010 2010 2010 2010 2010 2010 2010 2010 2010 2010 ...
 ##  $ MONTH           : int  1 1 1 1 1 1 1 1 1 1 ...
@@ -178,7 +178,7 @@ str(tbar)
 ##  $ LONGITUDE       : num  152 152 152 152 152 ...
 ##  $ ELEVATION       : num  407 407 407 407 407 ...
 ##  $ BEGIN           : int  19730430 19730430 19730430 19730430 19730430 19730430 19730430 19730430 19730430 19730430 ...
-##  $ END             : int  20200609 20200609 20200609 20200609 20200609 20200609 20200609 20200609 20200609 20200609 ...
+##  $ END             : int  20200917 20200917 20200917 20200917 20200917 20200917 20200917 20200917 20200917 20200917 ...
 ##  $ YEARMODA        : Date, format: "2010-01-01" ...
 ##  $ YEAR            : int  2010 2010 2010 2010 2010 2010 2010 2010 2010 2010 ...
 ##  $ MONTH           : int  1 1 1 1 1 1 1 1 1 1 ...
@@ -448,29 +448,29 @@ subset(inventory, STNID %in% "955510-99999")
 ## 23: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.9   AS       19980301
 ##            STNID              NAME    LAT   LON CTRY STATE    BEGIN
 ##          END COUNTRY_NAME ISO2C ISO3C YEAR JAN FEB MAR APR MAY JUN
-##  1: 20200609    AUSTRALIA    AU   AUS 1998   0   0 222 223 221 211
-##  2: 20200609    AUSTRALIA    AU   AUS 1999 213 201 235 224 244 229
-##  3: 20200609    AUSTRALIA    AU   AUS 2000 241 227 247 238 246 237
-##  4: 20200609    AUSTRALIA    AU   AUS 2001 245 223 246 238 239 236
-##  5: 20200609    AUSTRALIA    AU   AUS 2002 245 219 246 236 243 229
-##  6: 20200609    AUSTRALIA    AU   AUS 2003 244 217 220 232 235 233
-##  7: 20200609    AUSTRALIA    AU   AUS 2004 240 227 241 229 233 224
-##  8: 20200609    AUSTRALIA    AU   AUS 2005 241 221 242 240 247 239
-##  9: 20200609    AUSTRALIA    AU   AUS 2006 245 223 246 232 241 238
-## 10: 20200609    AUSTRALIA    AU   AUS 2007 247 222 244 240 248 240
-## 11: 20200609    AUSTRALIA    AU   AUS 2008 247 228 248 239 248 239
-## 12: 20200609    AUSTRALIA    AU   AUS 2009 245 222 246 235 244 237
-## 13: 20200609    AUSTRALIA    AU   AUS 2010 248 223 248 240 244 240
-## 14: 20200609    AUSTRALIA    AU   AUS 2011 247 224 247 240 247 240
-## 15: 20200609    AUSTRALIA    AU   AUS 2012 248 232 248 240 248 240
-## 16: 20200609    AUSTRALIA    AU   AUS 2013 236 220 247 233 248 239
-## 17: 20200609    AUSTRALIA    AU   AUS 2014 243 224 247 240 246 239
-## 18: 20200609    AUSTRALIA    AU   AUS 2015 248 222 248  72 247 240
-## 19: 20200609    AUSTRALIA    AU   AUS 2016 246 228 245 240 246 240
-## 20: 20200609    AUSTRALIA    AU   AUS 2017 247 224 248 240 248 239
-## 21: 20200609    AUSTRALIA    AU   AUS 2018 248 224 248 239 247 240
-## 22: 20200609    AUSTRALIA    AU   AUS 2019 247 224 245 240 245 240
-## 23: 20200609    AUSTRALIA    AU   AUS 2020 246 232 248 238 248 348
+##  1: 20200917    AUSTRALIA    AU   AUS 1998   0   0 222 223 221 211
+##  2: 20200917    AUSTRALIA    AU   AUS 1999 213 201 235 224 244 229
+##  3: 20200917    AUSTRALIA    AU   AUS 2000 241 227 247 238 246 237
+##  4: 20200917    AUSTRALIA    AU   AUS 2001 245 223 246 238 239 236
+##  5: 20200917    AUSTRALIA    AU   AUS 2002 245 219 246 236 243 229
+##  6: 20200917    AUSTRALIA    AU   AUS 2003 244 217 220 232 235 233
+##  7: 20200917    AUSTRALIA    AU   AUS 2004 240 227 241 229 233 224
+##  8: 20200917    AUSTRALIA    AU   AUS 2005 241 221 242 240 247 239
+##  9: 20200917    AUSTRALIA    AU   AUS 2006 245 223 246 232 241 238
+## 10: 20200917    AUSTRALIA    AU   AUS 2007 247 222 244 240 248 240
+## 11: 20200917    AUSTRALIA    AU   AUS 2008 247 228 248 239 248 239
+## 12: 20200917    AUSTRALIA    AU   AUS 2009 245 222 246 235 244 237
+## 13: 20200917    AUSTRALIA    AU   AUS 2010 248 223 248 240 244 240
+## 14: 20200917    AUSTRALIA    AU   AUS 2011 247 224 247 240 247 240
+## 15: 20200917    AUSTRALIA    AU   AUS 2012 248 232 248 240 248 240
+## 16: 20200917    AUSTRALIA    AU   AUS 2013 236 220 247 233 248 239
+## 17: 20200917    AUSTRALIA    AU   AUS 2014 243 224 247 240 246 239
+## 18: 20200917    AUSTRALIA    AU   AUS 2015 248 222 248  72 247 240
+## 19: 20200917    AUSTRALIA    AU   AUS 2016 246 228 245 240 246 240
+## 20: 20200917    AUSTRALIA    AU   AUS 2017 247 224 248 240 248 239
+## 21: 20200917    AUSTRALIA    AU   AUS 2018 248 224 248 239 247 240
+## 22: 20200917    AUSTRALIA    AU   AUS 2019 247 224 245 240 245 240
+## 23: 20200917    AUSTRALIA    AU   AUS 2020 246 232 248 238 248 348
 ##          END COUNTRY_NAME ISO2C ISO3C YEAR JAN FEB MAR APR MAY JUN
 ##     JUL AUG SEP OCT NOV DEC
 ##  1: 226 217 222 234 215 230
@@ -497,24 +497,6 @@ subset(inventory, STNID %in% "955510-99999")
 ## 22: 248 247 240 248 237 248
 ## 23: 493 477 271   0   0   0
 ##     JUL AUG SEP OCT NOV DEC
-```
-
-# Additional Climate Data Availability
-
-Additional climate data,
-[_GSODRdata_](https://github.com/adamhsparks/GSODRdata), formatted for use with GSOD data provided by _GSODR_ are available as an R package, which can only be installed through GitHub due to the package size, >5Mb, being too large for CRAN.
-
-
-```r
-if (!require(remotes)) {
-  install.packages(
-    "devtools",
-    repos = c(CRAN = "https://cloud.r-project.org/")
-  )
-  library("remotes")
-}
-remotes::install_github("adamhsparks/GSODRdata")
-library("GSODRdata")
 ```
 
 # Notes
@@ -627,7 +609,7 @@ See `FLAGS_PRCP` column for source of data;
 
     - G = 1 report of 24-hour precipitation amount;
 
-    - H = Station reported '0' as the amount for the day (e.g. from 6-hour reports), but also reported at least one occurrence of precipitation in hourly observations--this could indicate a rrace occurred, but should be considered as incomplete data for the day;
+    - H = Station reported '0' as the amount for the day (*e.g.* from 6-hour reports), but also reported at least one occurrence of precipitation in hourly observations--this could indicate a trace occurred, but should be considered as incomplete data for the day;
 
     - I = Station did not report any precipitation data for the day and did not report any occurrences of precipitation in its hourly observations--it's still possible that precipitation occurred but was not reported;
 

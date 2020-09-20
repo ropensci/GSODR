@@ -187,23 +187,6 @@ inventory
 subset(inventory, STNID %in% "955510-99999")
 ```
 
-# Additional Climate Data Availability
-
-Additional climate data,
-[_GSODRdata_](https://github.com/adamhsparks/GSODRdata), formatted for use with GSOD data provided by _GSODR_ are available as an R package, which can only be installed through GitHub due to the package size, >5Mb, being too large for CRAN.
-
-```{r Ex19, eval=FALSE}
-if (!require(remotes)) {
-  install.packages(
-    "devtools",
-    repos = c(CRAN = "https://cloud.r-project.org/")
-  )
-  library("remotes")
-}
-remotes::install_github("adamhsparks/GSODRdata")
-library("GSODRdata")
-```
-
 # Notes
 
 ## WMO Resolution 40. NOAA Policy
@@ -314,7 +297,7 @@ See `FLAGS_PRCP` column for source of data;
 
     - G = 1 report of 24-hour precipitation amount;
 
-    - H = Station reported '0' as the amount for the day (e.g. from 6-hour reports), but also reported at least one occurrence of precipitation in hourly observations--this could indicate a rrace occurred, but should be considered as incomplete data for the day;
+    - H = Station reported '0' as the amount for the day (*e.g.* from 6-hour reports), but also reported at least one occurrence of precipitation in hourly observations--this could indicate a trace occurred, but should be considered as incomplete data for the day;
 
     - I = Station did not report any precipitation data for the day and did not report any occurrences of precipitation in its hourly observations--it's still possible that precipitation occurred but was not reported;
 
