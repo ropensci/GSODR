@@ -24,7 +24,7 @@ Provides automated downloading, parsing, cleaning, unit conversion
     longitude, elevation, weather observations and associated flags.  For
     information on the 'GSOD' data from 'NCEI', please see the 'GSOD'
     'readme.txt' file available from,
-    <http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt>.
+    <https://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt>.
 }
 \seealso{
 Useful links:
