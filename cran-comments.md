@@ -1,12 +1,10 @@
 # Test environments
 
-  - macOS, R version 4.0.1 (2020-06-06)
+  - macOS, R version 4.0.2 (2020-06-22)
 
-  - Ubuntu Linux, R version 4.0.1 (2020-06-06)
+  - win-builder, R Under development (2020-09-17 r79226)
 
-  - win-builder, R Under development (unstable) (2020-06-09 r78665)
-
-  - win-builder, R version 4.0.1 (2020-06-06)
+  - win-builder, R version 4.0.2 (2020-06-22)
 
 # R CMD check results
 
@@ -14,17 +12,15 @@
 
 # New Patch Release
 
-## Bug fixes 
+## Bug fixes
 
-* Fix bug where station metadata files could not be updated
+* Fix bug where `nearest_stations()` did not always return the nearest station as the first value in the vector
 
 ## Minor changes
 
-* Update internal station list to latest
+* Update internal isd-history database, adding 11 stations
 
-* Correct an error in documentation for `update_station_list()`
-
-* Remove spatial vignettes to slim down Suggests and make CI maintenance easier
+* Fix any URLs that redirect found in DESCRIPTION, documentation or other materials in the package
 
 # Reverse dependencies
 
