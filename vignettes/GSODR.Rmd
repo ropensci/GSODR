@@ -32,7 +32,7 @@ _GSODR_ aims to make it easy to find, transfer and format the data you need for 
 When reformatting data either with `get_GSOD()` or `reformat_GSOD()`, all units are converted from United States Customary System (USCS) to International System of Units (SI), _e.g._, inches to millimetres and Fahrenheit to Celsius.
 Data in the R session summarise each year by station, which also includes vapour pressure and relative humidity elements calculated from existing data in GSOD.
 
-For more information see the description of the data provided by NCEI, <http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
+For more information see the description of the data provided by NCEI, <https://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
 
 # Using get_GSOD()
 
