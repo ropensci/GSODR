@@ -27,6 +27,8 @@ jobs:
           - { os: ubuntu-latest, r: "devel" }
           - { os: ubuntu-latest, r: "release" }
 
+    timeout-minutes: 30
+
     env:
       # otherwise remotes::fun() errors cause the build to fail. Example: Unavailability of binaries
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
