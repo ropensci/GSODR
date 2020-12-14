@@ -42,7 +42,9 @@ jobs:
       SDKROOT: /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
       # use GITHUB_TOKEN from GitHub to workaround rate limits in {remotes}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-
+      # Enable debug output from both parallelly and future 
+      R_FUTURE_DEBUG: TRUE
+    
     steps:
       - uses: actions/checkout@v2.3.4
 
