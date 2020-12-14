@@ -1,6 +1,4 @@
 
-context("update_station_list")
-
 test_that("If user selects no, database not updated", {
   f <- file()
   options(GSODR_connection = f)

@@ -1,6 +1,5 @@
 
-context("process_csv()")
-# Check that .process_csv() works properly and returns a tibble
+# Check that .process_csv() works properly and returns a tibble ----------------
 test_that(
   ".download_files properly works, subsetting for country and
   agroclimatology works and .process_gz returns a tibble", {

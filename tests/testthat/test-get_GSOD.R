@@ -1,5 +1,4 @@
 
-context("get_GSOD")
 # Check that .validate_years handles invalid years -----------------------------
 
 test_that(".validate_years handles invalid years", {
@@ -47,7 +46,8 @@ test_that("Station validations are properly handled for years available", {
 
 # Check missing days in non-leap years -----------------------------------------
 test_that("missing days check allows stations with permissible days missing,
-          non-leap year", {
+          non-leap year",
+          {
             max_missing <- 5
             td <- tempdir()
             just_right_2015 <-
@@ -56,7 +56,7 @@ test_that("missing days check allows stations with permissible days missing,
               data.frame(c(rep(12, 300)), c(rep("X", 300)))
             df_list <- list(just_right_2015, too_short_2015)
             dir.create(path = file.path(td, "2015"))
-
+            
             filenames <- c("just_right0", "too_short00")
             sapply(seq_len(length(df_list)),
                    function(x)
@@ -69,7 +69,7 @@ test_that("missing days check allows stations with permissible days missing,
                 pattern = ".csv$",
                 full.names = TRUE
               )
-
+            
             if (!is.null(max_missing)) {
               GSOD_list_filtered <- .validate_missing_days(max_missing,
                                                            GSOD_list)
@@ -85,7 +85,8 @@ test_that("missing days check allows stations with permissible days missing,
 
 # Check missing days in leap years ---------------------------------------------
 test_that("missing days check allows stations with permissible days missing,
-          leap year", {
+          leap year",
+          {
             max_missing <- 5
             td <- tempdir()
             just_right_2016 <-
@@ -94,7 +95,7 @@ test_that("missing days check allows stations with permissible days missing,
               data.frame(c(rep(12, 300)), c(rep("X", 300)))
             df_list <- list(just_right_2016, too_short_2016)
             dir.create(path = file.path(td, "2016"))
-
+            
             filenames <- c("just_right0", "too_short00")
             sapply(seq_len(length(df_list)),
                    function(x)
@@ -111,7 +112,7 @@ test_that("missing days check allows stations with permissible days missing,
               GSOD_list_filtered <- .validate_missing_days(max_missing,
                                                            GSOD_list)
             }
-
+            
             expect_length(GSOD_list, 2)
             expect_match(basename(GSOD_list_filtered), "just_right0.csv")
             rm_files <-
@@ -142,15 +143,15 @@ test_that("Check validate country returns a two letter code", {
   # CRAN NOTE avoidance
   isd_history <- NULL
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))
-
+  
   country <- "Philippines"
   Philippines <- .validate_country(country, isd_history)
   expect_match(Philippines, "RP")
-
+  
   country <- "PHL"
   PHL <- .validate_country(country, isd_history)
   expect_match(PHL, "RP")
-
+  
   country <- "PH"
   PH <- .validate_country(country, isd_history)
   expect_match(PH, "RP")
@@ -158,7 +159,8 @@ test_that("Check validate country returns a two letter code", {
 
 # Check validate country returns an error on invalid entry----------------------
 test_that("Check validate country returns an error on invalid entry when
-          mispelled", {
+          mispelled",
+          {
             isd_history <- NULL
             load(system.file("extdata", "isd_history.rda", package = "GSODR"))
             country <- "Philipines"
@@ -167,21 +169,25 @@ test_that("Check validate country returns an error on invalid entry when
 
 test_that(
   "Check validate country returns an error on invalid entry when two
-  two characters are used that are not in the list", {
+  two characters are used that are not in the list",
+  {
     isd_history <- NULL
     load(system.file("extdata", "isd_history.rda", package = "GSODR"))
     country <- "RZ"
     expect_error(.validate_country(country, isd_history))
-  })
+  }
+)
 
 test_that(
   "Check validate country returns an error on invalid entry when two
-  three characters are used that are not in the list", {
+  three characters are used that are not in the list",
+  {
     isd_history <- NULL
     load(system.file("extdata", "isd_history.rda", package = "GSODR"))
     country <- "RPS"
     expect_error(.validate_country(country, isd_history))
-  })
+  }
+)
 
 # Check that max_missing is not allowed for current year -----------------------
 test_that("max_missing is not allowed for current year", {
@@ -241,6 +247,6 @@ test_that("only specified country is returned using 3 letter ISO codes", {
 
 # Check that if an invalid station/year combo is selected, error result --------
 test_that("when year is selected for a station not providing it, error", {
-          expect_message(get_GSOD(years = 1950, station = "959360-99999"),
-                       regexp = "This station, 959360-99999, only provides")
-  })
+  expect_message(get_GSOD(years = 1950, station = "959360-99999"),
+                 regexp = "This station, 959360-99999, only provides")
+})

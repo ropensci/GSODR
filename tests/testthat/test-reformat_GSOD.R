@@ -1,6 +1,5 @@
 
 # Check that reformat_GSOD functions properly ----------------------------------
-context("reformat_GSOD")
 test_that("reformat_GSOD file_list parameter reformats data properly", {
   skip_on_cran()
   do.call(file.remove, list(list.files(

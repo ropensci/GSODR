@@ -1,7 +1,5 @@
 
 # Check that nearest stations functions properly -------------------------------
-context("nearest_stations")
-
 test_that("nearest stations returns station IDs nearest to farthest", {
   n <-
     nearest_stations(LAT = -27.5598,

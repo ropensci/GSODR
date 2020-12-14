@@ -1,6 +1,5 @@
 
 # Check that get_inventory functions properly ----------------------------------
-context("get_inventory()")
 test_that("get_inventory fetches the inventory doc and returns a data frame", {
   skip_on_cran()
   x <- get_inventory()
