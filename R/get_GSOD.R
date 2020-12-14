@@ -131,7 +131,6 @@ get_GSOD <- function(years,
 
   # Load station list
   load(system.file("extdata", "isd_history.rda", package = "GSODR")) # nocov
-  setkeyv(isd_history, "STNID")
 
   # Validate user entered stations for existence in stations list from NCEI
   invisible(lapply(
@@ -177,7 +176,7 @@ get_GSOD <- function(years,
 
   GSOD <- .apply_process_csv(file_list, isd_history)
 
-  # remove any leftover files from download to prevent poluting a new run
+  # remove any leftover files from download to prevent polluting a new run
   file.remove(list.files(tempdir(), pattern = ".csv$", full.names = TRUE))
 
   return(GSOD)
