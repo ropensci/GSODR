@@ -1,10 +1,9 @@
 Fetch and Clean ‘isd\_history.csv’ File
 ================
 Adam H. Sparks
-2020-09-20
+2020-12-14
 
-Introduction
-============
+# Introduction
 
 The isd\_history.csv file details GSOD station metadata. These data
 include the start and stop years used by *GSODR* to pre-check requests
@@ -26,109 +25,121 @@ are performed on the raw data file before inclusion in *GSODR*,
 -   A new field, STNID, a concatenation of the USAF and WBAN fields, is
     added.
 
-Data Processing
-===============
+# Data Processing
 
-Set up workspace
-----------------
+## Set up workspace
 
-    if (!require("pacman")) {
-      install.packages("pacman", repos = "https://cran.rstudio.com/")
-    }
-    pacman::p_load("sessioninfo", "skimr", "countrycode", "data.table")
+``` r
+if (!require("pacman")) {
+  install.packages("pacman", repos = "https://cran.rstudio.com/")
+}
+pacman::p_load("sessioninfo", "skimr", "countrycode", "data.table")
+```
 
-Download and clean data
------------------------
+    ## 
+    ## The downloaded binary packages are in
+    ##  /var/folders/w7/y2cm1lcj4wn647m7zr3nvd500000gn/T//Rtmpoh65bZ/downloaded_packages
 
-    # download data
-    isd_history <- fread("https://www1.ncdc.noaa.gov/pub/data/noaa/isd-history.csv")
+## Download and clean data
 
-Add/drop columns and save to disk
----------------------------------
+``` r
+# download data
+isd_history <- fread("https://www1.ncdc.noaa.gov/pub/data/noaa/isd-history.csv")
+```
 
-    # add STNID column
-    isd_history[, STNID := paste(USAF, WBAN, sep = "-")]
-    setcolorder(isd_history, "STNID")
-    setnames(isd_history, "STATION NAME", "NAME")
+## Add/drop columns and save to disk
 
-    # drop stations not in GSOD data
-    isd_history[, STNID_len := nchar(STNID)]
-    isd_history <- subset(isd_history, STNID_len == 12)
+``` r
+# add STNID column
+isd_history[, STNID := paste(USAF, WBAN, sep = "-")]
+setcolorder(isd_history, "STNID")
+setnames(isd_history, "STATION NAME", "NAME")
 
-    # remove stations where LAT or LON is NA
-    isd_history <- na.omit(isd_history, cols = c("LAT", "LON"))
+# drop stations not in GSOD data
+isd_history[, STNID_len := nchar(STNID)]
+isd_history <- subset(isd_history, STNID_len == 12)
 
-    # remove extra columns
-    isd_history[, c("USAF", "WBAN", "ICAO", "ELEV(M)", "STNID_len") := NULL]
+# remove stations where LAT or LON is NA
+isd_history <- na.omit(isd_history, cols = c("LAT", "LON"))
 
-Add country names based on FIPS
--------------------------------
+# remove extra columns
+isd_history[, c("USAF", "WBAN", "ICAO", "ELEV(M)", "STNID_len") := NULL]
+```
 
-    isd_history <-
-      isd_history[setDT(countrycode::codelist), on = c("CTRY" = "fips")]
+## Add country names based on FIPS
 
-    isd_history <- isd_history[, c(
-      "STNID",
-      "NAME",
-      "LAT",
-      "LON",
-      "CTRY",
-      "STATE",
-      "BEGIN",
-      "END",
-      "country.name.en",
-      "iso2c",
-      "iso3c"
-    )]
+``` r
+isd_history <-
+  isd_history[setDT(countrycode::codelist), on = c("CTRY" = "fips")]
 
-    # clean data
-    isd_history[isd_history == -999] <- NA
-    isd_history[isd_history == -999.9] <- NA
-    isd_history <- isd_history[!is.na(isd_history$LAT) & !is.na(isd_history$LON), ]
-    isd_history <- isd_history[isd_history$LAT != 0 & isd_history$LON != 0, ]
-    isd_history <- isd_history[isd_history$LAT > -90 & isd_history$LAT < 90, ]
-    isd_history <- isd_history[isd_history$LON > -180 & isd_history$LON < 180, ]
+isd_history <- isd_history[, c(
+  "STNID",
+  "NAME",
+  "LAT",
+  "LON",
+  "CTRY",
+  "STATE",
+  "BEGIN",
+  "END",
+  "country.name.en",
+  "iso2c",
+  "iso3c"
+)]
 
-    # set colnames to upper case
-    names(isd_history) <- toupper(names(isd_history))
-    setnames(
-      isd_history,
-      old = "COUNTRY.NAME.EN",
-      new = "COUNTRY_NAME"
-    )
+# clean data
+isd_history[isd_history == -999] <- NA
+isd_history[isd_history == -999.9] <- NA
+isd_history <- isd_history[!is.na(isd_history$LAT) & !is.na(isd_history$LON), ]
+isd_history <- isd_history[isd_history$LAT != 0 & isd_history$LON != 0, ]
+isd_history <- isd_history[isd_history$LAT > -90 & isd_history$LAT < 90, ]
+isd_history <- isd_history[isd_history$LON > -180 & isd_history$LON < 180, ]
 
-    # set country names to be upper case for easier internal verifications
-    isd_history[, COUNTRY_NAME := toupper(COUNTRY_NAME)]
+# set colnames to upper case
+names(isd_history) <- toupper(names(isd_history))
+setnames(
+  isd_history,
+  old = "COUNTRY.NAME.EN",
+  new = "COUNTRY_NAME"
+)
 
-View and save the data
-----------------------
+# set country names to be upper case for easier internal verifications
+isd_history[, COUNTRY_NAME := toupper(COUNTRY_NAME)]
 
-    str(isd_history)
+# set key for joins when processing CSV files
+setkeyv(isd_history, "STNID")
+```
 
-    ## Classes 'data.table' and 'data.frame':   26691 obs. of  11 variables:
-    ##  $ STNID       : chr  "008268-99999" "409000-99999" "409010-99999" "409030-99999" ...
-    ##  $ NAME        : chr  "WXPOD8278" "DARWAZ" "KHWAHAN" "KHWAJA-GHAR" ...
-    ##  $ LAT         : num  33 38.4 37.9 37.1 37.1 ...
-    ##  $ LON         : num  65.6 70.8 70.2 69.4 70.5 ...
-    ##  $ CTRY        : chr  "AF" "AF" "AF" "AF" ...
+## View and save the data
+
+``` r
+str(isd_history)
+```
+
+    ## Classes 'data.table' and 'data.frame':   26530 obs. of  11 variables:
+    ##  $ STNID       : chr  "008268-99999" "010010-99999" "010014-99999" "010015-99999" ...
+    ##  $ NAME        : chr  "WXPOD8278" "JAN MAYEN(NOR-NAVY)" "SORSTOKKEN" "BRINGELAND" ...
+    ##  $ LAT         : num  33 70.9 59.8 61.4 64.8 ...
+    ##  $ LON         : num  65.57 -8.67 5.34 5.87 11.23 ...
+    ##  $ CTRY        : chr  "AF" "NO" "NO" "NO" ...
     ##  $ STATE       : chr  "" "" "" "" ...
-    ##  $ BEGIN       : int  20100519 19730304 19730629 20010925 19730304 20171229 19730701 19730101 19800316 19730101 ...
-    ##  $ END         : int  20120323 20070905 20070608 20010925 20130703 20171229 20090511 20130313 20010828 20200917 ...
-    ##  $ COUNTRY_NAME: chr  "AFGHANISTAN" "AFGHANISTAN" "AFGHANISTAN" "AFGHANISTAN" ...
-    ##  $ ISO2C       : chr  "AF" "AF" "AF" "AF" ...
-    ##  $ ISO3C       : chr  "AFG" "AFG" "AFG" "AFG" ...
-    ##  - attr(*, ".internal.selfref")=<externalptr>
+    ##  $ BEGIN       : int  20100519 19310101 19861120 19870117 19870116 19880320 19861109 19850601 19730101 19310103 ...
+    ##  $ END         : int  20120323 20201209 20201209 20081231 19910806 20050228 20201204 20201209 20140523 20041030 ...
+    ##  $ COUNTRY_NAME: chr  "AFGHANISTAN" "NORWAY" "NORWAY" "NORWAY" ...
+    ##  $ ISO2C       : chr  "AF" "NO" "NO" "NO" ...
+    ##  $ ISO3C       : chr  "AFG" "NOR" "NOR" "NOR" ...
+    ##  - attr(*, ".internal.selfref")=<externalptr> 
+    ##  - attr(*, "sorted")= chr "STNID"
 
-    # write rda file to disk for use with GSODR package
-    save(isd_history,
-         file = "../inst/extdata/isd_history.rda",
-         compress = "bzip2")
+``` r
+# write rda file to disk for use with GSODR package
+save(isd_history,
+     file = "../inst/extdata/isd_history.rda",
+     compress = "bzip2")
+```
 
-Notes
-=====
+# Notes
 
-NOAA policy
------------
+## NOAA policy
 
 Users of these data should take into account the following (from the
 [NCEI
@@ -142,60 +153,59 @@ website](https://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryab
 > notification.” [WMO Resolution 40. NOAA
 > Policy](http://www.wmo.int/pages/about/Resolution40.html)
 
-R System Information
---------------------
+## R System Information
 
     ## ─ Session info ───────────────────────────────────────────────────────────────
     ##  setting  value                       
-    ##  version  R version 4.0.2 (2020-06-22)
-    ##  os       macOS Catalina 10.15.6      
+    ##  version  R version 4.0.3 (2020-10-10)
+    ##  os       macOS Catalina 10.15.7      
     ##  system   x86_64, darwin17.0          
     ##  ui       X11                         
     ##  language (EN)                        
     ##  collate  en_AU.UTF-8                 
     ##  ctype    en_AU.UTF-8                 
     ##  tz       Australia/Brisbane          
-    ##  date     2020-09-20                  
+    ##  date     2020-12-14                  
     ## 
     ## ─ Packages ───────────────────────────────────────────────────────────────────
     ##  package     * version    date       lib source                       
-    ##  assertthat    0.2.1      2019-03-21 [1] CRAN (R 4.0.2)               
-    ##  base64enc     0.1-3      2015-07-28 [1] CRAN (R 4.0.2)               
-    ##  cli           2.0.2      2020-02-28 [1] CRAN (R 4.0.2)               
+    ##  assertthat    0.2.1      2019-03-21 [1] CRAN (R 4.0.3)               
+    ##  base64enc     0.1-3      2015-07-28 [1] CRAN (R 4.0.3)               
+    ##  cli           2.2.0      2020-11-20 [1] CRAN (R 4.0.3)               
     ##  countrycode * 1.2.0      2020-05-22 [1] CRAN (R 4.0.2)               
-    ##  crayon        1.3.4.9000 2020-09-19 [1] Github (r-lib/crayon@6b3f0c6)
-    ##  curl          4.3        2019-12-02 [1] CRAN (R 4.0.1)               
-    ##  data.table  * 1.13.1     2020-08-19 [1] local                        
-    ##  digest        0.6.25     2020-02-23 [1] CRAN (R 4.0.2)               
+    ##  crayon        1.3.4.9000 2020-11-15 [1] Github (r-lib/crayon@4bceba8)
+    ##  curl          4.3        2019-12-02 [1] CRAN (R 4.0.3)               
+    ##  data.table  * 1.13.4     2020-12-08 [1] CRAN (R 4.0.3)               
+    ##  digest        0.6.27     2020-10-24 [1] CRAN (R 4.0.2)               
     ##  dplyr         1.0.2      2020-08-18 [1] CRAN (R 4.0.2)               
     ##  ellipsis      0.3.1      2020-05-15 [1] CRAN (R 4.0.2)               
-    ##  evaluate      0.14       2019-05-28 [1] CRAN (R 4.0.1)               
-    ##  fansi         0.4.1      2020-01-08 [1] CRAN (R 4.0.2)               
-    ##  generics      0.0.2      2018-11-29 [1] CRAN (R 4.0.2)               
+    ##  evaluate      0.14       2019-05-28 [1] CRAN (R 4.0.3)               
+    ##  fansi         0.4.1      2020-01-08 [1] CRAN (R 4.0.3)               
+    ##  generics      0.1.0      2020-10-31 [1] CRAN (R 4.0.2)               
     ##  glue          1.4.2      2020-08-27 [1] CRAN (R 4.0.2)               
     ##  htmltools     0.5.0      2020-06-16 [1] CRAN (R 4.0.2)               
-    ##  jsonlite      1.7.1      2020-09-07 [1] CRAN (R 4.0.2)               
-    ##  knitr         1.29       2020-06-23 [1] CRAN (R 4.0.2)               
-    ##  lifecycle     0.2.0      2020-03-06 [1] CRAN (R 4.0.2)               
-    ##  magrittr      1.5        2014-11-22 [1] CRAN (R 4.0.2)               
+    ##  jsonlite      1.7.2      2020-12-09 [1] CRAN (R 4.0.3)               
+    ##  knitr         1.30       2020-09-22 [1] CRAN (R 4.0.2)               
+    ##  lifecycle     0.2.0      2020-03-06 [1] CRAN (R 4.0.3)               
+    ##  magrittr      2.0.1      2020-11-17 [1] CRAN (R 4.0.3)               
     ##  pacman      * 0.5.1      2019-03-11 [1] CRAN (R 4.0.2)               
-    ##  pillar        1.4.6      2020-07-10 [1] CRAN (R 4.0.2)               
-    ##  pkgconfig     2.0.3      2019-09-22 [1] CRAN (R 4.0.2)               
+    ##  pillar        1.4.7      2020-11-20 [1] CRAN (R 4.0.3)               
+    ##  pkgconfig     2.0.3      2019-09-22 [1] CRAN (R 4.0.3)               
     ##  purrr         0.3.4      2020-04-17 [1] CRAN (R 4.0.2)               
-    ##  R6            2.4.1      2019-11-12 [1] CRAN (R 4.0.2)               
+    ##  R6            2.5.0      2020-10-28 [1] CRAN (R 4.0.2)               
     ##  repr          1.1.0      2020-01-28 [1] CRAN (R 4.0.2)               
-    ##  rlang         0.4.7      2020-07-09 [1] CRAN (R 4.0.2)               
-    ##  rmarkdown     2.3        2020-06-18 [1] CRAN (R 4.0.2)               
+    ##  rlang         0.4.9      2020-11-26 [1] CRAN (R 4.0.3)               
+    ##  rmarkdown     2.5        2020-10-21 [1] CRAN (R 4.0.3)               
     ##  sessioninfo * 1.1.1      2018-11-05 [1] CRAN (R 4.0.2)               
     ##  skimr       * 2.1.2      2020-07-06 [1] CRAN (R 4.0.2)               
     ##  stringi       1.5.3      2020-09-09 [1] CRAN (R 4.0.2)               
-    ##  stringr       1.4.0      2019-02-10 [1] CRAN (R 4.0.2)               
-    ##  tibble        3.0.3      2020-07-10 [1] CRAN (R 4.0.2)               
+    ##  stringr       1.4.0      2019-02-10 [1] CRAN (R 4.0.3)               
+    ##  tibble        3.0.4      2020-10-12 [1] CRAN (R 4.0.2)               
     ##  tidyselect    1.1.0      2020-05-11 [1] CRAN (R 4.0.2)               
-    ##  vctrs         0.3.4      2020-08-29 [1] CRAN (R 4.0.2)               
-    ##  withr         2.2.0      2020-04-20 [1] CRAN (R 4.0.2)               
-    ##  xfun          0.17       2020-09-09 [1] CRAN (R 4.0.2)               
-    ##  yaml          2.2.1      2020-02-01 [1] CRAN (R 4.0.2)               
+    ##  vctrs         0.3.5      2020-11-17 [1] CRAN (R 4.0.3)               
+    ##  withr         2.3.0      2020-09-22 [1] CRAN (R 4.0.2)               
+    ##  xfun          0.19       2020-10-30 [1] CRAN (R 4.0.2)               
+    ##  yaml          2.2.1      2020-02-01 [1] CRAN (R 4.0.3)               
     ## 
-    ## [1] /Users/adamsparks/.R/library
+    ## [1] /Users/adamsparks/Library/R/4.0/library
     ## [2] /Library/Frameworks/R.framework/Versions/4.0/Resources/library
