@@ -1,11 +1,10 @@
 
-#' Validate Years
+#' Validate years
 #'
 #' @param years User entered years for request
 #' @keywords internal
 #' @return None unless error in years being requested by users
 #' @noRd
-
 .validate_years <- function(years) {
   if (class(years) == "character") {
     stop(call. = FALSE,
@@ -27,7 +26,7 @@
 }
 
 
-#' Validate Station IDs
+#' Validate station IDs
 #'
 #' @param station User entered station ID
 #' @param isd_history isd_history.csv from NCEI provided by GSODR
@@ -35,7 +34,6 @@
 #' @keywords internal
 #' @return None unless an error with the years or invalid station ID
 #' @noRd
-
 .validate_station <- function(station, isd_history, years) {
   if (!station %in% isd_history$STNID) {
     stop(
@@ -50,9 +48,9 @@
     )
   }
   BEGIN <-
-    as.numeric(substr(isd_history[isd_history$STNID == station, ]$BEGIN, 1, 4))
+    as.numeric(substr(isd_history[isd_history$STNID == station,]$BEGIN, 1, 4))
   END <-
-    as.numeric(substr(isd_history[isd_history$STNID == station, ]$END, 1, 4))
+    as.numeric(substr(isd_history[isd_history$STNID == station,]$END, 1, 4))
   if (min(years) < BEGIN | max(years) > END) {
     message("\nThis station, ",
             station,
@@ -65,14 +63,13 @@
 }
 
 
-#' Validate Country Requests
+#' Validate country requests
 #'
 #' @param country User requested country name
 #' @param isd_history Data provided from NCEI on stations' locations and years
 #' @keywords internal
 #' @return A validated country name
 #' @noRd
-
 .validate_country <-
   function(country, isd_history) {
     if (!is.null(country)) {
@@ -111,7 +108,7 @@
   }
 
 
-#' Validate Data for Missing Days
+#' Validate data for missing days
 #'
 #' @param max_missing User entered maximum permissible missing days
 #' @param GSOD_list A list of GSOD files that have been downloaded from NCEI
@@ -119,7 +116,6 @@
 #' @return A validated `list()` of GSOD files that meet requirements for missing
 #' days
 #' @noRd
-
 .validate_missing_days <-
   function(max_missing, file_list) {
     records <-
@@ -142,7 +138,7 @@
   }
 
 
-#' Download GSOD Files from NCEI Server
+#' Download GSOD files from NCEI server
 #'
 #' @param station Station ID being requested. Optional
 #' @param years Years being requested. Mandatory
@@ -150,7 +146,6 @@
 #' @return A list of data for processing before returning to user
 #'
 #' @noRd
-
 .download_files <-
   function(station,
            years) {
@@ -162,7 +157,7 @@
           years,
           ".tar.gz"
         )
-
+      
       tryCatch(
         for (i in url_list) {
           if (!httr::http_error(i)) {
@@ -178,7 +173,7 @@
           stop(call. = FALSE,
                "\nThe file downloads have failed. Please restart.\n")
       )
-
+      
       # create a list of files that have been downloaded and untar them
       tar_files <-
         list.files(tempdir(), pattern = "*\\.tar.gz$", full.names = TRUE)
@@ -189,7 +184,7 @@
         utils::untar(i, exdir = year_dir)
         setwd(wd)
       }
-
+      
       GSOD_list <-
         list.files(
           tempdir(),
@@ -197,7 +192,7 @@
           full.names = TRUE,
           recursive = TRUE
         )
-
+      
       if (is.null(station)) {
         return(GSOD_list)
       } else {
@@ -209,14 +204,14 @@
                                                       "/",
                                                       gsub("-", "", station),
                                                       ".csv")]
-
+        
         GSOD_list <-
           subset(GSOD_list, GSOD_list %in% files_stations)
-
+        
         return(GSOD_list)
       }
     }
-
+    
     # if a station is provided, download its files -----------------------------
     if (!is.null(station)) {
       station <- gsub("-", "", station)
@@ -249,7 +244,7 @@
           stop(call. = FALSE,
                "\nThe file downloads have failed. Please restart.\n")
       )
-
+      
       GSOD_list <-
         list.files(tempdir(), pattern = "*\\.csv$", full.names = TRUE)
     }
@@ -268,9 +263,9 @@
 .agroclimatology_list <-
   function(file_list, isd_history, years) {
     station_list <- isd_history[isd_history$LAT >= -60 &
-                                  isd_history$LAT <= 60, ]$STNID
+                                  isd_history$LAT <= 60,]$STNID
     station_list <- gsub("-", "", station_list)
-
+    
     station_list <-
       CJ(years, sorted = FALSE)[, paste0(tempdir(),
                                          "/",
@@ -278,13 +273,13 @@
                                          "/",
                                          station_list,
                                          ".csv")]
-
+    
     file_list <- file_list[file_list %in% station_list]
     rm(station_list)
     return(file_list)
   }
 
-#' Subset Country List
+#' Subset country list
 #'
 #' @param country Country of interest to subset on
 #' @param GSOD_list List of GSOD files to be subset
@@ -293,14 +288,13 @@
 #' @keywords internal
 #' @return A list of stations in the requested country
 #' @noRd
-
 .subset_country_list <-
   function(country,
            file_list,
            isd_history,
            years) {
     station_list <-
-      isd_history[isd_history$CTRY == country, ]$STNID
+      isd_history[isd_history$CTRY == country,]$STNID
     station_list <- gsub("-", "", station_list)
     station_list <-
       CJ(years, sorted = FALSE)[, paste0(tempdir(),
@@ -314,14 +308,13 @@
     rm(station_list)
   }
 
-#' Process .gz Files in Parallel
+#' Process .gz files in parallel
 #'
 #' @param file_list List of GSOD files
 #' @param isd_history isd_history.csv file from NCEI provided by GSODR
 #' @keywords internal
-#' @return A `data.table()` of GSOD weather data
+#' @return A `data.table` of GSOD weather data
 #' @noRd
-
 .apply_process_csv <- function(file_list, isd_history) {
   x <- future.apply::future_lapply(X = file_list,
                                    FUN = .process_csv,
