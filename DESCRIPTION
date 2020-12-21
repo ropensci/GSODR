@@ -58,7 +58,7 @@ Imports:
     countrycode,
     curl,
     data.table (>= 1.11.6),
-    future.apply,
+    future.apply (>= 1.5.0),
     httr,
     R.utils,
     stats,
