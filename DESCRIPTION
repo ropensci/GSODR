@@ -57,7 +57,7 @@ License: MIT + file LICENSE
 Imports: 
     countrycode,
     curl,
-    data.table (<= 1.13.2),
+    data.table (<= 1.11.6),
     future.apply,
     httr,
     R.utils,
