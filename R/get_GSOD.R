@@ -10,9 +10,6 @@
 #' in the final data frame using the improved August-Roche-Magnus approximation
 #' (Alduchov and Eskridge 1996).
 #'
-#' Parallel processing can be enabled using \code{\link[future]{plan}} to set
-#' up a parallel backend of your choice, \emph{e.g.},
-#' \code{future::plan("multisession")}.
 #'
 #' @details
 #'

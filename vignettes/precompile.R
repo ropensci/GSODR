@@ -1,4 +1,4 @@
-# vignettes that depend on internet access need to be pre-compiled
+# vignettes that depend on Internet access need to be pre-compiled
 library("knitr")
 knit("vignettes/GSODR.Rmd.orig", "vignettes/GSODR.Rmd")
 

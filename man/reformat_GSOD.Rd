@@ -31,12 +31,6 @@ International System of Units (SI), \emph{e.g.}, Fahrenheit to Celsius and
 inches to millimetres.
 }
 \details{
-Parallel processing can be enabled using \code{\link[future]{plan}} to set
-up a parallel backend of your choice, \emph{e.g.},
-\code{future::plan("multisession")}.  See Examples for more.
-
-
-
 If multiple stations are given, data are summarised for each year by station,
 which include vapour pressure and relative humidity elements calculated from
 existing data in \acronym{GSOD}.  Else, a single station is tidied and a data

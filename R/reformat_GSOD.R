@@ -12,10 +12,6 @@
 #' International System of Units (SI), \emph{e.g.}, Fahrenheit to Celsius and
 #' inches to millimetres.
 #'
-#' Parallel processing can be enabled using \code{\link[future]{plan}} to set
-#' up a parallel backend of your choice, \emph{e.g.},
-#' \code{future::plan("multisession")}.  See Examples for more.
-#'
 #' @param dsn User supplied full file path to location of data files on local
 #'  disk for tidying.
 #' @param file_list User supplied list of file paths to individual files of data
