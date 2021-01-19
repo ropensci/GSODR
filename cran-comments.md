@@ -1,6 +1,6 @@
 # Test environments
 
-  - macOS, R version 4.0.3 (2020-06-22)
+  - macOS, R version 4.0.3 (2020-10-10)
 
   - win-builder, R Under development (2020-09-17 r79226)
 
