@@ -57,5 +57,6 @@ test_that("reformat_GSOD file_list parameter reformats data properly", {
 # Check that reformat_GSOD stops if no files are found -------------------------
 context("reformat_GSOD")
 test_that("reformat_GSOD stops if no files are found", {
+  skip_on_cran()
   expect_error(reformat_GSOD(dsn = "/dev/NULL"))
 })

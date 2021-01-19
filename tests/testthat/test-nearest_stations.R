@@ -1,6 +1,7 @@
 
 # Check that nearest stations functions properly -------------------------------
 test_that("nearest stations returns station IDs nearest to farthest", {
+  skip_on_cran()
   n <-
     nearest_stations(LAT = -27.5598,
                      LON = 151.9507,

@@ -2,6 +2,7 @@
 # Check that .validate_years handles invalid years -----------------------------
 
 test_that(".validate_years handles invalid years", {
+  skip_on_cran()
   expect_error(.validate_years())
   expect_error(.validate_years(years = "nineteen ninety two"))
   expect_error(.validate_years(years = 1923))
@@ -13,12 +14,14 @@ test_that(".validate_years handles invalid years", {
 
 # Check that .validate_years handles valid years -------------------------------
 test_that(".validate_years handles valid years", {
+  skip_on_cran()
   expect_error(.validate_years(years = 1929:2016), regexp = NA)
   expect_error(.validate_years(years = 2016), regexp = NA)
 })
 
 # Check that invalid stations are handled --------------------------------------
 test_that("invalid stations are handled", {
+  skip_on_cran()
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))
   stations <- isd_history
   expect_error(.validate_station(years = 2015,
@@ -28,6 +31,7 @@ test_that("invalid stations are handled", {
 
 # Check that station validation for years available on server works properly
 test_that("Station validations are properly handled for years available", {
+  skip_on_cran()
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))
   stations <- isd_history
   expect_error(.validate_station(station = "949999-00170",
@@ -36,6 +40,7 @@ test_that("Station validations are properly handled for years available", {
 })
 
 test_that("Station validations are properly handled for years available", {
+  skip_on_cran()
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))
   expect_silent(.validate_station(
     years = 2010,
@@ -48,6 +53,7 @@ test_that("Station validations are properly handled for years available", {
 test_that("missing days check allows stations with permissible days missing,
           non-leap year",
           {
+            skip_on_cran()
             max_missing <- 5
             td <- tempdir()
             just_right_2015 <-
@@ -87,6 +93,7 @@ test_that("missing days check allows stations with permissible days missing,
 test_that("missing days check allows stations with permissible days missing,
           leap year",
           {
+            skip_on_cran()
             max_missing <- 5
             td <- tempdir()
             just_right_2016 <-
@@ -124,21 +131,25 @@ test_that("missing days check allows stations with permissible days missing,
 # Check that stations are filtered for missing days ----------------------------
 # 1929 has no stations with a full 365 days, so none should be returned
 test_that("The 'max_missing' parameter filters out improper stations", {
+  skip_on_cran()
   expect_error(get_GSOD(years = 1929, max_missing = 1),
                regexp = "There were no stations that had a max of.")
 })
 
 # Check that max_missing only accepts positive values --------------------------
 test_that("The 'max_missing' parameter will not accept NA values", {
+  skip_on_cran()
   expect_error(get_GSOD(years = 2010, max_missing = NA))
 })
 
 test_that("The 'max_missing' parameter will not accept values < 1", {
+  skip_on_cran()
   expect_error(get_GSOD(years = 2010, max_missing = 0.1))
 })
 
 # Check validate country returns a two letter code -----------------------------
 test_that("Check validate country returns a two letter code", {
+  skip_on_cran()
   # Load country list
   # CRAN NOTE avoidance
   isd_history <- NULL
@@ -161,6 +172,7 @@ test_that("Check validate country returns a two letter code", {
 test_that("Check validate country returns an error on invalid entry when
           mispelled",
           {
+            skip_on_cran()
             isd_history <- NULL
             load(system.file("extdata", "isd_history.rda", package = "GSODR"))
             country <- "Philipines"
@@ -171,6 +183,7 @@ test_that(
   "Check validate country returns an error on invalid entry when two
   two characters are used that are not in the list",
   {
+    skip_on_cran()
     isd_history <- NULL
     load(system.file("extdata", "isd_history.rda", package = "GSODR"))
     country <- "RZ"
@@ -182,6 +195,7 @@ test_that(
   "Check validate country returns an error on invalid entry when two
   three characters are used that are not in the list",
   {
+    skip_on_cran()
     isd_history <- NULL
     load(system.file("extdata", "isd_history.rda", package = "GSODR"))
     country <- "RPS"
@@ -191,6 +205,7 @@ test_that(
 
 # Check that max_missing is not allowed for current year -----------------------
 test_that("max_missing is not allowed for current year", {
+  skip_on_cran()
   years <- 1983:format(Sys.Date(), "%Y")
   expect_error(get_GSOD(years = years, max_missing = 5))
 })
@@ -218,6 +233,7 @@ test_that("agroclimatology data is returned as requested", {
 
 # Check that agroclimatology and station cannot be specified concurrently ------
 test_that("agroclimatology and station cannot be specified concurrently", {
+  skip_on_cran()
   expect_error(get_GSOD(
     years = 2010,
     agroclimatology = TRUE,
@@ -247,6 +263,7 @@ test_that("only specified country is returned using 3 letter ISO codes", {
 
 # Check that if an invalid station/year combo is selected, error result --------
 test_that("when year is selected for a station not providing it, error", {
+  skip_on_cran()
   expect_message(get_GSOD(years = 1950, station = "959360-99999"),
                  regexp = "This station, 959360-99999, only provides")
 })
