@@ -1,4 +1,16 @@
-# GSODR (development version)
+# GSODR 2.2.0
+
+## Major changes
+
+* Remove parallel processing functionality.
+A bug that I was unable to properly debug with `future.apply::future_lapply()` caused the `get_GSOD()` and `reformat_GSOD()` functions to run without completing or responding was fixed by simply using R's base `lapply()` function.
+If parallel processing is needed, users should implement their own solutions to download and process in parallel.
+
+## Bug fixes
+
+* Fix bug that caused the package to run without responding.
+
+* Fix test that failed on CRAN's Solaris server for some reason.
 
 # GSODR 2.1.2
 
