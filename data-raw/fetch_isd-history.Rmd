@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 # Introduction
 
 The isd_history.csv file details GSOD station metadata.
-These data include the start and stop years used by _GSODR_ to pre-check requests before querying the server for download and the country code used by _GSODR_ when subsetting for requests by country.
+These data include the start and stop years used by _GSODR_ to pre-check requests before querying the server for download and the country code used by _GSODR_ when sub-setting for requests by country.
 The following checks are performed on the raw data file before inclusion in _GSODR_,
 
   * Check for valid lon and lat values;
