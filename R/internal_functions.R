@@ -316,8 +316,8 @@
 #' @return A `data.table` of GSOD weather data
 #' @noRd
 .apply_process_csv <- function(file_list, isd_history) {
-  x <- future.apply::future_lapply(X = file_list,
-                                   FUN = .process_csv,
-                                   isd_history = isd_history)
+  x <- lapply(X = file_list,
+              FUN = .process_csv,
+              isd_history = isd_history)
   return(rbindlist(x))
 }

@@ -57,15 +57,13 @@ License: MIT + file LICENSE
 Imports: 
     countrycode,
     curl,
-    data.table (<= 1.11.6),
-    future.apply,
+    data.table,
     httr,
     R.utils,
     stats,
     utils
 Suggests:
     dplyr,
-    future,
     ggplot2,
     gridExtra,
     knitr,
