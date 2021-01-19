@@ -463,13 +463,13 @@ This allows for end users to use a parallel process of their choice.
   * New data layers are provided through a separate package, [`GSODRdata`](https://github.com/adamhsparks/GSODRdata), which provide
     climate data formatted for use with GSODR.
 
-     * CHELSA (climatic surfaces at 1 km resolution), <https://chelsa-climate.org/>,
+     * CHELSA (climatic surfaces at 1 km resolution),
 
-     * MODCF  * Remotely sensed high-resolution global cloud dynamics for predicting ecosystem and biodiversity distributions (<http://www.earthenv.org/cloud>),
+     * MODCF  * Remotely sensed high-resolution global cloud dynamics for predicting ecosystem and biodiversity distributions,
 
-     * ESACCI  * ESA's CCI-LC snow cover probability (<http://maps.elie.ucl.ac.be/CCI/viewer/index.php>) and
+     * ESACCI  * ESA's CCI-LC snow cover probability and
 
-     * CRU CL2.0 (climatic surfaces at 10 minute resolution) (<https://crudata.uea.ac.uk/%7Etimm/grid/CRU_CL_2_0.html>) 
+     * CRU CL2.0 (climatic surfaces at 10 minute resolution).
 
   * Improved file handling for individual station downloads
 
