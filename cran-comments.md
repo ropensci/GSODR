@@ -22,7 +22,7 @@ If parallel processing is needed, users should implement their own solutions to 
 
 * Fix bug that caused the package to run without responding.
 
-* Fix test that failed on CRAN's Solaris server for some reason.
+* Fix test that failed on CRAN's Solaris server.
 
 * Removes a working DOI link from the reference for the equation used because win-builder checks say it doesn't work (even though it does and there's nothing wrong with the link any time I check).
 
