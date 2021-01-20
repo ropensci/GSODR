@@ -2,9 +2,9 @@
 
   - macOS, R version 4.0.3 (2020-10-10)
 
-  - win-builder, R Under development (2020-09-17 r79226)
+  - win-builder, R Under development (unstable) (2021-01-18 r79846)
 
-  - win-builder, R version 4.0.2 (2020-06-22)
+  - win-builder, R version 4.0.3 (2020-10-10)
 
 # R CMD check results
 
