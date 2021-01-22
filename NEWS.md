@@ -674,7 +674,7 @@ This allows for end users to use a parallel process of their choice.
 
 * Add single quotes around possibly misspelled words and spell out comma-separated values and geographic information system rather than just using "CSV" or "GIS" in DESCRIPTION.
 
-* Add full name of GSOD (Global Surface Summary of the Day) and URL for GSOD, <https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod> to DESCRIPTION as requested by CRAN.
+* Add full name of GSOD (Global Surface Summary of the Day) and URL for GSOD, <https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516> to DESCRIPTION as requested by CRAN.
 
 * Require user to specify directory for resulting .csv file output so that any files written to disk are interactive and with user's permission
 

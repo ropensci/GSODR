@@ -44,7 +44,7 @@ A data frame as a \code{\link[data.table]{data.table}} object of
 \description{
 This function automates downloading, cleaning, reformatting of data from
 the Global Surface Summary of the Day (\acronym{GSOD}) data provided by the
-\href{https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod}{US National Centers for Environmental Information (NCEI)},
+\href{https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516}{US National Centers for Environmental Information (NCEI)},
 Three additional useful elements: saturation vapour pressure (es), actual
 vapour pressure (ea) and relative humidity (RH) are calculated and returned
 in the final data frame using the improved August-Roche-Magnus approximation
