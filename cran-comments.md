@@ -10,21 +10,8 @@
 
 0 errors | 0 warnings | 1 note
 
-# New Major Release
-
-## Major changes
-
-* Remove parallel processing functionality.
-A bug that I was unable to properly debug with `future.apply::future_lapply()` caused the `get_GSOD()` and `reformat_GSOD()` functions to run without completing or responding was fixed by simply using R's base `lapply()` function.
-If parallel processing is needed, users should implement their own solutions to download and process in parallel.
-
-## Bug fixes
-
-* Fix bug that caused the package to run without responding.
-
-* Fix test that failed on CRAN's Solaris server.
-
-* Removes a working DOI link from the reference for the equation used because win-builder checks say it doesn't work (even though it does and there's nothing wrong with the link any time I check).
+# Resubmission with revised links
+After an e-mail conversation with Uwe over a link that failed after I submitted the last update, I've replaced the failing link with another link that should work
 
 # Reverse dependencies
 
