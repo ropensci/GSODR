@@ -173,6 +173,9 @@
       "STNID",
       "NAME",
       "CTRY",
+      "COUNTRY_NAME",
+      "ISO2C",
+      "ISO3C",
       "STATE",
       "LATITUDE",
       "LONGITUDE",
@@ -216,7 +219,5 @@
       "RH"
     )
   )
-  # drop extra cols before returning object
-  DT[, c("COUNTRY_NAME", "ISO2C", "ISO3C") := NULL]
   return(DT)
 }
