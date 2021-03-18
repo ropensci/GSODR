@@ -157,7 +157,7 @@
           years,
           ".tar.gz"
         )
-      
+
       tryCatch(
         for (i in url_list) {
           if (!httr::http_error(i)) {
@@ -173,7 +173,7 @@
           stop(call. = FALSE,
                "\nThe file downloads have failed. Please restart.\n")
       )
-      
+
       # create a list of files that have been downloaded and untar them
       tar_files <-
         list.files(tempdir(), pattern = "*\\.tar.gz$", full.names = TRUE)
@@ -184,7 +184,7 @@
         utils::untar(i, exdir = year_dir)
         setwd(wd)
       }
-      
+
       GSOD_list <-
         list.files(
           tempdir(),
@@ -192,11 +192,11 @@
           full.names = TRUE,
           recursive = TRUE
         )
-      
+
       if (is.null(station)) {
         return(GSOD_list)
       } else {
-        # Get a cartesian join of all stations of interest and all years
+        # Get a Cartesian join of all stations of interest and all years
         files_stations <-
           CJ(years, station, sorted = FALSE)[, paste0(tempdir(),
                                                       "/",
@@ -204,14 +204,14 @@
                                                       "/",
                                                       gsub("-", "", station),
                                                       ".csv")]
-        
+
         GSOD_list <-
           subset(GSOD_list, GSOD_list %in% files_stations)
-        
+
         return(GSOD_list)
       }
     }
-    
+
     # if a station is provided, download its files -----------------------------
     if (!is.null(station)) {
       station <- gsub("-", "", station)
@@ -244,7 +244,7 @@
           stop(call. = FALSE,
                "\nThe file downloads have failed. Please restart.\n")
       )
-      
+
       GSOD_list <-
         list.files(tempdir(), pattern = "*\\.csv$", full.names = TRUE)
     }
@@ -265,7 +265,7 @@
     station_list <- isd_history[isd_history$LAT >= -60 &
                                   isd_history$LAT <= 60,]$STNID
     station_list <- gsub("-", "", station_list)
-    
+
     station_list <-
       CJ(years, sorted = FALSE)[, paste0(tempdir(),
                                          "/",
@@ -273,7 +273,7 @@
                                          "/",
                                          station_list,
                                          ".csv")]
-    
+
     file_list <- file_list[file_list %in% station_list]
     rm(station_list)
     return(file_list)
@@ -308,7 +308,7 @@
     rm(station_list)
   }
 
-#' Process .gz files in parallel
+#' Process .gz files
 #'
 #' @param file_list List of GSOD files
 #' @param isd_history isd_history.csv file from NCEI provided by GSODR
