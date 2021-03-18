@@ -8,13 +8,16 @@
 #' an information header displaying the last update time with a data frame of
 #' the inventory information for each station-year-month.
 #'
-#' @note The \acronym{GSOD} data, which are downloaded and manipulated by
-#' \pkg{GSODR}, stipulate that the following notice should be given.
+#' @note While \pkg{GSODR} does not distribute GSOD weather data, users of
+#' the data should note the conditions that the U.S. \acronym{NCEI} places upon
+#' the \acronym{GSOD} data.
 #' \dQuote{The following data and products may have conditions placed on their
-#' international commercial use.  They can be used within the U.S. or for non-
-#' commercial international activities without restriction.  The non-U.S. data
-#' cannot be redistributed for commercial purposes.  Re-distribution of these
-#' data by others must provide this same notification.}
+#'  international commercial use.  They can be used within the U.S. or for non-
+#'  commercial international activities without restriction.  The non-U.S. data
+#'  cannot be redistributed for commercial purposes.  Re-distribution of these
+#'  data by others must provide this same notification.  A log of IP addresses
+#'  accessing these data and products will be maintained and may be made
+#'  available to data providers.}
 #'
 #' @examples
 #' \donttest{

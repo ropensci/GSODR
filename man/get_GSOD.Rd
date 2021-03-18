@@ -15,24 +15,24 @@ get_GSOD(
 \arguments{
 \item{years}{Year(s) of weather data to download.}
 
-\item{station}{Optional. Specify a station or multiple stations for which to
-retrieve, check and clean weather data using \var{STATION}. The
-\acronym{NCEI} reports years for which the data are available. This function
-checks against these years. However, not all cases are properly documented
+\item{station}{Optional.  Specify a station or multiple stations for which to
+retrieve, check and clean weather data using \var{STATION}.  The
+\acronym{NCEI} reports years for which the data are available.  This function
+checks against these years.  However, not all cases are properly documented
 and in some cases files may not exist for download even though it is
-indicated that data was recorded for the station for a particular year. If a
+indicated that data was recorded for the station for a particular year.  If a
 station is specified that does not have an existing file on the server, this
 function will silently fail and move on to existing files for download and
 cleaning.}
 
-\item{country}{Optional. Specify a country for which to retrieve weather
+\item{country}{Optional.  Specify a country for which to retrieve weather
 data; full name, 2 or 3 letter \acronym{ISO} or 2 letter \acronym{FIPS} codes
-can be used. All stations within the specified country will be returned.}
+can be used.  All stations within the specified country will be returned.}
 
-\item{max_missing}{Optional. The maximum number of days allowed to be missing
+\item{max_missing}{Optional.  The maximum number of days allowed to be missing
 from a station's data before it is excluded from final file output.}
 
-\item{agroclimatology}{Optional. Logical. Only clean data for stations
+\item{agroclimatology}{Optional.  Logical. Only clean data for stations
 between latitudes 60 and -60 for agroclimatology work, defaults to `FALSE`.
 Set to `TRUE` to include only stations within the confines of these
 latitudes.}
@@ -70,7 +70,7 @@ For more information see the description of the data provided by
 \note{
 \pkg{GSODR} attempts to validate year and station combination requests,
 however, in certain cases the start and end date may encompass years where
-no data is available. In these cases no data will be returned. It is
+no data is available.  In these cases no data will be returned.  It is
 suggested that the user check the latest data availability for the station(s)
 desired using \link{get_inventory} as this list is frequently updated by the
 \acronym{NCEI} and is not shipped with \pkg{GSODR}.
@@ -81,8 +81,8 @@ the \acronym{GSOD} data.
 \dQuote{The following data and products may have conditions placed on their
  international commercial use.  They can be used within the U.S. or for non-
  commercial international activities without restriction.  The non-U.S. data
- cannot be redistributed for commercial purposes. Re-distribution of these
- data by others must provide this same notification. A log of IP addresses
+ cannot be redistributed for commercial purposes.  Re-distribution of these
+ data by others must provide this same notification.  A log of IP addresses
  accessing these data and products will be maintained and may be made
  available to data providers.}
 }
@@ -97,15 +97,10 @@ of saturation vapor pressure. Journal of Applied Meteorology and Climatology,
 
 \examples{
 \donttest{
-# Download weather station for Toowoomba, Queensland for 2010
+# Download weather station data for Toowoomba, Queensland for 2010
 tbar <- get_GSOD(years = 2010, station = "955510-99999")
 
 tbar
-
-# Download data for Australia from 2010 to 2011
-AUS <- get_GSOD(years = 2010:2011, country = "Australia")
-
-AUS
 }
 }
 \seealso{
