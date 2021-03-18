@@ -195,7 +195,13 @@ _GSODR_ formatted data include the following fields and units:
 
 - **NAME** - Unique text identifier;
 
-- **CTRY** - Country in which the station is located;
+- **CTRY** - Country in which the station is located. This field is the original FIPS code that NCEI provides;
+
+- **COUNTRY_NAME** - Country in which the station is located. This field is the country name in English language;
+
+- **ISO2C** - Country in which the station is located. This field is the two letter ISO country code;
+
+- **ISO3C** - Country in which the station is located. This field is the three letter ISO country code;
 
 - **LAT** - Latitude. *Station dropped in cases where values are < -90 or > 90 degrees or Lat = 0 and Lon = 0*;
 

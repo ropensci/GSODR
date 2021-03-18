@@ -1,3 +1,9 @@
+# GSODR (development version)
+
+## Bug fixes
+
+* Fix bug where COUNTRY_NAME (country name in English), ISO2C and ISO3C were omitted from the final output from `get_GSOD()` and `reformat_GSOD()`.
+
 # GSODR 3.0.0
 
 ## Major changes
