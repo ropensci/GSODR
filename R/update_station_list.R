@@ -53,18 +53,20 @@ update_station_list <- function() {
     isd_history[, STNID := paste(USAF, WBAN, sep = "-")]
     setcolorder(isd_history, "STNID")
     setnames(isd_history, "STATION NAME", "NAME")
-    setkey(isd_history, "STNID")
 
     # drop stations not in GSOD data
     isd_history[, STNID_len := nchar(STNID)]
     isd_history <- subset(isd_history, STNID_len == 12)
 
+    # remove stations where LAT or LON is NA
+    isd_history <- na.omit(isd_history, cols = c("LAT", "LON"))
+
     # remove extra columns
     isd_history[, c("USAF", "WBAN", "ICAO", "ELEV(M)", "STNID_len") := NULL]
 
+    # add STNID column
     isd_history <-
-      isd_history[data.table::setDT(countrycode::codelist),
-                  on = c("CTRY" = "fips")]
+      isd_history[setDT(countrycode::codelist), on = c("CTRY" = "fips")]
 
     isd_history <- isd_history[, c(
       "STNID",
@@ -84,13 +86,17 @@ update_station_list <- function() {
     isd_history[isd_history == -999] <- NA
     isd_history[isd_history == -999.9] <- NA
     isd_history <-
-      isd_history[!is.na(isd_history$LAT) & !is.na(isd_history$LON), ]
+      isd_history[!is.na(isd_history$LAT) &
+                        !is.na(isd_history$LON),]
     isd_history <-
-      isd_history[isd_history$LAT != 0 & isd_history$LON != 0, ]
+      isd_history[isd_history$LAT != 0 &
+                        isd_history$LON != 0,]
     isd_history <-
-      isd_history[isd_history$LAT > -90 & isd_history$LAT < 90, ]
+      isd_history[isd_history$LAT > -90 &
+                        isd_history$LAT < 90,]
     isd_history <-
-      isd_history[isd_history$LON > -180 & isd_history$LON < 180, ]
+      isd_history[isd_history$LON > -180 &
+                        isd_history$LON < 180,]
 
     # set colnames to upper case
     names(isd_history) <- toupper(names(isd_history))
@@ -100,6 +106,9 @@ update_station_list <- function() {
 
     # set country names to be upper case for easier internal verifications
     isd_history[, COUNTRY_NAME := toupper(COUNTRY_NAME)]
+
+    # set key for joins when processing CSV files
+    setkeyv(isd_history, "STNID")
 
     # write rda file to disk for use with GSODR package
     fname <-
