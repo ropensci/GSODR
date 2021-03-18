@@ -208,7 +208,7 @@ _GSODR_ formatted data include the following fields and units:
 
 - **ELEVATION** - Elevation in metres;
 
-- **YEARMODA** - Date in YYYY-mm-dd format;
+- **YEARMODA** - Date in YYYYMMDD format;
 
 - **YEAR** - The year (YYYY);
 
