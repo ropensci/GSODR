@@ -44,11 +44,13 @@
 #' @note While \pkg{GSODR} does not distribute \acronym{GSOD} weather data,
 #' users of the data should note the conditions that the U.S. \acronym{NCEI}
 #' places upon the \acronym{GSOD} data.
-#' \dQuote{The following data and products may have conditions placed on
-#' their international commercial use.  They can be used within the U.S. or for
-#' non-commercial international activities without restriction. The non-U.S.
-#' data cannot be redistributed for commercial purposes.  Re-distribution of
-#' these data by others must provide this same notification.}
+#' \dQuote{The following data and products may have conditions placed on their
+#'  international commercial use.  They can be used within the U.S. or for non-
+#'  commercial international activities without restriction.  The non-U.S. data
+#'  cannot be redistributed for commercial purposes. Re-distribution of these
+#'  data by others must provide this same notification. A log of IP addresses
+#'  accessing these data and products will be maintained and may be made
+#'  available to data providers.}
 #'
 #' @seealso
 #' For automated downloading and tidying see the \code{\link{get_GSOD}}
