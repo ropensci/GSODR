@@ -32,7 +32,7 @@ can be used.  All stations within the specified country will be returned.}
 \item{max_missing}{Optional.  The maximum number of days allowed to be missing
 from a station's data before it is excluded from final file output.}
 
-\item{agroclimatology}{Optional.  Logical. Only clean data for stations
+\item{agroclimatology}{Optional.  Logical.  Only clean data for stations
 between latitudes 60 and -60 for agroclimatology work, defaults to `FALSE`.
 Set to `TRUE` to include only stations within the confines of these
 latitudes.}
@@ -98,9 +98,13 @@ of saturation vapor pressure. Journal of Applied Meteorology and Climatology,
 \examples{
 \donttest{
 # Download weather station data for Toowoomba, Queensland for 2010
-tbar <- get_GSOD(years = 2010, station = "955510-99999")
+(tbar <- get_GSOD(years = 2010, station = "955510-99999"))
 
-tbar
+# Download weather data for the year 1929
+(w_1929 <- get_GSOD(years = 1929))
+
+# Download weather data for the year 1929 for Ireland
+(ie_1929 <- get_GSOD(years = 1929, country = "Ireland"))
 }
 }
 \seealso{
