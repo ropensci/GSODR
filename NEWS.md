@@ -10,7 +10,7 @@
 
 * Update and improve documentation to reflect country name and ISO code columns
 
-* Update NCEI data useage statement
+* Update NCEI data usage statement
 
 # GSODR 3.0.0
 
