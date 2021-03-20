@@ -1,7 +1,7 @@
 Fetch and Clean ‘isd\_history.csv’ File
 ================
 Adam H. Sparks
-2021-03-18
+2021-03-20
 
 <STYLE type='text/css' scoped>
 PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
@@ -129,15 +129,15 @@ setkeyv(new_isd_history, "STNID")[]
     ## 26537: A00032-25715                 ATKA AIRPORT 52.22 -174.206   US    AK
     ##           BEGIN      END  COUNTRY_NAME ISO2C ISO3C
     ##     1: 20100519 20120323   AFGHANISTAN    AF   AFG
-    ##     2: 19310101 20210315        NORWAY    NO   NOR
-    ##     3: 19861120 20210315        NORWAY    NO   NOR
+    ##     2: 19310101 20210317        NORWAY    NO   NOR
+    ##     3: 19861120 20210317        NORWAY    NO   NOR
     ##     4: 19870117 20081231        NORWAY    NO   NOR
     ##     5: 19870116 19910806        NORWAY    NO   NOR
     ##    ---                                            
-    ## 26533: 20070601 20210315 UNITED STATES    US   USA
+    ## 26533: 20070601 20210317 UNITED STATES    US   USA
     ## 26534: 20060324 20150514 UNITED STATES    US   USA
-    ## 26535: 20130627 20210316 UNITED STATES    US   USA
-    ## 26536: 20210309 20210317 UNITED STATES    US   USA
+    ## 26535: 20130627 20210318 UNITED STATES    US   USA
+    ## 26536: 20210309 20210319 UNITED STATES    US   USA
     ## 26537: 20060101 20210121 UNITED STATES    US   USA
 
 ## Show changes from last release
@@ -151,7 +151,7 @@ install.packages("GSODR") # ensure we aren't using a locally installed dev versi
 
     ## 
     ## The downloaded binary packages are in
-    ##  /var/folders/hc/tft3s5bn48gb81cs99mycyf00000gn/T//RtmpY1AV8P/downloaded_packages
+    ##  /var/folders/tr/fwv720l96bz2btcr0jr_gs840000gn/T//RtmpAdEBcf/downloaded_packages
 
 ``` r
 load(system.file("extdata", "isd_history.rda", package = "GSODR"))
@@ -181,20 +181,20 @@ new_isd_history <- new_isd_history[, ..x]
 ## </span><span style='color: #0000BB;'>&gt;</span><span> </span><span style='color: #0000BB;'>26531:</span><span> A00032-25715                    ATKA AIRPORT 52.22 -174.206   US    AK
 ##             BEGIN      END  COUNTRY_NAME ISO2C ISO3C                           
 ##       1: 20100519 20120323   AFGHANISTAN    AF   AFG                           
-## </span><span style='color: #BBBB00;'>&lt;</span><span>     2: 19310101 </span><span style='color: #BBBB00;'>20210315</span><span>        NORWAY    NO   NOR                           
+## </span><span style='color: #BBBB00;'>&lt;</span><span>     2: 19310101 </span><span style='color: #BBBB00;'>20210317</span><span>        NORWAY    NO   NOR                           
 ## </span><span style='color: #0000BB;'>&gt;</span><span>     2: 19310101 </span><span style='color: #0000BB;'>20210116</span><span>        NORWAY    NO   NOR                           
-## </span><span style='color: #BBBB00;'>&lt;</span><span>     3: 19861120 </span><span style='color: #BBBB00;'>20210315</span><span>        NORWAY    NO   NOR                           
+## </span><span style='color: #BBBB00;'>&lt;</span><span>     3: 19861120 </span><span style='color: #BBBB00;'>20210317</span><span>        NORWAY    NO   NOR                           
 ## </span><span style='color: #0000BB;'>&gt;</span><span>     3: 19861120 </span><span style='color: #0000BB;'>20210116</span><span>        NORWAY    NO   NOR                           
 ##       4: 19870117 20081231        NORWAY    NO   NOR                           
 ##       5: 19870116 19910806        NORWAY    NO   NOR                           
 ##      ---                                                                       
-## </span><span style='color: #BBBB00;'>&lt;</span><span> </span><span style='color: #BBBB00;'>26533:</span><span> 20070601 </span><span style='color: #BBBB00;'>20210315</span><span> UNITED STATES    US   USA                           
+## </span><span style='color: #BBBB00;'>&lt;</span><span> </span><span style='color: #BBBB00;'>26533:</span><span> 20070601 </span><span style='color: #BBBB00;'>20210317</span><span> UNITED STATES    US   USA                           
 ## </span><span style='color: #0000BB;'>&gt;</span><span> </span><span style='color: #0000BB;'>26527:</span><span> 20070601 </span><span style='color: #0000BB;'>20210116</span><span> UNITED STATES    US   USA                           
 ## </span><span style='color: #BBBB00;'>&lt;</span><span> </span><span style='color: #BBBB00;'>26534:</span><span> </span><span style='color: #BBBB00;'>20060324</span><span> </span><span style='color: #BBBB00;'>20150514</span><span> UNITED STATES    US   USA                           
 ## </span><span style='color: #0000BB;'>&gt;</span><span> </span><span style='color: #0000BB;'>26528:</span><span> </span><span style='color: #0000BB;'>20070601</span><span> </span><span style='color: #0000BB;'>20210116</span><span> UNITED STATES    US   USA                           
-## </span><span style='color: #BBBB00;'>&lt;</span><span> </span><span style='color: #BBBB00;'>26535:</span><span> </span><span style='color: #BBBB00;'>20130627</span><span> </span><span style='color: #BBBB00;'>20210316</span><span> UNITED STATES    US   USA                           
+## </span><span style='color: #BBBB00;'>&lt;</span><span> </span><span style='color: #BBBB00;'>26535:</span><span> </span><span style='color: #BBBB00;'>20130627</span><span> </span><span style='color: #BBBB00;'>20210318</span><span> UNITED STATES    US   USA                           
 ## </span><span style='color: #0000BB;'>&gt;</span><span> </span><span style='color: #0000BB;'>26529:</span><span> </span><span style='color: #0000BB;'>20060324</span><span> </span><span style='color: #0000BB;'>20150514</span><span> UNITED STATES    US   USA                           
-## </span><span style='color: #BBBB00;'>&lt;</span><span> </span><span style='color: #BBBB00;'>26536:</span><span> </span><span style='color: #BBBB00;'>20210309</span><span> </span><span style='color: #BBBB00;'>20210317</span><span> UNITED STATES    US   USA                           
+## </span><span style='color: #BBBB00;'>&lt;</span><span> </span><span style='color: #BBBB00;'>26536:</span><span> </span><span style='color: #BBBB00;'>20210309</span><span> </span><span style='color: #BBBB00;'>20210319</span><span> UNITED STATES    US   USA                           
 ## </span><span style='color: #0000BB;'>&gt;</span><span> </span><span style='color: #0000BB;'>26530:</span><span> </span><span style='color: #0000BB;'>20130627</span><span> </span><span style='color: #0000BB;'>20210117</span><span> UNITED STATES    US   USA                           
 ## </span><span style='color: #BBBB00;'>&lt;</span><span> </span><span style='color: #BBBB00;'>26537:</span><span> 20060101 </span><span style='color: #BBBB00;'>20210121</span><span> UNITED STATES    US   USA                           
 ## </span><span style='color: #0000BB;'>&gt;</span><span> </span><span style='color: #0000BB;'>26531:</span><span> 20060101 </span><span style='color: #0000BB;'>20210117</span><span> UNITED STATES    US   USA
@@ -262,50 +262,50 @@ website](https://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryab
     ##  collate  en_AU.UTF-8                 
     ##  ctype    en_AU.UTF-8                 
     ##  tz       Australia/Perth             
-    ##  date     2021-03-18                  
+    ##  date     2021-03-20                  
     ## 
     ## ─ Packages ───────────────────────────────────────────────────────────────────
-    ##  package     * version date       lib source                            
-    ##  assertthat    0.2.1   2019-03-21 [1] CRAN (R 4.0.2)                    
-    ##  base64enc     0.1-3   2015-07-28 [1] CRAN (R 4.0.2)                    
-    ##  cli           2.3.1   2021-02-23 [1] CRAN (R 4.0.4)                    
-    ##  countrycode * 1.2.0   2020-05-22 [1] standard (@1.2.0)                 
-    ##  crayon        1.4.1   2021-02-08 [1] CRAN (R 4.0.2)                    
-    ##  curl          4.3     2019-12-02 [1] CRAN (R 4.0.1)                    
-    ##  data.table  * 1.14.0  2021-02-21 [1] CRAN (R 4.0.4)                    
-    ##  DBI           1.1.1   2021-01-15 [1] CRAN (R 4.0.2)                    
-    ##  diffobj       0.3.3   2021-01-07 [1] CRAN (R 4.0.2)                    
-    ##  digest        0.6.27  2020-10-24 [1] CRAN (R 4.0.2)                    
-    ##  dplyr         1.0.5   2021-03-05 [1] CRAN (R 4.0.2)                    
-    ##  ellipsis      0.3.1   2020-05-15 [1] CRAN (R 4.0.2)                    
-    ##  evaluate      0.14    2019-05-28 [1] CRAN (R 4.0.1)                    
-    ##  fansi         0.4.2   2021-01-15 [1] CRAN (R 4.0.2)                    
-    ##  generics      0.1.0   2020-10-31 [1] CRAN (R 4.0.2)                    
-    ##  glue          1.4.2   2020-08-27 [1] CRAN (R 4.0.2)                    
-    ##  htmltools     0.5.1.1 2021-01-22 [1] CRAN (R 4.0.2)                    
-    ##  jsonlite      1.7.2   2020-12-09 [1] CRAN (R 4.0.2)                    
-    ##  knitr         1.31    2021-01-27 [1] CRAN (R 4.0.2)                    
-    ##  lifecycle     1.0.0   2021-02-15 [1] CRAN (R 4.0.4)                    
-    ##  magrittr      2.0.1   2020-11-17 [1] CRAN (R 4.0.2)                    
-    ##  pacman      * 0.5.1   2019-03-11 [1] CRAN (R 4.0.2)                    
-    ##  pillar        1.5.1   2021-03-05 [1] CRAN (R 4.0.2)                    
-    ##  pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 4.0.2)                    
-    ##  purrr         0.3.4   2020-04-17 [1] CRAN (R 4.0.2)                    
-    ##  R6            2.5.0   2020-10-28 [1] CRAN (R 4.0.2)                    
-    ##  repr          1.1.3   2021-01-21 [1] standard (@1.1.3)                 
-    ##  rlang         0.4.10  2020-12-30 [1] CRAN (R 4.0.2)                    
-    ##  rmarkdown     2.7.3   2021-03-15 [1] Github (rstudio/rmarkdown@61db7a9)
-    ##  sessioninfo * 1.1.1   2018-11-05 [1] CRAN (R 4.0.2)                    
-    ##  skimr       * 2.1.3   2021-03-07 [1] CRAN (R 4.0.4)                    
-    ##  stringi       1.5.3   2020-09-09 [1] CRAN (R 4.0.2)                    
-    ##  stringr       1.4.0   2019-02-10 [1] CRAN (R 4.0.2)                    
-    ##  tibble        3.1.0   2021-02-25 [1] CRAN (R 4.0.2)                    
-    ##  tidyselect    1.1.0   2020-05-11 [1] CRAN (R 4.0.2)                    
-    ##  utf8          1.2.1   2021-03-12 [1] CRAN (R 4.0.2)                    
-    ##  vctrs         0.3.6   2020-12-17 [1] CRAN (R 4.0.2)                    
-    ##  withr         2.4.1   2021-01-26 [1] CRAN (R 4.0.2)                    
-    ##  xfun          0.22    2021-03-11 [1] CRAN (R 4.0.4)                    
-    ##  yaml          2.2.1   2020-02-01 [1] CRAN (R 4.0.2)                    
+    ##  package     * version date       lib source             
+    ##  assertthat    0.2.1   2019-03-21 [1] standard (@0.2.1)  
+    ##  base64enc     0.1-3   2015-07-28 [1] standard (@0.1-3)  
+    ##  cli           2.3.1   2021-02-23 [1] CRAN (R 4.0.2)     
+    ##  countrycode * 1.2.0   2020-05-22 [1] standard (@1.2.0)  
+    ##  crayon        1.4.1   2021-02-08 [1] standard (@1.4.1)  
+    ##  curl          4.3     2019-12-02 [1] standard (@4.3)    
+    ##  data.table  * 1.14.0  2021-02-21 [1] CRAN (R 4.0.2)     
+    ##  DBI           1.1.1   2021-01-15 [1] standard (@1.1.1)  
+    ##  diffobj       0.3.3   2021-01-07 [1] standard (@0.3.3)  
+    ##  digest        0.6.27  2020-10-24 [1] standard (@0.6.27) 
+    ##  dplyr         1.0.5   2021-03-05 [1] CRAN (R 4.0.2)     
+    ##  ellipsis      0.3.1   2020-05-15 [1] standard (@0.3.1)  
+    ##  evaluate      0.14    2019-05-28 [1] standard (@0.14)   
+    ##  fansi         0.4.2   2021-01-15 [1] standard (@0.4.2)  
+    ##  generics      0.1.0   2020-10-31 [1] standard (@0.1.0)  
+    ##  glue          1.4.2   2020-08-27 [1] standard (@1.4.2)  
+    ##  htmltools     0.5.1.1 2021-01-22 [1] standard (@0.5.1.1)
+    ##  jsonlite      1.7.2   2020-12-09 [1] standard (@1.7.2)  
+    ##  knitr         1.31    2021-01-27 [1] standard (@1.31)   
+    ##  lifecycle     1.0.0   2021-02-15 [1] standard (@1.0.0)  
+    ##  magrittr      2.0.1   2020-11-17 [1] standard (@2.0.1)  
+    ##  pacman      * 0.5.1   2019-03-11 [1] CRAN (R 4.0.2)     
+    ##  pillar        1.5.1   2021-03-05 [1] CRAN (R 4.0.2)     
+    ##  pkgconfig     2.0.3   2019-09-22 [1] standard (@2.0.3)  
+    ##  purrr         0.3.4   2020-04-17 [1] standard (@0.3.4)  
+    ##  R6            2.5.0   2020-10-28 [1] standard (@2.5.0)  
+    ##  repr          1.1.3   2021-01-21 [1] CRAN (R 4.0.2)     
+    ##  rlang         0.4.10  2020-12-30 [1] standard (@0.4.10) 
+    ##  rmarkdown     2.7     2021-02-19 [1] standard (@2.7)    
+    ##  sessioninfo * 1.1.1   2018-11-05 [1] standard (@1.1.1)  
+    ##  skimr       * 2.1.3   2021-03-07 [1] CRAN (R 4.0.2)     
+    ##  stringi       1.5.3   2020-09-09 [1] standard (@1.5.3)  
+    ##  stringr       1.4.0   2019-02-10 [1] standard (@1.4.0)  
+    ##  tibble        3.1.0   2021-02-25 [1] CRAN (R 4.0.2)     
+    ##  tidyselect    1.1.0   2020-05-11 [1] standard (@1.1.0)  
+    ##  utf8          1.2.1   2021-03-12 [1] CRAN (R 4.0.4)     
+    ##  vctrs         0.3.6   2020-12-17 [1] standard (@0.3.6)  
+    ##  withr         2.4.1   2021-01-26 [1] standard (@2.4.1)  
+    ##  xfun          0.22    2021-03-11 [1] CRAN (R 4.0.4)     
+    ##  yaml          2.2.1   2020-02-01 [1] standard (@2.2.1)  
     ## 
     ## [1] /Users/adamsparks/Library/R/4.0/library
     ## [2] /Library/Frameworks/R.framework/Versions/4.0/Resources/library
