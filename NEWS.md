@@ -4,6 +4,12 @@
 
 * Fix bug where COUNTRY_NAME (country name in English), ISO2C and ISO3C were omitted from the final output from `get_GSOD()` and `reformat_GSOD()`.
 
+## Minor changes
+
+* Diffs in the isd_history are now recorded in the `/data-raw/fetch_isd-history.md` file and shipped with GSODR as `isd_history.rda`, which can be viewed by using `load(system.file("extdata", "isd_diff.rda", package = "GSODR"))`
+
+* Update and improve documentation to reflect country name and ISO code columns
+
 # GSODR 3.0.0
 
 ## Major changes
