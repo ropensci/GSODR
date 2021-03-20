@@ -59,7 +59,7 @@ update_station_list <- function() {
     isd_history <- subset(isd_history, STNID_len == 12)
 
     # remove stations where LAT or LON is NA
-    isd_history <- na.omit(isd_history, cols = c("LAT", "LON"))
+    isd_history <- stats::na.omit(isd_history, cols = c("LAT", "LON"))
 
     # remove extra columns
     isd_history[, c("USAF", "WBAN", "ICAO", "ELEV(M)", "STNID_len") := NULL]

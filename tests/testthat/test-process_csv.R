@@ -39,7 +39,7 @@ test_that(
     csv_file <- GSOD_list[[10]]
     csv_out <- .process_csv(csv_file, stations)
 
-    expect_length(csv_out, 44)
+    expect_length(csv_out, 47)
 
     expect_is(csv_out, "data.frame")
 

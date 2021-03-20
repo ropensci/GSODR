@@ -36,13 +36,13 @@ test_that("reformat_GSOD file_list parameter reformats data properly", {
   # check that provided a file list, the function works properly
   x <- reformat_GSOD(file_list = file_list)
   expect_equal(nrow(x), 722)
-  expect_length(x, 44)
+  expect_length(x, 47)
   expect_is(x, "data.frame")
 
   # check that provided a dsn only, the function works properly
   x <- reformat_GSOD(dsn = tempdir())
   expect_equal(nrow(x), 722)
-  expect_length(x, 44)
+  expect_length(x, 47)
   expect_is(x, "data.frame")
 
   # Check that a message is emitted when both dsn and file_list are set --------
