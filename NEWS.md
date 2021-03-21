@@ -1,20 +1,20 @@
-# GSODR (development version)
+# GSODR 3.1.0
 
-## Bug fixes
+## New features
 
 * Fix bug where COUNTRY_NAME (country name in English), ISO2C and ISO3C were omitted from the final output from `get_GSOD()` and `reformat_GSOD()`.
 
-## Minor changes
+* Diffs in the isd_history are now recorded in the `/data-raw/fetch_isd-history.md` file and shipped with GSODR as `isd_history.rda`, which can be viewed by using `load(system.file("extdata", "isd_diff.rda", package = "GSODR"))`.
 
-* Diffs in the isd_history are now recorded in the `/data-raw/fetch_isd-history.md` file and shipped with GSODR as `isd_history.rda`, which can be viewed by using `load(system.file("extdata", "isd_diff.rda", package = "GSODR"))`
+* Update and improve documentation to reflect country name and ISO code columns.
 
-* Update and improve documentation to reflect country name and ISO code columns
+## Minor improvements
 
-* Update NCEI data usage statement
+* Update NCEI data usage statement.
 
 # GSODR 3.0.0
 
-## Major changes
+## Breaking changes
 
 * Remove parallel processing functionality.
 A bug that I was unable to properly debug with `future.apply::future_lapply()` caused the `get_GSOD()` and `reformat_GSOD()` functions to run without completing or responding was fixed by simply using R's base `lapply()` function.
