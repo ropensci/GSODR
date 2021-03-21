@@ -16,7 +16,7 @@
 
 * Update and improve documentation to reflect country name and ISO code columns.
 
-* Fix bug where COUNTRY_NAME (country name in English), ISO2C and ISO3C were omitted from the final output from `get_GSOD()` and `reformat_GSOD()`.
+* Include columns for COUNTRY_NAME (country name in English), ISO2C and ISO3C in the final output from `get_GSOD()` and `reformat_GSOD()`.
 
 ## Minor improvements
 
