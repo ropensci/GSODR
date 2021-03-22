@@ -105,8 +105,6 @@ For details, please consult: [WMO Resolution 40. NOAA Policy](https://community.
 
 - Please note that the _**GSODR**_ project is released with a [Contributor Code of Conduct](https://github.com/ropensci/GSODR/blob/main/CONDUCT.md) By participating in the _**GSODR**_ project you agree to abide by its terms.
 
-[![ropensci](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org)
-
 ## References
 
 Alduchov, O.A. and Eskridge, R.E., 1996. Improved Magnus form approximation of saturation vapor pressure. Journal of Applied Meteorology and Climatology, 35(4), pp. 601-609 DOI: 10.1175/1520-0450(1996)035<0601:IMFAOS>2.0.CO;2.
