@@ -30,10 +30,10 @@ the \acronym{GSOD} data.
  available to data providers.}
 }
 \examples{
-\donttest{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 inventory <- get_inventory()
 inventory
-}
+\dontshow{\}) # examplesIf}
 }
 \author{
 Adam H. Sparks, \email{adamhsparks@gmail.com}

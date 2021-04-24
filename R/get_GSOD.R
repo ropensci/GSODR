@@ -67,8 +67,7 @@
 #'  accessing these data and products will be maintained and may be made
 #'  available to data providers.}
 #'
-#' @examples
-#' \donttest{
+#' @examplesIf interactive()
 #' # Download weather station data for Toowoomba, Queensland for 2010
 #' (tbar <- get_GSOD(years = 2010, station = "955510-99999"))
 #'
@@ -77,7 +76,7 @@
 #' 
 #' # Download weather data for the year 1929 for Ireland
 #' (ie_1929 <- get_GSOD(years = 1929, country = "Ireland"))
-#' }
+#'
 #' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
 #'
 #' @section References:

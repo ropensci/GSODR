@@ -74,7 +74,7 @@ of saturation vapor pressure. Journal of Applied Meteorology and Climatology,
 }
 
 \examples{
-\donttest{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 
 # Download data to 'tempdir()'
 download.file(
@@ -88,8 +88,8 @@ download.file(
 tbar <- reformat_GSOD(dsn = tempdir())
 
 tbar
-}
 
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 For automated downloading and tidying see the \code{\link{get_GSOD}}
