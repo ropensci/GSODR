@@ -72,7 +72,7 @@ Suggests:
     maps,
     remotes,
     rmarkdown,
-    roxygen2 (>= 6.1.0),
+    roxygen2,
     testthat,
     tidyr
 RoxygenNote: 7.1.1.9001
