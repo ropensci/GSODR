@@ -78,6 +78,7 @@
 #' tbar <- reformat_GSOD(dsn = tempdir())
 #'
 #' tbar
+#' 
 #'
 #' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
 #'
