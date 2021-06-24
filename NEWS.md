@@ -1,5 +1,10 @@
 # GSODR (development version)
 
+## Bug fixes
+
+* Fix bug where FRSHTT (Fog, Rain/Drizzle, Snow/Ice, Hail, Tornado, Thunder) column values split into the respective columns only returned NA, not the proper values as expected.
+Reported in [#84](https://github.com/ropensci/GSODR/issues/84).
+
 # GSODR 3.1.0
 
 ## New features
