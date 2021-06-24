@@ -133,7 +133,7 @@
   DT[, VISIB := round(VISIB * 1.60934, 1)]
   DT[, MAX := round((MAX - 32) * 0.5556, 1)]
   DT[, MIN := round((MIN - 32) * 0.5556, 1)]
-  DT[, PRCP := round(PRCP * 25.4, 1)]
+  DT[, PRCP := round(PRCP * 25.4, 2)]
   DT[, SNDP := round(SNDP * 25.4, 1)]
 
   # Calculate EA, ES and RH using August-Roche-Magnus approximation ------------
