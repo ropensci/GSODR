@@ -47,7 +47,7 @@
   # Import data from the website for individual stations or tempdir() for all --
   DT <-
     fread(x,
-          colClasses = c("STATION" = "character", "FRSHTT" = "integer"))
+          colClasses = c("STATION" = "character"))
 
   # Replace 9999.99 et al. with NA
   for (col in names(DT)[names(DT) == "PRCP"]) {
@@ -151,17 +151,17 @@
 
   # Split FRSHTT into separate columns
   DT[, I_FOG := fifelse(DT$FRSHTT != 0,
-                        substr(DT$FRSHTT, 1, 1), 0)]
+                        as.integer(substr(DT$FRSHTT, 1, 1)), 0)]
   DT[, I_RAIN_DRIZZLE := fifelse(DT$FRSHTT != 0,
-                                 substr(DT$FRSHTT, 2, 2), 0)]
+                                 as.integer(substr(DT$FRSHTT, 2, 2)), 0)]
   DT[, I_SNOW_ICE := fifelse(DT$FRSHTT != 0,
-                             substr(DT$FRSHTT, 3, 3), 0)]
+                             as.integer(substr(DT$FRSHTT, 3, 3)), 0)]
   DT[, I_HAIL := fifelse(DT$FRSHTT != 0,
-                         substr(DT$FRSHTT, 4, 4), 0)]
+                         as.integer(substr(DT$FRSHTT, 4, 4)), 0)]
   DT[, I_THUNDER := fifelse(DT$FRSHTT != 0,
-                            substr(DT$FRSHTT, 5, 5), 0)]
+                            as.integer(substr(DT$FRSHTT, 5, 5)), 0)]
   DT[, I_TORNADO_FUNNEL := fifelse(DT$FRSHTT != 0,
-                                   substr(DT$FRSHTT, 6, 6), 0)]
+                                   as.integer(substr(DT$FRSHTT, 6, 6)), 0)]
   DT[, FRSHTT := NULL]
 
   # Join with internal isd-history for CTRY column -----------------------------
