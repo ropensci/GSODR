@@ -1,7 +1,7 @@
-Fetch and Clean ‘isd\_history.csv’ File
+Fetch and Clean ‘isd_history.csv’ File
 ================
 Adam H. Sparks
-2021-03-20
+2021-06-24
 
 <STYLE type='text/css' scoped>
 PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
@@ -9,7 +9,7 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 
 # Introduction
 
-The isd\_history.csv file details GSOD station metadata. These data
+The isd_history.csv file details GSOD station metadata. These data
 include the start and stop years used by *GSODR* to pre-check requests
 before querying the server for download and the country code used by
 *GSODR* when sub-setting for requests by country. The following checks
@@ -17,14 +17,12 @@ are performed on the raw data file before inclusion in *GSODR*,
 
 -   Check for valid lon and lat values;
 
-    -   isd\_history where latitude or longitude are `NA` or both 0 are
+    -   isd_history where latitude or longitude are `NA` or both 0 are
         removed leaving only properly georeferenced stations,
 
-    -   isd\_history where latitude is &lt; -90˚ or &gt; 90˚ are
-        removed,
+    -   isd_history where latitude is \< -90˚ or > 90˚ are removed,
 
-    -   isd\_history where longitude is &lt; -180˚ or &gt; 180˚ are
-        removed.
+    -   isd_history where longitude is \< -180˚ or > 180˚ are removed.
 
 -   A new field, STNID, a concatenation of the USAF and WBAN fields, is
     added.
@@ -39,6 +37,10 @@ if (!require("pacman")) {
 }
 pacman::p_load("sessioninfo", "skimr", "countrycode", "data.table")
 ```
+
+    ## 
+    ## The downloaded binary packages are in
+    ##  /var/folders/hc/tft3s5bn48gb81cs99mycyf00000gn/T//Rtmpth2rI9/downloaded_packages
 
 ## Download and clean data
 
@@ -122,23 +124,23 @@ setkeyv(new_isd_history, "STNID")[]
     ##     4: 010015-99999                   BRINGELAND 61.38    5.867   NO      
     ##     5: 010016-99999                  RORVIK/RYUM 64.85   11.233   NO      
     ##    ---                                                                    
-    ## 26533: A00024-53848 CHOCTAW NAVAL OUTLYING FIELD 30.51  -86.960   US    FL
-    ## 26534: A00026-94297              COUPEVILLE/NOLF 48.22 -122.633   US    WA
-    ## 26535: A00029-63820      EVERETT-STEWART AIRPORT 36.38  -88.985   US    TN
-    ## 26536: A00030-93795        CONNELLSVILLE AIRPORT 39.96  -79.657   US    PA
-    ## 26537: A00032-25715                 ATKA AIRPORT 52.22 -174.206   US    AK
+    ## 26539: A00024-53848 CHOCTAW NAVAL OUTLYING FIELD 30.51  -86.960   US    FL
+    ## 26540: A00026-94297              COUPEVILLE/NOLF 48.22 -122.633   US    WA
+    ## 26541: A00029-63820      EVERETT-STEWART AIRPORT 36.38  -88.985   US    TN
+    ## 26542: A00030-93795        CONNELLSVILLE AIRPORT 39.96  -79.657   US    PA
+    ## 26543: A00032-25715                 ATKA AIRPORT 52.22 -174.206   US    AK
     ##           BEGIN      END  COUNTRY_NAME ISO2C ISO3C
     ##     1: 20100519 20120323   AFGHANISTAN    AF   AFG
-    ##     2: 19310101 20210317        NORWAY    NO   NOR
-    ##     3: 19861120 20210317        NORWAY    NO   NOR
+    ##     2: 19310101 20210621        NORWAY    NO   NOR
+    ##     3: 19861120 20210621        NORWAY    NO   NOR
     ##     4: 19870117 20081231        NORWAY    NO   NOR
     ##     5: 19870116 19910806        NORWAY    NO   NOR
     ##    ---                                            
-    ## 26533: 20070601 20210317 UNITED STATES    US   USA
-    ## 26534: 20060324 20150514 UNITED STATES    US   USA
-    ## 26535: 20130627 20210318 UNITED STATES    US   USA
-    ## 26536: 20210309 20210319 UNITED STATES    US   USA
-    ## 26537: 20060101 20210121 UNITED STATES    US   USA
+    ## 26539: 20070601 20210621 UNITED STATES    US   USA
+    ## 26540: 20060324 20150514 UNITED STATES    US   USA
+    ## 26541: 20130627 20210622 UNITED STATES    US   USA
+    ## 26542: 20210309 20210621 UNITED STATES    US   USA
+    ## 26543: 20060101 20210612 UNITED STATES    US   USA
 
 ## Show changes from last release
 
@@ -146,12 +148,12 @@ setkeyv(new_isd_history, "STNID")[]
 install.packages("GSODR") # ensure we aren't using a locally installed dev version
 ```
 
-    ## Installing package into '/Users/adamsparks/Library/R/4.0/library'
+    ## Installing package into '/Users/adamsparks/Library/R/4.1/library'
     ## (as 'lib' is unspecified)
 
     ## 
     ## The downloaded binary packages are in
-    ##  /var/folders/tr/fwv720l96bz2btcr0jr_gs840000gn/T//RtmpAdEBcf/downloaded_packages
+    ##  /var/folders/hc/tft3s5bn48gb81cs99mycyf00000gn/T//Rtmpth2rI9/downloaded_packages
 
 ``` r
 load(system.file("extdata", "isd_history.rda", package = "GSODR"))
@@ -163,42 +165,42 @@ new_isd_history <- new_isd_history[, ..x]
 (isd_diff <- diffobj::diffPrint(new_isd_history, isd_history))
 ```
 
-<PRE class="fansi fansi-output"><CODE>## <span style='color: #BBBB00;'>&lt;</span><span> </span><span style='color: #BBBB00;'>new_isd_history</span><span>                                                              
-## </span><span style='color: #0000BB;'>&gt;</span><span> </span><span style='color: #0000BB;'>isd_history</span><span>                                                                  
-## </span><span style='color: #00BBBB;'>@@ 6,19 / 6,19 @@                                                              </span><span>
-## </span><span style='color: #555555;'>~               STNID                         NAME   LAT      LON CTRY STATE   </span><span>
+<PRE class="fansi fansi-output"><CODE>## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>new_isd_history</span>                                                              
+## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>isd_history</span>                                                                  
+## <span style='color: #00BBBB;'>@@ 6,19 / 6,19 @@                                                              </span>
+## <span style='color: #555555;'>~               STNID                         NAME   LAT      LON CTRY STATE   </span>
 ##       5: 010016-99999                  RORVIK/RYUM 64.85   11.233   NO         
 ##      ---                                                                       
-## </span><span style='color: #0000BB;'>&gt;</span><span> </span><span style='color: #0000BB;'>26527:</span><span> </span><span style='color: #0000BB;'>A00023-63890</span><span> </span><span style='color: #0000BB;'>WHITEHOUSE</span><span> </span><span style='color: #0000BB;'>NAVAL</span><span> </span><span style='color: #0000BB;'>OUTLYING</span><span> </span><span style='color: #0000BB;'>FIELD</span><span> </span><span style='color: #0000BB;'>30.35</span><span>  </span><span style='color: #0000BB;'>-81.883</span><span>   </span><span style='color: #0000BB;'>US</span><span>    </span><span style='color: #0000BB;'>FL</span><span>
-## </span><span style='color: #BBBB00;'>&lt;</span><span> </span><span style='color: #BBBB00;'>26533:</span><span> A00024-53848 CHOCTAW NAVAL OUTLYING FIELD 30.51  -86.960   US    FL   
-## </span><span style='color: #0000BB;'>&gt;</span><span> </span><span style='color: #0000BB;'>26528:</span><span> A00024-53848    CHOCTAW NAVAL OUTLYING FIELD 30.51  -86.960   US    FL
-## </span><span style='color: #BBBB00;'>&lt;</span><span> </span><span style='color: #BBBB00;'>26534:</span><span> A00026-94297              COUPEVILLE/NOLF 48.22 -122.633   US    WA   
-## </span><span style='color: #0000BB;'>&gt;</span><span> </span><span style='color: #0000BB;'>26529:</span><span> A00026-94297                 COUPEVILLE/NOLF 48.22 -122.633   US    WA
-## </span><span style='color: #BBBB00;'>&lt;</span><span> </span><span style='color: #BBBB00;'>26535:</span><span> A00029-63820      EVERETT-STEWART AIRPORT 36.38  -88.985   US    TN   
-## </span><span style='color: #0000BB;'>&gt;</span><span> </span><span style='color: #0000BB;'>26530:</span><span> A00029-63820         EVERETT-STEWART AIRPORT 36.38  -88.985   US    TN
-## </span><span style='color: #BBBB00;'>&lt;</span><span> </span><span style='color: #BBBB00;'>26536:</span><span> </span><span style='color: #BBBB00;'>A00030-93795</span><span>        </span><span style='color: #BBBB00;'>CONNELLSVILLE</span><span> </span><span style='color: #BBBB00;'>AIRPORT</span><span> </span><span style='color: #BBBB00;'>39.96</span><span>  </span><span style='color: #BBBB00;'>-79.657</span><span>   </span><span style='color: #BBBB00;'>US</span><span>    </span><span style='color: #BBBB00;'>PA</span><span>   
-## </span><span style='color: #BBBB00;'>&lt;</span><span> </span><span style='color: #BBBB00;'>26537:</span><span> A00032-25715                 ATKA AIRPORT 52.22 -174.206   US    AK   
-## </span><span style='color: #0000BB;'>&gt;</span><span> </span><span style='color: #0000BB;'>26531:</span><span> A00032-25715                    ATKA AIRPORT 52.22 -174.206   US    AK
+## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26527:</span> <span style='color: #0000BB;'>A00023-63890</span> <span style='color: #0000BB;'>WHITEHOUSE</span> <span style='color: #0000BB;'>NAVAL</span> <span style='color: #0000BB;'>OUTLYING</span> <span style='color: #0000BB;'>FIELD</span> <span style='color: #0000BB;'>30.35</span>  <span style='color: #0000BB;'>-81.883</span>   <span style='color: #0000BB;'>US</span>    <span style='color: #0000BB;'>FL</span>
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26539:</span> A00024-53848 CHOCTAW NAVAL OUTLYING FIELD 30.51  -86.960   US    FL   
+## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26528:</span> A00024-53848    CHOCTAW NAVAL OUTLYING FIELD 30.51  -86.960   US    FL
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26540:</span> A00026-94297              COUPEVILLE/NOLF 48.22 -122.633   US    WA   
+## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26529:</span> A00026-94297                 COUPEVILLE/NOLF 48.22 -122.633   US    WA
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26541:</span> A00029-63820      EVERETT-STEWART AIRPORT 36.38  -88.985   US    TN   
+## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26530:</span> A00029-63820         EVERETT-STEWART AIRPORT 36.38  -88.985   US    TN
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26542:</span> <span style='color: #BBBB00;'>A00030-93795</span>        <span style='color: #BBBB00;'>CONNELLSVILLE</span> <span style='color: #BBBB00;'>AIRPORT</span> <span style='color: #BBBB00;'>39.96</span>  <span style='color: #BBBB00;'>-79.657</span>   <span style='color: #BBBB00;'>US</span>    <span style='color: #BBBB00;'>PA</span>   
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26543:</span> A00032-25715                 ATKA AIRPORT 52.22 -174.206   US    AK   
+## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26531:</span> A00032-25715                    ATKA AIRPORT 52.22 -174.206   US    AK
 ##             BEGIN      END  COUNTRY_NAME ISO2C ISO3C                           
 ##       1: 20100519 20120323   AFGHANISTAN    AF   AFG                           
-## </span><span style='color: #BBBB00;'>&lt;</span><span>     2: 19310101 </span><span style='color: #BBBB00;'>20210317</span><span>        NORWAY    NO   NOR                           
-## </span><span style='color: #0000BB;'>&gt;</span><span>     2: 19310101 </span><span style='color: #0000BB;'>20210116</span><span>        NORWAY    NO   NOR                           
-## </span><span style='color: #BBBB00;'>&lt;</span><span>     3: 19861120 </span><span style='color: #BBBB00;'>20210317</span><span>        NORWAY    NO   NOR                           
-## </span><span style='color: #0000BB;'>&gt;</span><span>     3: 19861120 </span><span style='color: #0000BB;'>20210116</span><span>        NORWAY    NO   NOR                           
+## <span style='color: #BBBB00;'>&lt;</span>     2: 19310101 <span style='color: #BBBB00;'>20210621</span>        NORWAY    NO   NOR                           
+## <span style='color: #0000BB;'>&gt;</span>     2: 19310101 <span style='color: #0000BB;'>20210116</span>        NORWAY    NO   NOR                           
+## <span style='color: #BBBB00;'>&lt;</span>     3: 19861120 <span style='color: #BBBB00;'>20210621</span>        NORWAY    NO   NOR                           
+## <span style='color: #0000BB;'>&gt;</span>     3: 19861120 <span style='color: #0000BB;'>20210116</span>        NORWAY    NO   NOR                           
 ##       4: 19870117 20081231        NORWAY    NO   NOR                           
 ##       5: 19870116 19910806        NORWAY    NO   NOR                           
 ##      ---                                                                       
-## </span><span style='color: #BBBB00;'>&lt;</span><span> </span><span style='color: #BBBB00;'>26533:</span><span> 20070601 </span><span style='color: #BBBB00;'>20210317</span><span> UNITED STATES    US   USA                           
-## </span><span style='color: #0000BB;'>&gt;</span><span> </span><span style='color: #0000BB;'>26527:</span><span> 20070601 </span><span style='color: #0000BB;'>20210116</span><span> UNITED STATES    US   USA                           
-## </span><span style='color: #BBBB00;'>&lt;</span><span> </span><span style='color: #BBBB00;'>26534:</span><span> </span><span style='color: #BBBB00;'>20060324</span><span> </span><span style='color: #BBBB00;'>20150514</span><span> UNITED STATES    US   USA                           
-## </span><span style='color: #0000BB;'>&gt;</span><span> </span><span style='color: #0000BB;'>26528:</span><span> </span><span style='color: #0000BB;'>20070601</span><span> </span><span style='color: #0000BB;'>20210116</span><span> UNITED STATES    US   USA                           
-## </span><span style='color: #BBBB00;'>&lt;</span><span> </span><span style='color: #BBBB00;'>26535:</span><span> </span><span style='color: #BBBB00;'>20130627</span><span> </span><span style='color: #BBBB00;'>20210318</span><span> UNITED STATES    US   USA                           
-## </span><span style='color: #0000BB;'>&gt;</span><span> </span><span style='color: #0000BB;'>26529:</span><span> </span><span style='color: #0000BB;'>20060324</span><span> </span><span style='color: #0000BB;'>20150514</span><span> UNITED STATES    US   USA                           
-## </span><span style='color: #BBBB00;'>&lt;</span><span> </span><span style='color: #BBBB00;'>26536:</span><span> </span><span style='color: #BBBB00;'>20210309</span><span> </span><span style='color: #BBBB00;'>20210319</span><span> UNITED STATES    US   USA                           
-## </span><span style='color: #0000BB;'>&gt;</span><span> </span><span style='color: #0000BB;'>26530:</span><span> </span><span style='color: #0000BB;'>20130627</span><span> </span><span style='color: #0000BB;'>20210117</span><span> UNITED STATES    US   USA                           
-## </span><span style='color: #BBBB00;'>&lt;</span><span> </span><span style='color: #BBBB00;'>26537:</span><span> 20060101 </span><span style='color: #BBBB00;'>20210121</span><span> UNITED STATES    US   USA                           
-## </span><span style='color: #0000BB;'>&gt;</span><span> </span><span style='color: #0000BB;'>26531:</span><span> 20060101 </span><span style='color: #0000BB;'>20210117</span><span> UNITED STATES    US   USA
-</span></CODE></PRE>
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26539:</span> 20070601 <span style='color: #BBBB00;'>20210621</span> UNITED STATES    US   USA                           
+## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26527:</span> 20070601 <span style='color: #0000BB;'>20210116</span> UNITED STATES    US   USA                           
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26540:</span> <span style='color: #BBBB00;'>20060324</span> <span style='color: #BBBB00;'>20150514</span> UNITED STATES    US   USA                           
+## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26528:</span> <span style='color: #0000BB;'>20070601</span> <span style='color: #0000BB;'>20210116</span> UNITED STATES    US   USA                           
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26541:</span> <span style='color: #BBBB00;'>20130627</span> <span style='color: #BBBB00;'>20210622</span> UNITED STATES    US   USA                           
+## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26529:</span> <span style='color: #0000BB;'>20060324</span> <span style='color: #0000BB;'>20150514</span> UNITED STATES    US   USA                           
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26542:</span> <span style='color: #BBBB00;'>20210309</span> <span style='color: #BBBB00;'>20210621</span> UNITED STATES    US   USA                           
+## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26530:</span> <span style='color: #0000BB;'>20130627</span> <span style='color: #0000BB;'>20210117</span> UNITED STATES    US   USA                           
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26543:</span> 20060101 <span style='color: #BBBB00;'>20210612</span> UNITED STATES    US   USA                           
+## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26531:</span> 20060101 <span style='color: #0000BB;'>20210117</span> UNITED STATES    US   USA
+</CODE></PRE>
 
 ## View and save the data
 
@@ -254,58 +256,58 @@ website](https://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryab
 
     ## ─ Session info ───────────────────────────────────────────────────────────────
     ##  setting  value                       
-    ##  version  R version 4.0.4 (2021-02-15)
-    ##  os       macOS Big Sur 10.16         
-    ##  system   x86_64, darwin17.0          
+    ##  version  R version 4.1.0 (2021-05-18)
+    ##  os       macOS Big Sur 11.4          
+    ##  system   aarch64, darwin20           
     ##  ui       X11                         
     ##  language (EN)                        
     ##  collate  en_AU.UTF-8                 
     ##  ctype    en_AU.UTF-8                 
     ##  tz       Australia/Perth             
-    ##  date     2021-03-20                  
+    ##  date     2021-06-24                  
     ## 
     ## ─ Packages ───────────────────────────────────────────────────────────────────
-    ##  package     * version date       lib source             
-    ##  assertthat    0.2.1   2019-03-21 [1] standard (@0.2.1)  
-    ##  base64enc     0.1-3   2015-07-28 [1] standard (@0.1-3)  
-    ##  cli           2.3.1   2021-02-23 [1] CRAN (R 4.0.2)     
-    ##  countrycode * 1.2.0   2020-05-22 [1] standard (@1.2.0)  
-    ##  crayon        1.4.1   2021-02-08 [1] standard (@1.4.1)  
-    ##  curl          4.3     2019-12-02 [1] standard (@4.3)    
-    ##  data.table  * 1.14.0  2021-02-21 [1] CRAN (R 4.0.2)     
-    ##  DBI           1.1.1   2021-01-15 [1] standard (@1.1.1)  
-    ##  diffobj       0.3.3   2021-01-07 [1] standard (@0.3.3)  
-    ##  digest        0.6.27  2020-10-24 [1] standard (@0.6.27) 
-    ##  dplyr         1.0.5   2021-03-05 [1] CRAN (R 4.0.2)     
-    ##  ellipsis      0.3.1   2020-05-15 [1] standard (@0.3.1)  
-    ##  evaluate      0.14    2019-05-28 [1] standard (@0.14)   
-    ##  fansi         0.4.2   2021-01-15 [1] standard (@0.4.2)  
-    ##  generics      0.1.0   2020-10-31 [1] standard (@0.1.0)  
-    ##  glue          1.4.2   2020-08-27 [1] standard (@1.4.2)  
-    ##  htmltools     0.5.1.1 2021-01-22 [1] standard (@0.5.1.1)
-    ##  jsonlite      1.7.2   2020-12-09 [1] standard (@1.7.2)  
-    ##  knitr         1.31    2021-01-27 [1] standard (@1.31)   
-    ##  lifecycle     1.0.0   2021-02-15 [1] standard (@1.0.0)  
-    ##  magrittr      2.0.1   2020-11-17 [1] standard (@2.0.1)  
-    ##  pacman      * 0.5.1   2019-03-11 [1] CRAN (R 4.0.2)     
-    ##  pillar        1.5.1   2021-03-05 [1] CRAN (R 4.0.2)     
-    ##  pkgconfig     2.0.3   2019-09-22 [1] standard (@2.0.3)  
-    ##  purrr         0.3.4   2020-04-17 [1] standard (@0.3.4)  
-    ##  R6            2.5.0   2020-10-28 [1] standard (@2.5.0)  
-    ##  repr          1.1.3   2021-01-21 [1] CRAN (R 4.0.2)     
-    ##  rlang         0.4.10  2020-12-30 [1] standard (@0.4.10) 
-    ##  rmarkdown     2.7     2021-02-19 [1] standard (@2.7)    
-    ##  sessioninfo * 1.1.1   2018-11-05 [1] standard (@1.1.1)  
-    ##  skimr       * 2.1.3   2021-03-07 [1] CRAN (R 4.0.2)     
-    ##  stringi       1.5.3   2020-09-09 [1] standard (@1.5.3)  
-    ##  stringr       1.4.0   2019-02-10 [1] standard (@1.4.0)  
-    ##  tibble        3.1.0   2021-02-25 [1] CRAN (R 4.0.2)     
-    ##  tidyselect    1.1.0   2020-05-11 [1] standard (@1.1.0)  
-    ##  utf8          1.2.1   2021-03-12 [1] CRAN (R 4.0.4)     
-    ##  vctrs         0.3.6   2020-12-17 [1] standard (@0.3.6)  
-    ##  withr         2.4.1   2021-01-26 [1] standard (@2.4.1)  
-    ##  xfun          0.22    2021-03-11 [1] CRAN (R 4.0.4)     
-    ##  yaml          2.2.1   2020-02-01 [1] standard (@2.2.1)  
+    ##  package     * version date       lib source        
+    ##  assertthat    0.2.1   2019-03-21 [1] CRAN (R 4.1.0)
+    ##  base64enc     0.1-3   2015-07-28 [1] CRAN (R 4.1.0)
+    ##  cli           2.5.0   2021-04-26 [1] CRAN (R 4.1.0)
+    ##  countrycode * 1.2.0   2020-05-22 [1] CRAN (R 4.1.0)
+    ##  crayon        1.4.1   2021-02-08 [1] CRAN (R 4.1.0)
+    ##  curl          4.3.2   2021-06-23 [1] CRAN (R 4.1.0)
+    ##  data.table  * 1.14.0  2021-02-21 [1] CRAN (R 4.1.0)
+    ##  DBI           1.1.1   2021-01-15 [1] CRAN (R 4.1.0)
+    ##  diffobj       0.3.4   2021-03-22 [1] CRAN (R 4.1.0)
+    ##  digest        0.6.27  2020-10-24 [1] CRAN (R 4.1.0)
+    ##  dplyr         1.0.7   2021-06-18 [1] CRAN (R 4.1.0)
+    ##  ellipsis      0.3.2   2021-04-29 [1] CRAN (R 4.1.0)
+    ##  evaluate      0.14    2019-05-28 [1] CRAN (R 4.1.0)
+    ##  fansi         0.5.0   2021-05-25 [1] CRAN (R 4.1.0)
+    ##  generics      0.1.0   2020-10-31 [1] CRAN (R 4.1.0)
+    ##  glue          1.4.2   2020-08-27 [1] CRAN (R 4.1.0)
+    ##  htmltools     0.5.1.1 2021-01-22 [1] CRAN (R 4.1.0)
+    ##  jsonlite      1.7.2   2020-12-09 [1] CRAN (R 4.1.0)
+    ##  knitr         1.33    2021-04-24 [1] CRAN (R 4.1.0)
+    ##  lifecycle     1.0.0   2021-02-15 [1] CRAN (R 4.1.0)
+    ##  magrittr      2.0.1   2020-11-17 [1] CRAN (R 4.1.0)
+    ##  pacman      * 0.5.1   2019-03-11 [1] CRAN (R 4.1.0)
+    ##  pillar        1.6.1   2021-05-16 [1] CRAN (R 4.1.0)
+    ##  pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 4.1.0)
+    ##  purrr         0.3.4   2020-04-17 [1] CRAN (R 4.1.0)
+    ##  R6            2.5.0   2020-10-28 [1] CRAN (R 4.1.0)
+    ##  repr          1.1.3   2021-01-21 [2] CRAN (R 4.1.0)
+    ##  rlang         0.4.11  2021-04-30 [1] CRAN (R 4.1.0)
+    ##  rmarkdown     2.9     2021-06-15 [1] CRAN (R 4.1.0)
+    ##  sessioninfo * 1.1.1   2018-11-05 [1] CRAN (R 4.1.0)
+    ##  skimr       * 2.1.3   2021-03-07 [1] CRAN (R 4.1.0)
+    ##  stringi       1.6.2   2021-05-17 [1] CRAN (R 4.1.0)
+    ##  stringr       1.4.0   2019-02-10 [1] CRAN (R 4.1.0)
+    ##  tibble        3.1.2   2021-05-16 [1] CRAN (R 4.1.0)
+    ##  tidyselect    1.1.1   2021-04-30 [1] CRAN (R 4.1.0)
+    ##  utf8          1.2.1   2021-03-12 [1] CRAN (R 4.1.0)
+    ##  vctrs         0.3.8   2021-04-29 [1] CRAN (R 4.1.0)
+    ##  withr         2.4.2   2021-04-18 [1] CRAN (R 4.1.0)
+    ##  xfun          0.24    2021-06-15 [1] CRAN (R 4.1.0)
+    ##  yaml          2.2.1   2020-02-01 [1] CRAN (R 4.1.0)
     ## 
-    ## [1] /Users/adamsparks/Library/R/4.0/library
-    ## [2] /Library/Frameworks/R.framework/Versions/4.0/Resources/library
+    ## [1] /Users/adamsparks/Library/R/4.1/library
+    ## [2] /Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/library
