@@ -25,10 +25,9 @@ To directly access these data, use: \cr
 \code{load(system.file("extdata", "isd_history.rda", package = "GSODR"))}
 }
 \examples{
-\dontrun{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 update_station_list()
-}
-
+\dontshow{\}) # examplesIf}
 }
 \author{
 Adam H. Sparks, \email{adamhsparks@gmail.com}

@@ -19,11 +19,10 @@
 #'  accessing these data and products will be maintained and may be made
 #'  available to data providers.}
 #'
-#' @examples
-#' \donttest{
+#' @examplesIf interactive()
 #' inventory <- get_inventory()
 #' inventory
-#'}
+#'
 #' @return A \code{\link[data.table]{data.table}} object of station inventories
 #' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
 #' @export get_inventory

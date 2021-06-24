@@ -38,12 +38,12 @@ cannot be redistributed for commercial purposes.  Re-distribution of these
 data by others must provide this same notification.}
 }
 \examples{
-\donttest{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # Find stations within a 100km radius of Toowoomba, QLD, AUS
 
 n <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 100)
 n
-}
+\dontshow{\}) # examplesIf}
 }
 \author{
 Adam H. Sparks, \email{adamhsparks@gmail.com}

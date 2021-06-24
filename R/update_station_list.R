@@ -17,10 +17,8 @@
 #' To directly access these data, use: \cr
 #' \code{load(system.file("extdata", "isd_history.rda", package = "GSODR"))}
 #'
-#' @examples
-#' \dontrun{
+#' @examplesIf interactive()
 #' update_station_list()
-#' }
 #'
 #' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
 #' @export update_station_list
