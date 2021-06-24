@@ -149,7 +149,7 @@
                             exp((17.625 * (TEMP)) / (243.04 + (TEMP)))),
                    1)]
 
-  # Split FRSHTT into separate columns
+  # Split FRSHTT into separate columns -----------------------------------------
   DT[, I_FOG := fifelse(DT$FRSHTT != 0,
                         as.integer(substr(DT$FRSHTT, 1, 1)), 0)]
   DT[, I_RAIN_DRIZZLE := fifelse(DT$FRSHTT != 0,
