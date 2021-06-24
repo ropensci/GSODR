@@ -64,6 +64,7 @@ Imports:
     utils
 Suggests:
     dplyr,
+    spelling,
     ggplot2,
     gridExtra,
     knitr,
@@ -76,7 +77,7 @@ Suggests:
     tidyr
 RoxygenNote: 7.1.1.9001
 Encoding: UTF-8
-Language: en-AU
+Language: en-US
 NeedsCompilation: no
 Repository: CRAN
 LazyData: FALSE
