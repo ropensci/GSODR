@@ -8,7 +8,7 @@
 #'
 #' Care should be taken when using this function if reproducibility is necessary
 #' as different machines with the same version of \pkg{GSODR} can end up with
-#' different versions of the isd_history.csv file internally.
+#' different versions of the 'isd_history.csv' file internally.
 #'
 #' There is no need to use this unless you know that a station exists in the
 #' isd_history.csv file that is not available in \pkg{GSODR's} self-contained
