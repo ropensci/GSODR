@@ -1,4 +1,14 @@
-# GSODR (development version)
+# GSODR 3.1.1
+
+## Bug fixes
+
+* Fixes bug reported in [#84](https://github.com/ropensci/GSODR/issues/84) in the FRSHTT columns where the values were all reported as `NA` even if there were observed values.
+
+* Fixes bug where NA values reported as 99.99, 999.9 or 9999.9 were not replaced with `NA`.
+
+## Minor changes
+
+* Examples are no longer wrapped in `\donttest{}` but use `@examplesIf interactive()` instead.
 
 # GSODR 3.1.0
 
