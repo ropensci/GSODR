@@ -49,11 +49,11 @@
     fread(x,
           colClasses = c("STATION" = "character"))
 
-  # Replace 9999.99 et al. with NA
+  # Replace 99.99 et al. with NA
   for (col in names(DT)[names(DT) == "PRCP"]) {
     set(DT, j = col, value = as.character(DT[[col]]))
     set(DT,
-        i = which(DT[[col]] == 99.99),
+        i = which(DT[[col]] == "99.99"),
         j = col,
         value = NA)
   }
@@ -80,7 +80,7 @@
                                          "MIN")]) {
     set(DT, j = col, value = as.character(DT[[col]]))
     set(DT,
-        i = which(DT[[col]] == 9999.9),
+        i = which(DT[[col]] == "9999.9"),
         j = col,
         value = NA)
   }
