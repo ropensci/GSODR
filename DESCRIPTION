@@ -80,8 +80,6 @@ Encoding: UTF-8
 Language: en-US
 NeedsCompilation: no
 Repository: CRAN
-LazyData: FALSE
-LazyLoad: FALSE
 ByteCompile: TRUE
 VignetteBuilder: knitr
 X-schema.org-applicationCategory: Tools
