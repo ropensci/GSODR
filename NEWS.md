@@ -1,10 +1,12 @@
 # GSODR (development version)
 
+## Bug fixes
+
+* Fix (more) bugs related to `NA` value replacements.
+
 ## Minor changes
 
 * Simplify `NA` value replacement in "PRCP" column.
-
-* Fix (more) bugs related to `NA` value replacements.
 
 * The PRCP column values are rounded to two decimal places as in original GSOD data, not one.
 
@@ -20,14 +22,12 @@
 
 * Fixes bug where NA values reported as 99.99, 999.9 or 9999.9 were not replaced with `NA`.
 
+* Fix bug where FRSHTT (Fog, Rain/Drizzle, Snow/Ice, Hail, Tornado, Thunder) column values split into the respective columns only returned NA, not the proper values as expected.
+Reported in [#84](https://github.com/ropensci/GSODR/issues/84).
+
 ## Minor changes
 
 * Examples are no longer wrapped in `\donttest{}` but use `@examplesIf interactive()` instead.
-
-## Bug fixes
-
-* Fix bug where FRSHTT (Fog, Rain/Drizzle, Snow/Ice, Hail, Tornado, Thunder) column values split into the respective columns only returned NA, not the proper values as expected.
-Reported in [#84](https://github.com/ropensci/GSODR/issues/84).
 
 # GSODR 3.1.0
 
