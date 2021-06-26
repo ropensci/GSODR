@@ -4,9 +4,11 @@
 
 * Simplify `NA` value replacement in "PRCP" column.
 
-* Fix bugs (again) related to `NA` value replacements.
+* Fix (more) bugs related to `NA` value replacements.
 
-* Precipitation values are rounded to two decimal places as in original GSOD data, not one.
+* The PRCP column values are rounded to two decimal places as in original GSOD data, not one.
+
+* The TEMP_ATTRIBUTES, DEWP_ATTRIBUTES, SLP_ATTRIBUTES, STP_ATTRIBUTES, VISIB_ATTRIBUTES and WDSP_ATTRIBUTES columns are formatted as an integer not character.
 
 # GSODR 3.1.1
 
