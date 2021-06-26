@@ -151,19 +151,41 @@
                             exp((17.625 * (TEMP)) / (243.04 + (TEMP)))),
                    1)]
 
-  # Split FRSHTT into separate columns
+  # Split FRSHTT into separate columns -----------------------------------------
   DT[, I_FOG := fifelse(DT$FRSHTT != 0,
-                        as.numeric(substr(DT$FRSHTT, 1, 1)), 0)]
+                        as.numeric(substr(
+                          x = DT$FRSHTT,
+                          start = 1,
+                          stop = 1
+                        )), 0)]
   DT[, I_RAIN_DRIZZLE := fifelse(DT$FRSHTT != 0,
-                                 as.numeric(substr(DT$FRSHTT, 2, 2)), 0)]
+                                 as.numeric(substr(
+                                   x = DT$FRSHTT,
+                                   start = 2,
+                                   stop = 2
+                                 )), 0)]
   DT[, I_SNOW_ICE := fifelse(DT$FRSHTT != 0,
-                             as.numeric(substr(DT$FRSHTT, 3, 3)), 0)]
+                             as.numeric(substr(
+                               x = DT$FRSHTT,
+                               start = 3,
+                               stop = 3
+                             )), 0)]
   DT[, I_HAIL := fifelse(DT$FRSHTT != 0,
-                         as.numeric(substr(DT$FRSHTT, 4, 4)), 0)]
+                         as.numeric(substr(
+                           x = DT$FRSHTT,
+                           start = 4,
+                           stop = 4
+                         )), 0)]
   DT[, I_THUNDER := fifelse(DT$FRSHTT != 0,
-                            as.numeric(substr(DT$FRSHTT, 5, 5)), 0)]
+                            as.numeric(substr(
+                              DT$FRSHTT, start = 5, stop = 5
+                            )), 0)]
   DT[, I_TORNADO_FUNNEL := fifelse(DT$FRSHTT != 0,
-                                   as.numeric(substr(DT$FRSHTT, 6, 6)), 0)]
+                                   as.numeric(substr(
+                                     x = DT$FRSHTT,
+                                     start = 6,
+                                     stop = 6
+                                   )), 0)]
   DT[, FRSHTT := NULL]
 
   # Join with internal isd-history for CTRY column -----------------------------
