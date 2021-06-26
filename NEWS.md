@@ -1,5 +1,13 @@
 # GSODR (development version)
 
+## Minor changes
+
+* Simplify `NA` value replacement in "PRCP" column.
+
+* Fix bugs (again) related to `NA` value replacements.
+
+* Precipitation values are rounded to two decimal places as in original GSOD data, not one.
+
 # GSODR 3.1.1
 
 ## Bug fixes
