@@ -10,6 +10,8 @@
 
 * The TEMP_ATTRIBUTES, DEWP_ATTRIBUTES, SLP_ATTRIBUTES, STP_ATTRIBUTES, VISIB_ATTRIBUTES and WDSP_ATTRIBUTES columns are formatted as an integer not character.
 
+* Better tests for the generated weather data `data.table` output checking values and formats.
+
 # GSODR 3.1.1
 
 ## Bug fixes
