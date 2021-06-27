@@ -1,5 +1,3 @@
-
-# Check that .process_csv() works properly and returns a data.table ------------
 test_that(
   ".process_csv returns a data.table", {
 
