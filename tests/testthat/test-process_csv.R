@@ -1,6 +1,41 @@
+
+# Check that .process_csv() works properly and returns a data.table ------------
 test_that(
-  ".process_csv returns a data.table with proper structure and values",
-  {
+  ".download_files properly works, subsetting for country and
+  agroclimatology works and .process_csv returns a data.table", {
+    skip_on_cran()
+    do.call(file.remove, list(list.files(
+      tempdir(),
+      pattern = ".csv$",
+      full.names = TRUE
+    )))
+    years <- 1982
+    agroclimatology <- TRUE
+    country <- "RP"
+    station <- NULL
+
+    load(system.file("extdata", "isd_history.rda", package = "GSODR"))
+    setkey(isd_history, "STNID")
+    stations <- isd_history
+
+    load(system.file("extdata", "isd_history.rda",
+                     package = "GSODR"))
+
+    GSOD_list <- .download_files(station,
+                                 years)
+
+    agro_list <- .agroclimatology_list(GSOD_list,
+                                       stations,
+                                       years)
+    expect_length(agro_list, 7480)
+
+    RP_list <- .subset_country_list(country,
+                                    GSOD_list,
+                                    stations,
+                                    years)
+    expect_length(RP_list, 54)
+
+    # Check that .process_gz returns a properly formatted data.table -----------
     csv_file <- .download_files(station = "955510-99999", years = "2016")
     csv_out <- .process_csv(csv_file, stations)
 
