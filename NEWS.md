@@ -1,10 +1,10 @@
-# GSODR (development version)
+# GSODR 3.1.2
 
 ## Bug fixes
 
 * Fix (more) bugs related to `NA` value replacements.
 
-## Minor changes
+## Minor changes and improvements
 
 * Simplify `NA` value replacement in "PRCP" column.
 
