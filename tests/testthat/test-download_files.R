@@ -16,9 +16,6 @@ test_that(
     setkey(isd_history, "STNID")
     stations <- isd_history
 
-    load(system.file("extdata", "isd_history.rda",
-                     package = "GSODR"))
-
     GSOD_list <- .download_files(station,
                                  years)
 
