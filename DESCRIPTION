@@ -31,7 +31,7 @@ Authors@R: c(person("Adam H.", "Sparks", role = c("aut", "cre"),
     person("Tyler", "Widdison", role = "ctb",
     email = "Tyler.Widdison@usav.org", comment = "Reported bug where
     `nearest_stations()` did not return stations in order of nearest to
-    farthest."))
+    farthest"))
 URL: https://docs.ropensci.org/GSODR/
 BugReports: https://github.com/ropensci/GSODR/issues
 Description: Provides automated downloading, parsing, cleaning, unit conversion
