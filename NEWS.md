@@ -14,6 +14,9 @@
 
 * Better tests for the generated weather data `data.table` output checking values and formats.
 
+* Standardise handling of author/contributor comments.
+None have a full stop now in the comment.
+
 # GSODR 3.1.1
 
 ## Bug fixes
