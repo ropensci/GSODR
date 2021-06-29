@@ -62,7 +62,7 @@ test_that("missing days check allows stations with permissible days missing,
               data.frame(c(rep(12, 300)), c(rep("X", 300)))
             df_list <- list(just_right_2015, too_short_2015)
             dir.create(path = file.path(td, "2015"))
-            
+
             filenames <- c("just_right0", "too_short00")
             sapply(seq_len(length(df_list)),
                    function(x)
@@ -75,7 +75,7 @@ test_that("missing days check allows stations with permissible days missing,
                 pattern = ".csv$",
                 full.names = TRUE
               )
-            
+
             if (!is.null(max_missing)) {
               GSOD_list_filtered <- .validate_missing_days(max_missing,
                                                            GSOD_list)
@@ -102,7 +102,7 @@ test_that("missing days check allows stations with permissible days missing,
               data.frame(c(rep(12, 300)), c(rep("X", 300)))
             df_list <- list(just_right_2016, too_short_2016)
             dir.create(path = file.path(td, "2016"))
-            
+
             filenames <- c("just_right0", "too_short00")
             sapply(seq_len(length(df_list)),
                    function(x)
@@ -119,7 +119,7 @@ test_that("missing days check allows stations with permissible days missing,
               GSOD_list_filtered <- .validate_missing_days(max_missing,
                                                            GSOD_list)
             }
-            
+
             expect_length(GSOD_list, 2)
             expect_match(basename(GSOD_list_filtered), "just_right0.csv")
             rm_files <-
@@ -127,14 +127,6 @@ test_that("missing days check allows stations with permissible days missing,
             file.remove(rm_files)
             file.remove(file.path(td, "2016"))
           })
-
-# Check that stations are filtered for missing days ----------------------------
-# 1929 has no stations with a full 365 days, so none should be returned
-test_that("The 'max_missing' parameter filters out improper stations", {
-  skip_on_cran()
-  expect_error(get_GSOD(years = 1929, max_missing = 1),
-               regexp = "There were no stations that had a max of.")
-})
 
 # Check that max_missing only accepts positive values --------------------------
 test_that("The 'max_missing' parameter will not accept NA values", {
@@ -154,15 +146,15 @@ test_that("Check validate country returns a two letter code", {
   # CRAN NOTE avoidance
   isd_history <- NULL
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))
-  
+
   country <- "Philippines"
   Philippines <- .validate_country(country, isd_history)
   expect_match(Philippines, "RP")
-  
+
   country <- "PHL"
   PHL <- .validate_country(country, isd_history)
   expect_match(PHL, "RP")
-  
+
   country <- "PH"
   PH <- .validate_country(country, isd_history)
   expect_match(PH, "RP")
