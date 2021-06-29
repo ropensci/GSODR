@@ -2,7 +2,6 @@ ASOS
 Agroclimatology
 Alduchov
 Bigouette
-BoM
 CCI
 CDO
 CGIAR
@@ -58,6 +57,7 @@ SNDP
 SRTM
 STNID
 STP
+Standardise
 Toowoomba
 USCS
 VISIB
@@ -75,7 +75,6 @@ YYYYMMDD
 acc
 agroclimatology
 al
-bomrang
 capitalisation
 cliflo
 clifro
@@ -107,7 +106,6 @@ onLoad
 optimised
 plyr
 pre
-précis
 purrr
 rOpenSci
 rda
