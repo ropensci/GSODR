@@ -75,8 +75,6 @@ The [_**gsod**_](https://github.com/databrew/gsod) package from [DataBrew](https
 [_**stationaRy**_](https://cran.r-project.org/package=stationaRy), from Richard Iannone offers hourly meteorological data from stations located all over the world.
 There is a wealth of data available, with historic weather data accessible from nearly 30,000 stations.
 
-[_**bomrang**_](https://CRAN.R-project.org/package=bomrang), from [rOpenSci](https://docs.ropensci.org/bomrang/) provides functions to interface with Australia Government Bureau of Meteorology (BoM) data, fetching current and historical data including précis and marine forecasts, current weather data from stations, agriculture bulletin data, BoM 0900 or 1500 weather bulletins and satellite and radar imagery.
-
 [_**riem**_](https://CRAN.R-project.org/package=riem) from [rOpenSci](https://docs.ropensci.org/riem/) allows to get weather data from Automated Surface Observing System (ASOS) stations (airports) in the whole world thanks to the Iowa Environment Mesonet website.
 
 [_**weathercan**_](https://CRAN.R-project.org/package=weathercan) from [rOpenSci](https://github.com/ropensci/weathercan) makes it easier to search for and download multiple months/years of historical weather data from Environment and Climate Change Canada (ECCC) website.
