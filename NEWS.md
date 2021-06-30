@@ -19,6 +19,8 @@
 * Standardise handling of author/contributor comments.
 None have a full stop now in the comment.
 
+* Use `on.exit()` to reset the working directory to the original user-space value after changing the working directory to untar files located in `tempdir()`.
+
 # GSODR 3.1.1
 
 ## Bug fixes
