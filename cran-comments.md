@@ -15,4 +15,7 @@ I realise that the last release was four days ago, however, I found a few more b
 0 ERRORs | 0 WARNINGs | 0 NOTES.
 
 ## Reverse dependencies
-No ERRORs or WARNINGs found
+We checked 1 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
+
+ * We saw 0 new problems
+ * We failed to check 0 packages
