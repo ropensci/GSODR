@@ -1,7 +1,7 @@
 Package: GSODR
 Type: Package
 Title: Global Surface Summary of the Day ('GSOD') Weather Data Client
-Version: 3.1.2
+Version: 3.1.2.9000
 Authors@R: c(person("Adam H.", "Sparks", role = c("aut", "cre"),
     email = "adamhsparks@gmail.com",
     comment = c(ORCID = "0000-0002-0061-8359")),
