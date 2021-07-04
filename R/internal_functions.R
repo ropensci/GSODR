@@ -179,10 +179,10 @@
         list.files(tempdir(), pattern = "*\\.tar.gz$", full.names = TRUE)
       for (i in tar_files) {
         wd <- getwd()
+        on.exit(setwd(wd))
         setwd(tempdir())
         year_dir <- substr(i, nchar(i) - 10, nchar(i) - 7)
         utils::untar(i, exdir = year_dir)
-        setwd(wd)
       }
 
       GSOD_list <-

@@ -54,7 +54,7 @@ Other contributors:
     fail) [contributor]
   \item Tyler Widdison \email{Tyler.Widdison@usav.org} (Reported bug where
     `nearest_stations()` did not return stations in order of nearest to
-    farthest.) [contributor]
+    farthest) [contributor]
 }
 
 }
