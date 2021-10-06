@@ -8,23 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
-Provides automated downloading, parsing, cleaning, unit conversion
-    and formatting of Global Surface Summary of the Day ('GSOD') weather data
-    from the from the USA National Centers for Environmental Information
-    ('NCEI').  Units are converted from from United States Customary System
-    ('USCS') units to International System of Units ('SI').  Stations may be
-    individually checked for number of missing days defined by the user, where
-    stations with too many missing observations are omitted.  Only stations with
-    valid reported latitude and longitude values are permitted in the final
-    data.  Additional useful elements, saturation vapour pressure ('es'), actual
-    vapour pressure ('ea') and relative humidity ('RH') are calculated from the
-    original data using the improved August-Roche-Magnus approximation (Alduchov
-    & Eskridge 1996) and included in the final data set.  The resulting metadata
-    include station identification information, country, state, latitude,
-    longitude, elevation, weather observations and associated flags.  For
-    information on the 'GSOD' data from 'NCEI', please see the 'GSOD'
-    'readme.txt' file available from,
-    <https://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt>.
+Provides automated downloading, parsing, cleaning, unit conversion and formatting of Global Surface Summary of the Day ('GSOD') weather data from the from the USA National Centers for Environmental Information ('NCEI'). Units are converted from from United States Customary System ('USCS') units to International System of Units ('SI'). Stations may be individually checked for number of missing days defined by the user, where stations with too many missing observations are omitted. Only stations with valid reported latitude and longitude values are permitted in the final data. Additional useful elements, saturation vapour pressure ('es'), actual vapour pressure ('ea') and relative humidity ('RH') are calculated from the original data using the improved August-Roche-Magnus approximation (Alduchov & Eskridge 1996) and included in the final data set. The resulting metadata include station identification information, country, state, latitude, longitude, elevation, weather observations and associated flags. For information on the 'GSOD' data from 'NCEI', please see the 'GSOD' 'readme.txt' file available from, <https://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt>.
 }
 \seealso{
 Useful links:
@@ -46,15 +30,11 @@ Authors:
 Other contributors:
 \itemize{
   \item Hugh Parsonage \email{hugh.parsonage@gmail.com} (\href{https://orcid.org/0000-0003-4055-0835}{ORCID}) [copyright holder, contributor]
-  \item Taras Kaduk \email{taras.kaduk@gmail.com} (Suggestion for handling bulk station downloads more
-    efficiently) [contributor]
+  \item Taras Kaduk \email{taras.kaduk@gmail.com} (Suggestion for handling bulk station downloads more efficiently) [contributor]
   \item Gwenael Giboire \email{gwenael.giboire@oda-groupe.com} (Several bug reports in early versions and testing feedback) [contributor]
   \item Łukasz Pawlik \email{lukpawlik@gmail.com} (Reported bug in windspeed conversion calculation) [contributor]
-  \item Ross Darnell \email{Ross.Darnell@data61.csiro.au} (\href{https://orcid.org/0000-0002-7973-6322}{ORCID}) (Reported bug in 'Windows OS' versions causing 'GSOD' data untarring to
-    fail) [contributor]
-  \item Tyler Widdison \email{Tyler.Widdison@usav.org} (Reported bug where
-    `nearest_stations()` did not return stations in order of nearest to
-    farthest) [contributor]
+  \item Ross Darnell \email{Ross.Darnell@data61.csiro.au} (\href{https://orcid.org/0000-0002-7973-6322}{ORCID}) (Reported bug in 'Windows OS' versions causing 'GSOD' data untarring to fail) [contributor]
+  \item Tyler Widdison \email{Tyler.Widdison@usav.org} (Reported bug where `nearest_stations()` did not return stations in order of nearest to farthest) [contributor]
 }
 
 }

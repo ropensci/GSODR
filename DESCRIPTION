@@ -75,7 +75,7 @@ Suggests:
     roxygen2,
     testthat,
     tidyr
-RoxygenNote: 7.1.1.9001
+RoxygenNote: 7.1.2
 Encoding: UTF-8
 Language: en-US
 NeedsCompilation: no
