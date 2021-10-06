@@ -1,4 +1,12 @@
-# GSODR (development version)
+# GSODR 3.1.2.9000
+
+## Minor changes
+
+* Skip **ANY** and **ALL** tests on CRAN.
+
+* Update internal `isd-history` database.
+
+* Use `\CRANpkg{}` in place of `\pkg{}` in documentation.
 
 # GSODR 3.1.2
 
