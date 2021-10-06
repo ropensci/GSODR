@@ -18,8 +18,8 @@ as different machines with the same version of \CRANpkg{GSODR} can end up
 with different versions of the 'isd_history.csv' file internally.
 
 There is no need to use this unless you know that a station exists in the
-isd_history.csv file that is not available in \CRANpkg{GSODR's} self-
-contained database.
+isd_history.csv file that is not available in the self-contained
+database distributed with \CRANpkg{GSODR}.
 
 To directly access these data, use: \cr
 \code{load(system.file("extdata", "isd_history.rda", package = "GSODR"))}
