@@ -3,6 +3,7 @@
 ## Minor changes
 
 * Skip **ANY** and **ALL** tests on CRAN.
+This fixes the "problems" with _GSODR_ failing on a Solaris instance when the server failed to respond.
 
 * Update internal `isd-history` database.
 
