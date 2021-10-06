@@ -42,8 +42,8 @@
 #' @param country Optional.  Specify a country for which to retrieve weather
 #' data; full name, 2 or 3 letter \acronym{ISO} or 2 letter \acronym{FIPS} codes
 #' can be used.  All stations within the specified country will be returned.
-#' @param max_missing Optional.  The maximum number of days allowed to be missing
-#' from a station's data before it is excluded from final file output.
+#' @param max_missing Optional.  The maximum number of days allowed to be
+#' missing from a station's data before it is excluded from final file output.
 #' @param agroclimatology Optional.  Logical.  Only clean data for stations
 #' between latitudes 60 and -60 for agroclimatology work, defaults to `FALSE`.
 #' Set to `TRUE` to include only stations within the confines of these
