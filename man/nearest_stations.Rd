@@ -17,10 +17,10 @@ be returned.}
 \value{
 By default a class \code{\link[base]{character}}
  \code{\link[base]{vector}} object of station identification numbers.
- in order from nearest to farthest in increasing order.  If \code{return_full}
- is \code{TRUE}, a \code{\link[data.table]{data.table}} with full station
- metadata including the distance from the user specified coordinates is
- returned.
+ in order from nearest to farthest in increasing order.  If
+ \code{return_full} is \code{TRUE}, a \code{\link[data.table]{data.table}}
+ with full station metadata including the distance from the user specified
+ coordinates is returned.
 }
 \description{
 Given latitude and longitude values entered as decimal degrees (DD), this
