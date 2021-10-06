@@ -49,14 +49,14 @@
 #' Set to `TRUE` to include only stations within the confines of these
 #' latitudes.
 #'
-#' @note \pkg{GSODR} attempts to validate year and station combination requests,
+#' @note \CRANpkg{GSODR} attempts to validate year and station combination requests,
 #' however, in certain cases the start and end date may encompass years where
 #' no data is available.  In these cases no data will be returned.  It is
 #' suggested that the user check the latest data availability for the station(s)
 #' desired using \link{get_inventory} as this list is frequently updated by the
-#' \acronym{NCEI} and is not shipped with \pkg{GSODR}.
+#' \acronym{NCEI} and is not shipped with \CRANpkg{GSODR}.
 #'
-#' @note While \pkg{GSODR} does not distribute GSOD weather data, users of
+#' @note While \CRANpkg{GSODR} does not distribute GSOD weather data, users of
 #' the data should note the conditions that the U.S. \acronym{NCEI} places upon
 #' the \acronym{GSOD} data.
 #' \dQuote{The following data and products may have conditions placed on their

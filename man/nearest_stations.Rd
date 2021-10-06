@@ -30,7 +30,7 @@ stations as an argument in the \code{station} parameter of that function.
 }
 \note{
 The \acronym{GSOD} data, which are downloaded and manipulated by
-\pkg{GSODR} stipulate that the following notice should be given.
+\CRANpkg{GSODR} stipulate that the following notice should be given.
 \dQuote{The following data and products may have conditions placed on their
 international commercial use.  They can be used within the U.S. or for non-
 commercial international activities without restriction.  The non-U.S. data
