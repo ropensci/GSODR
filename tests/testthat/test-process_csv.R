@@ -1,6 +1,6 @@
 test_that(
   ".process_csv returns a data.table", {
-
+    skip_on_cran()
     # Check that .process_gz returns a properly formatted data.table -----------
     load(system.file("extdata", "isd_history.rda", package = "GSODR"))
     setkey(isd_history, "STNID")

@@ -49,11 +49,11 @@ files found in the \code{dsn} that you provide.  If there are non-
 \acronym{GSOD} files present this will lead to errors.
 
 For a complete list of the fields and description of the contents and units,
-please refer to Appendix 1 in the \pkg{GSODR} vignette,
+please refer to Appendix 1 in the \CRANpkg{GSODR} vignette,
 \code{vignette("GSODR", package = "GSODR")}.
 }
 \note{
-While \pkg{GSODR} does not distribute \acronym{GSOD} weather data,
+While \CRANpkg{GSODR} does not distribute \acronym{GSOD} weather data,
 users of the data should note the conditions that the U.S. \acronym{NCEI}
 places upon the \acronym{GSOD} data.
 \dQuote{The following data and products may have conditions placed on their
