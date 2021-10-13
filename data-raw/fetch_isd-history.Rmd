@@ -38,11 +38,11 @@ The following checks are performed on the raw data file before inclusion in _GSO
 
 ## Set up workspace
 
-```{r set_up_workspace, echo=TRUE, message=FALSE, output=FALSE, warning=FALSE}
-if (!require("pacman")) {
-  install.packages("pacman", repos = "https://cran.rstudio.com/")
-}
-pacman::p_load("sessioninfo", "skimr", "countrycode", "data.table")
+```{r load_libs, echo=TRUE, message=FALSE, output=FALSE, warning=FALSE}
+library("sessioninfo")
+library("skimr")
+library("countrycode")
+library("data.table")
 ```
 
 ## Download and clean data
@@ -123,7 +123,8 @@ setkeyv(new_isd_history, "STNID")[]
 ## Show changes from last release
 
 ```{r diff-codes}
-install.packages("GSODR") # ensure we aren't using a locally installed dev version
+# ensure we aren't using a locally installed dev version
+install.packages("GSODR", repos = "https://cloud.r-project.org/")
 load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 
 # select only the cols of interest

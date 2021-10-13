@@ -12,7 +12,7 @@
 #' be returned.
 #'
 #' @note The \acronym{GSOD} data, which are downloaded and manipulated by
-#' \pkg{GSODR} stipulate that the following notice should be given.
+#' \CRANpkg{GSODR} stipulate that the following notice should be given.
 #' \dQuote{The following data and products may have conditions placed on their
 #' international commercial use.  They can be used within the U.S. or for non-
 #' commercial international activities without restriction.  The non-U.S. data
@@ -27,10 +27,10 @@
 #'
 #' @return By default a class \code{\link[base]{character}}
 #'  \code{\link[base]{vector}} object of station identification numbers.
-#'  in order from nearest to farthest in increasing order.  If \code{return_full}
-#'  is \code{TRUE}, a \code{\link[data.table]{data.table}} with full station
-#'  metadata including the distance from the user specified coordinates is
-#'  returned.
+#'  in order from nearest to farthest in increasing order.  If
+#'  \code{return_full} is \code{TRUE}, a \code{\link[data.table]{data.table}}
+#'  with full station metadata including the distance from the user specified
+#'  coordinates is returned.
 #' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
 #' @export nearest_stations
 

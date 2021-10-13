@@ -8,7 +8,7 @@
 #' an information header displaying the last update time with a data frame of
 #' the inventory information for each station-year-month.
 #'
-#' @note While \pkg{GSODR} does not distribute GSOD weather data, users of
+#' @note While \CRANpkg{GSODR} does not distribute GSOD weather data, users of
 #' the data should note the conditions that the U.S. \acronym{NCEI} places upon
 #' the \acronym{GSOD} data.
 #' \dQuote{The following data and products may have conditions placed on their

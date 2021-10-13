@@ -39,5 +39,6 @@ test_that("get_inventory fetches the inventory doc and returns a data frame", {
 })
 
 test_that("inventory file is removed after download", {
+  skip_on_cran()
   expect_true(!file.exists(file.path(tempdir(), "inventory.txt")))
 })

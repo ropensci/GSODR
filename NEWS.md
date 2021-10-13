@@ -1,3 +1,16 @@
+# GSODR 3.1.4
+
+# GSODR 3.1.2.9000
+
+## Minor changes
+
+* Skip **ANY** and **ALL** tests on CRAN.
+This fixes the "problems" with _GSODR_ failing on a Solaris instance when the server failed to respond.
+
+* Update internal `isd-history` database.
+
+* Use `\CRANpkg{}` in place of `\pkg{}` in documentation.
+
 # GSODR 3.1.2
 
 ## Bug fixes
