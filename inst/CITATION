@@ -2,7 +2,7 @@ citHeader("To cite GSODR in publications, please use:")
 
 citEntry(
   entry = "Article",
-  author = personList(as.person("Adam H Sparks"),
+  author = personList(as.person("Adam H. Sparks"),
                       as.person("Tomislav Hengl"),
                       as.person("Andrew Nelson")),
   title = "{GSODR}: Global Summary Daily Weather Data in R",
@@ -14,7 +14,7 @@ citEntry(
   number = 10,
   journal = "The Journal of Open Source Software",
 
-  textVersion = paste("Adam H Sparks, Tomislav Hengl and Andrew Nelson (2017).",
+  textVersion = paste("Adam H. Sparks, Tomislav Hengl and Andrew Nelson (2017).",
         "GSODR: Global Summary Daily Weather Data in R.",
         "The Journal of Open Source Software, 2(10).",
         "DOI: 10.21105/joss.00177"),

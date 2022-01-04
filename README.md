@@ -99,7 +99,7 @@ For details, please consult: [WMO Resolution 40. NOAA Policy](https://community.
 
 - License: MIT
 
-- To cite _**GSODR**_, please use: Adam H Sparks, Tomislav Hengl and Andrew Nelson (2017). GSODR: Global Summary Daily Weather Data in R. _The Journal of Open Source Software_, **2(10)**. DOI: 10.21105/joss.00177.
+- To cite _**GSODR**_, please use: Adam H. Sparks, Tomislav Hengl and Andrew Nelson (2017). GSODR: Global Summary Daily Weather Data in R. _The Journal of Open Source Software_, **2(10)**. DOI: 10.21105/joss.00177.
 
 - Please note that the _**GSODR**_ project is released with a [Contributor Code of Conduct](https://github.com/ropensci/GSODR/blob/main/CONDUCT.md) By participating in the _**GSODR**_ project you agree to abide by its terms.
 
