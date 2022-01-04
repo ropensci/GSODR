@@ -1,5 +1,7 @@
 # GSODR (development version)
 
+* Update internal `isd-history` database.
+
 # GSODR 3.1.4
 
 ## Minor changes
