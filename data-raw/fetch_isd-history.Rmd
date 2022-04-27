@@ -20,19 +20,17 @@ old_hooks <- fansi::set_knit_hooks(knitr::knit_hooks,
 
 # Introduction
 
-The isd_history.csv file details GSOD station metadata.
-These data include the start and stop years used by _GSODR_ to pre-check requests before querying the server for download and the country code used by _GSODR_ when sub-setting for requests by country.
-The following checks are performed on the raw data file before inclusion in _GSODR_,
+The isd_history.csv file details GSOD station metadata. These data include the start and stop years used by *GSODR* to pre-check requests before querying the server for download and the country code used by *GSODR* when sub-setting for requests by country. The following checks are performed on the raw data file before inclusion in *GSODR*,
 
-  * Check for valid lon and lat values;
-    
-      * isd_history where latitude or longitude are `NA` or both 0 are removed leaving only properly georeferenced stations,
+-   Check for valid lon and lat values;
 
-      * isd_history where latitude is < -90˚ or > 90˚ are removed,
+    -   isd_history where latitude or longitude are `NA` or both 0 are removed leaving only properly georeferenced stations,
 
-      * isd_history where longitude is < -180˚ or > 180˚ are removed.
+    -   isd_history where latitude is < -90˚ or > 90˚ are removed,
 
-  * A new field, STNID, a concatenation of the USAF and WBAN fields, is added.
+    -   isd_history where longitude is < -180˚ or > 180˚ are removed.
+
+-   A new field, STNID, a concatenation of the USAF and WBAN fields, is added.
 
 # Data Processing
 
@@ -153,11 +151,10 @@ save(isd_diff,
 
 ## NOAA policy
 
-Users of these data should take into account the following (from the
-[NCEI website](https://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)): 
+Users of these data should take into account the following (from the [NCEI website](https://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):
 
 > The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification. A log of IP addresses accessing these data and products will be maintained and may be made available to data providers.  
-For details, please consult: [WMO Resolution 40. NOAA Policy](https://community.wmo.int/resolution-40)
+> For details, please consult: [WMO Resolution 40. NOAA Policy](https://community.wmo.int/resolution-40)
 
 ## R System Information
 
