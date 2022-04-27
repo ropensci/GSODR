@@ -23,6 +23,7 @@
            "\nThe year cannot be greater than current year.\n")
     }
   }
+  return(invisible(NULL))
 }
 
 
@@ -60,6 +61,7 @@
             END,
             ".\n")
   }
+  return(invisible(NULL))
 }
 
 
@@ -105,6 +107,7 @@
              "letter ISO country code\n")
       }
     }
+    return(invisible(NULL))
   }
 
 
