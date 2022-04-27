@@ -6,7 +6,7 @@
 #' @return None unless error in years being requested by users
 #' @noRd
 .validate_years <- function(years) {
-  if (class(years) == "character") {
+  if (inherits(years, what = "character")) {
     stop(call. = FALSE,
          "Years must be entered as a numeric value.")
   }
