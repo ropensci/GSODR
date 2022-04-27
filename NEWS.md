@@ -1,6 +1,12 @@
 # GSODR (development version)
 
+## Minor changes
+
 * Update internal `isd-history` database.
+
+* Use `return(invisible(NULL))` for functions that check user inputs without any returns.
+
+* Replace `class(years) == "character") with `inherits(years, what = "character")` in an internal function, `.validate_years()`.
 
 # GSODR 3.1.4
 
