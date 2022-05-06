@@ -107,7 +107,7 @@
              "letter ISO country code\n")
       }
     }
-    return(invisible(NULL))
+    return(country)
   }
 
 
