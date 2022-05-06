@@ -239,7 +239,7 @@ save(isd_diff,
 
 Users of these data should take into account the following (from the
 [NCEI
-website](https://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):
+website](https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516)):
 
 > The following data and products may have conditions placed on their
 > international commercial use. They can be used within the U.S. or for

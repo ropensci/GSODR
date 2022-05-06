@@ -36,7 +36,7 @@ File output is returned as a `data.table` object, summarising each year by stati
 Additional data are calculated by this R package using the original data and included in the final data.
 These include vapour pressure (ea and es) and relative humidity calculated using the improved August-Roche-Magnus approximation (Alduchov and Eskridge 1996).
 
-For more information see the description of the data provided by NCEI, <https://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
+For more information see the description of the data provided by NCEI, <https://www.ncei.noaa.gov/data/global-summary-of-the-day/doc/readme.txt>.
 
 ## How to Install
 
@@ -90,7 +90,7 @@ The user is required to have an Internet connection, and a current CliFlo subscr
 ### NOAA policy
 
 Users of these data should take into account the following (from the
-[NCEI website](https://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)): 
+[NCEI website](https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516)): 
 
 > The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification. A log of IP addresses accessing these data and products will be maintained and may be made available to data providers.  
 For details, please consult: [WMO Resolution 40. NOAA Policy](https://community.wmo.int/resolution-40)

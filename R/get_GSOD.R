@@ -27,7 +27,7 @@
 #' \code{vignette("GSODR", package = "GSODR")}.
 #'
 #' For more information see the description of the data provided by
-#' \acronym{NCEI}, \url{https://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
+#' \acronym{NCEI}, \url{https://www.ncei.noaa.gov/data/global-summary-of-the-day/doc/readme.txt}.
 #'
 #' @param years Year(s) of weather data to download.
 #' @param station Optional.  Specify a station or multiple stations for which to
