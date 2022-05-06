@@ -51,8 +51,7 @@ test_that("Station validations are properly handled for years available", {
 
 # Check missing days in non-leap years -----------------------------------------
 test_that("missing days check allows stations with permissible days missing,
-          non-leap year",
-          {
+          non-leap year", {
             skip_on_cran()
             max_missing <- 5
             td <- tempdir()
@@ -91,8 +90,7 @@ test_that("missing days check allows stations with permissible days missing,
 
 # Check missing days in leap years ---------------------------------------------
 test_that("missing days check allows stations with permissible days missing,
-          leap year",
-          {
+          leap year", {
             skip_on_cran()
             max_missing <- 5
             td <- tempdir()
@@ -162,8 +160,7 @@ test_that("Check validate country returns a two letter code", {
 
 # Check validate country returns an error on invalid entry----------------------
 test_that("Check validate country returns an error on invalid entry when
-          mispelled",
-          {
+          mispelled", {
             skip_on_cran()
             isd_history <- NULL
             load(system.file("extdata", "isd_history.rda", package = "GSODR"))
@@ -173,8 +170,7 @@ test_that("Check validate country returns an error on invalid entry when
 
 test_that(
   "Check validate country returns an error on invalid entry when two
-  two characters are used that are not in the list",
-  {
+  two characters are used that are not in the list", {
     skip_on_cran()
     isd_history <- NULL
     load(system.file("extdata", "isd_history.rda", package = "GSODR"))
@@ -185,8 +181,7 @@ test_that(
 
 test_that(
   "Check validate country returns an error on invalid entry when two
-  three characters are used that are not in the list",
-  {
+  three characters are used that are not in the list", {
     skip_on_cran()
     isd_history <- NULL
     load(system.file("extdata", "isd_history.rda", package = "GSODR"))
