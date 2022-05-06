@@ -1,9 +1,25 @@
 {
-  "@context": [
-    "https://raw.githubusercontent.com/mbjones/codemeta/master/codemeta.jsonld",
-    "http://schema.org"
-  ],
-  "@type": "Code",
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+  "@type": "SoftwareSourceCode",
+  "identifier": "GSODR",
+  "description": "Provides automated downloading, parsing, cleaning, unit conversion and formatting of Global Surface Summary of the Day ('GSOD') weather data from the from the USA National Centers for Environmental Information ('NCEI'). Units are converted from from United States Customary System ('USCS') units to International System of Units ('SI'). Stations may be individually checked for number of missing days defined by the user, where stations with too many missing observations are omitted. Only stations with valid reported latitude and longitude values are permitted in the final data. Additional useful elements, saturation vapour pressure ('es'), actual vapour pressure ('ea') and relative humidity ('RH') are calculated from the original data using the improved August-Roche-Magnus approximation (Alduchov & Eskridge 1996) and included in the final data set. The resulting metadata include station identification information, country, state, latitude, longitude, elevation, weather observations and associated flags. For information on the 'GSOD' data from 'NCEI', please see the 'GSOD' 'readme.txt' file available from, <https://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt>.",
+  "name": "GSODR: Global Surface Summary of the Day ('GSOD') Weather Data Client",
+  "codeRepository": "https://github.com/ropensci/GSODR",
+  "issueTracker": "https://github.com/ropensci/GSODR/issues",
+  "license": "https://spdx.org/licenses/MIT",
+  "version": "3.1.5",
+  "programmingLanguage": {
+    "@type": "ComputerLanguage",
+    "name": "R",
+    "url": "https://r-project.org"
+  },
+  "runtimePlatform": "R version 4.2.0 (2022-04-22)",
+  "provider": {
+    "@id": "https://cran.r-project.org",
+    "@type": "Organization",
+    "name": "Comprehensive R Archive Network (CRAN)",
+    "url": "https://cran.r-project.org"
+  },
   "author": [
     {
       "@type": "Person",
@@ -27,29 +43,55 @@
       "@id": "https://orcid.org/0000-0002-7249-3778"
     }
   ],
-  "identifier": "GSODR",
-  "codeRepository": "https://github.com/ropensci/GSODR",
-  "dateModified": "2017-01-21",
-  "dateCreated": "2017-01-21",
-  "description": "Provides automated downloading, parsing, cleaning, unit conversion and formatting of Global Surface Summary of the Day ('GSOD') weather data from the from the USA National Centers for Environmental Information ('NCEI'). Units are converted from from United States Customary System ('USCS') units to International System of Units ('SI'). Stations may be individually checked for number of missing days defined by the user, where stations with too many missing observations are omitted. Only stations with valid reported latitude and longitude values are permitted in the final data. Additional useful elements, saturation vapour pressure ('es'), actual vapour pressure ('ea') and relative humidity ('RH') are calculated from the original data using the improved August-Roche-Magnus approximation (Alduchov & Eskridge 1996) and included in the final data set. The resulting metadata include station identification information, country, state, latitude, longitude, elevation, weather observations and associated flags. For information on the 'GSOD' data from 'NCEI', please see the 'GSOD' 'readme.txt' file available from, <https://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt>.",
-  "keywords": ["US-NCEI", "meteorological-data", "global-weather", "weather", "weather-data", "meteorology", "station-data", "surface-weather", "data-access", "US-NCDC", "r", "gsod", "ncdc", "weather-stations", "global-data", "ncei", "weather-information", "historical-weather", "historical-data", "daily-data", "daily-weather", "rstats", "r-package"],
-  "license": "https://spdx.org/licenses/MIT",
-  "title": "GSODR",
-  "version": "3.1.4.9000",
-  "name": "GSODR: Global Surface Summary of the Day ('GSOD') Weather Data Client",
-  "issueTracker": "https://github.com/ropensci/GSODR/issues",
-  "programmingLanguage": {
-    "@type": "ComputerLanguage",
-    "name": "R",
-    "url": "https://r-project.org"
-  },
-  "runtimePlatform": "R version 4.1.2 (2021-11-01)",
-  "provider": {
-    "@id": "https://cran.r-project.org",
-    "@type": "Organization",
-    "name": "Central R Archive Network (CRAN)",
-    "url": "https://cran.r-project.org"
-  },
+  "contributor": [
+    {
+      "@type": "Person",
+      "givenName": "Hugh",
+      "familyName": "Parsonage",
+      "email": "hugh.parsonage@gmail.com",
+      "@id": "https://orcid.org/0000-0003-4055-0835"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Taras",
+      "familyName": "Kaduk",
+      "email": "taras.kaduk@gmail.com"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Gwenael",
+      "familyName": "Giboire",
+      "email": "gwenael.giboire@oda-groupe.com"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Łukasz",
+      "familyName": "Pawlik",
+      "email": "lukpawlik@gmail.com"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Ross",
+      "familyName": "Darnell",
+      "email": "Ross.Darnell@data61.csiro.au",
+      "@id": "https://orcid.org/0000-0002-7973-6322"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Tyler",
+      "familyName": "Widdison",
+      "email": "Tyler.Widdison@usav.org"
+    }
+  ],
+  "copyrightHolder": [
+    {
+      "@type": "Person",
+      "givenName": "Hugh",
+      "familyName": "Parsonage",
+      "email": "hugh.parsonage@gmail.com",
+      "@id": "https://orcid.org/0000-0003-4055-0835"
+    }
+  ],
   "maintainer": [
     {
       "@type": "Person",
@@ -205,14 +247,14 @@
       "sameAs": "https://CRAN.R-project.org/package=tidyr"
     }
   ],
-  "softwareRequirements": [
-    {
+  "softwareRequirements": {
+    "1": {
       "@type": "SoftwareApplication",
       "identifier": "R",
       "name": "R",
       "version": ">= 3.5.0"
     },
-    {
+    "2": {
       "@type": "SoftwareApplication",
       "identifier": "countrycode",
       "name": "countrycode",
@@ -224,7 +266,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=countrycode"
     },
-    {
+    "3": {
       "@type": "SoftwareApplication",
       "identifier": "curl",
       "name": "curl",
@@ -236,7 +278,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=curl"
     },
-    {
+    "4": {
       "@type": "SoftwareApplication",
       "identifier": "data.table",
       "name": "data.table",
@@ -248,7 +290,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=data.table"
     },
-    {
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "httr",
       "name": "httr",
@@ -260,7 +302,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=httr"
     },
-    {
+    "6": {
       "@type": "SoftwareApplication",
       "identifier": "R.utils",
       "name": "R.utils",
@@ -272,18 +314,22 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=R.utils"
     },
-    {
+    "7": {
       "@type": "SoftwareApplication",
       "identifier": "stats",
       "name": "stats"
     },
-    {
+    "8": {
       "@type": "SoftwareApplication",
       "identifier": "utils",
       "name": "utils"
-    }
-  ],
-  "contIntegration": ["https://github.com/ropensci/GSODR/actions", "https://codecov.io/gh/ropensci/GSODR"],
+    },
+    "SystemRequirements": null
+  },
+  "applicationCategory": "Tools",
+  "isPartOf": "https://ropensci.org",
+  "keywords": ["US-NCEI", "meteorological-data", "global-weather", "weather", "weather-data", "meteorology", "station-data", "surface-weather", "data-access", "US-NCDC", "r", "gsod", "ncdc", "weather-stations", "global-data", "ncei", "weather-information", "historical-weather", "historical-data", "daily-data", "daily-weather", "rstats", "r-package"],
+  "fileSize": "3787.29KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -321,63 +367,11 @@
       }
     }
   ],
-  "contributor": [
-    {
-      "@type": "Person",
-      "givenName": "Hugh",
-      "familyName": "Parsonage",
-      "email": "hugh.parsonage@gmail.com",
-      "@id": "https://orcid.org/0000-0003-4055-0835"
-    },
-    {
-      "@type": "Person",
-      "givenName": "Taras",
-      "familyName": "Kaduk",
-      "email": "taras.kaduk@gmail.com"
-    },
-    {
-      "@type": "Person",
-      "givenName": "Gwenael",
-      "familyName": "Giboire",
-      "email": "gwenael.giboire@oda-groupe.com"
-    },
-    {
-      "@type": "Person",
-      "givenName": "Łukasz",
-      "familyName": "Pawlik",
-      "email": "lukpawlik@gmail.com"
-    },
-    {
-      "@type": "Person",
-      "givenName": "Ross",
-      "familyName": "Darnell",
-      "email": "Ross.Darnell@data61.csiro.au",
-      "@id": "https://orcid.org/0000-0002-7973-6322"
-    },
-    {
-      "@type": "Person",
-      "givenName": "Tyler",
-      "familyName": "Widdison",
-      "email": "Tyler.Widdison@usav.org"
-    }
-  ],
-  "copyrightHolder": [
-    {
-      "@type": "Person",
-      "givenName": "Hugh",
-      "familyName": "Parsonage",
-      "email": "hugh.parsonage@gmail.com",
-      "@id": "https://orcid.org/0000-0003-4055-0835"
-    }
-  ],
-  "applicationCategory": "Tools",
-  "isPartOf": "https://ropensci.org",
   "relatedLink": ["https://docs.ropensci.org/GSODR/", "https://CRAN.R-project.org/package=GSODR"],
-  "developmentStatus": "https://www.repostatus.org/#active",
-  "funder": {},
-  "fileSize": "3785.37KB",
   "releaseNotes": "https://github.com/ropensci/GSODR/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/GSODR/blob/main/README.md",
+  "contIntegration": ["https://github.com/ropensci/GSODR/actions", "https://codecov.io/gh/ropensci/GSODR"],
+  "developmentStatus": "https://www.repostatus.org/#active",
   "review": {
     "@type": "Review",
     "url": "https://github.com/ropensci/software-review/issues/79",
