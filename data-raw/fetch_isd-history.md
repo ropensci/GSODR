@@ -1,7 +1,7 @@
 Fetch and Clean ‘isd_history.csv’ File
 ================
 Adam H. Sparks
-2022-04-27
+2022-05-06
 
 <STYLE type='text/css' scoped>
 PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
@@ -9,7 +9,7 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 
 # Introduction
 
-The isd_history.csv file details GSOD station metadata. These data
+The “isd_history.csv” file details GSOD station metadata. These data
 include the start and stop years used by *GSODR* to pre-check requests
 before querying the server for download and the country code used by
 *GSODR* when sub-setting for requests by country. The following checks
@@ -113,30 +113,33 @@ new_isd_history[, COUNTRY_NAME := toupper(COUNTRY_NAME)]
 setkeyv(new_isd_history, "STNID")[]
 ```
 
-    ##               STNID                         NAME    LAT      LON CTRY STATE
-    ##     1: 008268-99999                    WXPOD8278 32.950   65.567   AF      
-    ##     2: 010010-99999          JAN MAYEN(NOR-NAVY) 70.933   -8.667   NO      
-    ##     3: 010014-99999                   SORSTOKKEN 59.792    5.341   NO      
-    ##     4: 010015-99999                   BRINGELAND 61.383    5.867   NO      
-    ##     5: 010016-99999                  RORVIK/RYUM 64.850   11.233   NO      
-    ##    ---                                                                     
-    ## 26581: A00024-53848 CHOCTAW NAVAL OUTLYING FIELD 30.512  -86.954   US    FL
-    ## 26582: A00026-94297              COUPEVILLE/NOLF 48.217 -122.633   US    WA
-    ## 26583: A00029-63820      EVERETT-STEWART AIRPORT 36.380  -88.985   US    TN
-    ## 26584: A00030-93795        CONNELLSVILLE AIRPORT 39.959  -79.657   US    PA
-    ## 26585: A00032-25715                 ATKA AIRPORT 52.220 -174.206   US    AK
-    ##           BEGIN      END  COUNTRY_NAME ISO2C ISO3C
-    ##     1: 20100519 20120323   AFGHANISTAN    AF   AFG
-    ##     2: 19310101 20220406        NORWAY    NO   NOR
-    ##     3: 19861120 20220413        NORWAY    NO   NOR
-    ##     4: 19870117 20081231        NORWAY    NO   NOR
-    ##     5: 19870116 19910806        NORWAY    NO   NOR
-    ##    ---                                            
-    ## 26581: 20070601 20220408 UNITED STATES    US   USA
-    ## 26582: 20060324 20150514 UNITED STATES    US   USA
-    ## 26583: 20130627 20220401 UNITED STATES    US   USA
-    ## 26584: 20210309 20220417 UNITED STATES    US   USA
-    ## 26585: 20060101 20220417 UNITED STATES    US   USA
+    ## Key: <STNID>
+    ##               STNID                         NAME    LAT      LON   CTRY  STATE
+    ##              <char>                       <char>  <num>    <num> <char> <char>
+    ##     1: 008268-99999                    WXPOD8278 32.950   65.567     AF       
+    ##     2: 010010-99999          JAN MAYEN(NOR-NAVY) 70.933   -8.667     NO       
+    ##     3: 010014-99999                   SORSTOKKEN 59.792    5.341     NO       
+    ##     4: 010015-99999                   BRINGELAND 61.383    5.867     NO       
+    ##     5: 010016-99999                  RORVIK/RYUM 64.850   11.233     NO       
+    ##    ---                                                                        
+    ## 26581: A00024-53848 CHOCTAW NAVAL OUTLYING FIELD 30.512  -86.954     US     FL
+    ## 26582: A00026-94297              COUPEVILLE/NOLF 48.217 -122.633     US     WA
+    ## 26583: A00029-63820      EVERETT-STEWART AIRPORT 36.380  -88.985     US     TN
+    ## 26584: A00030-93795        CONNELLSVILLE AIRPORT 39.959  -79.657     US     PA
+    ## 26585: A00032-25715                 ATKA AIRPORT 52.220 -174.206     US     AK
+    ##           BEGIN      END  COUNTRY_NAME  ISO2C  ISO3C
+    ##           <int>    <int>        <char> <char> <char>
+    ##     1: 20100519 20120323   AFGHANISTAN     AF    AFG
+    ##     2: 19310101 20220406        NORWAY     NO    NOR
+    ##     3: 19861120 20220503        NORWAY     NO    NOR
+    ##     4: 19870117 20081231        NORWAY     NO    NOR
+    ##     5: 19870116 19910806        NORWAY     NO    NOR
+    ##    ---                                              
+    ## 26581: 20070601 20220408 UNITED STATES     US    USA
+    ## 26582: 20060324 20150514 UNITED STATES     US    USA
+    ## 26583: 20130627 20220401 UNITED STATES     US    USA
+    ## 26584: 20210309 20220419 UNITED STATES     US    USA
+    ## 26585: 20060101 20220504 UNITED STATES     US    USA
 
 ## Show changes from last release
 
@@ -147,7 +150,7 @@ install.packages("GSODR", repos = "https://cloud.r-project.org/")
 
     ## 
     ## The downloaded binary packages are in
-    ##  /var/folders/hc/tft3s5bn48gb81cs99mycyf00000gn/T//RtmpUQqY7T/downloaded_packages
+    ##  /var/folders/hc/tft3s5bn48gb81cs99mycyf00000gn/T//Rtmpo2Nu8R/downloaded_packages
 
 ``` r
 load(system.file("extdata", "isd_history.rda", package = "GSODR"))
@@ -159,46 +162,43 @@ new_isd_history <- new_isd_history[, ..x]
 (isd_diff <- diffobj::diffPrint(new_isd_history, isd_history))
 ```
 
-<PRE class="fansi fansi-output"><CODE>## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>new_isd_history</span>                                                            
-## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>isd_history</span>                                                                
-## <span style='color: #00BBBB;'>@@ 1,3 / 1,3 @@                                                              </span>
-## <span style='color: #BBBB00;'>&lt;</span>               STNID                         NAME    LAT      LON CTRY <span style='color: #BBBB00;'>STATE</span>
-## <span style='color: #0000BB;'>&gt;</span>               STNID                            NAME    LAT      LON CTRY   
-##       1: 008268-99999                    WXPOD8278 32.950   65.567   AF      
-##       2: 010010-99999          JAN MAYEN(NOR-NAVY) 70.933   -8.667   NO      
-## <span style='color: #00BBBB;'>@@ 6,19 / 6,19 @@                                                            </span>
-##       5: 010016-99999                  RORVIK/RYUM 64.850   11.233   NO      
-##      ---                                                                     
-## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26527:</span> <span style='color: #0000BB;'>A00023-63890</span> <span style='color: #0000BB;'>WHITEHOUSE</span> <span style='color: #0000BB;'>NAVAL</span> <span style='color: #0000BB;'>OUTLYING</span> <span style='color: #0000BB;'>FIELD</span> <span style='color: #0000BB;'>30.350</span>  <span style='color: #0000BB;'>-81.883</span>   <span style='color: #0000BB;'>US</span>   
-## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26581:</span> A00024-53848 CHOCTAW NAVAL OUTLYING FIELD <span style='color: #BBBB00;'>30.512</span>  <span style='color: #BBBB00;'>-86.954</span>   US    <span style='color: #BBBB00;'>FL</span>
-## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26528:</span> A00024-53848    CHOCTAW NAVAL OUTLYING FIELD <span style='color: #0000BB;'>30.507</span>  <span style='color: #0000BB;'>-86.960</span>   US   
-## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26582:</span> A00026-94297              COUPEVILLE/NOLF 48.217 -122.633   US    <span style='color: #BBBB00;'>WA</span>
-## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26529:</span> A00026-94297                 COUPEVILLE/NOLF 48.217 -122.633   US   
-## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26583:</span> A00029-63820      EVERETT-STEWART AIRPORT 36.380  -88.985   <span style='color: #BBBB00;'>US</span>    <span style='color: #BBBB00;'>TN</span>
-## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26584:</span> <span style='color: #BBBB00;'>A00030-93795</span>        <span style='color: #BBBB00;'>CONNELLSVILLE</span> <span style='color: #BBBB00;'>AIRPORT</span> <span style='color: #BBBB00;'>39.959</span>  <span style='color: #BBBB00;'>-79.657</span>   US    <span style='color: #BBBB00;'>PA</span>
-## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26530:</span> A00029-63820         EVERETT-STEWART AIRPORT 36.380  -88.985   US   
-## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26585:</span> A00032-25715                 ATKA AIRPORT 52.220 -174.206   US    <span style='color: #BBBB00;'>AK</span>
-## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26531:</span> A00032-25715                    ATKA AIRPORT 52.220 -174.206   US   
-## <span style='color: #BBBB00;'>&lt;</span>           BEGIN      END  COUNTRY_NAME ISO2C ISO3C                         
-## <span style='color: #0000BB;'>&gt;</span>        <span style='color: #0000BB;'>STATE</span>    BEGIN      END  COUNTRY_NAME ISO2C ISO3C                   
-##       1: 20100519 20120323   AFGHANISTAN    AF   AFG                         
-## <span style='color: #BBBB00;'>&lt;</span>     2: 19310101 <span style='color: #BBBB00;'>20220406</span>        NORWAY    NO   NOR                         
-## <span style='color: #0000BB;'>&gt;</span>     2:       19310101 <span style='color: #0000BB;'>20210116</span>        NORWAY    NO   NOR                   
-## <span style='color: #BBBB00;'>&lt;</span>     3: 19861120 <span style='color: #BBBB00;'>20220413</span>        NORWAY    NO   NOR                         
-## <span style='color: #0000BB;'>&gt;</span>     3:       19861120 <span style='color: #0000BB;'>20210116</span>        NORWAY    NO   NOR                   
-##       4: 19870117 20081231        NORWAY    NO   NOR                         
-##       5: 19870116 19910806        NORWAY    NO   NOR                         
-##      ---                                                                     
-## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26581:</span> 20070601 <span style='color: #BBBB00;'>20220408</span> UNITED STATES    US   USA                         
-## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26527:</span>    <span style='color: #0000BB;'>FL</span> 20070601 <span style='color: #0000BB;'>20210116</span> UNITED STATES    US   USA                   
-## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26582:</span> <span style='color: #BBBB00;'>20060324</span> <span style='color: #BBBB00;'>20150514</span> UNITED STATES    US   USA                         
-## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26528:</span>    <span style='color: #0000BB;'>FL</span> <span style='color: #0000BB;'>20070601</span> <span style='color: #0000BB;'>20210116</span> UNITED STATES    US   USA                   
-## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26583:</span> <span style='color: #BBBB00;'>20130627</span> <span style='color: #BBBB00;'>20220401</span> UNITED STATES    US   USA                         
-## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26529:</span>    <span style='color: #0000BB;'>WA</span> <span style='color: #0000BB;'>20060324</span> <span style='color: #0000BB;'>20150514</span> UNITED STATES    US   USA                   
-## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26584:</span> <span style='color: #BBBB00;'>20210309</span> <span style='color: #BBBB00;'>20220417</span> UNITED STATES    US   USA                         
-## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26530:</span>    <span style='color: #0000BB;'>TN</span> <span style='color: #0000BB;'>20130627</span> <span style='color: #0000BB;'>20210117</span> UNITED STATES    US   USA                   
-## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26585:</span> 20060101 <span style='color: #BBBB00;'>20220417</span> UNITED STATES    US   USA                         
-## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26531:</span>    <span style='color: #0000BB;'>AK</span> 20060101 <span style='color: #0000BB;'>20210117</span> UNITED STATES    US   USA
+<PRE class="fansi fansi-output"><CODE>## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>new_isd_history</span>                                                           
+## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>isd_history</span>                                                               
+## <span style='color: #00BBBB;'>@@ 8,20 / 8,20 @@                                                           </span>
+## <span style='color: #555555;'>~               STNID                         NAME    LAT      LON   CTRY   </span>
+## <span style='color: #555555;'>~              &lt;char&gt;                       &lt;char&gt;  &lt;num&gt;    &lt;num&gt; &lt;char&gt;   </span>
+##       5: 010016-99999                  RORVIK/RYUM 64.850   11.233     NO   
+##      ---                                                                    
+## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26527:</span> <span style='color: #0000BB;'>A00023-63890</span> <span style='color: #0000BB;'>WHITEHOUSE</span> <span style='color: #0000BB;'>NAVAL</span> <span style='color: #0000BB;'>OUTLYING</span> <span style='color: #0000BB;'>FIELD</span> <span style='color: #0000BB;'>30.350</span>  <span style='color: #0000BB;'>-81.883</span>     <span style='color: #0000BB;'>US</span>
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26581:</span> A00024-53848 CHOCTAW NAVAL OUTLYING FIELD <span style='color: #BBBB00;'>30.512</span>  <span style='color: #BBBB00;'>-86.954</span>     US   
+## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26528:</span> A00024-53848    CHOCTAW NAVAL OUTLYING FIELD <span style='color: #0000BB;'>30.507</span>  <span style='color: #0000BB;'>-86.960</span>     US
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26582:</span> A00026-94297              COUPEVILLE/NOLF 48.217 -122.633     US   
+## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26529:</span> A00026-94297                 COUPEVILLE/NOLF 48.217 -122.633     US
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26583:</span> A00029-63820      EVERETT-STEWART AIRPORT 36.380  -88.985     US   
+## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26530:</span> A00029-63820         EVERETT-STEWART AIRPORT 36.380  -88.985     US
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26584:</span> <span style='color: #BBBB00;'>A00030-93795</span>        <span style='color: #BBBB00;'>CONNELLSVILLE</span> <span style='color: #BBBB00;'>AIRPORT</span> <span style='color: #BBBB00;'>39.959</span>  <span style='color: #BBBB00;'>-79.657</span>     <span style='color: #BBBB00;'>US</span>   
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26585:</span> A00032-25715                 ATKA AIRPORT 52.220 -174.206     US   
+## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26531:</span> A00032-25715                    ATKA AIRPORT 52.220 -174.206     US
+##           STATE    BEGIN      END  COUNTRY_NAME  ISO2C  ISO3C               
+##          &lt;char&gt;    &lt;int&gt;    &lt;int&gt;        &lt;char&gt; &lt;char&gt; &lt;char&gt;               
+##       1:        20100519 20120323   AFGHANISTAN     AF    AFG               
+## <span style='color: #BBBB00;'>&lt;</span>     2:        19310101 <span style='color: #BBBB00;'>20220406</span>        NORWAY     NO    NOR               
+## <span style='color: #0000BB;'>&gt;</span>     2:        19310101 <span style='color: #0000BB;'>20210116</span>        NORWAY     NO    NOR               
+## <span style='color: #BBBB00;'>&lt;</span>     3:        19861120 <span style='color: #BBBB00;'>20220503</span>        NORWAY     NO    NOR               
+## <span style='color: #0000BB;'>&gt;</span>     3:        19861120 <span style='color: #0000BB;'>20210116</span>        NORWAY     NO    NOR               
+##       4:        19870117 20081231        NORWAY     NO    NOR               
+##       5:        19870116 19910806        NORWAY     NO    NOR               
+##      ---                                                                    
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26581:</span>     FL 20070601 <span style='color: #BBBB00;'>20220408</span> UNITED STATES     US    USA               
+## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26527:</span>     FL 20070601 <span style='color: #0000BB;'>20210116</span> UNITED STATES     US    USA               
+## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26528:</span>     <span style='color: #0000BB;'>FL</span> <span style='color: #0000BB;'>20070601</span> <span style='color: #0000BB;'>20210116</span> <span style='color: #0000BB;'>UNITED</span> <span style='color: #0000BB;'>STATES</span>     <span style='color: #0000BB;'>US</span>    <span style='color: #0000BB;'>USA</span>               
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26582:</span>     WA 20060324 20150514 UNITED STATES     US    USA               
+## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26529:</span>     WA 20060324 20150514 UNITED STATES     US    USA               
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26583:</span>     TN 20130627 <span style='color: #BBBB00;'>20220401</span> <span style='color: #BBBB00;'>UNITED</span> <span style='color: #BBBB00;'>STATES</span>     <span style='color: #BBBB00;'>US</span>    <span style='color: #BBBB00;'>USA</span>               
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26584:</span>     <span style='color: #BBBB00;'>PA</span> <span style='color: #BBBB00;'>20210309</span> <span style='color: #BBBB00;'>20220419</span> UNITED STATES     US    USA               
+## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26530:</span>     TN 20130627 <span style='color: #0000BB;'>20210117</span> UNITED STATES     US    USA               
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26585:</span>     AK 20060101 <span style='color: #BBBB00;'>20220504</span> UNITED STATES     US    USA               
+## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26531:</span>     AK 20060101 <span style='color: #0000BB;'>20210117</span> UNITED STATES     US    USA
 </CODE></PRE>
 
 ## View and save the data
@@ -263,7 +263,7 @@ website](https://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryab
 ##  collate  en_AU.UTF-8
 ##  ctype    en_AU.UTF-8
 ##  tz       Australia/Perth
-##  date     2022-04-27
+##  date     2022-05-06
 ##  pandoc   2.17.1.1 @ /Applications/RStudio.app/Contents/MacOS/quarto/bin/ (via rmarkdown)
 ## 
 ## <span style='color: #00BBBB; font-weight: bold;'>─ Packages ───────────────────────────────────────────────────────────────────</span>
@@ -272,15 +272,15 @@ website](https://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryab
 ##  assertthat    0.2.1   <span style='color: #555555;'>2019-03-21</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
 ##  base64enc     0.1-3   <span style='color: #555555;'>2015-07-28</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
 ##  cli           3.3.0   <span style='color: #555555;'>2022-04-25</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  countrycode * 1.3.1   <span style='color: #555555;'>2022-02-02</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
+##  countrycode * 1.4.0   <span style='color: #555555;'>2022-05-04</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
 ##  crayon        1.5.1   <span style='color: #555555;'>2022-03-26</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
 ##  credentials   1.3.2   <span style='color: #555555;'>2021-11-29</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
 ##  curl          4.3.2   <span style='color: #555555;'>2021-06-23</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  data.table  * 1.14.2  <span style='color: #555555;'>2021-09-27</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
+##  data.table  * 1.14.3  <span style='color: #555555;'>2022-05-02</span> <span style='color: #555555;'>[1]</span> <span style='color: #BB00BB; font-weight: bold;'>local</span>
 ##  DBI           1.1.2   <span style='color: #555555;'>2021-12-20</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
 ##  diffobj       0.3.5   <span style='color: #555555;'>2021-10-05</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
 ##  digest        0.6.29  <span style='color: #555555;'>2021-12-01</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  dplyr         1.0.8   <span style='color: #555555;'>2022-02-08</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
+##  dplyr         1.0.9   <span style='color: #555555;'>2022-04-28</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
 ##  ellipsis      0.3.2   <span style='color: #555555;'>2021-04-29</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
 ##  evaluate      0.15    <span style='color: #555555;'>2022-02-18</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
 ##  fansi         1.0.3   <span style='color: #555555;'>2022-03-24</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
@@ -289,7 +289,7 @@ website](https://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryab
 ##  glue          1.6.2   <span style='color: #555555;'>2022-02-24</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
 ##  htmltools     0.5.2   <span style='color: #555555;'>2021-08-25</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
 ##  jsonlite      1.8.0   <span style='color: #555555;'>2022-02-22</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  knitr         1.38    <span style='color: #555555;'>2022-03-25</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
+##  knitr         1.39    <span style='color: #555555;'>2022-04-26</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
 ##  lifecycle     1.0.1   <span style='color: #555555;'>2021-09-24</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
 ##  magrittr      2.0.3   <span style='color: #555555;'>2022-03-30</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
 ##  openssl       2.0.0   <span style='color: #555555;'>2022-03-02</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
@@ -306,7 +306,7 @@ website](https://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryab
 ##  stringi       1.7.6   <span style='color: #555555;'>2021-11-29</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
 ##  stringr       1.4.0   <span style='color: #555555;'>2019-02-10</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
 ##  sys           3.4     <span style='color: #555555;'>2020-07-23</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  tibble        3.1.6   <span style='color: #555555;'>2021-11-07</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
+##  tibble        3.1.7   <span style='color: #555555;'>2022-05-03</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
 ##  tidyselect    1.1.2   <span style='color: #555555;'>2022-02-21</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
 ##  utf8          1.2.2   <span style='color: #555555;'>2021-07-24</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
 ##  vctrs         0.4.1   <span style='color: #555555;'>2022-04-13</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
