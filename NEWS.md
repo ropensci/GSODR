@@ -14,6 +14,8 @@ editor_options:
 
 -   Replace `class(years) == "character")` with `inherits(years, what = "character")` in an internal function, `.validate_years()`.
 
+-   Updates invalid URLs.
+
 # GSODR 3.1.4
 
 ## Minor changes
