@@ -11,7 +11,6 @@ appveyor.yml
 ^data-raw$
 ^README\.Rmd$
 ^README-.*\.png$
-^CONDUCT\.md$
 ^paper$
 vignettes/figure
 ^codecov\.yml$
@@ -24,3 +23,4 @@ vignettes/figure
 ^Meta$
 ^\.ccache$
 ^tic\.R$
+^CODE_OF_CONDUCT\.md$
