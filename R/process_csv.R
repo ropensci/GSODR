@@ -103,8 +103,8 @@
   DT[, MONTH := as.integer(substr(DATE, 6, 7))]
   DT[, DAY := as.integer(substr(DATE, 9, 10))]
   DT[, YDAY := as.integer(strftime(as.Date(DATE), format = "%j"))]
-  
-  # Convert *_ATTRIBUTES cols to integer ---------------------------------------
+
+    # Convert *_ATTRIBUTES cols to integer ---------------------------------------
   for (col in names(DT)[names(DT) %in% c("TEMP_ATTRIBUTES",
                                          "DEWP_ATTRIBUTES",
                                          "SLP_ATTRIBUTES",
@@ -113,7 +113,7 @@
                                          "WDSP_ATTRIBUTES")]) {
     set(DT, j = col, value = as.integer(DT[[col]]))
   }
-  
+
   # Drop unnecessary columns ---------------------------------------------------
   DT[, c("DATE", "STATION") := NULL]
 

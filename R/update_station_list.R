@@ -85,16 +85,16 @@ update_station_list <- function() {
     isd_history[isd_history == -999.9] <- NA
     isd_history <-
       isd_history[!is.na(isd_history$LAT) &
-                        !is.na(isd_history$LON),]
+                        !is.na(isd_history$LON), ]
     isd_history <-
       isd_history[isd_history$LAT != 0 &
-                        isd_history$LON != 0,]
+                        isd_history$LON != 0, ]
     isd_history <-
       isd_history[isd_history$LAT > -90 &
-                        isd_history$LAT < 90,]
+                        isd_history$LAT < 90, ]
     isd_history <-
       isd_history[isd_history$LON > -180 &
-                        isd_history$LON < 180,]
+                        isd_history$LON < 180, ]
 
     # set colnames to upper case
     names(isd_history) <- toupper(names(isd_history))

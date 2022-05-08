@@ -3,7 +3,7 @@
 <!-- badges: start -->
 
 [![tic](https://github.com/ropensci/GSODR/workflows/tic/badge.svg?branch=main)](https://github.com/ropensci/GSODR/actions)
-[![codecov](https://codecov.io/gh/ropensci/GSODR/branch/main/graph/badge.svg)](https://codecov.io/gh/ropensci/GSODR)
+[![codecov](https://app.codecov.io/gh/ropensci/GSODR/branch/main/graph/badge.svg)](https://app.codecov.io/gh/ropensci/GSODR)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.439850.svg)](https://doi.org/10.5281/zenodo.439850) 
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/GSODR)](https://cran.r-project.org/package=GSODR)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) 
@@ -36,7 +36,7 @@ File output is returned as a `data.table` object, summarising each year by stati
 Additional data are calculated by this R package using the original data and included in the final data.
 These include vapour pressure (ea and es) and relative humidity calculated using the improved August-Roche-Magnus approximation (Alduchov and Eskridge 1996).
 
-For more information see the description of the data provided by NCEI, <https://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
+For more information see the description of the data provided by NCEI, <https://www.ncei.noaa.gov/data/global-summary-of-the-day/doc/readme.txt>.
 
 ## How to Install
 
@@ -89,11 +89,12 @@ The user is required to have an Internet connection, and a current CliFlo subscr
 
 ### NOAA policy
 
-Users of these data should take into account the following (from the
-[NCEI website](https://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)): 
+Users of these data should take into account the following:
 
-> The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification. A log of IP addresses accessing these data and products will be maintained and may be made available to data providers.  
-For details, please consult: [WMO Resolution 40. NOAA Policy](https://community.wmo.int/resolution-40)
+> The data summaries provided here are based on data exchanged under the World Meteorological Organization (WMO) World Weather Watch Program according to WMO Resolution 40 (Cg-XII). This allows WMO member countries to place restrictions on the use or re-export of their data for commercial purposes outside of the receiving country.
+Data for selected countries may, at times, not be available through this system.
+Those countries' data summaries and products which are available here are intended for free and unrestricted use in research, education, and other non-commercial activities.
+However, for non-U.S. locations' data, the data or any derived product shall not be provided to other users or be used for the re-export of commercial services.
 
 ## Meta
 
@@ -103,7 +104,9 @@ For details, please consult: [WMO Resolution 40. NOAA Policy](https://community.
 
 - To cite _**GSODR**_, please use: Adam H. Sparks, Tomislav Hengl and Andrew Nelson (2017). GSODR: Global Summary Daily Weather Data in R. _The Journal of Open Source Software_, **2(10)**. DOI: 10.21105/joss.00177.
 
-- Please note that the _**GSODR**_ project is released with a [Contributor Code of Conduct](https://github.com/ropensci/GSODR/blob/main/CONDUCT.md) By participating in the _**GSODR**_ project you agree to abide by its terms.
+## Code of Conduct
+  
+Please note that the GSODR project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
 
 ## References
 

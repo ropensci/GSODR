@@ -65,7 +65,7 @@ please refer to Appendix 1 in the \CRANpkg{GSODR} vignette,
 \code{vignette("GSODR", package = "GSODR")}.
 
 For more information see the description of the data provided by
-\acronym{NCEI}, \url{https://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
+\acronym{NCEI}, \url{https://www.ncei.noaa.gov/data/global-summary-of-the-day/doc/readme.txt}.
 }
 \note{
 \CRANpkg{GSODR} attempts to validate year and station combination
