@@ -1,10 +1,18 @@
-# GSODR (development version)
-
 ---
 editor_options: 
   markdown: 
     wrap: sentence
 ---
+
+# GSODR (development version)
+
+## Minor changes
+
+-   Redoc package to correct HTML issues.
+
+-   Update internal `isd-history` database.
+
+-   
 
 # GSODR 3.1.5
 
