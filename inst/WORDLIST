@@ -3,7 +3,6 @@ Agroclimatology
 Alduchov
 Bigouette
 CCI
-CDO
 CGIAR
 CHELSA
 CRAN's
@@ -13,7 +12,6 @@ CSIRO
 CTRY
 CliFlo
 DATSAV
-DESC
 DEWP
 DOI
 DataBrew
@@ -49,6 +47,7 @@ PRCP
 README
 Rda
 Rds
+Redoc
 Reefton
 Repatch
 Rmd
