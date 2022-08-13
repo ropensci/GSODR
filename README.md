@@ -1,4 +1,4 @@
-# _GSODR_ <img src="man/figures/logo.png" align="right" />
+# _GSODR_ <img src="man/figures/logo.png" style="float:right" />
 
 <!-- badges: start -->
 
