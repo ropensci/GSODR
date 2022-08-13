@@ -7,13 +7,13 @@
   "codeRepository": "https://github.com/ropensci/GSODR",
   "issueTracker": "https://github.com/ropensci/GSODR/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "3.1.5",
+  "version": "3.1.6",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.2.0 (2022-04-22)",
+  "runtimePlatform": "R version 4.2.1 (2022-06-23)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -329,7 +329,7 @@
   "applicationCategory": "Tools",
   "isPartOf": "https://ropensci.org",
   "keywords": ["US-NCEI", "meteorological-data", "global-weather", "weather", "weather-data", "meteorology", "station-data", "surface-weather", "data-access", "US-NCDC", "r", "gsod", "ncdc", "weather-stations", "global-data", "ncei", "weather-information", "historical-weather", "historical-data", "daily-data", "daily-weather", "rstats", "r-package"],
-  "fileSize": "3788.928KB",
+  "fileSize": "3791.35KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",

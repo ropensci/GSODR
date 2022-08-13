@@ -1,27 +1,24 @@
 # Platform
 
-|field    |value                        |
-|:--------|:----------------------------|
-|version  |R version 4.1.0 (2021-05-18) |
-|os       |macOS Big Sur 11.6           |
-|system   |x86_64, darwin17.0           |
-|ui       |RStudio                      |
-|language |(EN)                         |
-|collate  |en_AU.UTF-8                  |
-|ctype    |en_AU.UTF-8                  |
-|tz       |Australia/Perth              |
-|date     |2021-10-06                   |
+|field    |value                                     |
+|:--------|:-----------------------------------------|
+|version  |R version 4.2.1 (2022-06-23)              |
+|os       |macOS Monterey 12.5                       |
+|system   |aarch64, darwin20                         |
+|ui       |RStudio                                   |
+|language |(EN)                                      |
+|collate  |en_AU.UTF-8                               |
+|ctype    |en_AU.UTF-8                               |
+|tz       |Australia/Perth                           |
+|date     |2022-08-13                                |
+|rstudio  |2022.07.1+554 Spotted Wakerobin (desktop) |
+|pandoc   |2.19 @ /opt/homebrew/bin/ (via rmarkdown) |
 
 # Dependencies
 
-|package     |old   |new        |Δ  |
-|:-----------|:-----|:----------|:--|
-|GSODR       |3.1.2 |3.1.2.9000 |*  |
-|countrycode |1.3.0 |1.3.0      |   |
-|data.table  |NA    |1.14.2     |*  |
-|mime        |NA    |0.12       |*  |
-|openssl     |NA    |1.4.5      |*  |
-|R.utils     |NA    |2.11.0     |*  |
+|package |old   |new   |Δ  |
+|:-------|:-----|:-----|:--|
+|GSODR   |3.1.5 |3.1.6 |*  |
 
 # Revdeps
 

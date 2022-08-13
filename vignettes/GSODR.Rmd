@@ -55,32 +55,32 @@ Oz
 
 ```
 ## Key: <STNID>
-##              STNID                         NAME     LAT     LON   CTRY  STATE    BEGIN      END
-##             <char>                       <char>   <num>   <num> <char> <char>    <int>    <int>
-##    1: 695023-99999          HORN ISLAND   (HID) -10.583 142.300     AS        19420804 20030816
-##    2: 749430-99999           AIDELAIDE RIVER SE -13.300 131.133     AS        19430228 19440821
-##    3: 749432-99999    BATCHELOR FIELD AUSTRALIA -13.049 131.066     AS        19421231 19430610
-##    4: 749438-99999         IRON RANGE AUSTRALIA -12.700 143.300     AS        19420917 19440930
-##    5: 749439-99999     MAREEBA AS/HOEVETT FIELD -17.050 145.400     AS        19420630 19440630
-##   ---                                                                                          
-## 1044: 959890-99999      BICHENO (COUNCIL DEPOT) -41.867 148.300     AS        19650101 20210115
-## 1045: 959950-99999 LORD HOWE ISLAND WINDY POINT -31.533 159.067     AS        20120920 20210116
-## 1046: 959970-99999    HEARD ISLAND (ATLAS COVE) -53.017  73.400     AS        19980301 20121220
-## 1047: 996600-99999          ENVIRONM BUOY 55011 -40.800 144.300     AS        19930221 19970403
-## 1048: 999999-82101               NORTHWEST CAPE -22.333 114.050     AS        19680305 19680430
-##       COUNTRY_NAME  ISO2C  ISO3C
-##             <char> <char> <char>
-##    1:    AUSTRALIA     AU    AUS
-##    2:    AUSTRALIA     AU    AUS
-##    3:    AUSTRALIA     AU    AUS
-##    4:    AUSTRALIA     AU    AUS
-##    5:    AUSTRALIA     AU    AUS
-##   ---                           
-## 1044:    AUSTRALIA     AU    AUS
-## 1045:    AUSTRALIA     AU    AUS
-## 1046:    AUSTRALIA     AU    AUS
-## 1047:    AUSTRALIA     AU    AUS
-## 1048:    AUSTRALIA     AU    AUS
+##              STNID                         NAME     LAT     LON   CTRY
+##             <char>                       <char>   <num>   <num> <char>
+##    1: 695023-99999          HORN ISLAND   (HID) -10.583 142.300     AS
+##    2: 749430-99999           AIDELAIDE RIVER SE -13.300 131.133     AS
+##    3: 749432-99999    BATCHELOR FIELD AUSTRALIA -13.049 131.066     AS
+##    4: 749438-99999         IRON RANGE AUSTRALIA -12.700 143.300     AS
+##    5: 749439-99999     MAREEBA AS/HOEVETT FIELD -17.050 145.400     AS
+##   ---                                                                 
+## 1044: 959890-99999      BICHENO (COUNCIL DEPOT) -41.867 148.300     AS
+## 1045: 959950-99999 LORD HOWE ISLAND WINDY POINT -31.533 159.067     AS
+## 1046: 959970-99999    HEARD ISLAND (ATLAS COVE) -53.017  73.400     AS
+## 1047: 996600-99999          ENVIRONM BUOY 55011 -40.800 144.300     AS
+## 1048: 999999-82101               NORTHWEST CAPE -22.333 114.050     AS
+##        STATE    BEGIN      END COUNTRY_NAME  ISO2C  ISO3C
+##       <char>    <int>    <int>       <char> <char> <char>
+##    1:        19420804 20030816    AUSTRALIA     AU    AUS
+##    2:        19430228 19440821    AUSTRALIA     AU    AUS
+##    3:        19421231 19430610    AUSTRALIA     AU    AUS
+##    4:        19420917 19440930    AUSTRALIA     AU    AUS
+##    5:        19420630 19440630    AUSTRALIA     AU    AUS
+##   ---                                                    
+## 1044:        19650101 20210115    AUSTRALIA     AU    AUS
+## 1045:        20120920 20210116    AUSTRALIA     AU    AUS
+## 1046:        19980301 20121220    AUSTRALIA     AU    AUS
+## 1047:        19930221 19970403    AUSTRALIA     AU    AUS
+## 1048:        19680305 19680430    AUSTRALIA     AU    AUS
 ```
 
 ```r
@@ -90,14 +90,14 @@ subset(Oz, grepl("TOOWOOMBA", NAME))
 
 ```
 ## Key: <STNID>
-##           STNID              NAME     LAT     LON   CTRY  STATE    BEGIN      END COUNTRY_NAME
-##          <char>            <char>   <num>   <num> <char> <char>    <int>    <int>       <char>
-## 1: 945510-99999         TOOWOOMBA -27.583 151.933     AS        19561231 20120503    AUSTRALIA
-## 2: 955510-99999 TOOWOOMBA AIRPORT -27.550 151.917     AS        19980301 20210116    AUSTRALIA
-##     ISO2C  ISO3C
-##    <char> <char>
-## 1:     AU    AUS
-## 2:     AU    AUS
+##           STNID              NAME     LAT     LON   CTRY  STATE    BEGIN
+##          <char>            <char>   <num>   <num> <char> <char>    <int>
+## 1: 945510-99999         TOOWOOMBA -27.583 151.933     AS        19561231
+## 2: 955510-99999 TOOWOOMBA AIRPORT -27.550 151.917     AS        19980301
+##         END COUNTRY_NAME  ISO2C  ISO3C
+##       <int>       <char> <char> <char>
+## 1: 20120503    AUSTRALIA     AU    AUS
+## 2: 20210116    AUSTRALIA     AU    AUS
 ```
 
 ## Download a Single Station and Year Using get_GSOD()
@@ -124,7 +124,7 @@ str(tbar)
 ##  $ ELEVATION       : num  642 642 642 642 642 642 642 642 642 642 ...
 ##  $ BEGIN           : int  19980301 19980301 19980301 19980301 19980301 19980301 19980301 19980301 19980301 19980301 ...
 ##  $ END             : int  20210116 20210116 20210116 20210116 20210116 20210116 20210116 20210116 20210116 20210116 ...
-##  $ YEARMODA        : Date, format: "2010-01-01" "2010-01-02" "2010-01-03" ...
+##  $ YEARMODA        : Date, format: "2010-01-01" "2010-01-02" ...
 ##  $ YEAR            : int  2010 2010 2010 2010 2010 2010 2010 2010 2010 2010 ...
 ##  $ MONTH           : int  1 1 1 1 1 1 1 1 1 1 ...
 ##  $ DAY             : int  1 2 3 4 5 6 7 8 9 10 ...
@@ -191,7 +191,7 @@ str(tbar)
 ##  $ ELEVATION       : num  407 407 407 407 407 ...
 ##  $ BEGIN           : int  19730430 19730430 19730430 19730430 19730430 19730430 19730430 19730430 19730430 19730430 ...
 ##  $ END             : int  20210116 20210116 20210116 20210116 20210116 20210116 20210116 20210116 20210116 20210116 ...
-##  $ YEARMODA        : Date, format: "2010-01-01" "2010-01-02" "2010-01-03" ...
+##  $ YEARMODA        : Date, format: "2010-01-01" "2010-01-02" ...
 ##  $ YEAR            : int  2010 2010 2010 2010 2010 2010 2010 2010 2010 2010 ...
 ##  $ MONTH           : int  1 1 1 1 1 1 1 1 1 1 ...
 ##  $ DAY             : int  1 2 3 4 5 6 7 8 9 10 ...
@@ -324,47 +324,47 @@ inventory
 ```
 ##   *** FEDERAL CLIMATE COMPLEX INTEGRATED SURFACE DATA INVENTORY ***  
 ##    This inventory provides the number of weather observations by  
-##    STATION-YEAR-MONTH for beginning of record through may 2022   
+##    STATION-YEAR-MONTH for beginning of record through August 2022   
 ## Key: <STNID>
-##               STNID                NAME    LAT    LON   CTRY  STATE    BEGIN      END
-##              <char>              <char>  <num>  <num> <char> <char>    <int>    <int>
-##     1: 008415-99999                <NA>     NA     NA   <NA>   <NA>       NA       NA
-##     2: 010010-99999 JAN MAYEN(NOR-NAVY) 70.933 -8.667     NO        19310101 20210116
-##     3: 010010-99999 JAN MAYEN(NOR-NAVY) 70.933 -8.667     NO        19310101 20210116
-##     4: 010010-99999 JAN MAYEN(NOR-NAVY) 70.933 -8.667     NO        19310101 20210116
-##     5: 010014-99999          SORSTOKKEN 59.792  5.341     NO        19861120 20210116
-##    ---                                                                               
-## 40161:   A51255-445                <NA>     NA     NA   <NA>   <NA>       NA       NA
-## 40162:   A51255-445                <NA>     NA     NA   <NA>   <NA>       NA       NA
-## 40163:   A51256-451                <NA>     NA     NA   <NA>   <NA>       NA       NA
-## 40164:   A51256-451                <NA>     NA     NA   <NA>   <NA>       NA       NA
-## 40165:   A51256-451                <NA>     NA     NA   <NA>   <NA>       NA       NA
-##        COUNTRY_NAME  ISO2C  ISO3C  YEAR   JAN   FEB   MAR   APR   MAY   JUN   JUL   AUG   SEP
-##              <char> <char> <char> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int>
-##     1:         <NA>   <NA>   <NA>  2020     0     0    14     0     0     0     0     0     0
-##     2:       NORWAY     NO    NOR  2020   736   695   744   717   744   718   743   742   718
-##     3:       NORWAY     NO    NOR  2021   686   562   729   710   733   654   726   717   712
-##     4:       NORWAY     NO    NOR  2022   549   513   292    31     0     0     0     0     0
-##     5:       NORWAY     NO    NOR  2020   546   513   401   251   228   288   320   452   484
-##    ---                                                                                       
-## 40161:         <NA>   <NA>   <NA>  2021  2106  2009  2163  1970  2209  2105  2194  2087  2098
-## 40162:         <NA>   <NA>   <NA>  2022  2189  2004  2199  2149   227     0     0     0     0
-## 40163:         <NA>   <NA>   <NA>  2020  2165  1455  2144  2125  2199  2123  2112  2192  2083
-## 40164:         <NA>   <NA>   <NA>  2021  2085  1992  2217  1975  2146  2092  2227  2170  2080
-## 40165:         <NA>   <NA>   <NA>  2022  2203  1937  2204  2144   223     0     0     0     0
-##          OCT   NOV   DEC
-##        <int> <int> <int>
-##     1:     0     0     0
-##     2:   694   708   740
-##     3:   737   714   630
-##     4:     0     0     0
-##     5:   448   494   442
-##    ---                  
-## 40161:  2150  2122  2183
-## 40162:     0     0     0
-## 40163:  2079  2074  2187
-## 40164:  2163  2120  2168
-## 40165:     0     0     0
+##               STNID                NAME    LAT    LON   CTRY  STATE
+##              <char>              <char>  <num>  <num> <char> <char>
+##     1: 008415-99999                <NA>     NA     NA   <NA>   <NA>
+##     2: 010010-99999 JAN MAYEN(NOR-NAVY) 70.933 -8.667     NO       
+##     3: 010010-99999 JAN MAYEN(NOR-NAVY) 70.933 -8.667     NO       
+##     4: 010010-99999 JAN MAYEN(NOR-NAVY) 70.933 -8.667     NO       
+##     5: 010014-99999          SORSTOKKEN 59.792  5.341     NO       
+##    ---                                                             
+## 40333:   A51255-445                <NA>     NA     NA   <NA>   <NA>
+## 40334:   A51255-445                <NA>     NA     NA   <NA>   <NA>
+## 40335:   A51256-451                <NA>     NA     NA   <NA>   <NA>
+## 40336:   A51256-451                <NA>     NA     NA   <NA>   <NA>
+## 40337:   A51256-451                <NA>     NA     NA   <NA>   <NA>
+##           BEGIN      END COUNTRY_NAME  ISO2C  ISO3C  YEAR   JAN   FEB
+##           <int>    <int>       <char> <char> <char> <int> <int> <int>
+##     1:       NA       NA         <NA>   <NA>   <NA>  2020     0     0
+##     2: 19310101 20210116       NORWAY     NO    NOR  2020   736   695
+##     3: 19310101 20210116       NORWAY     NO    NOR  2021   686   562
+##     4: 19310101 20210116       NORWAY     NO    NOR  2022   549   513
+##     5: 19861120 20210116       NORWAY     NO    NOR  2020   546   513
+##    ---                                                               
+## 40333:       NA       NA         <NA>   <NA>   <NA>  2021  2106  2009
+## 40334:       NA       NA         <NA>   <NA>   <NA>  2022  2189  2004
+## 40335:       NA       NA         <NA>   <NA>   <NA>  2020  2165  1455
+## 40336:       NA       NA         <NA>   <NA>   <NA>  2021  2085  1992
+## 40337:       NA       NA         <NA>   <NA>   <NA>  2022  2203  1937
+##          MAR   APR   MAY   JUN   JUL   AUG   SEP   OCT   NOV   DEC
+##        <int> <int> <int> <int> <int> <int> <int> <int> <int> <int>
+##     1:    14     0     0     0     0     0     0     0     0     0
+##     2:   744   717   744   718   743   742   718   694   708   740
+##     3:   729   710   733   654   726   717   712   737   714   630
+##     4:   292    31     0     0    84     0     0     0     0     0
+##     5:   401   251   228   288   320   452   484   448   494   442
+##    ---                                                            
+## 40333:  2163  1970  2209  2105  2194  2087  2098  2150  2122  2183
+## 40334:  2199  2149  2217  2136  2228   751     0     0     0     0
+## 40335:  2144  2125  2199  2123  2112  2192  2083  2079  2074  2187
+## 40336:  2217  1975  2146  2092  2227  2170  2080  2163  2120  2168
+## 40337:  2204  2144  2218  2119  2224   751     0     0     0     0
 ```
 
 ```r
@@ -374,18 +374,23 @@ subset(inventory, STNID %in% "955510-99999")
 ```
 ##   *** FEDERAL CLIMATE COMPLEX INTEGRATED SURFACE DATA INVENTORY ***  
 ##    This inventory provides the number of weather observations by  
-##    STATION-YEAR-MONTH for beginning of record through may 2022   
+##    STATION-YEAR-MONTH for beginning of record through August 2022   
 ## Key: <STNID>
-##           STNID              NAME    LAT     LON   CTRY  STATE    BEGIN      END COUNTRY_NAME
-##          <char>            <char>  <num>   <num> <char> <char>    <int>    <int>       <char>
-## 1: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.917     AS        19980301 20210116    AUSTRALIA
-## 2: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.917     AS        19980301 20210116    AUSTRALIA
-## 3: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.917     AS        19980301 20210116    AUSTRALIA
-##     ISO2C  ISO3C  YEAR   JAN   FEB   MAR   APR   MAY   JUN   JUL   AUG   SEP   OCT   NOV   DEC
-##    <char> <char> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int>
-## 1:     AU    AUS  2020   246   232   248   238   248   348   493   492   480   496   475   496
-## 2:     AU    AUS  2021   485   483   742   720   743   716   744   737   719   744   720   726
-## 3:     AU    AUS  2022   743   672   739   716    70     0     0     0     0     0     0     0
+##           STNID              NAME    LAT     LON   CTRY  STATE    BEGIN
+##          <char>            <char>  <num>   <num> <char> <char>    <int>
+## 1: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.917     AS        19980301
+## 2: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.917     AS        19980301
+## 3: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.917     AS        19980301
+##         END COUNTRY_NAME  ISO2C  ISO3C  YEAR   JAN   FEB   MAR   APR   MAY
+##       <int>       <char> <char> <char> <int> <int> <int> <int> <int> <int>
+## 1: 20210116    AUSTRALIA     AU    AUS  2020   246   232   248   238   248
+## 2: 20210116    AUSTRALIA     AU    AUS  2021   485   483   742   720   743
+## 3: 20210116    AUSTRALIA     AU    AUS  2022   743   672   739   716   739
+##      JUN   JUL   AUG   SEP   OCT   NOV   DEC
+##    <int> <int> <int> <int> <int> <int> <int>
+## 1:   348   493   492   480   496   475   496
+## 2:   716   744   737   719   744   720   726
+## 3:   716   728   230     0     0     0     0
 ```
 
 # Notes

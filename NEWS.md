@@ -4,6 +4,16 @@ editor_options:
     wrap: sentence
 ---
 
+# GSODR 3.1.6
+
+## Minor changes
+
+-   Redoc package to correct HTML issues.
+
+-   Update internal `isd-history` database.
+
+-   Update changed URLs.
+
 # GSODR 3.1.5
 
 ## Minor changes
