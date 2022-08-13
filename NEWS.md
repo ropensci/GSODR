@@ -4,7 +4,7 @@ editor_options:
     wrap: sentence
 ---
 
-# GSODR (development version)
+# GSODR 3.1.6
 
 ## Minor changes
 
@@ -12,7 +12,7 @@ editor_options:
 
 -   Update internal `isd-history` database.
 
--   
+-   Update changed URLs.
 
 # GSODR 3.1.5
 
