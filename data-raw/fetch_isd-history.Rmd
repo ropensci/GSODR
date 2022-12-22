@@ -55,6 +55,9 @@ new_isd_history <- fread("https://www1.ncdc.noaa.gov/pub/data/noaa/isd-history.c
 ## Add/drop columns and save to disk
 
 ```{r clean_and_reformat, echo=TRUE, cache=FALSE}
+# pad WBAN where necessary
+new_isd_history[, WBAN := sprintf("%05d", WBAN)]
+
 # add STNID column
 new_isd_history[, STNID := paste(USAF, WBAN, sep = "-")]
 setcolorder(new_isd_history, "STNID")
