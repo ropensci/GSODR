@@ -1,7 +1,7 @@
 Fetch and Clean ‘isd_history.csv’ File
 ================
 Adam H. Sparks
-2022-08-13
+2022-12-22
 
 <STYLE type='text/css' scoped>
 PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
@@ -113,33 +113,30 @@ new_isd_history[, COUNTRY_NAME := toupper(COUNTRY_NAME)]
 setkeyv(new_isd_history, "STNID")[]
 ```
 
-    ## Key: <STNID>
-    ##               STNID                         NAME    LAT      LON   CTRY  STATE
-    ##              <char>                       <char>  <num>    <num> <char> <char>
-    ##     1: 008268-99999                    WXPOD8278 32.950   65.567     AF       
-    ##     2: 010010-99999          JAN MAYEN(NOR-NAVY) 70.933   -8.667     NO       
-    ##     3: 010014-99999                   SORSTOKKEN 59.792    5.341     NO       
-    ##     4: 010015-99999                   BRINGELAND 61.383    5.867     NO       
-    ##     5: 010016-99999                  RORVIK/RYUM 64.850   11.233     NO       
-    ##    ---                                                                        
-    ## 26587: A00024-53848 CHOCTAW NAVAL OUTLYING FIELD 30.512  -86.954     US     FL
-    ## 26588: A00026-94297              COUPEVILLE/NOLF 48.217 -122.633     US     WA
-    ## 26589: A00029-63820      EVERETT-STEWART AIRPORT 36.380  -88.985     US     TN
-    ## 26590: A00030-93795        CONNELLSVILLE AIRPORT 39.959  -79.657     US     PA
-    ## 26591: A00032-25715                 ATKA AIRPORT 52.220 -174.206     US     AK
-    ##           BEGIN      END  COUNTRY_NAME  ISO2C  ISO3C
-    ##           <int>    <int>        <char> <char> <char>
-    ##     1: 20100519 20120323   AFGHANISTAN     AF    AFG
-    ##     2: 19310101 20220731        NORWAY     NO    NOR
-    ##     3: 19861120 20220810        NORWAY     NO    NOR
-    ##     4: 19870117 20081231        NORWAY     NO    NOR
-    ##     5: 19870116 19910806        NORWAY     NO    NOR
-    ##    ---                                              
-    ## 26587: 20070601 20220810 UNITED STATES     US    USA
-    ## 26588: 20060324 20150514 UNITED STATES     US    USA
-    ## 26589: 20130627 20220812 UNITED STATES     US    USA
-    ## 26590: 20210309 20220811 UNITED STATES     US    USA
-    ## 26591: 20060101 20220725 UNITED STATES     US    USA
+    ##               STNID                         NAME    LAT      LON CTRY STATE
+    ##     1: 008268-99999                    WXPOD8278 32.950   65.567   AF      
+    ##     2: 010010-99999          JAN MAYEN(NOR-NAVY) 70.933   -8.667   NO      
+    ##     3: 010014-99999                   SORSTOKKEN 59.792    5.341   NO      
+    ##     4: 010015-99999                   BRINGELAND 61.383    5.867   NO      
+    ##     5: 010016-99999                  RORVIK/RYUM 64.850   11.233   NO      
+    ##    ---                                                                     
+    ## 26598: A00024-53848 CHOCTAW NAVAL OUTLYING FIELD 30.512  -86.954   US    FL
+    ## 26599: A00026-94297              COUPEVILLE/NOLF 48.217 -122.633   US    WA
+    ## 26600: A00029-63820      EVERETT-STEWART AIRPORT 36.380  -88.985   US    TN
+    ## 26601: A00030-93795        CONNELLSVILLE AIRPORT 39.959  -79.657   US    PA
+    ## 26602: A00032-25715                 ATKA AIRPORT 52.220 -174.206   US    AK
+    ##           BEGIN      END  COUNTRY_NAME ISO2C ISO3C
+    ##     1: 20100519 20120323   AFGHANISTAN    AF   AFG
+    ##     2: 19310101 20221219        NORWAY    NO   NOR
+    ##     3: 19861120 20221219        NORWAY    NO   NOR
+    ##     4: 19870117 19971231        NORWAY    NO   NOR
+    ##     5: 19870116 19910806        NORWAY    NO   NOR
+    ##    ---                                            
+    ## 26598: 20070601 20221219 UNITED STATES    US   USA
+    ## 26599: 20060324 20150514 UNITED STATES    US   USA
+    ## 26600: 20130627 20221220 UNITED STATES    US   USA
+    ## 26601: 20210309 20221218 UNITED STATES    US   USA
+    ## 26602: 20060101 20221204 UNITED STATES    US   USA
 
 ## Show changes from last release
 
@@ -148,9 +145,12 @@ setkeyv(new_isd_history, "STNID")[]
 install.packages("GSODR", repos = "https://cloud.r-project.org/")
 ```
 
+    ## Installing package into '/Users/adamsparks/Library/R/arm64/4.2/library'
+    ## (as 'lib' is unspecified)
+
     ## 
     ## The downloaded binary packages are in
-    ##  /var/folders/tr/fwv720l96bz2btcr0jr_gs840000gn/T//RtmpxawpIT/downloaded_packages
+    ##  /var/folders/hc/tft3s5bn48gb81cs99mycyf00000gn/T//RtmpjUTC4S/downloaded_packages
 
 ``` r
 load(system.file("extdata", "isd_history.rda", package = "GSODR"))
@@ -162,43 +162,42 @@ new_isd_history <- new_isd_history[, ..x]
 (isd_diff <- diffobj::diffPrint(new_isd_history, isd_history))
 ```
 
-<PRE class="fansi fansi-output"><CODE>## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>new_isd_history</span>                                                           
-## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>isd_history</span>                                                               
-## <span style='color: #00BBBB;'>@@ 8,20 / 8,20 @@                                                           </span>
-## <span style='color: #555555;'>~               STNID                         NAME    LAT      LON   CTRY   </span>
-## <span style='color: #555555;'>~              &lt;char&gt;                       &lt;char&gt;  &lt;num&gt;    &lt;num&gt; &lt;char&gt;   </span>
-##       5: 010016-99999                  RORVIK/RYUM 64.850   11.233     NO   
-##      ---                                                                    
-## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26527:</span> <span style='color: #0000BB;'>A00023-63890</span> <span style='color: #0000BB;'>WHITEHOUSE</span> <span style='color: #0000BB;'>NAVAL</span> <span style='color: #0000BB;'>OUTLYING</span> <span style='color: #0000BB;'>FIELD</span> <span style='color: #0000BB;'>30.350</span>  <span style='color: #0000BB;'>-81.883</span>     <span style='color: #0000BB;'>US</span>
-## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26587:</span> A00024-53848 CHOCTAW NAVAL OUTLYING FIELD <span style='color: #BBBB00;'>30.512</span>  <span style='color: #BBBB00;'>-86.954</span>     US   
-## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26528:</span> A00024-53848    CHOCTAW NAVAL OUTLYING FIELD <span style='color: #0000BB;'>30.507</span>  <span style='color: #0000BB;'>-86.960</span>     US
-## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26588:</span> A00026-94297              COUPEVILLE/NOLF 48.217 -122.633     US   
-## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26529:</span> A00026-94297                 COUPEVILLE/NOLF 48.217 -122.633     US
-## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26589:</span> A00029-63820      EVERETT-STEWART AIRPORT 36.380  -88.985     US   
-## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26530:</span> A00029-63820         EVERETT-STEWART AIRPORT 36.380  -88.985     US
-## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26590:</span> <span style='color: #BBBB00;'>A00030-93795</span>        <span style='color: #BBBB00;'>CONNELLSVILLE</span> <span style='color: #BBBB00;'>AIRPORT</span> <span style='color: #BBBB00;'>39.959</span>  <span style='color: #BBBB00;'>-79.657</span>     <span style='color: #BBBB00;'>US</span>   
-## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26591:</span> A00032-25715                 ATKA AIRPORT 52.220 -174.206     US   
-## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26531:</span> A00032-25715                    ATKA AIRPORT 52.220 -174.206     US
-##           STATE    BEGIN      END  COUNTRY_NAME  ISO2C  ISO3C               
-##          &lt;char&gt;    &lt;int&gt;    &lt;int&gt;        &lt;char&gt; &lt;char&gt; &lt;char&gt;               
-##       1:        20100519 20120323   AFGHANISTAN     AF    AFG               
-## <span style='color: #BBBB00;'>&lt;</span>     2:        19310101 <span style='color: #BBBB00;'>20220731</span>        NORWAY     NO    NOR               
-## <span style='color: #0000BB;'>&gt;</span>     2:        19310101 <span style='color: #0000BB;'>20210116</span>        NORWAY     NO    NOR               
-## <span style='color: #BBBB00;'>&lt;</span>     3:        19861120 <span style='color: #BBBB00;'>20220810</span>        NORWAY     NO    NOR               
-## <span style='color: #0000BB;'>&gt;</span>     3:        19861120 <span style='color: #0000BB;'>20210116</span>        NORWAY     NO    NOR               
-##       4:        19870117 20081231        NORWAY     NO    NOR               
-##       5:        19870116 19910806        NORWAY     NO    NOR               
-##      ---                                                                    
-## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26587:</span>     FL 20070601 <span style='color: #BBBB00;'>20220810</span> UNITED STATES     US    USA               
-## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26527:</span>     FL 20070601 <span style='color: #0000BB;'>20210116</span> UNITED STATES     US    USA               
-## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26528:</span>     <span style='color: #0000BB;'>FL</span> <span style='color: #0000BB;'>20070601</span> <span style='color: #0000BB;'>20210116</span> <span style='color: #0000BB;'>UNITED</span> <span style='color: #0000BB;'>STATES</span>     <span style='color: #0000BB;'>US</span>    <span style='color: #0000BB;'>USA</span>               
-## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26588:</span>     WA 20060324 20150514 UNITED STATES     US    USA               
-## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26529:</span>     WA 20060324 20150514 UNITED STATES     US    USA               
-## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26589:</span>     TN 20130627 <span style='color: #BBBB00;'>20220812</span> <span style='color: #BBBB00;'>UNITED</span> <span style='color: #BBBB00;'>STATES</span>     <span style='color: #BBBB00;'>US</span>    <span style='color: #BBBB00;'>USA</span>               
-## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26590:</span>     <span style='color: #BBBB00;'>PA</span> <span style='color: #BBBB00;'>20210309</span> <span style='color: #BBBB00;'>20220811</span> UNITED STATES     US    USA               
-## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26530:</span>     TN 20130627 <span style='color: #0000BB;'>20210117</span> UNITED STATES     US    USA               
-## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26591:</span>     AK 20060101 <span style='color: #BBBB00;'>20220725</span> UNITED STATES     US    USA               
-## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26531:</span>     AK 20060101 <span style='color: #0000BB;'>20210117</span> UNITED STATES     US    USA
+<PRE class="fansi fansi-output"><CODE>## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>new_isd_history</span>                                                            
+## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>isd_history</span>                                                                
+## <span style='color: #00BBBB;'>@@ 6,19 / 6,19 @@                                                            </span>
+## <span style='color: #555555;'>~               STNID                         NAME    LAT      LON CTRY STATE</span>
+##       5: 010016-99999                  RORVIK/RYUM 64.850   11.233   NO      
+##      ---                                                                     
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26598:</span> A00024-53848 CHOCTAW NAVAL OUTLYING FIELD 30.512  -86.954   US    FL
+## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26587:</span> A00024-53848 CHOCTAW NAVAL OUTLYING FIELD 30.512  -86.954   US    FL
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26599:</span> A00026-94297              COUPEVILLE/NOLF 48.217 -122.633   US    WA
+## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26588:</span> A00026-94297              COUPEVILLE/NOLF 48.217 -122.633   US    WA
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26600:</span> A00029-63820      EVERETT-STEWART AIRPORT 36.380  -88.985   US    TN
+## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26589:</span> A00029-63820      EVERETT-STEWART AIRPORT 36.380  -88.985   US    TN
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26601:</span> A00030-93795        CONNELLSVILLE AIRPORT 39.959  -79.657   US    PA
+## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26590:</span> A00030-93795        CONNELLSVILLE AIRPORT 39.959  -79.657   US    PA
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26602:</span> A00032-25715                 ATKA AIRPORT 52.220 -174.206   US    AK
+## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26591:</span> A00032-25715                 ATKA AIRPORT 52.220 -174.206   US    AK
+##             BEGIN      END  COUNTRY_NAME ISO2C ISO3C                         
+##       1: 20100519 20120323   AFGHANISTAN    AF   AFG                         
+## <span style='color: #BBBB00;'>&lt;</span>     2: 19310101 <span style='color: #BBBB00;'>20221219</span>        NORWAY    NO   NOR                         
+## <span style='color: #0000BB;'>&gt;</span>     2: 19310101 <span style='color: #0000BB;'>20220731</span>        NORWAY    NO   NOR                         
+## <span style='color: #BBBB00;'>&lt;</span>     3: 19861120 <span style='color: #BBBB00;'>20221219</span>        NORWAY    NO   NOR                         
+## <span style='color: #0000BB;'>&gt;</span>     3: 19861120 <span style='color: #0000BB;'>20220810</span>        NORWAY    NO   NOR                         
+## <span style='color: #BBBB00;'>&lt;</span>     4: 19870117 <span style='color: #BBBB00;'>19971231</span>        NORWAY    NO   NOR                         
+## <span style='color: #0000BB;'>&gt;</span>     4: 19870117 <span style='color: #0000BB;'>20081231</span>        NORWAY    NO   NOR                         
+##       5: 19870116 19910806        NORWAY    NO   NOR                         
+##      ---                                                                     
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26598:</span> 20070601 <span style='color: #BBBB00;'>20221219</span> UNITED STATES    US   USA                         
+## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26587:</span> 20070601 <span style='color: #0000BB;'>20220810</span> UNITED STATES    US   USA                         
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26599:</span> 20060324 20150514 UNITED STATES    US   USA                         
+## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26588:</span> 20060324 20150514 UNITED STATES    US   USA                         
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26600:</span> 20130627 <span style='color: #BBBB00;'>20221220</span> UNITED STATES    US   USA                         
+## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26589:</span> 20130627 <span style='color: #0000BB;'>20220812</span> UNITED STATES    US   USA                         
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26601:</span> 20210309 <span style='color: #BBBB00;'>20221218</span> UNITED STATES    US   USA                         
+## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26590:</span> 20210309 <span style='color: #0000BB;'>20220811</span> UNITED STATES    US   USA                         
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>26602:</span> 20060101 <span style='color: #BBBB00;'>20221204</span> UNITED STATES    US   USA                         
+## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26591:</span> 20060101 <span style='color: #0000BB;'>20220725</span> UNITED STATES    US   USA
 </CODE></PRE>
 
 ## View and save the data
@@ -207,7 +206,7 @@ new_isd_history <- new_isd_history[, ..x]
 str(isd_history)
 ```
 
-    ## Classes 'data.table' and 'data.frame':   26531 obs. of  11 variables:
+    ## Classes 'data.table' and 'data.frame':   26591 obs. of  11 variables:
     ##  $ STNID       : chr  "008268-99999" "010010-99999" "010014-99999" "010015-99999" ...
     ##  $ NAME        : chr  "WXPOD8278" "JAN MAYEN(NOR-NAVY)" "SORSTOKKEN" "BRINGELAND" ...
     ##  $ LAT         : num  33 70.9 59.8 61.4 64.8 ...
@@ -215,7 +214,7 @@ str(isd_history)
     ##  $ CTRY        : chr  "AF" "NO" "NO" "NO" ...
     ##  $ STATE       : chr  "" "" "" "" ...
     ##  $ BEGIN       : int  20100519 19310101 19861120 19870117 19870116 19880320 19861109 19850601 19730101 19310103 ...
-    ##  $ END         : int  20120323 20210116 20210116 20081231 19910806 20050228 20210114 20210116 20140523 20041030 ...
+    ##  $ END         : int  20120323 20220731 20220810 20081231 19910806 20050228 20220403 20220405 20140523 20041030 ...
     ##  $ COUNTRY_NAME: chr  "AFGHANISTAN" "NORWAY" "NORWAY" "NORWAY" ...
     ##  $ ISO2C       : chr  "AF" "NO" "NO" "NO" ...
     ##  $ ISO3C       : chr  "AFG" "NOR" "NOR" "NOR" ...
@@ -255,58 +254,64 @@ website](https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.n
 
 <PRE class="fansi fansi-output"><CODE>## <span style='color: #00BBBB; font-weight: bold;'>─ Session info ───────────────────────────────────────────────────────────────</span>
 ##  <span style='color: #555555; font-style: italic;'>setting </span> <span style='color: #555555; font-style: italic;'>value</span>
-##  version  R version 4.2.1 (2022-06-23)
-##  os       macOS Monterey 12.5
+##  version  R version 4.2.2 (2022-10-31)
+##  os       macOS Ventura 13.1
 ##  system   aarch64, darwin20
 ##  ui       X11
 ##  language (EN)
-##  collate  en_AU.UTF-8
-##  ctype    en_AU.UTF-8
+##  collate  en_US.UTF-8
+##  ctype    en_US.UTF-8
 ##  tz       Australia/Perth
-##  date     2022-08-13
-##  pandoc   2.19 @ /opt/homebrew/bin/ (via rmarkdown)
+##  date     2022-12-22
+##  pandoc   2.19.2 @ /opt/homebrew/bin/ (via rmarkdown)
 ## 
 ## <span style='color: #00BBBB; font-weight: bold;'>─ Packages ───────────────────────────────────────────────────────────────────</span>
 ##  <span style='color: #555555; font-style: italic;'>package    </span> <span style='color: #555555; font-style: italic;'>*</span> <span style='color: #555555; font-style: italic;'>version</span> <span style='color: #555555; font-style: italic;'>date (UTC)</span> <span style='color: #555555; font-style: italic;'>lib</span> <span style='color: #555555; font-style: italic;'>source</span>
-##  base64enc     0.1-3   <span style='color: #555555;'>2015-07-28</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  cli           3.3.0   <span style='color: #555555;'>2022-04-25</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  countrycode * 1.4.0   <span style='color: #555555;'>2022-05-04</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  crayon        1.5.1   <span style='color: #555555;'>2022-03-26</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  curl          4.3.2   <span style='color: #555555;'>2021-06-23</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  data.table  * 1.14.3  <span style='color: #555555;'>2022-08-13</span> <span style='color: #555555;'>[1]</span> <span style='color: #BB00BB; font-weight: bold;'>local</span>
-##  diffobj       0.3.5   <span style='color: #555555;'>2021-10-05</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  digest        0.6.29  <span style='color: #555555;'>2021-12-01</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  dplyr         1.0.9   <span style='color: #555555;'>2022-04-28</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  evaluate      0.16    <span style='color: #555555;'>2022-08-09</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  fansi         1.0.3   <span style='color: #555555;'>2022-03-24</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  fastmap       1.1.0   <span style='color: #555555;'>2021-01-25</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  generics      0.1.3   <span style='color: #555555;'>2022-07-05</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  glue          1.6.2   <span style='color: #555555;'>2022-02-24</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  htmltools     0.5.3   <span style='color: #555555;'>2022-07-18</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  jsonlite      1.8.0   <span style='color: #555555;'>2022-02-22</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  knitr         1.39    <span style='color: #555555;'>2022-04-26</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  lifecycle     1.0.1   <span style='color: #555555;'>2021-09-24</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  magrittr      2.0.3   <span style='color: #555555;'>2022-03-30</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  pillar        1.8.0   <span style='color: #555555;'>2022-07-18</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  pkgconfig     2.0.3   <span style='color: #555555;'>2019-09-22</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  purrr         0.3.4   <span style='color: #555555;'>2020-04-17</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  R6            2.5.1   <span style='color: #555555;'>2021-08-19</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  repr          1.1.4   <span style='color: #555555;'>2022-01-04</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  rlang         1.0.4   <span style='color: #555555;'>2022-07-12</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  rmarkdown     2.14    <span style='color: #555555;'>2022-04-25</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  rstudioapi    0.13    <span style='color: #555555;'>2020-11-12</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  sessioninfo * 1.2.2   <span style='color: #555555;'>2021-12-06</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  skimr       * 2.1.4   <span style='color: #555555;'>2022-04-15</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  stringi       1.7.8   <span style='color: #555555;'>2022-07-11</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  stringr       1.4.0   <span style='color: #555555;'>2019-02-10</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  tibble        3.1.8   <span style='color: #555555;'>2022-07-22</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  tidyselect    1.1.2   <span style='color: #555555;'>2022-02-21</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  utf8          1.2.2   <span style='color: #555555;'>2021-07-24</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  vctrs         0.4.1   <span style='color: #555555;'>2022-04-13</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  xfun          0.32    <span style='color: #555555;'>2022-08-10</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
-##  yaml          2.3.5   <span style='color: #555555;'>2022-02-21</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
+##  askpass       1.1     <span style='color: #555555;'>2019-01-13</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
+##  assertthat    0.2.1   <span style='color: #555555;'>2019-03-21</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.1)</span>
+##  base64enc     0.1-3   <span style='color: #555555;'>2015-07-28</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.1)</span>
+##  cli           3.5.0   <span style='color: #555555;'>2022-12-20</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.2)</span>
+##  countrycode * 1.4.0   <span style='color: #555555;'>2022-05-04</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.1)</span>
+##  crayon        1.5.2   <span style='color: #555555;'>2022-09-29</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.1)</span>
+##  credentials   1.3.2   <span style='color: #555555;'>2021-11-29</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
+##  curl          4.3.3   <span style='color: #555555;'>2022-10-06</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.1)</span>
+##  data.table  * 1.14.6  <span style='color: #555555;'>2022-11-16</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
+##  DBI           1.1.3   <span style='color: #555555;'>2022-06-18</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.1)</span>
+##  diffobj       0.3.5   <span style='color: #555555;'>2021-10-05</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.1)</span>
+##  digest        0.6.31  <span style='color: #555555;'>2022-12-11</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
+##  dplyr         1.0.10  <span style='color: #555555;'>2022-09-01</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.1)</span>
+##  evaluate      0.19    <span style='color: #555555;'>2022-12-13</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.2)</span>
+##  fansi         1.0.3   <span style='color: #555555;'>2022-03-24</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.1)</span>
+##  fastmap       1.1.0   <span style='color: #555555;'>2021-01-25</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.1)</span>
+##  generics      0.1.3   <span style='color: #555555;'>2022-07-05</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.1)</span>
+##  glue          1.6.2   <span style='color: #555555;'>2022-02-24</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.1)</span>
+##  htmltools     0.5.4   <span style='color: #555555;'>2022-12-07</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
+##  jsonlite      1.8.4   <span style='color: #555555;'>2022-12-06</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
+##  knitr         1.41    <span style='color: #555555;'>2022-11-18</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
+##  lifecycle     1.0.3   <span style='color: #555555;'>2022-10-07</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
+##  magrittr      2.0.3   <span style='color: #555555;'>2022-03-30</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.1)</span>
+##  openssl       2.0.5   <span style='color: #555555;'>2022-12-06</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
+##  pillar        1.8.1   <span style='color: #555555;'>2022-08-19</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.1)</span>
+##  pkgconfig     2.0.3   <span style='color: #555555;'>2019-09-22</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.1)</span>
+##  R6            2.5.1   <span style='color: #555555;'>2021-08-19</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.1)</span>
+##  repr          1.1.4   <span style='color: #555555;'>2022-01-04</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.1)</span>
+##  rlang         1.0.6   <span style='color: #555555;'>2022-09-24</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.1)</span>
+##  rmarkdown     2.19    <span style='color: #555555;'>2022-12-15</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.2)</span>
+##  rstudioapi    0.14    <span style='color: #555555;'>2022-08-22</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.1)</span>
+##  sessioninfo * 1.2.2   <span style='color: #555555;'>2021-12-06</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.1)</span>
+##  skimr       * 2.1.4   <span style='color: #555555;'>2022-04-15</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.1)</span>
+##  stringi       1.7.8   <span style='color: #555555;'>2022-07-11</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.1)</span>
+##  stringr       1.5.0   <span style='color: #555555;'>2022-12-02</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
+##  sys           3.4.1   <span style='color: #555555;'>2022-10-18</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
+##  tibble        3.1.8   <span style='color: #555555;'>2022-07-22</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.1)</span>
+##  tidyselect    1.2.0   <span style='color: #555555;'>2022-10-10</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.1)</span>
+##  utf8          1.2.2   <span style='color: #555555;'>2021-07-24</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.1)</span>
+##  vctrs         0.5.1   <span style='color: #555555;'>2022-11-16</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
+##  xfun          0.35    <span style='color: #555555;'>2022-11-16</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
+##  yaml          2.3.6   <span style='color: #555555;'>2022-10-18</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.2.0)</span>
 ## 
-## <span style='color: #555555;'> [1] /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library</span>
+## <span style='color: #555555;'> [1] /Users/adamsparks/Library/R/arm64/4.2/library</span>
+## <span style='color: #555555;'> [2] /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library</span>
 ## 
 ## <span style='color: #00BBBB; font-weight: bold;'>──────────────────────────────────────────────────────────────────────────────</span>
 </CODE></PRE>
