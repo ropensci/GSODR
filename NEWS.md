@@ -6,6 +6,12 @@ editor_options:
     wrap: sentence
 ---
 
+# GSODR 3.1.7
+
+## Bug fixes
+
+- Fix bug where stations were not available in the internal isd_history file, this caused `NA` values to appear for some stations when run using `format_GSOD()` or to not be available for download with `get_GSOD()`.
+
 # GSODR 3.1.6
 
 ## Minor changes
