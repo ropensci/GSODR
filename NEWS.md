@@ -10,6 +10,8 @@ editor_options:
 
 ## Bug fixes
 
+- Fix bug where the `isd_history.Rda` data object was not updated using the `data_raw/fetch_isd-history.Rmd`.
+
 - Fix bug where stations were not available in the internal isd_history file, this caused `NA` values to appear for some stations when run using `format_GSOD()` or to not be available for download with `get_GSOD()`.
 
 # GSODR 3.1.6
