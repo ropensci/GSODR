@@ -48,23 +48,23 @@ update_station_list <- function() {
       fread("https://www1.ncdc.noaa.gov/pub/data/noaa/isd-history.csv")
 
     # pad WBAN where necessary
-    new_isd_history[, WBAN := sprintf("%05d", WBAN)]
+    isd_history[, WBAN := sprintf("%05d", WBAN)]
 
     # add STNID column
-    new_isd_history[, STNID := paste(USAF, WBAN, sep = "-")]
-    setcolorder(new_isd_history, "STNID")
-    setnames(new_isd_history, "STATION NAME", "NAME")
+    isd_history[, STNID := paste(USAF, WBAN, sep = "-")]
+    setcolorder(isd_history, "STNID")
+    setnames(isd_history, "STATION NAME", "NAME")
 
     # remove stations where LAT or LON is NA
-    new_isd_history <- na.omit(new_isd_history, cols = c("LAT", "LON"))
+    isd_history <- na.omit(isd_history, cols = c("LAT", "LON"))
 
     # remove extra columns
-    new_isd_history[, c("USAF", "WBAN", "ICAO") := NULL]
+    isd_history[, c("USAF", "WBAN", "ICAO") := NULL]
 
-    new_isd_history <-
-      new_isd_history[setDT(countrycode::codelist), on = c("CTRY" = "fips")]
+    isd_history <-
+      isd_history[setDT(countrycode::codelist), on = c("CTRY" = "fips")]
 
-    new_isd_history <- new_isd_history[, c(
+    isd_history <- isd_history[, c(
       "STNID",
       "NAME",
       "LAT",
@@ -80,41 +80,39 @@ update_station_list <- function() {
     )]
 
     # clean data
-    new_isd_history[new_isd_history == -999] <- NA
-    new_isd_history[new_isd_history == -999.9] <- NA
-    new_isd_history <-
-      new_isd_history[!is.na(new_isd_history$LAT) &
-                        !is.na(new_isd_history$LON),]
-    new_isd_history <-
-      new_isd_history[new_isd_history$LAT != 0 &
-                        new_isd_history$LON != 0,]
-    new_isd_history <-
-      new_isd_history[new_isd_history$LAT > -90 &
-                        new_isd_history$LAT < 90,]
-    new_isd_history <-
-      new_isd_history[new_isd_history$LON > -180 &
-                        new_isd_history$LON < 180,]
+    isd_history[isd_history == -999] <- NA
+    isd_history[isd_history == -999.9] <- NA
+    isd_history <-
+      isd_history[!is.na(isd_history$LAT) &
+                    !is.na(isd_history$LON), ]
+    isd_history <-
+      isd_history[isd_history$LAT != 0 &
+                    isd_history$LON != 0, ]
+    isd_history <-
+      isd_history[isd_history$LAT > -90 &
+                    isd_history$LAT < 90, ]
+    isd_history <-
+      isd_history[isd_history$LON > -180 &
+                    isd_history$LON < 180, ]
 
     # set colnames to upper case
-    names(new_isd_history) <- toupper(names(new_isd_history))
-    setnames(new_isd_history,
+    names(isd_history) <- toupper(names(isd_history))
+    setnames(isd_history,
              old = "COUNTRY.NAME.EN",
              new = "COUNTRY_NAME")
 
     # set country names to be upper case for easier internal verifications
-    new_isd_history[, COUNTRY_NAME := toupper(COUNTRY_NAME)]
+    isd_history[, COUNTRY_NAME := toupper(COUNTRY_NAME)]
 
     # set key for joins when processing CSV files
-    setkeyv(new_isd_history, "STNID")[]
+    setkeyv(isd_history, "STNID")[]
 
     # write rda file to disk for use with GSODR package
     fname <-
       system.file("extdata", "isd_history.rda", package = "GSODR")
-    save(
-      isd_history,
-      file = fname,
-      compress = "bzip2"
-    )
+    save(isd_history,
+         file = fname,
+         compress = "bzip2")
   },
 
   error = function(cond) {
