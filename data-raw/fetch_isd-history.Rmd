@@ -135,6 +135,10 @@ x <- names(isd_history)
 new_isd_history <- new_isd_history[, ..x] 
 
 (isd_diff <- diffobj::diffPrint(new_isd_history, isd_history))
+
+rm(isd_history)
+
+isd_history <- new_isd_history
 ```
 
 ## View and save the data

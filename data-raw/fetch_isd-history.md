@@ -153,7 +153,7 @@ install.packages("GSODR", repos = "https://cloud.r-project.org/")
 
     ## 
     ## The downloaded binary packages are in
-    ##  /var/folders/hc/tft3s5bn48gb81cs99mycyf00000gn/T//RtmpFbCEQn/downloaded_packages
+    ##  /var/folders/hc/tft3s5bn48gb81cs99mycyf00000gn/T//Rtmpk9vtgm/downloaded_packages
 
 ``` r
 load(system.file("extdata", "isd_history.rda", package = "GSODR"))
@@ -216,13 +216,19 @@ new_isd_history <- new_isd_history[, ..x]
 ## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>26591:</span> <span style='color: #0000BB;'>20060101</span> <span style='color: #0000BB;'>20220725</span> UNITED STATES    US   USA
 </CODE></PRE>
 
+``` r
+rm(isd_history)
+
+isd_history <- new_isd_history
+```
+
 ## View and save the data
 
 ``` r
 str(isd_history)
 ```
 
-    ## Classes 'data.table' and 'data.frame':   26591 obs. of  11 variables:
+    ## Classes 'data.table' and 'data.frame':   27925 obs. of  11 variables:
     ##  $ STNID       : chr  "008268-99999" "010010-99999" "010014-99999" "010015-99999" ...
     ##  $ NAME        : chr  "WXPOD8278" "JAN MAYEN(NOR-NAVY)" "SORSTOKKEN" "BRINGELAND" ...
     ##  $ LAT         : num  33 70.9 59.8 61.4 64.8 ...
@@ -230,7 +236,7 @@ str(isd_history)
     ##  $ CTRY        : chr  "AF" "NO" "NO" "NO" ...
     ##  $ STATE       : chr  "" "" "" "" ...
     ##  $ BEGIN       : int  20100519 19310101 19861120 19870117 19870116 19880320 19861109 19850601 19730101 19310103 ...
-    ##  $ END         : int  20120323 20220731 20220810 20081231 19910806 20050228 20220403 20220405 20140523 20041030 ...
+    ##  $ END         : int  20120323 20221220 20221220 19971231 19910806 19971226 20221219 20221220 19970801 20041030 ...
     ##  $ COUNTRY_NAME: chr  "AFGHANISTAN" "NORWAY" "NORWAY" "NORWAY" ...
     ##  $ ISO2C       : chr  "AF" "NO" "NO" "NO" ...
     ##  $ ISO3C       : chr  "AFG" "NOR" "NOR" "NOR" ...
