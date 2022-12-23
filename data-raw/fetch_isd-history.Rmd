@@ -63,15 +63,11 @@ new_isd_history[, STNID := paste(USAF, WBAN, sep = "-")]
 setcolorder(new_isd_history, "STNID")
 setnames(new_isd_history, "STATION NAME", "NAME")
 
-# drop stations not in GSOD data
-new_isd_history[, STNID_len := nchar(STNID)]
-new_isd_history <- subset(new_isd_history, STNID_len == 12)
-
 # remove stations where LAT or LON is NA
 new_isd_history <- na.omit(new_isd_history, cols = c("LAT", "LON"))
 
 # remove extra columns
-new_isd_history[, c("USAF", "WBAN", "ICAO", "ELEV(M)", "STNID_len") := NULL]
+new_isd_history[, c("USAF", "WBAN", "ICAO") := NULL]
 ```
 
 ## Add country names based on FIPS
@@ -85,6 +81,7 @@ new_isd_history <- new_isd_history[, c(
   "NAME",
   "LAT",
   "LON",
+  "ELEV(M)",
   "CTRY",
   "STATE",
   "BEGIN",

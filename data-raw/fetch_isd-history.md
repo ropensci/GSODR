@@ -56,15 +56,11 @@ new_isd_history[, STNID := paste(USAF, WBAN, sep = "-")]
 setcolorder(new_isd_history, "STNID")
 setnames(new_isd_history, "STATION NAME", "NAME")
 
-# drop stations not in GSOD data
-new_isd_history[, STNID_len := nchar(STNID)]
-new_isd_history <- subset(new_isd_history, STNID_len == 12)
-
 # remove stations where LAT or LON is NA
 new_isd_history <- na.omit(new_isd_history, cols = c("LAT", "LON"))
 
 # remove extra columns
-new_isd_history[, c("USAF", "WBAN", "ICAO", "ELEV(M)", "STNID_len") := NULL]
+new_isd_history[, c("USAF", "WBAN", "ICAO") := NULL]
 ```
 
 ## Add country names based on FIPS
@@ -78,6 +74,7 @@ new_isd_history <- new_isd_history[, c(
   "NAME",
   "LAT",
   "LON",
+  "ELEV(M)",
   "CTRY",
   "STATE",
   "BEGIN",
@@ -128,18 +125,18 @@ setkeyv(new_isd_history, "STNID")[]
     ## 27923: A07359-00240                              IONIA COUNTY AIRPORT 42.938
     ## 27924: A51255-00445                       DEMOPOLIS MUNICIPAL AIRPORT 32.464
     ## 27925: A51256-00451      BRANSON WEST MUNICIPAL EMERSON FIELD AIRPORT 36.699
-    ##            LON CTRY STATE    BEGIN      END  COUNTRY_NAME ISO2C ISO3C
-    ##     1:  65.567   AF       20100519 20120323   AFGHANISTAN    AF   AFG
-    ##     2:  -8.667   NO       19310101 20221220        NORWAY    NO   NOR
-    ##     3:   5.341   NO       19861120 20221220        NORWAY    NO   NOR
-    ##     4:   5.867   NO       19870117 19971231        NORWAY    NO   NOR
-    ##     5:  11.233   NO       19870116 19910806        NORWAY    NO   NOR
-    ##    ---                                                               
-    ## 27921: -90.913   US    WI 20140731 20221220 UNITED STATES    US   USA
-    ## 27922: -95.992   US    MN 20140731 20221220 UNITED STATES    US   USA
-    ## 27923: -85.061   US    MI 20140731 20221220 UNITED STATES    US   USA
-    ## 27924: -87.954   US    AL 20140731 20221221 UNITED STATES    US   USA
-    ## 27925: -93.402   US    MO 20140731 20221220 UNITED STATES    US   USA
+    ##            LON ELEV(M) CTRY STATE    BEGIN      END  COUNTRY_NAME ISO2C ISO3C
+    ##     1:  65.567  1156.7   AF       20100519 20120323   AFGHANISTAN    AF   AFG
+    ##     2:  -8.667     9.0   NO       19310101 20221220        NORWAY    NO   NOR
+    ##     3:   5.341    48.8   NO       19861120 20221220        NORWAY    NO   NOR
+    ##     4:   5.867   327.0   NO       19870117 19971231        NORWAY    NO   NOR
+    ##     5:  11.233    14.0   NO       19870116 19910806        NORWAY    NO   NOR
+    ##    ---                                                                       
+    ## 27921: -90.913   394.1   US    WI 20140731 20221220 UNITED STATES    US   USA
+    ## 27922: -95.992   367.3   US    MN 20140731 20221220 UNITED STATES    US   USA
+    ## 27923: -85.061   249.0   US    MI 20140731 20221220 UNITED STATES    US   USA
+    ## 27924: -87.954    34.1   US    AL 20140731 20221221 UNITED STATES    US   USA
+    ## 27925: -93.402   411.2   US    MO 20140731 20221220 UNITED STATES    US   USA
 
 ## Show changes from last release
 
@@ -153,7 +150,7 @@ install.packages("GSODR", repos = "https://cloud.r-project.org/")
 
     ## 
     ## The downloaded binary packages are in
-    ##  /var/folders/hc/tft3s5bn48gb81cs99mycyf00000gn/T//Rtmpk9vtgm/downloaded_packages
+    ##  /var/folders/hc/tft3s5bn48gb81cs99mycyf00000gn/T//Rtmpm3cAoW/downloaded_packages
 
 ``` r
 load(system.file("extdata", "isd_history.rda", package = "GSODR"))
