@@ -1,7 +1,7 @@
 Fetch and Clean ‘isd_history.csv’ File
 ================
 Adam H. Sparks
-2022-12-22
+2022-12-23
 
 <STYLE type='text/css' scoped>
 PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
@@ -130,8 +130,8 @@ setkeyv(new_isd_history, "STNID")[]
     ## 27925: A51256-00451      BRANSON WEST MUNICIPAL EMERSON FIELD AIRPORT 36.699
     ##            LON CTRY STATE    BEGIN      END  COUNTRY_NAME ISO2C ISO3C
     ##     1:  65.567   AF       20100519 20120323   AFGHANISTAN    AF   AFG
-    ##     2:  -8.667   NO       19310101 20221219        NORWAY    NO   NOR
-    ##     3:   5.341   NO       19861120 20221219        NORWAY    NO   NOR
+    ##     2:  -8.667   NO       19310101 20221220        NORWAY    NO   NOR
+    ##     3:   5.341   NO       19861120 20221220        NORWAY    NO   NOR
     ##     4:   5.867   NO       19870117 19971231        NORWAY    NO   NOR
     ##     5:  11.233   NO       19870116 19910806        NORWAY    NO   NOR
     ##    ---                                                               
@@ -153,7 +153,7 @@ install.packages("GSODR", repos = "https://cloud.r-project.org/")
 
     ## 
     ## The downloaded binary packages are in
-    ##  /var/folders/hc/tft3s5bn48gb81cs99mycyf00000gn/T//Rtmp5t191i/downloaded_packages
+    ##  /var/folders/hc/tft3s5bn48gb81cs99mycyf00000gn/T//RtmpFbCEQn/downloaded_packages
 
 ``` r
 load(system.file("extdata", "isd_history.rda", package = "GSODR"))
@@ -195,9 +195,9 @@ new_isd_history <- new_isd_history[, ..x]
 ## <span style='color: #0000BB;'>&gt;</span>           BEGIN      END  COUNTRY_NAME ISO2C ISO3C                          
 ## <span style='color: #BBBB00;'>&lt;</span>     1:  <span style='color: #BBBB00;'>65.567</span>   <span style='color: #BBBB00;'>AF</span>       20100519 20120323   AFGHANISTAN    AF   AFG       
 ## <span style='color: #0000BB;'>&gt;</span>     1: 20100519 20120323   AFGHANISTAN    AF   AFG                          
-## <span style='color: #BBBB00;'>&lt;</span>     2:  <span style='color: #BBBB00;'>-8.667</span>   <span style='color: #BBBB00;'>NO</span>       19310101 <span style='color: #BBBB00;'>20221219</span>        NORWAY    NO   NOR       
+## <span style='color: #BBBB00;'>&lt;</span>     2:  <span style='color: #BBBB00;'>-8.667</span>   <span style='color: #BBBB00;'>NO</span>       19310101 <span style='color: #BBBB00;'>20221220</span>        NORWAY    NO   NOR       
 ## <span style='color: #0000BB;'>&gt;</span>     2: 19310101 <span style='color: #0000BB;'>20220731</span>        NORWAY    NO   NOR                          
-## <span style='color: #BBBB00;'>&lt;</span>     3:   <span style='color: #BBBB00;'>5.341</span>   <span style='color: #BBBB00;'>NO</span>       19861120 <span style='color: #BBBB00;'>20221219</span>        NORWAY    NO   NOR       
+## <span style='color: #BBBB00;'>&lt;</span>     3:   <span style='color: #BBBB00;'>5.341</span>   <span style='color: #BBBB00;'>NO</span>       19861120 <span style='color: #BBBB00;'>20221220</span>        NORWAY    NO   NOR       
 ## <span style='color: #0000BB;'>&gt;</span>     3: 19861120 <span style='color: #0000BB;'>20220810</span>        NORWAY    NO   NOR                          
 ## <span style='color: #BBBB00;'>&lt;</span>     4:   <span style='color: #BBBB00;'>5.867</span>   <span style='color: #BBBB00;'>NO</span>       19870117 <span style='color: #BBBB00;'>19971231</span>        NORWAY    NO   NOR       
 ## <span style='color: #0000BB;'>&gt;</span>     4: 19870117 <span style='color: #0000BB;'>20081231</span>        NORWAY    NO   NOR                          
@@ -278,7 +278,7 @@ website](https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.n
 ##  collate  en_US.UTF-8
 ##  ctype    en_US.UTF-8
 ##  tz       Australia/Perth
-##  date     2022-12-22
+##  date     2022-12-23
 ##  pandoc   2.19.2 @ /opt/homebrew/bin/ (via rmarkdown)
 ## 
 ## <span style='color: #00BBBB; font-weight: bold;'>─ Packages ───────────────────────────────────────────────────────────────────</span>
