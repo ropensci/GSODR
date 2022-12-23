@@ -70,7 +70,7 @@ get_inventory <- function() {
     setcolorder(main_body, "STNID")
 
     header <-
-      readLines(file.path(tempdir(), "inventory.txt"), n = 5)
+      readLines(file.path(tempdir(), "inventory.txt"), n = 6)
 
     # sift out the year and month
     year_month <- grep("[0-9]{4}", header)
@@ -79,6 +79,7 @@ get_inventory <- function() {
       tools::toTitleCase(tolower(gsub("^([^\\D]*\\d+).*", "\\1",
                                       header[[year_month]])))
     year_month <- gsub("Through ", "", year_month)
+    year_month <- gsub("\\..*", "", year_month)
 
     main_body <- isd_history[main_body, on = "STNID"]
 
