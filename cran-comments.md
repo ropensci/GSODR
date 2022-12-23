@@ -1,6 +1,6 @@
-# GSODR v3.1.6
+# GSODR v3.1.7
 
-This is a patch release to fix bad URLs, update an internal database, update changed URLs and correct HTML in the documentation as requested.
+This is a patch release that fixes several bugs and increases the number of stations available through this client.
 
 ## Reverse dependencies
 
