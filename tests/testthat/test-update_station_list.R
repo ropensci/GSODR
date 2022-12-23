@@ -19,7 +19,7 @@ test_that("update_station_list() downloads and imports proper file", {
   write(ans, f)
   expect_message(update_station_list())
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))
-  expect_equal(ncol(isd_history), 11)
+  expect_equal(ncol(isd_history), 12)
   expect_named(
     isd_history,
     c(
@@ -27,6 +27,7 @@ test_that("update_station_list() downloads and imports proper file", {
       "NAME",
       "LAT",
       "LON",
+      "ELEV(M)",
       "CTRY",
       "STATE",
       "BEGIN",
