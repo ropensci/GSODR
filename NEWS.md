@@ -16,6 +16,8 @@ editor_options:
 This adds 1,334 new stations that are now available through GSODR.
 These were always available through GSOD but this bug prevented them from being accessed through this package.
 
+- Fix minor bug where `get_inventory()` returned garbage in the header of the object.
+
 # GSODR 3.1.6
 
 ## Minor changes
