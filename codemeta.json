@@ -333,7 +333,7 @@
   "applicationCategory": "Tools",
   "isPartOf": "https://ropensci.org",
   "keywords": ["US-NCEI", "meteorological-data", "global-weather", "weather", "weather-data", "meteorology", "station-data", "surface-weather", "data-access", "US-NCDC", "r", "gsod", "ncdc", "weather-stations", "global-data", "ncei", "weather-information", "historical-weather", "historical-data", "daily-data", "daily-weather", "rstats", "r-package"],
-  "fileSize": "3879.248KB",
+  "fileSize": "3879.34KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -374,7 +374,7 @@
   "relatedLink": ["https://docs.ropensci.org/GSODR/", "https://CRAN.R-project.org/package=GSODR"],
   "releaseNotes": "https://github.com/ropensci/GSODR/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/GSODR/blob/main/README.md",
-  "contIntegration": ["https://github.com/ropensci/GSODR/actions", "https://codecov.io/gh/ropensci/GSODR"],
+  "contIntegration": ["https://github.com/ropensci/GSODR/actions", "https://app.codecov.io/gh/ropensci/GSODR"],
   "developmentStatus": "https://www.repostatus.org/#active",
   "review": {
     "@type": "Review",
