@@ -1,24 +1,24 @@
 # Platform
 
-|field    |value                                     |
-|:--------|:-----------------------------------------|
-|version  |R version 4.2.1 (2022-06-23)              |
-|os       |macOS Monterey 12.5                       |
-|system   |aarch64, darwin20                         |
-|ui       |RStudio                                   |
-|language |(EN)                                      |
-|collate  |en_AU.UTF-8                               |
-|ctype    |en_AU.UTF-8                               |
-|tz       |Australia/Perth                           |
-|date     |2022-08-13                                |
-|rstudio  |2022.07.1+554 Spotted Wakerobin (desktop) |
-|pandoc   |2.19 @ /opt/homebrew/bin/ (via rmarkdown) |
+|field    |value                                       |
+|:--------|:-------------------------------------------|
+|version  |R version 4.2.2 (2022-10-31)                |
+|os       |macOS Ventura 13.1                          |
+|system   |aarch64, darwin20                           |
+|ui       |RStudio                                     |
+|language |(EN)                                        |
+|collate  |en_US.UTF-8                                 |
+|ctype    |en_US.UTF-8                                 |
+|tz       |Australia/Perth                             |
+|date     |2023-01-05                                  |
+|rstudio  |2022.12.0+353 Elsbeth Geranium (desktop)    |
+|pandoc   |2.19.2 @ /opt/homebrew/bin/ (via rmarkdown) |
 
 # Dependencies
 
 |package |old   |new   |Δ  |
 |:-------|:-----|:-----|:--|
-|GSODR   |3.1.5 |3.1.6 |*  |
+|GSODR   |3.1.4 |3.1.5 |*  |
 
 # Revdeps
 
