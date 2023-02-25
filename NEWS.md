@@ -1,7 +1,7 @@
 
 # GSODR 3.1.8
 
-* Update CITATION file to follow CRAN's ~ever-changing whims~ guidelines.
+- Update CITATION file to follow CRAN's ~ever-changing whims~ guidelines.
 
 # GSODR 3.1.7
 
