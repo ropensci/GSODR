@@ -7,7 +7,7 @@
   "codeRepository": "https://github.com/ropensci/GSODR",
   "issueTracker": "https://github.com/ropensci/GSODR/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "3.1.7",
+  "version": "3.1.8",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -333,15 +333,14 @@
   "applicationCategory": "Tools",
   "isPartOf": "https://ropensci.org",
   "keywords": ["US-NCEI", "meteorological-data", "global-weather", "weather", "weather-data", "meteorology", "station-data", "surface-weather", "data-access", "US-NCDC", "r", "gsod", "ncdc", "weather-stations", "global-data", "ncei", "weather-information", "historical-weather", "historical-data", "daily-data", "daily-weather", "rstats", "r-package"],
-  "fileSize": "3879.019KB",
+  "fileSize": "4003.069KB",
   "citation": [
     {
-      "@type": "ScholarlyArticle",
-      "datePublished": "2017",
+      "@type": "SoftwareSourceCode",
       "author": [
         {
           "@type": "Person",
-          "givenName": ["Adam", "H."],
+          "givenName": "Adam H.",
           "familyName": "Sparks"
         },
         {
@@ -356,16 +355,34 @@
         }
       ],
       "name": "{GSODR}: Global Summary Daily Weather Data in R",
-      "identifier": "10.21105/joss.00177",
-      "@id": "https://doi.org/10.21105/joss.00177",
-      "sameAs": "https://doi.org/10.21105/joss.00177",
+      "identifier": "10.5281/zenodo.1040727",
+      "url": "https://CRAN.R-project.org/package=nasapower",
+      "description": "R package version 3.1.8",
+      "@id": "https://doi.org/10.5281/zenodo.1040727",
+      "sameAs": "https://doi.org/10.5281/zenodo.1040727"
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "datePublished": "2018",
+      "author": [
+        {
+          "@type": "Person",
+          "givenName": "Adam H.",
+          "familyName": "Sparks"
+        }
+      ],
+      "name": "nasapower: A NASA POWER Global Meteorology, Surface Solar Energy and Climatology Data Client for R",
+      "identifier": "10.21105/joss.01035",
+      "pagination": "1035",
+      "@id": "https://doi.org/10.21105/joss.01035",
+      "sameAs": "https://doi.org/10.21105/joss.01035",
       "isPartOf": {
         "@type": "PublicationIssue",
-        "issueNumber": "10",
-        "datePublished": "2017",
+        "issueNumber": "30",
+        "datePublished": "2018",
         "isPartOf": {
           "@type": ["PublicationVolume", "Periodical"],
-          "volumeNumber": "2",
+          "volumeNumber": "3",
           "name": "The Journal of Open Source Software"
         }
       }

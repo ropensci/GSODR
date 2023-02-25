@@ -1,10 +1,7 @@
 
+# GSODR 3.1.8
 
----
-editor_options: 
-  markdown: 
-    wrap: sentence
----
+- Update CITATION file to follow CRAN's ~ever-changing whims~ guidelines.
 
 # GSODR 3.1.7
 
