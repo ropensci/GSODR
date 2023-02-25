@@ -1,5 +1,5 @@
 
-# GSODR 3.1.8 (development)
+# GSODR 3.1.8
 
 * Update CITATION file to follow CRAN's ~ever-changing whims~ guidelines.
 
