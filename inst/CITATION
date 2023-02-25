@@ -1,21 +1,24 @@
-citHeader("To cite GSODR in publications, please use:")
 
-citEntry(
-  entry = "Article",
-  author = personList(as.person("Adam H. Sparks"),
-                      as.person("Tomislav Hengl"),
-                      as.person("Andrew Nelson")),
+bibentry(
+  bibtype = "Manual",
   title = "{GSODR}: Global Summary Daily Weather Data in R",
-  doi = "10.21105/joss.00177",
-  year = 2017,
-  month = "feb",
-  publisher = "The Open Journal",
-  volume = 2,
-  number = 10,
-  journal = "The Journal of Open Source Software",
+  author = c(person("Adam H.", "Sparks"),
+             person("Tomislav", "Hengl"),
+             person("Andrew", "Nelson")),
+  year = sub("-.*", "", meta$Date),
+  note = sprintf("R package version %s", meta$Version),
+  doi = "10.5281/zenodo.1040727",
+  url = "https://CRAN.R-project.org/package=nasapower")
 
-  textVersion = paste("Adam H. Sparks, Tomislav Hengl and Andrew Nelson (2017).",
-        "GSODR: Global Summary Daily Weather Data in R.",
-        "The Journal of Open Source Software, 2(10).",
-        "DOI: 10.21105/joss.00177"),
-)
+bibentry(
+  bibtype = "Article",
+  author = c(person("Adam H.", "Sparks")),
+  title = "nasapower: A NASA POWER Global Meteorology, Surface Solar Energy and Climatology Data Client for R",
+  doi = "10.21105/joss.01035",
+  year = 2018,
+  month = "oct",
+  publisher = "The Open Journal",
+  volume = 3,
+  number = 30,
+  pages = 1035,
+  journal = "The Journal of Open Source Software")
