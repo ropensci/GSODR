@@ -1,3 +1,6 @@
+# GSODR (development version)
+
+- Fix duplicated elevation columns.
 
 # GSODR 3.1.8
 
