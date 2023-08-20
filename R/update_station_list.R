@@ -24,7 +24,6 @@
 #' @export update_station_list
 
 update_station_list <- function() {
-  "STNID" <- "USAF" <- "WBAN" <- "COUNTRY_NAME" <- "STNID_len" <- NULL
 
   message(
     "This will overwrite GSODR's current internal list of GSOD stations.\n",
