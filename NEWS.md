@@ -1,6 +1,18 @@
 # GSODR (development version)
 
+## Bug fixes
+
 - Fix duplicated elevation columns.
+
+## Minor changes
+
+- Remove {httr} as an Import. Use base functionality to check existence first and then {curl} will properly error if a download fails, we will use that functionality.
+
+- Fix codecov badge to point at proper branch.
+
+- Ensure function titles are all proper title case.
+
+- Enhanced handling of data requests for incompatible station-year combinations. A `warning()` is issued for each bad combo, but if a `vector()` of stations is requested, any valid stations will still be downloaded with the bad combos omitted after the warning is emitted.
 
 # GSODR 3.1.8
 
