@@ -22,7 +22,7 @@ test_that("invalid stations are handled", {
   skip_if_offline()
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))
   stations <- isd_history
-  expect_error(.validate_station(
+  expect_error(.validate_station_id(
     years = 2015,
     station = "aaa-bbbbbb",
     stations
@@ -34,7 +34,7 @@ test_that("Station validations are properly handled for years available", {
   skip_if_offline()
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))
   stations <- isd_history
-  expect_warning(.validate_station(
+  expect_warning(.validate_station_data_years(
     station = "949999-00170",
     stations,
     years = 2010
@@ -44,7 +44,7 @@ test_that("Station validations are properly handled for years available", {
 test_that("Station validations are properly handled for years available", {
   skip_if_offline()
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))
-  expect_silent(.validate_station(
+  expect_silent(.validate_station_data_years(
     years = 2010,
     station = "955510-99999",
     isd_history = isd_history
