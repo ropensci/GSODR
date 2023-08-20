@@ -34,7 +34,7 @@ test_that("Station validations are properly handled for years available", {
   skip_if_offline()
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))
   stations <- isd_history
-  expect_error(.validate_station(
+  expect_warning(.validate_station(
     station = "949999-00170",
     stations,
     years = 2010
