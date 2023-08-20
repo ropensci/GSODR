@@ -1,4 +1,3 @@
-
 #' Validate years
 #'
 #' @param years User entered years for request
@@ -7,20 +6,26 @@
 #' @noRd
 .validate_years <- function(years) {
   if (inherits(years, what = "character")) {
-    stop(call. = FALSE,
-         "Years must be entered as a numeric value.")
+    stop(
+      call. = FALSE,
+      "Years must be entered as a numeric value."
+    )
   }
   this_year <- 1900 + as.POSIXlt(Sys.Date())$year
   for (i in years) {
     if (i <= 0) {
       stop("\nThis is not a valid year.\n")
     } else if (i < 1929) {
-      stop(call. = FALSE,
-           "\nThe GSOD data files start at 1929, you have entered a year prior
-           to 1929.\n")
+      stop(
+        call. = FALSE,
+        "\nThe GSOD data files start at 1929, you have entered a year prior
+           to 1929.\n"
+      )
     } else if (i > this_year) {
-      stop(call. = FALSE,
-           "\nThe year cannot be greater than current year.\n")
+      stop(
+        call. = FALSE,
+        "\nThe year cannot be greater than current year.\n"
+      )
     }
   }
   return(invisible(NULL))
@@ -53,13 +58,12 @@
   END <-
     as.numeric(substr(isd_history[isd_history$STNID == station, ]$END, 1, 4))
   if (min(years) < BEGIN | max(years) > END) {
-    message("\nThis station, ",
-            station,
-            ", only provides data for years ",
-            BEGIN,
-            " to ",
-            END,
-            ".\n")
+    stop(
+      "\nThis station, ", station, ", only provides data for years ",
+      BEGIN, " to ", END, ".\n",
+      "Please send a request that falls within these years.",
+      call. = FALSE
+    )
   }
   return(invisible(NULL))
 }
@@ -82,9 +86,11 @@
           c <- which(country == isd_history$ISO3C)
           country <- as.character(isd_history[c, "CTRY"][1])
         } else {
-          stop(call. = FALSE,
-               "\nPlease provide a valid name or 2 or 3 ",
-               "letter ISO country code\n")
+          stop(
+            call. = FALSE,
+            "\nPlease provide a valid name or 2 or 3 ",
+            "letter ISO country code\n"
+          )
         }
       } else if (nc == 2) {
         if (country %in% isd_history$ISO2C) {
@@ -94,17 +100,21 @@
           c <- which(country == isd_history$CTRY)
           country <- as.character(isd_history[c, "CTRY"][1])
         } else {
-          stop(call. = FALSE,
-               "\nPlease provide a valid name or 2 or 3 ",
-               "\nletter ISO country code")
+          stop(
+            call. = FALSE,
+            "\nPlease provide a valid name or 2 or 3 ",
+            "\nletter ISO country code"
+          )
         }
       } else if (country %in% isd_history$COUNTRY_NAME) {
         c <- which(country == isd_history$COUNTRY_NAME)
         country <- as.character(isd_history[c, "CTRY"][1])
       } else {
-        stop(call. = FALSE,
-             "\nPlease provide a valid name or 2 or 3 ",
-             "letter ISO country code\n")
+        stop(
+          call. = FALSE,
+          "\nPlease provide a valid name or 2 or 3 ",
+          "letter ISO country code\n"
+        )
       }
     }
     return(country)
@@ -122,8 +132,10 @@
 .validate_missing_days <-
   function(max_missing, file_list) {
     records <-
-      unlist(lapply(X = paste0(file_list),
-                    FUN = R.utils::countLines))
+      unlist(lapply(
+        X = paste0(file_list),
+        FUN = R.utils::countLines
+      ))
     names(records) <- file_list
     year <- as.numeric(substr(
       file_list[1],
@@ -136,8 +148,9 @@
       allow <- 366 - max_missing
     )
     file_list <- stats::na.omit(ifelse(records >= allow,
-                                       file_list,
-                                       NA))
+      file_list,
+      NA
+    ))
   }
 
 
@@ -163,18 +176,18 @@
 
       tryCatch(
         for (i in url_list) {
-          if (!httr::http_error(i)) {
-            # check for an http error b4 proceeding
-            curl::curl_download(
-              url = i,
-              destfile = file.path(tempdir(), basename(i)),
-              mode = "wb"
-            )
-          }
+          curl::curl_download(
+            url = i,
+            destfile = file.path(tempdir(), basename(i)),
+            mode = "wb"
+          )
         },
-        error = function(x)
-          stop(call. = FALSE,
-               "\nThe file downloads have failed. Please restart.\n")
+        error = function(x) {
+          stop(
+            call. = FALSE,
+            "\nThe file downloads have failed. Please restart.\n"
+          )
+        }
       )
 
       # create a list of files that have been downloaded and untar them
@@ -201,12 +214,14 @@
       } else {
         # Get a Cartesian join of all stations of interest and all years
         files_stations <-
-          CJ(years, station, sorted = FALSE)[, paste0(tempdir(),
-                                                      "/",
-                                                      years,
-                                                      "/",
-                                                      gsub("-", "", station),
-                                                      ".csv")]
+          CJ(years, station, sorted = FALSE)[, paste0(
+            tempdir(),
+            "/",
+            years,
+            "/",
+            gsub("-", "", station),
+            ".csv"
+          )]
 
         GSOD_list <-
           subset(GSOD_list, GSOD_list %in% files_stations)
@@ -228,9 +243,9 @@
         )]
       tryCatch(
         for (i in url_list) {
-          if (!httr::http_error(i)) {
-            # check for an http error b4 proceeding
-            httr::GET(url = i, httr::write_disk(
+          # check for an http error b4 proceeding
+          curl::curl_download(
+            url = i, destfile =
               paste0(
                 tempdir(),
                 "/",
@@ -238,14 +253,15 @@
                 # year
                 "-",
                 basename(i) # filename
-              ),
-              overwrite = TRUE
-            ))
-          }
+              )
+          )
         },
-        error = function(x)
-          stop(call. = FALSE,
-               "\nThe file downloads have failed. Please restart.\n")
+        error = function(x) {
+          stop(
+            call. = FALSE,
+            "\nThe file downloads have failed. Please restart.\n"
+          )
+        }
       )
 
       GSOD_list <-
@@ -266,16 +282,18 @@
 .agroclimatology_list <-
   function(file_list, isd_history, years) {
     station_list <- isd_history[isd_history$LAT >= -60 &
-                                  isd_history$LAT <= 60, ]$STNID
+      isd_history$LAT <= 60, ]$STNID
     station_list <- gsub("-", "", station_list)
 
     station_list <-
-      CJ(years, sorted = FALSE)[, paste0(tempdir(),
-                                         "/",
-                                         years,
-                                         "/",
-                                         station_list,
-                                         ".csv")]
+      CJ(years, sorted = FALSE)[, paste0(
+        tempdir(),
+        "/",
+        years,
+        "/",
+        station_list,
+        ".csv"
+      )]
 
     file_list <- file_list[file_list %in% station_list]
     rm(station_list)
@@ -300,12 +318,14 @@
       isd_history[isd_history$CTRY == country, ]$STNID
     station_list <- gsub("-", "", station_list)
     station_list <-
-      CJ(years, sorted = FALSE)[, paste0(tempdir(),
-                                         "/",
-                                         years,
-                                         "/",
-                                         station_list,
-                                         ".csv")]
+      CJ(years, sorted = FALSE)[, paste0(
+        tempdir(),
+        "/",
+        years,
+        "/",
+        station_list,
+        ".csv"
+      )]
     file_list <- file_list[file_list %in% station_list]
     return(file_list)
     rm(station_list)
@@ -319,8 +339,10 @@
 #' @return A `data.table` of GSOD weather data
 #' @noRd
 .apply_process_csv <- function(file_list, isd_history) {
-  x <- lapply(X = file_list,
-              FUN = .process_csv,
-              isd_history = isd_history)
+  x <- lapply(
+    X = file_list,
+    FUN = .process_csv,
+    isd_history = isd_history
+  )
   return(rbindlist(x))
 }
