@@ -21,8 +21,8 @@ old_hooks <- fansi::set_knit_hooks(knitr::knit_hooks,
 # Introduction
 
 The "isd_history.csv" file details GSOD station metadata.
-These data include the start and stop years used by *GSODR* to pre-check requests before querying the server for download and the country code used by *GSODR* when sub-setting for requests by country.
-The following checks are performed on the raw data file before inclusion in *GSODR*,
+These data include the start and stop years used by {GSODR} to pre-check requests before querying the server for download and the country code used by {GSODR} when sub-setting for requests by country.
+The following checks are performed on the raw data file before inclusion in {GSODR},
 
 -   Check for valid lon and lat values;
 
