@@ -133,14 +133,23 @@ get_GSOD <- function(years,
   # Validate user entered stations for existence in stations list from NCEI
   invisible(lapply(
     X = station,
-    FUN = .validate_station,
+    FUN = .validate_station_id,
+    isd_history = isd_history
+  ))
+
+  # Validate station data against years available. If years are requested w/ no
+  # data, an Warning and an `NA` is returned and removed here before passing the
+  # modified vector to `.download_files()`
+  station <- lapply(
+    X = station,
+    FUN = .validate_station_data_years,
     isd_history = isd_history,
     years = years
-  ))
+  )
 
   # Download files from server -------------------------------------------------
   # remove "-" from station to construct proper URL
-  file_list <- .download_files(station, years)
+  file_list <- .download_files(station[!is.na(station)], years)
 
   # Subset file_list for agroclimatology only stations -----------------------
   if (isTRUE(agroclimatology)) {
