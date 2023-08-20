@@ -130,26 +130,28 @@ get_GSOD <- function(years,
   # Load station list
   load(system.file("extdata", "isd_history.rda", package = "GSODR")) # nocov
 
-  # Validate user entered stations for existence in stations list from NCEI
-  invisible(lapply(
-    X = station,
-    FUN = .validate_station_id,
-    isd_history = isd_history
-  ))
+  if (!is.null(station)) {
+    # Validate user entered stations for existence in stations list from NCEI
+    invisible(lapply(
+      X = station,
+      FUN = .validate_station_id,
+      isd_history = isd_history
+    ))
 
-  # Validate station data against years available. If years are requested w/ no
-  # data, an Warning and an `NA` is returned and removed here before passing the
-  # modified vector to `.download_files()`
-  station <- lapply(
-    X = station,
-    FUN = .validate_station_data_years,
-    isd_history = isd_history,
-    years = years
-  )
+    # Validate station data against years available. If years are requested w/ no
+    # data, an Warning and an `NA` is returned and removed here before passing the
+    # modified vector to `.download_files()`
+    station <- lapply(
+      X = station,
+      FUN = .validate_station_data_years,
+      isd_history = isd_history,
+      years = years
+    )
+    station <- station[!is.na(station)]
+  }
 
   # Download files from server -------------------------------------------------
-  # remove "-" from station to construct proper URL
-  file_list <- .download_files(station[!is.na(station)], years)
+  file_list <- .download_files(station, years)
 
   # Subset file_list for agroclimatology only stations -----------------------
   if (isTRUE(agroclimatology)) {
