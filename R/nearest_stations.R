@@ -1,4 +1,3 @@
-
 #' Find Nearest GSOD Stations to a Specified Llatitude and Longitude
 #'
 #' Given latitude and longitude values entered as decimal degrees (DD), this
@@ -36,7 +35,7 @@
 
 nearest_stations <- function(LAT, LON, distance) {
   # CRAN NOTE avoidance
-  isd_history <- distance_km <- NULL #nocov
+  isd_history <- distance_km <- NULL # nocov
   # load current local copy of isd_history
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 
@@ -58,8 +57,8 @@ nearest_stations <- function(LAT, LON, distance) {
 
     # radius of earth
     6371 * 2 * asin(sqrt(`+`(
-      (sin(delta_lat / 2)) ^ 2,
-      cos(lat1) * cos(lat2) * (sin(delta_lon / 2)) ^ 2
+      (sin(delta_lat / 2))^2,
+      cos(lat1) * cos(lat2) * (sin(delta_lon / 2))^2
     )))
   }
 
@@ -72,5 +71,4 @@ nearest_stations <- function(LAT, LON, distance) {
   )]
 
   return(subset(isd_history[order(distance_km)], distance_km < distance)[[1]])
-
 }
