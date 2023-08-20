@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_GSOD.R
 \name{get_GSOD}
 \alias{get_GSOD}
-\title{Download and return a data.table object of GSOD weather data}
+\title{Download and Return a data.table Object of GSOD Weather Data}
 \usage{
 get_GSOD(
   years,

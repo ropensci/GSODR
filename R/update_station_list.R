@@ -1,5 +1,5 @@
 
-#' Download latest station list metadata and update internal database
+#' Download Latest Station List Metadata and Update an Internal Database
 #'
 #' This function downloads the latest station list (isd-history.csv) from the
 #' \acronym{NCEI} server and updates the data distributed with \CRANpkg{GSODR}

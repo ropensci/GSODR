@@ -1,5 +1,5 @@
 
-#' Download and return a data.table object of GSOD weather data
+#' Download and Return a data.table Object of GSOD Weather Data
 #'
 #' @description
 #' This function automates downloading, cleaning, reformatting of data from
