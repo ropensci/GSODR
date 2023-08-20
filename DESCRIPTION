@@ -61,7 +61,6 @@ Imports:
     countrycode,
     curl,
     data.table,
-    httr,
     R.utils,
     stats,
     utils
