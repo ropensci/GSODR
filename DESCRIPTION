@@ -73,9 +73,7 @@ Suggests:
     knitr,
     mapproj,
     maps,
-    remotes,
     rmarkdown,
-    roxygen2,
     testthat,
     tidyr
 RoxygenNote: 7.2.3
