@@ -2,7 +2,7 @@
 % Please edit documentation in R/nearest_stations.R
 \name{nearest_stations}
 \alias{nearest_stations}
-\title{Find Nearest GSOD Stations to a Specified Llatitude and Longitude}
+\title{Find Nearest GSOD Stations to a Specified Latitude and Longitude}
 \usage{
 nearest_stations(LAT, LON, distance)
 }
