@@ -7,7 +7,7 @@
   "codeRepository": "https://github.com/ropensci/GSODR",
   "issueTracker": "https://github.com/ropensci/GSODR/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "3.1.8.9000",
+  "version": "3.1.9",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -297,7 +297,7 @@
   "applicationCategory": "Tools",
   "isPartOf": "https://ropensci.org",
   "keywords": ["US-NCEI", "meteorological-data", "global-weather", "weather", "weather-data", "meteorology", "station-data", "surface-weather", "data-access", "US-NCDC", "r", "gsod", "ncdc", "weather-stations", "global-data", "ncei", "weather-information", "historical-weather", "historical-data", "daily-data", "daily-weather", "rstats", "r-package"],
-  "fileSize": "4322.231KB",
+  "fileSize": "4322.21KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
@@ -321,7 +321,7 @@
       "name": "{GSODR}: Global Summary Daily Weather Data in R",
       "identifier": "10.5281/zenodo.1040727",
       "url": "https://CRAN.R-project.org/package=nasapower",
-      "description": "R package version 3.1.8.9000",
+      "description": "R package version 3.1.9",
       "@id": "https://doi.org/10.5281/zenodo.1040727",
       "sameAs": "https://doi.org/10.5281/zenodo.1040727"
     },
