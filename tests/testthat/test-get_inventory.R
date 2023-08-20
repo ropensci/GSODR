@@ -1,7 +1,7 @@
 
 # Check that get_inventory functions properly ----------------------------------
 test_that("get_inventory fetches the inventory doc and returns a data frame", {
-  skip_on_cran()
+  skip_if_offline()
   x <- get_inventory()
   expect_length(x, 25)
   expect_is(x, "data.frame")
@@ -40,6 +40,6 @@ test_that("get_inventory fetches the inventory doc and returns a data frame", {
 })
 
 test_that("inventory file is removed after download", {
-  skip_on_cran()
+  skip_if_offline()
   expect_true(!file.exists(file.path(tempdir(), "inventory.txt")))
 })
