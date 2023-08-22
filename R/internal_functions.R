@@ -177,8 +177,7 @@
 
       tryCatch(
         for (i in url_list) {
-          http_resp <- .check_url_exists(x = i)
-          if (http_resp < 400) {
+          if (.check_url_exists(x = i)) {
             curl::curl_download(
               url = i,
               destfile = file.path(tempdir(), basename(i)),
@@ -244,8 +243,7 @@
       tryCatch(
         for (i in url_list) {
           # check for an http error b4 proceeding'
-          http_resp <- .check_url_exists(x = i)
-          if (http_resp < 400) {
+          if (.check_url_exists(x = i)) {
             curl::curl_download(url = i,
                                 destfile =
                                   paste0(
@@ -348,18 +346,15 @@
 #' @noRd
 
 .check_url_exists <- function(x) {
-  # check for an http error b4 proceeding'
-  return(as.numeric(gsub(
-    "^\\S+\\s+|\\s+\\S+$",
-    "",
-    trimws(
-      curlGetHeaders(
-        x,
-        redirect = TRUE,
-        verify = TRUE,
-        timeout = 0L,
-        TLS = ""
-      )
+  # check for an http error b4 proceeding, only if status is 200
+  return(grepl(
+    200L,
+    curlGetHeaders(
+      x,
+      redirect = TRUE,
+      verify = TRUE,
+      timeout = 0L,
+      TLS = ""
     )[[1]]
-  )))
+  ))
 }
