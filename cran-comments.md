@@ -1,12 +1,12 @@
-# GSODR v3.1.8
+# GSODR v3.1.9
 
 ## Test environments
 
  - local macOS, Platform: aarch64-apple-darwin20 (64-bit), R 4.2.2
- - local macOS, Platform: aarch64-apple-darwin20 (64-bit), R 4.3.0
- - win-builder, R Under development (unstable) (2023-02-24 r83902 ucrt)
+ - local macOS, Platform: aarch64-apple-darwin20 (64-bit), R 4.3.1
+ - win-builder, R Under development (unstable) 
 
-This is a new patch release to update the CITATION file to meet CRAN guidelines.
+This is a new patch release.
 
 ## revdepcheck results
 

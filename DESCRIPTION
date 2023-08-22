@@ -1,40 +1,41 @@
 Package: GSODR
 Type: Package
 Title: Global Surface Summary of the Day ('GSOD') Weather Data Client
-Version: 3.1.8.9000
-Authors@R: c(person("Adam H.", "Sparks", role = c("aut", "cre"),
-    email = "adamhsparks@gmail.com",
-    comment = c(ORCID = "0000-0002-0061-8359")),
+Version: 3.1.9
+Authors@R: c(
+    person("Adam H.", "Sparks", role = c("aut", "cre"),
+        email = "adamhsparks@gmail.com",
+        comment = c(ORCID = "0000-0002-0061-8359")),
     person("Tomislav", "Hengl", role = "aut",
-    email = "tom.hengl@isric.org",
-    comment = c(ORCID = "0000-0002-9921-5129")),
+        email = "tom.hengl@isric.org",
+        comment = c(ORCID = "0000-0002-9921-5129")),
     person("Andrew", "Nelson", role = "aut",
-    email = "dr.andy.nelson@gmail.com",
-    comment = c(ORCID = "0000-0002-7249-3778")),
+        email = "dr.andy.nelson@gmail.com",
+        comment = c(ORCID = "0000-0002-7249-3778")),
     person("Hugh", "Parsonage", role = c("cph", "ctb"),
-    email = "hugh.parsonage@gmail.com",
-    comment = c(ORCID = "0000-0003-4055-0835")),
+        email = "hugh.parsonage@gmail.com",
+        comment = c(ORCID = "0000-0003-4055-0835")),
     person("Taras", "Kaduk", role = "ctb",
-    email = "taras.kaduk@gmail.com",
-    comment = "Suggestion for handling bulk station downloads more
-    efficiently"),
+        email = "taras.kaduk@gmail.com",
+        comment = "Suggestion for handling bulk station downloads more
+        efficiently"),
     person("Gwenael", "Giboire", role = "ctb",
-    email = "gwenael.giboire@oda-groupe.com",
-    comment = "Several bug reports in early versions and testing feedback"),
+        email = "gwenael.giboire@oda-groupe.com",
+        comment = "Several bug reports in early versions and testing feedback"),
     person("Łukasz", "Pawlik", role = "ctb", email = "lukpawlik@gmail.com", 
-    comment = "Reported bug in windspeed conversion calculation"),
+        comment = "Reported bug in windspeed conversion calculation"),
     person("Ross","Darnell", role = "ctb",
-    email = "Ross.Darnell@data61.csiro.au", comment = c(
-    "Reported bug in 'Windows OS' versions causing 'GSOD' data untarring to
-    fail",
-    ORCID = "0000-0002-7973-6322")),
+        email = "Ross.Darnell@data61.csiro.au", comment = c(
+        "Reported bug in 'Windows OS' versions causing 'GSOD' data untarring to
+        fail",
+        ORCID = "0000-0002-7973-6322")),
     person("Tyler", "Widdison", role = "ctb",
-    email = "Tyler.Widdison@usav.org", comment = "Reported bug where
-    `nearest_stations()` did not return stations in order of nearest to
-    farthest"),
+        email = "Tyler.Widdison@usav.org", comment = "Reported bug where
+        `nearest_stations()` did not return stations in order of nearest to
+        farthest"),
     person(given = "Western Australia Agriculture Authority (WAAA)",
-    role = "cph", comment = c("Supported the development of 'GSODR' through
-    Adam H. Sparks's time.")))
+        role = "cph", comment = c("Supported the development of 'GSODR' through
+        Adam H. Sparks's time.")))
 URL: https://docs.ropensci.org/GSODR/
 BugReports: https://github.com/ropensci/GSODR/issues
 Description: Provides automated downloading, parsing, cleaning, unit conversion
@@ -61,7 +62,6 @@ Imports:
     countrycode,
     curl,
     data.table,
-    httr,
     R.utils,
     stats,
     utils
@@ -73,9 +73,7 @@ Suggests:
     knitr,
     mapproj,
     maps,
-    remotes,
     rmarkdown,
-    roxygen2,
     testthat,
     tidyr
 RoxygenNote: 7.2.3

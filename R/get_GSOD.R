@@ -1,5 +1,4 @@
-
-#' Download and return a data.table object of GSOD weather data
+#' Download and Return a data.table Object of GSOD Weather Data
 #'
 #' @description
 #' This function automates downloading, cleaning, reformatting of data from
@@ -99,46 +98,59 @@ get_GSOD <- function(years,
                      country = NULL,
                      max_missing = NULL,
                      agroclimatology = FALSE) {
-
   # Validate user inputs -------------------------------------------------------
   .validate_years(years)
   # Validate stations for missing days -----------------------------------------
   if (!is.null(max_missing)) {
     if (is.na(max_missing) | max_missing < 1) {
-      stop(call. = FALSE,
-           "\nThe `max_missing` parameter must be a positive",
-           "value larger than 1\n")
+      stop(
+        call. = FALSE,
+        "\nThe `max_missing` parameter must be a positive",
+        "value larger than 1\n"
+      )
     }
   }
 
   if (!is.null(max_missing)) {
     if (format(Sys.Date(), "%Y") %in% years) {
-      stop(call. = FALSE,
-           "You cannot use `max_missing` with the current, incomplete year.")
+      stop(
+        call. = FALSE,
+        "You cannot use `max_missing` with the current, incomplete year."
+      )
     }
   }
 
   if (isTRUE(agroclimatology) & !is.null(station)) {
-    stop(call. = FALSE,
-         "You cannot specify a single station along with agroclimatology.")
+    stop(
+      call. = FALSE,
+      "You cannot specify a single station along with agroclimatology."
+    )
   }
-
-# CRAN NOTE avoidance
-  isd_history <- NULL # nocov
 
   # Load station list
   load(system.file("extdata", "isd_history.rda", package = "GSODR")) # nocov
 
-  # Validate user entered stations for existence in stations list from NCEI
-  invisible(lapply(
-    X = station,
-    FUN = .validate_station,
-    isd_history = isd_history,
-    years = years
-  ))
+  if (!is.null(station)) {
+    # Validate user entered stations for existence in stations list from NCEI
+    invisible(lapply(
+      X = station,
+      FUN = .validate_station_id,
+      isd_history = isd_history
+    ))
+
+    # Validate station data against years available. If years are requested w/ no
+    # data, an Warning and an `NA` is returned and removed here before passing the
+    # modified vector to `.download_files()`
+    station <- lapply(
+      X = station,
+      FUN = .validate_station_data_years,
+      isd_history = isd_history,
+      years = years
+    )
+    station <- station[!is.na(station)]
+  }
 
   # Download files from server -------------------------------------------------
-  # remove "-" from station to construct proper URL
   file_list <- .download_files(station, years)
 
   # Subset file_list for agroclimatology only stations -----------------------
@@ -155,10 +167,12 @@ get_GSOD <- function(years,
     country <- .validate_country(country, isd_history)
 
     file_list <-
-      .subset_country_list(country = country,
-                           isd_history = isd_history,
-                           file_list = file_list,
-                           years = years)
+      .subset_country_list(
+        country = country,
+        isd_history = isd_history,
+        file_list = file_list,
+        years = years
+      )
   }
 
   # Validate stations for missing days -----------------------------------------
@@ -166,8 +180,10 @@ get_GSOD <- function(years,
     file_list <-
       .validate_missing_days(max_missing, file_list)
     if (length(file_list) == 0) {
-      stop(call. = FALSE,
-           "There were no stations that had a max of ", max_missing, " days.")
+      stop(
+        call. = FALSE,
+        "There were no stations that had a max of ", max_missing, " days."
+      )
     }
   }
 

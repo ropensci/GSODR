@@ -1,5 +1,5 @@
 
-#' Tidy and return a data.table object of GSOD weather from local storage
+#' Tidy and Return a data.table Object of GSOD Data From Local Storage
 #'
 #' This function automates cleaning and reformatting of \acronym{GSOD} station
 #' files in\cr \dQuote{YEAR.tar.gz}, provided that they have been untarred or
@@ -88,7 +88,7 @@
 #' @export reformat_GSOD
 
 reformat_GSOD <- function(dsn = NULL, file_list = NULL) {
-  isd_history <- NULL # nocov
+  
   load(system.file("extdata", "isd_history.rda", package = "GSODR")) # nocov
   setkeyv(isd_history, "STNID")
 

@@ -1,6 +1,6 @@
 
 test_that("If user selects no, database not updated", {
-  skip_on_cran()
+  skip_if_offline()
   f <- file()
   options(GSODR_connection = f)
   ans <- "no"
@@ -12,7 +12,7 @@ test_that("If user selects no, database not updated", {
 
 # update_forecast_locations() d-loads, imports file and resets timeout on exit--
 test_that("update_station_list() downloads and imports proper file", {
-  skip_on_cran()
+  skip_if_offline()
   f <- file()
   options(GSODR_connection = f)
   ans <- "yes"

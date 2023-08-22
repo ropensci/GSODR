@@ -14,7 +14,6 @@ CliFlo
 DATSAV
 DEWP
 DOI
-DataBrew
 Detsch
 ECCC
 ESA's
@@ -76,7 +75,6 @@ acc
 agroclimatology
 al
 capitalisation
-cliflo
 clifro
 codecov
 csv
@@ -86,8 +84,8 @@ github
 gsod
 gz
 https
+httr
 isd
-iso
 joss
 juba
 kilometres
@@ -97,11 +95,6 @@ md
 metres
 millimetres
 mistyped
-ncdc
-ncei
-niwa
-noaa
-nz
 onLoad
 optimised
 plyr
@@ -124,14 +117,11 @@ summarise
 summarised
 summarising
 tidyr
-tidyverse
 untar
 untarred
 untarring
-utilise
 vapour
 visualisation
 weathercan
 windspeed
-www
 zzz

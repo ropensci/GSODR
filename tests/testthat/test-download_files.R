@@ -1,8 +1,7 @@
-
 test_that(".download_files properly works, subsetting for country and
   agroclimatology works",
   {
-    skip_on_cran()
+    skip_if_offline()
     do.call(file.remove, list(list.files(
       tempdir(),
       pattern = ".csv$",
@@ -23,7 +22,7 @@ test_that(".download_files properly works, subsetting for country and
     agro_list <- .agroclimatology_list(GSOD_list,
                                        stations,
                                        years)
-    expect_length(agro_list, 7545)
+    expect_length(agro_list, 7544)
 
     RP_list <- .subset_country_list(country,
                                     GSOD_list,

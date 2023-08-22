@@ -1,5 +1,4 @@
-
-#' Validate years
+#' Validate Years
 #'
 #' @param years User entered years for request
 #' @keywords internal
@@ -27,15 +26,14 @@
 }
 
 
-#' Validate station IDs
+#' Validate Station IDs
 #'
 #' @param station User entered station ID
 #' @param isd_history isd_history.csv from NCEI provided by GSODR
-#' @param years User entered years for query
 #' @keywords internal
 #' @return None unless an error with the years or invalid station ID
 #' @noRd
-.validate_station <- function(station, isd_history, years) {
+.validate_station_id <- function(station, isd_history) {
   if (!station %in% isd_history$STNID) {
     stop(
       call. = FALSE,
@@ -48,22 +46,38 @@
       "file <https://www1.ncdc.noaa.gov/pub/data/noaa/isd-history.txt>\n"
     )
   }
-  BEGIN <-
-    as.numeric(substr(isd_history[isd_history$STNID == station, ]$BEGIN, 1, 4))
-  END <-
-    as.numeric(substr(isd_history[isd_history$STNID == station, ]$END, 1, 4))
-  if (min(years) < BEGIN | max(years) > END) {
-    message("\nThis station, ",
-            station,
-            ", only provides data for years ",
-            BEGIN,
-            " to ",
-            END,
-            ".\n")
-  }
   return(invisible(NULL))
 }
 
+#' Validate Station Data for Years Available
+#'
+#' @param station User entered station ID
+#' @param isd_history isd_history.csv from NCEI provided by GSODR
+#' @param years User entered years for query
+#' @keywords internal
+#' @return station_id value, "station", `NA` if no match with available data
+#' @noRd
+.validate_station_data_years <- function(station, isd_history, years) {
+  BEGIN <-
+    as.numeric(substr(isd_history[isd_history$STNID == station,]$BEGIN, 1, 4))
+  END <-
+    as.numeric(substr(isd_history[isd_history$STNID == station,]$END, 1, 4))
+  if (min(years) < BEGIN | max(years) > END) {
+    warning(
+      "\nThis station, ",
+      station,
+      ", only provides data for years ",
+      BEGIN,
+      " to ",
+      END,
+      ".\n",
+      "Please send a request that falls within these years.",
+      call. = FALSE
+    )
+    station <- NA
+  }
+  return(station)
+}
 
 #' Validate country requests
 #'
@@ -163,8 +177,7 @@
 
       tryCatch(
         for (i in url_list) {
-          if (!httr::http_error(i)) {
-            # check for an http error b4 proceeding
+          if (.check_url_exists(x = i)) {
             curl::curl_download(
               url = i,
               destfile = file.path(tempdir(), basename(i)),
@@ -172,11 +185,11 @@
             )
           }
         },
-        error = function(x)
+        error = function(x) {
           stop(call. = FALSE,
-               "\nThe file downloads have failed. Please restart.\n")
+               "\nA file download has failed.\n")
+        }
       )
-
       # create a list of files that have been downloaded and untar them
       tar_files <-
         list.files(tempdir(), pattern = "*\\.tar.gz$", full.names = TRUE)
@@ -226,26 +239,27 @@
           station,
           ".csv"
         )]
+
       tryCatch(
         for (i in url_list) {
-          if (!httr::http_error(i)) {
-            # check for an http error b4 proceeding
-            httr::GET(url = i, httr::write_disk(
-              paste0(
-                tempdir(),
-                "/",
-                substr(i, nchar(i) - 20, nchar(i) - 16),
-                # year
-                "-",
-                basename(i) # filename
-              ),
-              overwrite = TRUE
-            ))
+          # check for an http error b4 proceeding'
+          if (.check_url_exists(x = i)) {
+            curl::curl_download(url = i,
+                                destfile =
+                                  paste0(
+                                    tempdir(),
+                                    "/",
+                                    substr(i, nchar(i) - 20, nchar(i) - 16),
+                                    # year
+                                    "-",
+                                    basename(i) # filename
+                                  ))
           }
         },
-        error = function(x)
+        error = function(x) {
           stop(call. = FALSE,
-               "\nThe file downloads have failed. Please restart.\n")
+               "\nThe file downloads have failed. Please retry.\n")
+        }
       )
 
       GSOD_list <-
@@ -266,7 +280,7 @@
 .agroclimatology_list <-
   function(file_list, isd_history, years) {
     station_list <- isd_history[isd_history$LAT >= -60 &
-                                  isd_history$LAT <= 60, ]$STNID
+                                  isd_history$LAT <= 60,]$STNID
     station_list <- gsub("-", "", station_list)
 
     station_list <-
@@ -297,7 +311,7 @@
            isd_history,
            years) {
     station_list <-
-      isd_history[isd_history$CTRY == country, ]$STNID
+      isd_history[isd_history$CTRY == country,]$STNID
     station_list <- gsub("-", "", station_list)
     station_list <-
       CJ(years, sorted = FALSE)[, paste0(tempdir(),
@@ -323,4 +337,24 @@
               FUN = .process_csv,
               isd_history = isd_history)
   return(rbindlist(x))
+}
+
+#' Check That a URL Exists Before Downloading
+#'
+#' @param x a URL for checking
+#' @return A numeric value representing the HTTP response
+#' @noRd
+
+.check_url_exists <- function(x) {
+  # check for an http error b4 proceeding, only if status is 200
+  return(grepl(
+    200L,
+    curlGetHeaders(
+      x,
+      redirect = TRUE,
+      verify = TRUE,
+      timeout = 0L,
+      TLS = ""
+    )[[1]]
+  ))
 }

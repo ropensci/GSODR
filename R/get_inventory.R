@@ -1,5 +1,4 @@
-
-#' Download and return a data.table object GSOD weather station data inventories
+#' Download and Return a data.table Object of GSOD Weather Station Data Inventories
 #'
 #' The \acronym{NCEI} maintains a document,
 #' \url{https://www1.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt}, which lists
@@ -28,78 +27,81 @@
 #' @export get_inventory
 
 get_inventory <- function() {
-  "STNID" <- isd_history <- NULL #nocov
-  load(system.file("extdata", "isd_history.rda", package = "GSODR")) #nocov
+  load(system.file("extdata", "isd_history.rda", package = "GSODR")) # nocov
   setkeyv(isd_history, "STNID")
 
-  tryCatch({
-    curl::curl_download(
-      "https://www1.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt",
-      destfile = file.path(tempdir(), "inventory.txt"),
-      quiet = TRUE
-    )
-
-    main_body <-
-      fread(
-        file.path(tempdir(), "inventory.txt"),
-        skip = 8,
-        col.names = c(
-          "USAF",
-          "WBAN",
-          "YEAR",
-          "JAN",
-          "FEB",
-          "MAR",
-          "APR",
-          "MAY",
-          "JUN",
-          "JUL",
-          "AUG",
-          "SEP",
-          "OCT",
-          "NOV",
-          "DEC"
-        )
+  tryCatch(
+    {
+      curl::curl_download(
+        "https://www1.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt",
+        destfile = file.path(tempdir(), "inventory.txt"),
+        quiet = TRUE
       )
 
-    main_body[, STNID := paste(main_body$USAF, main_body$WBAN, sep = "-")]
-    setkeyv(main_body, "STNID")
+      main_body <-
+        fread(
+          file.path(tempdir(), "inventory.txt"),
+          skip = 8,
+          col.names = c(
+            "USAF",
+            "WBAN",
+            "YEAR",
+            "JAN",
+            "FEB",
+            "MAR",
+            "APR",
+            "MAY",
+            "JUN",
+            "JUL",
+            "AUG",
+            "SEP",
+            "OCT",
+            "NOV",
+            "DEC"
+          )
+        )
 
-    main_body[, c("USAF", "WBAN") := NULL]
+      main_body[, STNID := paste(main_body$USAF, main_body$WBAN, sep = "-")]
+      setkeyv(main_body, "STNID")
 
-    setcolorder(main_body, "STNID")
+      main_body[, c("USAF", "WBAN") := NULL]
 
-    header <-
-      readLines(file.path(tempdir(), "inventory.txt"), n = 6)
+      setcolorder(main_body, "STNID")
 
-    # sift out the year and month
-    year_month <- grep("[0-9]{4}", header)
+      header <-
+        readLines(file.path(tempdir(), "inventory.txt"), n = 6)
 
-    year_month <-
-      tools::toTitleCase(tolower(gsub("^([^\\D]*\\d+).*", "\\1",
-                                      header[[year_month]])))
-    year_month <- gsub("Through ", "", year_month)
-    year_month <- gsub("\\..*", "", year_month)
+      # sift out the year and month
+      year_month <- grep("[0-9]{4}", header)
 
-    main_body <- isd_history[main_body, on = "STNID"]
+      year_month <-
+        tools::toTitleCase(tolower(gsub(
+          "^([^\\D]*\\d+).*", "\\1",
+          header[[year_month]]
+        )))
+      year_month <- gsub("Through ", "", year_month)
+      year_month <- gsub("\\..*", "", year_month)
 
-    class(main_body) <- c("GSODR.Info", class(main_body))
+      main_body <- isd_history[main_body, on = "STNID"]
 
-    # add attributes for printing df
-    attr(main_body, "GSODR.Inventory") <- c(
-      "  *** FEDERAL CLIMATE COMPLEX INTEGRATED SURFACE DATA INVENTORY ***  \n",
-      "  This inventory provides the number of weather observations by  \n",
-      "  STATION-YEAR-MONTH for beginning of record through", year_month, "  \n"
-    )
-  },
-  error = function(cond) {
-    stop(
-      "There was a problem retrieving the inventory file. Perhaps \n",
-      "the server is not responding currently or there is no \n",
-      "Internet connection. Please try again later.",
-      call. = FALSE
-    )
-  })
+      class(main_body) <- c("GSODR.Info", class(main_body))
+
+      # add attributes for printing df
+      attr(main_body, "GSODR.Inventory") <- c(
+        "  *** FEDERAL CLIMATE COMPLEX INTEGRATED SURFACE DATA INVENTORY ***  \n",
+        "  This inventory provides the number of weather observations by  \n",
+        "  STATION-YEAR-MONTH for beginning of record through", year_month, "  \n"
+      )
+    },
+    error = function(cond) {
+      stop(
+        "There was a problem retrieving the inventory file. Perhaps \n",
+        "the server is not responding currently or there is no \n",
+        "Internet connection. Please try again later.",
+        call. = FALSE
+      )
+    }
+  )
 
   unlink(file.path(tempdir(), "inventory.txt"))
   return(main_body)
