@@ -4,44 +4,10 @@
 #' @param isd_history Internal metadata file for station locations
 #' @return A `data.table` of well-formatted weather data
 #' @keywords internal
+#' @autoglobal
 #' @noRd
 
 .process_csv <- function(x, isd_history) {
-  # CRAN NOTE avoidance
-  "EA" <- # nocov begin
-    "ES" <-
-    "TEMP" <-
-    "DEWP" <-
-    "SLP" <-
-    "STP" <-
-    "WDSP" <-
-    "MXSPD" <-
-    "GUST" <-
-    "VISIB" <-
-    "WDSP" <-
-    "MAX" <-
-    "MIN" <-
-    "PRCP" <-
-    "SNDP" <-
-    "PRCP_ATTRIBUTES" <-
-    "MIN_ATTRIBUTES" <-
-    "MAX_ATTRIBUTES" <-
-    "STNID" <-
-    "YEARMODA" <-
-    "DATE" <-
-    "YEAR" <-
-    "MONTH" <-
-    "DAY" <-
-    "YDAY" <-
-    "RH" <-
-    "I_FOG" <-
-    "I_RAIN_DRIZZLE" <-
-    "I_SNOW_ICE" <-
-    "I_HAIL" <-
-    "I_THUNDER" <-
-    "I_TORNADO_FUNNEL" <-
-    "FRSHTT" <-
-    NULL # nocov end
 
   # Import data from the website for individual stations or tempdir() for all --
   DT <-

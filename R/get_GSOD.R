@@ -90,7 +90,7 @@
 #'
 #' @seealso
 #' \code{\link{reformat_GSOD}}
-#'
+#' @autoglobal
 #' @export get_GSOD
 
 get_GSOD <- function(years,

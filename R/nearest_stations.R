@@ -31,6 +31,7 @@
 #'  with full station metadata including the distance from the user specified
 #'  coordinates is returned.
 #' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
+#' @autoglobal
 #' @export nearest_stations
 
 nearest_stations <- function(LAT, LON, distance) {
