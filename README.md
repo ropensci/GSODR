@@ -55,12 +55,7 @@ If you wish to install the development version that may have new features or bug
 We strive to keep the main branch on GitHub functional and working properly.
 
 ```r
-if (!require("remotes")) {
-  install.packages("remotes", repos = "http://cran.rstudio.com/")
-  library("remotes")
-}
-
-install_github("ropensci/GSODR")
+install.packages("GSODR", repos = "https://ropensci.r-universe.dev")
 ```
 
 ## Other Sources of Weather Data in R
