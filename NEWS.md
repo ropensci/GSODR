@@ -670,7 +670,7 @@ These were always available through GSOD but this bug prevented them from being 
 
 ## Bug Fixes
 
--   Fix bug with connection timing out for single station queries commit: [a126641e00dc7acc21844ff0436e5702f8b6e04a](https://github.com/ropensci/GSODR/commit/a126641e00dc7acc21844ff0436e5702f8b6e04a)
+-   Fix bug with connection timing out for single station queries.
 
 -   Somehow the previously working function that checked country names broke with the `toupper()` function.
     A new [function from juba](https://stackoverflow.com/questions/16516593/convert-from-lowercase-to-uppercase-all-values-in-all-character-variables-in-dat) fixes this issue and users can now select country again
