@@ -90,7 +90,7 @@
 #'
 #' @seealso
 #' \code{\link{reformat_GSOD}}
-#'
+#' @autoglobal
 #' @export get_GSOD
 
 get_GSOD <- function(years,
@@ -102,11 +102,11 @@ get_GSOD <- function(years,
   .validate_years(years)
   # Validate stations for missing days -----------------------------------------
   if (!is.null(max_missing)) {
-    if (is.na(max_missing) | max_missing < 1) {
+    if (is.na(max_missing) || max_missing < 1) {
       stop(
         call. = FALSE,
-        "\nThe `max_missing` parameter must be a positive",
-        "value larger than 1\n"
+        "The `max_missing` parameter must be a positive",
+        "value larger than 1."
       )
     }
   }
@@ -120,7 +120,7 @@ get_GSOD <- function(years,
     }
   }
 
-  if (isTRUE(agroclimatology) & !is.null(station)) {
+  if (isTRUE(agroclimatology) && !is.null(station)) {
     stop(
       call. = FALSE,
       "You cannot specify a single station along with agroclimatology."

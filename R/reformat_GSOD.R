@@ -84,11 +84,11 @@
 #'
 #' @return A data frame as a \code{\link[data.table]{data.table}} object of
 #' \acronym{GSOD} data.
-#'
+#' @autoglobal
 #' @export reformat_GSOD
 
 reformat_GSOD <- function(dsn = NULL, file_list = NULL) {
-  
+
   load(system.file("extdata", "isd_history.rda", package = "GSODR")) # nocov
   setkeyv(isd_history, "STNID")
 

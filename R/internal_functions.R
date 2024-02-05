@@ -3,6 +3,7 @@
 #' @param years User entered years for request
 #' @keywords internal
 #' @return None unless error in years being requested by users
+#' @autoglobal
 #' @noRd
 .validate_years <- function(years) {
   if (inherits(years, what = "character")) {
@@ -32,6 +33,7 @@
 #' @param isd_history isd_history.csv from NCEI provided by GSODR
 #' @keywords internal
 #' @return None unless an error with the years or invalid station ID
+#' @autoglobal
 #' @noRd
 .validate_station_id <- function(station, isd_history) {
   if (!station %in% isd_history$STNID) {
@@ -56,6 +58,7 @@
 #' @param years User entered years for query
 #' @keywords internal
 #' @return station_id value, "station", `NA` if no match with available data
+#' @autoglobal
 #' @noRd
 .validate_station_data_years <- function(station, isd_history, years) {
   BEGIN <-
@@ -85,6 +88,7 @@
 #' @param isd_history Data provided from NCEI on stations' locations and years
 #' @keywords internal
 #' @return A validated country name
+#' @autoglobal
 #' @noRd
 .validate_country <-
   function(country, isd_history) {
@@ -131,7 +135,8 @@
 #' @param GSOD_list A list of GSOD files that have been downloaded from NCEI
 #' @keywords internal
 #' @return A validated `list()` of GSOD files that meet requirements for missing
-#' days
+#'   days
+#' @autoglobal
 #' @noRd
 .validate_missing_days <-
   function(max_missing, file_list) {
@@ -160,6 +165,7 @@
 #' @param station Station ID being requested. Optional
 #' @param years Years being requested. Mandatory
 #' @keywords internal
+#' @autoglobal
 #' @return A list of data for processing before returning to user
 #'
 #' @noRd
@@ -275,6 +281,7 @@
 #' @param years Years being requested
 #' @keywords internal
 #' @return A list of GSOD stations suitable for agroclimatology work
+#' @autoglobal
 #' @noRd
 
 .agroclimatology_list <-
@@ -304,6 +311,7 @@
 #' @param years Years being requested
 #' @keywords internal
 #' @return A list of stations in the requested country
+#' @autoglobal
 #' @noRd
 .subset_country_list <-
   function(country,
@@ -331,6 +339,7 @@
 #' @param isd_history isd_history.csv file from NCEI provided by GSODR
 #' @keywords internal
 #' @return A `data.table` of GSOD weather data
+#' @autoglobal
 #' @noRd
 .apply_process_csv <- function(file_list, isd_history) {
   x <- lapply(X = file_list,

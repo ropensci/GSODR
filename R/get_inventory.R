@@ -24,6 +24,7 @@
 #'
 #' @return A \code{\link[data.table]{data.table}} object of station inventories
 #' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
+#' @autoglobal
 #' @export get_inventory
 
 get_inventory <- function() {

@@ -21,6 +21,7 @@
 #' update_station_list()
 #'
 #' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
+#' @autoglobal
 #' @export update_station_list
 
 update_station_list <- function() {
