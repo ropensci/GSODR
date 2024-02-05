@@ -33,7 +33,7 @@ Authors@R: c(
         email = "Tyler.Widdison@usav.org", comment = "Reported bug where
         `nearest_stations()` did not return stations in order of nearest to
         farthest"),
-    person(given = "Western Australia Agriculture Authority (WAAA)",
+    person(given = "Curtin University",
         role = "cph", comment = c("Supported the development of 'GSODR' through
         Adam H. Sparks's time.")))
 URL: https://docs.ropensci.org/GSODR/

@@ -35,7 +35,7 @@ Other contributors:
   \item Łukasz Pawlik \email{lukpawlik@gmail.com} (Reported bug in windspeed conversion calculation) [contributor]
   \item Ross Darnell \email{Ross.Darnell@data61.csiro.au} (\href{https://orcid.org/0000-0002-7973-6322}{ORCID}) (Reported bug in 'Windows OS' versions causing 'GSOD' data untarring to fail) [contributor]
   \item Tyler Widdison \email{Tyler.Widdison@usav.org} (Reported bug where `nearest_stations()` did not return stations in order of nearest to farthest) [contributor]
-  \item Western Australia Agriculture Authority (WAAA) (Supported the development of 'GSODR' through Adam H. Sparks's time.) [copyright holder]
+  \item Curtin University (Supported the development of 'GSODR' through Adam H. Sparks's time.) [copyright holder]
 }
 
 }
