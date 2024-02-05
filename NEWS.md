@@ -1,3 +1,18 @@
+# GSODR 3.1.10
+
+## Minor changes
+
+- Use {roxyglobals} for handling global values.
+
+- Update internal isd history database.
+
+- Tidy up Appendix 2 in vignette, map of GSOD station locations.
+Add a caption and remove text from .png image itself.
+
+## Bug fixes
+
+- Fix codecov badge in README
+
 # GSODR 3.1.9
 
 ## Bug fixes
