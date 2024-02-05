@@ -1,4 +1,4 @@
-#' Processes GSOD Data for Use in an R Sesion
+#' Processes GSOD Data for Use in an R Session
 #'
 #' @param x A `data.table` generated from `.download_data()`
 #' @param isd_history Internal metadata file for station locations
