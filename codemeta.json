@@ -7,13 +7,13 @@
   "codeRepository": "https://github.com/ropensci/GSODR",
   "issueTracker": "https://github.com/ropensci/GSODR/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "3.1.9",
+  "version": "3.1.10",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.3.1 (2023-06-16)",
+  "runtimePlatform": "R version 4.3.2 (2023-10-31)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -93,7 +93,7 @@
     },
     {
       "@type": "Organization",
-      "name": "Western Australia Agriculture Authority (WAAA)"
+      "name": "Curtin University"
     }
   ],
   "maintainer": [
@@ -225,6 +225,18 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=tidyr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "roxyglobals",
+      "name": "roxyglobals",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=roxyglobals"
     }
   ],
   "softwareRequirements": {
@@ -297,7 +309,7 @@
   "applicationCategory": "Tools",
   "isPartOf": "https://ropensci.org",
   "keywords": ["US-NCEI", "meteorological-data", "global-weather", "weather", "weather-data", "meteorology", "station-data", "surface-weather", "data-access", "US-NCDC", "r", "gsod", "ncdc", "weather-stations", "global-data", "ncei", "weather-information", "historical-weather", "historical-data", "daily-data", "daily-weather", "rstats", "r-package"],
-  "fileSize": "4321.957KB",
+  "fileSize": "4340.156KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
@@ -321,7 +333,7 @@
       "name": "{GSODR}: Global Summary Daily Weather Data in R",
       "identifier": "10.5281/zenodo.1040727",
       "url": "https://CRAN.R-project.org/package=nasapower",
-      "description": "R package version 3.1.9",
+      "description": "R package version 3.1.10",
       "@id": "https://doi.org/10.5281/zenodo.1040727",
       "sameAs": "https://doi.org/10.5281/zenodo.1040727"
     },
@@ -355,7 +367,7 @@
   "relatedLink": ["https://docs.ropensci.org/GSODR/", "https://CRAN.R-project.org/package=GSODR"],
   "releaseNotes": "https://github.com/ropensci/GSODR/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/GSODR/blob/main/README.md",
-  "contIntegration": ["https://github.com/ropensci/GSODR/actions", "https://app.codecov.io/gh/ropensci/GSODR"],
+  "contIntegration": ["https://github.com/ropensci/GSODR/actions", "https://codecov.io/gh/ropensci/GSODR"],
   "developmentStatus": "https://www.repostatus.org/#active",
   "review": {
     "@type": "Review",
