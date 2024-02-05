@@ -316,7 +316,7 @@ Missing = `NA`.
 
 ## Appendix 2: Map of Current GSOD Station Locations
 
-```{r, eval=TRUE, message=FALSE, echo=FALSE, warning=FALSE, fig.width = 7, fig.height = 5, fig.align = "center", fig.path = "vignettes/"}
+```{r GSOD_Station_locations, eval=TRUE, message=FALSE, echo=FALSE, warning=FALSE, fig.width = 7, fig.height = 5, fig.align = "center", fig.path = "vignettes/", fig.cap = "GSOD Station Locations. Data comes from US NCEI GSOD and CIA World DataBank II"}
 if (requireNamespace("maps", quietly = TRUE) &&
     requireNamespace("mapproj", quietly = TRUE) &&
     requireNamespace("gridExtra", quietly = TRUE) &&
@@ -338,9 +338,7 @@ if (requireNamespace("maps", quietly = TRUE) &&
     geom_point(color = "red",
                size = 0.05) +
     coord_map(xlim = c(-180, 180)) +
-    theme_void() +
-    labs(title = "GSOD Station Locations",
-         caption = "Data: US NCEI GSOD and CIA World DataBank II")
+    theme_void()
 
   # Using the gridExtra and grid packages add a neatline to the map
   grid.arrange(GSOD_stations, ncol = 1)
