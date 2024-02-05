@@ -1,5 +1,5 @@
 
-<div style="clear:both"><h1><em>GSODR</em>: Global Surface Summary of the Day ('GSOD') Weather Data Client</h1></div>
+<div style="clear:both"><h1>{GSODR}: Global Surface Summary of the Day ('GSOD') Weather Data Client</h1></div>
 <img src="man/figures/logo.png" style="float:right;" alt="logo" width="120" />
 
 <!-- badges: start -->
