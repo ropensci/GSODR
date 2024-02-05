@@ -1,10 +1,10 @@
-# GSODR v3.1.9
+# GSODR v3.1.10
 
 ## Test environments
 
- - local macOS, Platform: aarch64-apple-darwin20 (64-bit), R 4.2.2
- - local macOS, Platform: aarch64-apple-darwin20 (64-bit), R 4.3.1
- - win-builder, R Under development (unstable) 
+ - local macOS, Platform: aarch64-apple-darwin20 (64-bit), R 4.3.2
+ - win-builder, R Under development (unstable)
+ - win-builder, Platform: x86_64-w64-mingw32, R 4.3.2
 
 This is a new patch release.
 
