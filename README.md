@@ -5,7 +5,7 @@
 <!-- badges: start -->
 
 [![tic](https://github.com/ropensci/GSODR/workflows/tic/badge.svg?branch=main)](https://github.com/ropensci/GSODR/actions)
-[![codecov](https://codecov.io/gh/ropensci/GSODR/graph/badge.svg?token=7KOFeomenq)](https://codecov.io/gh/ropensci/GSODR)
+[![codecov](https://codecov.io/gh/ropensci/GSODR/graph/badge.svg?token=7KOFeomenq)](https://app.codecov.io/gh/ropensci/GSODR)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.439850.svg)](https://doi.org/10.5281/zenodo.439850) 
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/GSODR)](https://cran.r-project.org/package=GSODR)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) 
@@ -51,16 +51,11 @@ install.packages("GSODR")
 ### Development Version
 
 A development version is available from from GitHub.
-If you wish to install the development version that may have new features or bug fixes before the CRAN version does (but also may not work properly), please install the [remotes](https://github.com/r-lib/remotes) package, available from CRAN.
+If you wish to install the development version that may have new features or bug fixes before the CRAN version does (but also may not work properly), please install from the [rOpenSci R Universe](https://ropensci.org/r-universe/).
 We strive to keep the main branch on GitHub functional and working properly.
 
 ```r
-if (!require("remotes")) {
-  install.packages("remotes", repos = "http://cran.rstudio.com/")
-  library("remotes")
-}
-
-install_github("ropensci/GSODR")
+install.packages("GSODR", repos = "https://ropensci.r-universe.dev")
 ```
 
 ## Other Sources of Weather Data in R
