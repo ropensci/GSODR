@@ -11,6 +11,7 @@ CSI
 CSIRO
 CTRY
 CliFlo
+Curtin
 DATSAV
 DEWP
 DOI
@@ -59,7 +60,6 @@ Standardise
 Toowoomba
 USCS
 VISIB
-WAAA
 WBAN
 WDPS
 WDSP
@@ -98,6 +98,7 @@ mistyped
 onLoad
 optimised
 plyr
+png
 pre
 purrr
 rOpenSci
@@ -110,6 +111,7 @@ rgdal
 riem
 rnoaa
 ropensci
+roxyglobals
 snuck
 sp
 stationaRy
