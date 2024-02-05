@@ -573,7 +573,7 @@ These were always available through GSOD but this bug prevented them from being 
 
 -   A new function, `get_station_list()` allows for fetching latest station list from the FTP server and querying by the user for a specified station or location.
 
--   New data layers are provided through a separate package, [`GSODRdata`](https://github.com/adamhsparks/GSODRdata), which provide climate data formatted for use with GSODR.
+-   New data layers are provided through a separate package, `GSODRdata`, which provide climate data formatted for use with GSODR.
 
     -   CHELSA (climatic surfaces at 1 km resolution),
 
