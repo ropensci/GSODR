@@ -4,7 +4,7 @@
 \alias{nearest_stations}
 \title{Find Nearest GSOD Stations to a Specified Latitude and Longitude}
 \usage{
-nearest_stations(LAT, LON, distance)
+nearest_stations(LAT, LON, distance, return_full = FALSE)
 }
 \arguments{
 \item{LAT}{Latitude expressed as decimal degrees (DD) (WGS84)}
@@ -13,14 +13,19 @@ nearest_stations(LAT, LON, distance)
 
 \item{distance}{Distance in kilometres from point for which stations are to
 be returned.}
+
+\item{return_full}{A `Boolean` value indicating whether or not to return a
+detailed \code{\link[data.table]{data.table}} with station metadata or a
+single column \code{\link[data.table]{data.table}} of station identifiers
+(default). Defaults to `FALSE` with a single column
+\code{\link[data.table]{data.table}} of station IDs.}
 }
 \value{
-By default a class \code{\link[base]{character}}
- \code{\link[base]{vector}} object of station identification numbers.
- in order from nearest to farthest in increasing order.  If
- \code{return_full} is \code{TRUE}, a \code{\link[data.table]{data.table}}
- with full station metadata including the distance from the user specified
- coordinates is returned.
+By default a class single column \code{\link[data.table]{data.table}}
+ object of station identification numbers in order from nearest to farthest
+ in increasing distance.  If  \code{return_full} is \code{TRUE}, a
+ \code{\link[data.table]{data.table}} with full station metadata including
+ the distance from the user specified coordinates is returned.
 }
 \description{
 Given latitude and longitude values entered as decimal degrees (DD), this
