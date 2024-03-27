@@ -9,11 +9,6 @@
 #' @param LON Longitude expressed as decimal degrees (DD) (WGS84)
 #' @param distance Distance in kilometres from point for which stations are to
 #' be returned.
-#' @param return_full A `Boolean` value indicating whether or not to return a
-#'   detailed \code{\link[data.table]{data.table}} with station metadata or a
-#'   single column \code{\link[data.table]{data.table}} of station identifiers
-#'   (default). Defaults to `FALSE` with a single column
-#'   \code{\link[data.table]{data.table}} of station IDs.
 #'
 #' @note The \acronym{GSOD} data, which are downloaded and manipulated by
 #' \CRANpkg{GSODR} stipulate that the following notice should be given.
