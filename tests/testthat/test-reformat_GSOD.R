@@ -37,13 +37,13 @@ test_that("reformat_GSOD file_list parameter reformats data properly", {
   x <- reformat_GSOD(file_list = file_list)
   expect_equal(nrow(x), 722)
   expect_length(x, 47)
-  expect_is(x, "data.frame")
+  expect_s3_class(x, "data.frame")
 
   # check that provided a dsn only, the function works properly
   x <- reformat_GSOD(dsn = tempdir())
   expect_equal(nrow(x), 722)
   expect_length(x, 47)
-  expect_is(x, "data.frame")
+  expect_s3_class(x, "data.frame")
 
   # Check that a message is emitted when both dsn and file_list are set --------
   expect_message(reformat_GSOD(dsn = tempdir(),
@@ -55,7 +55,6 @@ test_that("reformat_GSOD file_list parameter reformats data properly", {
 
 
 # Check that reformat_GSOD stops if no files are found -------------------------
-context("reformat_GSOD")
 test_that("reformat_GSOD stops if no files are found", {
   skip_if_offline()
   expect_error(reformat_GSOD(dsn = "/dev/NULL"))

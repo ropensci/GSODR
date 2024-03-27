@@ -6,10 +6,10 @@ test_that("nearest stations returns station IDs nearest to farthest", {
     nearest_stations(LAT = -27.5598,
                      LON = 151.9507,
                      distance = 100)
-  expect_length(n, 17)
-  expect_type(n, "character")
+  expect_equal(dim(n), c(17, 13))
+  expect_s3_class(n, "data.frame")
   expect_equal(
-    n,
+    n$STNID,
     c(
       "945510-99999",
       "955510-99999",
