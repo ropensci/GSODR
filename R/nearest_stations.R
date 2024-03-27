@@ -29,16 +29,13 @@
 #' n <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 100)
 #' n
 #'
-#' @return By default a class single column \code{\link[data.table]{data.table}}
-#'  object of station identification numbers in order from nearest to farthest
-#'  in increasing distance.  If  \code{return_full} is \code{TRUE}, a
-#'  \code{\link[data.table]{data.table}} with full station metadata including
-#'  the distance from the user specified coordinates is returned.
+#' @return A \code{\link[data.table]{data.table}} with full station metadata
+#' including the distance from the user specified coordinates.
 #' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
 #' @autoglobal
 #' @export nearest_stations
 
-nearest_stations <- function(LAT, LON, distance, return_full = FALSE) {
+nearest_stations <- function(LAT, LON, distance) {
   # load current local copy of isd_history
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 
@@ -60,8 +57,8 @@ nearest_stations <- function(LAT, LON, distance, return_full = FALSE) {
 
     # radius of earth
     6371 * 2 * asin(sqrt(`+`(
-      (sin(delta_lat / 2))^2,
-      cos(lat1) * cos(lat2) * (sin(delta_lon / 2))^2
+      (sin(delta_lat / 2)) ^ 2,
+      cos(lat1) * cos(lat2) * (sin(delta_lon / 2)) ^ 2
     )))
   }
 
@@ -78,10 +75,5 @@ nearest_stations <- function(LAT, LON, distance, return_full = FALSE) {
                       distance_km < distance)[[1]])
   setnames(subset_stns, "V1", "STNID")
 
-  if (return_full) {
-    return(isd_history[subset_stns, on = "STNID"])
-  }
-
-  return(subset_stns)
-
-  }
+  return(isd_history[subset_stns, on = "STNID"])
+}
