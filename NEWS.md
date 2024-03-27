@@ -1,3 +1,19 @@
+# GSDOR 4.0.0
+
+## Major changes
+
+- **Breaking change** `nearest_stations()` now returns a `data.table` of all station metadata and a value with the distance in kilometres from the user-provided coordinates.
+This function previous returned a single `character` vector.
+To replicate the previous functionality, you can use the following method by calling the `STNID` column name.
+
+```r
+nearest_stations(LAT = 14.16742, LON = 121.255669, distance = 50)$STNID
+```
+
+## Minor changes
+
+- Update internal isd history database.
+
 # GSODR 3.1.10
 
 ## Minor changes
