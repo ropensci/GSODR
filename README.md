@@ -3,15 +3,13 @@
 <img src="man/figures/logo.png" style="float:right;" alt="logo" width="120" />
 
 <!-- badges: start -->
-
-[![tic](https://github.com/ropensci/GSODR/workflows/tic/badge.svg?branch=main)](https://github.com/ropensci/GSODR/actions)
+[![R-CMD-check](https://github.com/ropensci/GSODR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/GSODR/actions/workflows/R-CMD-check.yaml)
 [![codecov](https://codecov.io/gh/ropensci/GSODR/graph/badge.svg?token=7KOFeomenq)](https://app.codecov.io/gh/ropensci/GSODR)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.439850.svg)](https://doi.org/10.5281/zenodo.439850) 
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/GSODR)](https://cran.r-project.org/package=GSODR)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) 
 [![JOSS](http://joss.theoj.org/papers/10.21105/joss.00177/status.svg)](https://joss.theoj.org/papers/10.21105/joss.00177) 
 [![](https://badges.ropensci.org/79_status.svg)](https://github.com/ropensci/software-review/issues/79)
-
 <!-- badges: end -->
 
 --------------------
