@@ -32,7 +32,7 @@ _GSODR_ aims to make it easy to find, transfer and format the data you need for 
 
 - `reformat_GSOD()` - this function takes individual station files from the local disk and re-formats them returning a tidy data frame in R.
 
-- `nearest_stations()` - this function returns a vector of station IDs that fall within the given radius (kilometres) of a point given as latitude and longitude in order from nearest to farthest.
+- `nearest_stations()` - this function returns a `data.table` of stations with their metadata and the distance in which they fall from the given radius (kilometres) of a point given as latitude and longitude in order from nearest to farthest.
 
 - `update_station_list()` - this function downloads the latest station list from the NCEI's server updates the package's internal database of stations and their metadata.
 
@@ -78,10 +78,12 @@ str(tbar)
 Using the `nearest_stations()` function, you can find stations closest to a given point specified by latitude and longitude in decimal degrees.
 This can be used to generate a vector to pass along to `get_GSOD()` and download the stations of interest.
 
+Warning messages will be generated as not all stations have data for the requested year.
+
 ```{r Ex3, eval=TRUE, message=FALSE}
 tbar_stations <- nearest_stations(LAT = -27.5598,
                                   LON = 151.9507,
-                                  distance = 50)
+                                  distance = 50)$STNID
 
 tbar <- get_GSOD(years = 2010, station = tbar_stations)
 str(tbar)
