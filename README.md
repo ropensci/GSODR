@@ -23,7 +23,7 @@ The GSOD or [Global Surface Summary of the Day (GSOD)](https://www.ncei.noaa.gov
 
 - `reformat_GSOD()` - this function takes individual station files from the local disk and re-formats them returning a data frame.
 
-- `nearest_stations()` - this function returns a vector of station IDs that fall within the given radius (kilometres) of a point given as latitude and longitude in order from nearest to farthest.
+- `nearest_stations()` - this function returns a `data.table` of stations with their metadata and the distance in which they fall from the given radius (kilometres) of a point given as latitude and longitude in order from nearest to farthest.
 
 - `update_station_list()` - this function downloads the latest station list from the NCEI's server updates the package's internal database of stations and their metadata.
 
