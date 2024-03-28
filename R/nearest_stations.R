@@ -24,12 +24,8 @@
 #' n <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 100)
 #' n
 #'
-#' @return By default a class \code{\link[base]{character}}
-#'  \code{\link[base]{vector}} object of station identification numbers.
-#'  in order from nearest to farthest in increasing order.  If
-#'  \code{return_full} is \code{TRUE}, a \code{\link[data.table]{data.table}}
-#'  with full station metadata including the distance from the user specified
-#'  coordinates is returned.
+#' @return A \code{\link[data.table]{data.table}} with full station metadata
+#' including the distance from the user specified coordinates.
 #' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
 #' @autoglobal
 #' @export nearest_stations
@@ -42,32 +38,37 @@ nearest_stations <- function(LAT, LON, distance) {
   user_LON <- LON
 
   # Distance over a great circle. Reasonable approximation.
-  # From HughParsonage in our bomrang package,
+  # From @HughParsonage in our (now retired) {bomrang} package,
   # https://github.com/ropensci/bomrang/blob/master/R/internal_functions.R
   haversine_distance <- function(lat1, lon1, lat2, lon2) {
     # to radians
-    lat1 <- lat1 * pi / 180
-    lat2 <- lat2 * pi / 180
-    lon1 <- lon1 * pi / 180
-    lon2 <- lon2 * pi / 180
+    lat1 <- lat1 * 0.01745329 # this is `pi / 180` pre calculated for efficiency
+    lat2 <- lat2 * 0.01745329
+    lon1 <- lon1 * 0.01745329
+    lon2 <- lon2 * 0.01745329
 
     delta_lat <- abs(lat1 - lat2)
     delta_lon <- abs(lon1 - lon2)
 
     # radius of earth
     6371 * 2 * asin(sqrt(`+`(
-      (sin(delta_lat / 2))^2,
-      cos(lat1) * cos(lat2) * (sin(delta_lon / 2))^2
+      (sin(delta_lat / 2)) ^ 2,
+      cos(lat1) * cos(lat2) * (sin(delta_lon / 2)) ^ 2
     )))
   }
 
 
-  isd_history[, distance_km := haversine_distance(
+  isd_history[, distance_km := round(haversine_distance(
     lat1 = LAT,
     lon1 = LON,
     lat2 = user_LAT,
     lon2 = user_LON
-  )]
+  ), 1)]
 
-  return(subset(isd_history[order(distance_km)], distance_km < distance)[[1]])
+  subset_stns <-
+    data.table(subset(isd_history[order(distance_km)],
+                      distance_km < distance)[[1]])
+  setnames(subset_stns, "V1", "STNID")
+
+  return(isd_history[subset_stns, on = "STNID"])
 }

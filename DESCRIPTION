@@ -1,7 +1,7 @@
 Package: GSODR
 Type: Package
 Title: Global Surface Summary of the Day ('GSOD') Weather Data Client
-Version: 3.1.10
+Version: 4.0.0
 Authors@R: c(
     person("Adam H.", "Sparks", role = c("aut", "cre"),
         email = "adamhsparks@gmail.com",
@@ -91,3 +91,5 @@ Roxygen: list(roclets = c("collate", "namespace", "rd",
     "roxyglobals::global_roclet"))
 Config/roxyglobals/filename: globals.R
 Config/roxyglobals/unique: FALSE
+Config/testthat/edition: 3
+Config/testthat/parallel: true
