@@ -1,63 +1,52 @@
-Package: GSODR
 Type: Package
+Package: GSODR
 Title: Global Surface Summary of the Day ('GSOD') Weather Data Client
 Version: 4.0.0
 Authors@R: c(
-    person("Adam H.", "Sparks", role = c("aut", "cre"),
-        email = "adamhsparks@gmail.com",
-        comment = c(ORCID = "0000-0002-0061-8359")),
-    person("Tomislav", "Hengl", role = "aut",
-        email = "tom.hengl@isric.org",
-        comment = c(ORCID = "0000-0002-9921-5129")),
-    person("Andrew", "Nelson", role = "aut",
-        email = "dr.andy.nelson@gmail.com",
-        comment = c(ORCID = "0000-0002-7249-3778")),
-    person("Hugh", "Parsonage", role = c("cph", "ctb"),
-        email = "hugh.parsonage@gmail.com",
-        comment = c(ORCID = "0000-0003-4055-0835")),
-    person("Taras", "Kaduk", role = "ctb",
-        email = "taras.kaduk@gmail.com",
-        comment = "Suggestion for handling bulk station downloads more
-        efficiently"),
-    person("Gwenael", "Giboire", role = "ctb",
-        email = "gwenael.giboire@oda-groupe.com",
-        comment = "Several bug reports in early versions and testing feedback"),
-    person("Łukasz", "Pawlik", role = "ctb", email = "lukpawlik@gmail.com", 
-        comment = "Reported bug in windspeed conversion calculation"),
-    person("Ross","Darnell", role = "ctb",
-        email = "Ross.Darnell@data61.csiro.au", comment = c(
-        "Reported bug in 'Windows OS' versions causing 'GSOD' data untarring to
-        fail",
-        ORCID = "0000-0002-7973-6322")),
-    person("Tyler", "Widdison", role = "ctb",
-        email = "Tyler.Widdison@usav.org", comment = "Reported bug where
-        `nearest_stations()` did not return stations in order of nearest to
-        farthest"),
-    person(given = "Curtin University",
-        role = "cph", comment = c("Supported the development of 'GSODR' through
-        Adam H. Sparks's time.")))
+    person("Adam H.", "Sparks", , "adamhsparks@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-0061-8359")),
+    person("Tomislav", "Hengl", , "tom.hengl@isric.org", role = "aut",
+           comment = c(ORCID = "0000-0002-9921-5129")),
+    person("Andrew", "Nelson", , "dr.andy.nelson@gmail.com", role = "aut",
+           comment = c(ORCID = "0000-0002-7249-3778")),
+    person("Hugh", "Parsonage", , "hugh.parsonage@gmail.com", role = c("cph", "ctb"),
+           comment = c(ORCID = "0000-0003-4055-0835")),
+    person("Taras", "Kaduk", , "taras.kaduk@gmail.com", role = "ctb",
+           comment = "Suggestion for handling bulk station downloads more\n        efficiently"),
+    person("Gwenael", "Giboire", , "gwenael.giboire@oda-groupe.com", role = "ctb",
+           comment = "Several bug reports in early versions and testing feedback"),
+    person("Łukasz", "Pawlik", , "lukpawlik@gmail.com", role = "ctb",
+           comment = "Reported bug in windspeed conversion calculation"),
+    person("Ross", "Darnell", , "Ross.Darnell@data61.csiro.au", role = "ctb",
+           comment = c("Reported bug in 'Windows OS' versions causing 'GSOD' data untarring to\n        fail", ORCID = "0000-0002-7973-6322")),
+    person("Tyler", "Widdison", , "Tyler.Widdison@usav.org", role = "ctb",
+           comment = "Reported bug where\n        `nearest_stations()` did not return stations in order of nearest to\n        farthest"),
+    person("Curtin University", role = "cph",
+           comment = "Supported the development of 'GSODR' through\n        Adam H. Sparks's time.")
+  )
+Description: Provides automated downloading, parsing, cleaning, unit
+    conversion and formatting of Global Surface Summary of the Day
+    ('GSOD') weather data from the from the USA National Centers for
+    Environmental Information ('NCEI').  Units are converted from from
+    United States Customary System ('USCS') units to International System
+    of Units ('SI').  Stations may be individually checked for number of
+    missing days defined by the user, where stations with too many missing
+    observations are omitted.  Only stations with valid reported latitude
+    and longitude values are permitted in the final data.  Additional
+    useful elements, saturation vapour pressure ('es'), actual vapour
+    pressure ('ea') and relative humidity ('RH') are calculated from the
+    original data using the improved August-Roche-Magnus approximation
+    (Alduchov & Eskridge 1996) and included in the final data set.  The
+    resulting metadata include station identification information,
+    country, state, latitude, longitude, elevation, weather observations
+    and associated flags.  For information on the 'GSOD' data from 'NCEI',
+    please see the 'GSOD' 'readme.txt' file available from,
+    <https://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt>.
+License: MIT + file LICENSE
 URL: https://docs.ropensci.org/GSODR/
 BugReports: https://github.com/ropensci/GSODR/issues
-Description: Provides automated downloading, parsing, cleaning, unit conversion
-    and formatting of Global Surface Summary of the Day ('GSOD') weather data
-    from the from the USA National Centers for Environmental Information
-    ('NCEI').  Units are converted from from United States Customary System
-    ('USCS') units to International System of Units ('SI').  Stations may be
-    individually checked for number of missing days defined by the user, where
-    stations with too many missing observations are omitted.  Only stations with
-    valid reported latitude and longitude values are permitted in the final
-    data.  Additional useful elements, saturation vapour pressure ('es'), actual
-    vapour pressure ('ea') and relative humidity ('RH') are calculated from the
-    original data using the improved August-Roche-Magnus approximation (Alduchov
-    & Eskridge 1996) and included in the final data set.  The resulting metadata
-    include station identification information, country, state, latitude,
-    longitude, elevation, weather observations and associated flags.  For
-    information on the 'GSOD' data from 'NCEI', please see the 'GSOD'
-    'readme.txt' file available from,
-    <https://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt>.
 Depends:
     R (>= 3.5.0)
-License: MIT + file LICENSE
 Imports: 
     countrycode,
     curl,
@@ -67,29 +56,32 @@ Imports:
     utils
 Suggests:
     dplyr,
-    spelling,
     ggplot2,
     gridExtra,
     knitr,
     mapproj,
     maps,
     rmarkdown,
+    roxyglobals,
+    spelling,
     testthat,
-    tidyr,
-    roxyglobals
-RoxygenNote: 7.3.1
-Encoding: UTF-8
-Language: en-US
-NeedsCompilation: no
-Repository: CRAN
+    tidyr
+VignetteBuilder: 
+    knitr
 ByteCompile: TRUE
-VignetteBuilder: knitr
-X-schema.org-applicationCategory: Tools
-X-schema.org-keywords: US-NCEI, meteorological-data, global-weather, weather, weather-data, meteorology, station-data, surface-weather, data-access, US-NCDC
-X-schema.org-isPartOf: https://ropensci.org
-Roxygen: list(roclets = c("collate", "namespace", "rd",
-    "roxyglobals::global_roclet"))
 Config/roxyglobals/filename: globals.R
 Config/roxyglobals/unique: FALSE
 Config/testthat/edition: 3
 Config/testthat/parallel: true
+Encoding: UTF-8
+Language: en-US
+NeedsCompilation: no
+Repository: CRAN
+Roxygen: list(roclets = c("collate", "namespace", "rd",
+    "roxyglobals::global_roclet"))
+RoxygenNote: 7.3.1
+X-schema.org-applicationCategory: Tools
+X-schema.org-isPartOf: https://ropensci.org
+X-schema.org-keywords: US-NCEI, meteorological-data, global-weather,
+    weather, weather-data, meteorology, station-data, surface-weather,
+    data-access, US-NCDC

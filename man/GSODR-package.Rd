@@ -30,12 +30,17 @@ Authors:
 Other contributors:
 \itemize{
   \item Hugh Parsonage \email{hugh.parsonage@gmail.com} (\href{https://orcid.org/0000-0003-4055-0835}{ORCID}) [copyright holder, contributor]
-  \item Taras Kaduk \email{taras.kaduk@gmail.com} (Suggestion for handling bulk station downloads more efficiently) [contributor]
+  \item Taras Kaduk \email{taras.kaduk@gmail.com} (Suggestion for handling bulk station downloads more
+ efficiently) [contributor]
   \item Gwenael Giboire \email{gwenael.giboire@oda-groupe.com} (Several bug reports in early versions and testing feedback) [contributor]
   \item Łukasz Pawlik \email{lukpawlik@gmail.com} (Reported bug in windspeed conversion calculation) [contributor]
-  \item Ross Darnell \email{Ross.Darnell@data61.csiro.au} (\href{https://orcid.org/0000-0002-7973-6322}{ORCID}) (Reported bug in 'Windows OS' versions causing 'GSOD' data untarring to fail) [contributor]
-  \item Tyler Widdison \email{Tyler.Widdison@usav.org} (Reported bug where `nearest_stations()` did not return stations in order of nearest to farthest) [contributor]
-  \item Curtin University (Supported the development of 'GSODR' through Adam H. Sparks's time.) [copyright holder]
+  \item Ross Darnell \email{Ross.Darnell@data61.csiro.au} (\href{https://orcid.org/0000-0002-7973-6322}{ORCID}) (Reported bug in 'Windows OS' versions causing 'GSOD' data untarring to
+ fail) [contributor]
+  \item Tyler Widdison \email{Tyler.Widdison@usav.org} (Reported bug where
+ `nearest_stations()` did not return stations in order of nearest to
+ farthest) [contributor]
+  \item Curtin University (Supported the development of 'GSODR' through
+ Adam H. Sparks's time.) [copyright holder]
 }
 
 }
