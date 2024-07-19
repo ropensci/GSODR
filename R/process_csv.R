@@ -30,8 +30,7 @@
     "WDSP",
     "MXSPD",
     "GUST",
-    "SNDP",
-    "STP"
+    "SNDP"
   )]) {
     set(DT, j = col, value = as.character(DT[[col]]))
     set(DT,
@@ -46,6 +45,7 @@
     "TEMP",
     "DEWP",
     "SLP",
+    "STP",
     "MAX",
     "MIN"
   )]) {
