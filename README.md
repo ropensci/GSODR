@@ -78,6 +78,10 @@ The user is required to have an Internet connection, and a current CliFlo subscr
 
 ## Notes
 
+### Citing GSOD data
+
+> Cite as: NOAA National Centers of Environmental Information. 1999. Global Surface Summary of the Day - GSOD. 1.0. [indicate subset used]. NOAA National Centers for Environmental Information. Accessed [date].
+
 ### NOAA policy
 
 Users of these data should take into account the following:
