@@ -50,7 +50,7 @@ get_updates <- function() {
 
   x[, STNID := sprintf("%s-%s", STATION, WBAN)]
   x[, c("STATION", "WBAN") := NULL]
-  x[, Year := as.integer(YEAR)]
+  x[, YEAR := as.integer(YEAR)]
   x[, DATE := as.Date(DATE)]
   setorder(x, -DATE)
   setcolorder(x, c("STNID"))
