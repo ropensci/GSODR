@@ -88,8 +88,7 @@
 #' @return A data frame as a \code{\link[data.table]{data.table}} object of
 #' \acronym{GSOD} weather data.
 #'
-#' @seealso
-#' \code{\link{reformat_GSOD}}
+#' @seealso [reformat_GSOD()]
 #' @autoglobal
 #' @export get_GSOD
 
