@@ -108,7 +108,7 @@ ie_1929 <- get_GSOD(years = 1929, country = "Ireland")
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-\code{\link{reformat_GSOD}}
+[reformat_GSOD()]
 }
 \author{
 Adam H. Sparks, \email{adamhsparks@gmail.com}

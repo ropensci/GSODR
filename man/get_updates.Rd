@@ -15,8 +15,9 @@ Gets and imports the 'updates.txt' file that has a change log of GSOD data.
   field.  Column names follow \CRANpkg{GSODR} naming conventions.
 }
 \examples{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 get_updates()
-
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other metadata: 

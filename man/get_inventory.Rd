@@ -35,6 +35,12 @@ inventory <- get_inventory()
 inventory
 \dontshow{\}) # examplesIf}
 }
+\seealso{
+Other metadata: 
+\code{\link{get_isd_history}()},
+\code{\link{get_updates}()}
+}
 \author{
 Adam H. Sparks, \email{adamhsparks@gmail.com}
 }
+\concept{metadata}

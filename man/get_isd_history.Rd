@@ -17,3 +17,9 @@ Get the Most Recent isd_history File
 get_isd_history()
 \dontshow{\}) # examplesIf}
 }
+\seealso{
+Other metadata: 
+\code{\link{get_inventory}()},
+\code{\link{get_updates}()}
+}
+\concept{metadata}

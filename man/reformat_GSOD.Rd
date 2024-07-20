@@ -95,6 +95,8 @@ tbar
 For automated downloading and tidying see the \code{\link{get_GSOD}}
 function which provides expanded functionality for automatically downloading
 and expanding annual \acronym{GSOD} files and cleaning station files.
+
+[get_GSOD()]
 }
 \author{
 Adam H. Sparks, \email{adamhsparks@gmail.com}
