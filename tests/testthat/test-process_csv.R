@@ -2,8 +2,7 @@ test_that(
   ".process_csv returns a data.table", {
     skip_if_offline()
     # Check that .process_gz returns a properly formatted data.table -----------
-    load(system.file("extdata", "isd_history.rda", package = "GSODR"))
-    stations <- isd_history
+    stations <- get_isd_history()
 
     csv_file <- .download_files(station = "955510-99999", years = "2016")
     csv_out <- .process_csv(csv_file, stations)
