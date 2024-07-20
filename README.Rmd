@@ -1,6 +1,19 @@
+---
+output: github_document
+---
 
-<div style="clear:both"><h1>{GSODR}: Global Surface Summary of the Day ('GSOD') Weather Data Client</h1></div>
-<img src="man/figures/logo.png" style="float:right;" alt="logo" width="120" />
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# {GSODR}: Global Surface Summary of the Day ('GSOD') Weather Data Client <img src="man/figures/logo.png" style="float:right;" alt="logo" width="120" />
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/ropensci/GSODR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/GSODR/actions/workflows/R-CMD-check.yaml)
@@ -17,7 +30,7 @@
 ## Introduction
 
 The GSOD or [Global Surface Summary of the Day (GSOD)](https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516) data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage.
-{GSODR} aims to make it easy to find, transfer and format the data you need for use in analysis and provides five main functions for facilitating this:
+{GSODR} aims to make it easy to find, transfer and format the data you need for use in analysis and provides six main functions for facilitating this:
 
 - `get_GSOD()` - this function queries and transfers files from the NCEI's web server, reformats them and returns a data frame.
 
