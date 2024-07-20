@@ -13,7 +13,7 @@
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.4.0 (2024-04-24)",
+  "runtimePlatform": "R version 4.4.1 (2024-06-14)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -309,7 +309,7 @@
   "applicationCategory": "Tools",
   "isPartOf": "https://ropensci.org",
   "keywords": ["US-NCEI", "meteorological-data", "global-weather", "weather", "weather-data", "meteorology", "station-data", "surface-weather", "data-access", "US-NCDC", "r", "gsod", "ncdc", "weather-stations", "global-data", "ncei", "weather-information", "historical-weather", "historical-data", "daily-data", "daily-weather", "rstats", "r-package"],
-  "fileSize": "4329.045KB",
+  "fileSize": "4348.383KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
@@ -367,7 +367,7 @@
   "relatedLink": ["https://docs.ropensci.org/GSODR/", "https://CRAN.R-project.org/package=GSODR"],
   "releaseNotes": "https://github.com/ropensci/GSODR/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/GSODR/blob/main/README.md",
-  "contIntegration": ["https://github.com/ropensci/GSODR/actions", "https://app.codecov.io/gh/ropensci/GSODR"],
+  "contIntegration": ["https://github.com/ropensci/GSODR/actions/workflows/R-CMD-check.yaml", "https://app.codecov.io/gh/ropensci/GSODR"],
   "developmentStatus": "https://www.repostatus.org/#active",
   "review": {
     "@type": "Review",
