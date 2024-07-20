@@ -5,6 +5,7 @@ Bigouette
 CCI
 CGIAR
 CHELSA
+CMD
 CRAN's
 CRU
 CSI
@@ -30,6 +31,7 @@ GSODR's
 GSODRdata
 GSODTools
 GSODdata
+GSOD’
 GeoPackage
 ICAO
 IMFAOS
@@ -42,6 +44,7 @@ Mesonet
 NCDC
 NCEI
 NCEI's
+NCEI’s
 NOAA
 ORCID
 PRCP
@@ -75,8 +78,10 @@ YYYYMMDD
 agroclimatology
 al
 capitalisation
+changelog
 clifro
 codecov
+countries’
 csv
 dplyr
 et
@@ -90,6 +95,7 @@ joss
 juba
 kilometres
 licence
+locations’
 lon
 md
 metres
@@ -115,6 +121,7 @@ roxyglobals
 snuck
 sp
 stationaRy
+stations’
 summarise
 summarised
 summarising
