@@ -7,6 +7,7 @@ utils::globalVariables(c(
   "isd_history", # <nearest_stations>
   "distance_km", # <nearest_stations>
   "STNID", # <.process_csv>
+  "STP", # <.process_csv>
   "YEARMODA", # <.process_csv>
   "DATE", # <.process_csv>
   "YEAR", # <.process_csv>
@@ -34,9 +35,9 @@ utils::globalVariables(c(
   "I_TORNADO_FUNNEL", # <.process_csv>
   "FRSHTT", # <.process_csv>
   "isd_history", # <reformat_GSOD>
-  "WBAN", # <update_station_list>
-  "STNID", # <update_station_list>
-  "USAF", # <update_station_list>
-  "COUNTRY_NAME", # <update_station_list>
+  "WBAN", # <update_internal_isd_history>
+  "STNID", # <update_internal_isd_history>
+  "USAF", # <update_internal_isd_history>
+  "COUNTRY_NAME", # <update_internal_isd_history>
   NULL
 ))
