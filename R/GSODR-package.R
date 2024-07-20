@@ -18,6 +18,7 @@
 #' @importFrom data.table fread
 #' @importFrom data.table set
 #' @importFrom data.table setcolorder
+#' @importFrom data.table setorder
 #' @importFrom data.table setkey
 #' @importFrom data.table setkeyv
 #' @importFrom data.table setnames
