@@ -1,5 +1,5 @@
 
-#' Download Latest Station List Metadata and Update an Internal Database
+#' Download Latest isd-history.csv File and Update an Internal Database
 #'
 #' This function downloads the latest station list (isd-history.csv) from the
 #' \acronym{NCEI} server and updates the data distributed with \CRANpkg{GSODR}
@@ -22,9 +22,8 @@
 #'
 #' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
 #' @autoglobal
-#' @export update_station_list
 
-update_station_list <- function() {
+update_internal_isd_history <- function() {
 
   message(
     "This will overwrite GSODR's current internal list of GSOD stations.\n",
