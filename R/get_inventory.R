@@ -24,6 +24,7 @@
 #'
 #' @return A \code{\link[data.table]{data.table}} object of station inventories
 #' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
+#' @family metadata
 #' @autoglobal
 #' @export get_inventory
 
@@ -34,7 +35,7 @@ get_inventory <- function() {
   tryCatch(
     {
       curl::curl_download(
-        "https://www1.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt",
+        "https://www1.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt.z",
         destfile = file.path(tempdir(), "inventory.txt"),
         quiet = TRUE
       )
