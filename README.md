@@ -25,11 +25,13 @@ The GSOD or [Global Surface Summary of the Day (GSOD)](https://www.ncei.noaa.gov
 
 - `nearest_stations()` - this function returns a `data.table` of stations with their metadata and the distance in which they fall from the given radius (kilometres) of a point given as latitude and longitude in order from nearest to farthest.
 
-- `update_internal_isd_history()` - this function downloads the latest station list from the NCEI's server updates the package's internal database of stations and their metadata.
-
 - `get_inventory()` - this function downloads the latest station inventory information from the NCEI's server and returns the header information about the latest version as a message in the console and a tidy data frame of the stations' inventory for each month that data are reported.
 
-- `get_history()` - this function downloads the changelog for the GSOD data from the NCEI's server and reorders it by the most recent changes first.
+- `get_history()` - this function downloads the latest version of the isd-history.csv file from the NCEI's server and returns a {data.table} of the information for each station that is available. A version of this file is distributed with {GSODR} internally and can be updated with `update_internal_isd_history()`.
+
+- `get_updates()` - this function downloads the changelog for the GSOD data from the NCEI's server and reorders it by the most recent changes first.
+
+- `update_internal_isd_history()` - this function downloads the latest station list from the NCEI's server updates the package's internal database of stations and their metadata. **Not recommended for normal use.**
 
 When reformatting data either with `get_GSOD()` or `reformat_GSOD()`, all units are converted to International System of Units (SI), _e.g._, inches to millimetres and Fahrenheit to Celsius.
 File output is returned as a `data.table` object, summarising each year by station, which also includes vapour pressure and relative humidity elements calculated from existing data in GSOD.
