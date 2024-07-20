@@ -4,6 +4,12 @@ utils::globalVariables(c(
   "isd_history", # <get_GSOD>
   "isd_history", # <get_inventory>
   "STNID", # <get_inventory>
+  "STNID", # <get_updates>
+  "STATION", # <get_updates>
+  "WBAN", # <get_updates>
+  "Year", # <get_updates>
+  "YEAR", # <get_updates>
+  "DATE", # <get_updates>
   "isd_history", # <nearest_stations>
   "distance_km", # <nearest_stations>
   "STNID", # <.process_csv>
