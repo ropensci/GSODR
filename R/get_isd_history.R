@@ -5,6 +5,7 @@
 #' @return A \code{\link[data.table]{data.table}} object
 #' @export
 #' @family metadata
+#' @autoglobal
 #' @examplesIf interactive()
 #' get_isd_history()
 #'
