@@ -12,7 +12,6 @@ utils::globalVariables(c(
   "STNID", # <get_updates>
   "STATION", # <get_updates>
   "WBAN", # <get_updates>
-  "Year", # <get_updates>
   "YEAR", # <get_updates>
   "DATE", # <get_updates>
   "isd_history", # <nearest_stations>
