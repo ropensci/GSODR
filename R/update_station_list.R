@@ -18,7 +18,7 @@
 #' \code{load(system.file("extdata", "isd_history.rda", package = "GSODR"))}
 #'
 #' @examplesIf interactive()
-#' update_station_list()
+#' update_internal_isd_history()
 #'
 #' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
 #' @autoglobal
