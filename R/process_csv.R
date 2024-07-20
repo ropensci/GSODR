@@ -9,7 +9,12 @@
 
 .process_csv <- function(x, isd_history) {
   # Import data from the website for individual stations or tempdir() for all --
-  DT <- fread(x, strip.white = TRUE, keepLeadingZeros = TRUE)
+  # The "STP" column is set to be character here to handle the issues with vals
+  # over 1000 having the leading zero removed.
+  DT <- fread(x,
+              strip.white = TRUE,
+              keepLeadingZeros = TRUE,
+              colClasses = c("STP" = "character"))
 
   # Replace 99.99 et al. with NA
   set(DT,
