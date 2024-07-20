@@ -117,7 +117,7 @@ setnames(new_isd_history,
 new_isd_history[, COUNTRY_NAME := toupper(COUNTRY_NAME)]
 
 # set key for joins when processing CSV files
-setkeyv(new_isd_history, "STNID")[]
+setkeyv(new_isd_history, "STNID")
 ```
 
 ## Show changes from last release
