@@ -3,7 +3,6 @@ test_that(
     skip_if_offline()
     # Check that .process_gz returns a properly formatted data.table -----------
     load(system.file("extdata", "isd_history.rda", package = "GSODR"))
-    setkey(isd_history, "STNID")
     stations <- isd_history
 
     csv_file <- .download_files(station = "955510-99999", years = "2016")
@@ -137,3 +136,4 @@ test_that(
     expect_equal(csv_out$RH[[1]], 60.8, tolerance = 0.1)
   }
 )
+
