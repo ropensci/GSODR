@@ -27,7 +27,7 @@ ex_cnt <- 0
 
 The GSOD or [Global Surface Summary of the Day (GSOD)](https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516) data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage.
 However, the data files are cumbersome and difficult to work with.
-{GSODR} aims to make it easy to find, transfer and format the data you need for use in analysis and provides four main functions for facilitating this:
+{GSODR} aims to make it easy to find, transfer and format the data you need for use in analysis and provides six main functions for facilitating this:
 
 - `get_GSOD()` - this function queries and transfers files from the NCEI's web server, reformats them and returns a data frame.
 
