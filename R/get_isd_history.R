@@ -4,7 +4,7 @@
 #'
 #' @return A \code{\link[data.table]{data.table}} object
 #' @export
-#'
+#' @family metadata
 #' @examplesIf interactive()
 #' get_isd_history()
 #'
