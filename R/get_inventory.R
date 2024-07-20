@@ -109,7 +109,7 @@ get_inventory <- function() {
   return(main_body)
 }
 
-#' Prints GSODR.info object.
+#' Prints GSODR.info object
 #'
 #' @param x GSODR.Info object
 #' @param ... ignored
