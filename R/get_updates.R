@@ -8,8 +8,9 @@
 #'
 #' @return A \code{\link[data.table]{data.table}} object
 #' @export
+#' @autoglobal
 #' @family metadata
-#' @examples
+#' @examplesIf interactive()
 #' get_updates()
 #'
 get_updates <- function() {
