@@ -73,8 +73,8 @@
   # Correct STP values ---------------------------------------------------------
   # The NCEI supplied CSV files are broken, they lop off the "1" in values >1000
   # See https://github.com/ropensci/GSODR/issues/117
-  DT[, STP := fifelse(substr(STP, 1, 1) == 0,
-                      sprintf("%s%s", 1, DT$STP[[5]]),
+  DT[, STP := fifelse(substr(STP, 1, 1) == "0",
+                      sprintf("%s%s", 1, DT$STP),
                       STP, na = NA)]
 
   # Add and convert date related columns ---------------------------------------
