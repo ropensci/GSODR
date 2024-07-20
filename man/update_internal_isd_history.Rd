@@ -26,7 +26,7 @@ To directly access these data, use: \cr
 }
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-update_station_list()
+update_internal_isd_history()
 \dontshow{\}) # examplesIf}
 }
 \author{
