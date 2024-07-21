@@ -213,7 +213,7 @@ test_that("max_missing is not allowed for current year", {
 test_that("unique stations are returned, tempdir() is cleaned up on exit", {
   skip_if_offline()
   a <- get_GSOD(years = 1929, station = "039800-99999")
-  b <- get_GSOD(years = 1929, station = "990061-99999")
+  b <- get_GSOD(years = 1929, station = "039730-99999")
   expect_false(isTRUE(list.files(
     tempdir(),
     pattern = ".csv$",
