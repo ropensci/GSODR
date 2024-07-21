@@ -1,7 +1,7 @@
 Fetch and Clean ‘isd_history.csv’ File
 ================
 Adam H. Sparks
-2024-07-20
+2024-07-21
 
 <STYLE type='text/css' scoped>
 PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
@@ -110,49 +110,8 @@ setnames(new_isd_history,
 new_isd_history[, COUNTRY_NAME := toupper(COUNTRY_NAME)]
 
 # set key for joins when processing CSV files
-setkeyv(new_isd_history, "STNID")[]
+setkeyv(new_isd_history, "STNID")
 ```
-
-    ## Key: <STNID>
-    ##               STNID                                              NAME    LAT
-    ##              <char>                                            <char>  <num>
-    ##     1: 008268-99999                                         WXPOD8278 32.950
-    ##     2: 010010-99999                               JAN MAYEN(NOR-NAVY) 70.933
-    ##     3: 010014-99999                                        SORSTOKKEN 59.792
-    ##     4: 010015-99999                                        BRINGELAND 61.383
-    ##     5: 010016-99999                                       RORVIK/RYUM 64.850
-    ##    ---                                                                      
-    ## 27921: A07355-00241                         VIROQUA MUNICIPAL AIRPORT 43.579
-    ## 27922: A07357-00182 ELBOW LAKE MUNICIPAL PRIDE OF THE PRAIRIE AIRPORT 45.986
-    ## 27923: A07359-00240                              IONIA COUNTY AIRPORT 42.938
-    ## 27924: A51255-00445                       DEMOPOLIS MUNICIPAL AIRPORT 32.464
-    ## 27925: A51256-00451      BRANSON WEST MUNICIPAL EMERSON FIELD AIRPORT 36.699
-    ##            LON ELEV(M)   CTRY  STATE    BEGIN      END  COUNTRY_NAME  ISO2C
-    ##          <num>   <num> <char> <char>    <int>    <int>        <char> <char>
-    ##     1:  65.567  1156.7     AF        20100519 20120323   AFGHANISTAN     AF
-    ##     2:  -8.667     9.0     NO        19310101 20240717        NORWAY     NO
-    ##     3:   5.341    48.8     NO        19861120 20240717        NORWAY     NO
-    ##     4:   5.867   327.0     NO        19870117 19971231        NORWAY     NO
-    ##     5:  11.233    14.0     NO        19870116 19910806        NORWAY     NO
-    ##    ---                                                                     
-    ## 27921: -90.913   394.1     US     WI 20140731 20240718 UNITED STATES     US
-    ## 27922: -95.992   367.3     US     MN 20140731 20240718 UNITED STATES     US
-    ## 27923: -85.061   249.0     US     MI 20140731 20240718 UNITED STATES     US
-    ## 27924: -87.954    34.1     US     AL 20140731 20240718 UNITED STATES     US
-    ## 27925: -93.402   411.2     US     MO 20140731 20240718 UNITED STATES     US
-    ##         ISO3C
-    ##        <char>
-    ##     1:    AFG
-    ##     2:    NOR
-    ##     3:    NOR
-    ##     4:    NOR
-    ##     5:    NOR
-    ##    ---       
-    ## 27921:    USA
-    ## 27922:    USA
-    ## 27923:    USA
-    ## 27924:    USA
-    ## 27925:    USA
 
 ## Show changes from last release
 
@@ -166,7 +125,7 @@ install.packages("GSODR", repos = "https://cloud.r-project.org/")
 
     ## 
     ## The downloaded binary packages are in
-    ##  /var/folders/ch/8fqkzddj1kj_qb5ddfdd3p1w0000gn/T//RtmpY4j8Kj/downloaded_packages
+    ##  /var/folders/ch/8fqkzddj1kj_qb5ddfdd3p1w0000gn/T//Rtmpx7iKJ9/downloaded_packages
 
 ``` r
 load(system.file("extdata", "isd_history.rda", package = "GSODR"))
@@ -198,22 +157,22 @@ new_isd_history <- new_isd_history[, ..x]
 ##              LON ELEV(M)   CTRY  STATE    BEGIN      END  COUNTRY_NAME  ISO2C 
 ##            &lt;num&gt;   &lt;num&gt; &lt;char&gt; &lt;char&gt;    &lt;int&gt;    &lt;int&gt;        &lt;char&gt; &lt;char&gt; 
 ##       1:  65.567  1156.7     AF        20100519 20120323   AFGHANISTAN     AF 
-## <span style='color: #BBBB00;'>&lt;</span>     2:  -8.667     9.0     NO        19310101 <span style='color: #BBBB00;'>20240717</span>        NORWAY     NO 
+## <span style='color: #BBBB00;'>&lt;</span>     2:  -8.667     9.0     NO        19310101 <span style='color: #BBBB00;'>20240718</span>        NORWAY     NO 
 ## <span style='color: #0000BB;'>&gt;</span>     2:  -8.667     9.0     NO        19310101 <span style='color: #0000BB;'>20240324</span>        NORWAY     NO 
-## <span style='color: #BBBB00;'>&lt;</span>     3:   5.341    48.8     NO        19861120 <span style='color: #BBBB00;'>20240717</span>        NORWAY     NO 
+## <span style='color: #BBBB00;'>&lt;</span>     3:   5.341    48.8     NO        19861120 <span style='color: #BBBB00;'>20240718</span>        NORWAY     NO 
 ## <span style='color: #0000BB;'>&gt;</span>     3:   5.341    48.8     NO        19861120 <span style='color: #0000BB;'>20240324</span>        NORWAY     NO 
 ##       4:   5.867   327.0     NO        19870117 19971231        NORWAY     NO 
 ##       5:  11.233    14.0     NO        19870116 19910806        NORWAY     NO 
 ##      ---                                                                      
-## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>27921:</span> -90.913   394.1     US     WI 20140731 <span style='color: #BBBB00;'>20240718</span> UNITED STATES     US 
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>27921:</span> -90.913   394.1     US     WI 20140731 <span style='color: #BBBB00;'>20240719</span> UNITED STATES     US 
 ## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>27930:</span> -90.913   394.1     US     WI 20140731 <span style='color: #0000BB;'>20240325</span> UNITED STATES     US 
-## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>27922:</span> -95.992   367.3     US     MN 20140731 <span style='color: #BBBB00;'>20240718</span> UNITED STATES     US 
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>27922:</span> -95.992   367.3     US     MN 20140731 <span style='color: #BBBB00;'>20240719</span> UNITED STATES     US 
 ## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>27931:</span> -95.992   367.3     US     MN 20140731 <span style='color: #0000BB;'>20240326</span> UNITED STATES     US 
-## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>27923:</span> -85.061   249.0     US     MI 20140731 <span style='color: #BBBB00;'>20240718</span> UNITED STATES     US 
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>27923:</span> -85.061   249.0     US     MI 20140731 <span style='color: #BBBB00;'>20240719</span> UNITED STATES     US 
 ## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>27932:</span> -85.061   249.0     US     MI 20140731 <span style='color: #0000BB;'>20240325</span> UNITED STATES     US 
-## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>27924:</span> -87.954    34.1     US     AL 20140731 <span style='color: #BBBB00;'>20240718</span> UNITED STATES     US 
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>27924:</span> -87.954    34.1     US     AL 20140731 <span style='color: #BBBB00;'>20240719</span> UNITED STATES     US 
 ## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>27933:</span> -87.954    34.1     US     AL 20140731 <span style='color: #0000BB;'>20240325</span> UNITED STATES     US 
-## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>27925:</span> -93.402   411.2     US     MO 20140731 <span style='color: #BBBB00;'>20240718</span> UNITED STATES     US 
+## <span style='color: #BBBB00;'>&lt;</span> <span style='color: #BBBB00;'>27925:</span> -93.402   411.2     US     MO 20140731 <span style='color: #BBBB00;'>20240719</span> UNITED STATES     US 
 ## <span style='color: #0000BB;'>&gt;</span> <span style='color: #0000BB;'>27934:</span> -93.402   411.2     US     MO 20140731 <span style='color: #0000BB;'>20240326</span> UNITED STATES     US 
 ##           ISO3C                                                               
 ##          &lt;char&gt;                                                               
@@ -255,7 +214,7 @@ str(isd_history)
     ##  $ CTRY        : chr  "AF" "NO" "NO" "NO" ...
     ##  $ STATE       : chr  "" "" "" "" ...
     ##  $ BEGIN       : int  20100519 19310101 19861120 19870117 19870116 19880320 19861109 19850601 19730101 19310103 ...
-    ##  $ END         : int  20120323 20240717 20240717 19971231 19910806 19971226 20240717 20240717 19970801 20041030 ...
+    ##  $ END         : int  20120323 20240718 20240718 19971231 19910806 19971226 20240718 20240718 19970801 20041030 ...
     ##  $ COUNTRY_NAME: chr  "AFGHANISTAN" "NORWAY" "NORWAY" "NORWAY" ...
     ##  $ ISO2C       : chr  "AF" "NO" "NO" "NO" ...
     ##  $ ISO3C       : chr  "AFG" "NOR" "NOR" "NOR" ...
@@ -303,7 +262,7 @@ website](https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.n
 ##  collate  en_US.UTF-8
 ##  ctype    en_US.UTF-8
 ##  tz       Australia/Perth
-##  date     2024-07-20
+##  date     2024-07-21
 ##  pandoc   3.2.1 @ /opt/homebrew/bin/ (via rmarkdown)
 ## 
 ## <span style='color: #00BBBB; font-weight: bold;'>─ Packages ───────────────────────────────────────────────────────────────────</span>
