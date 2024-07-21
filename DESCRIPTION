@@ -59,7 +59,6 @@ Suggests:
     dplyr,
     ggplot2,
     gridExtra,
-    bit64,
     knitr,
     mapproj,
     maps,
