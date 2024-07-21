@@ -205,33 +205,33 @@ them through R. Several are also [rOpenSci](https://ropensci.org)
 projects.
 
 The
-[***GSODTools***](https://github.com/environmentalinformatics-marburg/GSODTools)
+[{GSODTools}](https://github.com/environmentalinformatics-marburg/GSODTools)
 by [Florian Detsch](https://github.com/fdetsch) is an R package that
 offers similar functionality as {GSODR}, but also has the ability to
 graph the data and working with data for time series analysis.
 
-[***rnoaa***](https://CRAN.R-project.org/package=rnoaa), from
+[{rnoaa}](https://CRAN.R-project.org/package=rnoaa), from
 [rOpenSci](https://docs.ropensci.org/rnoaa/) offers tools for
 interacting with and downloading weather data from the United States
 National Oceanic and Atmospheric Administration but lacks support for
 GSOD data.
 
-[***stationaRy***](https://cran.r-project.org/package=stationaRy), from
+[{stationaRy}](https://cran.r-project.org/package=stationaRy), from
 Richard Iannone offers hourly meteorological data from stations located
 all over the world. There is a wealth of data available, with historic
 weather data accessible from nearly 30,000 stations.
 
-[***riem***](https://CRAN.R-project.org/package=riem) from
+[{riem}](https://CRAN.R-project.org/package=riem) from
 [rOpenSci](https://docs.ropensci.org/riem/) allows to get weather data
 from Automated Surface Observing System (ASOS) stations (airports) in
 the whole world thanks to the Iowa Environment Mesonet website.
 
-[***weathercan***](https://CRAN.R-project.org/package=weathercan) from
+[{weathercan}](https://CRAN.R-project.org/package=weathercan) from
 [rOpenSci](https://github.com/ropensci/weathercan) makes it easier to
 search for and download multiple months/years of historical weather data
 from Environment and Climate Change Canada (ECCC) website.
 
-[***clifro***](https://CRAN.R-project.org/package=clifro) from
+[{clifro}](https://CRAN.R-project.org/package=clifro) from
 [rOpenSci](https://docs.ropensci.org/clifro/) is a web portal to the New
 Zealand National Climate Database and provides public access (via
 subscription) to around 6,500 various climate stations (see
