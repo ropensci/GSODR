@@ -1,49 +1,47 @@
-# Check that .validate_years handles invalid years -----------------------------
+load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 
-test_that(".validate_years handles invalid years", {
+# Check that invalid years are handled gracefully -----------------------------
+
+test_that("invalid years are handled gracefully", {
   skip_if_offline()
-  expect_error(.validate_years())
-  expect_error(.validate_years(years = "nineteen ninety two"))
-  expect_error(.validate_years(years = 1923))
-  expect_error(.validate_years(years = 1901 + as.POSIXlt(Sys.Date())$year))
-  expect_error(.validate_years(years = 0))
-  expect_error(.validate_years(years = -1))
+  expect_error(get_GSOD(years = ""))
+  expect_error(get_GSOD(years = "nineteen ninety two"))
+  expect_error(get_GSOD(years = "1923"))
+  expect_error(get_GSOD(years = 1923))
+  expect_error(get_GSOD(years = 1901 + as.POSIXlt(Sys.Date())$year))
+  expect_error(get_GSOD(years = 0))
+  expect_error(get_GSOD(years = -1))
 })
 
+# some of these tests, test the sub-functions to avoid downloading files
 # Check that .validate_years handles valid years -------------------------------
 test_that(".validate_years handles valid years", {
   skip_if_offline()
-  expect_error(.validate_years(years = 1929:2016), regexp = NA)
-  expect_error(.validate_years(years = 2016), regexp = NA)
+  expect_silent(.validate_years(years = 1929:2016))
+  expect_silent(.validate_years(years = 2016))
 })
 
 # Check that invalid stations are handled --------------------------------------
 test_that("invalid stations are handled", {
   skip_if_offline()
-  load(system.file("extdata", "isd_history.rda", package = "GSODR"))
-  stations <- isd_history
   expect_error(.validate_station_id(
-    years = 2015,
     station = "aaa-bbbbbb",
-    stations
+    isd_history = isd_history
   ))
 })
 
-# Check that station validation for years available on server works properly
+# Check that station validation for years available on server works properly ---
 test_that("Station validations are properly handled for years available", {
   skip_if_offline()
-  load(system.file("extdata", "isd_history.rda", package = "GSODR"))
-  stations <- isd_history
   expect_warning(.validate_station_data_years(
     station = "949999-00170",
-    stations,
+    isd_history = isd_history,
     years = 2010
   ))
 })
 
 test_that("Station validations are properly handled for years available", {
   skip_if_offline()
-  load(system.file("extdata", "isd_history.rda", package = "GSODR"))
   expect_silent(.validate_station_data_years(
     years = 2010,
     station = "955510-99999",
@@ -162,8 +160,6 @@ test_that("Check validate country returns a two letter code", {
   skip_if_offline()
   # Load country list
   # CRAN NOTE avoidance
-  isd_history <- NULL
-  load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 
   country <- "Philippines"
   Philippines <- .validate_country(country, isd_history)
@@ -182,8 +178,6 @@ test_that("Check validate country returns a two letter code", {
 test_that("Check validate country returns an error on invalid entry when
           mispelled", {
   skip_if_offline()
-  isd_history <- NULL
-  load(system.file("extdata", "isd_history.rda", package = "GSODR"))
   country <- "Philipines"
   expect_error(.validate_country(country, isd_history))
 })
@@ -193,8 +187,6 @@ test_that(
   two characters are used that are not in the list",
   {
     skip_if_offline()
-    isd_history <- NULL
-    load(system.file("extdata", "isd_history.rda", package = "GSODR"))
     country <- "RZ"
     expect_error(.validate_country(country, isd_history))
   }
@@ -205,8 +197,6 @@ test_that(
   three characters are used that are not in the list",
   {
     skip_if_offline()
-    isd_history <- NULL
-    load(system.file("extdata", "isd_history.rda", package = "GSODR"))
     country <- "RPS"
     expect_error(.validate_country(country, isd_history))
   }
@@ -250,21 +240,89 @@ test_that("agroclimatology and station cannot be specified concurrently", {
   ))
 })
 
+# Check the structure of the data.table and contents ---------------------------
+# this also provides tests for `.process_csv()`
 # Check that when specifying a country only that country is returned -----------
-test_that("only specified country is returned using FIPS and ISO codes", {
-  skip_if_offline()
-  a <- get_GSOD(years = 1929, country = "UK")
-  expect_equal(a$CTRY[1], "UK")
+test_that(
+  "get_GSOD works properly and for one country only",
+  {
+    skip_if_offline()
+    a <- get_GSOD(years = 1929, country = "UK")
+    expect_equal(a$CTRY[1], "UK")
+    expect_s3_class(a, "data.table")
+    expect_equal(a$STNID[[1]], "030050-99999")
+    expect_equal(a$NAME[[1]], "LERWICK")
+    expect_equal(a$CTRY[[1]], "UK")
+    expect_equal(a$COUNTRY_NAME[[1]], "UNITED KINGDOM")
+    expect_equal(a$ISO2C[[1]], "GB")
+    expect_equal(a$ISO3C[[1]], "GBR")
+    expect_equal(a$STATE[[1]], "")
+    expect_equal(a$LATITUDE[[1]], 60.133)
+    expect_equal(a$LONGITUDE[[1]], -1.183)
+    expect_equal(a$ELEVATION[[1]], 84)
+    expect_equal(a$BEGIN[[1]], 19291001)
+    expect_equal(
+      lapply(a, class),
+      list(
+        STNID = "character",
+        NAME = "character",
+        CTRY = "character",
+        COUNTRY_NAME = "character",
+        ISO2C = "character",
+        ISO3C = "character",
+        STATE = "character",
+        LATITUDE = "numeric",
+        LONGITUDE = "numeric",
+        ELEVATION = "numeric",
+        BEGIN = "integer",
+        END = "integer",
+        YEARMODA = "Date",
+        YEAR = "integer",
+        MONTH = "integer",
+        DAY = "integer",
+        YDAY = "integer",
+        TEMP = "numeric",
+        TEMP_ATTRIBUTES = "integer",
+        DEWP = "numeric",
+        DEWP_ATTRIBUTES = "integer",
+        SLP = "numeric",
+        SLP_ATTRIBUTES = "integer",
+        STP = "numeric",
+        STP_ATTRIBUTES = "integer",
+        VISIB = "numeric",
+        VISIB_ATTRIBUTES = "integer",
+        WDSP = "numeric",
+        WDSP_ATTRIBUTES = "integer",
+        MXSPD = "numeric",
+        GUST = "numeric",
+        MAX = "numeric",
+        MAX_ATTRIBUTES = "character",
+        MIN = "numeric",
+        MIN_ATTRIBUTES = "character",
+        PRCP = "numeric",
+        PRCP_ATTRIBUTES = "character",
+        SNDP = "numeric",
+        I_FOG = "numeric",
+        I_RAIN_DRIZZLE = "numeric",
+        I_SNOW_ICE = "numeric",
+        I_HAIL = "numeric",
+        I_THUNDER = "numeric",
+        I_TORNADO_FUNNEL = "numeric",
+        EA = "numeric",
+        ES = "numeric",
+        RH = "numeric"
+      )
+    )
 })
 
 test_that("only specified country is returned using 2 letter ISO codes", {
   skip_if_offline()
-  a <- get_GSOD(years = 1930, country = "GB")
+  a <- get_GSOD(years = 1929, country = "GB")
   expect_equal(a$CTRY[1], "UK")
 })
 
 test_that("only specified country is returned using 3 letter ISO codes", {
   skip_if_offline()
-  a <- get_GSOD(years = 1931, country = "GBR")
+  a <- get_GSOD(years = 1929, country = "GBR")
   expect_equal(a$CTRY[1], "UK")
 })

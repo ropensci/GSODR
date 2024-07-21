@@ -58,6 +58,7 @@ Suggests:
     dplyr,
     ggplot2,
     gridExtra,
+    bit64,
     knitr,
     mapproj,
     maps,
@@ -78,8 +79,8 @@ Language: en-US
 NeedsCompilation: no
 Repository: CRAN
 Roxygen: list(roclets = c("collate", "namespace", "rd",
-    "roxyglobals::global_roclet"))
-RoxygenNote: 7.3.1
+    "roxyglobals::global_roclet"), markdown = TRUE)
+RoxygenNote: 7.3.2
 X-schema.org-applicationCategory: Tools
 X-schema.org-isPartOf: https://ropensci.org
 X-schema.org-keywords: US-NCEI, meteorological-data, global-weather,

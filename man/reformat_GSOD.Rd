@@ -11,11 +11,11 @@ reformat_GSOD(dsn = NULL, file_list = NULL)
 disk for tidying.}
 
 \item{file_list}{User supplied list of file paths to individual files of data
-on local disk for tidying.  Ignored if \code{dsn} is set.  Use if there are
-other files in the \code{dsn} that you do not wish to reformat.}
+on local disk for tidying.  Ignored if \code{dsn} is set.  Use if there are other
+files in the \code{dsn} that you do not wish to reformat.}
 }
 \value{
-A data frame as a \code{\link[data.table]{data.table}} object of
+A data frame as a \link[data.table:data.table]{data.table::data.table} object of
 \acronym{GSOD} data.
 }
 \description{
@@ -44,9 +44,9 @@ this function.  If you have downloaded the full annual (\dQuote{YYYY.tar.gz})
 file you will need to extract the individual station files from the tar file
 first to use this function.
 
-Note that \code{reformat_GSOD()} will attempt to reformat any \dQuote{.csv}
-files found in the \code{dsn} that you provide.  If there are non-
-\acronym{GSOD} files present this will lead to errors.
+Note that \code{\link[=reformat_GSOD]{reformat_GSOD()}} will attempt to reformat any \dQuote{.csv}
+files found in the \code{dsn} that you provide.  If there are non-\acronym{GSOD}
+files present this will lead to errors.
 
 For a complete list of the fields and description of the contents and units,
 please refer to Appendix 1 in the \CRANpkg{GSODR} vignette,
@@ -57,12 +57,12 @@ While \CRANpkg{GSODR} does not distribute \acronym{GSOD} weather data,
 users of the data should note the conditions that the U.S. \acronym{NCEI}
 places upon the \acronym{GSOD} data.
 \dQuote{The following data and products may have conditions placed on their
- international commercial use.  They can be used within the U.S. or for non-
- commercial international activities without restriction.  The non-U.S. data
- cannot be redistributed for commercial purposes. Re-distribution of these
- data by others must provide this same notification. A log of IP addresses
- accessing these data and products will be maintained and may be made
- available to data providers.}
+international commercial use.  They can be used within the U.S. or for non-
+commercial international activities without restriction.  The non-U.S. data
+cannot be redistributed for commercial purposes. Re-distribution of these
+data by others must provide this same notification. A log of IP addresses
+accessing these data and products will be maintained and may be made
+available to data providers.}
 }
 \section{References}{
 
@@ -70,7 +70,7 @@ places upon the \acronym{GSOD} data.
 Alduchov, O.A. and Eskridge, R.E., 1996. Improved Magnus form approximation
 of saturation vapor pressure. Journal of Applied Meteorology and Climatology,
 35(4), pp.601-609. DOI:
-<10.1175%2F1520-0450%281996%29035%3C0601%3AIMFAOS%3E2.0.CO%3B2>.
+<10.1175\%2F1520-0450\%281996\%29035\%3C0601\%3AIMFAOS\%3E2.0.CO\%3B2>.
 }
 
 \examples{
@@ -92,9 +92,11 @@ tbar
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-For automated downloading and tidying see the \code{\link{get_GSOD}}
-function which provides expanded functionality for automatically downloading
-and expanding annual \acronym{GSOD} files and cleaning station files.
+For automated downloading and tidying see the \code{\link[=get_GSOD]{get_GSOD()}} function, which
+provides expanded functionality for automatically downloading and expanding
+annual \acronym{GSOD} files and cleaning station files.
+
+\code{\link[=get_GSOD]{get_GSOD()}}
 }
 \author{
 Adam H. Sparks, \email{adamhsparks@gmail.com}

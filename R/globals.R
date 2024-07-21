@@ -4,9 +4,20 @@ utils::globalVariables(c(
   "isd_history", # <get_GSOD>
   "isd_history", # <get_inventory>
   "STNID", # <get_inventory>
+  "STNID", # <get_isd_history>
+  "USAF", # <get_isd_history>
+  "WBAN", # <get_isd_history>
+  "COUNTRY_NAME", # <get_isd_history>
+  "..x", # <get_isd_history>
+  "STNID", # <get_updates>
+  "STATION", # <get_updates>
+  "WBAN", # <get_updates>
+  "YEAR", # <get_updates>
+  "DATE", # <get_updates>
   "isd_history", # <nearest_stations>
   "distance_km", # <nearest_stations>
   "STNID", # <.process_csv>
+  "STP", # <.process_csv>
   "YEARMODA", # <.process_csv>
   "DATE", # <.process_csv>
   "YEAR", # <.process_csv>
@@ -34,9 +45,5 @@ utils::globalVariables(c(
   "I_TORNADO_FUNNEL", # <.process_csv>
   "FRSHTT", # <.process_csv>
   "isd_history", # <reformat_GSOD>
-  "WBAN", # <update_station_list>
-  "STNID", # <update_station_list>
-  "USAF", # <update_station_list>
-  "COUNTRY_NAME", # <update_station_list>
   NULL
 ))

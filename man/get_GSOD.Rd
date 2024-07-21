@@ -33,32 +33,31 @@ can be used.  All stations within the specified country will be returned.}
 missing from a station's data before it is excluded from final file output.}
 
 \item{agroclimatology}{Optional.  Logical.  Only clean data for stations
-between latitudes 60 and -60 for agroclimatology work, defaults to `FALSE`.
-Set to `TRUE` to include only stations within the confines of these
+between latitudes 60 and -60 for agroclimatology work, defaults to \code{FALSE}.
+Set to \code{TRUE} to include only stations within the confines of these
 latitudes.}
 }
 \value{
-A data frame as a \code{\link[data.table]{data.table}} object of
-\acronym{GSOD} weather data.
+A \code{\link[data.table:data.table]{data.table::data.table()}} object of \acronym{GSOD} weather data.
 }
 \description{
-This function automates downloading, cleaning, reformatting of data from
-the Global Surface Summary of the Day (\acronym{GSOD}) data provided by the
-\href{https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516}{US National Centers for Environmental Information (NCEI)},
+Automates downloading, cleaning, reformatting of data from the Global Surface
+Summary of the Day (\acronym{GSOD}) data provided by the
+[US National Centers for Environmental Information (NCEI)(https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516),
 Three additional useful elements: saturation vapour pressure (es), actual
 vapour pressure (ea) and relative humidity (RH) are calculated and returned
 in the final data frame using the improved August-Roche-Magnus approximation
 (Alduchov and Eskridge 1996).
 }
 \details{
-All units are converted to International System of Units (SI), \emph{e.g.},
+All units are converted to International System of Units (SI), \emph{e.g},
 Fahrenheit to Celsius and inches to millimetres.
 
 Data summarise each year by station, which include vapour pressure and
 relative humidity elements calculated from existing data in \acronym{GSOD}.
 
-All missing values in resulting files are represented as \code{NA}
-regardless of which field they occur in.
+All missing values in resulting files are represented as \code{NA} regardless of
+which field they occur in.
 
 For a complete list of the fields and description of the contents and units,
 please refer to Appendix 1 in the \CRANpkg{GSODR} vignette,
@@ -72,19 +71,19 @@ For more information see the description of the data provided by
 requests, however, in certain cases the start and end date may encompass
 years where no data is available.  In these cases no data will be returned.
 It is suggested that the user check the latest data availability for the
-station(s) desired using \link{get_inventory} as this list is frequently
+station(s) desired using \code{\link[=get_inventory]{get_inventory()}} as this list is frequently
 updated by the \acronym{NCEI} and is not shipped with \CRANpkg{GSODR}.
 
 While \CRANpkg{GSODR} does not distribute GSOD weather data, users of
 the data should note the conditions that the U.S. \acronym{NCEI} places upon
 the \acronym{GSOD} data.
 \dQuote{The following data and products may have conditions placed on their
- international commercial use.  They can be used within the U.S. or for non-
- commercial international activities without restriction.  The non-U.S. data
- cannot be redistributed for commercial purposes.  Re-distribution of these
- data by others must provide this same notification.  A log of IP addresses
- accessing these data and products will be maintained and may be made
- available to data providers.}
+international commercial use.  They can be used within the U.S. or for non-
+commercial international activities without restriction.  The non-U.S. data
+cannot be redistributed for commercial purposes.  Re-distribution of these
+data by others must provide this same notification.  A log of IP addresses
+accessing these data and products will be maintained and may be made
+available to data providers.}
 }
 \section{References}{
 
@@ -92,7 +91,7 @@ the \acronym{GSOD} data.
 Alduchov, O.A. and Eskridge, R.E., 1996. Improved Magnus form approximation
 of saturation vapor pressure. Journal of Applied Meteorology and Climatology,
 35(4), pp.601-609. DOI:
-<10.1175%2F1520-0450%281996%29035%3C0601%3AIMFAOS%3E2.0.CO%3B2>.
+<10.1175\%2F1520-0450\%281996\%29035\%3C0601\%3AIMFAOS\%3E2.0.CO\%3B2>.
 }
 
 \examples{
@@ -108,7 +107,7 @@ ie_1929 <- get_GSOD(years = 1929, country = "Ireland")
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-\code{\link{reformat_GSOD}}
+\code{\link[=reformat_GSOD]{reformat_GSOD()}}
 }
 \author{
 Adam H. Sparks, \email{adamhsparks@gmail.com}

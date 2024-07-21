@@ -2,7 +2,7 @@
 % Please edit documentation in R/update_station_list.R
 \name{update_station_list}
 \alias{update_station_list}
-\title{Download Latest Station List Metadata and Update an Internal Database}
+\title{Download Latest isd-history.csv File and Update an Internal Database}
 \usage{
 update_station_list()
 }
@@ -23,11 +23,18 @@ database distributed with \CRANpkg{GSODR}.
 
 To directly access these data, use: \cr
 \code{load(system.file("extdata", "isd_history.rda", package = "GSODR"))}
+
+To see the latest version available from the \acronym{NCEI} server, please
+refer to \code{\link[=get_isd_history]{get_isd_history()}}.
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-update_station_list()
-\dontshow{\}) # examplesIf}
+\dontrun{
+ update_internal_isd_history()
+}
+
+}
+\seealso{
+\code{\link[=get_isd_history]{get_isd_history()}}
 }
 \author{
 Adam H. Sparks, \email{adamhsparks@gmail.com}

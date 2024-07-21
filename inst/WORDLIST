@@ -1,3 +1,4 @@
+AIMFAOS
 ASOS
 Agroclimatology
 Alduchov
@@ -5,6 +6,7 @@ Bigouette
 CCI
 CGIAR
 CHELSA
+CMD
 CRAN's
 CRU
 CSI
@@ -30,6 +32,7 @@ GSODR's
 GSODRdata
 GSODTools
 GSODdata
+GSOD’
 GeoPackage
 ICAO
 IMFAOS
@@ -42,6 +45,7 @@ Mesonet
 NCDC
 NCEI
 NCEI's
+NCEI’s
 NOAA
 ORCID
 PRCP
@@ -75,8 +79,10 @@ YYYYMMDD
 agroclimatology
 al
 capitalisation
+changelog
 clifro
 codecov
+countries’
 csv
 dplyr
 et
@@ -86,15 +92,20 @@ gz
 https
 httr
 isd
+iso
 joss
 juba
 kilometres
 licence
+locations’
 lon
 md
 metres
 millimetres
 mistyped
+ncdc
+ncei
+noaa
 onLoad
 optimised
 plyr
@@ -115,6 +126,7 @@ roxyglobals
 snuck
 sp
 stationaRy
+stations’
 summarise
 summarised
 summarising
@@ -126,4 +138,5 @@ vapour
 visualisation
 weathercan
 windspeed
+www
 zzz

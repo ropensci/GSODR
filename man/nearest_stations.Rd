@@ -15,14 +15,14 @@ nearest_stations(LAT, LON, distance)
 be returned.}
 }
 \value{
-A \code{\link[data.table]{data.table}} with full station metadata
-including the distance from the user specified coordinates.
+A \link[data.table:data.table]{data.table::data.table} with full station metadata including the
+distance from the user specified coordinates from nearest to farthest.
 }
 \description{
 Given latitude and longitude values entered as decimal degrees (DD), this
 function returns a list (as an atomic vector) of station ID
-values, which can be used in \code{\link{get_GSOD}} to query for specific
-stations as an argument in the \code{station} parameter of that function.
+values, which can be used in\code{\link[=get_GSOD]{get_GSOD()}} to query for specific stations as an
+argument in the \code{station} parameter of that function.
 }
 \note{
 The \acronym{GSOD} data, which are downloaded and manipulated by

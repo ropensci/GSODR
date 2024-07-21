@@ -1,3 +1,4 @@
+load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 
 test_that("If user selects no, database not updated", {
   skip_if_offline()
@@ -18,7 +19,6 @@ test_that("update_station_list() downloads and imports proper file", {
   ans <- "yes"
   write(ans, f)
   expect_message(update_station_list())
-  load(system.file("extdata", "isd_history.rda", package = "GSODR"))
   expect_equal(ncol(isd_history), 12)
   expect_named(
     isd_history,

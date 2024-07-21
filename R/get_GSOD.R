@@ -1,9 +1,9 @@
 #' Download and Return a data.table Object of GSOD Weather Data
 #'
 #' @description
-#' This function automates downloading, cleaning, reformatting of data from
-#' the Global Surface Summary of the Day (\acronym{GSOD}) data provided by the
-#' \href{https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516}{US National Centers for Environmental Information (NCEI)},
+#' Automates downloading, cleaning, reformatting of data from the Global Surface
+#' Summary of the Day (\acronym{GSOD}) data provided by the
+#' [US National Centers for Environmental Information (NCEI)(https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516),
 #' Three additional useful elements: saturation vapour pressure (es), actual
 #' vapour pressure (ea) and relative humidity (RH) are calculated and returned
 #' in the final data frame using the improved August-Roche-Magnus approximation
@@ -11,22 +11,21 @@
 #'
 #'
 #' @details
-#'
-#' All units are converted to International System of Units (SI), \emph{e.g.},
+#' All units are converted to International System of Units (SI), *e.g*,
 #' Fahrenheit to Celsius and inches to millimetres.
 #'
 #' Data summarise each year by station, which include vapour pressure and
 #' relative humidity elements calculated from existing data in \acronym{GSOD}.
 #'
-#' All missing values in resulting files are represented as \code{NA}
-#' regardless of which field they occur in.
+#' All missing values in resulting files are represented as `NA` regardless of
+#'   which field they occur in.
 #'
 #' For a complete list of the fields and description of the contents and units,
 #' please refer to Appendix 1 in the \CRANpkg{GSODR} vignette,
-#' \code{vignette("GSODR", package = "GSODR")}.
+#' `vignette("GSODR", package = "GSODR")`.
 #'
 #' For more information see the description of the data provided by
-#' \acronym{NCEI}, \url{https://www.ncei.noaa.gov/data/global-summary-of-the-day/doc/readme.txt}.
+#' \acronym{NCEI}, <https://www.ncei.noaa.gov/data/global-summary-of-the-day/doc/readme.txt>.
 #'
 #' @param years Year(s) of weather data to download.
 #' @param station Optional.  Specify a station or multiple stations for which to
@@ -52,7 +51,7 @@
 #' requests, however, in certain cases the start and end date may encompass
 #' years where no data is available.  In these cases no data will be returned.
 #' It is suggested that the user check the latest data availability for the
-#' station(s) desired using \link{get_inventory} as this list is frequently
+#' station(s) desired using [get_inventory()] as this list is frequently
 #' updated by the \acronym{NCEI} and is not shipped with \CRANpkg{GSODR}.
 #'
 #' @note While \CRANpkg{GSODR} does not distribute GSOD weather data, users of
@@ -85,11 +84,9 @@
 #' 35(4), pp.601-609. DOI:
 #' <10.1175%2F1520-0450%281996%29035%3C0601%3AIMFAOS%3E2.0.CO%3B2>.
 #'
-#' @return A data frame as a \code{\link[data.table]{data.table}} object of
-#' \acronym{GSOD} weather data.
+#' @return A [data.table::data.table()] object of \acronym{GSOD} weather data.
 #'
-#' @seealso
-#' \code{\link{reformat_GSOD}}
+#' @seealso [reformat_GSOD()]
 #' @autoglobal
 #' @export get_GSOD
 
@@ -138,9 +135,9 @@ get_GSOD <- function(years,
       isd_history = isd_history
     ))
 
-    # Validate station data against years available. If years are requested w/ no
-    # data, an Warning and an `NA` is returned and removed here before passing the
-    # modified vector to `.download_files()`
+    # Validate station data against years available. If years are requested w/o
+    # data, an Warning and an `NA` is returned and removed here before passing
+    # the modified vector to `.download_files()`
     station <- lapply(
       X = station,
       FUN = .validate_station_data_years,
@@ -153,7 +150,7 @@ get_GSOD <- function(years,
   # Download files from server -------------------------------------------------
   file_list <- .download_files(station, years)
 
-  # Subset file_list for agroclimatology only stations -----------------------
+  # Subset file_list for agroclimatology only stations -------------------------
   if (isTRUE(agroclimatology)) {
     file_list <-
       .agroclimatology_list(file_list, isd_history, years)

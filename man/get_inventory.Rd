@@ -7,7 +7,7 @@
 get_inventory()
 }
 \value{
-A \code{\link[data.table]{data.table}} object of station inventories
+A \code{GSODR.info} object, which inherits from \link[data.table:data.table]{data.table::data.table}.
 }
 \description{
 The \acronym{NCEI} maintains a document,
@@ -22,12 +22,12 @@ While \CRANpkg{GSODR} does not distribute GSOD weather data, users of
 the data should note the conditions that the U.S. \acronym{NCEI} places upon
 the \acronym{GSOD} data.
 \dQuote{The following data and products may have conditions placed on their
- international commercial use.  They can be used within the U.S. or for non-
- commercial international activities without restriction.  The non-U.S. data
- cannot be redistributed for commercial purposes.  Re-distribution of these
- data by others must provide this same notification.  A log of IP addresses
- accessing these data and products will be maintained and may be made
- available to data providers.}
+international commercial use.  They can be used within the U.S. or for non-
+commercial international activities without restriction.  The non-U.S. data
+cannot be redistributed for commercial purposes.  Re-distribution of these
+data by others must provide this same notification.  A log of IP addresses
+accessing these data and products will be maintained and may be made
+available to data providers.}
 }
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
@@ -35,6 +35,12 @@ inventory <- get_inventory()
 inventory
 \dontshow{\}) # examplesIf}
 }
+\seealso{
+Other metadata: 
+\code{\link{get_isd_history}()},
+\code{\link{get_updates}()}
+}
 \author{
 Adam H. Sparks, \email{adamhsparks@gmail.com}
 }
+\concept{metadata}

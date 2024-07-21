@@ -8,16 +8,15 @@
 #' @noRd
 
 .process_csv <- function(x, isd_history) {
-
   # Import data from the website for individual stations or tempdir() for all --
-  DT <-
-    fread(x,
-      colClasses = c("STATION" = "character"),
-      strip.white = TRUE
-    )
+  # The "STP" column is set to be character here to handle the issues with vals
+  # over 1000 having the leading zero removed.
+  DT <- fread(x,
+              strip.white = TRUE,
+              keepLeadingZeros = TRUE,
+              colClasses = c("STP" = "character"))
 
   # Replace 99.99 et al. with NA
-  set(DT, j = "PRCP", value = as.character(DT[["PRCP"]]))
   set(DT,
     i = which(DT[["PRCP"]] == "99.99"),
     j = "PRCP",
@@ -30,10 +29,8 @@
     "WDSP",
     "MXSPD",
     "GUST",
-    "SNDP",
-    "STP"
+    "SNDP"
   )]) {
-    set(DT, j = col, value = as.character(DT[[col]]))
     set(DT,
       i = which(DT[[col]] == "999.9"),
       j = col,
@@ -46,10 +43,10 @@
     "TEMP",
     "DEWP",
     "SLP",
+    "STP",
     "MAX",
     "MIN"
   )]) {
-    set(DT, j = col, value = as.character(DT[[col]]))
     set(DT,
       i = which(DT[[col]] == "9999.9"),
       j = col,
@@ -72,6 +69,13 @@
 
   # Add STNID col --------------------------------------------------------------
   DT[, STNID := gsub("^(.{6})(.*)$", "\\1-\\2", DT$STATION)]
+
+  # Correct STP values ---------------------------------------------------------
+  # The NCEI supplied CSV files are broken, they lop off the "1" in values >1000
+  # See https://github.com/ropensci/GSODR/issues/117
+  DT[, STP := fifelse(substr(STP, 1, 1) == "0",
+                      sprintf("%s%s", 1, DT$STP),
+                      STP, na = NA)]
 
   # Add and convert date related columns ---------------------------------------
   DT[, YEARMODA := as.Date(DATE, format = "%Y-%m-%d")]

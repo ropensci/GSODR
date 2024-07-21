@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_inventory.R
 \name{print.GSODR.Info}
 \alias{print.GSODR.Info}
-\title{Prints GSODR.info object.}
+\title{Prints GSODR.info object}
 \usage{
 \method{print}{GSODR.Info}(x, ...)
 }
@@ -12,5 +12,5 @@
 \item{...}{ignored}
 }
 \description{
-Prints GSODR.info object.
+Prints GSODR.info object
 }

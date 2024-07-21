@@ -37,13 +37,13 @@ test_that("reformat_GSOD file_list parameter reformats data properly", {
   x <- reformat_GSOD(file_list = file_list)
   expect_equal(nrow(x), 722)
   expect_length(x, 47)
-  expect_s3_class(x, "data.frame")
+  expect_s3_class(x, "data.table")
 
   # check that provided a dsn only, the function works properly
   x <- reformat_GSOD(dsn = tempdir())
   expect_equal(nrow(x), 722)
   expect_length(x, 47)
-  expect_s3_class(x, "data.frame")
+  expect_s3_class(x, "data.table")
 
   # Check that a message is emitted when both dsn and file_list are set --------
   expect_message(reformat_GSOD(dsn = tempdir(),

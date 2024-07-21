@@ -1,7 +1,7 @@
 #' Download and Return a data.table Object of GSOD Weather Station Data Inventories
 #'
 #' The \acronym{NCEI} maintains a document,
-#' \url{https://www1.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt}, which lists
+#' <https://www1.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt>, which lists
 #' the number of weather observations by station-year-month from the beginning
 #' of the stations' records.  This function retrieves that document and prints
 #' an information header displaying the last update time with a data frame of
@@ -22,8 +22,9 @@
 #' inventory <- get_inventory()
 #' inventory
 #'
-#' @return A \code{\link[data.table]{data.table}} object of station inventories
+#' @return A `GSODR.info` object, which inherits from [data.table::data.table].
 #' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
+#' @family metadata
 #' @autoglobal
 #' @export get_inventory
 
@@ -34,7 +35,7 @@ get_inventory <- function() {
   tryCatch(
     {
       curl::curl_download(
-        "https://www1.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt",
+        "https://www1.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt.z",
         destfile = file.path(tempdir(), "inventory.txt"),
         quiet = TRUE
       )
@@ -91,7 +92,7 @@ get_inventory <- function() {
       attr(main_body, "GSODR.Inventory") <- c(
         "  *** FEDERAL CLIMATE COMPLEX INTEGRATED SURFACE DATA INVENTORY ***  \n",
         "  This inventory provides the number of weather observations by  \n",
-        "  STATION-YEAR-MONTH for beginning of record through", year_month, "  \n"
+        "  STATION-YEAR-MONTH for beginning of record through", year_month, " \n"
       )
     },
     error = function(cond) {
@@ -108,7 +109,7 @@ get_inventory <- function() {
   return(main_body)
 }
 
-#' Prints GSODR.info object.
+#' Prints GSODR.info object
 #'
 #' @param x GSODR.Info object
 #' @param ... ignored

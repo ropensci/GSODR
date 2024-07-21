@@ -9,14 +9,14 @@
 #' (es), actual vapour pressure (ea) and relative humidity (RH) are calculated
 #' and returned in the final data frame using the improved August-Roche-Magnus
 #' approximation (Alduchov and Eskridge 1996).  All units are converted to
-#' International System of Units (SI), \emph{e.g.}, Fahrenheit to Celsius and
+#' International System of Units (SI), *e.g.*, Fahrenheit to Celsius and
 #' inches to millimetres.
 #'
 #' @param dsn User supplied full file path to location of data files on local
 #'  disk for tidying.
 #' @param file_list User supplied list of file paths to individual files of data
-#'  on local disk for tidying.  Ignored if \code{dsn} is set.  Use if there are
-#'  other files in the \code{dsn} that you do not wish to reformat.
+#'  on local disk for tidying.  Ignored if `dsn` is set.  Use if there are other
+#'  files in the `dsn` that you do not wish to reformat.
 #'
 #' @details
 #'
@@ -25,7 +25,7 @@
 #' existing data in \acronym{GSOD}.  Else, a single station is tidied and a data
 #' frame is returned.
 #'
-#' All missing values in resulting files are represented as \code{NA} regardless
+#' All missing values in resulting files are represented as `NA` regardless
 #' of which field they occur in.
 #'
 #' Only station files in the original \dQuote{csv} file format are supported by
@@ -33,9 +33,9 @@
 #' file you will need to extract the individual station files from the tar file
 #' first to use this function.
 #'
-#' Note that \code{reformat_GSOD()} will attempt to reformat any \dQuote{.csv}
-#' files found in the \code{dsn} that you provide.  If there are non-
-#' \acronym{GSOD} files present this will lead to errors.
+#' Note that [reformat_GSOD()] will attempt to reformat any \dQuote{.csv}
+#' files found in the `dsn` that you provide.  If there are non-\acronym{GSOD}
+#' files present this will lead to errors.
 #'
 #' For a complete list of the fields and description of the contents and units,
 #' please refer to Appendix 1 in the \CRANpkg{GSODR} vignette,
@@ -53,9 +53,9 @@
 #'  available to data providers.}
 #'
 #' @seealso
-#' For automated downloading and tidying see the \code{\link{get_GSOD}}
-#' function which provides expanded functionality for automatically downloading
-#' and expanding annual \acronym{GSOD} files and cleaning station files.
+#' For automated downloading and tidying see the [get_GSOD()] function, which
+#' provides expanded functionality for automatically downloading and expanding
+#' annual \acronym{GSOD} files and cleaning station files.
 #'
 #' @section References:
 #'
@@ -82,15 +82,15 @@
 #'
 #' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
 #'
-#' @return A data frame as a \code{\link[data.table]{data.table}} object of
+#' @return A data frame as a [data.table::data.table] object of
 #' \acronym{GSOD} data.
+#' @seealso [get_GSOD()]
 #' @autoglobal
 #' @export reformat_GSOD
 
 reformat_GSOD <- function(dsn = NULL, file_list = NULL) {
 
   load(system.file("extdata", "isd_history.rda", package = "GSODR")) # nocov
-  setkeyv(isd_history, "STNID")
 
   # If both dsn and file_path are set, emit message that only dsn is used
   if (!is.null(dsn) & !is.null(file_list)) {
