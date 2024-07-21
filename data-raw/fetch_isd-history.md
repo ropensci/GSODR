@@ -125,7 +125,7 @@ install.packages("GSODR", repos = "https://cloud.r-project.org/")
 
     ## 
     ## The downloaded binary packages are in
-    ##  /var/folders/ch/8fqkzddj1kj_qb5ddfdd3p1w0000gn/T//RtmpyO57I7/downloaded_packages
+    ##  /var/folders/ch/8fqkzddj1kj_qb5ddfdd3p1w0000gn/T//RtmpQChfhj/downloaded_packages
 
 ``` r
 load(system.file("extdata", "isd_history.rda", package = "GSODR"))
