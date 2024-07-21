@@ -1,3 +1,4 @@
+AIMFAOS
 ASOS
 Agroclimatology
 Alduchov
@@ -91,6 +92,7 @@ gz
 https
 httr
 isd
+iso
 joss
 juba
 kilometres
@@ -101,6 +103,9 @@ md
 metres
 millimetres
 mistyped
+ncdc
+ncei
+noaa
 onLoad
 optimised
 plyr
@@ -133,4 +138,5 @@ vapour
 visualisation
 weathercan
 windspeed
+www
 zzz
