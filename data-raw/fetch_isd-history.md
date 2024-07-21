@@ -125,7 +125,7 @@ install.packages("GSODR", repos = "https://cloud.r-project.org/")
 
     ## 
     ## The downloaded binary packages are in
-    ##  /var/folders/ch/8fqkzddj1kj_qb5ddfdd3p1w0000gn/T//Rtmpx7iKJ9/downloaded_packages
+    ##  /var/folders/ch/8fqkzddj1kj_qb5ddfdd3p1w0000gn/T//RtmpyO57I7/downloaded_packages
 
 ``` r
 load(system.file("extdata", "isd_history.rda", package = "GSODR"))
@@ -303,7 +303,7 @@ website](https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.n
 ##  tidyselect    1.2.1   <span style='color: #555555;'>2024-03-11</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.4.0)</span>
 ##  utf8          1.2.4   <span style='color: #555555;'>2023-10-22</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.4.0)</span>
 ##  vctrs         0.6.5   <span style='color: #555555;'>2023-12-01</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.4.0)</span>
-##  xfun          0.45    <span style='color: #555555;'>2024-06-16</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.4.0)</span>
+##  xfun          0.46    <span style='color: #555555;'>2024-07-18</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.4.0)</span>
 ##  yaml          2.3.9   <span style='color: #555555;'>2024-07-05</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.4.0)</span>
 ## 
 ## <span style='color: #555555;'> [1] /Users/adamsparks/Library/R/arm64/4.4/library</span>
