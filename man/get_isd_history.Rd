@@ -7,7 +7,7 @@
 get_isd_history()
 }
 \value{
-A \code{\link[data.table]{data.table}} object
+A \link[data.table:data.table]{data.table::data.table} object
 }
 \description{
 Get the Most Recent isd_history File

@@ -45,9 +45,5 @@ utils::globalVariables(c(
   "I_TORNADO_FUNNEL", # <.process_csv>
   "FRSHTT", # <.process_csv>
   "isd_history", # <reformat_GSOD>
-  "WBAN", # <update_internal_isd_history>
-  "STNID", # <update_internal_isd_history>
-  "USAF", # <update_internal_isd_history>
-  "COUNTRY_NAME", # <update_internal_isd_history>
   NULL
 ))

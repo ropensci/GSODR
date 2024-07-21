@@ -7,12 +7,12 @@
 get_updates()
 }
 \value{
-A \code{\link[data.table]{data.table}} object
+A \code{\link[data.table:data.table]{data.table::data.table()}} object
 }
 \description{
 Gets and imports the 'updates.txt' file that has a change log of GSOD data.
-  Changes are shown in order from most recent to oldest changes by the "DATE"
-  field.  Column names follow \CRANpkg{GSODR} naming conventions.
+Changes are shown in order from most recent to oldest changes by the "DATE"
+field.  Column names follow \CRANpkg{GSODR} naming conventions.
 }
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
