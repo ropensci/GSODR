@@ -2,7 +2,7 @@
 
 #' Get the Most Recent isd_history File
 #'
-#' @return A \code{\link[data.table]{data.table}} object
+#' @return A [data.table::data.table] object
 #' @export
 #' @family metadata
 #' @autoglobal
