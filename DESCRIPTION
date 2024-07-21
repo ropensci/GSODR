@@ -55,10 +55,10 @@ Imports:
     stats,
     utils
 Suggests:
+    bit64,
     dplyr,
     ggplot2,
     gridExtra,
-    bit64,
     knitr,
     mapproj,
     maps,
