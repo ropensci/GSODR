@@ -6,7 +6,7 @@
 #'   field.  Column names follow \CRANpkg{GSODR} naming conventions.
 #'
 #'
-#' @return A \code{\link[data.table]{data.table}} object
+#' @return A [data.table::data.table()] object
 #' @export
 #' @autoglobal
 #' @family metadata
