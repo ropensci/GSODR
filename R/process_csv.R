@@ -16,6 +16,7 @@
               keepLeadingZeros = TRUE,
               colClasses = c("STP" = "character"))
 
+
   # Replace 99.99 et al. with NA
   set(DT,
     i = which(DT[["PRCP"]] == "99.99"),
