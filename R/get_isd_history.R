@@ -6,6 +6,7 @@
 #' @export
 #' @family metadata
 #' @autoglobal
+#'
 #' @examplesIf interactive()
 #' get_isd_history()
 #'
