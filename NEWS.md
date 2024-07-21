@@ -1,8 +1,8 @@
 # GSODR 5.0.0
 
-## Major changes
+## Minor changes
 
-- `update_station_list()` is now `update_internal_isd_history()` for consistency with NCEI vocabulary and other portions of {GSODR}.
+- Added citation information for the data themselves to README.
 
 - Adds new function, `get_updates()`, which gets the changelog for the GSOD data and returns it sorted with most recent changes first.
 
@@ -15,9 +15,6 @@ Further, {data.table} drops the leading zeros by default on import with `fread()
 
 - Fixes title that ended with a full stop.
 
-## Minor changes
-
-- Added citation information for the data themselves to README.
 
 # GSDOR 4.0.0
 
