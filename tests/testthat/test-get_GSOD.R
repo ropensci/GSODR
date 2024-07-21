@@ -160,8 +160,6 @@ test_that("Check validate country returns a two letter code", {
   skip_if_offline()
   # Load country list
   # CRAN NOTE avoidance
-  isd_history <- NULL
-  load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 
   country <- "Philippines"
   Philippines <- .validate_country(country, isd_history)
