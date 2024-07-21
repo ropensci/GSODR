@@ -22,7 +22,7 @@
 #'
 #' @examples
 #' \dontrun{
-#'  update_internal_isd_history()
+#'  update_station_list()
 #' }
 #'
 #' @seealso [get_isd_history()]
