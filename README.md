@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# {GSODR}: Global Surface Summary of the Day (‘GSOD’) Weather Data Client <img src="man/figures/logo.png" style="float:right;" alt="logo" width="120" />
+# {GSODR}: Global Surface Summary of the Day (GSOD) Weather Data Client <img src="man/figures/logo.png" style="float:right;" alt="logo" width="120" />
 
 <!-- badges: start -->
 
