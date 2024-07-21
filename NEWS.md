@@ -1,4 +1,4 @@
-# GSODR 5.0.0
+# GSODR 4.1.0
 
 ## Minor changes
 
@@ -14,7 +14,6 @@ Upon further inspection, it was found that the GSOD data in the CSV files is inc
 Further, {data.table} drops the leading zeros by default on import with `fread()` unless `keepLeadingZeros = TRUE` is set, so that is now set and the "1" is appended when the values are >1000 and all should be well with the world again.
 
 - Fixes title that ended with a full stop.
-
 
 # GSDOR 4.0.0
 
