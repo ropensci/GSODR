@@ -75,7 +75,7 @@ For more information see the description of the data provided by NCEI,
 
 ### Stable Version
 
-A stable version of *GSODR* is available from
+A stable version of {GSODR} is available from
 [CRAN](https://cran.r-project.org/package=GSODR).
 
 ``` r
