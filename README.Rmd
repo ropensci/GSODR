@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# <img src="man/figures/logo.png" style="float:right;" alt="logo" width="120" /> {GSODR}: Global Surface Summary of the Day ('GSOD') Weather Data Client
+# {GSODR}: Global Surface Summary of the Day ('GSOD') Weather Data Client <img src="man/figures/logo.png" style="float:right;" alt="logo" width="120" />
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/ropensci/GSODR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/GSODR/actions/workflows/R-CMD-check.yaml)
@@ -24,8 +24,6 @@ knitr::opts_chunk$set(
 [![JOSS](http://joss.theoj.org/papers/10.21105/joss.00177/status.svg)](https://joss.theoj.org/papers/10.21105/joss.00177) 
 [![](https://badges.ropensci.org/79_status.svg)](https://github.com/ropensci/software-review/issues/79)
 <!-- badges: end -->
-
---------------------
 
 ## Introduction
 

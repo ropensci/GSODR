@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# <img src="man/figures/logo.png" style="float:right;" alt="logo" width="120" /> {GSODR}: Global Surface Summary of the Day (‘GSOD’) Weather Data Client
+# {GSODR}: Global Surface Summary of the Day (‘GSOD’) Weather Data Client <img src="man/figures/logo.png" style="float:right;" alt="logo" width="120" />
 
 <!-- badges: start -->
 
@@ -15,8 +15,6 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 [![JOSS](http://joss.theoj.org/papers/10.21105/joss.00177/status.svg)](https://joss.theoj.org/papers/10.21105/joss.00177)
 [![](https://badges.ropensci.org/79_status.svg)](https://github.com/ropensci/software-review/issues/79)
 <!-- badges: end -->
-
-------------------------------------------------------------------------
 
 ## Introduction
 
