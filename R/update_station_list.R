@@ -21,15 +21,15 @@
 #' refer to [get_isd_history()].
 #'
 #' @examples
-#' \dontrun {
+#' \dontrun{
 #'  update_internal_isd_history()
 #' }
 #'
-#' @seealso [isd_history()]
+#' @seealso [get_isd_history()]
 #' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
 #' @autoglobal
 
-update_internal_isd_history <- function() {
+update_station_list <- function() {
   message(
     "This will overwrite GSODR's current internal list of GSOD stations. \n",
     "If reproducibility is necessary, you may not wish to proceed. \n",
