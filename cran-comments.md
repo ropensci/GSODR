@@ -1,12 +1,12 @@
-# GSODR v4.0.0
+# GSODR v4.1.0
 
 ## Test environments
 
- - local macOS, Platform: aarch64-apple-darwin20 (64-bit), R 4.3.3
+ - local macOS, Platform: aarch64-apple-darwin20 (64-bit), R 4.4.1
  - win-builder, R Under development (unstable)
  - win-builder, Platform: x86_64-w64-mingw32, R 4.3.3
 
-This is a new major release with breaking changes, however they do not affect the 1 reverse dependency.
+This is a new release with minor changes and bug fixes.
 
 ## revdepcheck results
 
