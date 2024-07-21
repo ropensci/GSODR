@@ -17,7 +17,7 @@ test_that("update_station_list() downloads and imports proper file", {
   options(GSODR_connection = f)
   ans <- "yes"
   write(ans, f)
-  expect_message(update_internal_isd_history())
+  expect_message(update_station_list())
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))
   expect_equal(ncol(isd_history), 12)
   expect_named(
