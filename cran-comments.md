@@ -6,7 +6,7 @@
  - win-builder, R Under development (unstable)
  - win-builder, Platform: x86_64-w64-mingw32, R 4.3.3
 
-This is a new release with minor changes and bug fixes.
+This is a new minor release with a bug fix to deal with missing values in the data that were misreported.
 
 ## revdepcheck results
 
