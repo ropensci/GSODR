@@ -18,6 +18,7 @@ utils::globalVariables(c(
   "distance_km", # <nearest_stations>
   "STNID", # <.process_csv>
   "STP", # <.process_csv>
+  "STP_ATTRIBUTES", # <.process_csv>
   "YEARMODA", # <.process_csv>
   "DATE", # <.process_csv>
   "YEAR", # <.process_csv>
