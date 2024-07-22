@@ -78,7 +78,7 @@
                       sprintf("%s%s", 1, DT$STP),
                       STP, na = NA)]
   
-  DT[, STP := fifelse(STP_ATTRIBUTES == 0, NA, STP)]
+  DT[, STP := fifelse(STP_ATTRIBUTES == " 0", NA, STP)]
 
   # Add and convert date related columns ---------------------------------------
   DT[, YEARMODA := as.Date(DATE, format = "%Y-%m-%d")]
