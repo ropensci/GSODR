@@ -721,7 +721,7 @@ These were always available through GSOD but this bug prevented them from being 
 
 -   stations.rda is compressed
 
--   stations.rda now includes a field for "corrected" elevation using hole-filled SRTM data from Jarvis et al. 2008, see [https://github.com/ropensci/GSODR/blob/main/data-raw/fetch_isd-history.md](https://github.com/ropensci/GSODR/blob/devel/data-raw/fetch_isd-history.md) for a description
+-   stations.rda now includes a field for "corrected" elevation using hole-filled SRTM data from Jarvis et al. 2008
 
 -   Set NA or missing values in CSV or shapefile to -9999 from -9999.99 to align with other data sources such as WorldClim
 
