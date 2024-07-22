@@ -11,7 +11,7 @@
 - This is really a bug in the GSOD data, not {GSODR}, but we do our best to please.
 As reported by @geospacedman in [#117](https://github.com/ropensci/GSODR/issues/117), STP values above 1000 were not properly reported.
 Upon further inspection, it was found that the GSOD data in the CSV files is incorrect and the leading "1" is truncated and the values are reported as "034" for _e.g._ "1034".
-Further, {data.table} drops the leading zeros by default on import with `fread()` unless `keepLeadingZeros = TRUE` is set, so that is now set and the "1" is appended when the values are >1000 and all should be well with the world again.
+Further, {data.table} drops the leading zeros by default on import with `fread()` unless `keepLeadingZeros = TRUE` is set, so that is now set and the 1 is appended when the values are >1000 and all should be well with the world again.
 
 - Fixes title that ended with a full stop.
 
