@@ -1,5 +1,14 @@
 # GSODR 4.1.0
 
+## Bug fixes
+
+- This is a continuation of the bug in the GSOD CSV file format data from the previous release.
+The missing values should be 9999.9 as 999.9 is a valid "STP" value.
+However, this does not appear to be the value that's actually used for missing data in this field.
+So, I've elected to set the STP field to `NA` when "STP_ATTRIBUTES" are equal to "0" or no observations used in reporting "STP" to see if this overcomes the issue.
+
+# GSODR 4.1.0
+
 ## Minor changes
 
 - Added citation information for the data themselves to README.
