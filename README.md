@@ -120,17 +120,17 @@ tbar
 #> 362: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS       
 #>      LATITUDE LONGITUDE ELEVATION    BEGIN      END   YEARMODA  YEAR MONTH
 #>         <num>     <num>     <num>    <int>    <int>     <Date> <int> <int>
-#>   1:   -27.55   151.917       642 19980301 20240324 2021-01-01  2021     1
-#>   2:   -27.55   151.917       642 19980301 20240324 2021-01-02  2021     1
-#>   3:   -27.55   151.917       642 19980301 20240324 2021-01-03  2021     1
-#>   4:   -27.55   151.917       642 19980301 20240324 2021-01-04  2021     1
-#>   5:   -27.55   151.917       642 19980301 20240324 2021-01-05  2021     1
+#>   1:   -27.55   151.917       642 19980301 20240718 2021-01-01  2021     1
+#>   2:   -27.55   151.917       642 19980301 20240718 2021-01-02  2021     1
+#>   3:   -27.55   151.917       642 19980301 20240718 2021-01-03  2021     1
+#>   4:   -27.55   151.917       642 19980301 20240718 2021-01-04  2021     1
+#>   5:   -27.55   151.917       642 19980301 20240718 2021-01-05  2021     1
 #>  ---                                                                      
-#> 358:   -27.55   151.917       642 19980301 20240324 2021-12-27  2021    12
-#> 359:   -27.55   151.917       642 19980301 20240324 2021-12-28  2021    12
-#> 360:   -27.55   151.917       642 19980301 20240324 2021-12-29  2021    12
-#> 361:   -27.55   151.917       642 19980301 20240324 2021-12-30  2021    12
-#> 362:   -27.55   151.917       642 19980301 20240324 2021-12-31  2021    12
+#> 358:   -27.55   151.917       642 19980301 20240718 2021-12-27  2021    12
+#> 359:   -27.55   151.917       642 19980301 20240718 2021-12-28  2021    12
+#> 360:   -27.55   151.917       642 19980301 20240718 2021-12-29  2021    12
+#> 361:   -27.55   151.917       642 19980301 20240718 2021-12-30  2021    12
+#> 362:   -27.55   151.917       642 19980301 20240718 2021-12-31  2021    12
 #>        DAY  YDAY  TEMP TEMP_ATTRIBUTES  DEWP DEWP_ATTRIBUTES    SLP
 #>      <int> <int> <num>           <int> <num>           <int>  <num>
 #>   1:     1     1  20.9              16  18.1              15 1011.5
@@ -181,8 +181,8 @@ tbar
 #> 358:  0.00               I    NA     0              0          0      0
 #> 359:  0.00               I    NA     0              0          0      0
 #> 360:  0.00               I    NA     0              0          0      0
-#> 361:  0.25               G    NA     1              0          0      0
-#> 362:  7.11               G    NA     1              0          0      0
+#> 361:  0.25               G    NA     0              1          0      0
+#> 362:  7.11               G    NA     0              1          0      0
 #>      I_THUNDER I_TORNADO_FUNNEL    EA    ES    RH
 #>          <num>            <num> <num> <num> <num>
 #>   1:         0                0   2.1   2.5  84.0
@@ -194,8 +194,8 @@ tbar
 #> 358:         0                0   1.8   2.4  76.4
 #> 359:         0                0   1.5   1.9  79.3
 #> 360:         0                0   1.6   2.1  75.5
-#> 361:         0               NA   1.5   2.1  73.1
-#> 362:         0               NA   1.9   2.1  91.6
+#> 361:         0                0   1.5   2.1  73.1
+#> 362:         0                0   1.9   2.1  91.6
 ```
 
 ## Other Sources of Weather Data in R
@@ -204,11 +204,36 @@ There are several other sources of weather data and ways of retrieving
 them through R. Several are also [rOpenSci](https://ropensci.org)
 projects.
 
-The
+[{clifro}](https://CRAN.R-project.org/package=clifro) from
+[rOpenSci](https://docs.ropensci.org/clifro/) is a web portal to the New
+Zealand National Climate Database and provides public access (via
+subscription) to around 6,500 various climate stations (see
+<https://cliflo.niwa.co.nz/> for more information). Collating and
+manipulating data from CliFlo (hence clifro) and importing into R for
+further analysis, exploration and visualisation is now straightforward
+and coherent. The user is required to have an Internet connection, and a
+current CliFlo subscription (free) if data from stations, other than the
+public Reefton electronic weather station, is sought.
+
 [{GSODTools}](https://github.com/environmentalinformatics-marburg/GSODTools)
 by [Florian Detsch](https://github.com/fdetsch) is an R package that
 offers similar functionality as {GSODR}, but also has the ability to
 graph the data and working with data for time series analysis.
+
+[{nasapower}](https://CRAN.R-project.org/package=nasapower) from
+[rOpenSci](https://docs.ropensci.org/nasapower/) aims to make it quick
+and easy to automate downloading of the NASA-POWER global meteorology,
+surface solar energy and climatology data in your R session as a tidy
+`tibble` object for analysis and use in modelling or other purposes.
+POWER (Prediction Of Worldwide Energy Resource) data are freely
+available for download with varying spatial resolutions dependent on the
+original data and with several temporal resolutions depending on the
+POWER parameter and community.
+
+[{riem}](https://CRAN.R-project.org/package=riem) from
+[rOpenSci](https://docs.ropensci.org/riem/) allows to get weather data
+from Automated Surface Observing System (ASOS) stations (airports) in
+the whole world thanks to the Iowa Environment Mesonet website.
 
 [{rnoaa}](https://CRAN.R-project.org/package=rnoaa), from
 [rOpenSci](https://docs.ropensci.org/rnoaa/) offers tools for
@@ -221,26 +246,26 @@ Richard Iannone offers hourly meteorological data from stations located
 all over the world. There is a wealth of data available, with historic
 weather data accessible from nearly 30,000 stations.
 
-[{riem}](https://CRAN.R-project.org/package=riem) from
-[rOpenSci](https://docs.ropensci.org/riem/) allows to get weather data
-from Automated Surface Observing System (ASOS) stations (airports) in
-the whole world thanks to the Iowa Environment Mesonet website.
-
 [{weathercan}](https://CRAN.R-project.org/package=weathercan) from
 [rOpenSci](https://github.com/ropensci/weathercan) makes it easier to
 search for and download multiple months/years of historical weather data
 from Environment and Climate Change Canada (ECCC) website.
 
-[{clifro}](https://CRAN.R-project.org/package=clifro) from
-[rOpenSci](https://docs.ropensci.org/clifro/) is a web portal to the New
-Zealand National Climate Database and provides public access (via
-subscription) to around 6,500 various climate stations (see
-<https://cliflo.niwa.co.nz/> for more information). Collating and
-manipulating data from CliFlo (hence clifro) and importing into R for
-further analysis, exploration and visualisation is now straightforward
-and coherent. The user is required to have an Internet connection, and a
-current CliFlo subscription (free) if data from stations, other than the
-public Reefton electronic weather station, is sought.
+{weatherOz}\](<https://CRAN.R-project.org/package=weatherOz>) aims to
+facilitate access and download weather and climate data for Australia
+from Australian data sources. Data are sourced from from the Western
+Australian Department of Primary Industries and Regional Development
+(DPIRD) and the Scientific Information for Land Owners (SILO) API
+endpoints and the Australian Government Bureau of Meteorology’s (BOM)
+FTP server.
+
+[{worldmet}](https://CRAN.R-project.org/package=worldmet) provides an
+easy way to access data from the NOAA Integrated Surface Database (ISD)
+(the same database {GSODR} provides access to. The ISD contains detailed
+surface meteorological data from around the world for over 35,000
+locations. However, rather than daily values, the package outputs
+(typically hourly meteorological data) and works very well with the
+[{openair}](https://CRAN.R-project.org/package=openair) package.
 
 ## Notes
 
