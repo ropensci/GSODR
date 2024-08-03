@@ -1,3 +1,9 @@
+# GSODR 4.1.1.9000
+
+## Bug fixes
+
+- Enforce {data.table} >= 1.15.4 due to issue with `fifelse()` as reported in <https://github.com/ropensci/GSODR/issues/121>
+
 # GSODR 4.1.1
 
 ## Bug fixes
