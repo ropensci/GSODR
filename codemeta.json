@@ -286,6 +286,7 @@
       "@type": "SoftwareApplication",
       "identifier": "data.table",
       "name": "data.table",
+      "version": ">= 1.15.4",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -321,7 +322,7 @@
   "applicationCategory": "Tools",
   "isPartOf": "https://ropensci.org",
   "keywords": ["US-NCEI", "meteorological-data", "global-weather", "weather", "weather-data", "meteorology", "station-data", "surface-weather", "data-access", "US-NCDC", "r", "gsod", "ncdc", "weather-stations", "global-data", "ncei", "weather-information", "historical-weather", "historical-data", "daily-data", "daily-weather", "rstats", "r-package"],
-  "fileSize": "4343.308KB",
+  "fileSize": "4344.81KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
