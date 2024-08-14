@@ -251,7 +251,7 @@ weather data accessible from nearly 30,000 stations.
 search for and download multiple months/years of historical weather data
 from Environment and Climate Change Canada (ECCC) website.
 
-{weatherOz}\](<https://CRAN.R-project.org/package=weatherOz>) aims to
+[{weatherOz}\](<https://CRAN.R-project.org/package=weatherOz>) aims to
 facilitate access and download weather and climate data for Australia
 from Australian data sources. Data are sourced from from the Western
 Australian Department of Primary Industries and Regional Development
