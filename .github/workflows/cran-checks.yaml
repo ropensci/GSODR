@@ -15,4 +15,4 @@ jobs:
       - name: Get CRAN checks
         uses: flrsh-dev/cran-checks/check-pkg@main
         with:
-          pkg: YOUR-PKG-NAME
+          pkg: GSODR
