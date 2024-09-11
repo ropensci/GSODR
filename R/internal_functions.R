@@ -199,13 +199,8 @@
       # create a list of files that have been downloaded and untar them
       tar_files <-
         list.files(tempdir(), pattern = "*\\.tar.gz$", full.names = TRUE)
-      for (i in tar_files) {
-        wd <- getwd()
-        on.exit(setwd(wd))
-        setwd(tempdir())
-        year_dir <- substr(i, nchar(i) - 10, nchar(i) - 7)
-        utils::untar(i, exdir = year_dir)
-      }
+
+      withr::with_dir(tempdir(), .untar_files(tar_files))
 
       GSOD_list <-
         list.files(
@@ -366,4 +361,20 @@
       TLS = ""
     )[[1]]
   ))
+}
+
+
+#' Untar GSOD Tar Archive Files
+#'
+#' @param tar_files a list of tar files located in in `tempdir()`
+#'
+#' @noRd
+#' @return called for it's side-effects, untars the archive files in the
+#'  `tempdir()`
+
+.untar_files <- function(tar_files) {
+  for (i in tar_files) {
+    year_dir <- substr(i, nchar(i) - 10, nchar(i) - 7)
+    utils::untar(i, exdir = year_dir)
+  }
 }
