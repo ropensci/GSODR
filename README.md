@@ -120,17 +120,17 @@ tbar
 #> 362: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS       
 #>      LATITUDE LONGITUDE ELEVATION    BEGIN      END   YEARMODA  YEAR MONTH
 #>         <num>     <num>     <num>    <int>    <int>     <Date> <int> <int>
-#>   1:   -27.55   151.917       642 19980301 20240718 2021-01-01  2021     1
-#>   2:   -27.55   151.917       642 19980301 20240718 2021-01-02  2021     1
-#>   3:   -27.55   151.917       642 19980301 20240718 2021-01-03  2021     1
-#>   4:   -27.55   151.917       642 19980301 20240718 2021-01-04  2021     1
-#>   5:   -27.55   151.917       642 19980301 20240718 2021-01-05  2021     1
+#>   1:   -27.55   151.917       642 19980301 20240908 2021-01-01  2021     1
+#>   2:   -27.55   151.917       642 19980301 20240908 2021-01-02  2021     1
+#>   3:   -27.55   151.917       642 19980301 20240908 2021-01-03  2021     1
+#>   4:   -27.55   151.917       642 19980301 20240908 2021-01-04  2021     1
+#>   5:   -27.55   151.917       642 19980301 20240908 2021-01-05  2021     1
 #>  ---                                                                      
-#> 358:   -27.55   151.917       642 19980301 20240718 2021-12-27  2021    12
-#> 359:   -27.55   151.917       642 19980301 20240718 2021-12-28  2021    12
-#> 360:   -27.55   151.917       642 19980301 20240718 2021-12-29  2021    12
-#> 361:   -27.55   151.917       642 19980301 20240718 2021-12-30  2021    12
-#> 362:   -27.55   151.917       642 19980301 20240718 2021-12-31  2021    12
+#> 358:   -27.55   151.917       642 19980301 20240908 2021-12-27  2021    12
+#> 359:   -27.55   151.917       642 19980301 20240908 2021-12-28  2021    12
+#> 360:   -27.55   151.917       642 19980301 20240908 2021-12-29  2021    12
+#> 361:   -27.55   151.917       642 19980301 20240908 2021-12-30  2021    12
+#> 362:   -27.55   151.917       642 19980301 20240908 2021-12-31  2021    12
 #>        DAY  YDAY  TEMP TEMP_ATTRIBUTES  DEWP DEWP_ATTRIBUTES    SLP
 #>      <int> <int> <num>           <int> <num>           <int>  <num>
 #>   1:     1     1  20.9              16  18.1              15 1011.5
@@ -251,7 +251,7 @@ weather data accessible from nearly 30,000 stations.
 search for and download multiple months/years of historical weather data
 from Environment and Climate Change Canada (ECCC) website.
 
-[{weatherOz}\](<https://CRAN.R-project.org/package=weatherOz>) aims to
+[{weatherOz}](https://CRAN.R-project.org/package=weatherOz) aims to
 facilitate access and download weather and climate data for Australia
 from Australian data sources. Data are sourced from from the Western
 Australian Department of Primary Industries and Regional Development
