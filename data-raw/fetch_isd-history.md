@@ -1,7 +1,7 @@
 Fetch and Clean ‘isd_history.csv’ File
 ================
 Adam H. Sparks
-2024-09-11
+2024-09-12
 
 <STYLE type='text/css' scoped>
 PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
@@ -125,7 +125,7 @@ install.packages("GSODR", repos = "https://cloud.r-project.org/")
 
     ## 
     ## The downloaded binary packages are in
-    ##  /var/folders/r4/wwsd3hsn48j5gck6qv6npkpc0000gr/T//RtmpNkmWel/downloaded_packages
+    ##  /var/folders/r4/wwsd3hsn48j5gck6qv6npkpc0000gr/T//RtmpFv4b2D/downloaded_packages
 
 ``` r
 load(system.file("extdata", "isd_history.rda", package = "GSODR"))
@@ -157,9 +157,9 @@ new_isd_history <- new_isd_history[, ..x]
 ##              LON ELEV(M)   CTRY  STATE    BEGIN      END  COUNTRY_NAME  ISO2C 
 ##            &lt;num&gt;   &lt;num&gt; &lt;char&gt; &lt;char&gt;    &lt;int&gt;    &lt;int&gt;        &lt;char&gt; &lt;char&gt; 
 ##       1:  65.567  1156.7     AF        20100519 20120323   AFGHANISTAN     AF 
-## <span style='color: #BBBB00;'>&lt;</span>     2:  -8.667     9.0     NO        19310101 <span style='color: #BBBB00;'>20240908</span>        NORWAY     NO 
+## <span style='color: #BBBB00;'>&lt;</span>     2:  -8.667     9.0     NO        19310101 <span style='color: #BBBB00;'>20240909</span>        NORWAY     NO 
 ## <span style='color: #0000BB;'>&gt;</span>     2:  -8.667     9.0     NO        19310101 <span style='color: #0000BB;'>20240718</span>        NORWAY     NO 
-## <span style='color: #BBBB00;'>&lt;</span>     3:   5.341    48.8     NO        19861120 <span style='color: #BBBB00;'>20240908</span>        NORWAY     NO 
+## <span style='color: #BBBB00;'>&lt;</span>     3:   5.341    48.8     NO        19861120 <span style='color: #BBBB00;'>20240909</span>        NORWAY     NO 
 ## <span style='color: #0000BB;'>&gt;</span>     3:   5.341    48.8     NO        19861120 <span style='color: #0000BB;'>20240718</span>        NORWAY     NO 
 ##       4:   5.867   327.0     NO        19870117 19971231        NORWAY     NO 
 ##       5:  11.233    14.0     NO        19870116 19910806        NORWAY     NO 
@@ -211,7 +211,7 @@ str(isd_history)
     ##  $ CTRY        : chr  "AF" "NO" "NO" "NO" ...
     ##  $ STATE       : chr  "" "" "" "" ...
     ##  $ BEGIN       : int  20100519 19310101 19861120 19870117 19870116 19880320 19861109 19850601 19730101 19310103 ...
-    ##  $ END         : int  20120323 20240908 20240908 19971231 19910806 19971226 20240908 20240908 19970801 20041030 ...
+    ##  $ END         : int  20120323 20240909 20240909 19971231 19910806 19971226 20240909 20240909 19970801 20041030 ...
     ##  $ COUNTRY_NAME: chr  "AFGHANISTAN" "NORWAY" "NORWAY" "NORWAY" ...
     ##  $ ISO2C       : chr  "AF" "NO" "NO" "NO" ...
     ##  $ ISO3C       : chr  "AFG" "NOR" "NOR" "NOR" ...
@@ -259,7 +259,7 @@ website](https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.n
 ##  collate  en_US.UTF-8
 ##  ctype    en_US.UTF-8
 ##  tz       Australia/Perth
-##  date     2024-09-11
+##  date     2024-09-12
 ##  pandoc   3.3 @ /opt/homebrew/bin/ (via rmarkdown)
 ## 
 ## <span style='color: #00BBBB; font-weight: bold;'>─ Packages ───────────────────────────────────────────────────────────────────</span>
