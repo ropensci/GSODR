@@ -14,6 +14,7 @@ Provides automated downloading, parsing, cleaning, unit conversion and formattin
 Useful links:
 \itemize{
   \item \url{https://docs.ropensci.org/GSODR/}
+  \item \url{https://github.com/ropensci/GSODR}
   \item Report bugs at \url{https://github.com/ropensci/GSODR/issues}
 }
 
