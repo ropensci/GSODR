@@ -2,6 +2,7 @@ AIMFAOS
 ASOS
 Agroclimatology
 Alduchov
+BOM
 Bigouette
 CCI
 CGIAR
@@ -17,6 +18,7 @@ Curtin
 DATSAV
 DEWP
 DOI
+DPIRD
 Detsch
 ECCC
 ESA's
@@ -32,10 +34,10 @@ GSODR's
 GSODRdata
 GSODTools
 GSODdata
-GSOD’
 GeoPackage
 ICAO
 IMFAOS
+ISD
 Iannone
 JOSS
 MODCF
@@ -86,7 +88,6 @@ countries’
 csv
 dplyr
 et
-github
 gsod
 gz
 https
@@ -103,10 +104,13 @@ md
 metres
 millimetres
 mistyped
+modelling
+nasapower
 ncdc
 ncei
 noaa
 onLoad
+openair
 optimised
 plyr
 png
@@ -136,7 +140,9 @@ untarred
 untarring
 vapour
 visualisation
+weatherOz
 weathercan
 windspeed
+worldmet
 www
 zzz

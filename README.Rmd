@@ -105,7 +105,7 @@ There is a wealth of data available, with historic weather data accessible from 
 
 [{weathercan}](https://CRAN.R-project.org/package=weathercan) from [rOpenSci](https://github.com/ropensci/weathercan) makes it easier to search for and download multiple months/years of historical weather data from Environment and Climate Change Canada (ECCC) website.
 
-{weatherOz}](https://CRAN.R-project.org/package=weatherOz) aims to facilitate access and download weather and climate data for Australia from Australian data sources.
+[{weatherOz}](https://CRAN.R-project.org/package=weatherOz) aims to facilitate access and download weather and climate data for Australia from Australian data sources.
 Data are sourced from from the Western Australian Department of Primary Industries and Regional Development (DPIRD) and the Scientific Information for Land Owners (SILO) API endpoints and the Australian Government Bureau of Meteorology’s (BOM) FTP server.
 
 [{worldmet}](https://CRAN.R-project.org/package=worldmet) provides an easy way to access data from the NOAA Integrated Surface Database (ISD) (the same database {GSODR} provides access to.
