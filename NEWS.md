@@ -1,3 +1,7 @@
+# GSODR 4.1.3
+
+- Skip test on CRAN (`test-get_updates()`) that should have been skipped but wasn't
+
 # GSODR 4.1.2
 
 ## Bug fixes
