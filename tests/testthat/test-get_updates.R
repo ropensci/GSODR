@@ -1,5 +1,5 @@
 test_that("get_updates() returns a data.table", {
-  skip_on_cran()
+  skip_if_offline()
   x <- get_updates()
   expect_s3_class(x, "data.table")
   expect_named(x, c("STNID", "YEAR", "DATE", "COMMENT"))
