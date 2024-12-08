@@ -12,9 +12,10 @@
   # The "STP" column is set to be character here to handle the issues with vals
   # over 1000 having the leading zero removed.
   DT <- fread(x,
-              strip.white = TRUE,
-              keepLeadingZeros = TRUE,
-              colClasses = c("STP" = "character"))
+    strip.white = TRUE,
+    keepLeadingZeros = TRUE,
+    colClasses = c("STP" = "character")
+  )
 
 
   # Replace 99.99 et al. with NA
@@ -75,9 +76,11 @@
   # The NCEI supplied CSV files are broken, they lop off the "1" in values >1000
   # See https://github.com/ropensci/GSODR/issues/117
   DT[, STP := fifelse(substr(STP, 1, 1) == "0",
-                      sprintf("%s%s", 1, DT$STP),
-                      STP, na = NA)]
-  
+    sprintf("%s%s", 1, DT$STP),
+    STP,
+    na = NA
+  )]
+
   DT[, STP := fifelse(STP_ATTRIBUTES == " 0", NA, STP)]
 
   # Add and convert date related columns ---------------------------------------

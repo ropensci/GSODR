@@ -25,3 +25,7 @@ vignettes/figure
 ^tic\.R$
 ^CODE_OF_CONDUCT\.md$
 ^CRAN-SUBMISSION$
+
+
+# flint files
+^flint$

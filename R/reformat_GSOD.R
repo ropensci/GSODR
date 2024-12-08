@@ -1,4 +1,3 @@
-
 #' Tidy and Return a data.table Object of GSOD Data From Local Storage
 #'
 #' This function automates cleaning and reformatting of \acronym{GSOD} station
@@ -79,7 +78,6 @@
 #'
 #' tbar
 #'
-#'
 #' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
 #'
 #' @return A data frame as a [data.table::data.table] object of
@@ -89,23 +87,27 @@
 #' @export reformat_GSOD
 
 reformat_GSOD <- function(dsn = NULL, file_list = NULL) {
-
   load(system.file("extdata", "isd_history.rda", package = "GSODR")) # nocov
 
   # If both dsn and file_path are set, emit message that only dsn is used
   if (!is.null(dsn) & !is.null(file_list)) {
-    message("\nYou have specified both `file_list` and `dsn`.\n",
-            "Proceeding with using only the value from `dsn`.\n",
-            "See `?reformat_GSOD` if this behaviour was not expected.\n")
+    message(
+      "\nYou have specified both `file_list` and `dsn`.\n",
+      "Proceeding with using only the value from `dsn`.\n",
+      "See `?reformat_GSOD` if this behaviour was not expected.\n"
+    )
   }
 
   # If dsn !NULL, create a list of files to reformat
   if (!is.null(dsn)) {
-    file_list <- list.files(path = dsn,
-                            pattern = "^.*\\.csv$",
-                            full.names = TRUE)
-    if (length(file_list) == 0)
+    file_list <- list.files(
+      path = dsn,
+      pattern = "^.*\\.csv$",
+      full.names = TRUE
+    )
+    if (length(file_list) == 0) {
       stop("No files were found, please check your file location.")
+    }
   }
   GSOD_XY <- .apply_process_csv(file_list, isd_history)
   return(GSOD_XY)

@@ -1,4 +1,3 @@
-
 #' Download Latest isd-history.csv File and Update an Internal Database
 #'
 #' This function downloads the latest station list (isd-history.csv) from the
@@ -22,7 +21,7 @@
 #'
 #' @examples
 #' \dontrun{
-#'  update_station_list()
+#' update_station_list()
 #' }
 #'
 #' @seealso [get_isd_history()]

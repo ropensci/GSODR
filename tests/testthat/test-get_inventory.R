@@ -1,4 +1,3 @@
-
 # Check that get_inventory functions properly ----------------------------------
 test_that("get_inventory fetches the inventory doc and returns a data frame", {
   skip_if_offline()
@@ -33,10 +32,14 @@ test_that("get_inventory fetches the inventory doc and returns a data frame", {
 
   y <- capture.output(x)
   expect_type(y, "character")
-  expect_equal(y[[1]],
-               "  *** FEDERAL CLIMATE COMPLEX INTEGRATED SURFACE DATA INVENTORY ***  ")
-  expect_equal(y[[2]],
-               "   This inventory provides the number of weather observations by  ")
+  expect_equal(
+    y[[1]],
+    "  *** FEDERAL CLIMATE COMPLEX INTEGRATED SURFACE DATA INVENTORY ***  "
+  )
+  expect_equal(
+    y[[2]],
+    "   This inventory provides the number of weather observations by  "
+  )
 })
 
 test_that("inventory file is removed after download", {

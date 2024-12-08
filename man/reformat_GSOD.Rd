@@ -88,7 +88,6 @@ download.file(
 tbar <- reformat_GSOD(dsn = tempdir())
 
 tbar
-
 \dontshow{\}) # examplesIf}
 }
 \seealso{

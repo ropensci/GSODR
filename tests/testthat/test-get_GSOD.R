@@ -313,7 +313,8 @@ test_that(
         RH = "numeric"
       )
     )
-})
+  }
+)
 
 test_that("only specified country is returned using 2 letter ISO codes", {
   skip_if_offline()

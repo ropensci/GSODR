@@ -29,7 +29,7 @@ refer to \code{\link[=get_isd_history]{get_isd_history()}}.
 }
 \examples{
 \dontrun{
- update_station_list()
+update_station_list()
 }
 
 }
