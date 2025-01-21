@@ -13,6 +13,6 @@ jobs:
 
     steps:
       - name: Get CRAN checks
-        uses: flrsh-dev/cran-checks/check-pkg@main
+        uses: ricochet-rs/cran-checks/check-pkg@main
         with:
           pkg: GSODR
