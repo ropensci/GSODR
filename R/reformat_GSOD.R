@@ -80,7 +80,7 @@
 #'
 #' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
 #'
-#' @return A data frame as a [data.table::data.table] object of
+#' @returns A data frame as a [data.table::data.table] object of
 #' \acronym{GSOD} data.
 #' @seealso [get_GSOD()]
 #' @autoglobal

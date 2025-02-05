@@ -2,7 +2,7 @@
 #'
 #' @param x A `data.table` generated from `.download_data()`
 #' @param isd_history Internal metadata file for station locations
-#' @return A `data.table` of well-formatted weather data
+#' @returns A `data.table` of well-formatted weather data
 #' @keywords internal
 #' @autoglobal
 #' @noRd

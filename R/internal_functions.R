@@ -1,10 +1,9 @@
 #' Validate Years
 #'
 #' @param years User entered years for request
-#' @keywords internal
-#' @return None unless error in years being requested by users
+#' @returns None unless error in years being requested by users.
 #' @autoglobal
-#' @noRd
+#' @dev
 .validate_years <- function(years) {
   if (inherits(years, what = "character")) {
     stop(
@@ -37,10 +36,9 @@
 #'
 #' @param station User entered station ID
 #' @param isd_history isd_history.csv from NCEI provided by GSODR
-#' @keywords internal
-#' @return None unless an error with the years or invalid station ID
+#' @returns None unless an error with the years or invalid station ID.
 #' @autoglobal
-#' @noRd
+#' @dev
 .validate_station_id <- function(station, isd_history) {
   if (!station %in% isd_history$STNID) {
     stop(
@@ -62,10 +60,10 @@
 #' @param station User entered station ID
 #' @param isd_history isd_history.csv from NCEI provided by GSODR
 #' @param years User entered years for query
-#' @keywords internal
-#' @return station_id value, "station", `NA` if no match with available data
+#' @returns `station_id` value, "station", `NA` if no match with available
+#' data.
 #' @autoglobal
-#' @noRd
+#' @dev
 .validate_station_data_years <- function(station, isd_history, years) {
   BEGIN <-
     as.numeric(substr(isd_history[isd_history$STNID == station, ]$BEGIN, 1, 4))
@@ -92,10 +90,9 @@
 #'
 #' @param country User requested country name
 #' @param isd_history Data provided from NCEI on stations' locations and years
-#' @keywords internal
-#' @return A validated country name
+#' @returns A validated country name.
 #' @autoglobal
-#' @noRd
+#' @dev
 .validate_country <-
   function(country, isd_history) {
     if (!is.null(country)) {
@@ -145,11 +142,10 @@
 #'
 #' @param max_missing User entered maximum permissible missing days
 #' @param GSOD_list A list of GSOD files that have been downloaded from NCEI
-#' @keywords internal
-#' @return A validated `list()` of GSOD files that meet requirements for missing
-#'   days
+#' @returns A validated `list()` of GSOD files that meet requirements for
+#' missing days.
 #' @autoglobal
-#' @noRd
+#' @dev
 .validate_missing_days <-
   function(max_missing, file_list) {
     records <-
@@ -179,11 +175,10 @@
 #'
 #' @param station Station ID being requested. Optional
 #' @param years Years being requested. Mandatory
-#' @keywords internal
 #' @autoglobal
-#' @return A list of data for processing before returning to user
+#' @returns A list of data for processing before returning to user.
 #'
-#' @noRd
+#' @dev
 .download_files <-
   function(station,
            years) {
@@ -297,10 +292,9 @@
 #' @param x A `data.table` of GSOD data from .download_data
 #' @param isd_history isd_history file from NCEI
 #' @param years Years being requested
-#' @keywords internal
-#' @return A list of GSOD stations suitable for agroclimatology work
+#' @returns A list of GSOD stations suitable for agroclimatology work.
 #' @autoglobal
-#' @noRd
+#' @dev
 
 .agroclimatology_list <-
   function(file_list, isd_history, years) {
@@ -330,9 +324,9 @@
 #' @param isd_history isd_history.csv file from NCEI provided by GSODR
 #' @param years Years being requested
 #' @keywords internal
-#' @return A list of stations in the requested country
+#' @returns A list of stations in the requested country.
 #' @autoglobal
-#' @noRd
+#' @dev
 .subset_country_list <-
   function(country,
            file_list,
@@ -360,9 +354,9 @@
 #' @param file_list List of GSOD files
 #' @param isd_history isd_history.csv file from NCEI provided by GSODR
 #' @keywords internal
-#' @return A `data.table` of GSOD weather data
+#' @returns A `data.table` of GSOD weather data.
 #' @autoglobal
-#' @noRd
+#' @dev
 .apply_process_csv <- function(file_list, isd_history) {
   x <- lapply(
     X = file_list,
@@ -375,8 +369,8 @@
 #' Check That a URL Exists Before Downloading
 #'
 #' @param x a URL for checking
-#' @return A numeric value representing the HTTP response
-#' @noRd
+#' @returns A numeric value representing the HTTP response.
+#' @dev
 
 .check_url_exists <- function(x) {
   # check for an http error b4 proceeding, only if status is 200
@@ -397,9 +391,9 @@
 #'
 #' @param tar_files a list of tar files located in in `tempdir()`
 #'
-#' @noRd
-#' @return called for it's side-effects, untars the archive files in the
-#'  `tempdir()`
+#' @dev
+#' @returns Called for it's side-effects, untars the archive files in the
+#'  `tempdir()`.
 
 .untar_files <- function(tar_files) {
   for (i in tar_files) {

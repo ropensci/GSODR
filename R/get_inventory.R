@@ -22,7 +22,7 @@
 #' inventory <- get_inventory()
 #' inventory
 #'
-#' @return A `GSODR.info` object, which inherits from [data.table::data.table].
+#' @returns A `GSODR.info` object, which inherits from [data.table::data.table].
 #' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
 #' @family metadata
 #' @autoglobal

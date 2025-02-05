@@ -1,6 +1,6 @@
 #' Get the Most Recent isd_history File
 #'
-#' @return A [data.table::data.table] object
+#' @returns A [data.table::data.table] object
 #' @export
 #' @family metadata
 #' @autoglobal

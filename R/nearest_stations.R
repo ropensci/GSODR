@@ -24,7 +24,7 @@
 #' n <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 100)
 #' n
 #'
-#' @return A [data.table::data.table] with full station metadata including the
+#' @returns A [data.table::data.table] with full station metadata including the
 #' distance from the user specified coordinates from nearest to farthest.
 #' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
 #' @autoglobal

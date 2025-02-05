@@ -5,7 +5,7 @@
 #'   field.  Column names follow \CRANpkg{GSODR} naming conventions.
 #'
 #'
-#' @return A [data.table::data.table()] object
+#' @returns A [data.table::data.table()] object
 #' @export
 #' @autoglobal
 #' @family metadata
