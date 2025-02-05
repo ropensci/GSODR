@@ -69,7 +69,7 @@
     as.numeric(substr(isd_history[isd_history$STNID == station, ]$BEGIN, 1, 4))
   END <-
     as.numeric(substr(isd_history[isd_history$STNID == station, ]$END, 1, 4))
-  if (min(years) < BEGIN | max(years) > END) {
+  if (min(years) < BEGIN || max(years) > END) {
     warning(
       "\nThis station, ",
       station,
