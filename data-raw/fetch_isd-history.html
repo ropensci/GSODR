@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style type="text/css">
+@font-face {
+font-family: octicons-link;
+src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+body {
+-webkit-text-size-adjust: 100%;
+text-size-adjust: 100%;
+color: #333;
+font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+font-size: 16px;
+line-height: 1.6;
+word-wrap: break-word;
+}
+a {
+background-color: transparent;
+}
+a:active,
+a:hover {
+outline: 0;
+}
+strong {
+font-weight: bold;
+}
+h1 {
+font-size: 2em;
+margin: 0.67em 0;
+}
+img {
+border: 0;
+}
+hr {
+box-sizing: content-box;
+height: 0;
+}
+pre {
+overflow: auto;
+}
+code,
+kbd,
+pre {
+font-family: monospace, monospace;
+font-size: 1em;
+}
+input {
+color: inherit;
+font: inherit;
+margin: 0;
+}
+html input[disabled] {
+cursor: default;
+}
+input {
+line-height: normal;
+}
+input[type="checkbox"] {
+box-sizing: border-box;
+padding: 0;
+}
+table {
+border-collapse: collapse;
+border-spacing: 0;
+}
+td,
+th {
+padding: 0;
+}
+* {
+box-sizing: border-box;
+}
+input {
+font: 13px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+a {
+color: #4078c0;
+text-decoration: none;
+}
+a:hover,
+a:active {
+text-decoration: underline;
+}
+hr {
+height: 0;
+margin: 15px 0;
+overflow: hidden;
+background: transparent;
+border: 0;
+border-bottom: 1px solid #ddd;
+}
+hr:before {
+display: table;
+content: "";
+}
+hr:after {
+display: table;
+clear: both;
+content: "";
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 15px;
+margin-bottom: 15px;
+line-height: 1.1;
+}
+h1 {
+font-size: 30px;
+}
+h2 {
+font-size: 21px;
+}
+h3 {
+font-size: 16px;
+}
+h4 {
+font-size: 14px;
+}
+h5 {
+font-size: 12px;
+}
+h6 {
+font-size: 11px;
+}
+blockquote {
+margin: 0;
+}
+ul,
+ol {
+padding: 0;
+margin-top: 0;
+margin-bottom: 0;
+}
+ol ol,
+ul ol {
+list-style-type: lower-roman;
+}
+ul ul ol,
+ul ol ol,
+ol ul ol,
+ol ol ol {
+list-style-type: lower-alpha;
+}
+dd {
+margin-left: 0;
+}
+code {
+font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+font-size: 12px;
+}
+pre {
+margin-top: 0;
+margin-bottom: 0;
+font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+.select::-ms-expand {
+opacity: 0;
+}
+.octicon {
+font: normal normal normal 16px/1 octicons-link;
+display: inline-block;
+text-decoration: none;
+text-rendering: auto;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+.octicon-link:before {
+content: '\f05c';
+}
+.markdown-body:before {
+display: table;
+content: "";
+}
+.markdown-body:after {
+display: table;
+clear: both;
+content: "";
+}
+.markdown-body>*:first-child {
+margin-top: 0 !important;
+}
+.markdown-body>*:last-child {
+margin-bottom: 0 !important;
+}
+a:not([href]) {
+color: inherit;
+text-decoration: none;
+}
+.anchor {
+display: inline-block;
+padding-right: 2px;
+margin-left: -18px;
+}
+.anchor:focus {
+outline: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 1em;
+margin-bottom: 16px;
+font-weight: bold;
+line-height: 1.4;
+}
+h1 .octicon-link,
+h2 .octicon-link,
+h3 .octicon-link,
+h4 .octicon-link,
+h5 .octicon-link,
+h6 .octicon-link {
+color: #000;
+vertical-align: middle;
+visibility: hidden;
+}
+h1:hover .anchor,
+h2:hover .anchor,
+h3:hover .anchor,
+h4:hover .anchor,
+h5:hover .anchor,
+h6:hover .anchor {
+text-decoration: none;
+}
+h1:hover .anchor .octicon-link,
+h2:hover .anchor .octicon-link,
+h3:hover .anchor .octicon-link,
+h4:hover .anchor .octicon-link,
+h5:hover .anchor .octicon-link,
+h6:hover .anchor .octicon-link {
+visibility: visible;
+}
+h1 {
+padding-bottom: 0.3em;
+font-size: 2.25em;
+line-height: 1.2;
+border-bottom: 1px solid #eee;
+}
+h1 .anchor {
+line-height: 1;
+}
+h2 {
+padding-bottom: 0.3em;
+font-size: 1.75em;
+line-height: 1.225;
+border-bottom: 1px solid #eee;
+}
+h2 .anchor {
+line-height: 1;
+}
+h3 {
+font-size: 1.5em;
+line-height: 1.43;
+}
+h3 .anchor {
+line-height: 1.2;
+}
+h4 {
+font-size: 1.25em;
+}
+h4 .anchor {
+line-height: 1.2;
+}
+h5 {
+font-size: 1em;
+}
+h5 .anchor {
+line-height: 1.1;
+}
+h6 {
+font-size: 1em;
+color: #777;
+}
+h6 .anchor {
+line-height: 1.1;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table,
+pre {
+margin-top: 0;
+margin-bottom: 16px;
+}
+hr {
+height: 4px;
+padding: 0;
+margin: 16px 0;
+background-color: #e7e7e7;
+border: 0 none;
+}
+ul,
+ol {
+padding-left: 2em;
+}
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+margin-top: 0;
+margin-bottom: 0;
+}
+li>p {
+margin-top: 16px;
+}
+dl {
+padding: 0;
+}
+dl dt {
+padding: 0;
+margin-top: 16px;
+font-size: 1em;
+font-style: italic;
+font-weight: bold;
+}
+dl dd {
+padding: 0 16px;
+margin-bottom: 16px;
+}
+blockquote {
+padding: 0 15px;
+color: #777;
+border-left: 4px solid #ddd;
+}
+blockquote>:first-child {
+margin-top: 0;
+}
+blockquote>:last-child {
+margin-bottom: 0;
+}
+table {
+display: block;
+width: 100%;
+overflow: auto;
+word-break: normal;
+word-break: keep-all;
+}
+table th {
+font-weight: bold;
+}
+table th,
+table td {
+padding: 6px 13px;
+border: 1px solid #ddd;
+}
+table tr {
+background-color: #fff;
+border-top: 1px solid #ccc;
+}
+table tr:nth-child(2n) {
+background-color: #f8f8f8;
+}
+img {
+max-width: 100%;
+box-sizing: content-box;
+background-color: #fff;
+}
+code {
+padding: 0;
+padding-top: 0.2em;
+padding-bottom: 0.2em;
+margin: 0;
+font-size: 85%;
+background-color: rgba(0,0,0,0.04);
+border-radius: 3px;
+}
+code:before,
+code:after {
+letter-spacing: -0.2em;
+content: "\00a0";
+}
+pre>code {
+padding: 0;
+margin: 0;
+font-size: 100%;
+word-break: normal;
+white-space: pre;
+background: transparent;
+border: 0;
+}
+.highlight {
+margin-bottom: 16px;
+}
+.highlight pre,
+pre {
+padding: 16px;
+overflow: auto;
+font-size: 85%;
+line-height: 1.45;
+background-color: #f7f7f7;
+border-radius: 3px;
+}
+.highlight pre {
+margin-bottom: 0;
+word-break: normal;
+}
+pre {
+word-wrap: normal;
+}
+pre code {
+display: inline;
+max-width: initial;
+padding: 0;
+margin: 0;
+overflow: initial;
+line-height: inherit;
+word-wrap: normal;
+background-color: transparent;
+border: 0;
+}
+pre code:before,
+pre code:after {
+content: normal;
+}
+kbd {
+display: inline-block;
+padding: 3px 5px;
+font-size: 11px;
+line-height: 10px;
+color: #555;
+vertical-align: middle;
+background-color: #fcfcfc;
+border: solid 1px #ccc;
+border-bottom-color: #bbb;
+border-radius: 3px;
+box-shadow: inset 0 -1px 0 #bbb;
+}
+.pl-c {
+color: #969896;
+}
+.pl-c1,
+.pl-s .pl-v {
+color: #0086b3;
+}
+.pl-e,
+.pl-en {
+color: #795da3;
+}
+.pl-s .pl-s1,
+.pl-smi {
+color: #333;
+}
+.pl-ent {
+color: #63a35c;
+}
+.pl-k {
+color: #a71d5d;
+}
+.pl-pds,
+.pl-s,
+.pl-s .pl-pse .pl-s1,
+.pl-sr,
+.pl-sr .pl-cce,
+.pl-sr .pl-sra,
+.pl-sr .pl-sre {
+color: #183691;
+}
+.pl-v {
+color: #ed6a43;
+}
+.pl-id {
+color: #b52a1d;
+}
+.pl-ii {
+background-color: #b52a1d;
+color: #f8f8f8;
+}
+.pl-sr .pl-cce {
+color: #63a35c;
+font-weight: bold;
+}
+.pl-ml {
+color: #693a17;
+}
+.pl-mh,
+.pl-mh .pl-en,
+.pl-ms {
+color: #1d3e81;
+font-weight: bold;
+}
+.pl-mq {
+color: #008080;
+}
+.pl-mi {
+color: #333;
+font-style: italic;
+}
+.pl-mb {
+color: #333;
+font-weight: bold;
+}
+.pl-md {
+background-color: #ffecec;
+color: #bd2c00;
+}
+.pl-mi1 {
+background-color: #eaffea;
+color: #55a532;
+}
+.pl-mdr {
+color: #795da3;
+font-weight: bold;
+}
+.pl-mo {
+color: #1d3e81;
+}
+kbd {
+display: inline-block;
+padding: 3px 5px;
+font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+line-height: 10px;
+color: #555;
+vertical-align: middle;
+background-color: #fcfcfc;
+border: solid 1px #ccc;
+border-bottom-color: #bbb;
+border-radius: 3px;
+box-shadow: inset 0 -1px 0 #bbb;
+}
+.task-list-item {
+list-style-type: none;
+}
+.task-list-item+.task-list-item {
+margin-top: 3px;
+}
+.task-list-item input {
+margin: 0 0.35em 0.25em -1.6em;
+vertical-align: middle;
+}
+:checked+.radio-label {
+z-index: 1;
+position: relative;
+border-color: #4078c0;
+}
+.sourceLine {
+display: inline-block;
+}
+code .kw { color: #000000; }
+code .dt { color: #ed6a43; }
+code .dv { color: #009999; }
+code .bn { color: #009999; }
+code .fl { color: #009999; }
+code .ch { color: #009999; }
+code .st { color: #183691; }
+code .co { color: #969896; }
+code .ot { color: #0086b3; }
+code .al { color: #a61717; }
+code .fu { color: #63a35c; }
+code .er { color: #a61717; background-color: #e3d2d2; }
+code .wa { color: #000000; }
+code .cn { color: #008080; }
+code .sc { color: #008080; }
+code .vs { color: #183691; }
+code .ss { color: #183691; }
+code .im { color: #000000; }
+code .va {color: #008080; }
+code .cf { color: #000000; }
+code .op { color: #000000; }
+code .bu { color: #000000; }
+code .ex { color: #000000; }
+code .pp { color: #999999; }
+code .at { color: #008080; }
+code .do { color: #969896; }
+code .an { color: #008080; }
+code .cv { color: #008080; }
+code .in { color: #008080; }
+</style>
+<style>
+body {
+box-sizing: border-box;
+min-width: 200px;
+max-width: 980px;
+margin: 0 auto;
+padding: 45px;
+padding-top: 0px;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<h1 id="fetch-and-clean-isd_historycsv-file">Fetch and Clean
+‘isd_history.csv’ File</h1>
+<p>Adam H. Sparks 2025-02-05</p>
+<STYLE type="text/css" scoped>
+PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
+</STYLE>
+
+<h1 id="introduction">Introduction</h1>
+<p>The “isd_history.csv” file details GSOD station metadata. These data
+include the start and stop years used by {GSODR} to pre-check requests
+before querying the server for download and the country code used by
+{GSODR} when sub-setting for requests by country. The following checks
+are performed on the raw data file before inclusion in {GSODR},</p>
+<ul>
+<li><p>Check for valid lon and lat values;</p>
+<ul>
+<li><p>isd_history where latitude or longitude are <code>NA</code> or
+both 0 are removed leaving only properly georeferenced
+stations,</p></li>
+<li><p>isd_history where latitude is &lt; -90˚ or &gt; 90˚ are
+removed,</p></li>
+<li><p>isd_history where longitude is &lt; -180˚ or &gt; 180˚ are
+removed.</p></li>
+</ul></li>
+<li><p>A new field, STNID, a concatenation of the USAF and WBAN fields,
+is added.</p></li>
+</ul>
+<h1 id="data-processing">Data Processing</h1>
+<h2 id="set-up-workspace">Set up workspace</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;sessioninfo&quot;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;skimr&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;countrycode&quot;</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;data.table&quot;</span>)</span></code></pre></div>
+<h2 id="download-and-clean-data">Download and clean data</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># download data</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>new_isd_history <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="st">&quot;https://www1.ncdc.noaa.gov/pub/data/noaa/isd-history.csv&quot;</span>)</span></code></pre></div>
+<h2 id="adddrop-columns-and-save-to-disk">Add/drop columns and save to
+disk</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># pad WBAN where necessary</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>new_isd_history[, WBAN <span class="sc">:=</span> <span class="fu">sprintf</span>(<span class="st">&quot;%05d&quot;</span>, WBAN)]</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co"># add STNID column</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>new_isd_history[, STNID <span class="sc">:=</span> <span class="fu">paste</span>(USAF, WBAN, <span class="at">sep =</span> <span class="st">&quot;-&quot;</span>)]</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="fu">setcolorder</span>(new_isd_history, <span class="st">&quot;STNID&quot;</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="fu">setnames</span>(new_isd_history, <span class="st">&quot;STATION NAME&quot;</span>, <span class="st">&quot;NAME&quot;</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co"># remove stations where LAT or LON is NA</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>new_isd_history <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(new_isd_history, <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">&quot;LAT&quot;</span>, <span class="st">&quot;LON&quot;</span>))</span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="co"># remove extra columns</span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>new_isd_history[, <span class="fu">c</span>(<span class="st">&quot;USAF&quot;</span>, <span class="st">&quot;WBAN&quot;</span>, <span class="st">&quot;ICAO&quot;</span>) <span class="sc">:=</span> <span class="cn">NULL</span>]</span></code></pre></div>
+<h2 id="add-country-names-based-on-fips">Add country names based on
+FIPS</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>new_isd_history <span class="ot">&lt;-</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  new_isd_history[<span class="fu">setDT</span>(countrycode<span class="sc">::</span>codelist), on <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;CTRY&quot;</span> <span class="ot">=</span> <span class="st">&quot;fips&quot;</span>)]</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>new_isd_history <span class="ot">&lt;-</span> new_isd_history[, <span class="fu">c</span>(</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  <span class="st">&quot;STNID&quot;</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  <span class="st">&quot;NAME&quot;</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>  <span class="st">&quot;LAT&quot;</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>  <span class="st">&quot;LON&quot;</span>,</span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>  <span class="st">&quot;ELEV(M)&quot;</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>  <span class="st">&quot;CTRY&quot;</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>  <span class="st">&quot;STATE&quot;</span>,</span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>  <span class="st">&quot;BEGIN&quot;</span>,</span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>  <span class="st">&quot;END&quot;</span>,</span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a>  <span class="st">&quot;country.name.en&quot;</span>,</span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a>  <span class="st">&quot;iso2c&quot;</span>,</span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a>  <span class="st">&quot;iso3c&quot;</span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a>)]</span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a><span class="co"># clean data</span></span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a>new_isd_history[new_isd_history <span class="sc">==</span> <span class="sc">-</span><span class="dv">999</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a>new_isd_history[new_isd_history <span class="sc">==</span> <span class="sc">-</span><span class="fl">999.9</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a>new_isd_history <span class="ot">&lt;-</span></span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a>  new_isd_history[<span class="sc">!</span><span class="fu">is.na</span>(new_isd_history<span class="sc">$</span>LAT) <span class="sc">&amp;</span></span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a>                    <span class="sc">!</span><span class="fu">is.na</span>(new_isd_history<span class="sc">$</span>LON),]</span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a>new_isd_history <span class="ot">&lt;-</span></span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a>  new_isd_history[new_isd_history<span class="sc">$</span>LAT <span class="sc">!=</span> <span class="dv">0</span> <span class="sc">&amp;</span></span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a>                    new_isd_history<span class="sc">$</span>LON <span class="sc">!=</span> <span class="dv">0</span>,]</span>
+<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a>new_isd_history <span class="ot">&lt;-</span></span>
+<span id="cb4-29"><a href="#cb4-29" tabindex="-1"></a>  new_isd_history[new_isd_history<span class="sc">$</span>LAT <span class="sc">&gt;</span> <span class="sc">-</span><span class="dv">90</span> <span class="sc">&amp;</span></span>
+<span id="cb4-30"><a href="#cb4-30" tabindex="-1"></a>                    new_isd_history<span class="sc">$</span>LAT <span class="sc">&lt;</span> <span class="dv">90</span>,]</span>
+<span id="cb4-31"><a href="#cb4-31" tabindex="-1"></a>new_isd_history <span class="ot">&lt;-</span></span>
+<span id="cb4-32"><a href="#cb4-32" tabindex="-1"></a>  new_isd_history[new_isd_history<span class="sc">$</span>LON <span class="sc">&gt;</span> <span class="sc">-</span><span class="dv">180</span> <span class="sc">&amp;</span></span>
+<span id="cb4-33"><a href="#cb4-33" tabindex="-1"></a>                    new_isd_history<span class="sc">$</span>LON <span class="sc">&lt;</span> <span class="dv">180</span>,]</span>
+<span id="cb4-34"><a href="#cb4-34" tabindex="-1"></a></span>
+<span id="cb4-35"><a href="#cb4-35" tabindex="-1"></a><span class="co"># set colnames to upper case</span></span>
+<span id="cb4-36"><a href="#cb4-36" tabindex="-1"></a><span class="fu">names</span>(new_isd_history) <span class="ot">&lt;-</span> <span class="fu">toupper</span>(<span class="fu">names</span>(new_isd_history))</span>
+<span id="cb4-37"><a href="#cb4-37" tabindex="-1"></a><span class="fu">setnames</span>(new_isd_history,</span>
+<span id="cb4-38"><a href="#cb4-38" tabindex="-1"></a>         <span class="at">old =</span> <span class="st">&quot;COUNTRY.NAME.EN&quot;</span>,</span>
+<span id="cb4-39"><a href="#cb4-39" tabindex="-1"></a>         <span class="at">new =</span> <span class="st">&quot;COUNTRY_NAME&quot;</span>)</span>
+<span id="cb4-40"><a href="#cb4-40" tabindex="-1"></a></span>
+<span id="cb4-41"><a href="#cb4-41" tabindex="-1"></a><span class="co"># set country names to be upper case for easier internal verifications</span></span>
+<span id="cb4-42"><a href="#cb4-42" tabindex="-1"></a>new_isd_history[, COUNTRY_NAME <span class="sc">:=</span> <span class="fu">toupper</span>(COUNTRY_NAME)]</span>
+<span id="cb4-43"><a href="#cb4-43" tabindex="-1"></a></span>
+<span id="cb4-44"><a href="#cb4-44" tabindex="-1"></a><span class="co"># set key for joins when processing CSV files</span></span>
+<span id="cb4-45"><a href="#cb4-45" tabindex="-1"></a><span class="fu">setkeyv</span>(new_isd_history, <span class="st">&quot;STNID&quot;</span>)</span></code></pre></div>
+<h2 id="show-changes-from-last-release">Show changes from last
+release</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># ensure we aren&#39;t using a locally installed dev version</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;GSODR&quot;</span>, <span class="at">repos =</span> <span class="st">&quot;https://cloud.r-project.org/&quot;</span>)</span></code></pre></div>
+<pre><code>## Installing package into &#39;/Users/283204f/Library/R/arm64/4.4/library&#39;
+## (as &#39;lib&#39; is unspecified)
+
+## 
+## The downloaded binary packages are in
+##  /var/folders/r4/wwsd3hsn48j5gck6qv6npkpc0000gr/T//RtmpwvAIs1/downloaded_packages</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;isd_history.rda&quot;</span>, <span class="at">package =</span> <span class="st">&quot;GSODR&quot;</span>))</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co"># select only the cols of interest</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">names</span>(isd_history)</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>new_isd_history <span class="ot">&lt;-</span> new_isd_history[, ..x] </span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>(isd_diff <span class="ot">&lt;-</span> diffobj<span class="sc">::</span><span class="fu">diffPrint</span>(new_isd_history, isd_history))</span></code></pre></div>
+<PRE class="fansi fansi-output"><CODE>## <span style="color: #555555;">No visible differences between objects.</span>
+## <span style="color: #BBBB00;">&lt;</span> <span style="color: #BBBB00;">new_isd_history</span>                                                      
+## <span style="color: #0000BB;">&gt;</span> <span style="color: #0000BB;">isd_history</span>                                                          
+## <span style="color: #00BBBB;">@@ 1,40 / 1,40 @@                                                      </span>
+##   Key: &lt;STNID&gt;                                                         
+##                 STNID                                              NAME
+##                &lt;char&gt;                                            &lt;char&gt;
+##       1: 008268-99999                                         WXPOD8278
+##       2: 010010-99999                               JAN MAYEN(NOR-NAVY)
+##       3: 010014-99999                                        SORSTOKKEN
+##       4: 010015-99999                                        BRINGELAND
+##       5: 010016-99999                                       RORVIK/RYUM
+##      ---                                                               
+##   27932: A07355-00241                         VIROQUA MUNICIPAL AIRPORT
+##   27933: A07357-00182 ELBOW LAKE MUNICIPAL PRIDE OF THE PRAIRIE AIRPORT
+##   27934: A07359-00240                              IONIA COUNTY AIRPORT
+##   27935: A51255-00445                       DEMOPOLIS MUNICIPAL AIRPORT
+##   27936: A51256-00451      BRANSON WEST MUNICIPAL EMERSON FIELD AIRPORT
+##             LAT     LON ELEV(M)   CTRY  STATE    BEGIN      END        
+##           &lt;num&gt;   &lt;num&gt;   &lt;num&gt; &lt;char&gt; &lt;char&gt;    &lt;int&gt;    &lt;int&gt;        
+##       1: 32.950  65.567  1156.7     AF        20100519 20120323        
+##       2: 70.933  -8.667     9.0     NO        19310101 20250202        
+##       3: 59.792   5.341    48.8     NO        19861120 20250202        
+##       4: 61.383   5.867   327.0     NO        19870117 19971231        
+##       5: 64.850  11.233    14.0     NO        19870116 19910806        
+##      ---                                                               
+##   27932: 43.579 -90.913   394.1     US     WI 20140731 20250203        
+##   27933: 45.986 -95.992   367.3     US     MN 20140731 20250204        
+##   27934: 42.938 -85.061   249.0     US     MI 20140731 20250204        
+##   27935: 32.464 -87.954    34.1     US     AL 20140731 20250203        
+##   27936: 36.699 -93.402   411.2     US     MO 20140731 20250203        
+##           COUNTRY_NAME  ISO2C  ISO3C                                   
+##                 &lt;char&gt; &lt;char&gt; &lt;char&gt;                                   
+##       1:   AFGHANISTAN     AF    AFG                                   
+##       2:        NORWAY     NO    NOR                                   
+##       3:        NORWAY     NO    NOR                                   
+##       4:        NORWAY     NO    NOR                                   
+##       5:        NORWAY     NO    NOR                                   
+##      ---                                                               
+##   27932: UNITED STATES     US    USA                                   
+##   27933: UNITED STATES     US    USA                                   
+##   27934: UNITED STATES     US    USA                                   
+##   27935: UNITED STATES     US    USA                                   
+##   27936: UNITED STATES     US    USA
+</CODE></PRE>
+
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">rm</span>(isd_history)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>isd_history <span class="ot">&lt;-</span> new_isd_history</span></code></pre></div>
+<h2 id="view-and-save-the-data">View and save the data</h2>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">str</span>(isd_history)</span></code></pre></div>
+<pre><code>## Classes &#39;data.table&#39; and &#39;data.frame&#39;:   27936 obs. of  12 variables:
+##  $ STNID       : chr  &quot;008268-99999&quot; &quot;010010-99999&quot; &quot;010014-99999&quot; &quot;010015-99999&quot; ...
+##  $ NAME        : chr  &quot;WXPOD8278&quot; &quot;JAN MAYEN(NOR-NAVY)&quot; &quot;SORSTOKKEN&quot; &quot;BRINGELAND&quot; ...
+##  $ LAT         : num  33 70.9 59.8 61.4 64.8 ...
+##  $ LON         : num  65.57 -8.67 5.34 5.87 11.23 ...
+##  $ ELEV(M)     : num  1156.7 9 48.8 327 14 ...
+##  $ CTRY        : chr  &quot;AF&quot; &quot;NO&quot; &quot;NO&quot; &quot;NO&quot; ...
+##  $ STATE       : chr  &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...
+##  $ BEGIN       : int  20100519 19310101 19861120 19870117 19870116 19880320 19861109 19850601 19730101 19310103 ...
+##  $ END         : int  20120323 20250202 20250202 19971231 19910806 19971226 20250202 20250202 19970801 20041030 ...
+##  $ COUNTRY_NAME: chr  &quot;AFGHANISTAN&quot; &quot;NORWAY&quot; &quot;NORWAY&quot; &quot;NORWAY&quot; ...
+##  $ ISO2C       : chr  &quot;AF&quot; &quot;NO&quot; &quot;NO&quot; &quot;NO&quot; ...
+##  $ ISO3C       : chr  &quot;AFG&quot; &quot;NOR&quot; &quot;NOR&quot; &quot;NOR&quot; ...
+##  - attr(*, &quot;.internal.selfref&quot;)=&lt;externalptr&gt; 
+##  - attr(*, &quot;sorted&quot;)= chr &quot;STNID&quot;</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="co"># write rda file to disk for use with GSODR package</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="fu">save</span>(isd_history,</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>     <span class="at">file =</span> <span class="st">&quot;../inst/extdata/isd_history.rda&quot;</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>     <span class="at">compress =</span> <span class="st">&quot;bzip2&quot;</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a><span class="fu">save</span>(isd_diff,</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>     <span class="at">file =</span> <span class="st">&quot;../inst/extdata/isd_diff.rda&quot;</span>,</span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>     <span class="at">compress =</span> <span class="st">&quot;bzip2&quot;</span>)</span></code></pre></div>
+<h1 id="notes">Notes</h1>
+<h2 id="noaa-policy">NOAA policy</h2>
+<p>Users of these data should take into account the following (from the
+<a href="https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516">NCEI
+website</a>):</p>
+<blockquote>
+<p>The following data and products may have conditions placed on their
+international commercial use. They can be used within the U.S. or for
+non-commercial international activities without restriction. The
+non-U.S. data cannot be redistributed for commercial purposes.
+Re-distribution of these data by others must provide this same
+notification. A log of IP addresses accessing these data and products
+will be maintained and may be made available to data providers.<br />
+For details, please consult: <a href="https://community.wmo.int/resolution-40">WMO Resolution 40. NOAA
+Policy</a></p>
+</blockquote>
+<h2 id="r-system-information">R System Information</h2>
+<PRE class="fansi fansi-output"><CODE>## <span style="color: #00BBBB; font-weight: bold;">─ Session info ─────────────────────────────────────────────────────────</span>
+##  <span style="color: #555555; font-style: italic;">setting </span> <span style="color: #555555; font-style: italic;">value</span>
+##  version  R version 4.4.2 (2024-10-31)
+##  os       macOS Sequoia 15.3
+##  system   aarch64, darwin20
+##  ui       X11
+##  language (EN)
+##  collate  en_AU.UTF-8
+##  ctype    en_AU.UTF-8
+##  tz       Australia/Perth
+##  date     2025-02-05
+##  pandoc   3.6.2 @ /opt/homebrew/bin/ (via rmarkdown)
+## 
+## <span style="color: #00BBBB; font-weight: bold;">─ Packages ─────────────────────────────────────────────────────────────</span>
+##  <span style="color: #555555; font-style: italic;">!</span> <span style="color: #555555; font-style: italic;">package    </span> <span style="color: #555555; font-style: italic;">*</span> <span style="color: #555555; font-style: italic;">version   </span> <span style="color: #555555; font-style: italic;">date (UTC)</span> <span style="color: #555555; font-style: italic;">lib</span> <span style="color: #555555; font-style: italic;">source</span>
+##    askpass       1.2.1      <span style="color: #555555;">2024-10-04</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.1)</span>
+##    base64enc     0.1-3      <span style="color: #555555;">2015-07-28</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    brio          1.1.5      <span style="color: #555555;">2024-04-24</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    cachem        1.1.0      <span style="color: #555555;">2024-05-16</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    callr         3.7.6      <span style="color: #555555;">2024-03-25</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    cli           3.6.3      <span style="color: #555555;">2024-06-21</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    codemeta      0.1.1      <span style="color: #555555;">2021-12-22</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    codemetar     0.3.5      <span style="color: #555555;">2022-09-02</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    codetools     0.2-20     <span style="color: #555555;">2024-03-31</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">CRAN (R 4.4.2)</span>
+##    colorout      1.3-2      <span style="color: #555555;">2024-12-13</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">Github (jalvesaq/colorout@2a5f214)</span>
+##    commonmark    1.9.2      <span style="color: #555555;">2024-10-04</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.1)</span>
+##    countrycode * 1.6.0      <span style="color: #555555;">2024-03-22</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    crayon        1.5.3      <span style="color: #555555;">2024-06-20</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    credentials   2.0.2      <span style="color: #555555;">2024-10-04</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.1)</span>
+##    crul          1.5.0      <span style="color: #555555;">2024-07-19</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    curl          6.2.0      <span style="color: #555555;">2025-01-23</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.1)</span>
+##    data.table  * 1.16.4     <span style="color: #555555;">2024-12-06</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.1)</span>
+##    desc          1.4.3      <span style="color: #555555;">2023-12-10</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    devtag        <span style="color: #BB00BB; font-weight: bold;">0.0.0.9000</span> <span style="color: #555555;">2025-02-04</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">Github (moodymudskipper/devtag@24f9b21)</span>
+##    devtools      2.4.5      <span style="color: #555555;">2022-10-11</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    diffobj       0.3.5      <span style="color: #555555;">2021-10-05</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    digest        0.6.37     <span style="color: #555555;">2024-08-19</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.1)</span>
+##    dplyr         1.1.4      <span style="color: #555555;">2023-11-17</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    ellipsis      0.3.2      <span style="color: #555555;">2021-04-29</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    evaluate      1.0.3      <span style="color: #555555;">2025-01-10</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.1)</span>
+##    fansi         1.0.6      <span style="color: #555555;">2023-12-08</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    fastmap       1.2.0      <span style="color: #555555;">2024-05-15</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    fs            1.6.5      <span style="color: #555555;">2024-10-30</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.1)</span>
+##    generics      0.1.3      <span style="color: #555555;">2022-07-05</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    gert          2.1.4      <span style="color: #555555;">2024-10-14</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.1)</span>
+##    gh            1.4.1      <span style="color: #555555;">2024-03-28</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    gitcreds      0.1.2      <span style="color: #555555;">2022-09-08</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    glue          1.8.0      <span style="color: #555555;">2024-09-30</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.1)</span>
+##  <span style="color: #BBBBBB; background-color: #BB0000;">P</span> GSODR       * 4.1.3      <span style="color: #555555;">2024-10-16</span> <span style="color: #555555;">[?]</span> <span style="color: #555555;">CRAN (R 4.4.1)</span>
+##    htmltools     0.5.8.1    <span style="color: #555555;">2024-04-04</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    htmlwidgets   1.6.4      <span style="color: #555555;">2023-12-06</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    httpcode      0.3.0      <span style="color: #555555;">2020-04-10</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    httpuv        1.6.15     <span style="color: #555555;">2024-03-26</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    httr2         1.1.0      <span style="color: #555555;">2025-01-18</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.1)</span>
+##    jsonlite      1.8.9      <span style="color: #555555;">2024-09-20</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.1)</span>
+##    knitr         1.49       <span style="color: #555555;">2024-11-08</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.1)</span>
+##    later         1.4.1      <span style="color: #555555;">2024-11-27</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.1)</span>
+##    lifecycle     1.0.4      <span style="color: #555555;">2023-11-07</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    magrittr      2.0.3      <span style="color: #555555;">2022-03-30</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    memoise       2.0.1      <span style="color: #555555;">2021-11-26</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    mime          0.12       <span style="color: #555555;">2021-09-28</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    miniUI        0.1.1.1    <span style="color: #555555;">2018-05-18</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    nvimcom     * 0.9.60     <span style="color: #555555;">2024-12-17</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">local</span>
+##    openssl       2.3.2      <span style="color: #555555;">2025-02-03</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.1)</span>
+##    pillar        1.10.1     <span style="color: #555555;">2025-01-07</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.1)</span>
+##    pingr         2.0.5      <span style="color: #555555;">2024-12-12</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.1)</span>
+##    pkgbuild      1.4.6      <span style="color: #555555;">2025-01-16</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.1)</span>
+##    pkgconfig     2.0.3      <span style="color: #555555;">2019-09-22</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    pkgload       1.4.0      <span style="color: #555555;">2024-06-28</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    processx      3.8.5      <span style="color: #555555;">2025-01-08</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.1)</span>
+##    profvis       0.4.0      <span style="color: #555555;">2024-09-20</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.1)</span>
+##    promises      1.3.2      <span style="color: #555555;">2024-11-28</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.1)</span>
+##    ps            1.8.1      <span style="color: #555555;">2024-10-28</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.1)</span>
+##    purrr         1.0.2      <span style="color: #555555;">2023-08-10</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    R.methodsS3   1.8.2      <span style="color: #555555;">2022-06-13</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    R.oo          1.27.0     <span style="color: #555555;">2024-11-01</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.1)</span>
+##    R.utils       2.12.3     <span style="color: #555555;">2023-11-18</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    R6            2.5.1      <span style="color: #555555;">2021-08-19</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    rappdirs      0.3.3      <span style="color: #555555;">2021-01-31</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    Rcpp          1.0.14     <span style="color: #555555;">2025-01-12</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.2)</span>
+##    remotes       2.5.0      <span style="color: #555555;">2024-03-17</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    repr          1.1.7      <span style="color: #555555;">2024-03-22</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    rlang         1.1.5      <span style="color: #555555;">2025-01-17</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.1)</span>
+##    rmarkdown   * 2.29       <span style="color: #555555;">2024-11-04</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.1)</span>
+##    roxygen2      7.3.2      <span style="color: #555555;">2024-06-28</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    roxyglobals   1.0.0      <span style="color: #555555;">2023-08-21</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    rprojroot     2.0.4      <span style="color: #555555;">2023-11-05</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    rstudioapi    0.17.1     <span style="color: #555555;">2024-10-22</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.1)</span>
+##    sessioninfo * 1.2.2      <span style="color: #555555;">2021-12-06</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    shiny         1.10.0     <span style="color: #555555;">2024-12-14</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.1)</span>
+##    skimr       * 2.1.5      <span style="color: #555555;">2022-12-23</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    stringi       1.8.4      <span style="color: #555555;">2024-05-06</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    stringr       1.5.1      <span style="color: #555555;">2023-11-14</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    sys           3.4.3      <span style="color: #555555;">2024-10-04</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.1)</span>
+##    testthat      3.2.3      <span style="color: #555555;">2025-01-13</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.1)</span>
+##    tibble        3.2.1      <span style="color: #555555;">2023-03-20</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    tidyselect    1.2.1      <span style="color: #555555;">2024-03-11</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    triebeard     0.4.1      <span style="color: #555555;">2023-03-04</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    urlchecker    1.0.1      <span style="color: #555555;">2021-11-30</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    urltools      1.7.3      <span style="color: #555555;">2019-04-14</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    usethis       3.1.0      <span style="color: #555555;">2024-11-26</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.1)</span>
+##    vctrs         0.6.5      <span style="color: #555555;">2023-12-01</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    withr         3.0.2      <span style="color: #555555;">2024-10-28</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.1)</span>
+##    xfun          0.50       <span style="color: #555555;">2025-01-07</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.1)</span>
+##    xml2          1.3.6      <span style="color: #555555;">2023-12-04</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    xtable        1.8-4      <span style="color: #555555;">2019-04-21</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+##    yaml          2.3.10     <span style="color: #555555;">2024-07-26</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">CRAN (R 4.4.0)</span>
+## 
+## <span style="color: #555555;"> [1] /Users/283204f/Library/R/arm64/4.4/library</span>
+## <span style="color: #555555;"> [2] /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library</span>
+## 
+##  <span style="color: #BBBBBB; background-color: #BB0000;">P</span> ── Loaded and on-disk path mismatch.
+## 
+## <span style="color: #00BBBB; font-weight: bold;">────────────────────────────────────────────────────────────────────────</span>
+</CODE></PRE>
+
+</body>
+</html>
