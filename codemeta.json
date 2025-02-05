@@ -335,7 +335,11 @@
   "applicationCategory": "Tools",
   "isPartOf": "https://ropensci.org",
   "keywords": ["US-NCEI", "meteorological-data", "global-weather", "weather", "weather-data", "meteorology", "station-data", "surface-weather", "data-access", "US-NCDC", "r", "gsod", "ncdc", "weather-stations", "global-data", "ncei", "weather-information", "historical-weather", "historical-data", "daily-data", "daily-weather", "rstats", "r-package"],
+<<<<<<< HEAD
   "fileSize": "4356.19KB",
+=======
+  "fileSize": "4348.013KB",
+>>>>>>> 50f451d (Update cran-comments.md)
   "citation": [
     {
       "@type": "SoftwareSourceCode",
