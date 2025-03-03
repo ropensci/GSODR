@@ -66,9 +66,12 @@ test_that("missing days check allows stations with permissible days missing,
   sapply(
     seq_len(length(df_list)),
     function(x) {
-      write.csv(df_list[[x]],
+      write.csv(
+        df_list[[x]],
         file = paste0(
-          td, "/2015/", filenames[x],
+          td,
+          "/2015/",
+          filenames[x],
           ".csv"
         )
       )
@@ -115,9 +118,12 @@ test_that("missing days check allows stations with permissible days missing,
   sapply(
     seq_len(length(df_list)),
     function(x) {
-      write.csv(df_list[[x]],
+      write.csv(
+        df_list[[x]],
         file = paste0(
-          td, "/2016/", filenames[x],
+          td,
+          "/2016/",
+          filenames[x],
           ".csv"
         )
       )
@@ -182,25 +188,19 @@ test_that("Check validate country returns an error on invalid entry when
   expect_error(.validate_country(country, isd_history))
 })
 
-test_that(
-  "Check validate country returns an error on invalid entry when two
-  two characters are used that are not in the list",
-  {
-    skip_if_offline()
-    country <- "RZ"
-    expect_error(.validate_country(country, isd_history))
-  }
-)
+test_that("Check validate country returns an error on invalid entry when two
+  two characters are used that are not in the list", {
+  skip_if_offline()
+  country <- "RZ"
+  expect_error(.validate_country(country, isd_history))
+})
 
-test_that(
-  "Check validate country returns an error on invalid entry when two
-  three characters are used that are not in the list",
-  {
-    skip_if_offline()
-    country <- "RPS"
-    expect_error(.validate_country(country, isd_history))
-  }
-)
+test_that("Check validate country returns an error on invalid entry when two
+  three characters are used that are not in the list", {
+  skip_if_offline()
+  country <- "RPS"
+  expect_error(.validate_country(country, isd_history))
+})
 
 # Check that max_missing is not allowed for current year -----------------------
 test_that("max_missing is not allowed for current year", {
@@ -243,78 +243,75 @@ test_that("agroclimatology and station cannot be specified concurrently", {
 # Check the structure of the data.table and contents ---------------------------
 # this also provides tests for `.process_csv()`
 # Check that when specifying a country only that country is returned -----------
-test_that(
-  "get_GSOD works properly and for one country only",
-  {
-    skip_if_offline()
-    a <- get_GSOD(years = 1929, country = "UK")
-    expect_equal(a$CTRY[1], "UK")
-    expect_s3_class(a, "data.table")
-    expect_equal(a$STNID[[1]], "030050-99999")
-    expect_equal(a$NAME[[1]], "LERWICK")
-    expect_equal(a$CTRY[[1]], "UK")
-    expect_equal(a$COUNTRY_NAME[[1]], "UNITED KINGDOM")
-    expect_equal(a$ISO2C[[1]], "GB")
-    expect_equal(a$ISO3C[[1]], "GBR")
-    expect_equal(a$STATE[[1]], "")
-    expect_equal(a$LATITUDE[[1]], 60.133)
-    expect_equal(a$LONGITUDE[[1]], -1.183)
-    expect_equal(a$ELEVATION[[1]], 84)
-    expect_equal(a$BEGIN[[1]], 19291001)
-    expect_equal(
-      lapply(a, class),
-      list(
-        STNID = "character",
-        NAME = "character",
-        CTRY = "character",
-        COUNTRY_NAME = "character",
-        ISO2C = "character",
-        ISO3C = "character",
-        STATE = "character",
-        LATITUDE = "numeric",
-        LONGITUDE = "numeric",
-        ELEVATION = "numeric",
-        BEGIN = "integer",
-        END = "integer",
-        YEARMODA = "Date",
-        YEAR = "integer",
-        MONTH = "integer",
-        DAY = "integer",
-        YDAY = "integer",
-        TEMP = "numeric",
-        TEMP_ATTRIBUTES = "integer",
-        DEWP = "numeric",
-        DEWP_ATTRIBUTES = "integer",
-        SLP = "numeric",
-        SLP_ATTRIBUTES = "integer",
-        STP = "numeric",
-        STP_ATTRIBUTES = "integer",
-        VISIB = "numeric",
-        VISIB_ATTRIBUTES = "integer",
-        WDSP = "numeric",
-        WDSP_ATTRIBUTES = "integer",
-        MXSPD = "numeric",
-        GUST = "numeric",
-        MAX = "numeric",
-        MAX_ATTRIBUTES = "character",
-        MIN = "numeric",
-        MIN_ATTRIBUTES = "character",
-        PRCP = "numeric",
-        PRCP_ATTRIBUTES = "character",
-        SNDP = "numeric",
-        I_FOG = "numeric",
-        I_RAIN_DRIZZLE = "numeric",
-        I_SNOW_ICE = "numeric",
-        I_HAIL = "numeric",
-        I_THUNDER = "numeric",
-        I_TORNADO_FUNNEL = "numeric",
-        EA = "numeric",
-        ES = "numeric",
-        RH = "numeric"
-      )
+test_that("get_GSOD works properly and for one country only", {
+  skip_if_offline()
+  a <- get_GSOD(years = 1929, country = "UK")
+  expect_equal(a$CTRY[1], "UK")
+  expect_s3_class(a, "data.table")
+  expect_equal(a$STNID[[1]], "030050-99999")
+  expect_equal(a$NAME[[1]], "LERWICK")
+  expect_equal(a$CTRY[[1]], "UK")
+  expect_equal(a$COUNTRY_NAME[[1]], "UNITED KINGDOM")
+  expect_equal(a$ISO2C[[1]], "GB")
+  expect_equal(a$ISO3C[[1]], "GBR")
+  expect_equal(a$STATE[[1]], "")
+  expect_equal(a$LATITUDE[[1]], 60.133)
+  expect_equal(a$LONGITUDE[[1]], -1.183)
+  expect_equal(a$ELEVATION[[1]], 84)
+  expect_equal(a$BEGIN[[1]], 19291001)
+  expect_equal(
+    lapply(a, class),
+    list(
+      STNID = "character",
+      NAME = "character",
+      CTRY = "character",
+      COUNTRY_NAME = "character",
+      ISO2C = "character",
+      ISO3C = "character",
+      STATE = "character",
+      LATITUDE = "numeric",
+      LONGITUDE = "numeric",
+      ELEVATION = "numeric",
+      BEGIN = "integer",
+      END = "integer",
+      YEARMODA = "Date",
+      YEAR = "integer",
+      MONTH = "integer",
+      DAY = "integer",
+      YDAY = "integer",
+      TEMP = "numeric",
+      TEMP_ATTRIBUTES = "integer",
+      DEWP = "numeric",
+      DEWP_ATTRIBUTES = "integer",
+      SLP = "numeric",
+      SLP_ATTRIBUTES = "integer",
+      STP = "numeric",
+      STP_ATTRIBUTES = "integer",
+      VISIB = "numeric",
+      VISIB_ATTRIBUTES = "integer",
+      WDSP = "numeric",
+      WDSP_ATTRIBUTES = "integer",
+      MXSPD = "numeric",
+      GUST = "numeric",
+      MAX = "numeric",
+      MAX_ATTRIBUTES = "character",
+      MIN = "numeric",
+      MIN_ATTRIBUTES = "character",
+      PRCP = "numeric",
+      PRCP_ATTRIBUTES = "character",
+      SNDP = "numeric",
+      I_FOG = "numeric",
+      I_RAIN_DRIZZLE = "numeric",
+      I_SNOW_ICE = "numeric",
+      I_HAIL = "numeric",
+      I_THUNDER = "numeric",
+      I_TORNADO_FUNNEL = "numeric",
+      EA = "numeric",
+      ES = "numeric",
+      RH = "numeric"
     )
-  }
-)
+  )
+})
 
 test_that("only specified country is returned using 2 letter ISO codes", {
   skip_if_offline()

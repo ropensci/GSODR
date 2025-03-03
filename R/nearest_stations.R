@@ -51,19 +51,25 @@ nearest_stations <- function(LAT, LON, distance) {
     delta_lon <- abs(lon1 - lon2)
 
     # radius of earth
-    6371 * 2 * asin(sqrt(`+`(
-      (sin(delta_lat / 2))^2,
-      cos(lat1) * cos(lat2) * (sin(delta_lon / 2))^2
-    )))
+    6371 *
+      2 *
+      asin(sqrt(`+`(
+        (sin(delta_lat / 2))^2,
+        cos(lat1) * cos(lat2) * (sin(delta_lon / 2))^2
+      )))
   }
 
-
-  isd_history[, distance_km := round(haversine_distance(
-    lat1 = LAT,
-    lon1 = LON,
-    lat2 = user_LAT,
-    lon2 = user_LON
-  ), 1)]
+  isd_history[,
+    distance_km := round(
+      haversine_distance(
+        lat1 = LAT,
+        lon1 = LON,
+        lat2 = user_LAT,
+        lon2 = user_LON
+      ),
+      1
+    )
+  ]
 
   subset_stns <-
     data.table(subset(

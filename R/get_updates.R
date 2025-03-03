@@ -21,8 +21,7 @@ get_updates <- function() {
     tryCatch(
       {
         utils::download.file(
-          url =
-            "https://www1.ncdc.noaa.gov/pub/data/noaa/updates.txt",
+          url = "https://www1.ncdc.noaa.gov/pub/data/noaa/updates.txt",
           destfile = file_in,
           mode = "wb",
           quiet = TRUE

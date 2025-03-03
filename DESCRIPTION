@@ -71,6 +71,7 @@ Suggests:
 VignetteBuilder: 
     knitr
 ByteCompile: TRUE
+Config/Needs/build: moodymudskipper/devtag
 Config/roxyglobals/filename: globals.R
 Config/roxyglobals/unique: FALSE
 Config/testthat/edition: 3
@@ -79,11 +80,11 @@ Encoding: UTF-8
 Language: en-US
 NeedsCompilation: no
 Repository: CRAN
-Roxygen: list(roclets = c("collate", "namespace", "rd", "roxyglobals::global_roclet", "devtag::dev_roclet"), markdown = TRUE)
+Roxygen: list(roclets = c("collate", "namespace", "rd",
+    "roxyglobals::global_roclet", "devtag::dev_roclet"), markdown = TRUE)
 RoxygenNote: 7.3.2
 X-schema.org-applicationCategory: Tools
 X-schema.org-isPartOf: https://ropensci.org
 X-schema.org-keywords: US-NCEI, meteorological-data, global-weather,
     weather, weather-data, meteorology, station-data, surface-weather,
     data-access, US-NCDC
-Config/Needs/build: moodymudskipper/devtag

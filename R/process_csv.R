@@ -11,62 +11,55 @@
   # Import data from the website for individual stations or tempdir() for all --
   # The "STP" column is set to be character here to handle the issues with vals
   # over 1000 having the leading zero removed.
-  DT <- fread(x,
+  DT <- fread(
+    x,
     strip.white = TRUE,
     keepLeadingZeros = TRUE,
     colClasses = c("STP" = "character")
   )
 
-
   # Replace 99.99 et al. with NA
-  set(DT,
-    i = which(DT[["PRCP"]] == "99.99"),
-    j = "PRCP",
-    value = NA
-  )
+  set(DT, i = which(DT[["PRCP"]] == "99.99"), j = "PRCP", value = NA)
 
   # Replace 999.9 with NA
-  for (col in names(DT)[names(DT) %in% c(
-    "VISIB",
-    "WDSP",
-    "MXSPD",
-    "GUST",
-    "SNDP"
-  )]) {
-    set(DT,
-      i = which(DT[[col]] == "999.9"),
-      j = col,
-      value = NA
-    )
+  for (col in names(DT)[
+    names(DT) %in%
+      c(
+        "VISIB",
+        "WDSP",
+        "MXSPD",
+        "GUST",
+        "SNDP"
+      )
+  ]) {
+    set(DT, i = which(DT[[col]] == "999.9"), j = col, value = NA)
   }
 
   # Replace 9999.99 with NA
-  for (col in names(DT)[names(DT) %in% c(
-    "TEMP",
-    "DEWP",
-    "SLP",
-    "STP",
-    "MAX",
-    "MIN"
-  )]) {
-    set(DT,
-      i = which(DT[[col]] == "9999.9"),
-      j = col,
-      value = NA
-    )
+  for (col in names(DT)[
+    names(DT) %in%
+      c(
+        "TEMP",
+        "DEWP",
+        "SLP",
+        "STP",
+        "MAX",
+        "MIN"
+      )
+  ]) {
+    set(DT, i = which(DT[[col]] == "9999.9"), j = col, value = NA)
   }
 
   # Replace " " with NA
-  for (col in names(DT)[names(DT) %in% c(
-    "PRCP_ATTRIBUTES",
-    "MIN_ATTRIBUTES",
-    "MAX_ATTRIBUTES"
-  )]) {
-    set(DT,
-      i = which(DT[[col]] == " "),
-      j = col,
-      value = NA
-    )
+  for (col in names(DT)[
+    names(DT) %in%
+      c(
+        "PRCP_ATTRIBUTES",
+        "MIN_ATTRIBUTES",
+        "MAX_ATTRIBUTES"
+      )
+  ]) {
+    set(DT, i = which(DT[[col]] == " "), j = col, value = NA)
   }
 
   # Add STNID col --------------------------------------------------------------
@@ -75,11 +68,14 @@
   # Correct STP values ---------------------------------------------------------
   # The NCEI supplied CSV files are broken, they lop off the "1" in values >1000
   # See https://github.com/ropensci/GSODR/issues/117
-  DT[, STP := fifelse(substr(STP, 1, 1) == "0",
-    sprintf("%s%s", 1, DT$STP),
-    STP,
-    na = NA
-  )]
+  DT[,
+    STP := fifelse(
+      substr(STP, 1, 1) == "0",
+      sprintf("%s%s", 1, DT$STP),
+      STP,
+      na = NA
+    )
+  ]
 
   DT[, STP := fifelse(STP_ATTRIBUTES == " 0", NA, STP)]
 
@@ -91,14 +87,17 @@
   DT[, YDAY := as.integer(strftime(as.Date(DATE), format = "%j"))]
 
   # Convert *_ATTRIBUTES cols to integer ---------------------------------------
-  for (col in names(DT)[names(DT) %in% c(
-    "TEMP_ATTRIBUTES",
-    "DEWP_ATTRIBUTES",
-    "SLP_ATTRIBUTES",
-    "STP_ATTRIBUTES",
-    "VISIB_ATTRIBUTES",
-    "WDSP_ATTRIBUTES"
-  )]) {
+  for (col in names(DT)[
+    names(DT) %in%
+      c(
+        "TEMP_ATTRIBUTES",
+        "DEWP_ATTRIBUTES",
+        "SLP_ATTRIBUTES",
+        "STP_ATTRIBUTES",
+        "VISIB_ATTRIBUTES",
+        "WDSP_ATTRIBUTES"
+      )
+  ]) {
     set(DT, j = col, value = as.integer(DT[[col]]))
   }
 
@@ -140,65 +139,103 @@
   # Oleg A. Alduchov and Robert E. Eskridge 1995
   # https://doi.org/10.1175/1520-0450(1996)035<0601:IMFAOS>2.0.CO;2
   # EA derived from dew point
-  DT[, EA := round(0.61094 * exp((17.625 * (DEWP)) /
-    ((DEWP) + 243.04)), 1)]
+  DT[,
+    EA := round(
+      0.61094 *
+        exp(
+          (17.625 * (DEWP)) /
+            ((DEWP) + 243.04)
+        ),
+      1
+    )
+  ]
   # ES derived from average temperature
-  DT[, ES := round(0.61094 * exp((17.625 * (TEMP)) /
-    ((TEMP) + 243.04)), 1)]
-  DT[, RH := round(
-    100 * (exp((17.625 * DEWP) / (243.04 + DEWP)) /
-      exp((17.625 * (TEMP)) / (243.04 + (TEMP)))),
-    1
-  )]
+  DT[,
+    ES := round(
+      0.61094 *
+        exp(
+          (17.625 * (TEMP)) /
+            ((TEMP) + 243.04)
+        ),
+      1
+    )
+  ]
+  DT[,
+    RH := round(
+      100 *
+        (exp((17.625 * DEWP) / (243.04 + DEWP)) /
+          exp((17.625 * (TEMP)) / (243.04 + (TEMP)))),
+      1
+    )
+  ]
 
   # Split FRSHTT into separate columns -----------------------------------------
-  DT[, I_FOG := fifelse(
-    DT$FRSHTT != 0,
-    as.numeric(substr(
-      x = DT$FRSHTT,
-      start = 1,
-      stop = 1
-    )), 0
-  )]
-  DT[, I_RAIN_DRIZZLE := fifelse(
-    DT$FRSHTT != 0,
-    as.numeric(substr(
-      x = DT$FRSHTT,
-      start = 2,
-      stop = 2
-    )), 0
-  )]
-  DT[, I_SNOW_ICE := fifelse(
-    DT$FRSHTT != 0,
-    as.numeric(substr(
-      x = DT$FRSHTT,
-      start = 3,
-      stop = 3
-    )), 0
-  )]
-  DT[, I_HAIL := fifelse(
-    DT$FRSHTT != 0,
-    as.numeric(substr(
-      x = DT$FRSHTT,
-      start = 4,
-      stop = 4
-    )), 0
-  )]
-  DT[, I_THUNDER := fifelse(
-    DT$FRSHTT != 0,
-    as.numeric(substr(
-      DT$FRSHTT,
-      start = 5, stop = 5
-    )), 0
-  )]
-  DT[, I_TORNADO_FUNNEL := fifelse(
-    DT$FRSHTT != 0,
-    as.numeric(substr(
-      x = DT$FRSHTT,
-      start = 6,
-      stop = 6
-    )), 0
-  )]
+  DT[,
+    I_FOG := fifelse(
+      DT$FRSHTT != 0,
+      as.numeric(substr(
+        x = DT$FRSHTT,
+        start = 1,
+        stop = 1
+      )),
+      0
+    )
+  ]
+  DT[,
+    I_RAIN_DRIZZLE := fifelse(
+      DT$FRSHTT != 0,
+      as.numeric(substr(
+        x = DT$FRSHTT,
+        start = 2,
+        stop = 2
+      )),
+      0
+    )
+  ]
+  DT[,
+    I_SNOW_ICE := fifelse(
+      DT$FRSHTT != 0,
+      as.numeric(substr(
+        x = DT$FRSHTT,
+        start = 3,
+        stop = 3
+      )),
+      0
+    )
+  ]
+  DT[,
+    I_HAIL := fifelse(
+      DT$FRSHTT != 0,
+      as.numeric(substr(
+        x = DT$FRSHTT,
+        start = 4,
+        stop = 4
+      )),
+      0
+    )
+  ]
+  DT[,
+    I_THUNDER := fifelse(
+      DT$FRSHTT != 0,
+      as.numeric(substr(
+        DT$FRSHTT,
+        start = 5,
+        stop = 5
+      )),
+      0
+    )
+  ]
+  DT[,
+    I_TORNADO_FUNNEL := fifelse(
+      DT$FRSHTT != 0,
+      as.numeric(substr(
+        x = DT$FRSHTT,
+        start = 6,
+        stop = 6
+      )),
+      0
+    )
+  ]
   DT[, FRSHTT := NULL]
 
   # Join with internal isd-history for CTRY column -----------------------------

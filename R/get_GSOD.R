@@ -90,11 +90,13 @@
 #' @autoglobal
 #' @export get_GSOD
 
-get_GSOD <- function(years,
-                     station = NULL,
-                     country = NULL,
-                     max_missing = NULL,
-                     agroclimatology = FALSE) {
+get_GSOD <- function(
+  years,
+  station = NULL,
+  country = NULL,
+  max_missing = NULL,
+  agroclimatology = FALSE
+) {
   # Validate user inputs -------------------------------------------------------
   .validate_years(years)
   # Validate stations for missing days -----------------------------------------
@@ -179,7 +181,9 @@ get_GSOD <- function(years,
     if (length(file_list) == 0) {
       stop(
         call. = FALSE,
-        "There were no stations that had a max of ", max_missing, " days."
+        "There were no stations that had a max of ",
+        max_missing,
+        " days."
       )
     }
   }

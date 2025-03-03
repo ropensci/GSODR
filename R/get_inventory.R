@@ -78,7 +78,8 @@ get_inventory <- function() {
 
       year_month <-
         tools::toTitleCase(tolower(gsub(
-          "^([^\\D]*\\d+).*", "\\1",
+          "^([^\\D]*\\d+).*",
+          "\\1",
           header[[year_month]]
         )))
       year_month <- gsub("Through ", "", year_month)
@@ -92,7 +93,9 @@ get_inventory <- function() {
       attr(main_body, "GSODR.Inventory") <- c(
         "  *** FEDERAL CLIMATE COMPLEX INTEGRATED SURFACE DATA INVENTORY ***  \n",
         "  This inventory provides the number of weather observations by  \n",
-        "  STATION-YEAR-MONTH for beginning of record through", year_month, " \n"
+        "  STATION-YEAR-MONTH for beginning of record through",
+        year_month,
+        " \n"
       )
     },
     error = function(cond) {

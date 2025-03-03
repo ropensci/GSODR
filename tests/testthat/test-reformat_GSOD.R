@@ -1,11 +1,14 @@
 # Check that reformat_GSOD functions properly ----------------------------------
 test_that("reformat_GSOD file_list parameter reformats data properly", {
   skip_if_offline()
-  do.call(file.remove, list(list.files(
-    tempdir(),
-    pattern = ".csv$",
-    full.names = TRUE
-  )))
+  do.call(
+    file.remove,
+    list(list.files(
+      tempdir(),
+      pattern = ".csv$",
+      full.names = TRUE
+    ))
+  )
 
   # set up options for curl
 
@@ -17,10 +20,7 @@ test_that("reformat_GSOD file_list parameter reformats data properly", {
 
   Map(
     function(u, d) {
-      curl::curl_download(u, d,
-        mode = "wb",
-        quiet = TRUE
-      )
+      curl::curl_download(u, d, mode = "wb", quiet = TRUE)
     },
     paste0(url_base, test_files),
     destinations

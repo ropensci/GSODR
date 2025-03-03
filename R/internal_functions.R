@@ -157,17 +157,14 @@
     year <- as.numeric(substr(
       file_list[1],
       start = nchar(file_list[1]) - 19,
-      stop  = nchar(file_list[1]) - 16
+      stop = nchar(file_list[1]) - 16
     ))
     ifelse(
       format(as.POSIXct(paste0(year, "-03-01")) - 1, "%d") != "29",
       allow <- 365 - max_missing,
       allow <- 366 - max_missing
     )
-    file_list <- stats::na.omit(ifelse(records >= allow,
-      file_list,
-      NA
-    ))
+    file_list <- stats::na.omit(ifelse(records >= allow, file_list, NA))
   }
 
 
@@ -180,8 +177,7 @@
 #'
 #' @dev
 .download_files <-
-  function(station,
-           years) {
+  function(station, years) {
     # if no station or station > 10 download annual zip files ------------------
     if (is.null(station) | length(station) > 10) {
       url_list <-
@@ -261,15 +257,14 @@
           if (.check_url_exists(x = i)) {
             curl::curl_download(
               url = i,
-              destfile =
-                paste0(
-                  tempdir(),
-                  "/",
-                  substr(i, nchar(i) - 20, nchar(i) - 16),
-                  # year
-                  "-",
-                  basename(i) # filename
-                )
+              destfile = paste0(
+                tempdir(),
+                "/",
+                substr(i, nchar(i) - 20, nchar(i) - 16),
+                # year
+                "-",
+                basename(i) # filename
+              )
             )
           }
         },
@@ -298,8 +293,10 @@
 
 .agroclimatology_list <-
   function(file_list, isd_history, years) {
-    station_list <- isd_history[isd_history$LAT >= -60 &
-      isd_history$LAT <= 60, ]$STNID
+    station_list <- isd_history[
+      isd_history$LAT >= -60 &
+        isd_history$LAT <= 60,
+    ]$STNID
     station_list <- gsub("-", "", station_list)
 
     station_list <-
@@ -328,10 +325,7 @@
 #' @autoglobal
 #' @dev
 .subset_country_list <-
-  function(country,
-           file_list,
-           isd_history,
-           years) {
+  function(country, file_list, isd_history, years) {
     station_list <-
       isd_history[isd_history$CTRY == country, ]$STNID
     station_list <- gsub("-", "", station_list)
