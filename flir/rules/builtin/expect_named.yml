@@ -12,7 +12,7 @@ rule:
 constraints:
   VALUES:
     not:
-      regex: colnames|rownames|dimnames|NULL
+      regex: ^(colnames\(|rownames\(|dimnames\(|NULL|names\()
       has:
         kind: null
 fix: expect_named(~~OBJ~~, ~~VALUES~~)
@@ -34,7 +34,7 @@ rule:
 constraints:
   VALUES:
     not:
-      regex: colnames|rownames|dimnames|NULL
+      regex: ^(colnames\(|rownames\(|dimnames\(|NULL|names\()
 fix: expect_named(~~OBJ~~, ~~VALUES~~)
 message: expect_named(x, n) is better than expect_equal(names(x), n).
 
@@ -54,7 +54,7 @@ rule:
 constraints:
   VALUES:
     not:
-      regex: colnames|rownames|dimnames|NULL
+      regex: ^(colnames\(|rownames\(|dimnames\(|NULL|names\()
 fix: testthat::expect_named(~~OBJ~~, ~~VALUES~~)
 message: expect_named(x, n) is better than expect_identical(names(x), n).
 
@@ -74,6 +74,6 @@ rule:
 constraints:
   VALUES:
     not:
-      regex: colnames|rownames|dimnames|NULL
+      regex: ^(colnames\(|rownames\(|dimnames\(|NULL|names\()
 fix: testthat::expect_named(~~OBJ~~, ~~VALUES~~)
 message: expect_named(x, n) is better than expect_equal(names(x), n).

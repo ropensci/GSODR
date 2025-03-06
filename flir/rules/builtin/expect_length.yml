@@ -8,5 +8,8 @@ rule:
 constraints:
   FUN:
     regex: ^(expect_identical|expect_equal)$
+  VALUE:
+    not:
+      regex: length\(
 fix: expect_length(~~OBJ~~, ~~VALUE~~)
 message: expect_length(x, n) is better than ~~FUN~~(length(x), n).

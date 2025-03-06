@@ -43,3 +43,7 @@ vignettes/figure
 ^man/dot-check_url_exists\.Rd$
 ^man/dot-untar_files\.Rd$
 >>>>>>> a934cc1 (infra for {devtag})
+
+
+# flir files
+^flir$
