@@ -70,8 +70,8 @@
   # See https://github.com/ropensci/GSODR/issues/117
   DT[,
     STP := fifelse(
-      substr(STP, 1, 1) == "0",
-      sprintf("%s%s", 1, DT$STP),
+      startsWith(x = STP, prefix = "0"),
+      sprintf("%s%s", 1L, DT$STP),
       STP,
       na = NA
     )
@@ -81,9 +81,9 @@
 
   # Add and convert date related columns ---------------------------------------
   DT[, YEARMODA := as.Date(DATE, format = "%Y-%m-%d")]
-  DT[, YEAR := as.integer(substr(DATE, 1, 4))]
-  DT[, MONTH := as.integer(substr(DATE, 6, 7))]
-  DT[, DAY := as.integer(substr(DATE, 9, 10))]
+  DT[, YEAR := as.integer(substr(DATE, 1L, 4L))]
+  DT[, MONTH := as.integer(substr(DATE, 6L, 7L))]
+  DT[, DAY := as.integer(substr(DATE, 9L, 10L))]
   DT[, YDAY := as.integer(strftime(as.Date(DATE), format = "%j"))]
 
   # Convert *_ATTRIBUTES cols to integer ---------------------------------------
@@ -124,16 +124,16 @@
   }
 
   # Convert data to Metric units -----------------------------------------------
-  DT[, TEMP := round(0.5556 * (TEMP - 32), 1)]
-  DT[, DEWP := round(0.5556 * (DEWP - 32), 1)]
-  DT[, WDSP := round(WDSP * 0.514444444, 1)]
-  DT[, MXSPD := round(MXSPD * 0.514444444, 1)]
-  DT[, GUST := round(GUST * 0.514444444, 1)]
-  DT[, VISIB := round(VISIB * 1.60934, 1)]
-  DT[, MAX := round((MAX - 32) * 0.5556, 1)]
-  DT[, MIN := round((MIN - 32) * 0.5556, 1)]
-  DT[, PRCP := round(PRCP * 25.4, 2)]
-  DT[, SNDP := round(SNDP * 25.4, 1)]
+  DT[, TEMP := round(0.5556 * (TEMP - 32L), 1L)]
+  DT[, DEWP := round(0.5556 * (DEWP - 32L), 1L)]
+  DT[, WDSP := round(WDSP * 0.514444444, 1L)]
+  DT[, MXSPD := round(MXSPD * 0.514444444, 1L)]
+  DT[, GUST := round(GUST * 0.514444444, 1L)]
+  DT[, VISIB := round(VISIB * 1.60934, 1L)]
+  DT[, MAX := round((MAX - 32L) * 0.5556, 1L)]
+  DT[, MIN := round((MIN - 32L) * 0.5556, 1L)]
+  DT[, PRCP := round(PRCP * 25.4, 2L)]
+  DT[, SNDP := round(SNDP * 25.4, 1L)]
 
   # Calculate EA, ES and RH using August-Roche-Magnus approximation ------------
   # Oleg A. Alduchov and Robert E. Eskridge 1995
@@ -146,7 +146,7 @@
           (17.625 * (DEWP)) /
             ((DEWP) + 243.04)
         ),
-      1
+      1L
     )
   ]
   # ES derived from average temperature
@@ -157,83 +157,83 @@
           (17.625 * (TEMP)) /
             ((TEMP) + 243.04)
         ),
-      1
+      1L
     )
   ]
   DT[,
     RH := round(
-      100 *
+      100L *
         (exp((17.625 * DEWP) / (243.04 + DEWP)) /
           exp((17.625 * (TEMP)) / (243.04 + (TEMP)))),
-      1
+      1L
     )
   ]
 
   # Split FRSHTT into separate columns -----------------------------------------
   DT[,
     I_FOG := fifelse(
-      DT$FRSHTT != 0,
+      DT$FRSHTT != 0L,
       as.numeric(substr(
         x = DT$FRSHTT,
-        start = 1,
-        stop = 1
+        start = 1L,
+        stop = 1L
       )),
-      0
+      0L
     )
   ]
   DT[,
     I_RAIN_DRIZZLE := fifelse(
-      DT$FRSHTT != 0,
+      DT$FRSHTT != 0L,
       as.numeric(substr(
         x = DT$FRSHTT,
-        start = 2,
-        stop = 2
+        start = 2L,
+        stop = 2L
       )),
-      0
+      0L
     )
   ]
   DT[,
     I_SNOW_ICE := fifelse(
-      DT$FRSHTT != 0,
+      DT$FRSHTT != 0L,
       as.numeric(substr(
         x = DT$FRSHTT,
-        start = 3,
-        stop = 3
+        start = 3L,
+        stop = 3L
       )),
-      0
+      0L
     )
   ]
   DT[,
     I_HAIL := fifelse(
-      DT$FRSHTT != 0,
+      DT$FRSHTT != 0L,
       as.numeric(substr(
         x = DT$FRSHTT,
-        start = 4,
-        stop = 4
+        start = 4L,
+        stop = 4L
       )),
-      0
+      0L
     )
   ]
   DT[,
     I_THUNDER := fifelse(
-      DT$FRSHTT != 0,
+      DT$FRSHTT != 0L,
       as.numeric(substr(
         DT$FRSHTT,
-        start = 5,
-        stop = 5
+        start = 5L,
+        stop = 5L
       )),
-      0
+      0L
     )
   ]
   DT[,
     I_TORNADO_FUNNEL := fifelse(
-      DT$FRSHTT != 0,
+      DT$FRSHTT != 0L,
       as.numeric(substr(
         x = DT$FRSHTT,
-        start = 6,
-        stop = 6
+        start = 6L,
+        stop = 6L
       )),
-      0
+      0L
     )
   ]
   DT[, FRSHTT := NULL]
