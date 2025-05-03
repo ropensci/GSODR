@@ -1,13 +1,9 @@
 ^CRAN-RELEASE$
 ^\.github$
-.travis.yml
-appveyor.yml
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^\.travis\.yml$
 ^cran-comments\.md$
 ^revdep$
-^appveyor\.yml
 ^data-raw$
 ^README\.Rmd$
 ^README-.*\.png$
@@ -17,20 +13,13 @@ vignettes/figure
 ^docs$
 ^codemeta\.json$
 ^_pkgdown\.yml$
-^\.circleci$
-^GSODR.code-workspace$
 ^doc$
 ^Meta$
 ^\.ccache$
-^tic\.R$
 ^CODE_OF_CONDUCT\.md$
 ^CRAN-SUBMISSION$
-<<<<<<< HEAD
-
-
-# flint files
-^flint$
-=======
+^air\.toml$
+^flir$
 ^man/dot-validate_years\.Rd$
 ^man/dot-validate_station_id\.Rd$
 ^man/dot-validate_station_data_years\.Rd$
@@ -42,8 +31,3 @@ vignettes/figure
 ^man/dot-apply_process_csv\.Rd$
 ^man/dot-check_url_exists\.Rd$
 ^man/dot-untar_files\.Rd$
->>>>>>> a934cc1 (infra for {devtag})
-
-
-# flir files
-^flir$
