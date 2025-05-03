@@ -100,20 +100,20 @@ get_GSOD <- function(
   # Validate user inputs -------------------------------------------------------
   .validate_years(years)
   # Validate stations for missing days -----------------------------------------
-  if (!is.null(max_missing) && (is.na(max_missing) || max_missing < 1L) {
-      stop(
-        call. = FALSE,
-        "The `max_missing` parameter must be a positive",
-        "value larger than 1."
-      )
+  if (!is.null(max_missing) && (is.na(max_missing) || max_missing < 1L)) {
+    stop(
+      call. = FALSE,
+      "The `max_missing` parameter must be a positive",
+      "value larger than 1."
+    )
   }
 
-  if (!is.null(max_missing)) && (format(Sys.Date(), "%Y") %in% years) {
-      stop(
-        call. = FALSE,
-        "You cannot use `max_missing` with the current, incomplete year."
-      )
-    }
+  if (!is.null(max_missing) && (format(Sys.Date(), "%Y") %in% years)) {
+    stop(
+      call. = FALSE,
+      "You cannot use `max_missing` with the current, incomplete year."
+    )
+  }
 
   if (isTRUE(agroclimatology) && !is.null(station)) {
     stop(

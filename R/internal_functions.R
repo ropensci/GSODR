@@ -161,8 +161,8 @@
     year <- as.numeric(substr(
       file_list[1L],
       start = nchar(file_list[1L]) - 19L,
+      stop = nchar(file_list[1L]) - 16L
     ))
-    stop = nchar(file_list[1L]) - 16L
     ifelse(
       format(as.POSIXct(paste0(year, "-03-01")) - 1L, "%d") != "29",
       allow <- 365L - max_missing,
