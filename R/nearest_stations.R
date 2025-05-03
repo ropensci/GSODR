@@ -67,7 +67,7 @@ nearest_stations <- function(LAT, LON, distance) {
         lat2 = user_LAT,
         lon2 = user_LON
       ),
-      1
+      1L
     )
   ]
 
@@ -75,7 +75,7 @@ nearest_stations <- function(LAT, LON, distance) {
     data.table(subset(
       isd_history[order(distance_km)],
       distance_km < distance
-    )[[1]])
+    )[[1L]])
   setnames(subset_stns, "V1", "STNID")
 
   return(isd_history[subset_stns, on = "STNID"])

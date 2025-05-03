@@ -43,7 +43,7 @@ get_inventory <- function() {
       main_body <-
         fread(
           file.path(tempdir(), "inventory.txt"),
-          skip = 8,
+          skip = 8L,
           col.names = c(
             "USAF",
             "WBAN",
@@ -71,7 +71,7 @@ get_inventory <- function() {
       setcolorder(main_body, "STNID")
 
       header <-
-        readLines(file.path(tempdir(), "inventory.txt"), n = 6)
+        readLines(file.path(tempdir(), "inventory.txt"), n = 6L)
 
       # sift out the year and month
       year_month <- grep("[0-9]{4}", header)
@@ -82,7 +82,7 @@ get_inventory <- function() {
           "\\1",
           header[[year_month]]
         )))
-      year_month <- gsub("Through ", "", year_month)
+      year_month <- gsub("Through ", "", year_month, fixed = TRUE)
       year_month <- gsub("\\..*", "", year_month)
 
       main_body <- isd_history[main_body, on = "STNID"]

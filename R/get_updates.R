@@ -40,7 +40,7 @@ get_updates <- function() {
   x <- data.table::setDT(
     utils::read.fwf(
       file = file_in,
-      widths = c(7, 5, 5, 11, 25),
+      widths = c(7L, 5L, 5L, 11L, 25L),
       header = FALSE,
       comment.char = "",
       allowEscapes = TRUE,

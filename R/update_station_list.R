@@ -36,12 +36,12 @@ update_station_list <- function() {
   )
 
   answer <-
-    readLines(con = getOption("GSODR_connection"), n = 1)
+    readLines(con = getOption("GSODR_connection"), n = 1L)
 
   answer <- toupper(answer)
 
   if (answer != "Y" & answer != "YES") {
-    stop("Station list was not updated.")
+    stop("Station list was not updated.", call. = FALSE)
   }
 
   isd_history <- get_isd_history()

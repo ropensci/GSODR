@@ -100,7 +100,7 @@ get_GSOD <- function(
   # Validate user inputs -------------------------------------------------------
   .validate_years(years)
   # Validate stations for missing days -----------------------------------------
-  if (!is.null(max_missing) && (is.na(max_missing) || max_missing < 1) {
+  if (!is.null(max_missing) && (is.na(max_missing) || max_missing < 1L) {
       stop(
         call. = FALSE,
         "The `max_missing` parameter must be a positive",
@@ -174,7 +174,7 @@ get_GSOD <- function(
   if (!is.null(max_missing)) {
     file_list <-
       .validate_missing_days(max_missing, file_list)
-    if (length(file_list) == 0) {
+    if (length(file_list) == 0L) {
       stop(
         call. = FALSE,
         "There were no stations that had a max of ",

@@ -105,7 +105,7 @@ reformat_GSOD <- function(dsn = NULL, file_list = NULL) {
       pattern = "^.*\\.csv$",
       full.names = TRUE
     )
-    if (length(file_list) == 0) {
+    if (length(file_list) == 0L) {
       stop("No files were found, please check your file location.")
     }
   }

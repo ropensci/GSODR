@@ -11,11 +11,11 @@
       "Years must be entered as a numeric value."
     )
   }
-  this_year <- 1900 + as.POSIXlt(Sys.Date())$year
+  this_year <- 1900L + as.POSIXlt(Sys.Date())$year
   for (i in years) {
-    if (i <= 0) {
+    if (i <= 0L) {
       stop("\nThis is not a valid year.\n")
-    } else if (i < 1929) {
+    } else if (i < 1929L) {
       stop(
         call. = FALSE,
         "\nThe GSOD data files start at 1929, you have entered a year prior
@@ -66,9 +66,13 @@
 #' @dev
 .validate_station_data_years <- function(station, isd_history, years) {
   BEGIN <-
-    as.numeric(substr(isd_history[isd_history$STNID == station, ]$BEGIN, 1, 4))
+    as.numeric(substr(
+      isd_history[isd_history$STNID == station, ]$BEGIN,
+      1L,
+      4L
+    ))
   END <-
-    as.numeric(substr(isd_history[isd_history$STNID == station, ]$END, 1, 4))
+    as.numeric(substr(isd_history[isd_history$STNID == station, ]$END, 1L, 4L))
   if (min(years) < BEGIN || max(years) > END) {
     warning(
       "\nThis station, ",
@@ -96,12 +100,12 @@
 .validate_country <-
   function(country, isd_history) {
     if (!is.null(country)) {
-      country <- toupper(trimws(country[1]))
+      country <- toupper(trimws(country[1L]))
       nc <- nchar(country)
-      if (nc == 3) {
+      if (nc == 3L) {
         if (country %in% isd_history$ISO3C) {
           c <- which(country == isd_history$ISO3C)
-          country <- as.character(isd_history[c, "CTRY"][1])
+          country <- as.character(isd_history[c, "CTRY"][1L])
         } else {
           stop(
             call. = FALSE,
@@ -109,13 +113,13 @@
             "letter ISO country code\n"
           )
         }
-      } else if (nc == 2) {
+      } else if (nc == 2L) {
         if (country %in% isd_history$ISO2C) {
           c <- which(country == isd_history$ISO2C)
-          country <- as.character(isd_history[c, "CTRY"][1])
+          country <- as.character(isd_history[c, "CTRY"][1L])
         } else if (country %in% isd_history$CTRY) {
           c <- which(country == isd_history$CTRY)
-          country <- as.character(isd_history[c, "CTRY"][1])
+          country <- as.character(isd_history[c, "CTRY"][1L])
         } else {
           stop(
             call. = FALSE,
@@ -125,7 +129,7 @@
         }
       } else if (country %in% isd_history$COUNTRY_NAME) {
         c <- which(country == isd_history$COUNTRY_NAME)
-        country <- as.character(isd_history[c, "CTRY"][1])
+        country <- as.character(isd_history[c, "CTRY"][1L])
       } else {
         stop(
           call. = FALSE,
@@ -155,14 +159,14 @@
       ))
     names(records) <- file_list
     year <- as.numeric(substr(
-      file_list[1],
-      start = nchar(file_list[1]) - 19,
-      stop = nchar(file_list[1]) - 16
+      file_list[1L],
+      start = nchar(file_list[1L]) - 19L,
     ))
+    stop = nchar(file_list[1L]) - 16L
     ifelse(
-      format(as.POSIXct(paste0(year, "-03-01")) - 1, "%d") != "29",
-      allow <- 365 - max_missing,
-      allow <- 366 - max_missing
+      format(as.POSIXct(paste0(year, "-03-01")) - 1L, "%d") != "29",
+      allow <- 365L - max_missing,
+      allow <- 366L - max_missing
     )
     file_list <- stats::na.omit(ifelse(records >= allow, file_list, NA))
   }
@@ -179,7 +183,7 @@
 .download_files <-
   function(station, years) {
     # if no station or station > 10 download annual zip files ------------------
-    if (is.null(station) | length(station) > 10) {
+    if (is.null(station) | length(station) > 10L) {
       url_list <-
         paste0(
           "https://www.ncei.noaa.gov/data/global-summary-of-the-day/archive/",
@@ -228,7 +232,7 @@
             "/",
             years,
             "/",
-            gsub("-", "", station),
+            gsub("-", "", station, fixed = TRUE),
             ".csv"
           )]
 
@@ -241,7 +245,7 @@
 
     # if a station is provided, download its files -----------------------------
     if (!is.null(station)) {
-      station <- gsub("-", "", station)
+      station <- gsub("-", "", station, fixed = TRUE)
       url_list <-
         CJ(years, station, sorted = FALSE)[, paste0(
           "https://www.ncei.noaa.gov/data/global-summary-of-the-day/access/",
@@ -260,7 +264,7 @@
               destfile = paste0(
                 tempdir(),
                 "/",
-                substr(i, nchar(i) - 20, nchar(i) - 16),
+                substr(i, nchar(i) - 20L, nchar(i) - 16L),
                 # year
                 "-",
                 basename(i) # filename
@@ -294,10 +298,10 @@
 .agroclimatology_list <-
   function(file_list, isd_history, years) {
     station_list <- isd_history[
-      isd_history$LAT >= -60 &
-        isd_history$LAT <= 60,
+      isd_history$LAT >= -60L &
+        isd_history$LAT <= 60L,
     ]$STNID
-    station_list <- gsub("-", "", station_list)
+    station_list <- gsub("-", "", station_list, fixed = TRUE)
 
     station_list <-
       CJ(years, sorted = FALSE)[, paste0(
@@ -328,7 +332,7 @@
   function(country, file_list, isd_history, years) {
     station_list <-
       isd_history[isd_history$CTRY == country, ]$STNID
-    station_list <- gsub("-", "", station_list)
+    station_list <- gsub("-", "", station_list, fixed = TRUE)
     station_list <-
       CJ(years, sorted = FALSE)[, paste0(
         tempdir(),
@@ -339,8 +343,8 @@
         ".csv"
       )]
     file_list <- file_list[file_list %in% station_list]
-    return(file_list)
     rm(station_list)
+    return(file_list)
   }
 
 #' Process .gz files
@@ -376,7 +380,7 @@
       verify = TRUE,
       timeout = 0L,
       TLS = ""
-    )[[1]]
+    )[[1L]]
   ))
 }
 
@@ -391,7 +395,7 @@
 
 .untar_files <- function(tar_files) {
   for (i in tar_files) {
-    year_dir <- substr(i, nchar(i) - 10, nchar(i) - 7)
+    year_dir <- substr(i, nchar(i) - 10L, nchar(i) - 7L)
     utils::untar(i, exdir = year_dir)
   }
 }
