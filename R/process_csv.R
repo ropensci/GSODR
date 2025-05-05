@@ -124,14 +124,14 @@
   }
 
   # Convert data to Metric units -----------------------------------------------
-  DT[, TEMP := round(0.5556 * (TEMP - 32L), 1L)]
-  DT[, DEWP := round(0.5556 * (DEWP - 32L), 1L)]
+  DT[, TEMP := round(0.5556 * (TEMP - 32.0), 1L)]
+  DT[, DEWP := round(0.5556 * (DEWP - 32.0, 1L)]
   DT[, WDSP := round(WDSP * 0.514444444, 1L)]
   DT[, MXSPD := round(MXSPD * 0.514444444, 1L)]
   DT[, GUST := round(GUST * 0.514444444, 1L)]
   DT[, VISIB := round(VISIB * 1.60934, 1L)]
-  DT[, MAX := round((MAX - 32L) * 0.5556, 1L)]
-  DT[, MIN := round((MIN - 32L) * 0.5556, 1L)]
+  DT[, MAX := round((MAX - 32.0) * 0.5556, 1L)]
+  DT[, MIN := round((MIN - 32.0) * 0.5556, 1L)]
   DT[, PRCP := round(PRCP * 25.4, 2L)]
   DT[, SNDP := round(SNDP * 25.4, 1L)]
 

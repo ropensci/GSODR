@@ -54,18 +54,18 @@ get_isd_history <- function() {
     ]
   isd_history <-
     isd_history[
-      isd_history$LAT != 0L &
-        isd_history$LON != 0L,
+      isd_history$LAT != 0.0 &
+        isd_history$LON != 0.0,
     ]
   isd_history <-
     isd_history[
-      isd_history$LAT > -90L &
-        isd_history$LAT < 90L,
+      isd_history$LAT > -90.0 &
+        isd_history$LAT < 90.0,
     ]
   isd_history <-
     isd_history[
-      isd_history$LON > -180L &
-        isd_history$LON < 180L,
+      isd_history$LON > -180.0 &
+        isd_history$LON < 180.0,
     ]
 
   # set colnames to upper case

@@ -51,11 +51,11 @@ nearest_stations <- function(LAT, LON, distance) {
     delta_lon <- abs(lon1 - lon2)
 
     # radius of earth
-    6371 *
-      2 *
+    6371.0 *
+      2.0 *
       asin(sqrt(`+`(
-        (sin(delta_lat / 2))^2,
-        cos(lat1) * cos(lat2) * (sin(delta_lon / 2))^2
+        (sin(delta_lat / 2.0))^2.0,
+        cos(lat1) * cos(lat2) * (sin(delta_lon / 2.))^2.
       )))
   }
 
