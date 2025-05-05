@@ -125,7 +125,7 @@
 
   # Convert data to Metric units -----------------------------------------------
   DT[, TEMP := round(0.5556 * (TEMP - 32.0), 1L)]
-  DT[, DEWP := round(0.5556 * (DEWP - 32.0, 1L)]
+  DT[, DEWP := round(0.5556 * (DEWP - 32.0), 1L)]
   DT[, WDSP := round(WDSP * 0.514444444, 1L)]
   DT[, MXSPD := round(MXSPD * 0.514444444, 1L)]
   DT[, GUST := round(GUST * 0.514444444, 1L)]
