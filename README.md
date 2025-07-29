@@ -74,32 +74,97 @@ Here's an example of fetching data for a station in Toowoomba, Queensland, AU in
 library(GSODR)
 tbar <- get_GSOD(years = 2021, station = "955510-99999")
 tbar
-#>             STNID              NAME   CTRY COUNTRY_NAME  ISO2C  ISO3C  STATE LATITUDE LONGITUDE ELEVATION    BEGIN      END   YEARMODA  YEAR MONTH   DAY  YDAY  TEMP TEMP_ATTRIBUTES  DEWP DEWP_ATTRIBUTES    SLP SLP_ATTRIBUTES   STP STP_ATTRIBUTES VISIB VISIB_ATTRIBUTES
-#>            <char>            <char> <char>       <char> <char> <char> <char>    <num>     <num>     <num>    <int>    <int>     <Date> <int> <int> <int> <int> <num>           <int> <num>           <int>  <num>          <int> <num>          <int> <num>            <int>
-#>   1: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS          -27.55   151.917       642 19980301 20240909 2021-01-01  2021     1     1     1  20.9              16  18.1              15 1011.5             16 940.5             16    NA                0
-#>   2: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS          -27.55   151.917       642 19980301 20240909 2021-01-02  2021     1     2     2  21.2              16  17.8              16 1009.1             16 938.2             16    NA                0
-#>   3: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS          -27.55   151.917       642 19980301 20240909 2021-01-03  2021     1     3     3  21.0              16  19.2              16 1008.3             16 937.4             16    NA                0
-#>   4: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS          -27.55   151.917       642 19980301 20240909 2021-01-04  2021     1     4     4  22.2              16  19.4              15 1008.6             16 937.7             16    NA                0
-#>   5: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS          -27.55   151.917       642 19980301 20240909 2021-01-05  2021     1     5     5  23.6              16  19.8              16 1009.3             16 938.4             16    NA                0
-#>  ---                                                                                                                                                                                                                                                                        
-#> 358: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS          -27.55   151.917       642 19980301 20240909 2021-12-27  2021    12    27   361  20.5              24  16.2              24 1009.3             24 938.1             24    NA                0
-#> 359: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS          -27.55   151.917       642 19980301 20240909 2021-12-28  2021    12    28   362  16.7              24  13.1              24 1012.0             24 940.7             24    NA                0
-#> 360: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS          -27.55   151.917       642 19980301 20240909 2021-12-29  2021    12    29   363  18.1              24  13.7              24 1012.4             24 941.0             24    NA                0
-#> 361: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS          -27.55   151.917       642 19980301 20240909 2021-12-30  2021    12    30   364  18.4              24  13.5              24 1012.6             24 941.2             24    NA                0
-#> 362: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS          -27.55   151.917       642 19980301 20240909 2021-12-31  2021    12    31   365  18.4              24  17.0              21 1010.9             24 939.7             24    NA                0
-#>       WDSP WDSP_ATTRIBUTES MXSPD  GUST   MAX MAX_ATTRIBUTES   MIN MIN_ATTRIBUTES  PRCP PRCP_ATTRIBUTES  SNDP I_FOG I_RAIN_DRIZZLE I_SNOW_ICE I_HAIL I_THUNDER I_TORNADO_FUNNEL    EA    ES    RH
-#>      <num>           <int> <num> <num> <num>         <char> <num>         <char> <num>          <char> <num> <num>          <num>      <num>  <num>     <num>            <num> <num> <num> <num>
-#>   1:   8.0              16   9.8    NA  25.6              *  16.7           <NA>  2.03               G    NA     1              1          0      0         0                0   2.1   2.5  84.0
-#>   2:   6.2              16   9.3    NA  25.7              *  17.6           <NA>  0.25               G    NA     0              0          0      0         0                0   2.0   2.5  81.0
-#>   3:   4.9              16   8.2    NA  25.5              *  17.7           <NA> 19.05               G    NA     1              1          0      0         0                0   2.2   2.5  89.5
-#>   4:   3.9              16   5.7    NA  25.0              *  18.8           <NA>  0.25               G    NA     0              0          0      0         0                0   2.2   2.7  84.2
-#>   5:   3.4              16   7.7    NA  28.1              *  19.0           <NA>  0.51               G    NA     0              0          0      0         0                0   2.3   2.9  79.3
-#>  ---                                                                                                                                                                                            
-#> 358:   7.0              24   9.8    NA  27.2              *  17.0              *  0.00               I    NA     0              0          0      0         0                0   1.8   2.4  76.4
-#> 359:   8.2              24  10.8    NA  20.2              *  13.5              *  0.00               I    NA     0              0          0      0         0                0   1.5   1.9  79.3
-#> 360:   8.7              24  10.8    NA  24.0              *  13.4           <NA>  0.00               I    NA     0              0          0      0         0                0   1.6   2.1  75.5
-#> 361:   8.4              24  11.8    NA  24.5              *  13.9           <NA>  0.25               G    NA     0              1          0      0         0                0   1.5   2.1  73.1
-#> 362:   9.2              24  12.3    NA  22.2              *  14.8           <NA>  7.11               G    NA     0              1          0      0         0                0   1.9   2.1  91.6
+#>             STNID              NAME   CTRY   COUNTRY_NAME  ISO2C  ISO3C  STATE
+#>            <char>            <char> <char>         <char> <char> <char> <char>
+#>   1: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
+#>   2: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
+#>   3: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
+#>   4: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
+#>   5: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
+#>  ---                                                                          
+#> 358: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
+#> 359: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
+#> 360: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
+#> 361: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
+#> 362: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
+#>      LATITUDE LONGITUDE ELEVATION    BEGIN      END   YEARMODA  YEAR MONTH
+#>         <num>     <num>     <num>    <int>    <int>     <Date> <int> <int>
+#>   1:   -27.55   151.917       642 19980301 20250726 2021-01-01  2021     1
+#>   2:   -27.55   151.917       642 19980301 20250726 2021-01-02  2021     1
+#>   3:   -27.55   151.917       642 19980301 20250726 2021-01-03  2021     1
+#>   4:   -27.55   151.917       642 19980301 20250726 2021-01-04  2021     1
+#>   5:   -27.55   151.917       642 19980301 20250726 2021-01-05  2021     1
+#>  ---                                                                      
+#> 358:   -27.55   151.917       642 19980301 20250726 2021-12-27  2021    12
+#> 359:   -27.55   151.917       642 19980301 20250726 2021-12-28  2021    12
+#> 360:   -27.55   151.917       642 19980301 20250726 2021-12-29  2021    12
+#> 361:   -27.55   151.917       642 19980301 20250726 2021-12-30  2021    12
+#> 362:   -27.55   151.917       642 19980301 20250726 2021-12-31  2021    12
+#>        DAY  YDAY  TEMP TEMP_ATTRIBUTES  DEWP DEWP_ATTRIBUTES    SLP
+#>      <int> <int> <num>           <int> <num>           <int>  <num>
+#>   1:     1     1  20.9              16  18.1              15 1011.5
+#>   2:     2     2  21.2              16  17.8              16 1009.1
+#>   3:     3     3  21.0              16  19.2              16 1008.3
+#>   4:     4     4  22.2              16  19.4              15 1008.6
+#>   5:     5     5  23.6              16  19.8              16 1009.3
+#>  ---                                                               
+#> 358:    27   361  20.5              24  16.2              24 1009.3
+#> 359:    28   362  16.7              24  13.1              24 1012.0
+#> 360:    29   363  18.1              24  13.7              24 1012.4
+#> 361:    30   364  18.4              24  13.5              24 1012.6
+#> 362:    31   365  18.4              24  17.0              21 1010.9
+#>      SLP_ATTRIBUTES   STP STP_ATTRIBUTES VISIB VISIB_ATTRIBUTES  WDSP
+#>               <int> <num>          <int> <num>            <int> <num>
+#>   1:             16 940.5             16    NA                0   8.0
+#>   2:             16 938.2             16    NA                0   6.2
+#>   3:             16 937.4             16    NA                0   4.9
+#>   4:             16 937.7             16    NA                0   3.9
+#>   5:             16 938.4             16    NA                0   3.4
+#>  ---                                                                 
+#> 358:             24 938.1             24    NA                0   7.0
+#> 359:             24 940.7             24    NA                0   8.2
+#> 360:             24 941.0             24    NA                0   8.7
+#> 361:             24 941.2             24    NA                0   8.4
+#> 362:             24 939.7             24    NA                0   9.2
+#>      WDSP_ATTRIBUTES MXSPD  GUST   MAX MAX_ATTRIBUTES   MIN MIN_ATTRIBUTES
+#>                <int> <num> <num> <num>         <char> <num>         <char>
+#>   1:              16   9.8    NA  25.6              *  16.7           <NA>
+#>   2:              16   9.3    NA  25.7              *  17.6           <NA>
+#>   3:              16   8.2    NA  25.5              *  17.7           <NA>
+#>   4:              16   5.7    NA  25.0              *  18.8           <NA>
+#>   5:              16   7.7    NA  28.1              *  19.0           <NA>
+#>  ---                                                                      
+#> 358:              24   9.8    NA  27.2              *  17.0              *
+#> 359:              24  10.8    NA  20.2              *  13.5              *
+#> 360:              24  10.8    NA  24.0              *  13.4           <NA>
+#> 361:              24  11.8    NA  24.5              *  13.9           <NA>
+#> 362:              24  12.3    NA  22.2              *  14.8           <NA>
+#>       PRCP PRCP_ATTRIBUTES  SNDP I_FOG I_RAIN_DRIZZLE I_SNOW_ICE I_HAIL
+#>      <num>          <char> <num> <num>          <num>      <num>  <num>
+#>   1:  2.03               G    NA     1              1          0      0
+#>   2:  0.25               G    NA     0              0          0      0
+#>   3: 19.05               G    NA     1              1          0      0
+#>   4:  0.25               G    NA     0              0          0      0
+#>   5:  0.51               G    NA     0              0          0      0
+#>  ---                                                                   
+#> 358:  0.00               I    NA     0              0          0      0
+#> 359:  0.00               I    NA     0              0          0      0
+#> 360:  0.00               I    NA     0              0          0      0
+#> 361:  0.25               G    NA     0              1          0      0
+#> 362:  7.11               G    NA     0              1          0      0
+#>      I_THUNDER I_TORNADO_FUNNEL    EA    ES    RH
+#>          <num>            <num> <num> <num> <num>
+#>   1:         0                0   2.1   2.5  84.0
+#>   2:         0                0   2.0   2.5  81.0
+#>   3:         0                0   2.2   2.5  89.5
+#>   4:         0                0   2.2   2.7  84.2
+#>   5:         0                0   2.3   2.9  79.3
+#>  ---                                             
+#> 358:         0                0   1.8   2.4  76.4
+#> 359:         0                0   1.5   1.9  79.3
+#> 360:         0                0   1.6   2.1  75.5
+#> 361:         0                0   1.5   2.1  73.1
+#> 362:         0                0   1.9   2.1  91.6
 ```
 
 ## Other Sources of Weather Data in R
