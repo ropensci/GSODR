@@ -19,7 +19,7 @@ test_that("update_station_list() downloads and imports proper file", {
   ans <- "yes"
   write(ans, f)
   expect_message(update_station_list())
-  expect_equal(ncol(isd_history), 12)
+  expect_identical(ncol(isd_history), 12L)
   expect_named(
     isd_history,
     c(
@@ -37,7 +37,7 @@ test_that("update_station_list() downloads and imports proper file", {
       "ISO3C"
     )
   )
-  expect_equal(options("timeout")[[1]], 60)
+  expect_identical(options("timeout")[[1L]], 60L)
   options(GSODR_connection = stdin())
   close(f)
 })

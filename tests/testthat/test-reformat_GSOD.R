@@ -31,8 +31,8 @@ test_that("reformat_GSOD file_list parameter reformats data properly", {
     pattern = "^.*\\.csv$",
     full.names = TRUE
   )
-  expect_equal(length(file_list), 2)
-  expect_equal(
+  expect_length(file_list, 2L)
+  expect_identical(
     basename(file_list),
     c(
       "06600099999.csv",
@@ -42,14 +42,14 @@ test_that("reformat_GSOD file_list parameter reformats data properly", {
 
   # check that provided a file list, the function works properly
   x <- reformat_GSOD(file_list = file_list)
-  expect_equal(nrow(x), 722)
-  expect_length(x, 47)
+  expect_identical(nrow(x), 722L)
+  expect_length(x, 47L)
   expect_s3_class(x, "data.table")
 
   # check that provided a dsn only, the function works properly
   x <- reformat_GSOD(dsn = tempdir())
-  expect_equal(nrow(x), 722)
-  expect_length(x, 47)
+  expect_identical(nrow(x), 722L)
+  expect_length(x, 47L)
   expect_s3_class(x, "data.table")
 
   # Check that a message is emitted when both dsn and file_list are set --------

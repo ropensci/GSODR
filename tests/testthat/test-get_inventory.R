@@ -32,17 +32,11 @@ test_that("get_inventory fetches the inventory doc and returns a data frame", {
 
   y <- capture.output(x)
   expect_type(y, "character")
-  expect_equal(
-    y[[1]],
-    "  *** FEDERAL CLIMATE COMPLEX INTEGRATED SURFACE DATA INVENTORY ***  "
-  )
-  expect_equal(
-    y[[2]],
-    "   This inventory provides the number of weather observations by  "
-  )
+  expect_identical(y[[1]], "  *** FEDERAL CLIMATE COMPLEX INTEGRATED SURFACE DATA INVENTORY ***  ")
+  expect_identical(y[[2]], "   This inventory provides the number of weather observations by  ")
 })
 
 test_that("inventory file is removed after download", {
   skip_if_offline()
-  expect_true(!file.exists(file.path(tempdir(), "inventory.txt")))
+  expect_false(file.exists(file.path(tempdir(), "inventory.txt")))
 })

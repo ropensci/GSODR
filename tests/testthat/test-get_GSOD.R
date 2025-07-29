@@ -219,7 +219,7 @@ test_that("unique stations are returned, tempdir() is cleaned up on exit", {
     pattern = ".csv$",
     full.names = TRUE
   )))
-  expect_equal(length(unique(b$STNID)), 1)
+  expect_length(unique(b$STNID), 1)
 })
 
 # Check that agroclimatology is returned when requested ------------------------
@@ -246,20 +246,20 @@ test_that("agroclimatology and station cannot be specified concurrently", {
 test_that("get_GSOD works properly and for one country only", {
   skip_if_offline()
   a <- get_GSOD(years = 1929, country = "UK")
-  expect_equal(a$CTRY[1], "UK")
+  expect_identical(a$CTRY[1], "UK")
   expect_s3_class(a, "data.table")
-  expect_equal(a$STNID[[1]], "030050-99999")
-  expect_equal(a$NAME[[1]], "LERWICK")
-  expect_equal(a$CTRY[[1]], "UK")
-  expect_equal(a$COUNTRY_NAME[[1]], "UNITED KINGDOM")
-  expect_equal(a$ISO2C[[1]], "GB")
-  expect_equal(a$ISO3C[[1]], "GBR")
-  expect_equal(a$STATE[[1]], "")
+  expect_identical(a$STNID[[1]], "030050-99999")
+  expect_identical(a$NAME[[1]], "LERWICK")
+  expect_identical(a$CTRY[[1]], "UK")
+  expect_identical(a$COUNTRY_NAME[[1]], "UNITED KINGDOM")
+  expect_identical(a$ISO2C[[1]], "GB")
+  expect_identical(a$ISO3C[[1]], "GBR")
+  expect_identical(a$STATE[[1]], "")
   expect_equal(a$LATITUDE[[1]], 60.133)
   expect_equal(a$LONGITUDE[[1]], -1.183)
-  expect_equal(a$ELEVATION[[1]], 84)
-  expect_equal(a$BEGIN[[1]], 19291001)
-  expect_equal(
+  expect_identical(a$ELEVATION[[1]], 84)
+  expect_identical(a$BEGIN[[1]], 19291001L)
+  expect_identical(
     lapply(a, class),
     list(
       STNID = "character",
@@ -316,11 +316,11 @@ test_that("get_GSOD works properly and for one country only", {
 test_that("only specified country is returned using 2 letter ISO codes", {
   skip_if_offline()
   a <- get_GSOD(years = 1929, country = "GB")
-  expect_equal(a$CTRY[1], "UK")
+  expect_identical(a$CTRY[1], "UK")
 })
 
 test_that("only specified country is returned using 3 letter ISO codes", {
   skip_if_offline()
   a <- get_GSOD(years = 1929, country = "GBR")
-  expect_equal(a$CTRY[1], "UK")
+  expect_identical(a$CTRY[1], "UK")
 })
