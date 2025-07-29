@@ -34,7 +34,7 @@ bug, create an associated issue and illustrate the bug with a minimal
 
 ### Code of Conduct
 
-Please note that the nasapower project is released with a
+Please note that the GSODR project is released with a
 [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By contributing to this
 project you agree to abide by its terms.
 
