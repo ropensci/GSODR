@@ -14,7 +14,7 @@
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.5.0 (2025-04-11)",
+  "runtimePlatform": "R version 4.5.1 (2025-06-13)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -335,7 +335,7 @@
   "applicationCategory": "Tools",
   "isPartOf": "https://ropensci.org",
   "keywords": ["US-NCEI", "meteorological-data", "global-weather", "weather", "weather-data", "meteorology", "station-data", "surface-weather", "data-access", "US-NCDC", "r", "gsod", "ncdc", "weather-stations", "global-data", "ncei", "weather-information", "historical-weather", "historical-data", "daily-data", "daily-weather", "rstats", "r-package"],
-  "fileSize": "4366.75KB",
+  "fileSize": "2239.445KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
@@ -390,7 +390,7 @@
       }
     }
   ],
-  "releaseNotes": "https://github.com/ropensci/GSODR/blob/master/NEWS.md",
+  "releaseNotes": "https://github.com/ropensci/GSODR/blob/main/NEWS.md",
   "readme": "https://github.com/ropensci/GSODR/blob/main/README.md",
   "contIntegration": ["https://github.com/ropensci/GSODR/actions/workflows/R-CMD-check.yaml", "https://app.codecov.io/gh/ropensci/GSODR"],
   "developmentStatus": "https://www.repostatus.org/#active",
