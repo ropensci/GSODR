@@ -26,9 +26,23 @@ get_isd_history <- function() {
   # remove extra columns
   isd_history[, c("USAF", "WBAN", "ICAO") := NULL]
 
-  isd_history <-
-    isd_history[setDT(countrycode::codelist), on = c("CTRY" = "fips")]
+  cclist <- data.table::as.data.table(countrycode::codelist[, c(
+    "country.name.en",
+    "iso2c",
+    "fips"
+  )])
+  cclist <- data.table::melt(cclist, id.vars = "country.name.en")
+  cclist <- cclist[order(cclist$country.name.en)]
+  cclist <- unique(cclist, by = "value")
 
+  isd_history <-
+    isd_history[cclist, on = c("CTRY" = "value")]
+
+  isd_history <-
+    isd_history[
+      data.table::as.data.table(countrycode::codelist),
+      on = "country.name.en"
+    ]
   isd_history <- isd_history[, c(
     "STNID",
     "NAME",

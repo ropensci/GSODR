@@ -7,6 +7,7 @@ utils::globalVariables(c(
   "STNID", # <get_isd_history>
   "USAF", # <get_isd_history>
   "WBAN", # <get_isd_history>
+  "codelist", # <get_isd_history>
   "COUNTRY_NAME", # <get_isd_history>
   "..x", # <get_isd_history>
   "STNID", # <get_updates>
