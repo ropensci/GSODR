@@ -1,5 +1,6 @@
 # vignettes that depend on Internet access need to be pre-compiled
 library("devtools")
+library("here")
 
 install()
 
