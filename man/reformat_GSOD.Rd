@@ -74,7 +74,7 @@ of saturation vapor pressure. Journal of Applied Meteorology and Climatology,
 }
 
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 
 # Download data to 'tempdir()'
 download.file(

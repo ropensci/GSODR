@@ -13,7 +13,7 @@ A \link[data.table:data.table]{data.table::data.table} object
 Get the Most Recent isd_history File
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 get_isd_history()
 \dontshow{\}) # examplesIf}
 }

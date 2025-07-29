@@ -15,7 +15,7 @@ Changes are shown in order from most recent to oldest changes by the "DATE"
 field.  Column names follow \CRANpkg{GSODR} naming conventions.
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 get_updates()
 \dontshow{\}) # examplesIf}
 }

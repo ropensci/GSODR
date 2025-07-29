@@ -95,7 +95,7 @@ of saturation vapor pressure. Journal of Applied Meteorology and Climatology,
 }
 
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 # Download weather station data for Toowoomba, Queensland for 2010
 tbar <- get_GSOD(years = 2010, station = "955510-99999")
 
