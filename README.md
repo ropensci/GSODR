@@ -6,7 +6,7 @@ output: github_document
 
 
 
-# {GSODR}: Global Surface Summary of the Day (GSOD) Weather Data Client <img src="man/figures/logo.png" style="float:right;" alt="logo" width="120" />
+# {GSODR}: Global Surface Summary of the Day (GSOD) Weather Data Client<br /> <img src="man/figures/logo.png" style="float:right;" alt="logo" width="120" />
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/ropensci/GSODR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/GSODR/actions/workflows/R-CMD-check.yaml)
