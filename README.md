@@ -74,32 +74,32 @@ Here's an example of fetching data for a station in Toowoomba, Queensland, AU in
 library(GSODR)
 tbar <- get_GSOD(years = 2021, station = "955510-99999")
 tbar
-#>             STNID              NAME   CTRY   COUNTRY_NAME  ISO2C  ISO3C  STATE
-#>            <char>            <char> <char>         <char> <char> <char> <char>
-#>   1: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
-#>   2: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
-#>   3: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
-#>   4: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
-#>   5: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
-#>  ---                                                                          
-#> 358: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
-#> 359: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
-#> 360: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
-#> 361: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
-#> 362: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
+#>             STNID              NAME   CTRY COUNTRY_NAME  ISO2C  ISO3C  STATE
+#>            <char>            <char> <char>       <char> <char> <char> <char>
+#>   1: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS       
+#>   2: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS       
+#>   3: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS       
+#>   4: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS       
+#>   5: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS       
+#>  ---                                                                        
+#> 358: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS       
+#> 359: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS       
+#> 360: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS       
+#> 361: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS       
+#> 362: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS       
 #>      LATITUDE LONGITUDE ELEVATION    BEGIN      END   YEARMODA  YEAR MONTH
 #>         <num>     <num>     <num>    <int>    <int>     <Date> <int> <int>
-#>   1:   -27.55   151.917       642 19980301 20250726 2021-01-01  2021     1
-#>   2:   -27.55   151.917       642 19980301 20250726 2021-01-02  2021     1
-#>   3:   -27.55   151.917       642 19980301 20250726 2021-01-03  2021     1
-#>   4:   -27.55   151.917       642 19980301 20250726 2021-01-04  2021     1
-#>   5:   -27.55   151.917       642 19980301 20250726 2021-01-05  2021     1
+#>   1:   -27.55   151.917       642 19980301 20240909 2021-01-01  2021     1
+#>   2:   -27.55   151.917       642 19980301 20240909 2021-01-02  2021     1
+#>   3:   -27.55   151.917       642 19980301 20240909 2021-01-03  2021     1
+#>   4:   -27.55   151.917       642 19980301 20240909 2021-01-04  2021     1
+#>   5:   -27.55   151.917       642 19980301 20240909 2021-01-05  2021     1
 #>  ---                                                                      
-#> 358:   -27.55   151.917       642 19980301 20250726 2021-12-27  2021    12
-#> 359:   -27.55   151.917       642 19980301 20250726 2021-12-28  2021    12
-#> 360:   -27.55   151.917       642 19980301 20250726 2021-12-29  2021    12
-#> 361:   -27.55   151.917       642 19980301 20250726 2021-12-30  2021    12
-#> 362:   -27.55   151.917       642 19980301 20250726 2021-12-31  2021    12
+#> 358:   -27.55   151.917       642 19980301 20240909 2021-12-27  2021    12
+#> 359:   -27.55   151.917       642 19980301 20240909 2021-12-28  2021    12
+#> 360:   -27.55   151.917       642 19980301 20240909 2021-12-29  2021    12
+#> 361:   -27.55   151.917       642 19980301 20240909 2021-12-30  2021    12
+#> 362:   -27.55   151.917       642 19980301 20240909 2021-12-31  2021    12
 #>        DAY  YDAY  TEMP TEMP_ATTRIBUTES  DEWP DEWP_ATTRIBUTES    SLP
 #>      <int> <int> <num>           <int> <num>           <int>  <num>
 #>   1:     1     1  20.9              16  18.1              15 1011.5
@@ -171,10 +171,6 @@ tbar
 
 There are several other sources of weather data and ways of retrieving them through R.
 Several are also [rOpenSci](https://ropensci.org) projects.
-
-[{clifro}](https://CRAN.R-project.org/package=clifro) from [rOpenSci](https://docs.ropensci.org/clifro/) is a web portal to the New Zealand National Climate Database and provides public access (via subscription) to around 6,500 various climate stations (see <https://cliflo.niwa.co.nz/> for more information).
-Collating and manipulating data from CliFlo (hence clifro) and importing into R for further analysis, exploration and visualisation is now straightforward and coherent.
-The user is required to have an Internet connection, and a current CliFlo subscription (free) if data from stations, other than the public Reefton electronic weather station, is sought.
 
 [{GSODTools}](https://github.com/environmentalinformatics-marburg/GSODTools) by [Florian Detsch](https://github.com/fdetsch) is an R package that offers similar functionality as {GSODR}, but also has the ability to graph the data and working with data for time series analysis.
 
