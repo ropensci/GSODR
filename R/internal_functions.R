@@ -14,7 +14,7 @@
   this_year <- 1900L + as.POSIXlt(Sys.Date())$year
   for (i in years) {
     if (i <= 0L) {
-      stop("\nThis is not a valid year.\n")
+      stop("\nThis is not a valid year.\n", call. = FALSE)
     } else if (i < 1929L) {
       stop(
         call. = FALSE,

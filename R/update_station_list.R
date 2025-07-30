@@ -41,7 +41,7 @@ update_station_list <- function() {
 
   answer <- toupper(answer)
 
-  if (answer != "Y" & answer != "YES") {
+  if (answer != "Y" || answer != "YES") {
     stop("Station list was not updated.", call. = FALSE)
   }
 

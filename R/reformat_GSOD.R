@@ -106,7 +106,10 @@ reformat_GSOD <- function(dsn = NULL, file_list = NULL) {
       full.names = TRUE
     )
     if (length(file_list) == 0L) {
-      stop("No files were found, please check your file location.")
+      stop(
+        "No files were found, please check your file location.",
+        call. = FALSE
+      )
     }
   }
   GSOD_XY <- .apply_process_csv(file_list, isd_history)
