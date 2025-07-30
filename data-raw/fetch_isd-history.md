@@ -1,7 +1,7 @@
 ---
 title: "Fetch and Clean 'isd_history.csv' File"
 author: "Adam H. Sparks"
-date: "2025-07-29"
+date: "2025-07-30"
 output: github_document
 ---
 
@@ -141,7 +141,7 @@ install.packages("GSODR", repos = "https://cloud.r-project.org/")
 ```
 ## 
 ## The downloaded binary packages are in
-## 	/var/folders/r4/wwsd3hsn48j5gck6qv6npkpc0000gr/T//RtmpP9HCn8/downloaded_packages
+## 	/var/folders/r4/wwsd3hsn48j5gck6qv6npkpc0000gr/T//RtmpmE4x69/downloaded_packages
 ```
 
 ``` r
@@ -200,7 +200,7 @@ str(isd_history)
 ##  $ CTRY        : chr  "AF" "NO" "NO" "NO" ...
 ##  $ STATE       : chr  "" "" "" "" ...
 ##  $ BEGIN       : int  20100519 19310101 19861120 19870117 19870116 19880320 19861109 19850601 19730101 19310103 ...
-##  $ END         : int  20120323 20250726 20250725 19971231 19910806 19971226 20250726 20250522 19970801 20041030 ...
+##  $ END         : int  20120323 20250727 20250727 19971231 19910806 19971226 20250727 20250522 19970801 20041030 ...
 ##  $ COUNTRY_NAME: chr  "AFGHANISTAN" "NORWAY" "NORWAY" "NORWAY" ...
 ##  $ ISO2C       : chr  "AF" "NO" "NO" "NO" ...
 ##  $ ISO3C       : chr  "AFG" "NOR" "NOR" "NOR" ...
@@ -233,14 +233,14 @@ Users of these data should take into account the following (from the [NCEI websi
 <PRE class="fansi fansi-output"><CODE>## <span style='color: #00BBBB; font-weight: bold;'>─ Session info ───────────────────────────────────────────────────────────────</span>
 ##  <span style='color: #555555; font-style: italic;'>setting </span> <span style='color: #555555; font-style: italic;'>value</span>
 ##  version  R version 4.5.1 (2025-06-13)
-##  os       macOS Sequoia 15.5
+##  os       macOS Sequoia 15.6
 ##  system   aarch64, darwin20
 ##  ui       X11
 ##  language (EN)
 ##  collate  en_AU.UTF-8
 ##  ctype    en_AU.UTF-8
 ##  tz       Australia/Perth
-##  date     2025-07-29
+##  date     2025-07-30
 ##  pandoc   3.7.0.2 @ /opt/homebrew/bin/pandoc
 ##  quarto   1.7.32 @ /usr/local/bin/quarto
 ## 
@@ -284,7 +284,6 @@ Users of these data should take into account the following (from the [NCEI websi
 ##  miniUI        0.1.2      <span style='color: #555555;'>2025-04-17</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.0)</span>
 ##  nvimcom     * 0.9.71     <span style='color: #555555;'>2025-07-08</span> <span style='color: #555555;'>[1]</span> <span style='color: #BB00BB; font-weight: bold;'>local</span>
 ##  openssl       2.3.3      <span style='color: #555555;'>2025-05-26</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.0)</span>
-##  pak           0.9.0      <span style='color: #555555;'>2025-05-27</span> <span style='color: #555555;'>[1]</span> <span style='color: #BB00BB; font-weight: bold;'>local</span>
 ##  pillar        1.11.0     <span style='color: #555555;'>2025-07-04</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.0)</span>
 ##  pkgbuild      1.4.8      <span style='color: #555555;'>2025-05-26</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.0)</span>
 ##  pkgconfig     2.0.3      <span style='color: #555555;'>2019-09-22</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.0)</span>
