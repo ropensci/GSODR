@@ -22,11 +22,12 @@
 #' inventory <- get_inventory()
 #' inventory
 #'
-#' @returns A `GSODR.info` object, which inherits from [data.table::data.table].
+#' @returns A `GSODR.info` object, which inherits from
+#' [data.table::data.table()].
 #' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
 #' @family metadata
 #' @autoglobal
-#' @export get_inventory
+#' @export
 
 get_inventory <- function() {
   load(system.file("extdata", "isd_history.rda", package = "GSODR")) # nocov

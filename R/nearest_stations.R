@@ -24,11 +24,11 @@
 #' n <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 100)
 #' n
 #'
-#' @returns A [data.table::data.table] with full station metadata including the
-#' distance from the user specified coordinates from nearest to farthest.
+#' @returns A [data.table::data.table()] with full station metadata including
+#' the distance from the user specified coordinates from nearest to farthest.
 #' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
 #' @autoglobal
-#' @export nearest_stations
+#' @export
 
 nearest_stations <- function(LAT, LON, distance) {
   # load current local copy of isd_history
