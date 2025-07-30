@@ -3,12 +3,11 @@
 #' @description
 #' Automates downloading, cleaning, reformatting of data from the Global Surface
 #' Summary of the Day (\acronym{GSOD}) data provided by the
-#' [US National Centers for Environmental Information (NCEI)(https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516),
+#' [US National Centers for Environmental Information (NCEI)](https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516),
 #' Three additional useful elements: saturation vapour pressure (es), actual
 #' vapour pressure (ea) and relative humidity (RH) are calculated and returned
 #' in the final data frame using the improved August-Roche-Magnus approximation
 #' (Alduchov and Eskridge 1996).
-#'
 #'
 #' @details
 #' All units are converted to International System of Units (SI), *e.g*,
