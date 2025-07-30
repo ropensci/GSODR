@@ -23,7 +23,8 @@
 #' \dontrun{
 #' update_station_list()
 #' }
-#'
+#' @returns Called for side-effects of saving a file to disk, returns an
+#'  invisible `NULL`.
 #' @seealso [get_isd_history()]
 #' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
 #' @autoglobal
@@ -50,4 +51,5 @@ update_station_list <- function() {
   fname <-
     system.file("extdata", "isd_history.rda", package = "GSODR")
   save(isd_history, file = fname, compress = "bzip2")
+  return(invisible(NULL))
 }
