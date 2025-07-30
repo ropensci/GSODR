@@ -1,3 +1,4 @@
+AAGI
 AIMFAOS
 ASOS
 Agroclimatology
@@ -26,6 +27,7 @@ FRSHTT
 FTPing
 Florian
 GPKG
+GRDC
 GSDOR
 GSOD
 GSODR's
@@ -46,9 +48,11 @@ NCDC
 NCEI
 NCEI's
 NOAA
+OPX
 ORCID
 PRCP
 README
+ROR
 Rda
 Rds
 Redoc
@@ -76,14 +80,19 @@ YYYY
 YYYYMMDD
 agroclimatology
 al
+au
 capitalisation
 changelog
 codecov
 csv
+curtin
 dplyr
+edu
 et
+funder
 gsod
 gz
+http
 https
 httr
 isd
@@ -131,4 +140,5 @@ weatherOz
 weathercan
 windspeed
 worldmet
+www
 zzz
