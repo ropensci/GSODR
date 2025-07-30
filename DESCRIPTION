@@ -21,8 +21,10 @@ Authors@R: c(
            comment = c("Reported bug in 'Windows OS' versions causing 'GSOD' data untarring to\n        fail", ORCID = "0000-0002-7973-6322")),
     person("Tyler", "Widdison", , "Tyler.Widdison@usav.org", role = "ctb",
            comment = "Reported bug where\n        `nearest_stations()` did not return stations in order of nearest to\n        farthest"),
-    person("Curtin University", role = "cph",
-           comment = c("Supported the development of 'GSODR' through\n        Adam H. Sparks's time.", "http://www.curtin.edu.au/", ROR = "02n415q13"))
+    person("Curtin University", role = c("fnd", "cph"),
+           comment = c("Supported the development of 'GSODR' through\n        Adam H. Sparks's time.", "http://www.curtin.edu.au/", ROR = "02n415q13")),
+    person("Grains Research and Development Corporation", role = c("fnd", "cph"),
+           comment = c(Project = "GRDC Project CUR2210-005OPX (AAGI-CU)", ROR = "02xwr1996"))
   )
 Description: Provides automated downloading, parsing, cleaning, unit
     conversion and formatting of Global Surface Summary of the Day
