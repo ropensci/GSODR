@@ -13,11 +13,9 @@ CRU
 CSI
 CSIRO
 CTRY
-CliFlo
 Curtin
 DATSAV
 DEWP
-DOI
 DPIRD
 Detsch
 ECCC
@@ -47,7 +45,6 @@ Mesonet
 NCDC
 NCEI
 NCEI's
-NCEI’s
 NOAA
 ORCID
 PRCP
@@ -55,7 +52,6 @@ README
 Rda
 Rds
 Redoc
-Reefton
 Repatch
 Rmd
 SLP
@@ -66,11 +62,11 @@ STP
 Standardise
 Toowoomba
 USCS
+Untar
 VISIB
 WBAN
 WDPS
 WDSP
-WGS
 WMO
 WSPD
 WorldClim
@@ -82,9 +78,7 @@ agroclimatology
 al
 capitalisation
 changelog
-clifro
 codecov
-countries’
 csv
 dplyr
 et
@@ -93,12 +87,10 @@ gz
 https
 httr
 isd
-iso
 joss
 juba
 kilometres
 licence
-locations’
 lon
 md
 metres
@@ -106,9 +98,6 @@ millimetres
 mistyped
 modelling
 nasapower
-ncdc
-ncei
-noaa
 onLoad
 openair
 optimised
@@ -121,7 +110,6 @@ rda
 readme
 readr
 reformats
-reproducibility
 rgdal
 riem
 rnoaa
@@ -130,7 +118,6 @@ roxyglobals
 snuck
 sp
 stationaRy
-stations’
 summarise
 summarised
 summarising
@@ -138,11 +125,10 @@ tidyr
 untar
 untarred
 untarring
+untars
 vapour
-visualisation
 weatherOz
 weathercan
 windspeed
 worldmet
-www
 zzz
