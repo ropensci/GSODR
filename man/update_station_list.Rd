@@ -6,6 +6,10 @@
 \usage{
 update_station_list()
 }
+\value{
+Called for side-effects of saving a file to disk, returns an
+invisible \code{NULL}.
+}
 \description{
 This function downloads the latest station list (isd-history.csv) from the
 \acronym{NCEI} server and updates the data distributed with \CRANpkg{GSODR}
@@ -31,7 +35,6 @@ refer to \code{\link[=get_isd_history]{get_isd_history()}}.
 \dontrun{
 update_station_list()
 }
-
 }
 \seealso{
 \code{\link[=get_isd_history]{get_isd_history()}}

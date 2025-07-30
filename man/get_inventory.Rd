@@ -7,7 +7,8 @@
 get_inventory()
 }
 \value{
-A \code{GSODR.info} object, which inherits from \link[data.table:data.table]{data.table::data.table}.
+A \code{GSODR.info} object, which inherits from
+\code{\link[data.table:data.table]{data.table::data.table()}}.
 }
 \description{
 The \acronym{NCEI} maintains a document,

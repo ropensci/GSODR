@@ -15,7 +15,7 @@ on local disk for tidying.  Ignored if \code{dsn} is set.  Use if there are othe
 files in the \code{dsn} that you do not wish to reformat.}
 }
 \value{
-A data frame as a \link[data.table:data.table]{data.table::data.table} object of
+A data frame as a \code{\link[data.table:data.table]{data.table::data.table()}} object of
 \acronym{GSOD} data.
 }
 \description{

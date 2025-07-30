@@ -15,8 +15,8 @@ nearest_stations(LAT, LON, distance)
 be returned.}
 }
 \value{
-A \link[data.table:data.table]{data.table::data.table} with full station metadata including the
-distance from the user specified coordinates from nearest to farthest.
+A \code{\link[data.table:data.table]{data.table::data.table()}} with full station metadata including
+the distance from the user specified coordinates from nearest to farthest.
 }
 \description{
 Given latitude and longitude values entered as decimal degrees (DD), this
