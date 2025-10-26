@@ -38,7 +38,7 @@ The GSOD or [Global Surface Summary of the Day (GSOD)](https://www.ncei.noaa.gov
 
 - `get_inventory()` - this function downloads the latest station inventory information from the NCEI's server and returns the header information about the latest version as a message in the console and a tidy data frame of the stations' inventory for each month that data are reported.
 
-- `get_history()` - this function downloads the latest version of the isd-history.csv file from the NCEI's server and returns a {data.table} of the information for each station that is available. A version of this file is distributed with {GSODR} internally and can be updated with `update_internal_isd_history()`.
+- `get_history()` - this function downloads the latest version of the isd-history.csv file from the NCEI's server and returns a {data.table} of the information for each station that is available. A version of this file is distributed with {GSODR} internally and can be updated with `update_station_list()`.
 
 - `get_updates()` - this function downloads the changelog for the GSOD data from the NCEI's server and reorders it by the most recent changes first.
 

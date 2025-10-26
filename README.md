@@ -47,7 +47,7 @@ facilitating this:
   isd-history.csv file from the NCEI’s server and returns a {data.table}
   of the information for each station that is available. A version of
   this file is distributed with {GSODR} internally and can be updated
-  with `update_internal_isd_history()`.
+  with `update_station_list()`.
 
 - `get_updates()` - this function downloads the changelog for the GSOD
   data from the NCEI’s server and reorders it by the most recent changes
