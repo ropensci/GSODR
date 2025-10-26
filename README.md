@@ -1,105 +1,135 @@
----
-output: github_document
----
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
-
 
 # {GSODR}: Global Surface Summary of the Day (GSOD) Weather Data Client<br /> <img src="man/figures/logo.png" style="float:right;" alt="logo" width="120" />
 
 <!-- badges: start -->
+
 [![R-CMD-check](https://github.com/ropensci/GSODR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/GSODR/actions/workflows/R-CMD-check.yaml)
 [![codecov](https://codecov.io/gh/ropensci/GSODR/graph/badge.svg?token=7KOFeomenq)](https://app.codecov.io/gh/ropensci/GSODR)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.439850.svg)](https://doi.org/10.5281/zenodo.439850) 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.439850.svg)](https://doi.org/10.5281/zenodo.439850)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/GSODR)](https://cran.r-project.org/package=GSODR)
-[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) 
-[![JOSS](http://joss.theoj.org/papers/10.21105/joss.00177/status.svg)](https://joss.theoj.org/papers/10.21105/joss.00177) 
+[![Project Status: Active – The project has reached a stable, usable
+state and is being actively
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![JOSS](http://joss.theoj.org/papers/10.21105/joss.00177/status.svg)](https://joss.theoj.org/papers/10.21105/joss.00177)
 [![](https://badges.ropensci.org/79_status.svg)](https://github.com/ropensci/software-review/issues/79)
 <!-- badges: end -->
 
 ## Introduction
 
-The GSOD or [Global Surface Summary of the Day (GSOD)](https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516) data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage.
-{GSODR} aims to make it easy to find, transfer and format the data you need for use in analysis and provides six main functions for facilitating this:
+The GSOD or [Global Surface Summary of the Day
+(GSOD)](https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516)
+data provided by the US National Centers for Environmental Information
+(NCEI) are a valuable source of weather data with global coverage.
+{GSODR} aims to make it easy to find, transfer and format the data you
+need for use in analysis and provides six main functions for
+facilitating this:
 
-- `get_GSOD()` - this function queries and transfers files from the NCEI's web server, reformats them and returns a data frame.
+- `get_GSOD()` - this function queries and transfers files from the
+  NCEI’s web server, reformats them and returns a data frame.
 
-- `reformat_GSOD()` - this function takes individual station files from the local disk and re-formats them returning a data frame.
+- `reformat_GSOD()` - this function takes individual station files from
+  the local disk and re-formats them returning a data frame.
 
-- `nearest_stations()` - this function returns a `data.table` of stations with their metadata and the distance in which they fall from the given radius (kilometres) of a point given as latitude and longitude in order from nearest to farthest.
+- `nearest_stations()` - this function returns a `data.table` of
+  stations with their metadata and the distance in which they fall from
+  the given radius (kilometres) of a point given as latitude and
+  longitude in order from nearest to farthest.
 
-- `get_inventory()` - this function downloads the latest station inventory information from the NCEI's server and returns the header information about the latest version as a message in the console and a tidy data frame of the stations' inventory for each month that data are reported.
+- `get_inventory()` - this function downloads the latest station
+  inventory information from the NCEI’s server and returns the header
+  information about the latest version as a message in the console and a
+  tidy data frame of the stations’ inventory for each month that data
+  are reported.
 
-- `get_history()` - this function downloads the latest version of the isd-history.csv file from the NCEI's server and returns a {data.table} of the information for each station that is available. A version of this file is distributed with {GSODR} internally and can be updated with `update_internal_isd_history()`.
+- `get_history()` - this function downloads the latest version of the
+  isd-history.csv file from the NCEI’s server and returns a {data.table}
+  of the information for each station that is available. A version of
+  this file is distributed with {GSODR} internally and can be updated
+  with `update_internal_isd_history()`.
 
-- `get_updates()` - this function downloads the changelog for the GSOD data from the NCEI's server and reorders it by the most recent changes first.
+- `get_updates()` - this function downloads the changelog for the GSOD
+  data from the NCEI’s server and reorders it by the most recent changes
+  first.
 
-- `update_internal_isd_history()` - this function downloads the latest station list from the NCEI's server updates the package's internal database of stations and their metadata. **Not recommended for normal use.**
+- `update_station_list()` - this function downloads the latest station
+  list from the NCEI’s server updates the package’s internal database of
+  stations and their metadata. **Not recommended for normal use.**
 
-When reformatting data either with `get_GSOD()` or `reformat_GSOD()`, all units are converted to International System of Units (SI), _e.g._, inches to millimetres and Fahrenheit to Celsius.
-File output is returned as a `data.table` object, summarising each year by station, which also includes vapour pressure and relative humidity elements calculated from existing data in GSOD.
-Additional data are calculated by this R package using the original data and included in the final data.
-These include vapour pressure (ea and es) and relative humidity calculated using the improved August-Roche-Magnus approximation (Alduchov and Eskridge 1996).
+When reformatting data either with `get_GSOD()` or `reformat_GSOD()`,
+all units are converted to International System of Units (SI), *e.g.*,
+inches to millimetres and Fahrenheit to Celsius. File output is returned
+as a `data.table` object, summarising each year by station, which also
+includes vapour pressure and relative humidity elements calculated from
+existing data in GSOD. Additional data are calculated by this R package
+using the original data and included in the final data. These include
+vapour pressure (ea and es) and relative humidity calculated using the
+improved August-Roche-Magnus approximation (Alduchov and Eskridge 1996).
 
-For more information see the description of the data provided by NCEI, <https://www.ncei.noaa.gov/data/global-summary-of-the-day/doc/readme.txt>.
+For more information see the description of the data provided by NCEI,
+<https://www.ncei.noaa.gov/data/global-summary-of-the-day/doc/readme.txt>.
 
 ## How to Install
 
 ### Stable Version
 
-A stable version of {GSODR} is available from [CRAN](https://cran.r-project.org/package=GSODR).
+A stable version of {GSODR} is available from
+[CRAN](https://cran.r-project.org/package=GSODR).
 
-```r
+``` r
 install.packages("GSODR")
 ```
 
 ### Development Version
 
-A development version is available from from GitHub.
-If you wish to install the development version that may have new features or bug fixes before the CRAN version does (but also may not work properly), please install from the [rOpenSci R Universe](https://ropensci.org/r-universe/).
-We strive to keep the main branch on GitHub functional and working properly.
+A development version is available from from GitHub. If you wish to
+install the development version that may have new features or bug fixes
+before the CRAN version does (but also may not work properly), please
+install from the [rOpenSci R
+Universe](https://ropensci.org/r-universe/). We strive to keep the main
+branch on GitHub functional and working properly.
 
-```r
+``` r
 install.packages("GSODR", repos = "https://ropensci.r-universe.dev")
 ```
 
 ## Using {GSODR}
 
-The most common work might be getting data for a single location.
-Here's an example of fetching data for a station in Toowoomba, Queensland, AU in 2021.
-
+The most common work might be getting data for a single location. Here’s
+an example of fetching data for a station in Toowoomba, Queensland, AU
+in 2021.
 
 ``` r
 library(GSODR)
 tbar <- get_GSOD(years = 2021, station = "955510-99999")
 tbar
-#>             STNID              NAME   CTRY COUNTRY_NAME  ISO2C  ISO3C  STATE
-#>            <char>            <char> <char>       <char> <char> <char> <char>
-#>   1: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS       
-#>   2: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS       
-#>   3: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS       
-#>   4: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS       
-#>   5: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS       
-#>  ---                                                                        
-#> 358: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS       
-#> 359: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS       
-#> 360: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS       
-#> 361: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS       
-#> 362: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS       
+#>             STNID              NAME   CTRY   COUNTRY_NAME  ISO2C  ISO3C  STATE
+#>            <char>            <char> <char>         <char> <char> <char> <char>
+#>   1: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
+#>   2: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
+#>   3: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
+#>   4: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
+#>   5: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
+#>  ---                                                                          
+#> 358: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
+#> 359: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
+#> 360: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
+#> 361: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
+#> 362: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
 #>      LATITUDE LONGITUDE ELEVATION    BEGIN      END   YEARMODA  YEAR MONTH
 #>         <num>     <num>     <num>    <int>    <int>     <Date> <int> <int>
-#>   1:   -27.55   151.917       642 19980301 20240909 2021-01-01  2021     1
-#>   2:   -27.55   151.917       642 19980301 20240909 2021-01-02  2021     1
-#>   3:   -27.55   151.917       642 19980301 20240909 2021-01-03  2021     1
-#>   4:   -27.55   151.917       642 19980301 20240909 2021-01-04  2021     1
-#>   5:   -27.55   151.917       642 19980301 20240909 2021-01-05  2021     1
+#>   1:   -27.55   151.917       642 19980301 20250824 2021-01-01  2021     1
+#>   2:   -27.55   151.917       642 19980301 20250824 2021-01-02  2021     1
+#>   3:   -27.55   151.917       642 19980301 20250824 2021-01-03  2021     1
+#>   4:   -27.55   151.917       642 19980301 20250824 2021-01-04  2021     1
+#>   5:   -27.55   151.917       642 19980301 20250824 2021-01-05  2021     1
 #>  ---                                                                      
-#> 358:   -27.55   151.917       642 19980301 20240909 2021-12-27  2021    12
-#> 359:   -27.55   151.917       642 19980301 20240909 2021-12-28  2021    12
-#> 360:   -27.55   151.917       642 19980301 20240909 2021-12-29  2021    12
-#> 361:   -27.55   151.917       642 19980301 20240909 2021-12-30  2021    12
-#> 362:   -27.55   151.917       642 19980301 20240909 2021-12-31  2021    12
+#> 358:   -27.55   151.917       642 19980301 20250824 2021-12-27  2021    12
+#> 359:   -27.55   151.917       642 19980301 20250824 2021-12-28  2021    12
+#> 360:   -27.55   151.917       642 19980301 20250824 2021-12-29  2021    12
+#> 361:   -27.55   151.917       642 19980301 20250824 2021-12-30  2021    12
+#> 362:   -27.55   151.917       642 19980301 20250824 2021-12-31  2021    12
 #>        DAY  YDAY  TEMP TEMP_ATTRIBUTES  DEWP DEWP_ATTRIBUTES    SLP
 #>      <int> <int> <num>           <int> <num>           <int>  <num>
 #>   1:     1     1  20.9              16  18.1              15 1011.5
@@ -169,58 +199,107 @@ tbar
 
 ## Other Sources of Weather Data in R
 
-There are several other sources of weather data and ways of retrieving them through R.
-Several are also [rOpenSci](https://ropensci.org) projects.
+There are several other sources of weather data and ways of retrieving
+them through R. Several are also [rOpenSci](https://ropensci.org)
+projects.
 
-[{GSODTools}](https://github.com/environmentalinformatics-marburg/GSODTools) by [Florian Detsch](https://github.com/fdetsch) is an R package that offers similar functionality as {GSODR}, but also has the ability to graph the data and working with data for time series analysis.
+[{GSODTools}](https://github.com/environmentalinformatics-marburg/GSODTools)
+by [Florian Detsch](https://github.com/fdetsch) is an R package that
+offers similar functionality as {GSODR}, but also has the ability to
+graph the data and working with data for time series analysis.
 
-[{nasapower}](https://CRAN.R-project.org/package=nasapower) from [rOpenSci](https://docs.ropensci.org/nasapower/) aims to make it quick and easy to automate downloading of the NASA-POWER global meteorology, surface solar energy and climatology data in your R session as a tidy `tibble` object for analysis and use in modelling or other purposes.
-POWER (Prediction Of Worldwide Energy Resource) data are freely available for download with varying spatial resolutions dependent on the original data and with several temporal resolutions depending on the POWER parameter and community.
+[{nasapower}](https://CRAN.R-project.org/package=nasapower) from
+[rOpenSci](https://docs.ropensci.org/nasapower/) aims to make it quick
+and easy to automate downloading of the NASA-POWER global meteorology,
+surface solar energy and climatology data in your R session as a tidy
+`tibble` object for analysis and use in modelling or other purposes.
+POWER (Prediction Of Worldwide Energy Resource) data are freely
+available for download with varying spatial resolutions dependent on the
+original data and with several temporal resolutions depending on the
+POWER parameter and community.
 
-[{riem}](https://CRAN.R-project.org/package=riem) from [rOpenSci](https://docs.ropensci.org/riem/) allows to get weather data from Automated Surface Observing System (ASOS) stations (airports) in the whole world thanks to the Iowa Environment Mesonet website.
+[{riem}](https://CRAN.R-project.org/package=riem) from
+[rOpenSci](https://docs.ropensci.org/riem/) allows to get weather data
+from Automated Surface Observing System (ASOS) stations (airports) in
+the whole world thanks to the Iowa Environment Mesonet website.
 
-[{rnoaa}](https://CRAN.R-project.org/package=rnoaa), from [rOpenSci](https://docs.ropensci.org/rnoaa/) offers tools for interacting with and downloading weather data from the United States National Oceanic and Atmospheric Administration but lacks support for GSOD data.
+[{rnoaa}](https://CRAN.R-project.org/package=rnoaa), from
+[rOpenSci](https://docs.ropensci.org/rnoaa/) offers tools for
+interacting with and downloading weather data from the United States
+National Oceanic and Atmospheric Administration but lacks support for
+GSOD data.
 
-[{stationaRy}](https://cran.r-project.org/package=stationaRy), from Richard Iannone offers hourly meteorological data from stations located all over the world.
-There is a wealth of data available, with historic weather data accessible from nearly 30,000 stations.
+[{stationaRy}](https://cran.r-project.org/package=stationaRy), from
+Richard Iannone offers hourly meteorological data from stations located
+all over the world. There is a wealth of data available, with historic
+weather data accessible from nearly 30,000 stations.
 
-[{weathercan}](https://CRAN.R-project.org/package=weathercan) from [rOpenSci](https://github.com/ropensci/weathercan) makes it easier to search for and download multiple months/years of historical weather data from Environment and Climate Change Canada (ECCC) website.
+[{weathercan}](https://CRAN.R-project.org/package=weathercan) from
+[rOpenSci](https://github.com/ropensci/weathercan) makes it easier to
+search for and download multiple months/years of historical weather data
+from Environment and Climate Change Canada (ECCC) website.
 
-[{weatherOz}](https://CRAN.R-project.org/package=weatherOz) aims to facilitate access and download weather and climate data for Australia from Australian data sources.
-Data are sourced from from the Western Australian Department of Primary Industries and Regional Development (DPIRD) and the Scientific Information for Land Owners (SILO) API endpoints and the Australian Government Bureau of Meteorology’s (BOM) FTP server.
+[{weatherOz}](https://CRAN.R-project.org/package=weatherOz) aims to
+facilitate access and download weather and climate data for Australia
+from Australian data sources. Data are sourced from from the Western
+Australian Department of Primary Industries and Regional Development
+(DPIRD) and the Scientific Information for Land Owners (SILO) API
+endpoints and the Australian Government Bureau of Meteorology’s (BOM)
+FTP server.
 
-[{worldmet}](https://CRAN.R-project.org/package=worldmet) provides an easy way to access data from the NOAA Integrated Surface Database (ISD) (the same database {GSODR} provides access to.
-The ISD contains detailed surface meteorological data from around the world for over 35,000 locations.
-However, rather than daily values, the package outputs (typically hourly meteorological data) and works very well with the [{openair}](https://CRAN.R-project.org/package=openair) package.
+[{worldmet}](https://CRAN.R-project.org/package=worldmet) provides an
+easy way to access data from the NOAA Integrated Surface Database (ISD)
+(the same database {GSODR} provides access to. The ISD contains detailed
+surface meteorological data from around the world for over 35,000
+locations. However, rather than daily values, the package outputs
+(typically hourly meteorological data) and works very well with the
+[{openair}](https://CRAN.R-project.org/package=openair) package.
 
 ## Notes
 
 ### Citing GSOD data
 
-> Cite as: NOAA National Centers of Environmental Information. 1999. Global Surface Summary of the Day - GSOD. 1.0. [indicate subset used]. NOAA National Centers for Environmental Information. Accessed [date].
+> Cite as: NOAA National Centers of Environmental Information. 1999.
+> Global Surface Summary of the Day - GSOD. 1.0. \[indicate subset
+> used\]. NOAA National Centers for Environmental Information. Accessed
+> \[date\].
 
 ### NOAA policy
 
 Users of these data should take into account the following:
 
-> The data summaries provided here are based on data exchanged under the World Meteorological Organization (WMO) World Weather Watch Program according to WMO Resolution 40 (Cg-XII). This allows WMO member countries to place restrictions on the use or re-export of their data for commercial purposes outside of the receiving country.
-Data for selected countries may, at times, not be available through this system.
-Those countries' data summaries and products which are available here are intended for free and unrestricted use in research, education, and other non-commercial activities.
-However, for non-U.S. locations' data, the data or any derived product shall not be provided to other users or be used for the re-export of commercial services.
+> The data summaries provided here are based on data exchanged under the
+> World Meteorological Organization (WMO) World Weather Watch Program
+> according to WMO Resolution 40 (Cg-XII). This allows WMO member
+> countries to place restrictions on the use or re-export of their data
+> for commercial purposes outside of the receiving country. Data for
+> selected countries may, at times, not be available through this
+> system. Those countries’ data summaries and products which are
+> available here are intended for free and unrestricted use in research,
+> education, and other non-commercial activities. However, for non-U.S.
+> locations’ data, the data or any derived product shall not be provided
+> to other users or be used for the re-export of commercial services.
 
 ## Meta
 
-- Please [report any issues or bugs](https://github.com/ropensci/GSODR/issues).
+- Please [report any issues or
+  bugs](https://github.com/ropensci/GSODR/issues).
 
 - License: MIT
 
-- To cite {GSODR}, please use: Adam H. Sparks, Tomislav Hengl and Andrew Nelson (2017). GSODR: Global Summary Daily Weather Data in R. _The Journal of Open Source Software_, **2(10)**. DOI: 10.21105/joss.00177.
+- To cite {GSODR}, please use: Adam H. Sparks, Tomislav Hengl and Andrew
+  Nelson (2017). GSODR: Global Summary Daily Weather Data in R. *The
+  Journal of Open Source Software*, **2(10)**. DOI: 10.21105/joss.00177.
 
 ## Code of Conduct
-  
-Please note that this package is released with a [Contributor Code of Conduct](https://ropensci.org/code-of-conduct/). 
-By contributing to this project, you agree to abide by its terms.
+
+Please note that this package is released with a [Contributor Code of
+Conduct](https://ropensci.org/code-of-conduct/). By contributing to this
+project, you agree to abide by its terms.
 
 ## References
 
-Alduchov, O.A. and Eskridge, R.E., 1996. Improved Magnus form approximation of saturation vapor pressure. Journal of Applied Meteorology and Climatology, 35(4), pp. 601-609 DOI: 10.1175/1520-0450(1996)035<0601:IMFAOS>2.0.CO;2.
+Alduchov, O.A. and Eskridge, R.E., 1996. Improved Magnus form
+approximation of saturation vapor pressure. Journal of Applied
+Meteorology and Climatology, 35(4), pp. 601-609 DOI:
+10.1175/1520-0450(1996)035\<0601:IMFAOS\>2.0.CO;2.
