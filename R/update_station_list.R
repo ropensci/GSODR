@@ -25,6 +25,7 @@
 #' }
 #' @returns Called for side-effects of saving a file to disk, returns an
 #'  invisible `NULL`.
+#' @export
 #' @seealso [get_isd_history()]
 #' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
 #' @autoglobal

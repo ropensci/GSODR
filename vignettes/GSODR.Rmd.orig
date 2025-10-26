@@ -37,11 +37,11 @@ However, the data files are cumbersome and difficult to work with.
 
 - `get_inventory()` - this function downloads the latest station inventory information from the NCEI's server and returns the header information about the latest version as a message in the console and a tidy data frame of the stations' inventory for each month that data are reported.
 
-- `get_history()` - this function downloads the latest version of the isd-history.csv file from the NCEI's server and returns a {data.table} of the information for each station that is available. A version of this file is distributed with {GSODR}  internally and can be updated with `update_internal_isd_history()`.
+- `get_history()` - this function downloads the latest version of the isd-history.csv file from the NCEI's server and returns a {data.table} of the information for each station that is available. A version of this file is distributed with {GSODR}  internally and can be updated with `update_station_list()`.
 
 - `get_updates()` - this function downloads the changelog for the GSOD data from the NCEI's server and reorders it by the most recent changes first.
 
-- `update_internal_isd_history()` - this function downloads the latest station list from the NCEI's server updates the package's internal database of stations and their metadata. **Not recommended for normal use.**
+- `update_station_list()` - this function downloads the latest station list from the NCEI's server updates the package's internal database of stations and their metadata. **Not recommended for normal use.**
 
 When reformatting data either with `get_GSOD()` or `reformat_GSOD()`, all units are converted from United States Customary System (USCS) to International System of Units (SI), _e.g._, inches to millimetres and Fahrenheit to Celsius.
 Data in the R session summarise each year by station, which also includes vapour pressure and relative humidity elements calculated from existing data in GSOD.
@@ -175,7 +175,7 @@ inventory
 subset(inventory, STNID %in% "955510-99999")
 ```
 
-# Using update_internal_isd_history()
+# Using update_station_list()
 
 {GSODR} uses internal databases of station data from the NCEI to provide location and other metadata, _e.g._ elevation, station names, WMO codes, etc. to make the process of querying for weather data faster.
 This database is created and packaged with {GSODR} for distribution and is updated with new releases.
@@ -188,7 +188,7 @@ The database file `isd_history.rda` can be located on your local system by using
 To update _GSODR's_ internal database of station locations simply use `update_station_list()`, which will update the internal station database according to the latest data available from the NCEI.
 
 ```{r Ex19, eval=FALSE}
-update_internal_isd_history()
+update_station_list()
 ```
 
 # Notes
