@@ -157,7 +157,7 @@ x <- reformat_GSOD(dsn = "~/GSOD/gsod_1960")
 
 Following is an example how to use this function.
 
-```{r Ex17, eval=TRUE, message=FALSE}'
+```{r Ex17, eval=TRUE, message=FALSE}
 get_updates()
 ```
 

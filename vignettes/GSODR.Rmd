@@ -59,32 +59,19 @@ Oz
 
 ```
 ## Key: <STNID>
-##             STNID             NAME     LAT     LON ELEV(M)   CTRY  STATE
-##            <char>           <char>   <num>   <num>   <num> <char> <char>
-##   1: 110010-99999         WOLFSEGG  48.100  13.667   615.6     AU       
-##   2: 110030-99999 RIED IM INNKREIS  48.217  13.483   443.0     AU       
-##   3: 110050-99999 SCHAERDING/SUBEN  48.400  13.433   330.0     AU       
-##   4: 110080-99999         ROHRBACH  48.567  14.000   602.0     AU       
-##   5: 110090-99999    WELS/FLUGFELD  48.183  14.033   318.0     AU       
-##  ---                                                                    
-## 272: 958070-99999   KINGSTONE AERO -35.717 137.517     6.0     AU       
-## 273: 958150-99999          MUNKORA -36.100 140.317    28.0     AU       
-## 274: 958230-99999  PADTHAWAY SOUTH -36.650 140.517    35.0     AU       
-## 275: 958310-99999 WALPEUP RESEARCH -35.117 142.000   105.0     AU       
-## 276: 958450-99999    MT GELLIBRAND -38.233 143.783   262.0     AU       
-##         BEGIN      END COUNTRY_NAME  ISO2C  ISO3C
-##         <int>    <int>       <char> <char> <char>
-##   1: 19730715 20250726    AUSTRALIA     AU    AUS
-##   2: 19520103 19971225    AUSTRALIA     AU    AUS
-##   3: 20010807 20010807    AUSTRALIA     AU    AUS
-##   4: 19761101 20250726    AUSTRALIA     AU    AUS
-##   5: 19340502 20050814    AUSTRALIA     AU    AUS
-##  ---                                             
-## 272: 19970101 20250726    AUSTRALIA     AU    AUS
-## 273: 20030401 20250726    AUSTRALIA     AU    AUS
-## 274: 20030401 20250726    AUSTRALIA     AU    AUS
-## 275: 20010915 20250726    AUSTRALIA     AU    AUS
-## 276: 20010918 20250726    AUSTRALIA     AU    AUS
+##             STNID             NAME     LAT     LON ELEV(M)   CTRY  STATE    BEGIN      END COUNTRY_NAME  ISO2C  ISO3C
+##            <char>           <char>   <num>   <num>   <num> <char> <char>    <int>    <int>       <char> <char> <char>
+##   1: 110010-99999         WOLFSEGG  48.100  13.667   615.6     AU        19730715 20250727    AUSTRALIA     AU    AUS
+##   2: 110030-99999 RIED IM INNKREIS  48.217  13.483   443.0     AU        19520103 19971225    AUSTRALIA     AU    AUS
+##   3: 110050-99999 SCHAERDING/SUBEN  48.400  13.433   330.0     AU        20010807 20010807    AUSTRALIA     AU    AUS
+##   4: 110080-99999         ROHRBACH  48.567  14.000   602.0     AU        19761101 20250727    AUSTRALIA     AU    AUS
+##   5: 110090-99999    WELS/FLUGFELD  48.183  14.033   318.0     AU        19340502 20050814    AUSTRALIA     AU    AUS
+##  ---                                                                                                                 
+## 272: 958070-99999   KINGSTONE AERO -35.717 137.517     6.0     AU        19970101 20250727    AUSTRALIA     AU    AUS
+## 273: 958150-99999          MUNKORA -36.100 140.317    28.0     AU        20030401 20250727    AUSTRALIA     AU    AUS
+## 274: 958230-99999  PADTHAWAY SOUTH -36.650 140.517    35.0     AU        20030401 20250727    AUSTRALIA     AU    AUS
+## 275: 958310-99999 WALPEUP RESEARCH -35.117 142.000   105.0     AU        20010915 20250727    AUSTRALIA     AU    AUS
+## 276: 958450-99999    MT GELLIBRAND -38.233 143.783   262.0     AU        20010918 20250727    AUSTRALIA     AU    AUS
 ```
 
 ``` r
@@ -119,8 +106,8 @@ str(tbar)
 ##  $ LONGITUDE       : num  152 152 152 152 152 ...
 ##  $ ELEVATION       : num  642 642 642 642 642 642 642 642 642 642 ...
 ##  $ BEGIN           : int  19980301 19980301 19980301 19980301 19980301 19980301 19980301 19980301 19980301 19980301 ...
-##  $ END             : int  20250726 20250726 20250726 20250726 20250726 20250726 20250726 20250726 20250726 20250726 ...
-##  $ YEARMODA        : Date, format: "2010-01-01" "2010-01-02" ...
+##  $ END             : int  20250727 20250727 20250727 20250727 20250727 20250727 20250727 20250727 20250727 20250727 ...
+##  $ YEARMODA        : Date, format: "2010-01-01" "2010-01-02" "2010-01-03" "2010-01-04" ...
 ##  $ YEAR            : int  2010 2010 2010 2010 2010 2010 2010 2010 2010 2010 ...
 ##  $ MONTH           : int  1 1 1 1 1 1 1 1 1 1 ...
 ##  $ DAY             : int  1 2 3 4 5 6 7 8 9 10 ...
@@ -209,8 +196,8 @@ str(tbar)
 ##  $ LONGITUDE       : num  152 152 152 152 152 ...
 ##  $ ELEVATION       : num  407 407 407 407 407 ...
 ##  $ BEGIN           : int  19730430 19730430 19730430 19730430 19730430 19730430 19730430 19730430 19730430 19730430 ...
-##  $ END             : int  20250726 20250726 20250726 20250726 20250726 20250726 20250726 20250726 20250726 20250726 ...
-##  $ YEARMODA        : Date, format: "2010-01-01" "2010-01-02" ...
+##  $ END             : int  20250727 20250727 20250727 20250727 20250727 20250727 20250727 20250727 20250727 20250727 ...
+##  $ YEARMODA        : Date, format: "2010-01-01" "2010-01-02" "2010-01-03" "2010-01-04" ...
 ##  $ YEAR            : int  2010 2010 2010 2010 2010 2010 2010 2010 2010 2010 ...
 ##  $ MONTH           : int  1 1 1 1 1 1 1 1 1 1 ...
 ##  $ DAY             : int  1 2 3 4 5 6 7 8 9 10 ...
@@ -319,8 +306,25 @@ x <- reformat_GSOD(dsn = "~/GSOD/gsod_1960")
 
 Following is an example how to use this function.
 
-```{r Ex17, eval=TRUE, message=FALSE}'
+
+``` r
 get_updates()
+```
+
+```
+##              STNID  YEAR       DATE                  COMMENT
+##             <char> <int>     <Date>                   <char>
+##    1: ******-*****  2025 2025-08-29 ENTIRE YEAR WAS REPLACED
+##    2: ******-*****  2024 2025-01-21 ENTIRE YEAR WAS REPLACED
+##    3: ******-*****  2023 2024-01-05 ENTIRE YEAR WAS REPLACED
+##    4: ******-*****  2022 2023-05-18 ENTIRE YEAR WAS REPLACED
+##    5: ******-*****  1997 2022-08-31 ENTIRE YEAR WAS REPLACED
+##   ---                                                       
+## 5451: ******-*****  1968 2004-11-12 ENTIRE YEAR WAS REPLACED
+## 5452: ******-*****  1969 2004-11-12 ENTIRE YEAR WAS REPLACED
+## 5453: ******-*****  1970 2004-11-10 ENTIRE YEAR WAS REPLACED
+## 5454: ******-*****  1971 2004-11-10 ENTIRE YEAR WAS REPLACED
+## 5455: ******-*****  1972 2004-11-09 ENTIRE YEAR WAS REPLACED
 ```
 
 # Using get_inventory()
@@ -339,47 +343,34 @@ inventory
 ```
 ##   *** FEDERAL CLIMATE COMPLEX INTEGRATED SURFACE DATA INVENTORY ***  
 ##    This inventory provides the number of weather observations by  
-##    STATION-YEAR-MONTH for beginning of record through July 2025  
+##    STATION-YEAR-MONTH for beginning of record through August 2025  
 ## Key: <STNID>
-##                STNID                NAME    LAT    LON ELEV(M)   CTRY  STATE
-##               <char>              <char>  <num>  <num>   <num> <char> <char>
-##      1: 008415-99999                <NA>     NA     NA      NA   <NA>   <NA>
-##      2: 010010-99999 JAN MAYEN(NOR-NAVY) 70.933 -8.667       9     NO       
-##      3: 010010-99999 JAN MAYEN(NOR-NAVY) 70.933 -8.667       9     NO       
-##      4: 010010-99999 JAN MAYEN(NOR-NAVY) 70.933 -8.667       9     NO       
-##      5: 010010-99999 JAN MAYEN(NOR-NAVY) 70.933 -8.667       9     NO       
-##     ---                                                                     
-## 154815:   A51256-451                <NA>     NA     NA      NA   <NA>   <NA>
-## 154816:   A51256-451                <NA>     NA     NA      NA   <NA>   <NA>
-## 154817:   A51256-451                <NA>     NA     NA      NA   <NA>   <NA>
-## 154818:   A51256-451                <NA>     NA     NA      NA   <NA>   <NA>
-## 154819:   A51256-451                <NA>     NA     NA      NA   <NA>   <NA>
-##            BEGIN      END COUNTRY_NAME  ISO2C  ISO3C  YEAR   JAN   FEB   MAR
-##            <int>    <int>       <char> <char> <char> <int> <int> <int> <int>
-##      1:       NA       NA         <NA>   <NA>   <NA>  2020     0     0    14
-##      2: 19310101 20250726       NORWAY     NO    NOR  2020   736   695   744
-##      3: 19310101 20250726       NORWAY     NO    NOR  2021   686   562   729
-##      4: 19310101 20250726       NORWAY     NO    NOR  2022   549   513   292
-##      5: 19310101 20250726       NORWAY     NO    NOR  2023   738   657   715
-##     ---                                                                     
-## 154815:       NA       NA         <NA>   <NA>   <NA>  2021  2085  1992  2217
-## 154816:       NA       NA         <NA>   <NA>   <NA>  2022  2203  1937  2204
-## 154817:       NA       NA         <NA>   <NA>   <NA>  2023  2006  1988  2172
-## 154818:       NA       NA         <NA>   <NA>   <NA>  2024  2223  1956  2215
-## 154819:       NA       NA         <NA>   <NA>   <NA>  2025  2179  1986  2016
-##           APR   MAY   JUN   JUL   AUG   SEP   OCT   NOV   DEC
-##         <int> <int> <int> <int> <int> <int> <int> <int> <int>
-##      1:     0     0     0     0     0     0     0     0     0
-##      2:   717   744   718   743   742   718   694   708   740
-##      3:   710   733   654   726   717   712   737   714   630
-##      4:    98     0     0   137     0   292   709   708   724
-##      5:   713   735   666   735   726   693   729   698   741
-##     ---                                                      
-## 154815:  1975  2146  2092  2227  2170  2080  2163  2120  2168
-## 154816:  2144  2218  2119  2224  2209  2137  1743  2126  2201
-## 154817:  1993  2063  2088  2189  2182  2147  2199  2120  2197
-## 154818:  2152  2221  2004  2210  2124  1977  2104  1885  2165
-## 154819:  2133  2213  2109  1833     0     0     0     0     0
+##                STNID                NAME    LAT    LON ELEV(M)   CTRY  STATE    BEGIN      END COUNTRY_NAME  ISO2C
+##               <char>              <char>  <num>  <num>   <num> <char> <char>    <int>    <int>       <char> <char>
+##      1: 008415-99999                <NA>     NA     NA      NA   <NA>   <NA>       NA       NA         <NA>   <NA>
+##      2: 010010-99999 JAN MAYEN(NOR-NAVY) 70.933 -8.667       9     NO        19310101 20250727       NORWAY     NO
+##      3: 010010-99999 JAN MAYEN(NOR-NAVY) 70.933 -8.667       9     NO        19310101 20250727       NORWAY     NO
+##      4: 010010-99999 JAN MAYEN(NOR-NAVY) 70.933 -8.667       9     NO        19310101 20250727       NORWAY     NO
+##      5: 010010-99999 JAN MAYEN(NOR-NAVY) 70.933 -8.667       9     NO        19310101 20250727       NORWAY     NO
+##     ---                                                                                                           
+## 154837:   A51256-451                <NA>     NA     NA      NA   <NA>   <NA>       NA       NA         <NA>   <NA>
+## 154838:   A51256-451                <NA>     NA     NA      NA   <NA>   <NA>       NA       NA         <NA>   <NA>
+## 154839:   A51256-451                <NA>     NA     NA      NA   <NA>   <NA>       NA       NA         <NA>   <NA>
+## 154840:   A51256-451                <NA>     NA     NA      NA   <NA>   <NA>       NA       NA         <NA>   <NA>
+## 154841:   A51256-451                <NA>     NA     NA      NA   <NA>   <NA>       NA       NA         <NA>   <NA>
+##          ISO3C  YEAR   JAN   FEB   MAR   APR   MAY   JUN   JUL   AUG   SEP   OCT   NOV   DEC
+##         <char> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int>
+##      1:   <NA>  2020     0     0    14     0     0     0     0     0     0     0     0     0
+##      2:    NOR  2020   736   695   744   717   744   718   743   742   718   694   708   740
+##      3:    NOR  2021   686   562   729   710   733   654   726   717   712   737   714   630
+##      4:    NOR  2022   549   513   292    98     0     0   137     0   292   709   708   724
+##      5:    NOR  2023   738   657   715   713   735   666   735   726   693   729   698   741
+##     ---                                                                                     
+## 154837:   <NA>  2021  2085  1992  2217  1975  2146  2092  2227  2170  2080  2163  2120  2168
+## 154838:   <NA>  2022  2203  1937  2204  2144  2218  2119  2224  2209  2137  1743  2126  2201
+## 154839:   <NA>  2023  2006  1988  2172  1993  2063  2088  2189  2182  2147  2199  2120  2197
+## 154840:   <NA>  2024  2223  1956  2215  2152  2221  2004  2210  2124  1977  2104  1885  2165
+## 154841:   <NA>  2025  2179  1986  2016  2133  2213  2109  2140  1708     0     0     0     0
 ```
 
 ``` r
@@ -389,32 +380,24 @@ subset(inventory, STNID %in% "955510-99999")
 ```
 ##   *** FEDERAL CLIMATE COMPLEX INTEGRATED SURFACE DATA INVENTORY ***  
 ##    This inventory provides the number of weather observations by  
-##    STATION-YEAR-MONTH for beginning of record through July 2025  
+##    STATION-YEAR-MONTH for beginning of record through August 2025  
 ## Key: <STNID>
-##           STNID              NAME    LAT     LON ELEV(M)   CTRY  STATE    BEGIN
-##          <char>            <char>  <num>   <num>   <num> <char> <char>    <int>
-## 1: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.917     642     AS        19980301
-## 2: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.917     642     AS        19980301
-## 3: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.917     642     AS        19980301
-## 4: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.917     642     AS        19980301
-## 5: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.917     642     AS        19980301
-## 6: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.917     642     AS        19980301
-##         END   COUNTRY_NAME  ISO2C  ISO3C  YEAR   JAN   FEB   MAR   APR   MAY
-##       <int>         <char> <char> <char> <int> <int> <int> <int> <int> <int>
-## 1: 20250726 AMERICAN SAMOA     AS    ASM  2020   246   232   248   238   248
-## 2: 20250726 AMERICAN SAMOA     AS    ASM  2021   485   483   742   720   743
-## 3: 20250726 AMERICAN SAMOA     AS    ASM  2022   743   672   739   716   739
-## 4: 20250726 AMERICAN SAMOA     AS    ASM  2023   738   663   730   715   737
-## 5: 20250726 AMERICAN SAMOA     AS    ASM  2024   741   691   626   662   714
-## 6: 20250726 AMERICAN SAMOA     AS    ASM  2025   737   650   741   711   732
-##      JUN   JUL   AUG   SEP   OCT   NOV   DEC
-##    <int> <int> <int> <int> <int> <int> <int>
-## 1:   348   493   492   480   496   475   496
-## 2:   716   744   737   719   744   720   726
-## 3:   716   728   742   716   726   713   726
-## 4:   701   733   729   700   730   710   744
-## 5:   703   719   707   708   743   619   711
-## 6:   706   619     0     0     0     0     0
+##           STNID              NAME    LAT     LON ELEV(M)   CTRY  STATE    BEGIN      END   COUNTRY_NAME  ISO2C  ISO3C
+##          <char>            <char>  <num>   <num>   <num> <char> <char>    <int>    <int>         <char> <char> <char>
+## 1: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.917     642     AS        19980301 20250727 AMERICAN SAMOA     AS    ASM
+## 2: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.917     642     AS        19980301 20250727 AMERICAN SAMOA     AS    ASM
+## 3: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.917     642     AS        19980301 20250727 AMERICAN SAMOA     AS    ASM
+## 4: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.917     642     AS        19980301 20250727 AMERICAN SAMOA     AS    ASM
+## 5: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.917     642     AS        19980301 20250727 AMERICAN SAMOA     AS    ASM
+## 6: 955510-99999 TOOWOOMBA AIRPORT -27.55 151.917     642     AS        19980301 20250727 AMERICAN SAMOA     AS    ASM
+##     YEAR   JAN   FEB   MAR   APR   MAY   JUN   JUL   AUG   SEP   OCT   NOV   DEC
+##    <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int>
+## 1:  2020   246   232   248   238   248   348   493   492   480   496   475   496
+## 2:  2021   485   483   742   720   743   716   744   737   719   744   720   726
+## 3:  2022   743   672   739   716   739   716   728   742   716   726   713   726
+## 4:  2023   738   663   730   715   737   701   733   729   700   730   710   744
+## 5:  2024   741   691   626   662   714   703   719   707   708   743   619   711
+## 6:  2025   737   650   741   711   732   706   738   569     0     0     0     0
 ```
 
 # Using update_internal_isd_history()
