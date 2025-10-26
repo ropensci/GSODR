@@ -1,10 +1,9 @@
 # vignettes that depend on Internet access need to be pre-compiled
 library("devtools")
 library("here")
+library("knitr")
 
 install()
-
-library("knitr")
 
 knit("vignettes/GSODR.Rmd.orig", "vignettes/GSODR.Rmd")
 
