@@ -400,7 +400,7 @@ subset(inventory, STNID %in% "955510-99999")
 ## 6:  2025   737   650   741   711   732   706   738   569     0     0     0     0
 ```
 
-# Using update_internal_isd_history()
+# Using update_station_list()
 
 {GSODR} uses internal databases of station data from the NCEI to provide location and other metadata, _e.g._ elevation, station names, WMO codes, etc. to make the process of querying for weather data faster.
 This database is created and packaged with {GSODR} for distribution and is updated with new releases.
@@ -414,7 +414,7 @@ To update _GSODR's_ internal database of station locations simply use `update_st
 
 
 ``` r
-update_internal_isd_history()
+update_station_list()
 ```
 
 # Notes
