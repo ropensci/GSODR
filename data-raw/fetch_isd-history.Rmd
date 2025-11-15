@@ -172,7 +172,7 @@ x <- names(isd_history)
 new_isd_history <- new_isd_history[, ..x] 
 cat(                                 # output to screen
   as.character(                      # convert to diff to character vector
-    diffPrint(new_isd_history, isd_history, format = "ansi8", strip.sgr = FALSE)
+    diffPrint(new_isd_history, isd_history, format = "raw", strip.sgr = FALSE)
     )
   )
 ```
