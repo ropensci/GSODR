@@ -21,7 +21,7 @@ output: github_document
 ## Introduction
 
 The GSOD or [Global Surface Summary of the Day (GSOD)](https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516) data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage.
-{GSODR} aims to make it easy to find, transfer and format the data you need for use in analysis and provides six main functions for facilitating this:
+{GSODR} aims to make it easy to find, transfer and format the data you need for use in analysis and provides five main functions for facilitating this:
 
 - `get_GSOD()` - this function queries and transfers files from the NCEI's web server, reformats them and returns a data frame.
 
@@ -31,11 +31,7 @@ The GSOD or [Global Surface Summary of the Day (GSOD)](https://www.ncei.noaa.gov
 
 - `get_inventory()` - this function downloads the latest station inventory information from the NCEI's server and returns the header information about the latest version as a message in the console and a tidy data frame of the stations' inventory for each month that data are reported.
 
-- `get_history()` - this function downloads the latest version of the isd-history.csv file from the NCEI's server and returns a {data.table} of the information for each station that is available. A version of this file is distributed with {GSODR} internally and can be updated with `update_station_list()`.
-
 - `get_updates()` - this function downloads the changelog for the GSOD data from the NCEI's server and reorders it by the most recent changes first.
-
-- `update_station_list()` - this function downloads the latest station list from the NCEI's server updates the package's internal database of stations and their metadata. **Not recommended for normal use.**
 
 When reformatting data either with `get_GSOD()` or `reformat_GSOD()`, all units are converted to International System of Units (SI), _e.g._, inches to millimetres and Fahrenheit to Celsius.
 File output is returned as a `data.table` object, summarising each year by station, which also includes vapour pressure and relative humidity elements calculated from existing data in GSOD.
@@ -74,32 +70,32 @@ Here's an example of fetching data for a station in Toowoomba, Queensland, AU in
 library(GSODR)
 tbar <- get_GSOD(years = 2021, station = "955510-99999")
 tbar
-#>             STNID              NAME   CTRY   COUNTRY_NAME  ISO2C  ISO3C  STATE
-#>            <char>            <char> <char>         <char> <char> <char> <char>
-#>   1: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
-#>   2: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
-#>   3: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
-#>   4: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
-#>   5: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
-#>  ---                                                                          
-#> 358: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
-#> 359: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
-#> 360: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
-#> 361: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
-#> 362: 955510-99999 TOOWOOMBA AIRPORT     AS AMERICAN SAMOA     AS    ASM       
+#>             STNID              NAME   CTRY COUNTRY_NAME  ISO2C  ISO3C  STATE
+#>            <char>            <char> <char>       <char> <char> <char> <char>
+#>   1: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS       
+#>   2: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS       
+#>   3: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS       
+#>   4: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS       
+#>   5: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS       
+#>  ---                                                                        
+#> 358: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS       
+#> 359: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS       
+#> 360: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS       
+#> 361: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS       
+#> 362: 955510-99999 TOOWOOMBA AIRPORT     AS    AUSTRALIA     AU    AUS       
 #>      LATITUDE LONGITUDE ELEVATION    BEGIN      END   YEARMODA  YEAR MONTH
 #>         <num>     <num>     <num>    <int>    <int>     <Date> <int> <int>
-#>   1:   -27.55   151.917       642 19980301 20250727 2021-01-01  2021     1
-#>   2:   -27.55   151.917       642 19980301 20250727 2021-01-02  2021     1
-#>   3:   -27.55   151.917       642 19980301 20250727 2021-01-03  2021     1
-#>   4:   -27.55   151.917       642 19980301 20250727 2021-01-04  2021     1
-#>   5:   -27.55   151.917       642 19980301 20250727 2021-01-05  2021     1
+#>   1:   -27.55   151.917       642 19980301 20250824 2021-01-01  2021     1
+#>   2:   -27.55   151.917       642 19980301 20250824 2021-01-02  2021     1
+#>   3:   -27.55   151.917       642 19980301 20250824 2021-01-03  2021     1
+#>   4:   -27.55   151.917       642 19980301 20250824 2021-01-04  2021     1
+#>   5:   -27.55   151.917       642 19980301 20250824 2021-01-05  2021     1
 #>  ---                                                                      
-#> 358:   -27.55   151.917       642 19980301 20250727 2021-12-27  2021    12
-#> 359:   -27.55   151.917       642 19980301 20250727 2021-12-28  2021    12
-#> 360:   -27.55   151.917       642 19980301 20250727 2021-12-29  2021    12
-#> 361:   -27.55   151.917       642 19980301 20250727 2021-12-30  2021    12
-#> 362:   -27.55   151.917       642 19980301 20250727 2021-12-31  2021    12
+#> 358:   -27.55   151.917       642 19980301 20250824 2021-12-27  2021    12
+#> 359:   -27.55   151.917       642 19980301 20250824 2021-12-28  2021    12
+#> 360:   -27.55   151.917       642 19980301 20250824 2021-12-29  2021    12
+#> 361:   -27.55   151.917       642 19980301 20250824 2021-12-30  2021    12
+#> 362:   -27.55   151.917       642 19980301 20250824 2021-12-31  2021    12
 #>        DAY  YDAY  TEMP TEMP_ATTRIBUTES  DEWP DEWP_ATTRIBUTES    SLP
 #>      <int> <int> <num>           <int> <num>           <int>  <num>
 #>   1:     1     1  20.9              16  18.1              15 1011.5
