@@ -171,7 +171,7 @@ load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 x <- names(isd_history)
 new_isd_history <- new_isd_history[, ..x]
 
-(isd_diff <- diffobj::diffPrint(new_isd_history, isd_history, format = "raw"))
+isd_diff <- diffObj(new_isd_history, isd_history, strip.sgr = FALSE)
 ```
 
 ## View and save the data

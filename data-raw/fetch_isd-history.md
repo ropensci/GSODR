@@ -171,7 +171,7 @@ install.packages("GSODR", repos = "https://cloud.r-project.org/")
 ```
 ## 
 ## The downloaded binary packages are in
-## 	/var/folders/vz/txwj1tx51txgw7zv_b5c5_3m0000gn/T//Rtmp3Z9nvv/downloaded_packages
+## 	/var/folders/vz/txwj1tx51txgw7zv_b5c5_3m0000gn/T//Rtmpg7jS2O/downloaded_packages
 ```
 
 ``` r
@@ -181,7 +181,7 @@ load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 x <- names(isd_history)
 new_isd_history <- new_isd_history[, ..x]
 
-(isd_diff <- diffobj::diffPrint(new_isd_history, isd_history, format = "raw"))
+isd_diff <- diffObj(new_isd_history, isd_history, strip.sgr = FALSE)
 ```
 
 ## View and save the data
