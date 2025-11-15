@@ -181,13 +181,7 @@ load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 x <- names(isd_history)
 new_isd_history <- new_isd_history[, ..x]
 
-(isd_diff <- diffobj::diffPrint(new_isd_history, isd_history))
-```
-
-```
-## Warning in diffobj::diffPrint(target = new_isd_history, current = isd_history):
-## `target` or `current` contained ANSI CSI SGR when rendered; these were
-## stripped.  Use `strip.sgr=FALSE` to preserve them in the diffs.
+(isd_diff <- diffobj::diffPrint(new_isd_history, isd_history, format = "raw"))
 ```
 
 ## View and save the data
