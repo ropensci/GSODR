@@ -170,17 +170,25 @@ load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 # select only the cols of interest
 x <- names(isd_history)
 new_isd_history <- new_isd_history[, ..x] 
-
-(isd_diff <- diffPrint(new_isd_history, isd_history, strip.sgr = FALSE))
-
-rm(isd_history)
-
-isd_history <- new_isd_history
+cat(                                 # output to screen
+  as.character(                      # convert to diff to character vector
+diffPrint(new_isd_history, isd_history,
+      format = "html",                 # specify html output
+      style =
+      list(
+        html.output = "diff.w.style"   # configure html style
+      )
+      )
+    )
+  )
 ```
 
 ## View and save the data
 
 ```{r view-and-save}
+rm(isd_history)
+isd_history <- new_isd_history
+
 str(isd_history)
 
 # write rda file to disk for use with GSODR package
