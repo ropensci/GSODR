@@ -21,7 +21,6 @@ get_updates()
 }
 \seealso{
 Other metadata: 
-\code{\link{get_inventory}()},
-\code{\link{get_isd_history}()}
+\code{\link{get_inventory}()}
 }
 \concept{metadata}

@@ -38,7 +38,6 @@ inventory
 }
 \seealso{
 Other metadata: 
-\code{\link{get_isd_history}()},
 \code{\link{get_updates}()}
 }
 \author{

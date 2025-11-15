@@ -4,11 +4,6 @@ utils::globalVariables(c(
   "isd_history", # <get_GSOD>
   "isd_history", # <get_inventory>
   "STNID", # <get_inventory>
-  "STNID", # <get_isd_history>
-  "USAF", # <get_isd_history>
-  "WBAN", # <get_isd_history>
-  "COUNTRY_NAME", # <get_isd_history>
-  "..x", # <get_isd_history>
   "STNID", # <get_updates>
   "STATION", # <get_updates>
   "WBAN", # <get_updates>
