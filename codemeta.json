@@ -281,18 +281,6 @@
     },
     "2": {
       "@type": "SoftwareApplication",
-      "identifier": "countrycode",
-      "name": "countrycode",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=countrycode"
-    },
-    "3": {
-      "@type": "SoftwareApplication",
       "identifier": "curl",
       "name": "curl",
       "provider": {
@@ -303,7 +291,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=curl"
     },
-    "4": {
+    "3": {
       "@type": "SoftwareApplication",
       "identifier": "data.table",
       "name": "data.table",
@@ -316,7 +304,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=data.table"
     },
-    "5": {
+    "4": {
       "@type": "SoftwareApplication",
       "identifier": "lifecycle",
       "name": "lifecycle",
@@ -328,7 +316,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=lifecycle"
     },
-    "6": {
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "R.utils",
       "name": "R.utils",
@@ -340,17 +328,17 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=R.utils"
     },
-    "7": {
+    "6": {
       "@type": "SoftwareApplication",
       "identifier": "stats",
       "name": "stats"
     },
-    "8": {
+    "7": {
       "@type": "SoftwareApplication",
       "identifier": "utils",
       "name": "utils"
     },
-    "9": {
+    "8": {
       "@type": "SoftwareApplication",
       "identifier": "withr",
       "name": "withr",
@@ -367,7 +355,7 @@
   "applicationCategory": "Tools",
   "isPartOf": "https://ropensci.org",
   "keywords": ["US-NCEI", "meteorological-data", "global-weather", "weather", "weather-data", "meteorology", "station-data", "surface-weather", "data-access", "US-NCDC", "r", "gsod", "ncdc", "weather-stations", "global-data", "ncei", "weather-information", "historical-weather", "historical-data", "daily-data", "daily-weather", "rstats", "r-package"],
-  "fileSize": "3892.892KB",
+  "fileSize": "3892.887KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
