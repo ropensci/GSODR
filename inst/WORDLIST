@@ -31,7 +31,6 @@ GPKG
 GRDC
 GSDOR
 GSOD
-GSODR's
 GSODRdata
 GSODTools
 GSODdata
@@ -93,6 +92,7 @@ edu
 et
 funder
 geocode
+geospatial
 gsod
 gz
 http
@@ -122,6 +122,7 @@ rOpenSci
 rda
 readme
 readr
+realised
 reformats
 rgdal
 riem
