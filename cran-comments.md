@@ -2,7 +2,7 @@
 
 0 errors | 0 warnings | 1 note
 
-- This is a new patch release that fixes bugs with data retrieval and provides better formatting of documentation.
+- This is a new major release that fixes bugs related to the country stations are located in being incorrect reported and deprecates two functions related to the station inventory list.
 
 ## Reverse Dependencies
 
