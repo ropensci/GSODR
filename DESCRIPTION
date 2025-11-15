@@ -52,7 +52,6 @@ BugReports: https://github.com/ropensci/GSODR/issues
 Depends:
     R (>= 3.5.0)
 Imports: 
-    countrycode,
     curl,
     data.table (>= 1.15.4),
     lifecycle,
