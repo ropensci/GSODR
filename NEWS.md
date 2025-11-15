@@ -1,4 +1,15 @@
-# GSODR (development version)
+# GSODR 5.0.0
+
+## Major Changes
+
+- Now GSODR uses [GADM](https://gadm.org/) to geocode locations
+  Previously used methods led to [miscoded station locations](https://github.com/ropensci/GSODR/issues/133)
+  Some noted included German stations being FIPS coded as Guam (QU) or The Gambia (GA) in the [isd_history.csv](https://www.ncei.noaa.gov/pub/data/noaa/isd-history.csv).
+  This may lead to some changes in station locations in the dataset, hence the major release version, please check your scripts and data carefully and let me know if you find any errors.
+
+## Bug Fixes
+
+- Corrections to [documentation and vignettes](https://github.com/ropensci/GSODR/commit/2725a6ff71b347291dccfaa0bf3201669680d4a4).
 
 # GSODR 4.1.4
 

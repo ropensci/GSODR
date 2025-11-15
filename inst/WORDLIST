@@ -26,6 +26,7 @@ Eskridge
 FRSHTT
 FTPing
 Florian
+GADM
 GPKG
 GRDC
 GSDOR
@@ -51,6 +52,7 @@ NOAA
 OPX
 ORCID
 PRCP
+QU
 README
 ROR
 Rda
@@ -90,6 +92,7 @@ dplyr
 edu
 et
 funder
+geocode
 gsod
 gz
 http
@@ -104,6 +107,7 @@ lon
 md
 metres
 millimetres
+miscoded
 mistyped
 modelling
 nasapower

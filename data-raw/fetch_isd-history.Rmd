@@ -40,65 +40,31 @@ The following checks are performed on the raw data file before inclusion in {GSO
 
 ```{r load_libs, echo=TRUE, message=FALSE, output=FALSE, warning=FALSE}
 library("sessioninfo")
-library("skimr")
 library("countrycode")
 library("data.table")
+library("sf")
+library("dplyr")
+library("geodata")
+library("diffobj")
+
+new_isd_history <- fread("https://www.ncei.noaa.gov/pub/data/noaa/isd-history.csv")
 ```
 
-## Download and clean data
 
-```{r download_NE_data, echo=TRUE, message=FALSE, warning=FALSE}
-# download data
-new_isd_history <- fread("https://www1.ncdc.noaa.gov/pub/data/noaa/isd-history.csv")
-```
+## Add country names based on geographic location
 
-## Add/drop columns and save to disk
+Previously (prior to 2025-11-04) I used the FIPS code in the CSV file to determine the country.
+This turned out to be [problematic](https://github.com/ropensci/GSODR/issues/133#issuecomment-3483206035).
+So, I've gone to a brute-force method of determining which country the lat/lon values fall in using {rnaturalearth} and {sf}.
 
-```{r clean_and_reformat, echo=TRUE, cache=FALSE}
+```{r merge-country, eval=TRUE, message=FALSE}
+# isd_history
 # pad WBAN where necessary
 new_isd_history[, WBAN := sprintf("%05d", WBAN)]
 
 # add STNID column
 new_isd_history[, STNID := paste(USAF, WBAN, sep = "-")]
 setcolorder(new_isd_history, "STNID")
-setnames(new_isd_history, "STATION NAME", "NAME")
-
-# remove stations where LAT or LON is NA
-new_isd_history <- na.omit(new_isd_history, cols = c("LAT", "LON"))
-
-# remove extra columns
-new_isd_history[, c("USAF", "WBAN", "ICAO") := NULL]
-```
-
-## Add country names based on FIPS or ISO2C
-
-```{r merge-country, eval=TRUE, message=FALSE}
-
-cclist <- as.data.table(codelist[, c("country.name.en", "iso2c", "fips")])
-cclist <- melt(cclist, id.vars = "country.name.en")
-cclist <- cclist[order(cclist$country.name.en)]
-cclist <- unique(cclist, by = "value")
-
-new_isd_history <-
-  new_isd_history[cclist, on = c("CTRY" = "value")]
-
-new_isd_history <-
-  new_isd_history[as.data.table(countrycode::codelist), on = c("country.name.en")]
-
-new_isd_history <- new_isd_history[, c(
-  "STNID",
-  "NAME",
-  "LAT",
-  "LON",
-  "ELEV(M)",
-  "CTRY",
-  "STATE",
-  "BEGIN",
-  "END",
-  "country.name.en",
-  "iso2c",
-  "iso3c"
-)]
 
 # clean data
 new_isd_history[new_isd_history == -999] <- NA
@@ -116,14 +82,81 @@ new_isd_history <-
   new_isd_history[new_isd_history$LON > -180 &
                     new_isd_history$LON < 180,]
 
-# set colnames to upper case
-names(new_isd_history) <- toupper(names(new_isd_history))
-setnames(new_isd_history,
-         old = "COUNTRY.NAME.EN",
-         new = "COUNTRY_NAME")
+sf_use_s2(FALSE)
 
-# set country names to be upper case for easier internal verifications
-new_isd_history[, COUNTRY_NAME := toupper(COUNTRY_NAME)]
+coords_sf <- 
+  st_as_sf(
+  new_isd_history,
+  coords = c("LON", "LAT"),
+  crs = 4326,
+  remove = FALSE
+ ) |> select(STNID, `STATION NAME`, STATE, `ELEV(M)`, BEGIN, END, LON, LAT)
+
+world <- st_as_sf(world(resolution = 1L)) |>
+  st_transform(crs = 4326)
+
+within_dt <- st_join(
+  x = coords_sf,
+  y = world,
+  join = st_within) |>
+  as.data.table()
+
+new_isd_history <-
+  within_dt[as.data.table(codelist), on = c("NAME_0" = "country.name.en")]
+
+# remove rows with no stations
+new_isd_history <- new_isd_history[complete.cases(new_isd_history$STNID), ]
+
+new_isd_history <- new_isd_history[, c(
+  "STNID",
+  "STATION NAME",
+  "LAT",
+  "LON",
+  "ELEV(M)",
+  "STATE",
+  "BEGIN",
+  "END",
+  "NAME_0",
+  "fips",
+  "iso2c",
+  "iso3c"
+)]
+
+setnames(
+  new_isd_history,
+  c(
+    "STATION NAME",
+    "NAME_0",
+    "fips",
+    "iso2c",
+    "iso3c"
+  ),
+  c(
+    "NAME",
+    "COUNTRY_NAME",
+    "CTRY",
+    "ISO2C",
+    "ISO3C"
+  )
+)
+setcolorder(
+  new_isd_history,
+    c(
+      "STNID",
+      "NAME",
+      "LAT",
+      "LON",
+      "ELEV(M)",
+      "STATE",
+      "BEGIN",
+      "END",
+      "COUNTRY_NAME",
+      "ISO2C",
+      "ISO3C",
+      "CTRY"
+))
+
+new_isd_history[, COUNTRY_NAME := toupper(new_isd_history$COUNTRY_NAME)]
 
 # set key for joins when processing CSV files
 setkeyv(new_isd_history, "STNID")
@@ -138,18 +171,17 @@ load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 
 # select only the cols of interest
 x <- names(isd_history)
-new_isd_history <- new_isd_history[, ..x] 
+new_isd_history <- new_isd_history[, ..x]
 
-(isd_diff <- diffobj::diffPrint(new_isd_history, isd_history))
-
-rm(isd_history)
-
-isd_history <- new_isd_history
+isd_diff <- diffObj(new_isd_history, isd_history, strip.sgr = FALSE)
 ```
 
 ## View and save the data
 
 ```{r view-and-save}
+rm(isd_history)
+isd_history <- new_isd_history
+
 str(isd_history)
 
 # write rda file to disk for use with GSODR package
