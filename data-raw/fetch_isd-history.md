@@ -39,6 +39,7 @@ library("data.table")
 library("sf")
 library("dplyr")
 library("geodata")
+library("diffobj")
 
 new_isd_history <- fread("https://www.ncei.noaa.gov/pub/data/noaa/isd-history.csv")
 ```
@@ -180,16 +181,8 @@ load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 x <- names(isd_history)
 new_isd_history <- new_isd_history[, ..x] 
 
-(isd_diff <- diffobj::diffPrint(new_isd_history, isd_history))
-```
+(isd_diff <- diffPrint(new_isd_history, isd_history, strip.sgr = FALSE))
 
-```
-## Warning in diffobj::diffPrint(target = new_isd_history, current = isd_history):
-## `target` or `current` contained ANSI CSI SGR when rendered; these were
-## stripped.  Use `strip.sgr=FALSE` to preserve them in the diffs.
-```
-
-``` r
 rm(isd_history)
 
 isd_history <- new_isd_history
@@ -271,7 +264,7 @@ Users of these data should take into account the following (from the [NCEI websi
 ##  curl            7.0.0   <span style='color: #555555;'>2025-08-19</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.0)</span>
 ##  data.table    * 1.17.8  <span style='color: #555555;'>2025-07-10</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.1)</span>
 ##  DBI             1.2.3   <span style='color: #555555;'>2024-06-02</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.1)</span>
-##  diffobj         0.3.6   <span style='color: #555555;'>2025-04-21</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.1)</span>
+##  diffobj       * 0.3.6   <span style='color: #555555;'>2025-04-21</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.1)</span>
 ##  dplyr         * 1.1.4   <span style='color: #555555;'>2023-11-17</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.1)</span>
 ##  e1071           1.7-16  <span style='color: #555555;'>2024-09-16</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.1)</span>
 ##  evaluate        1.0.5   <span style='color: #555555;'>2025-08-27</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.1)</span>
