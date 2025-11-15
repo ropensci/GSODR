@@ -27,15 +27,13 @@ ex_cnt <- 0
 
 The GSOD or [Global Surface Summary of the Day (GSOD)](https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516) data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage.
 However, the data files are cumbersome and difficult to work with.
-{GSODR} aims to make it easy to find, transfer and format the data you need for use in analysis and provides five main functions for facilitating this:
+{GSODR} aims to make it easy to find, transfer and format the data you need for use in analysis and provides four main functions for facilitating this:
 
 - `get_GSOD()` - this function queries and transfers files from the NCEI's web server, reformats them and returns a data frame.
 
 - `reformat_GSOD()` - this function takes individual station files from the local disk and re-formats them returning a data frame.
 
 - `nearest_stations()` - this function returns a `data.table` of stations with their metadata and the distance in which they fall from the given radius (kilometres) of a point given as latitude and longitude in order from nearest to farthest.
-
-- `get_inventory()` - this function downloads the latest station inventory information from the NCEI's server and returns the header information about the latest version as a message in the console and a tidy data frame of the stations' inventory for each month that data are reported.
 
 - `get_updates()` - this function downloads the changelog for the GSOD data from the NCEI's server and reorders it by the most recent changes first.
 
@@ -155,20 +153,6 @@ Following is an example how to use this function.
 
 ```{r Ex17, eval=TRUE, message=FALSE}
 get_updates()
-```
-
-# Using get_inventory()
-
-{GSODR} provides a function, `get_inventory()` to retrieve an inventory of the number of weather observations by station-year-month for the beginning of record through to current.
-
-Following is an example of how to retrieve the inventory and check a station in Toowoomba, Queensland, Australia, which was used in an earlier example.
-
-```{r Ex18, eval=TRUE, message=FALSE}
-inventory <- get_inventory()
-
-inventory
-
-subset(inventory, STNID %in% "955510-99999")
 ```
 
 # Notes

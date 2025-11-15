@@ -25,15 +25,13 @@ knitr::opts_chunk$set(
 ## Introduction
 
 The GSOD or [Global Surface Summary of the Day (GSOD)](https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516) data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage.
-{GSODR} aims to make it easy to find, transfer and format the data you need for use in analysis and provides five main functions for facilitating this:
+{GSODR} aims to make it easy to find, transfer and format the data you need for use in analysis and provides four main functions for facilitating this:
 
 - `get_GSOD()` - this function queries and transfers files from the NCEI's web server, reformats them and returns a data frame.
 
 - `reformat_GSOD()` - this function takes individual station files from the local disk and re-formats them returning a data frame.
 
 - `nearest_stations()` - this function returns a `data.table` of stations with their metadata and the distance in which they fall from the given radius (kilometres) of a point given as latitude and longitude in order from nearest to farthest.
-
-- `get_inventory()` - this function downloads the latest station inventory information from the NCEI's server and returns the header information about the latest version as a message in the console and a tidy data frame of the stations' inventory for each month that data are reported.
 
 - `get_updates()` - this function downloads the changelog for the GSOD data from the NCEI's server and reorders it by the most recent changes first.
 
