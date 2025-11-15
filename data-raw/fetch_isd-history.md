@@ -86,8 +86,7 @@ coords_sf <-
   remove = FALSE
  ) |> select(STNID, `STATION NAME`, STATE, `ELEV(M)`, BEGIN, END, LON, LAT)
 
-world <- ne_countries(returnclass = "sf") |>
-  select(name) |> 
+world <- st_as_sf(world(resolution = 1L)) |>
   st_transform(crs = 4326)
 
 within_dt <- st_join(
@@ -97,7 +96,10 @@ within_dt <- st_join(
   as.data.table()
 
 new_isd_history <-
-  within_dt[as.data.table(codelist), on = c("name" = "country.name.en")]
+  within_dt[as.data.table(codelist), on = c("NAME_0" = "country.name.en")]
+
+# remove rows with no stations
+new_isd_history <- new_isd_history[complete.cases(new_isd_history$STNID), ]
 
 new_isd_history <- new_isd_history[, c(
   "STNID",
@@ -108,7 +110,7 @@ new_isd_history <- new_isd_history[, c(
   "STATE",
   "BEGIN",
   "END",
-  "name",
+  "NAME_0",
   "fips",
   "iso2c",
   "iso3c"
@@ -118,7 +120,7 @@ setnames(
   new_isd_history,
   c(
     "STATION NAME",
-    "name",
+    "NAME_0",
     "fips",
     "iso2c",
     "iso3c"
@@ -168,7 +170,7 @@ install.packages("GSODR", repos = "https://cloud.r-project.org/")
 ```
 ## 
 ## The downloaded binary packages are in
-## 	/var/folders/vz/txwj1tx51txgw7zv_b5c5_3m0000gn/T//RtmphAJ62d/downloaded_packages
+## 	/var/folders/vz/txwj1tx51txgw7zv_b5c5_3m0000gn/T//RtmpEGNWbq/downloaded_packages
 ```
 
 ``` r
@@ -201,19 +203,19 @@ str(isd_history)
 ```
 
 ```
-## Classes 'data.table' and 'data.frame':	17530 obs. of  12 variables:
-##  $ STNID       : chr  NA NA NA NA ...
-##  $ NAME        : chr  NA NA NA NA ...
-##  $ LAT         : num  NA NA NA NA NA NA NA NA NA NA ...
-##  $ LON         : num  NA NA NA NA NA NA NA NA NA NA ...
-##  $ ELEV(M)     : num  NA NA NA NA NA NA NA NA NA NA ...
-##  $ CTRY        : chr  "AQ" "AN" "AV" "AC" ...
-##  $ STATE       : chr  NA NA NA NA ...
-##  $ BEGIN       : int  NA NA NA NA NA NA NA NA NA NA ...
-##  $ END         : int  NA NA NA NA NA NA NA NA NA NA ...
-##  $ COUNTRY_NAME: chr  "American Samoa" "Andorra" "Anguilla" "Antigua & Barbuda" ...
-##  $ ISO2C       : chr  "AS" "AD" "AI" "AG" ...
-##  $ ISO3C       : chr  "ASM" "AND" "AIA" "ATG" ...
+## Classes 'data.table' and 'data.frame':	24285 obs. of  12 variables:
+##  $ STNID       : chr  "008268-99999" "010014-99999" "010015-99999" "010016-99999" ...
+##  $ NAME        : chr  "WXPOD8278" "SORSTOKKEN / STORD" "BRINGELAND" "RORVIK/RYUM" ...
+##  $ LAT         : num  33 59.8 61.4 64.8 69.3 ...
+##  $ LON         : num  65.57 5.34 5.87 11.23 16.14 ...
+##  $ ELEV(M)     : num  1156.7 48.8 327 14 13.1 ...
+##  $ CTRY        : chr  "AF" "NO" "NO" "NO" ...
+##  $ STATE       : chr  "" "" "" "" ...
+##  $ BEGIN       : int  20100519 19861120 19870117 19870116 19310103 19400713 19730101 19970201 20110928 19510101 ...
+##  $ END         : int  20120323 20250824 19971231 19910806 20250824 20250824 20250824 20250824 20250824 20250824 ...
+##  $ COUNTRY_NAME: chr  "Afghanistan" "Norway" "Norway" "Norway" ...
+##  $ ISO2C       : chr  "AF" "NO" "NO" "NO" ...
+##  $ ISO3C       : chr  "AFG" "NOR" "NOR" "NOR" ...
 ##  - attr(*, ".internal.selfref")=<externalptr> 
 ##  - attr(*, "sorted")= chr "STNID"
 ```
@@ -260,6 +262,7 @@ Users of these data should take into account the following (from the [NCEI websi
 ##  class           7.3-23  <span style='color: #555555;'>2025-01-01</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.1)</span>
 ##  classInt        0.4-11  <span style='color: #555555;'>2025-01-08</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.1)</span>
 ##  cli             3.6.5   <span style='color: #555555;'>2025-04-23</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.1)</span>
+##  codetools       0.2-20  <span style='color: #555555;'>2024-03-31</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.1)</span>
 ##  colorDF         0.1.7   <span style='color: #555555;'>2022-09-26</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.1)</span>
 ##  colorout        1.3-3   <span style='color: #555555;'>2025-08-16</span> <span style='color: #555555;'>[1]</span> <span style='color: #BB00BB; font-weight: bold;'>Github (jalvesaq/colorout@64863bb)</span>
 ##  countrycode   * 1.6.1   <span style='color: #555555;'>2025-03-31</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.1)</span>
@@ -275,6 +278,7 @@ Users of these data should take into account the following (from the [NCEI websi
 ##  fansi           1.0.6   <span style='color: #555555;'>2023-12-08</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.1)</span>
 ##  fs              1.6.6   <span style='color: #555555;'>2025-04-12</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.1)</span>
 ##  generics        0.1.4   <span style='color: #555555;'>2025-05-09</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.1)</span>
+##  geodata       * 0.6-6   <span style='color: #555555;'>2025-09-30</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.0)</span>
 ##  glue            1.8.0   <span style='color: #555555;'>2024-09-30</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.1)</span>
 ##  jsonlite        2.0.0   <span style='color: #555555;'>2025-03-27</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.1)</span>
 ##  KernSmooth      2.23-26 <span style='color: #555555;'>2025-01-01</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.1)</span>
@@ -283,18 +287,21 @@ Users of these data should take into account the following (from the [NCEI websi
 ##  magrittr        2.0.4   <span style='color: #555555;'>2025-09-12</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.0)</span>
 ##  nvimcom       * 0.9.76  <span style='color: #555555;'>2025-11-08</span> <span style='color: #555555;'>[1]</span> <span style='color: #BB00BB; font-weight: bold;'>local</span>
 ##  openssl         2.3.4   <span style='color: #555555;'>2025-09-30</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.0)</span>
+##  pak             0.9.0   <span style='color: #555555;'>2025-05-27</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.1)</span>
 ##  pillar          1.11.1  <span style='color: #555555;'>2025-09-17</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.0)</span>
 ##  pkgconfig       2.0.3   <span style='color: #555555;'>2019-09-22</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.1)</span>
 ##  pkgdown         2.2.0   <span style='color: #555555;'>2025-11-06</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.0)</span>
 ##  proxy           0.4-27  <span style='color: #555555;'>2022-06-09</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.1)</span>
 ##  purrr           1.2.0   <span style='color: #555555;'>2025-11-04</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.0)</span>
 ##  R6              2.6.1   <span style='color: #555555;'>2025-02-15</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.1)</span>
+##  rappdirs        0.3.3   <span style='color: #555555;'>2021-01-31</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.1)</span>
 ##  Rcpp            1.1.0   <span style='color: #555555;'>2025-07-02</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.1)</span>
 ##  rlang           1.1.6   <span style='color: #555555;'>2025-04-11</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.1)</span>
 ##  rnaturalearth * 1.1.0   <span style='color: #555555;'>2025-07-28</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.1)</span>
 ##  sessioninfo   * 1.2.3   <span style='color: #555555;'>2025-02-05</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.1)</span>
 ##  sf            * 1.0-22  <span style='color: #555555;'>2025-11-10</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.0)</span>
 ##  sys             3.4.3   <span style='color: #555555;'>2024-10-04</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.1)</span>
+##  terra         * 1.8-80  <span style='color: #555555;'>2025-11-05</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.0)</span>
 ##  tibble          3.3.0   <span style='color: #555555;'>2025-06-08</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.1)</span>
 ##  tidyselect      1.2.1   <span style='color: #555555;'>2024-03-11</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.1)</span>
 ##  units           1.0-0   <span style='color: #555555;'>2025-10-09</span> <span style='color: #555555;'>[1]</span> <span style='color: #555555;'>CRAN (R 4.5.0)</span>

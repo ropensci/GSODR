@@ -91,8 +91,7 @@ coords_sf <-
   remove = FALSE
  ) |> select(STNID, `STATION NAME`, STATE, `ELEV(M)`, BEGIN, END, LON, LAT)
 
-world <- ne_countries(returnclass = "sf") |>
-  select(name) |> 
+world <- st_as_sf(world(resolution = 1L)) |>
   st_transform(crs = 4326)
 
 within_dt <- st_join(
@@ -102,7 +101,10 @@ within_dt <- st_join(
   as.data.table()
 
 new_isd_history <-
-  within_dt[as.data.table(codelist), on = c("name" = "country.name.en")]
+  within_dt[as.data.table(codelist), on = c("NAME_0" = "country.name.en")]
+
+# remove rows with no stations
+new_isd_history <- new_isd_history[complete.cases(new_isd_history$STNID), ]
 
 new_isd_history <- new_isd_history[, c(
   "STNID",
@@ -113,7 +115,7 @@ new_isd_history <- new_isd_history[, c(
   "STATE",
   "BEGIN",
   "END",
-  "name",
+  "NAME_0",
   "fips",
   "iso2c",
   "iso3c"
@@ -123,7 +125,7 @@ setnames(
   new_isd_history,
   c(
     "STATION NAME",
-    "name",
+    "NAME_0",
     "fips",
     "iso2c",
     "iso3c"
