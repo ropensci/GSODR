@@ -2,8 +2,6 @@
 
 utils::globalVariables(c(
   "isd_history", # <get_GSOD>
-  "isd_history", # <get_inventory>
-  "STNID", # <get_inventory>
   "STNID", # <get_updates>
   "STATION", # <get_updates>
   "WBAN", # <get_updates>

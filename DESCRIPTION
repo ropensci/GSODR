@@ -55,6 +55,7 @@ Imports:
     countrycode,
     curl,
     data.table (>= 1.15.4),
+    lifecycle,
     R.utils,
     stats,
     utils,

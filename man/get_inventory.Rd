@@ -6,41 +6,11 @@
 \usage{
 get_inventory()
 }
-\value{
-A \code{GSODR.info} object, which inherits from
-\code{\link[data.table:data.table]{data.table::data.table()}}.
-}
 \description{
-The \acronym{NCEI} maintains a document,
-\url{https://www1.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt}, which lists
-the number of weather observations by station-year-month from the beginning
-of the stations' records.  This function retrieves that document and prints
-an information header displaying the last update time with a data frame of
-the inventory information for each station-year-month.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+This function was deprecated because the handling of country inventories has
+changed and I did not want to introduce geospatial package dependencies for
+this package.
 }
-\note{
-While \CRANpkg{GSODR} does not distribute GSOD weather data, users of
-the data should note the conditions that the U.S. \acronym{NCEI} places upon
-the \acronym{GSOD} data.
-\dQuote{The following data and products may have conditions placed on their
-international commercial use.  They can be used within the U.S. or for non-
-commercial international activities without restriction.  The non-U.S. data
-cannot be redistributed for commercial purposes.  Re-distribution of these
-data by others must provide this same notification.  A log of IP addresses
-accessing these data and products will be maintained and may be made
-available to data providers.}
-}
-\examples{
-\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
-inventory <- get_inventory()
-inventory
-\dontshow{\}) # examplesIf}
-}
-\seealso{
-Other metadata: 
-\code{\link{get_updates}()}
-}
-\author{
-Adam H. Sparks, \email{adamhsparks@gmail.com}
-}
-\concept{metadata}
+\keyword{internal}
