@@ -38,7 +38,7 @@ library("countrycode")
 library("data.table")
 library("sf")
 library("dplyr")
-library("rnaturalearth")
+library("geodata")
 
 new_isd_history <- fread("https://www.ncei.noaa.gov/pub/data/noaa/isd-history.csv")
 ```
