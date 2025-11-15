@@ -156,6 +156,8 @@ setcolorder(
       "CTRY"
 ))
 
+new_isd_history[, COUNTRY_NAME := toupper(new_isd_history$COUNTRY_NAME)]
+
 # set key for joins when processing CSV files
 setkeyv(new_isd_history, "STNID")
 ```
