@@ -25,6 +25,5 @@
 #' @importFrom data.table setkeyv
 #' @importFrom data.table setnames
 #' @importFrom data.table setorder
-#' @importFrom lifecycle deprecated
 ## usethis namespace: end
 NULL
