@@ -1,7 +1,7 @@
 Type: Package
 Package: GSODR
 Title: Global Surface Summary of the Day ('GSOD') Weather Data Client
-Version: 5.0.0
+Version: 5.0.1
 Authors@R: c(
     person("Adam H.", "Sparks", , "adamhsparks@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-0061-8359")),
@@ -24,14 +24,13 @@ Authors@R: c(
     person("Wenbo", "Lv", , "lyu.geosocial@gmail.com", role = "ctb",
            comment = "Provided suggestions for improving documentation"),
     person("Curtin University", role = c("fnd", "cph"),
-           comment = c(url = "http://www.curtin.edu.au/", ROR = "02n415q13")),
-    person("Grains Research and Development Corporation", role = c("fnd", "cph"),
-           comment = c(Project = "GRDC Project CUR2210-005OPX (AAGI-CU)", ROR = "02xwr1996"))
+           comment = c(url = "http://www.curtin.edu.au/", ROR = "02n415q13"))
   )
 Description: Provides automated downloading, parsing, cleaning, unit
     conversion and formatting of Global Surface Summary of the Day
     ('GSOD') weather data from the from the USA National Centers for
-    Environmental Information ('NCEI').  Units are converted from from
+    Environmental Information ('NCEI').  The data were retired on
+    2025-08-29 and are no longer updated. Units are converted from from
     United States Customary System ('USCS') units to International System
     of Units ('SI').  Stations may be individually checked for number of
     missing days defined by the user, where stations with too many missing
@@ -52,9 +51,9 @@ BugReports: https://github.com/ropensci/GSODR/issues
 Depends:
     R (>= 3.5.0)
 Imports: 
+    cli,
     curl,
     data.table (>= 1.15.4),
-    lifecycle,
     R.utils,
     stats,
     utils,
@@ -75,7 +74,7 @@ Suggests:
 VignetteBuilder: 
     knitr
 ByteCompile: TRUE
-Config/Needs/build: moodymudskipper/devtag
+Config/Needs/build: maelle/devtag2
 Config/roxyglobals/filename: globals.R
 Config/roxyglobals/unique: FALSE
 Config/testthat/edition: 3
@@ -84,8 +83,9 @@ Encoding: UTF-8
 Language: en-US
 NeedsCompilation: no
 Repository: CRAN
-Roxygen: list(roclets = c("collate", "namespace", "rd",
-    "roxyglobals::global_roclet", "devtag::dev_roclet"), markdown = TRUE)
+Roxygen: list(markdown = TRUE, roclets = c("collate", "namespace", "rd",
+    "roxyglobals::global_roclet", "roxylint::roxylint",
+    "devtag2::super_rd"))
 RoxygenNote: 7.3.3
 X-schema.org-applicationCategory: Tools
 X-schema.org-isPartOf: https://ropensci.org
