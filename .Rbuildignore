@@ -31,3 +31,14 @@ vignettes/figure
 ^man/dot-apply_process_csv\.Rd$
 ^man/dot-check_url_exists\.Rd$
 ^man/dot-untar_files\.Rd$
+^man/dot-validate_years.Rd
+^man/dot-validate_station_id.Rd
+^man/dot-validate_station_data_years.Rd
+^man/dot-validate_country.Rd
+^man/dot-validate_missing_days.Rd
+^man/dot-download_files.Rd
+^man/dot-agroclimatology_list.Rd
+^man/dot-subset_country_list.Rd
+^man/dot-apply_process_csv.Rd
+^man/dot-check_url_exists.Rd
+^man/dot-untar_files.Rd
