@@ -17,12 +17,14 @@ knitr::opts_chunk$set(
 [![codecov](https://codecov.io/gh/ropensci/GSODR/graph/badge.svg?token=7KOFeomenq)](https://app.codecov.io/gh/ropensci/GSODR)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.439850.svg)](https://doi.org/10.5281/zenodo.439850) 
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/GSODR)](https://cran.r-project.org/package=GSODR)
-[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) 
+[![Project Status: Inactive – The project has reached a stable, usable state but is no longer being actively developed; support/maintenance will be provided as time allows.](https://www.repostatus.org/badges/latest/inactive.svg)](https://www.repostatus.org/#inactive)
 [![JOSS](http://joss.theoj.org/papers/10.21105/joss.00177/status.svg)](https://joss.theoj.org/papers/10.21105/joss.00177) 
 [![](https://badges.ropensci.org/79_status.svg)](https://github.com/ropensci/software-review/issues/79)
 <!-- badges: end -->
 
 ## Introduction
+
+**GSOD Data have been discontinued by NCEI as of 2025l-08-29.** The data are no longer being updated, and this package will no longer receive any updates.
 
 The GSOD or [Global Surface Summary of the Day (GSOD)](https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516) data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage.
 {GSODR} aims to make it easy to find, transfer and format the data you need for use in analysis and provides four main functions for facilitating this:
@@ -54,7 +56,7 @@ install.packages("GSODR")
 
 ### Development Version
 
-A development version is available from from GitHub.
+A development version is available from GitHub.
 If you wish to install the development version that may have new features or bug fixes before the CRAN version does (but also may not work properly), please install from the [rOpenSci R Universe](https://ropensci.org/r-universe/).
 We strive to keep the main branch on GitHub functional and working properly.
 
@@ -83,7 +85,7 @@ Several are also [rOpenSci](https://ropensci.org) projects.
 [{nasapower}](https://CRAN.R-project.org/package=nasapower) from [rOpenSci](https://docs.ropensci.org/nasapower/) aims to make it quick and easy to automate downloading of the NASA-POWER global meteorology, surface solar energy and climatology data in your R session as a tidy `tibble` object for analysis and use in modelling or other purposes.
 POWER (Prediction Of Worldwide Energy Resource) data are freely available for download with varying spatial resolutions dependent on the original data and with several temporal resolutions depending on the POWER parameter and community.
 
-[{riem}](https://CRAN.R-project.org/package=riem) from [rOpenSci](https://docs.ropensci.org/riem/) allows to get weather data from Automated Surface Observing System (ASOS) stations (airports) in the whole world thanks to the Iowa Environment Mesonet website.
+[{riem}](https://CRAN.R-project.org/package=riem) from [rOpenSci](https://docs.ropensci.org/riem/) allows getting weather data from Automated Surface Observing System (ASOS) stations (airports) in the whole world thanks to the Iowa Environment Mesonet website.
 
 [{rnoaa}](https://CRAN.R-project.org/package=rnoaa), from [rOpenSci](https://docs.ropensci.org/rnoaa/) offers tools for interacting with and downloading weather data from the United States National Oceanic and Atmospheric Administration but lacks support for GSOD data.
 
@@ -93,7 +95,7 @@ There is a wealth of data available, with historic weather data accessible from 
 [{weathercan}](https://CRAN.R-project.org/package=weathercan) from [rOpenSci](https://github.com/ropensci/weathercan) makes it easier to search for and download multiple months/years of historical weather data from Environment and Climate Change Canada (ECCC) website.
 
 [{weatherOz}](https://CRAN.R-project.org/package=weatherOz) aims to facilitate access and download weather and climate data for Australia from Australian data sources.
-Data are sourced from from the Western Australian Department of Primary Industries and Regional Development (DPIRD) and the Scientific Information for Land Owners (SILO) API endpoints and the Australian Government Bureau of Meteorology’s (BOM) FTP server.
+Data are sourced from the Western Australian Department of Primary Industries and Regional Development (DPIRD) and the Scientific Information for Land Owners (SILO) API endpoints and the Australian Government Bureau of Meteorology’s (BOM) FTP server.
 
 [{worldmet}](https://CRAN.R-project.org/package=worldmet) provides an easy way to access data from the NOAA Integrated Surface Database (ISD) (the same database {GSODR} provides access to.
 The ISD contains detailed surface meteorological data from around the world for over 35,000 locations.
