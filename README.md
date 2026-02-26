@@ -17,7 +17,7 @@
 
 ## Introduction
 
-**GSOD Data have been discontinued by NCEI as of 2025l-08-29.** The data are no longer being updated, and this package will no longer receive any updates.
+**GSOD Data have been discontinued by NCEI as of 2025-08-29.** The data are no longer being updated, and this package will no longer receive any updates.
 
 The GSOD or [Global Surface Summary of the Day (GSOD)](https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516) data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage.
 {GSODR} aims to make it easy to find, transfer and format the data you need for use in analysis and provides four main functions for facilitating this:
@@ -65,6 +65,8 @@ Here's an example of fetching data for a station in Toowoomba, Queensland, AU in
 
 ``` r
 library(GSODR)
+#> The GSOD dataset was retired on 2025-08-29.
+#> GSODR will not receive further updates.
 tbar <- get_GSOD(years = 2021, station = "955510-99999")
 tbar
 #>             STNID              NAME   CTRY COUNTRY_NAME  ISO2C  ISO3C  STATE
