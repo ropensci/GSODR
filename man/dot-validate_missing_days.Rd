@@ -16,6 +16,5 @@ A validated \code{list()} of GSOD files that meet requirements for
 missing days.
 }
 \description{
-Validate data for missing days
+Internal function: Validate data for missing days
 }
-\keyword{internal}

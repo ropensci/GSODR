@@ -17,6 +17,5 @@
 A list of GSOD stations suitable for agroclimatology work.
 }
 \description{
-Agroclimatology List
+Internal function: Agroclimatology List
 }
-\keyword{internal}

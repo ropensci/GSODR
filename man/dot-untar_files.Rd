@@ -14,6 +14,5 @@ Called for it's side-effects, untars the archive files in the
 \code{tempdir()}.
 }
 \description{
-Untar GSOD Tar Archive Files
+Internal function: Untar GSOD Tar Archive Files
 }
-\keyword{internal}

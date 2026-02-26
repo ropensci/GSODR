@@ -15,7 +15,6 @@
 A \code{data.table} of GSOD weather data.
 }
 \description{
-Process .gz files
+Internal function: Process .gz files
 }
-\keyword{internal}
 \keyword{internal}

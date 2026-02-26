@@ -18,6 +18,5 @@
 data.
 }
 \description{
-Validate Station Data for Years Available
+Internal function: Validate Station Data for Years Available
 }
-\keyword{internal}

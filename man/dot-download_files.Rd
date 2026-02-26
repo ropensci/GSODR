@@ -15,6 +15,5 @@
 A list of data for processing before returning to user.
 }
 \description{
-Download GSOD files from NCEI server
+Internal function: Download GSOD files from NCEI server
 }
-\keyword{internal}

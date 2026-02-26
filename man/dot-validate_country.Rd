@@ -15,6 +15,5 @@
 A validated country name.
 }
 \description{
-Validate country requests
+Internal function: Validate country requests
 }
-\keyword{internal}

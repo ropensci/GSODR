@@ -13,6 +13,5 @@
 A numeric value representing the HTTP response.
 }
 \description{
-Check That a URL Exists Before Downloading
+Internal function: Check That a URL Exists Before Downloading
 }
-\keyword{internal}

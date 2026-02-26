@@ -19,7 +19,6 @@
 A list of stations in the requested country.
 }
 \description{
-Subset country list
+Internal function: Subset country list
 }
-\keyword{internal}
 \keyword{internal}
