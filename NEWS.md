@@ -3,7 +3,7 @@
 ## Minor Changes
 
 - Notify user on startup that the GSOD data set has been retired and that the package will no longer be maintained.
-  The data set is still available for download and use, but users should be aware that it will not be updated or maintained in the future.
+  The dataset is still available for download and use, but users should be aware that it will not be updated or maintained in the future.
 - Remove deprecated functions, `update_station_list()` and `get_inventory()`, from the package.
 
 # GSODR 5.0.0
