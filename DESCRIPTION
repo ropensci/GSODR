@@ -46,8 +46,8 @@ Description: Provides automated downloading, parsing, cleaning, unit
     please see the 'GSOD' 'readme.txt' file available from,
     <https://www.ncei.noaa.gov/pub/data/gsod/readme.txt>.
 License: MIT + file LICENSE
-URL: https://docs.ropensci.org/GSODR/, https://github.com/ropensci/GSODR
-BugReports: https://github.com/ropensci/GSODR/issues
+URL: https://docs.ropensci.org/GSODR/, https://codeberg.org/ropensci/GSODR
+BugReports: https://codeberg.org/ropensci/GSODR/issues
 Depends:
     R (>= 3.5.0)
 Imports: 
