@@ -54,11 +54,7 @@ A stable version of {GSODR} is available from [CRAN](https://cran.r-project.org/
 install.packages("GSODR")
 ```
 
-### Development Version
-
-A development version is available from GitHub.
-If you wish to install the development version that may have new features or bug fixes before the CRAN version does (but also may not work properly), please install from the [rOpenSci R Universe](https://ropensci.org/r-universe/).
-We strive to keep the main branch on GitHub functional and working properly.
+Or if you use R-Universe, you can install the latest version of {GSODR} with:
 
 ```r
 install.packages("GSODR", repos = "https://ropensci.r-universe.dev")

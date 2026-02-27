@@ -47,11 +47,7 @@ A stable version of {GSODR} is available from [CRAN](https://cran.r-project.org/
 install.packages("GSODR")
 ```
 
-### Development Version
-
-A development version is available from GitHub.
-If you wish to install the development version that may have new features or bug fixes before the CRAN version does (but also may not work properly), please install from the [rOpenSci R Universe](https://ropensci.org/r-universe/).
-We strive to keep the main branch on GitHub functional and working properly.
+Or if you use R-Universe, you can install the latest version of {GSODR} with:
 
 ```r
 install.packages("GSODR", repos = "https://ropensci.r-universe.dev")
@@ -65,8 +61,6 @@ Here's an example of fetching data for a station in Toowoomba, Queensland, AU in
 
 ``` r
 library(GSODR)
-#> The GSOD dataset was retired on 2025-08-29.
-#> GSODR will not receive further updates.
 tbar <- get_GSOD(years = 2021, station = "955510-99999")
 tbar
 #>             STNID              NAME   CTRY COUNTRY_NAME  ISO2C  ISO3C  STATE

@@ -347,7 +347,7 @@
   "applicationCategory": "Tools",
   "isPartOf": "https://ropensci.org",
   "keywords": ["US-NCEI", "meteorological-data", "global-weather", "weather", "weather-data", "meteorology", "station-data", "surface-weather", "data-access", "US-NCDC"],
-  "fileSize": "3890.427KB",
+  "fileSize": "3890.034KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
