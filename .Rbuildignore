@@ -1,7 +1,4 @@
 ^CRAN-RELEASE$
-^\.github$
-^.*\.Rproj$
-^\.Rproj\.user$
 ^cran-comments\.md$
 ^revdep$
 ^data-raw$
