@@ -2,7 +2,7 @@
 
 0 errors | 0 warnings | 1 note
 
-- This is a new major release that fixes bugs related to the country stations are located in being incorrect reported and deprecates two functions related to the station inventory list.
+- This is a new minor release that removes deprecated functions and is anticipated to be the last release as the GSOD data have been retired.
 
 ## Reverse Dependencies
 
