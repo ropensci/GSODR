@@ -347,7 +347,7 @@
   "applicationCategory": "Tools",
   "isPartOf": "https://ropensci.org",
   "keywords": ["US-NCEI", "meteorological-data", "global-weather", "weather", "weather-data", "meteorology", "station-data", "surface-weather", "data-access", "US-NCDC"],
-  "fileSize": "3890.034KB",
+  "fileSize": "3889.743KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
@@ -402,7 +402,6 @@
       }
     }
   ],
-  "contIntegration": ["https://github.com/ropensci/GSODR/actions/workflows/R-CMD-check.yaml", "https://app.codecov.io/gh/ropensci/GSODR"],
   "developmentStatus": "https://www.repostatus.org/#inactive",
   "review": {
     "@type": "Review",

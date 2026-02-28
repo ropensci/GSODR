@@ -112,7 +112,7 @@ However, for non-U.S. locations' data, the data or any derived product shall not
 
 ## Meta
 
-- Please [report any issues or bugs](https://github.com/ropensci/GSODR/issues).
+- Please [report any issues or bugs](https://codeberg.org/ropensci/GSODR/issues).
 
 - License: MIT
 
