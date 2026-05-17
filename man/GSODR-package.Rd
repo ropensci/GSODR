@@ -24,6 +24,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Adam H. Sparks \email{adamhsparks@gmail.com} (\href{https://orcid.org/0000-0002-0061-8359}{ORCID})
   \item Tomislav Hengl \email{tom.hengl@isric.org} (\href{https://orcid.org/0000-0002-9921-5129}{ORCID})
   \item Andrew Nelson \email{dr.andy.nelson@gmail.com} (\href{https://orcid.org/0000-0002-7249-3778}{ORCID})
 }
@@ -41,7 +42,7 @@ Other contributors:
  `nearest_stations()` did not return stations in order of nearest to
  farthest) [contributor]
   \item Wenbo Lv \email{lyu.geosocial@gmail.com} (Provided suggestions for improving documentation) [contributor]
-  \item Curtin University (\href{https://ror.org/02n415q13}{ROR}) (http://www.curtin.edu.au/) [funder, copyright holder]
+  \item Curtin University (\href{https://ror.org/02n415q13}{ROR}) (url: http://www.curtin.edu.au/) [funder, copyright holder]
 }
 
 }
