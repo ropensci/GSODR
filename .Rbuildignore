@@ -1,4 +1,5 @@
 ^CRAN-RELEASE$
+^CONTRIBUTING\.md$
 ^cran-comments\.md$
 ^revdep$
 ^data-raw$
@@ -12,11 +13,10 @@ vignettes/figure
 ^_pkgdown\.yml$
 ^doc$
 ^Meta$
-^\.ccache$
 ^CODE_OF_CONDUCT\.md$
 ^CRAN-SUBMISSION$
 ^air\.toml$
-^flir$
+
 ^man/dot-validate_years\.Rd$
 ^man/dot-validate_station_id\.Rd$
 ^man/dot-validate_station_data_years\.Rd$
