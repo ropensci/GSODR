@@ -26,7 +26,7 @@ If you’ve found a bug, create an associated issue and illustrate the bug with 
 
 ### Code of Conduct
 
-Please note that the {nasapower} project is released with a [Contributor Code of Conduct](https://ropensci.org/code-of-conduct/).
+Please note that the {GSODR} project is released with a [Contributor Code of Conduct](https://ropensci.org/code-of-conduct/).
 By contributing to this project you agree to abide by its terms.
 
 See rOpenSci [contributing guide](https://ropensci.github.io/dev_guide/contributingguide.html) for further details.
