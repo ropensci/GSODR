@@ -75,6 +75,7 @@ VignetteBuilder:
     knitr
 ByteCompile: TRUE
 Config/Needs/build: maelle/devtag2
+Config/roxygen2/version: 8.0.0
 Config/roxyglobals/filename: globals.R
 Config/roxyglobals/unique: FALSE
 Config/testthat/edition: 3
@@ -86,7 +87,6 @@ Repository: CRAN
 Roxygen: list(markdown = TRUE, roclets = c("collate", "namespace", "rd",
     "roxyglobals::global_roclet", "roxylint::roxylint",
     "devtag2::super_rd"))
-RoxygenNote: 7.3.3
 X-schema.org-applicationCategory: Tools
 X-schema.org-isPartOf: https://ropensci.org
 X-schema.org-keywords: US-NCEI, meteorological-data, global-weather,
